@@ -12,38 +12,42 @@ import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
 
+export interface modelsSerDe {
+  models: string;
+  serDe: string;
+}
+
 // Creates the content in models.go
-export async function generateModels(session: Session<CodeModel>): Promise<string> {
+export async function generateModels(session: Session<CodeModel>): Promise<modelsSerDe> {
   // this list of packages to import
-  const imports = new ImportManager();
-  let text = await contentPreamble(session);
+  const modelImports = new ImportManager();
+  const serdeImports = new ImportManager();
+  let modelText = await contentPreamble(session);
 
   // we do model generation first as it can add imports to the imports list
-  const structs = generateStructs(imports, session.model.schemas.objects);
+  const structs = generateStructs(modelImports, serdeImports, session.model.schemas.objects);
   const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
   for (const paramGroup of values(paramGroups)) {
-    structs.push(generateParamGroupStruct(imports, paramGroup.schema.language.go!, paramGroup.originalParameter));
+    structs.push(generateParamGroupStruct(modelImports, paramGroup.schema.language.go!, paramGroup.originalParameter));
   }
 
-  // imports
-  if (imports.length() > 0) {
-    text += imports.text();
-  }
+  modelText += modelImports.text();
 
   // structs
   let needsJSONPopulate = false;
   let needsJSONUnpopulate = false;
   let needsJSONPopulateByteArray = false;
+  let serdeTextBody = '';
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
-    text += struct.discriminator();
-    text += struct.text();
+    modelText += struct.discriminator();
+    modelText += struct.text();
     struct.Methods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
     for (const method of values(struct.Methods)) {
       if (method.desc.length > 0) {
-        text += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
+        serdeTextBody += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
-      text += method.text;
+      serdeTextBody += method.text;
     }
     if (struct.HasJSONMarshaller) {
       needsJSONPopulate = true;
@@ -56,47 +60,60 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     }
   }
   if (needsJSONPopulate) {
-    text += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
-    text += '\tif v == nil {\n';
-    text += '\t\treturn\n';
-    text += '\t} else if azcore.IsNullValue(v) {\n';
-    text += '\t\tm[k] = nil\n';
-    text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
-    text += '\t\tm[k] = v\n';
-    text += '\t}\n';
-    text += '}\n\n';
+    serdeTextBody += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
+    serdeTextBody += '\tif v == nil {\n';
+    serdeTextBody += '\t\treturn\n';
+    serdeTextBody += '\t} else if azcore.IsNullValue(v) {\n';
+    serdeTextBody += '\t\tm[k] = nil\n';
+    serdeTextBody += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
+    serdeTextBody += '\t\tm[k] = v\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '}\n\n';
   }
   if (needsJSONPopulateByteArray) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    text += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {\n';
-    text += '\tif azcore.IsNullValue(b) {\n';
-    text += '\t\tm[k] = nil\n';
-    text += '\t} else if len(b) == 0 {\n';
-    text += '\t\treturn\n';
-    text += '\t} else {\n';
-    text += '\t\tm[k] = runtime.EncodeByteArray(b, f)\n';
-    text += '\t}\n';
-    text += '}\n\n';
+    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+    serdeTextBody += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {\n';
+    serdeTextBody += '\tif azcore.IsNullValue(b) {\n';
+    serdeTextBody += '\t\tm[k] = nil\n';
+    serdeTextBody += '\t} else if len(b) == 0 {\n';
+    serdeTextBody += '\t\treturn\n';
+    serdeTextBody += '\t} else {\n';
+    serdeTextBody += '\t\tm[k] = runtime.EncodeByteArray(b, f)\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '}\n\n';
   }
   if (needsJSONUnpopulate) {
-    text += 'func unpopulate(data json.RawMessage, v interface{}) error {\n';
-    text += '\tif data == nil {\n';
-    text += '\t\treturn nil\n';
-    text += '\t}\n';
-    text += '\treturn json.Unmarshal(data, v)\n';
-    text += '}\n\n';
+    serdeTextBody += 'func unpopulate(data json.RawMessage, v interface{}) error {\n';
+    serdeTextBody += '\tif data == nil {\n';
+    serdeTextBody += '\t\treturn nil\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '\treturn json.Unmarshal(data, v)\n';
+    serdeTextBody += '}\n\n';
   }
-  return text;
+  let serdeText = '';
+  if (serdeTextBody.length > 0) {
+    serdeText = await contentPreamble(session);
+    serdeText += serdeImports.text();
+    serdeText += serdeTextBody;
+  }
+  return {
+    models: modelText,
+    serDe: serdeText
+  };
 }
 
-function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
+function generateStructs(modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
     if (obj.language.go!.omitType) {
       continue;
     }
-    const structDef = generateStruct(imports, obj.language.go!, aggregateProperties(obj));
+    const structDef = generateStruct(modelImports, obj.language.go!, aggregateProperties(obj));
     if (obj.language.go!.marshallingFormat === 'xml') {
+      serdeImports.add('encoding/xml');
+      if (obj.language.go!.needsDateTimeMarshalling) {
+        serdeImports.add('time');
+      }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj)) {
         generateXMLMarshaller(structDef);
@@ -119,17 +136,17 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     }
     const needs = determineMarshallers(obj);
     if (needs.M) {
-      imports.add('reflect');
-      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+      serdeImports.add('reflect');
+      serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       structDef.HasJSONMarshaller = true;
       if (obj.language.go!.byteArrayFormat) {
         structDef.HasJSONByteArray = true;
       }
-      generateJSONMarshaller(imports, obj, structDef);
+      generateJSONMarshaller(serdeImports, obj, structDef);
     }
     if (needs.U) {
       structDef.HasJSONUnmarshaller = true;
-      generateJSONUnmarshaller(imports, structDef);
+      generateJSONUnmarshaller(serdeImports, structDef);
     }
     structTypes.push(structDef);
   }

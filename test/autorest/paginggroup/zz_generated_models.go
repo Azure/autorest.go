@@ -8,12 +8,6 @@
 
 package paginggroup
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-)
-
 // CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink method.
 type CustomParameterGroup struct {
 	// Sets the api version to use.
@@ -25,14 +19,6 @@ type CustomParameterGroup struct {
 type ODataProductResult struct {
 	ODataNextLink *string    `json:"odata.nextLink,omitempty"`
 	Values        []*Product `json:"values,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ODataProductResult.
-func (o ODataProductResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.nextLink", o.ODataNextLink)
-	populate(objectMap, "values", o.Values)
-	return json.Marshal(objectMap)
 }
 
 // PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
@@ -162,46 +148,12 @@ type ProductResult struct {
 	Values   []*Product `json:"values,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ProductResult.
-func (p ProductResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", p.NextLink)
-	populate(objectMap, "values", p.Values)
-	return json.Marshal(objectMap)
-}
-
 type ProductResultValue struct {
 	NextLink *string    `json:"nextLink,omitempty"`
 	Value    []*Product `json:"value,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ProductResultValue.
-func (p ProductResultValue) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", p.NextLink)
-	populate(objectMap, "value", p.Value)
-	return json.Marshal(objectMap)
-}
-
 type ProductResultValueWithXMSClientName struct {
 	Indexes  []*Product `json:"values,omitempty"`
 	NextLink *string    `json:"nextLink,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ProductResultValueWithXMSClientName.
-func (p ProductResultValueWithXMSClientName) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "values", p.Indexes)
-	populate(objectMap, "nextLink", p.NextLink)
-	return json.Marshal(objectMap)
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
 }

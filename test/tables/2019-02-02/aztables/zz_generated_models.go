@@ -8,13 +8,7 @@
 
 package aztables
 
-import (
-	"encoding/json"
-	"encoding/xml"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-	"time"
-)
+import "time"
 
 // AccessPolicy - An Access policy.
 type AccessPolicy struct {
@@ -26,39 +20,6 @@ type AccessPolicy struct {
 
 	// REQUIRED; The start datetime from which the policy is active.
 	Start *time.Time `xml:"Start"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
-func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias AccessPolicy
-	aux := &struct {
-		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
-	}{
-		alias:  (*alias)(&a),
-		Expiry: (*timeRFC3339)(a.Expiry),
-		Start:  (*timeRFC3339)(a.Start),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
-func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias AccessPolicy
-	aux := &struct {
-		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
-	}{
-		alias: (*alias)(a),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	a.Expiry = (*time.Time)(aux.Expiry)
-	a.Start = (*time.Time)(aux.Start)
-	return nil
 }
 
 // ClientCreateOptions contains the optional parameters for the Client.Create method.
@@ -254,14 +215,6 @@ type EntityQueryResponse struct {
 	Value []map[string]interface{} `json:"value,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type EntityQueryResponse.
-func (e EntityQueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", e.ODataMetadata)
-	populate(objectMap, "value", e.Value)
-	return json.Marshal(objectMap)
-}
-
 type GeoReplication struct {
 	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available
 	// for read operations at the secondary. Primary writes after this point in time may or may
@@ -270,35 +223,6 @@ type GeoReplication struct {
 
 	// REQUIRED; The status of the secondary location.
 	Status *GeoReplicationStatusType `xml:"Status"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type GeoReplication.
-func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias GeoReplication
-	aux := &struct {
-		*alias
-		LastSyncTime *timeRFC1123 `xml:"LastSyncTime"`
-	}{
-		alias:        (*alias)(&g),
-		LastSyncTime: (*timeRFC1123)(g.LastSyncTime),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type GeoReplication.
-func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias GeoReplication
-	aux := &struct {
-		*alias
-		LastSyncTime *timeRFC1123 `xml:"LastSyncTime"`
-	}{
-		alias: (*alias)(g),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	g.LastSyncTime = (*time.Time)(aux.LastSyncTime)
-	return nil
 }
 
 // Logging - Azure Analytics Logging settings.
@@ -346,14 +270,6 @@ type QueryResponse struct {
 
 	// List of tables.
 	Value []*ResponseProperties `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type QueryResponse.
-func (q QueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", q.ODataMetadata)
-	populate(objectMap, "value", q.Value)
-	return json.Marshal(objectMap)
 }
 
 // Response - The response for a single table.
@@ -441,22 +357,6 @@ type ServiceProperties struct {
 	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
 }
 
-// MarshalXML implements the xml.Marshaller interface for type ServiceProperties.
-func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "StorageServiceProperties"
-	type alias ServiceProperties
-	aux := &struct {
-		*alias
-		Cors *[]*CorsRule `xml:"Cors>CorsRule"`
-	}{
-		alias: (*alias)(&s),
-	}
-	if s.Cors != nil {
-		aux.Cors = &s.Cors
-	}
-	return e.EncodeElement(aux, start)
-}
-
 // ServiceStats - Stats for the service.
 type ServiceStats struct {
 	// Geo-Replication information for the Secondary Storage Service.
@@ -470,14 +370,4 @@ type SignedIdentifier struct {
 
 	// REQUIRED; A unique id.
 	ID *string `xml:"Id"`
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
 }

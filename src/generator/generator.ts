@@ -77,9 +77,16 @@ export async function protocolGen(host: AutorestExtensionHost) {
     const models = await generateModels(session);
     host.writeFile({
       filename: `${filePrefix}models.go`,
-      content: models,
+      content: models.models,
       artifactType: 'source-file-go'
     });
+    if (models.serDe.length > 0) {
+      host.writeFile({
+        filename: `${filePrefix}models_serde.go`,
+        content: models.serDe,
+        artifactType: 'source-file-go'
+      });
+    }
 
     const responses = await generateResponses(session);
     if (responses.length > 0) {

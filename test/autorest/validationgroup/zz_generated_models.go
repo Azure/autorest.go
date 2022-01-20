@@ -8,12 +8,6 @@
 
 package validationgroup
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-)
-
 // AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 // method.
 type AutoRestValidationTestClientGetWithConstantInPathOptions struct {
@@ -81,28 +75,4 @@ type Product struct {
 
 	// Image URL representing the product.
 	Image *string `json:"image,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Product.
-func (p Product) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "capacity", p.Capacity)
-	populate(objectMap, "child", p.Child)
-	populate(objectMap, "constChild", p.ConstChild)
-	populate(objectMap, "constInt", p.ConstInt)
-	populate(objectMap, "constString", p.ConstString)
-	populate(objectMap, "constStringAsEnum", p.ConstStringAsEnum)
-	populate(objectMap, "display_names", p.DisplayNames)
-	populate(objectMap, "image", p.Image)
-	return json.Marshal(objectMap)
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
 }
