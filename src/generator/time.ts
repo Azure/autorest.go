@@ -6,6 +6,8 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
 import { contentPreamble } from './helpers'
+import { values } from '@azure-tools/linq';
+import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
 export class Content {
@@ -21,33 +23,57 @@ export class Content {
 // Creates the content for required time marshalling helpers.
 // Will be empty if no helpers are required.
 export async function generateTimeHelpers(session: Session<CodeModel>): Promise<Content[]> {
-  const preamble = await contentPreamble(session);
   const content = new Array<Content>();
+  if (!session.model.language.go!.hasTimeRFC1123 &&
+    !session.model.language.go!.hasTimeRFC3339 &&
+    !session.model.language.go!.hasUnixTime &&
+    !session.model.language.go!.hasDate) {
+    return content;
+  }
+  let needsPopulate = false;
+  for (const obj of values(session.model.schemas.objects)) {
+    if (obj.language.go!.marshallingFormat !== 'json') {
+      // population helpers are for JSON only
+      continue;
+    }
+    for (const prop of values(obj.properties)) {
+      if (prop.schema.language.go!.internalTimeType) {
+        needsPopulate = true;
+        break;
+      }
+    }
+    if (needsPopulate) {
+      break;
+    }
+  }
+  const preamble = await contentPreamble(session);
   if (session.model.language.go!.hasTimeRFC1123) {
-    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble)));
+    content.push(new Content('time_rfc1123', generateRFC1123Helper(preamble, needsPopulate)));
   }
   if (session.model.language.go!.hasTimeRFC3339) {
-    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble)));
+    content.push(new Content('time_rfc3339', generateRFC3339Helper(preamble, needsPopulate)));
   }
   if (session.model.language.go!.hasUnixTime) {
-    content.push(new Content('time_unix', generateUnixTimeHelper(preamble)));
+    content.push(new Content('time_unix', generateUnixTimeHelper(preamble, needsPopulate)));
   }
   if (session.model.language.go!.hasDate) {
-    content.push(new Content('date_type', generateDateHelper(preamble)));
+    content.push(new Content('date_type', generateDateHelper(preamble, needsPopulate)));
   }
   return content;
 }
 
-function generateRFC1123Helper(preamble: string): string {
-  return `${preamble}
+function generateRFC1123Helper(preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager();
+  imports.add('strings');
+  imports.add('time');
+  if (needsPopulate) {
+    imports.add('encoding/json');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add('reflect');
+  }
+  let text = `${preamble}
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-	"strings"
-	"time"
-)
+${imports.text()}
 
 const (
 	rfc1123JSON = \`"\` + time.RFC1123 + \`"\`
@@ -76,6 +102,10 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
 	*t = timeRFC1123(p)
 	return err
 }
+`;
+  if (needsPopulate) {
+    text +=
+`
 
 func populateTimeRFC1123(m map[string]interface{}, k string, t *time.Time) {
 	if t == nil {
@@ -101,19 +131,23 @@ func unpopulateTimeRFC1123(data json.RawMessage, t **time.Time) error {
 	return nil
 }
 `;
+  }
+  return text;
 }
 
-function generateRFC3339Helper(preamble: string): string {
-  return `${preamble}
+function generateRFC3339Helper(preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager();
+  imports.add('regexp');
+  imports.add('strings');
+  imports.add('time');
+  if (needsPopulate) {
+    imports.add('encoding/json');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add('reflect');
+  }
+  let text = `${preamble}
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-	"regexp"
-	"strings"
-	"time"
-)
+${imports.text()}
 
 const (
 	utcLayoutJSON = \`"2006-01-02T15:04:05.999999999"\`
@@ -157,6 +191,10 @@ func (t *timeRFC3339) Parse(layout, value string) error {
 	*t = timeRFC3339(p)
 	return err
 }
+`;
+  if (needsPopulate) {
+    text +=
+`
 
 func populateTimeRFC3339(m map[string]interface{}, k string, t *time.Time) {
 	if t == nil {
@@ -182,19 +220,23 @@ func unpopulateTimeRFC3339(data json.RawMessage, t **time.Time) error {
 	return nil
 }
 `;
+  }
+  return text;
 }
 
-function generateUnixTimeHelper(preamble: string): string {
-  return `${preamble}
+function generateUnixTimeHelper(preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager();
+  imports.add('encoding/json');
+  imports.add('fmt');
+  imports.add('time');
+  if (needsPopulate) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add('reflect');
+    imports.add('strings');
+  }
+  let text = `${preamble}
 
-import (
-	"encoding/json"
-	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-	"strings"
-	"time"
-)
+${imports.text()}
 
 type timeUnix time.Time
 
@@ -214,7 +256,10 @@ func (t *timeUnix) UnmarshalJSON(data []byte) error {
 func (t timeUnix) String() string {
 	return fmt.Sprintf("%d", time.Time(t).Unix())
 }
-
+`;
+  if (needsPopulate) {
+    text +=
+`
 func populateTimeUnix(m map[string]interface{}, k string, t *time.Time) {
 	if t == nil {
 		return
@@ -239,19 +284,23 @@ func unpopulateTimeUnix(data json.RawMessage, t **time.Time) error {
 	return nil
 }
 `;
+  }
+  return text;
 }
 
-function generateDateHelper(preamble: string): string {
-  return `${preamble}
+function generateDateHelper(preamble: string, needsPopulate: boolean): string {
+  const imports = new ImportManager();
+  imports.add('fmt');
+  imports.add('time');
+  if (needsPopulate) {
+    imports.add('encoding/json');
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    imports.add('reflect');
+    imports.add('strings');
+  }
+  let text = `${preamble}
 
-import (
-	"encoding/json"
-	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-	"strings"
-	"time"
-)
+${imports.text()}
 
 const (
 	fullDateJSON = \`"2006-01-02"\`
@@ -269,7 +318,10 @@ func (d *dateType) UnmarshalJSON(data []byte) (err error) {
 	*d = (dateType)(t)
 	return err
 }
-
+`;
+  if (needsPopulate) {
+    text +=
+`
 func populateDateType(m map[string]interface{}, k string, t *time.Time) {
 	if t == nil {
 		return
@@ -294,4 +346,6 @@ func unpopulateDateType(data json.RawMessage, t **time.Time) error {
 	return nil
 }
 `;
+  }
+  return text;
 }
