@@ -167,9 +167,6 @@ export function generateStruct(imports: ImportManager, lang: Language, props?: P
     imports.add('time');
     imports.add('context');
   }
-  if (lang.needsDateTimeMarshalling) {
-    imports.add('encoding/' + lang.marshallingFormat);
-  }
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {
     imports.addImportForSchemaType(prop.schema);

@@ -8,10 +8,7 @@
 
 package xmlgroup
 
-import (
-	"encoding/xml"
-	"time"
-)
+import "time"
 
 // AccessPolicy - An Access policy
 type AccessPolicy struct {
@@ -25,62 +22,10 @@ type AccessPolicy struct {
 	Start *time.Time `xml:"Start"`
 }
 
-// MarshalXML implements the xml.Marshaller interface for type AccessPolicy.
-func (a AccessPolicy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias AccessPolicy
-	aux := &struct {
-		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
-	}{
-		alias:  (*alias)(&a),
-		Expiry: (*timeRFC3339)(a.Expiry),
-		Start:  (*timeRFC3339)(a.Start),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type AccessPolicy.
-func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias AccessPolicy
-	aux := &struct {
-		*alias
-		Expiry *timeRFC3339 `xml:"Expiry"`
-		Start  *timeRFC3339 `xml:"Start"`
-	}{
-		alias: (*alias)(a),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	a.Expiry = (*time.Time)(aux.Expiry)
-	a.Start = (*time.Time)(aux.Start)
-	return nil
-}
-
 // AppleBarrel - A barrel of apples.
 type AppleBarrel struct {
 	BadApples  []*string `xml:"BadApples>Apple"`
 	GoodApples []*string `xml:"GoodApples>Apple"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type AppleBarrel.
-func (a AppleBarrel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias AppleBarrel
-	aux := &struct {
-		*alias
-		BadApples  *[]*string `xml:"BadApples>Apple"`
-		GoodApples *[]*string `xml:"GoodApples>Apple"`
-	}{
-		alias: (*alias)(&a),
-	}
-	if a.BadApples != nil {
-		aux.BadApples = &a.BadApples
-	}
-	if a.GoodApples != nil {
-		aux.GoodApples = &a.GoodApples
-	}
-	return e.EncodeElement(aux, start)
 }
 
 // Banana - A banana.
@@ -89,36 +34,6 @@ type Banana struct {
 	Expiration *time.Time `xml:"expiration"`
 	Flavor     *string    `xml:"flavor"`
 	Name       *string    `xml:"name"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type Banana.
-func (b Banana) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "banana"
-	type alias Banana
-	aux := &struct {
-		*alias
-		Expiration *timeRFC3339 `xml:"expiration"`
-	}{
-		alias:      (*alias)(&b),
-		Expiration: (*timeRFC3339)(b.Expiration),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type Banana.
-func (b *Banana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias Banana
-	aux := &struct {
-		*alias
-		Expiration *timeRFC3339 `xml:"expiration"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	b.Expiration = (*time.Time)(aux.Expiration)
-	return nil
 }
 
 // Blob - An Azure Storage blob
@@ -137,22 +52,6 @@ type Blob struct {
 
 	// Dictionary of
 	Metadata map[string]*string `xml:"Metadata"`
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type Blob.
-func (b *Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias Blob
-	aux := &struct {
-		*alias
-		Metadata additionalProperties `xml:"Metadata"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	b.Metadata = (map[string]*string)(aux.Metadata)
-	return nil
 }
 
 type BlobPrefix struct {
@@ -197,65 +96,9 @@ type BlobProperties struct {
 	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
 }
 
-// MarshalXML implements the xml.Marshaller interface for type BlobProperties.
-func (b BlobProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias BlobProperties
-	aux := &struct {
-		*alias
-		CopyCompletionTime *timeRFC1123 `xml:"CopyCompletionTime"`
-		DeletedTime        *timeRFC1123 `xml:"DeletedTime"`
-		LastModified       *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias:              (*alias)(&b),
-		CopyCompletionTime: (*timeRFC1123)(b.CopyCompletionTime),
-		DeletedTime:        (*timeRFC1123)(b.DeletedTime),
-		LastModified:       (*timeRFC1123)(b.LastModified),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type BlobProperties.
-func (b *BlobProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias BlobProperties
-	aux := &struct {
-		*alias
-		CopyCompletionTime *timeRFC1123 `xml:"CopyCompletionTime"`
-		DeletedTime        *timeRFC1123 `xml:"DeletedTime"`
-		LastModified       *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
-	b.DeletedTime = (*time.Time)(aux.DeletedTime)
-	b.LastModified = (*time.Time)(aux.LastModified)
-	return nil
-}
-
 type Blobs struct {
 	Blob       []*Blob       `xml:"Blob"`
 	BlobPrefix []*BlobPrefix `xml:"BlobPrefix"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type Blobs.
-func (b Blobs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias Blobs
-	aux := &struct {
-		*alias
-		Blob       *[]*Blob       `xml:"Blob"`
-		BlobPrefix *[]*BlobPrefix `xml:"BlobPrefix"`
-	}{
-		alias: (*alias)(&b),
-	}
-	if b.Blob != nil {
-		aux.Blob = &b.Blob
-	}
-	if b.BlobPrefix != nil {
-		aux.BlobPrefix = &b.BlobPrefix
-	}
-	return e.EncodeElement(aux, start)
 }
 
 // ComplexTypeNoMeta - I am a complex type with no XML node
@@ -282,22 +125,6 @@ type Container struct {
 	Metadata map[string]*string `xml:"Metadata"`
 }
 
-// UnmarshalXML implements the xml.Unmarshaller interface for type Container.
-func (c *Container) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias Container
-	aux := &struct {
-		*alias
-		Metadata additionalProperties `xml:"Metadata"`
-	}{
-		alias: (*alias)(c),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	c.Metadata = (map[string]*string)(aux.Metadata)
-	return nil
-}
-
 // ContainerProperties - Properties of a container
 type ContainerProperties struct {
 	// REQUIRED
@@ -309,35 +136,6 @@ type ContainerProperties struct {
 	LeaseState    *LeaseStateType    `xml:"LeaseState"`
 	LeaseStatus   *LeaseStatusType   `xml:"LeaseStatus"`
 	PublicAccess  *PublicAccessType  `xml:"PublicAccess"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type ContainerProperties.
-func (c ContainerProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias ContainerProperties
-	aux := &struct {
-		*alias
-		LastModified *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias:        (*alias)(&c),
-		LastModified: (*timeRFC1123)(c.LastModified),
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type ContainerProperties.
-func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias ContainerProperties
-	aux := &struct {
-		*alias
-		LastModified *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias: (*alias)(c),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	c.LastModified = (*time.Time)(aux.LastModified)
-	return nil
 }
 
 // CorsRule - CORS is an HTTP feature that enables a web application running under one domain to access resources in another
@@ -415,21 +213,6 @@ type ListContainersResponse struct {
 	Marker          *string      `xml:"Marker"`
 }
 
-// MarshalXML implements the xml.Marshaller interface for type ListContainersResponse.
-func (l ListContainersResponse) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias ListContainersResponse
-	aux := &struct {
-		*alias
-		Containers *[]*Container `xml:"Containers>Container"`
-	}{
-		alias: (*alias)(&l),
-	}
-	if l.Containers != nil {
-		aux.Containers = &l.Containers
-	}
-	return e.EncodeElement(aux, start)
-}
-
 // Logging - Azure Analytics Logging settings.
 type Logging struct {
 	// REQUIRED; Indicates whether all delete requests should be logged.
@@ -464,21 +247,6 @@ type Metrics struct {
 
 type ModelWithByteProperty struct {
 	Bytes []byte `xml:"Bytes"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type ModelWithByteProperty.
-func (m ModelWithByteProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias ModelWithByteProperty
-	aux := &struct {
-		*alias
-		Bytes *[]byte `xml:"Bytes"`
-	}{
-		alias: (*alias)(&m),
-	}
-	if m.Bytes != nil {
-		aux.Bytes = &m.Bytes
-	}
-	return e.EncodeElement(aux, start)
 }
 
 type ModelWithURLProperty struct {
@@ -538,43 +306,12 @@ type Slide struct {
 	Type  *string   `xml:"type,attr"`
 }
 
-// MarshalXML implements the xml.Marshaller interface for type Slide.
-func (s Slide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias Slide
-	aux := &struct {
-		*alias
-		Items *[]*string `xml:"item"`
-	}{
-		alias: (*alias)(&s),
-	}
-	if s.Items != nil {
-		aux.Items = &s.Items
-	}
-	return e.EncodeElement(aux, start)
-}
-
 // Slideshow - Data about a slideshow
 type Slideshow struct {
 	Author *string  `xml:"author,attr"`
 	Date   *string  `xml:"date,attr"`
 	Slides []*Slide `xml:"slide"`
 	Title  *string  `xml:"title,attr"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type Slideshow.
-func (s Slideshow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "slideshow"
-	type alias Slideshow
-	aux := &struct {
-		*alias
-		Slides *[]*Slide `xml:"slide"`
-	}{
-		alias: (*alias)(&s),
-	}
-	if s.Slides != nil {
-		aux.Slides = &s.Slides
-	}
-	return e.EncodeElement(aux, start)
 }
 
 // StorageServiceProperties - Storage Service Properties.
@@ -597,21 +334,6 @@ type StorageServiceProperties struct {
 
 	// a summary of request statistics grouped by API in minute aggregates for blobs
 	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type StorageServiceProperties.
-func (s StorageServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias StorageServiceProperties
-	aux := &struct {
-		*alias
-		Cors *[]*CorsRule `xml:"Cors>CorsRule"`
-	}{
-		alias: (*alias)(&s),
-	}
-	if s.Cors != nil {
-		aux.Cors = &s.Cors
-	}
-	return e.EncodeElement(aux, start)
 }
 
 // XMLClientGetACLsOptions contains the optional parameters for the XMLClient.GetACLs method.

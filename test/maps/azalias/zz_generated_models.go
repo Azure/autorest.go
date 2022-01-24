@@ -8,12 +8,7 @@
 
 package azalias
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-	"time"
-)
+import "time"
 
 // AliasesCreateResponse - The response model for the Alias Create API for the case when the alias was successfully created.
 type AliasesCreateResponse struct {
@@ -49,53 +44,6 @@ type GeoJSONFeature struct {
 	Properties interface{} `json:"properties,omitempty"`
 }
 
-// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
-func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
-	return &GeoJSONObject{
-		Type: g.Type,
-		ID:   g.ID,
-	}
-}
-
-// MarshalJSON implements the json.Marshaller interface for type GeoJSONFeature.
-func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "featureType", g.FeatureType)
-	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", &g.Properties)
-	objectMap["type"] = GeoJSONObjectTypeGeoJSONFeature
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONFeature.
-func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "featureType":
-			err = unpopulate(val, &g.FeatureType)
-			delete(rawMsg, key)
-		case "id":
-			err = unpopulate(val, &g.ID)
-			delete(rawMsg, key)
-		case "properties":
-			err = unpopulate(val, &g.Properties)
-			delete(rawMsg, key)
-		case "type":
-			err = unpopulate(val, &g.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 type GeoJSONFeatureData struct {
 	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
 	// an empty value.
@@ -128,9 +76,6 @@ type GeoJSONObject struct {
 	ID *string `json:"id,omitempty"`
 }
 
-// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
-func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
-
 // GeoJSONObjectNamedCollection - A named collection of GeoJSON object
 type GeoJSONObjectNamedCollection struct {
 	// Name of the collection
@@ -138,37 +83,6 @@ type GeoJSONObjectNamedCollection struct {
 
 	// Dictionary of
 	Objects map[string]GeoJSONObjectClassification `json:"objects,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type GeoJSONObjectNamedCollection.
-func (g GeoJSONObjectNamedCollection) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "collectionName", g.CollectionName)
-	populate(objectMap, "objects", g.Objects)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONObjectNamedCollection.
-func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "collectionName":
-			err = unpopulate(val, &g.CollectionName)
-			delete(rawMsg, key)
-		case "objects":
-			g.Objects, err = unmarshalGeoJSONObjectClassificationMap(val)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // ListItem - Detailed information for the alias.
@@ -195,14 +109,6 @@ type ListResponse struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ListResponse.
-func (l ListResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "aliases", l.Aliases)
-	populate(objectMap, "nextLink", l.NextLink)
-	return json.Marshal(objectMap)
-}
-
 type ParameterMetadataValue struct {
 	// a JSON object
 	Value interface{} `json:"value,omitempty"`
@@ -225,15 +131,6 @@ type PolicyAssignmentProperties struct {
 	Parameters map[string]*ParameterValuesValue `json:"parameters,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type PolicyAssignmentProperties.
-func (p PolicyAssignmentProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "displayName", p.DisplayName)
-	populate(objectMap, "metadata", p.Metadata)
-	populate(objectMap, "parameters", p.Parameters)
-	return json.Marshal(objectMap)
-}
-
 // ScheduleCreateOrUpdateProperties - The parameters supplied to the create or update schedule operation.
 type ScheduleCreateOrUpdateProperties struct {
 	// A list of all the previously created aliases.
@@ -247,45 +144,6 @@ type ScheduleCreateOrUpdateProperties struct {
 
 	// Gets or sets the start time of the schedule.
 	StartTime *time.Time `json:"startTime,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ScheduleCreateOrUpdateProperties.
-func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "aliases", s.Aliases)
-	populate(objectMap, "description", s.Description)
-	populate(objectMap, "interval", &s.Interval)
-	populateTimeRFC3339(objectMap, "startTime", s.StartTime)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ScheduleCreateOrUpdateProperties.
-func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "aliases":
-			err = unpopulate(val, &s.Aliases)
-			delete(rawMsg, key)
-		case "description":
-			err = unpopulate(val, &s.Description)
-			delete(rawMsg, key)
-		case "interval":
-			err = unpopulate(val, &s.Interval)
-			delete(rawMsg, key)
-		case "startTime":
-			err = unpopulateTimeRFC3339(val, &s.StartTime)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // clientCreateOptions contains the optional parameters for the client.Create method.
@@ -308,21 +166,4 @@ type clientListOptions struct {
 // clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
 type clientPolicyAssignmentOptions struct {
 	// placeholder for future optional parameters
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
-}
-
-func unpopulate(data json.RawMessage, v interface{}) error {
-	if data == nil {
-		return nil
-	}
-	return json.Unmarshal(data, v)
 }

@@ -8,22 +8,9 @@
 
 package complexmodelgroup
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
-)
-
 type CatalogArray struct {
 	// Array of products
 	ProductArray []*Product `json:"productArray,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type CatalogArray.
-func (c CatalogArray) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "productArray", c.ProductArray)
-	return json.Marshal(objectMap)
 }
 
 type CatalogArrayOfDictionary struct {
@@ -31,35 +18,14 @@ type CatalogArrayOfDictionary struct {
 	ProductArrayOfDictionary []map[string]*Product `json:"productArrayOfDictionary,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type CatalogArrayOfDictionary.
-func (c CatalogArrayOfDictionary) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "productArrayOfDictionary", c.ProductArrayOfDictionary)
-	return json.Marshal(objectMap)
-}
-
 type CatalogDictionary struct {
 	// Dictionary of products
 	ProductDictionary map[string]*Product `json:"productDictionary,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type CatalogDictionary.
-func (c CatalogDictionary) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "productDictionary", c.ProductDictionary)
-	return json.Marshal(objectMap)
-}
-
 type CatalogDictionaryOfArray struct {
 	// Dictionary of Array of product
 	ProductDictionaryOfArray map[string][]*Product `json:"productDictionaryOfArray,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type CatalogDictionaryOfArray.
-func (c CatalogDictionaryOfArray) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "productDictionaryOfArray", c.ProductDictionaryOfArray)
-	return json.Marshal(objectMap)
 }
 
 // ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
@@ -94,14 +60,4 @@ type Product struct {
 	// Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco
 	// will have a different product_id than uberX in Los Angeles.
 	ProductID *string `json:"product_id,omitempty"`
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
 }
