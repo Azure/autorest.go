@@ -35,118 +35,110 @@ func httpClientWithCookieJar() policy.Transporter {
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePages(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePages(nil)
+	pager := client.GetMultiplePages(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
 func TestGetMultiplePagesFailure(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesFailure(nil)
+	pager := client.GetMultiplePagesFailure(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			if !reflect.ValueOf(page).IsZero() {
+				t.Fatal("expected empty payload")
+			}
+			break
+		}
+		if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if page.Err() == nil {
-		t.Fatal("unexpected nil error")
-	}
 	if r := cmp.Diff(count, 1); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
 func TestGetMultiplePagesFailureURI(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesFailureURI(nil)
+	pager := client.GetMultiplePagesFailureURI(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			if !reflect.ValueOf(page).IsZero() {
+				t.Fatal("expected empty payload")
+			}
+			break
 		}
 		count++
 	}
-	if page.Err() == nil {
-		t.Fatal("unexpected nil error")
-	}
 	if r := cmp.Diff(count, 1); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
 func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesFragmentNextLink("1.6", "test_user", nil)
+	pager := client.GetMultiplePagesFragmentNextLink("1.6", "test_user", nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ODataProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesFragmentWithGroupingNextLink(CustomParameterGroup{
+	pager := client.GetMultiplePagesFragmentWithGroupingNextLink(CustomParameterGroup{
 		APIVersion: "1.6",
 		Tenant:     "test_user",
 	})
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ODataProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -171,15 +163,14 @@ func TestGetMultiplePagesLro(t *testing.T) {
 		t.Fatal(err)
 	}
 	count := 0
-	for pager.NextPage(context.Background()) {
-		resp := pager.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
-	}
-	if err = pager.Err(); err != nil {
-		t.Fatal(err)
 	}
 	const pageCount = 10
 	if r := cmp.Diff(count, pageCount); r != "" {
@@ -190,92 +181,84 @@ func TestGetMultiplePagesLro(t *testing.T) {
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
 func TestGetMultiplePagesRetryFirst(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesRetryFirst(nil)
+	pager := client.GetMultiplePagesRetryFirst(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
 func TestGetMultiplePagesRetrySecond(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesRetrySecond(nil)
+	pager := client.GetMultiplePagesRetrySecond(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesWithOffset(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesWithOffset(PagingClientGetMultiplePagesWithOffsetOptions{})
+	pager := client.GetMultiplePagesWithOffset(PagingClientGetMultiplePagesWithOffsetOptions{})
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
 func TestGetNoItemNamePages(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetNoItemNamePages(nil)
+	pager := client.GetNoItemNamePages(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResultValue.Value) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResultValue.Value) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 1); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
@@ -294,114 +277,103 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 func TestGetOdataMultiplePages(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetODataMultiplePages(nil)
+	pager := client.GetODataMultiplePages(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ODataProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ODataProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
 func TestGetPagingModelWithItemNameWithXMSClientName(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetPagingModelWithItemNameWithXMSClientName(nil)
+	pager := client.GetPagingModelWithItemNameWithXMSClientName(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResultValueWithXMSClientName.Indexes) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResultValueWithXMSClientName.Indexes) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 1); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
 func TestGetSinglePages(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetSinglePages(nil)
+	pager := client.GetSinglePages(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 1); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }
 
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
 func TestGetSinglePagesFailure(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetSinglePagesFailure(nil)
+	pager := client.GetSinglePagesFailure(nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			if !reflect.ValueOf(page).IsZero() {
+				t.Fatal("expected empty payload")
+			}
+			break
 		}
 		count++
 	}
-	if page.Err() == nil {
-		t.Fatal("unexpected nil error")
-	}
 	if r := cmp.Diff(count, 0); r != "" {
 		t.Fatal(r)
-	}
-	if !reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("expected empty payload")
 	}
 }
 
 // GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
 func TestGetWithQueryParams(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetWithQueryParams(100, nil)
+	pager := client.GetWithQueryParams(100, nil)
 	count := 0
-	for page.NextPage(context.Background()) {
-		resp := page.PageResponse()
-		if len(resp.ProductResult.Values) == 0 {
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
 			t.Fatal("missing payload")
 		}
 		count++
 	}
-	if err := page.Err(); err != nil {
-		t.Fatal(err)
-	}
 	if r := cmp.Diff(count, 2); r != "" {
 		t.Fatal(r)
-	}
-	if reflect.ValueOf(page.PageResponse()).IsZero() {
-		t.Fatal("unexpected empty payload")
 	}
 }

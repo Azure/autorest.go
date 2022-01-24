@@ -10,6 +10,7 @@ package paginggroup
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,968 +21,932 @@ import (
 type PagingClientFirstResponseEmptyPager struct {
 	client    *PagingClient
 	current   PagingClientFirstResponseEmptyResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientFirstResponseEmptyResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientFirstResponseEmptyPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientFirstResponseEmptyPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientFirstResponseEmptyPager) NextPage(ctx context.Context) (PagingClientFirstResponseEmptyResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientFirstResponseEmptyResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientFirstResponseEmptyResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientFirstResponseEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientFirstResponseEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.firstResponseEmptyHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientFirstResponseEmptyResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientFirstResponseEmptyResponse page.
-func (p *PagingClientFirstResponseEmptyPager) PageResponse() PagingClientFirstResponseEmptyResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesFailurePager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesFailurePager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesFailureResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesFailureResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesFailurePager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesFailurePager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesFailurePager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesFailureResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesFailureResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesFailureResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesFailureHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesFailureResponse page.
-func (p *PagingClientGetMultiplePagesFailurePager) PageResponse() PagingClientGetMultiplePagesFailureResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesFailureURIPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesFailureURIPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesFailureURIResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesFailureURIResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesFailureURIPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesFailureURIPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesFailureURIResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesFailureURIResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesFailureURIResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesFailureURIHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesFailureURIResponse page.
-func (p *PagingClientGetMultiplePagesFailureURIPager) PageResponse() PagingClientGetMultiplePagesFailureURIResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesFragmentNextLinkPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesFragmentNextLinkPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesFragmentNextLinkResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesFragmentNextLinkResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesFragmentNextLinkResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesFragmentNextLinkHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesFragmentNextLinkResponse page.
-func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) PageResponse() PagingClientGetMultiplePagesFragmentNextLinkResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse page.
-func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) PageResponse() PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesLROPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesLROPager struct {
 	client  *PagingClient
 	current PagingClientGetMultiplePagesLROResponse
-	err     error
 	second  bool
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesLROPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
-	if !p.second {
-		p.second = true
-		return true
-	} else if !reflect.ValueOf(p.current).IsZero() {
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesLROPager) More() bool {
+	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
 		}
 	}
-	req, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.ProductResult.NextLink)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	resp, err := p.client.pl.Do(req)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		p.err = runtime.NewResponseError(resp)
-		return false
-	}
-	result, err := p.client.getMultiplePagesLROHandleResponse(resp)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	p.current = result
 	return true
 }
 
-// PageResponse returns the current PagingClientGetMultiplePagesLROResponse page.
-func (p *PagingClientGetMultiplePagesLROPager) PageResponse() PagingClientGetMultiplePagesLROResponse {
-	return p.current
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesLROPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesLROResponse, error) {
+	if !p.second {
+		p.second = true
+		return p.current, nil
+	} else if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesLROResponse{}, errors.New("no more pages")
+		}
+	}
+	req, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.ProductResult.NextLink)
+	if err != nil {
+
+		return PagingClientGetMultiplePagesLROResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+
+		return PagingClientGetMultiplePagesLROResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
+
+		return PagingClientGetMultiplePagesLROResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.getMultiplePagesLROHandleResponse(resp)
+	if err != nil {
+
+		return PagingClientGetMultiplePagesLROResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesResponse page.
-func (p *PagingClientGetMultiplePagesPager) PageResponse() PagingClientGetMultiplePagesResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesRetryFirstPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesRetryFirstPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesRetryFirstResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesRetryFirstResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesRetryFirstPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesRetryFirstPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesRetryFirstResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesRetryFirstResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesRetryFirstResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesRetryFirstHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesRetryFirstResponse page.
-func (p *PagingClientGetMultiplePagesRetryFirstPager) PageResponse() PagingClientGetMultiplePagesRetryFirstResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesRetrySecondPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesRetrySecondPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesRetrySecondResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesRetrySecondResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesRetrySecondPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesRetrySecondPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesRetrySecondResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesRetrySecondResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesRetrySecondResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesRetrySecondHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesRetrySecondResponse page.
-func (p *PagingClientGetMultiplePagesRetrySecondPager) PageResponse() PagingClientGetMultiplePagesRetrySecondResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetMultiplePagesWithOffsetPager provides operations for iterating over paged responses.
 type PagingClientGetMultiplePagesWithOffsetPager struct {
 	client    *PagingClient
 	current   PagingClientGetMultiplePagesWithOffsetResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetMultiplePagesWithOffsetResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetMultiplePagesWithOffsetPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetMultiplePagesWithOffsetPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) (PagingClientGetMultiplePagesWithOffsetResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetMultiplePagesWithOffsetResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetMultiplePagesWithOffsetResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getMultiplePagesWithOffsetHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetMultiplePagesWithOffsetResponse page.
-func (p *PagingClientGetMultiplePagesWithOffsetPager) PageResponse() PagingClientGetMultiplePagesWithOffsetResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetNoItemNamePagesPager provides operations for iterating over paged responses.
 type PagingClientGetNoItemNamePagesPager struct {
 	client    *PagingClient
 	current   PagingClientGetNoItemNamePagesResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetNoItemNamePagesResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetNoItemNamePagesPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetNoItemNamePagesPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValue.NextLink == nil || len(*p.current.ProductResultValue.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetNoItemNamePagesPager) NextPage(ctx context.Context) (PagingClientGetNoItemNamePagesResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetNoItemNamePagesResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetNoItemNamePagesResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getNoItemNamePagesHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetNoItemNamePagesResponse page.
-func (p *PagingClientGetNoItemNamePagesPager) PageResponse() PagingClientGetNoItemNamePagesResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetODataMultiplePagesPager provides operations for iterating over paged responses.
 type PagingClientGetODataMultiplePagesPager struct {
 	client    *PagingClient
 	current   PagingClientGetODataMultiplePagesResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetODataMultiplePagesResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetODataMultiplePagesPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetODataMultiplePagesPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetODataMultiplePagesPager) NextPage(ctx context.Context) (PagingClientGetODataMultiplePagesResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetODataMultiplePagesResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetODataMultiplePagesResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getODataMultiplePagesHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetODataMultiplePagesResponse page.
-func (p *PagingClientGetODataMultiplePagesPager) PageResponse() PagingClientGetODataMultiplePagesResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetPagingModelWithItemNameWithXMSClientNamePager provides operations for iterating over paged responses.
 type PagingClientGetPagingModelWithItemNameWithXMSClientNamePager struct {
 	client    *PagingClient
 	current   PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResultValueWithXMSClientName.NextLink == nil || len(*p.current.ProductResultValueWithXMSClientName.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) (PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse page.
-func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) PageResponse() PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetSinglePagesFailurePager provides operations for iterating over paged responses.
 type PagingClientGetSinglePagesFailurePager struct {
 	client    *PagingClient
 	current   PagingClientGetSinglePagesFailureResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetSinglePagesFailureResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetSinglePagesFailurePager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetSinglePagesFailurePager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetSinglePagesFailurePager) NextPage(ctx context.Context) (PagingClientGetSinglePagesFailureResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetSinglePagesFailureResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetSinglePagesFailureResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getSinglePagesFailureHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetSinglePagesFailureResponse page.
-func (p *PagingClientGetSinglePagesFailurePager) PageResponse() PagingClientGetSinglePagesFailureResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetSinglePagesPager provides operations for iterating over paged responses.
 type PagingClientGetSinglePagesPager struct {
 	client    *PagingClient
 	current   PagingClientGetSinglePagesResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetSinglePagesResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetSinglePagesPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetSinglePagesPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetSinglePagesPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetSinglePagesPager) NextPage(ctx context.Context) (PagingClientGetSinglePagesResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetSinglePagesResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetSinglePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetSinglePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetSinglePagesResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getSinglePagesHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetSinglePagesResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetSinglePagesResponse page.
-func (p *PagingClientGetSinglePagesPager) PageResponse() PagingClientGetSinglePagesResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientGetWithQueryParamsPager provides operations for iterating over paged responses.
 type PagingClientGetWithQueryParamsPager struct {
 	client    *PagingClient
 	current   PagingClientGetWithQueryParamsResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientGetWithQueryParamsResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientGetWithQueryParamsPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientGetWithQueryParamsPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientGetWithQueryParamsPager) NextPage(ctx context.Context) (PagingClientGetWithQueryParamsResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientGetWithQueryParamsResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientGetWithQueryParamsResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.getWithQueryParamsHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientGetWithQueryParamsResponse page.
-func (p *PagingClientGetWithQueryParamsPager) PageResponse() PagingClientGetWithQueryParamsResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientNextFragmentPager provides operations for iterating over paged responses.
 type PagingClientNextFragmentPager struct {
 	client    *PagingClient
 	current   PagingClientNextFragmentResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientNextFragmentResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientNextFragmentPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientNextFragmentPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientNextFragmentPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientNextFragmentPager) NextPage(ctx context.Context) (PagingClientNextFragmentResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientNextFragmentResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientNextFragmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientNextFragmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientNextFragmentResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.nextFragmentHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientNextFragmentResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientNextFragmentResponse page.
-func (p *PagingClientNextFragmentPager) PageResponse() PagingClientNextFragmentResponse {
-	return p.current
+	return p.current, nil
 }
 
 // PagingClientNextFragmentWithGroupingPager provides operations for iterating over paged responses.
 type PagingClientNextFragmentWithGroupingPager struct {
 	client    *PagingClient
 	current   PagingClientNextFragmentWithGroupingResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, PagingClientNextFragmentWithGroupingResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *PagingClientNextFragmentWithGroupingPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *PagingClientNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientNextFragmentWithGroupingPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ODataProductResult.ODataNextLink == nil || len(*p.current.ODataProductResult.ODataNextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientNextFragmentWithGroupingPager) NextPage(ctx context.Context) (PagingClientNextFragmentWithGroupingResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientNextFragmentWithGroupingResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return PagingClientNextFragmentWithGroupingResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.nextFragmentWithGroupingHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current PagingClientNextFragmentWithGroupingResponse page.
-func (p *PagingClientNextFragmentWithGroupingPager) PageResponse() PagingClientNextFragmentWithGroupingResponse {
-	return p.current
+	return p.current, nil
 }

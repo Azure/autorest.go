@@ -10,6 +10,7 @@ package azblob
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,160 +21,154 @@ import (
 type containerClientListBlobFlatSegmentPager struct {
 	client    *containerClient
 	current   containerClientListBlobFlatSegmentResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, containerClientListBlobFlatSegmentResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *containerClientListBlobFlatSegmentPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *containerClientListBlobFlatSegmentPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *containerClientListBlobFlatSegmentPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ListBlobsFlatSegmentResponse.NextMarker == nil || len(*p.current.ListBlobsFlatSegmentResponse.NextMarker) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *containerClientListBlobFlatSegmentPager) NextPage(ctx context.Context) (containerClientListBlobFlatSegmentResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return containerClientListBlobFlatSegmentResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return containerClientListBlobFlatSegmentResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.listBlobFlatSegmentHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current containerClientListBlobFlatSegmentResponse page.
-func (p *containerClientListBlobFlatSegmentPager) PageResponse() containerClientListBlobFlatSegmentResponse {
-	return p.current
+	return p.current, nil
 }
 
 // containerClientListBlobHierarchySegmentPager provides operations for iterating over paged responses.
 type containerClientListBlobHierarchySegmentPager struct {
 	client    *containerClient
 	current   containerClientListBlobHierarchySegmentResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, containerClientListBlobHierarchySegmentResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *containerClientListBlobHierarchySegmentPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *containerClientListBlobHierarchySegmentPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *containerClientListBlobHierarchySegmentPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ListBlobsHierarchySegmentResponse.NextMarker == nil || len(*p.current.ListBlobsHierarchySegmentResponse.NextMarker) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *containerClientListBlobHierarchySegmentPager) NextPage(ctx context.Context) (containerClientListBlobHierarchySegmentResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return containerClientListBlobHierarchySegmentResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return containerClientListBlobHierarchySegmentResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.listBlobHierarchySegmentHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current containerClientListBlobHierarchySegmentResponse page.
-func (p *containerClientListBlobHierarchySegmentPager) PageResponse() containerClientListBlobHierarchySegmentResponse {
-	return p.current
+	return p.current, nil
 }
 
 // serviceClientListContainersSegmentPager provides operations for iterating over paged responses.
 type serviceClientListContainersSegmentPager struct {
 	client    *serviceClient
 	current   serviceClientListContainersSegmentResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, serviceClientListContainersSegmentResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *serviceClientListContainersSegmentPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *serviceClientListContainersSegmentPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *serviceClientListContainersSegmentPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ListContainersSegmentResponse.NextMarker == nil || len(*p.current.ListContainersSegmentResponse.NextMarker) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *serviceClientListContainersSegmentPager) NextPage(ctx context.Context) (serviceClientListContainersSegmentResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return serviceClientListContainersSegmentResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return serviceClientListContainersSegmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return serviceClientListContainersSegmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return serviceClientListContainersSegmentResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.listContainersSegmentHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return serviceClientListContainersSegmentResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current serviceClientListContainersSegmentResponse page.
-func (p *serviceClientListContainersSegmentPager) PageResponse() serviceClientListContainersSegmentResponse {
-	return p.current
+	return p.current, nil
 }

@@ -10,6 +10,7 @@ package azalias
 
 import (
 	"context"
+	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,52 +21,50 @@ import (
 type clientListPager struct {
 	client    *client
 	current   clientListResponse
-	err       error
 	requester func(context.Context) (*policy.Request, error)
 	advancer  func(context.Context, clientListResponse) (*policy.Request, error)
 }
 
-// Err returns the last error encountered while paging.
-func (p *clientListPager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *clientListPager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
+// More returns true if there are more pages to retrieve.
+func (p *clientListPager) More() bool {
 	if !reflect.ValueOf(p.current).IsZero() {
 		if p.current.ListResponse.NextLink == nil || len(*p.current.ListResponse.NextLink) == 0 {
 			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *clientListPager) NextPage(ctx context.Context) (clientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return clientListResponse{}, errors.New("no more pages")
 		}
 		req, err = p.advancer(ctx, p.current)
 	} else {
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-		p.err = err
-		return false
+
+		return clientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-		p.err = err
-		return false
+
+		return clientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = runtime.NewResponseError(resp)
-		return false
+
+		return clientListResponse{}, runtime.NewResponseError(resp)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-		p.err = err
-		return false
+
+		return clientListResponse{}, err
 	}
 	p.current = result
-	return true
-}
-
-// PageResponse returns the current clientListResponse page.
-func (p *clientListPager) PageResponse() clientListResponse {
-	return p.current
+	return p.current, nil
 }
