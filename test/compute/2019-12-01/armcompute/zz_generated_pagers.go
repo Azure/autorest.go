@@ -48,12 +48,10 @@ func (p *AvailabilitySetsClientListBySubscriptionPager) NextPage(ctx context.Con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailabilitySetsClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailabilitySetsClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *AvailabilitySetsClientListBySubscriptionPager) NextPage(ctx context.Con
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return AvailabilitySetsClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *AvailabilitySetsClientListPager) NextPage(ctx context.Context) (Availab
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailabilitySetsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailabilitySetsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *AvailabilitySetsClientListPager) NextPage(ctx context.Context) (Availab
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailabilitySetsClientListResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *ContainerServicesClientListByResourceGroupPager) NextPage(ctx context.C
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ContainerServicesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ContainerServicesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *ContainerServicesClientListByResourceGroupPager) NextPage(ctx context.C
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ContainerServicesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -204,12 +195,10 @@ func (p *ContainerServicesClientListPager) NextPage(ctx context.Context) (Contai
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ContainerServicesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ContainerServicesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -218,7 +207,6 @@ func (p *ContainerServicesClientListPager) NextPage(ctx context.Context) (Contai
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ContainerServicesClientListResponse{}, err
 	}
 	p.current = result
@@ -256,12 +244,10 @@ func (p *DedicatedHostGroupsClientListByResourceGroupPager) NextPage(ctx context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DedicatedHostGroupsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DedicatedHostGroupsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -270,7 +256,6 @@ func (p *DedicatedHostGroupsClientListByResourceGroupPager) NextPage(ctx context
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return DedicatedHostGroupsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -308,12 +293,10 @@ func (p *DedicatedHostGroupsClientListBySubscriptionPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DedicatedHostGroupsClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DedicatedHostGroupsClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -322,7 +305,6 @@ func (p *DedicatedHostGroupsClientListBySubscriptionPager) NextPage(ctx context.
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return DedicatedHostGroupsClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -360,12 +342,10 @@ func (p *DedicatedHostsClientListByHostGroupPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DedicatedHostsClientListByHostGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DedicatedHostsClientListByHostGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -374,7 +354,6 @@ func (p *DedicatedHostsClientListByHostGroupPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listByHostGroupHandleResponse(resp)
 	if err != nil {
-
 		return DedicatedHostsClientListByHostGroupResponse{}, err
 	}
 	p.current = result
@@ -412,12 +391,10 @@ func (p *DiskEncryptionSetsClientListByResourceGroupPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DiskEncryptionSetsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DiskEncryptionSetsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -426,7 +403,6 @@ func (p *DiskEncryptionSetsClientListByResourceGroupPager) NextPage(ctx context.
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return DiskEncryptionSetsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -464,12 +440,10 @@ func (p *DiskEncryptionSetsClientListPager) NextPage(ctx context.Context) (DiskE
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DiskEncryptionSetsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DiskEncryptionSetsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -478,7 +452,6 @@ func (p *DiskEncryptionSetsClientListPager) NextPage(ctx context.Context) (DiskE
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return DiskEncryptionSetsClientListResponse{}, err
 	}
 	p.current = result
@@ -516,12 +489,10 @@ func (p *DisksClientListByResourceGroupPager) NextPage(ctx context.Context) (Dis
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DisksClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DisksClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -530,7 +501,6 @@ func (p *DisksClientListByResourceGroupPager) NextPage(ctx context.Context) (Dis
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return DisksClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -568,12 +538,10 @@ func (p *DisksClientListPager) NextPage(ctx context.Context) (DisksClientListRes
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DisksClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DisksClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -582,7 +550,6 @@ func (p *DisksClientListPager) NextPage(ctx context.Context) (DisksClientListRes
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return DisksClientListResponse{}, err
 	}
 	p.current = result
@@ -620,12 +587,10 @@ func (p *GalleriesClientListByResourceGroupPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return GalleriesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return GalleriesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -634,7 +599,6 @@ func (p *GalleriesClientListByResourceGroupPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return GalleriesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -672,12 +636,10 @@ func (p *GalleriesClientListPager) NextPage(ctx context.Context) (GalleriesClien
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return GalleriesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return GalleriesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -686,7 +648,6 @@ func (p *GalleriesClientListPager) NextPage(ctx context.Context) (GalleriesClien
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return GalleriesClientListResponse{}, err
 	}
 	p.current = result
@@ -724,12 +685,10 @@ func (p *GalleryApplicationVersionsClientListByGalleryApplicationPager) NextPage
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -738,7 +697,6 @@ func (p *GalleryApplicationVersionsClientListByGalleryApplicationPager) NextPage
 	}
 	result, err := p.client.listByGalleryApplicationHandleResponse(resp)
 	if err != nil {
-
 		return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, err
 	}
 	p.current = result
@@ -776,12 +734,10 @@ func (p *GalleryApplicationsClientListByGalleryPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return GalleryApplicationsClientListByGalleryResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return GalleryApplicationsClientListByGalleryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -790,7 +746,6 @@ func (p *GalleryApplicationsClientListByGalleryPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listByGalleryHandleResponse(resp)
 	if err != nil {
-
 		return GalleryApplicationsClientListByGalleryResponse{}, err
 	}
 	p.current = result
@@ -828,12 +783,10 @@ func (p *GalleryImageVersionsClientListByGalleryImagePager) NextPage(ctx context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return GalleryImageVersionsClientListByGalleryImageResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return GalleryImageVersionsClientListByGalleryImageResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -842,7 +795,6 @@ func (p *GalleryImageVersionsClientListByGalleryImagePager) NextPage(ctx context
 	}
 	result, err := p.client.listByGalleryImageHandleResponse(resp)
 	if err != nil {
-
 		return GalleryImageVersionsClientListByGalleryImageResponse{}, err
 	}
 	p.current = result
@@ -880,12 +832,10 @@ func (p *GalleryImagesClientListByGalleryPager) NextPage(ctx context.Context) (G
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return GalleryImagesClientListByGalleryResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return GalleryImagesClientListByGalleryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -894,7 +844,6 @@ func (p *GalleryImagesClientListByGalleryPager) NextPage(ctx context.Context) (G
 	}
 	result, err := p.client.listByGalleryHandleResponse(resp)
 	if err != nil {
-
 		return GalleryImagesClientListByGalleryResponse{}, err
 	}
 	p.current = result
@@ -932,12 +881,10 @@ func (p *ImagesClientListByResourceGroupPager) NextPage(ctx context.Context) (Im
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ImagesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ImagesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -946,7 +893,6 @@ func (p *ImagesClientListByResourceGroupPager) NextPage(ctx context.Context) (Im
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ImagesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -984,12 +930,10 @@ func (p *ImagesClientListPager) NextPage(ctx context.Context) (ImagesClientListR
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ImagesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ImagesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -998,7 +942,6 @@ func (p *ImagesClientListPager) NextPage(ctx context.Context) (ImagesClientListR
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ImagesClientListResponse{}, err
 	}
 	p.current = result
@@ -1036,12 +979,10 @@ func (p *ProximityPlacementGroupsClientListByResourceGroupPager) NextPage(ctx co
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ProximityPlacementGroupsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ProximityPlacementGroupsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1050,7 +991,6 @@ func (p *ProximityPlacementGroupsClientListByResourceGroupPager) NextPage(ctx co
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ProximityPlacementGroupsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -1088,12 +1028,10 @@ func (p *ProximityPlacementGroupsClientListBySubscriptionPager) NextPage(ctx con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ProximityPlacementGroupsClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ProximityPlacementGroupsClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1102,7 +1040,6 @@ func (p *ProximityPlacementGroupsClientListBySubscriptionPager) NextPage(ctx con
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return ProximityPlacementGroupsClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -1140,12 +1077,10 @@ func (p *ResourceSKUsClientListPager) NextPage(ctx context.Context) (ResourceSKU
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ResourceSKUsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ResourceSKUsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1154,7 +1089,6 @@ func (p *ResourceSKUsClientListPager) NextPage(ctx context.Context) (ResourceSKU
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ResourceSKUsClientListResponse{}, err
 	}
 	p.current = result
@@ -1192,12 +1126,10 @@ func (p *SSHPublicKeysClientListByResourceGroupPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SSHPublicKeysClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SSHPublicKeysClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1206,7 +1138,6 @@ func (p *SSHPublicKeysClientListByResourceGroupPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return SSHPublicKeysClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -1244,12 +1175,10 @@ func (p *SSHPublicKeysClientListBySubscriptionPager) NextPage(ctx context.Contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SSHPublicKeysClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SSHPublicKeysClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1258,7 +1187,6 @@ func (p *SSHPublicKeysClientListBySubscriptionPager) NextPage(ctx context.Contex
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return SSHPublicKeysClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -1296,12 +1224,10 @@ func (p *SnapshotsClientListByResourceGroupPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SnapshotsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SnapshotsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1310,7 +1236,6 @@ func (p *SnapshotsClientListByResourceGroupPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return SnapshotsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -1348,12 +1273,10 @@ func (p *SnapshotsClientListPager) NextPage(ctx context.Context) (SnapshotsClien
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SnapshotsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SnapshotsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1362,7 +1285,6 @@ func (p *SnapshotsClientListPager) NextPage(ctx context.Context) (SnapshotsClien
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return SnapshotsClientListResponse{}, err
 	}
 	p.current = result
@@ -1400,12 +1322,10 @@ func (p *UsageClientListPager) NextPage(ctx context.Context) (UsageClientListRes
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return UsageClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return UsageClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1414,7 +1334,6 @@ func (p *UsageClientListPager) NextPage(ctx context.Context) (UsageClientListRes
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return UsageClientListResponse{}, err
 	}
 	p.current = result
@@ -1452,12 +1371,10 @@ func (p *VirtualMachineRunCommandsClientListPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineRunCommandsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineRunCommandsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1466,7 +1383,6 @@ func (p *VirtualMachineRunCommandsClientListPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineRunCommandsClientListResponse{}, err
 	}
 	p.current = result
@@ -1504,12 +1420,10 @@ func (p *VirtualMachineScaleSetExtensionsClientListPager) NextPage(ctx context.C
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineScaleSetExtensionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineScaleSetExtensionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1518,7 +1432,6 @@ func (p *VirtualMachineScaleSetExtensionsClientListPager) NextPage(ctx context.C
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineScaleSetExtensionsClientListResponse{}, err
 	}
 	p.current = result
@@ -1556,12 +1469,10 @@ func (p *VirtualMachineScaleSetVMsClientListPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineScaleSetVMsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineScaleSetVMsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1570,7 +1481,6 @@ func (p *VirtualMachineScaleSetVMsClientListPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineScaleSetVMsClientListResponse{}, err
 	}
 	p.current = result
@@ -1608,12 +1518,10 @@ func (p *VirtualMachineScaleSetsClientGetOSUpgradeHistoryPager) NextPage(ctx con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1622,7 +1530,6 @@ func (p *VirtualMachineScaleSetsClientGetOSUpgradeHistoryPager) NextPage(ctx con
 	}
 	result, err := p.client.getOSUpgradeHistoryHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse{}, err
 	}
 	p.current = result
@@ -1660,12 +1567,10 @@ func (p *VirtualMachineScaleSetsClientListAllPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1674,7 +1579,6 @@ func (p *VirtualMachineScaleSetsClientListAllPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -1712,12 +1616,10 @@ func (p *VirtualMachineScaleSetsClientListPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1726,7 +1628,6 @@ func (p *VirtualMachineScaleSetsClientListPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListResponse{}, err
 	}
 	p.current = result
@@ -1764,12 +1665,10 @@ func (p *VirtualMachineScaleSetsClientListSKUsPager) NextPage(ctx context.Contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListSKUsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListSKUsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1778,7 +1677,6 @@ func (p *VirtualMachineScaleSetsClientListSKUsPager) NextPage(ctx context.Contex
 	}
 	result, err := p.client.listSKUsHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachineScaleSetsClientListSKUsResponse{}, err
 	}
 	p.current = result
@@ -1816,12 +1714,10 @@ func (p *VirtualMachinesClientListAllPager) NextPage(ctx context.Context) (Virtu
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachinesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachinesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1830,7 +1726,6 @@ func (p *VirtualMachinesClientListAllPager) NextPage(ctx context.Context) (Virtu
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachinesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -1868,12 +1763,10 @@ func (p *VirtualMachinesClientListByLocationPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachinesClientListByLocationResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachinesClientListByLocationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1882,7 +1775,6 @@ func (p *VirtualMachinesClientListByLocationPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listByLocationHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachinesClientListByLocationResponse{}, err
 	}
 	p.current = result
@@ -1920,12 +1812,10 @@ func (p *VirtualMachinesClientListPager) NextPage(ctx context.Context) (VirtualM
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualMachinesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualMachinesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1934,7 +1824,6 @@ func (p *VirtualMachinesClientListPager) NextPage(ctx context.Context) (VirtualM
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualMachinesClientListResponse{}, err
 	}
 	p.current = result

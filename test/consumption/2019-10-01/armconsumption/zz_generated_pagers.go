@@ -48,12 +48,10 @@ func (p *BudgetsClientListPager) NextPage(ctx context.Context) (BudgetsClientLis
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return BudgetsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return BudgetsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *BudgetsClientListPager) NextPage(ctx context.Context) (BudgetsClientLis
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return BudgetsClientListResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *EventsClientListPager) NextPage(ctx context.Context) (EventsClientListR
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return EventsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return EventsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *EventsClientListPager) NextPage(ctx context.Context) (EventsClientListR
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return EventsClientListResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *LotsClientListPager) NextPage(ctx context.Context) (LotsClientListRespo
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LotsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LotsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *LotsClientListPager) NextPage(ctx context.Context) (LotsClientListRespo
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LotsClientListResponse{}, err
 	}
 	p.current = result
@@ -204,12 +195,10 @@ func (p *MarketplacesClientListPager) NextPage(ctx context.Context) (Marketplace
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return MarketplacesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return MarketplacesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -218,7 +207,6 @@ func (p *MarketplacesClientListPager) NextPage(ctx context.Context) (Marketplace
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return MarketplacesClientListResponse{}, err
 	}
 	p.current = result
@@ -256,12 +244,10 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsCli
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -270,7 +256,6 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsCli
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	p.current = result
@@ -308,12 +293,10 @@ func (p *ReservationRecommendationsClientListPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationRecommendationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationRecommendationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
@@ -322,7 +305,6 @@ func (p *ReservationRecommendationsClientListPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ReservationRecommendationsClientListResponse{}, err
 	}
 	p.current = result
@@ -360,12 +342,10 @@ func (p *ReservationTransactionsClientListByBillingProfilePager) NextPage(ctx co
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationTransactionsClientListByBillingProfileResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationTransactionsClientListByBillingProfileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -374,7 +354,6 @@ func (p *ReservationTransactionsClientListByBillingProfilePager) NextPage(ctx co
 	}
 	result, err := p.client.listByBillingProfileHandleResponse(resp)
 	if err != nil {
-
 		return ReservationTransactionsClientListByBillingProfileResponse{}, err
 	}
 	p.current = result
@@ -412,12 +391,10 @@ func (p *ReservationTransactionsClientListPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationTransactionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationTransactionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -426,7 +403,6 @@ func (p *ReservationTransactionsClientListPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ReservationTransactionsClientListResponse{}, err
 	}
 	p.current = result
@@ -464,12 +440,10 @@ func (p *ReservationsDetailsClientListByReservationOrderAndReservationPager) Nex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -478,7 +452,6 @@ func (p *ReservationsDetailsClientListByReservationOrderAndReservationPager) Nex
 	}
 	result, err := p.client.listByReservationOrderAndReservationHandleResponse(resp)
 	if err != nil {
-
 		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 	}
 	p.current = result
@@ -516,12 +489,10 @@ func (p *ReservationsDetailsClientListByReservationOrderPager) NextPage(ctx cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationsDetailsClientListByReservationOrderResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationsDetailsClientListByReservationOrderResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -530,7 +501,6 @@ func (p *ReservationsDetailsClientListByReservationOrderPager) NextPage(ctx cont
 	}
 	result, err := p.client.listByReservationOrderHandleResponse(resp)
 	if err != nil {
-
 		return ReservationsDetailsClientListByReservationOrderResponse{}, err
 	}
 	p.current = result
@@ -568,12 +538,10 @@ func (p *ReservationsDetailsClientListPager) NextPage(ctx context.Context) (Rese
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationsDetailsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationsDetailsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -582,7 +550,6 @@ func (p *ReservationsDetailsClientListPager) NextPage(ctx context.Context) (Rese
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ReservationsDetailsClientListResponse{}, err
 	}
 	p.current = result
@@ -620,12 +587,10 @@ func (p *ReservationsSummariesClientListByReservationOrderAndReservationPager) N
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -634,7 +599,6 @@ func (p *ReservationsSummariesClientListByReservationOrderAndReservationPager) N
 	}
 	result, err := p.client.listByReservationOrderAndReservationHandleResponse(resp)
 	if err != nil {
-
 		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, err
 	}
 	p.current = result
@@ -672,12 +636,10 @@ func (p *ReservationsSummariesClientListByReservationOrderPager) NextPage(ctx co
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationsSummariesClientListByReservationOrderResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationsSummariesClientListByReservationOrderResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -686,7 +648,6 @@ func (p *ReservationsSummariesClientListByReservationOrderPager) NextPage(ctx co
 	}
 	result, err := p.client.listByReservationOrderHandleResponse(resp)
 	if err != nil {
-
 		return ReservationsSummariesClientListByReservationOrderResponse{}, err
 	}
 	p.current = result
@@ -724,12 +685,10 @@ func (p *ReservationsSummariesClientListPager) NextPage(ctx context.Context) (Re
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ReservationsSummariesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ReservationsSummariesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -738,7 +697,6 @@ func (p *ReservationsSummariesClientListPager) NextPage(ctx context.Context) (Re
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ReservationsSummariesClientListResponse{}, err
 	}
 	p.current = result
@@ -776,12 +734,10 @@ func (p *UsageDetailsClientListPager) NextPage(ctx context.Context) (UsageDetail
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return UsageDetailsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return UsageDetailsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -790,7 +746,6 @@ func (p *UsageDetailsClientListPager) NextPage(ctx context.Context) (UsageDetail
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return UsageDetailsClientListResponse{}, err
 	}
 	p.current = result

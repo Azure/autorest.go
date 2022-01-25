@@ -48,12 +48,10 @@ func (p *clientListPager) NextPage(ctx context.Context) (clientListResponse, err
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return clientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return clientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *clientListPager) NextPage(ctx context.Context) (clientListResponse, err
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return clientListResponse{}, err
 	}
 	p.current = result

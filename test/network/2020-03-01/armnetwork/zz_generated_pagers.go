@@ -48,12 +48,10 @@ func (p *ApplicationGatewaysClientListAllPager) NextPage(ctx context.Context) (A
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ApplicationGatewaysClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ApplicationGatewaysClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *ApplicationGatewaysClientListAllPager) NextPage(ctx context.Context) (A
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return ApplicationGatewaysClientListAllResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesPager) NextP
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesPager) NextP
 	}
 	result, err := p.client.listAvailableSSLPredefinedPoliciesHandleResponse(resp)
 	if err != nil {
-
 		return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *ApplicationGatewaysClientListPager) NextPage(ctx context.Context) (Appl
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ApplicationGatewaysClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ApplicationGatewaysClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *ApplicationGatewaysClientListPager) NextPage(ctx context.Context) (Appl
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ApplicationGatewaysClientListResponse{}, err
 	}
 	p.current = result
@@ -204,12 +195,10 @@ func (p *ApplicationSecurityGroupsClientListAllPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ApplicationSecurityGroupsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ApplicationSecurityGroupsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -218,7 +207,6 @@ func (p *ApplicationSecurityGroupsClientListAllPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return ApplicationSecurityGroupsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -256,12 +244,10 @@ func (p *ApplicationSecurityGroupsClientListPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ApplicationSecurityGroupsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ApplicationSecurityGroupsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -270,7 +256,6 @@ func (p *ApplicationSecurityGroupsClientListPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ApplicationSecurityGroupsClientListResponse{}, err
 	}
 	p.current = result
@@ -308,12 +293,10 @@ func (p *AvailableDelegationsClientListPager) NextPage(ctx context.Context) (Ava
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailableDelegationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailableDelegationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -322,7 +305,6 @@ func (p *AvailableDelegationsClientListPager) NextPage(ctx context.Context) (Ava
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailableDelegationsClientListResponse{}, err
 	}
 	p.current = result
@@ -360,12 +342,10 @@ func (p *AvailableEndpointServicesClientListPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailableEndpointServicesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailableEndpointServicesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -374,7 +354,6 @@ func (p *AvailableEndpointServicesClientListPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailableEndpointServicesClientListResponse{}, err
 	}
 	p.current = result
@@ -412,12 +391,10 @@ func (p *AvailablePrivateEndpointTypesClientListByResourceGroupPager) NextPage(c
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -426,7 +403,6 @@ func (p *AvailablePrivateEndpointTypesClientListByResourceGroupPager) NextPage(c
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -464,12 +440,10 @@ func (p *AvailablePrivateEndpointTypesClientListPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailablePrivateEndpointTypesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailablePrivateEndpointTypesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -478,7 +452,6 @@ func (p *AvailablePrivateEndpointTypesClientListPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailablePrivateEndpointTypesClientListResponse{}, err
 	}
 	p.current = result
@@ -516,12 +489,10 @@ func (p *AvailableResourceGroupDelegationsClientListPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailableResourceGroupDelegationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailableResourceGroupDelegationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -530,7 +501,6 @@ func (p *AvailableResourceGroupDelegationsClientListPager) NextPage(ctx context.
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailableResourceGroupDelegationsClientListResponse{}, err
 	}
 	p.current = result
@@ -568,12 +538,10 @@ func (p *AvailableServiceAliasesClientListByResourceGroupPager) NextPage(ctx con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailableServiceAliasesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailableServiceAliasesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -582,7 +550,6 @@ func (p *AvailableServiceAliasesClientListByResourceGroupPager) NextPage(ctx con
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return AvailableServiceAliasesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -620,12 +587,10 @@ func (p *AvailableServiceAliasesClientListPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailableServiceAliasesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailableServiceAliasesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -634,7 +599,6 @@ func (p *AvailableServiceAliasesClientListPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailableServiceAliasesClientListResponse{}, err
 	}
 	p.current = result
@@ -672,12 +636,10 @@ func (p *AzureFirewallFqdnTagsClientListAllPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AzureFirewallFqdnTagsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AzureFirewallFqdnTagsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -686,7 +648,6 @@ func (p *AzureFirewallFqdnTagsClientListAllPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return AzureFirewallFqdnTagsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -724,12 +685,10 @@ func (p *AzureFirewallsClientListAllPager) NextPage(ctx context.Context) (AzureF
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AzureFirewallsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AzureFirewallsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -738,7 +697,6 @@ func (p *AzureFirewallsClientListAllPager) NextPage(ctx context.Context) (AzureF
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return AzureFirewallsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -776,12 +734,10 @@ func (p *AzureFirewallsClientListPager) NextPage(ctx context.Context) (AzureFire
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AzureFirewallsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AzureFirewallsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -790,7 +746,6 @@ func (p *AzureFirewallsClientListPager) NextPage(ctx context.Context) (AzureFire
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AzureFirewallsClientListResponse{}, err
 	}
 	p.current = result
@@ -828,12 +783,10 @@ func (p *BastionHostsClientListByResourceGroupPager) NextPage(ctx context.Contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return BastionHostsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return BastionHostsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -842,7 +795,6 @@ func (p *BastionHostsClientListByResourceGroupPager) NextPage(ctx context.Contex
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return BastionHostsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -880,12 +832,10 @@ func (p *BastionHostsClientListPager) NextPage(ctx context.Context) (BastionHost
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return BastionHostsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return BastionHostsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -894,7 +844,6 @@ func (p *BastionHostsClientListPager) NextPage(ctx context.Context) (BastionHost
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return BastionHostsClientListResponse{}, err
 	}
 	p.current = result
@@ -932,12 +881,10 @@ func (p *BgpServiceCommunitiesClientListPager) NextPage(ctx context.Context) (Bg
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return BgpServiceCommunitiesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return BgpServiceCommunitiesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -946,7 +893,6 @@ func (p *BgpServiceCommunitiesClientListPager) NextPage(ctx context.Context) (Bg
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return BgpServiceCommunitiesClientListResponse{}, err
 	}
 	p.current = result
@@ -984,12 +930,10 @@ func (p *DdosProtectionPlansClientListByResourceGroupPager) NextPage(ctx context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DdosProtectionPlansClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DdosProtectionPlansClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -998,7 +942,6 @@ func (p *DdosProtectionPlansClientListByResourceGroupPager) NextPage(ctx context
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return DdosProtectionPlansClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -1036,12 +979,10 @@ func (p *DdosProtectionPlansClientListPager) NextPage(ctx context.Context) (Ddos
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DdosProtectionPlansClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DdosProtectionPlansClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1050,7 +991,6 @@ func (p *DdosProtectionPlansClientListPager) NextPage(ctx context.Context) (Ddos
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return DdosProtectionPlansClientListResponse{}, err
 	}
 	p.current = result
@@ -1088,12 +1028,10 @@ func (p *DefaultSecurityRulesClientListPager) NextPage(ctx context.Context) (Def
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DefaultSecurityRulesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DefaultSecurityRulesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1102,7 +1040,6 @@ func (p *DefaultSecurityRulesClientListPager) NextPage(ctx context.Context) (Def
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return DefaultSecurityRulesClientListResponse{}, err
 	}
 	p.current = result
@@ -1140,12 +1077,10 @@ func (p *ExpressRouteCircuitAuthorizationsClientListPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCircuitAuthorizationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCircuitAuthorizationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1154,7 +1089,6 @@ func (p *ExpressRouteCircuitAuthorizationsClientListPager) NextPage(ctx context.
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCircuitAuthorizationsClientListResponse{}, err
 	}
 	p.current = result
@@ -1192,12 +1126,10 @@ func (p *ExpressRouteCircuitConnectionsClientListPager) NextPage(ctx context.Con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1206,7 +1138,6 @@ func (p *ExpressRouteCircuitConnectionsClientListPager) NextPage(ctx context.Con
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	p.current = result
@@ -1244,12 +1175,10 @@ func (p *ExpressRouteCircuitPeeringsClientListPager) NextPage(ctx context.Contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCircuitPeeringsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCircuitPeeringsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1258,7 +1187,6 @@ func (p *ExpressRouteCircuitPeeringsClientListPager) NextPage(ctx context.Contex
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCircuitPeeringsClientListResponse{}, err
 	}
 	p.current = result
@@ -1296,12 +1224,10 @@ func (p *ExpressRouteCircuitsClientListAllPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCircuitsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCircuitsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1310,7 +1236,6 @@ func (p *ExpressRouteCircuitsClientListAllPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCircuitsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -1348,12 +1273,10 @@ func (p *ExpressRouteCircuitsClientListPager) NextPage(ctx context.Context) (Exp
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCircuitsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCircuitsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1362,7 +1285,6 @@ func (p *ExpressRouteCircuitsClientListPager) NextPage(ctx context.Context) (Exp
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCircuitsClientListResponse{}, err
 	}
 	p.current = result
@@ -1400,12 +1322,10 @@ func (p *ExpressRouteCrossConnectionPeeringsClientListPager) NextPage(ctx contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1414,7 +1334,6 @@ func (p *ExpressRouteCrossConnectionPeeringsClientListPager) NextPage(ctx contex
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
 	}
 	p.current = result
@@ -1452,12 +1371,10 @@ func (p *ExpressRouteCrossConnectionsClientListByResourceGroupPager) NextPage(ct
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1466,7 +1383,6 @@ func (p *ExpressRouteCrossConnectionsClientListByResourceGroupPager) NextPage(ct
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -1504,12 +1420,10 @@ func (p *ExpressRouteCrossConnectionsClientListPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteCrossConnectionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteCrossConnectionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1518,7 +1432,6 @@ func (p *ExpressRouteCrossConnectionsClientListPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteCrossConnectionsClientListResponse{}, err
 	}
 	p.current = result
@@ -1556,12 +1469,10 @@ func (p *ExpressRouteLinksClientListPager) NextPage(ctx context.Context) (Expres
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteLinksClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteLinksClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1570,7 +1481,6 @@ func (p *ExpressRouteLinksClientListPager) NextPage(ctx context.Context) (Expres
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteLinksClientListResponse{}, err
 	}
 	p.current = result
@@ -1608,12 +1518,10 @@ func (p *ExpressRoutePortsClientListByResourceGroupPager) NextPage(ctx context.C
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRoutePortsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRoutePortsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1622,7 +1530,6 @@ func (p *ExpressRoutePortsClientListByResourceGroupPager) NextPage(ctx context.C
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRoutePortsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -1660,12 +1567,10 @@ func (p *ExpressRoutePortsClientListPager) NextPage(ctx context.Context) (Expres
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRoutePortsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRoutePortsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1674,7 +1579,6 @@ func (p *ExpressRoutePortsClientListPager) NextPage(ctx context.Context) (Expres
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRoutePortsClientListResponse{}, err
 	}
 	p.current = result
@@ -1712,12 +1616,10 @@ func (p *ExpressRoutePortsLocationsClientListPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRoutePortsLocationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRoutePortsLocationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1726,7 +1628,6 @@ func (p *ExpressRoutePortsLocationsClientListPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRoutePortsLocationsClientListResponse{}, err
 	}
 	p.current = result
@@ -1764,12 +1665,10 @@ func (p *ExpressRouteServiceProvidersClientListPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ExpressRouteServiceProvidersClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ExpressRouteServiceProvidersClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1778,7 +1677,6 @@ func (p *ExpressRouteServiceProvidersClientListPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ExpressRouteServiceProvidersClientListResponse{}, err
 	}
 	p.current = result
@@ -1816,12 +1714,10 @@ func (p *FirewallPoliciesClientListAllPager) NextPage(ctx context.Context) (Fire
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return FirewallPoliciesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return FirewallPoliciesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1830,7 +1726,6 @@ func (p *FirewallPoliciesClientListAllPager) NextPage(ctx context.Context) (Fire
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return FirewallPoliciesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -1868,12 +1763,10 @@ func (p *FirewallPoliciesClientListPager) NextPage(ctx context.Context) (Firewal
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return FirewallPoliciesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return FirewallPoliciesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1882,7 +1775,6 @@ func (p *FirewallPoliciesClientListPager) NextPage(ctx context.Context) (Firewal
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return FirewallPoliciesClientListResponse{}, err
 	}
 	p.current = result
@@ -1920,12 +1812,10 @@ func (p *FirewallPolicyRuleGroupsClientListPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return FirewallPolicyRuleGroupsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return FirewallPolicyRuleGroupsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1934,7 +1824,6 @@ func (p *FirewallPolicyRuleGroupsClientListPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return FirewallPolicyRuleGroupsClientListResponse{}, err
 	}
 	p.current = result
@@ -1972,12 +1861,10 @@ func (p *FlowLogsClientListPager) NextPage(ctx context.Context) (FlowLogsClientL
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return FlowLogsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return FlowLogsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -1986,7 +1873,6 @@ func (p *FlowLogsClientListPager) NextPage(ctx context.Context) (FlowLogsClientL
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return FlowLogsClientListResponse{}, err
 	}
 	p.current = result
@@ -2024,12 +1910,10 @@ func (p *HubVirtualNetworkConnectionsClientListPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return HubVirtualNetworkConnectionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return HubVirtualNetworkConnectionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2038,7 +1922,6 @@ func (p *HubVirtualNetworkConnectionsClientListPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return HubVirtualNetworkConnectionsClientListResponse{}, err
 	}
 	p.current = result
@@ -2076,12 +1959,10 @@ func (p *IPAllocationsClientListByResourceGroupPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return IPAllocationsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return IPAllocationsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2090,7 +1971,6 @@ func (p *IPAllocationsClientListByResourceGroupPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return IPAllocationsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -2128,12 +2008,10 @@ func (p *IPAllocationsClientListPager) NextPage(ctx context.Context) (IPAllocati
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return IPAllocationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return IPAllocationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2142,7 +2020,6 @@ func (p *IPAllocationsClientListPager) NextPage(ctx context.Context) (IPAllocati
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return IPAllocationsClientListResponse{}, err
 	}
 	p.current = result
@@ -2180,12 +2057,10 @@ func (p *IPGroupsClientListByResourceGroupPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return IPGroupsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return IPGroupsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2194,7 +2069,6 @@ func (p *IPGroupsClientListByResourceGroupPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return IPGroupsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -2232,12 +2106,10 @@ func (p *IPGroupsClientListPager) NextPage(ctx context.Context) (IPGroupsClientL
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return IPGroupsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return IPGroupsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2246,7 +2118,6 @@ func (p *IPGroupsClientListPager) NextPage(ctx context.Context) (IPGroupsClientL
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return IPGroupsClientListResponse{}, err
 	}
 	p.current = result
@@ -2284,12 +2155,10 @@ func (p *InboundNatRulesClientListPager) NextPage(ctx context.Context) (InboundN
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InboundNatRulesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InboundNatRulesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2298,7 +2167,6 @@ func (p *InboundNatRulesClientListPager) NextPage(ctx context.Context) (InboundN
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return InboundNatRulesClientListResponse{}, err
 	}
 	p.current = result
@@ -2336,12 +2204,10 @@ func (p *InterfaceIPConfigurationsClientListPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfaceIPConfigurationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfaceIPConfigurationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2350,7 +2216,6 @@ func (p *InterfaceIPConfigurationsClientListPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return InterfaceIPConfigurationsClientListResponse{}, err
 	}
 	p.current = result
@@ -2388,12 +2253,10 @@ func (p *InterfaceLoadBalancersClientListPager) NextPage(ctx context.Context) (I
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfaceLoadBalancersClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfaceLoadBalancersClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2402,7 +2265,6 @@ func (p *InterfaceLoadBalancersClientListPager) NextPage(ctx context.Context) (I
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return InterfaceLoadBalancersClientListResponse{}, err
 	}
 	p.current = result
@@ -2440,12 +2302,10 @@ func (p *InterfaceTapConfigurationsClientListPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfaceTapConfigurationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfaceTapConfigurationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2454,7 +2314,6 @@ func (p *InterfaceTapConfigurationsClientListPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return InterfaceTapConfigurationsClientListResponse{}, err
 	}
 	p.current = result
@@ -2492,12 +2351,10 @@ func (p *InterfacesClientListAllPager) NextPage(ctx context.Context) (Interfaces
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfacesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfacesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2506,7 +2363,6 @@ func (p *InterfacesClientListAllPager) NextPage(ctx context.Context) (Interfaces
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return InterfacesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -2544,12 +2400,10 @@ func (p *InterfacesClientListPager) NextPage(ctx context.Context) (InterfacesCli
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfacesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfacesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2558,7 +2412,6 @@ func (p *InterfacesClientListPager) NextPage(ctx context.Context) (InterfacesCli
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return InterfacesClientListResponse{}, err
 	}
 	p.current = result
@@ -2596,12 +2449,10 @@ func (p *InterfacesClientListVirtualMachineScaleSetIPConfigurationsPager) NextPa
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2610,7 +2461,6 @@ func (p *InterfacesClientListVirtualMachineScaleSetIPConfigurationsPager) NextPa
 	}
 	result, err := p.client.listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp)
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, err
 	}
 	p.current = result
@@ -2648,12 +2498,10 @@ func (p *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesPager) NextP
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2662,7 +2510,6 @@ func (p *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesPager) NextP
 	}
 	result, err := p.client.listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp)
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
 	}
 	p.current = result
@@ -2700,12 +2547,10 @@ func (p *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesPager) Nex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2714,7 +2559,6 @@ func (p *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesPager) Nex
 	}
 	result, err := p.client.listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp)
 	if err != nil {
-
 		return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
 	}
 	p.current = result
@@ -2752,12 +2596,10 @@ func (p *LoadBalancerBackendAddressPoolsClientListPager) NextPage(ctx context.Co
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancerBackendAddressPoolsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancerBackendAddressPoolsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2766,7 +2608,6 @@ func (p *LoadBalancerBackendAddressPoolsClientListPager) NextPage(ctx context.Co
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancerBackendAddressPoolsClientListResponse{}, err
 	}
 	p.current = result
@@ -2804,12 +2645,10 @@ func (p *LoadBalancerFrontendIPConfigurationsClientListPager) NextPage(ctx conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancerFrontendIPConfigurationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancerFrontendIPConfigurationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2818,7 +2657,6 @@ func (p *LoadBalancerFrontendIPConfigurationsClientListPager) NextPage(ctx conte
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancerFrontendIPConfigurationsClientListResponse{}, err
 	}
 	p.current = result
@@ -2856,12 +2694,10 @@ func (p *LoadBalancerLoadBalancingRulesClientListPager) NextPage(ctx context.Con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancerLoadBalancingRulesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancerLoadBalancingRulesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2870,7 +2706,6 @@ func (p *LoadBalancerLoadBalancingRulesClientListPager) NextPage(ctx context.Con
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancerLoadBalancingRulesClientListResponse{}, err
 	}
 	p.current = result
@@ -2908,12 +2743,10 @@ func (p *LoadBalancerNetworkInterfacesClientListPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancerNetworkInterfacesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancerNetworkInterfacesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2922,7 +2755,6 @@ func (p *LoadBalancerNetworkInterfacesClientListPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancerNetworkInterfacesClientListResponse{}, err
 	}
 	p.current = result
@@ -2960,12 +2792,10 @@ func (p *LoadBalancerOutboundRulesClientListPager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancerOutboundRulesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancerOutboundRulesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -2974,7 +2804,6 @@ func (p *LoadBalancerOutboundRulesClientListPager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancerOutboundRulesClientListResponse{}, err
 	}
 	p.current = result
@@ -3012,12 +2841,10 @@ func (p *LoadBalancerProbesClientListPager) NextPage(ctx context.Context) (LoadB
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancerProbesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancerProbesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3026,7 +2853,6 @@ func (p *LoadBalancerProbesClientListPager) NextPage(ctx context.Context) (LoadB
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancerProbesClientListResponse{}, err
 	}
 	p.current = result
@@ -3064,12 +2890,10 @@ func (p *LoadBalancersClientListAllPager) NextPage(ctx context.Context) (LoadBal
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancersClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancersClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3078,7 +2902,6 @@ func (p *LoadBalancersClientListAllPager) NextPage(ctx context.Context) (LoadBal
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancersClientListAllResponse{}, err
 	}
 	p.current = result
@@ -3116,12 +2939,10 @@ func (p *LoadBalancersClientListPager) NextPage(ctx context.Context) (LoadBalanc
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LoadBalancersClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LoadBalancersClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3130,7 +2951,6 @@ func (p *LoadBalancersClientListPager) NextPage(ctx context.Context) (LoadBalanc
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LoadBalancersClientListResponse{}, err
 	}
 	p.current = result
@@ -3168,12 +2988,10 @@ func (p *LocalNetworkGatewaysClientListPager) NextPage(ctx context.Context) (Loc
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return LocalNetworkGatewaysClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return LocalNetworkGatewaysClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3182,7 +3000,6 @@ func (p *LocalNetworkGatewaysClientListPager) NextPage(ctx context.Context) (Loc
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return LocalNetworkGatewaysClientListResponse{}, err
 	}
 	p.current = result
@@ -3220,12 +3037,10 @@ func (p *ManagementClientDisconnectActiveSessionsPager) NextPage(ctx context.Con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ManagementClientDisconnectActiveSessionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ManagementClientDisconnectActiveSessionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3234,7 +3049,6 @@ func (p *ManagementClientDisconnectActiveSessionsPager) NextPage(ctx context.Con
 	}
 	result, err := p.client.disconnectActiveSessionsHandleResponse(resp)
 	if err != nil {
-
 		return ManagementClientDisconnectActiveSessionsResponse{}, err
 	}
 	p.current = result
@@ -3270,12 +3084,10 @@ func (p *ManagementClientGetActiveSessionsPager) NextPage(ctx context.Context) (
 	}
 	req, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.BastionActiveSessionListResult.NextLink)
 	if err != nil {
-
 		return ManagementClientGetActiveSessionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ManagementClientGetActiveSessionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
@@ -3284,7 +3096,6 @@ func (p *ManagementClientGetActiveSessionsPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.getActiveSessionsHandleResponse(resp)
 	if err != nil {
-
 		return ManagementClientGetActiveSessionsResponse{}, err
 	}
 	p.current = result
@@ -3322,12 +3133,10 @@ func (p *ManagementClientGetBastionShareableLinkPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ManagementClientGetBastionShareableLinkResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ManagementClientGetBastionShareableLinkResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3336,7 +3145,6 @@ func (p *ManagementClientGetBastionShareableLinkPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.getBastionShareableLinkHandleResponse(resp)
 	if err != nil {
-
 		return ManagementClientGetBastionShareableLinkResponse{}, err
 	}
 	p.current = result
@@ -3372,12 +3180,10 @@ func (p *ManagementClientPutBastionShareableLinkPager) NextPage(ctx context.Cont
 	}
 	req, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.BastionShareableLinkListResult.NextLink)
 	if err != nil {
-
 		return ManagementClientPutBastionShareableLinkResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ManagementClientPutBastionShareableLinkResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
@@ -3386,7 +3192,6 @@ func (p *ManagementClientPutBastionShareableLinkPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.putBastionShareableLinkHandleResponse(resp)
 	if err != nil {
-
 		return ManagementClientPutBastionShareableLinkResponse{}, err
 	}
 	p.current = result
@@ -3424,12 +3229,10 @@ func (p *NatGatewaysClientListAllPager) NextPage(ctx context.Context) (NatGatewa
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return NatGatewaysClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return NatGatewaysClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3438,7 +3241,6 @@ func (p *NatGatewaysClientListAllPager) NextPage(ctx context.Context) (NatGatewa
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return NatGatewaysClientListAllResponse{}, err
 	}
 	p.current = result
@@ -3476,12 +3278,10 @@ func (p *NatGatewaysClientListPager) NextPage(ctx context.Context) (NatGatewaysC
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return NatGatewaysClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return NatGatewaysClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3490,7 +3290,6 @@ func (p *NatGatewaysClientListPager) NextPage(ctx context.Context) (NatGatewaysC
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return NatGatewaysClientListResponse{}, err
 	}
 	p.current = result
@@ -3528,12 +3327,10 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsCli
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3542,7 +3339,6 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsCli
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	p.current = result
@@ -3580,12 +3376,10 @@ func (p *P2SVPNGatewaysClientListByResourceGroupPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3594,7 +3388,6 @@ func (p *P2SVPNGatewaysClientListByResourceGroupPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -3632,12 +3425,10 @@ func (p *P2SVPNGatewaysClientListPager) NextPage(ctx context.Context) (P2SVPNGat
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return P2SVPNGatewaysClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return P2SVPNGatewaysClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3646,7 +3437,6 @@ func (p *P2SVPNGatewaysClientListPager) NextPage(ctx context.Context) (P2SVPNGat
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return P2SVPNGatewaysClientListResponse{}, err
 	}
 	p.current = result
@@ -3684,12 +3474,10 @@ func (p *PeerExpressRouteCircuitConnectionsClientListPager) NextPage(ctx context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PeerExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PeerExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3698,7 +3486,6 @@ func (p *PeerExpressRouteCircuitConnectionsClientListPager) NextPage(ctx context
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return PeerExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	p.current = result
@@ -3736,12 +3523,10 @@ func (p *PrivateDNSZoneGroupsClientListPager) NextPage(ctx context.Context) (Pri
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateDNSZoneGroupsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateDNSZoneGroupsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3750,7 +3535,6 @@ func (p *PrivateDNSZoneGroupsClientListPager) NextPage(ctx context.Context) (Pri
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return PrivateDNSZoneGroupsClientListResponse{}, err
 	}
 	p.current = result
@@ -3788,12 +3572,10 @@ func (p *PrivateEndpointsClientListBySubscriptionPager) NextPage(ctx context.Con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateEndpointsClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateEndpointsClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3802,7 +3584,6 @@ func (p *PrivateEndpointsClientListBySubscriptionPager) NextPage(ctx context.Con
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return PrivateEndpointsClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -3840,12 +3621,10 @@ func (p *PrivateEndpointsClientListPager) NextPage(ctx context.Context) (Private
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateEndpointsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateEndpointsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3854,7 +3633,6 @@ func (p *PrivateEndpointsClientListPager) NextPage(ctx context.Context) (Private
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return PrivateEndpointsClientListResponse{}, err
 	}
 	p.current = result
@@ -3892,12 +3670,10 @@ func (p *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceG
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3906,7 +3682,6 @@ func (p *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceG
 	}
 	result, err := p.client.listAutoApprovedPrivateLinkServicesByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -3944,12 +3719,10 @@ func (p *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesPager) Next
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -3958,7 +3731,6 @@ func (p *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesPager) Next
 	}
 	result, err := p.client.listAutoApprovedPrivateLinkServicesHandleResponse(resp)
 	if err != nil {
-
 		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse{}, err
 	}
 	p.current = result
@@ -3996,12 +3768,10 @@ func (p *PrivateLinkServicesClientListBySubscriptionPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateLinkServicesClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateLinkServicesClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4010,7 +3780,6 @@ func (p *PrivateLinkServicesClientListBySubscriptionPager) NextPage(ctx context.
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return PrivateLinkServicesClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -4048,12 +3817,10 @@ func (p *PrivateLinkServicesClientListPager) NextPage(ctx context.Context) (Priv
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateLinkServicesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateLinkServicesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4062,7 +3829,6 @@ func (p *PrivateLinkServicesClientListPager) NextPage(ctx context.Context) (Priv
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return PrivateLinkServicesClientListResponse{}, err
 	}
 	p.current = result
@@ -4100,12 +3866,10 @@ func (p *PrivateLinkServicesClientListPrivateEndpointConnectionsPager) NextPage(
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PrivateLinkServicesClientListPrivateEndpointConnectionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PrivateLinkServicesClientListPrivateEndpointConnectionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4114,7 +3878,6 @@ func (p *PrivateLinkServicesClientListPrivateEndpointConnectionsPager) NextPage(
 	}
 	result, err := p.client.listPrivateEndpointConnectionsHandleResponse(resp)
 	if err != nil {
-
 		return PrivateLinkServicesClientListPrivateEndpointConnectionsResponse{}, err
 	}
 	p.current = result
@@ -4152,12 +3915,10 @@ func (p *ProfilesClientListAllPager) NextPage(ctx context.Context) (ProfilesClie
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ProfilesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ProfilesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4166,7 +3927,6 @@ func (p *ProfilesClientListAllPager) NextPage(ctx context.Context) (ProfilesClie
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return ProfilesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -4204,12 +3964,10 @@ func (p *ProfilesClientListPager) NextPage(ctx context.Context) (ProfilesClientL
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ProfilesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ProfilesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4218,7 +3976,6 @@ func (p *ProfilesClientListPager) NextPage(ctx context.Context) (ProfilesClientL
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ProfilesClientListResponse{}, err
 	}
 	p.current = result
@@ -4256,12 +4013,10 @@ func (p *PublicIPAddressesClientListAllPager) NextPage(ctx context.Context) (Pub
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PublicIPAddressesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PublicIPAddressesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4270,7 +4025,6 @@ func (p *PublicIPAddressesClientListAllPager) NextPage(ctx context.Context) (Pub
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return PublicIPAddressesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -4308,12 +4062,10 @@ func (p *PublicIPAddressesClientListPager) NextPage(ctx context.Context) (Public
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PublicIPAddressesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PublicIPAddressesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4322,7 +4074,6 @@ func (p *PublicIPAddressesClientListPager) NextPage(ctx context.Context) (Public
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return PublicIPAddressesClientListResponse{}, err
 	}
 	p.current = result
@@ -4360,12 +4111,10 @@ func (p *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesPager
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4374,7 +4123,6 @@ func (p *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesPager
 	}
 	result, err := p.client.listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp)
 	if err != nil {
-
 		return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
 	}
 	p.current = result
@@ -4412,12 +4160,10 @@ func (p *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesPag
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4426,7 +4172,6 @@ func (p *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesPag
 	}
 	result, err := p.client.listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp)
 	if err != nil {
-
 		return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
 	}
 	p.current = result
@@ -4464,12 +4209,10 @@ func (p *PublicIPPrefixesClientListAllPager) NextPage(ctx context.Context) (Publ
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PublicIPPrefixesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PublicIPPrefixesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4478,7 +4221,6 @@ func (p *PublicIPPrefixesClientListAllPager) NextPage(ctx context.Context) (Publ
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return PublicIPPrefixesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -4516,12 +4258,10 @@ func (p *PublicIPPrefixesClientListPager) NextPage(ctx context.Context) (PublicI
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PublicIPPrefixesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PublicIPPrefixesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4530,7 +4270,6 @@ func (p *PublicIPPrefixesClientListPager) NextPage(ctx context.Context) (PublicI
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return PublicIPPrefixesClientListResponse{}, err
 	}
 	p.current = result
@@ -4568,12 +4307,10 @@ func (p *RouteFilterRulesClientListByRouteFilterPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RouteFilterRulesClientListByRouteFilterResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RouteFilterRulesClientListByRouteFilterResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4582,7 +4319,6 @@ func (p *RouteFilterRulesClientListByRouteFilterPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.listByRouteFilterHandleResponse(resp)
 	if err != nil {
-
 		return RouteFilterRulesClientListByRouteFilterResponse{}, err
 	}
 	p.current = result
@@ -4620,12 +4356,10 @@ func (p *RouteFiltersClientListByResourceGroupPager) NextPage(ctx context.Contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RouteFiltersClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RouteFiltersClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4634,7 +4368,6 @@ func (p *RouteFiltersClientListByResourceGroupPager) NextPage(ctx context.Contex
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return RouteFiltersClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -4672,12 +4405,10 @@ func (p *RouteFiltersClientListPager) NextPage(ctx context.Context) (RouteFilter
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RouteFiltersClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RouteFiltersClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4686,7 +4417,6 @@ func (p *RouteFiltersClientListPager) NextPage(ctx context.Context) (RouteFilter
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return RouteFiltersClientListResponse{}, err
 	}
 	p.current = result
@@ -4724,12 +4454,10 @@ func (p *RouteTablesClientListAllPager) NextPage(ctx context.Context) (RouteTabl
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RouteTablesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RouteTablesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4738,7 +4466,6 @@ func (p *RouteTablesClientListAllPager) NextPage(ctx context.Context) (RouteTabl
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return RouteTablesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -4776,12 +4503,10 @@ func (p *RouteTablesClientListPager) NextPage(ctx context.Context) (RouteTablesC
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RouteTablesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RouteTablesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4790,7 +4515,6 @@ func (p *RouteTablesClientListPager) NextPage(ctx context.Context) (RouteTablesC
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return RouteTablesClientListResponse{}, err
 	}
 	p.current = result
@@ -4828,12 +4552,10 @@ func (p *RoutesClientListPager) NextPage(ctx context.Context) (RoutesClientListR
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RoutesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RoutesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4842,7 +4564,6 @@ func (p *RoutesClientListPager) NextPage(ctx context.Context) (RoutesClientListR
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return RoutesClientListResponse{}, err
 	}
 	p.current = result
@@ -4880,12 +4601,10 @@ func (p *SecurityGroupsClientListAllPager) NextPage(ctx context.Context) (Securi
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SecurityGroupsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SecurityGroupsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4894,7 +4613,6 @@ func (p *SecurityGroupsClientListAllPager) NextPage(ctx context.Context) (Securi
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return SecurityGroupsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -4932,12 +4650,10 @@ func (p *SecurityGroupsClientListPager) NextPage(ctx context.Context) (SecurityG
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SecurityGroupsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SecurityGroupsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4946,7 +4662,6 @@ func (p *SecurityGroupsClientListPager) NextPage(ctx context.Context) (SecurityG
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return SecurityGroupsClientListResponse{}, err
 	}
 	p.current = result
@@ -4984,12 +4699,10 @@ func (p *SecurityPartnerProvidersClientListByResourceGroupPager) NextPage(ctx co
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -4998,7 +4711,6 @@ func (p *SecurityPartnerProvidersClientListByResourceGroupPager) NextPage(ctx co
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5036,12 +4748,10 @@ func (p *SecurityPartnerProvidersClientListPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SecurityPartnerProvidersClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SecurityPartnerProvidersClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5050,7 +4760,6 @@ func (p *SecurityPartnerProvidersClientListPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return SecurityPartnerProvidersClientListResponse{}, err
 	}
 	p.current = result
@@ -5088,12 +4797,10 @@ func (p *SecurityRulesClientListPager) NextPage(ctx context.Context) (SecurityRu
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SecurityRulesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SecurityRulesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5102,7 +4809,6 @@ func (p *SecurityRulesClientListPager) NextPage(ctx context.Context) (SecurityRu
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return SecurityRulesClientListResponse{}, err
 	}
 	p.current = result
@@ -5140,12 +4846,10 @@ func (p *ServiceEndpointPoliciesClientListByResourceGroupPager) NextPage(ctx con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ServiceEndpointPoliciesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ServiceEndpointPoliciesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5154,7 +4858,6 @@ func (p *ServiceEndpointPoliciesClientListByResourceGroupPager) NextPage(ctx con
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ServiceEndpointPoliciesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5192,12 +4895,10 @@ func (p *ServiceEndpointPoliciesClientListPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ServiceEndpointPoliciesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ServiceEndpointPoliciesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5206,7 +4907,6 @@ func (p *ServiceEndpointPoliciesClientListPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return ServiceEndpointPoliciesClientListResponse{}, err
 	}
 	p.current = result
@@ -5244,12 +4944,10 @@ func (p *ServiceEndpointPolicyDefinitionsClientListByResourceGroupPager) NextPag
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5258,7 +4956,6 @@ func (p *ServiceEndpointPolicyDefinitionsClientListByResourceGroupPager) NextPag
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5296,12 +4993,10 @@ func (p *SubnetsClientListPager) NextPage(ctx context.Context) (SubnetsClientLis
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SubnetsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SubnetsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5310,7 +5005,6 @@ func (p *SubnetsClientListPager) NextPage(ctx context.Context) (SubnetsClientLis
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return SubnetsClientListResponse{}, err
 	}
 	p.current = result
@@ -5348,12 +5042,10 @@ func (p *UsagesClientListPager) NextPage(ctx context.Context) (UsagesClientListR
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return UsagesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return UsagesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5362,7 +5054,6 @@ func (p *UsagesClientListPager) NextPage(ctx context.Context) (UsagesClientListR
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return UsagesClientListResponse{}, err
 	}
 	p.current = result
@@ -5400,12 +5091,10 @@ func (p *VPNConnectionsClientListByVPNGatewayPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNConnectionsClientListByVPNGatewayResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNConnectionsClientListByVPNGatewayResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5414,7 +5103,6 @@ func (p *VPNConnectionsClientListByVPNGatewayPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listByVPNGatewayHandleResponse(resp)
 	if err != nil {
-
 		return VPNConnectionsClientListByVPNGatewayResponse{}, err
 	}
 	p.current = result
@@ -5452,12 +5140,10 @@ func (p *VPNGatewaysClientListByResourceGroupPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5466,7 +5152,6 @@ func (p *VPNGatewaysClientListByResourceGroupPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5504,12 +5189,10 @@ func (p *VPNGatewaysClientListPager) NextPage(ctx context.Context) (VPNGatewaysC
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNGatewaysClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNGatewaysClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5518,7 +5201,6 @@ func (p *VPNGatewaysClientListPager) NextPage(ctx context.Context) (VPNGatewaysC
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VPNGatewaysClientListResponse{}, err
 	}
 	p.current = result
@@ -5556,12 +5238,10 @@ func (p *VPNLinkConnectionsClientListByVPNConnectionPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5570,7 +5250,6 @@ func (p *VPNLinkConnectionsClientListByVPNConnectionPager) NextPage(ctx context.
 	}
 	result, err := p.client.listByVPNConnectionHandleResponse(resp)
 	if err != nil {
-
 		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, err
 	}
 	p.current = result
@@ -5608,12 +5287,10 @@ func (p *VPNServerConfigurationsClientListByResourceGroupPager) NextPage(ctx con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNServerConfigurationsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNServerConfigurationsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5622,7 +5299,6 @@ func (p *VPNServerConfigurationsClientListByResourceGroupPager) NextPage(ctx con
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VPNServerConfigurationsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5660,12 +5336,10 @@ func (p *VPNServerConfigurationsClientListPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNServerConfigurationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNServerConfigurationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5674,7 +5348,6 @@ func (p *VPNServerConfigurationsClientListPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VPNServerConfigurationsClientListResponse{}, err
 	}
 	p.current = result
@@ -5712,12 +5385,10 @@ func (p *VPNSiteLinksClientListByVPNSitePager) NextPage(ctx context.Context) (VP
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNSiteLinksClientListByVPNSiteResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNSiteLinksClientListByVPNSiteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5726,7 +5397,6 @@ func (p *VPNSiteLinksClientListByVPNSitePager) NextPage(ctx context.Context) (VP
 	}
 	result, err := p.client.listByVPNSiteHandleResponse(resp)
 	if err != nil {
-
 		return VPNSiteLinksClientListByVPNSiteResponse{}, err
 	}
 	p.current = result
@@ -5764,12 +5434,10 @@ func (p *VPNSitesClientListByResourceGroupPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNSitesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNSitesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5778,7 +5446,6 @@ func (p *VPNSitesClientListByResourceGroupPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VPNSitesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5816,12 +5483,10 @@ func (p *VPNSitesClientListPager) NextPage(ctx context.Context) (VPNSitesClientL
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VPNSitesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VPNSitesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5830,7 +5495,6 @@ func (p *VPNSitesClientListPager) NextPage(ctx context.Context) (VPNSitesClientL
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VPNSitesClientListResponse{}, err
 	}
 	p.current = result
@@ -5868,12 +5532,10 @@ func (p *VirtualAppliancesClientListByResourceGroupPager) NextPage(ctx context.C
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualAppliancesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualAppliancesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5882,7 +5544,6 @@ func (p *VirtualAppliancesClientListByResourceGroupPager) NextPage(ctx context.C
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VirtualAppliancesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -5920,12 +5581,10 @@ func (p *VirtualAppliancesClientListPager) NextPage(ctx context.Context) (Virtua
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualAppliancesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualAppliancesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5934,7 +5593,6 @@ func (p *VirtualAppliancesClientListPager) NextPage(ctx context.Context) (Virtua
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualAppliancesClientListResponse{}, err
 	}
 	p.current = result
@@ -5972,12 +5630,10 @@ func (p *VirtualHubRouteTableV2SClientListPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualHubRouteTableV2SClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualHubRouteTableV2SClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -5986,7 +5642,6 @@ func (p *VirtualHubRouteTableV2SClientListPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualHubRouteTableV2SClientListResponse{}, err
 	}
 	p.current = result
@@ -6024,12 +5679,10 @@ func (p *VirtualHubsClientListByResourceGroupPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualHubsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualHubsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6038,7 +5691,6 @@ func (p *VirtualHubsClientListByResourceGroupPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VirtualHubsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -6076,12 +5728,10 @@ func (p *VirtualHubsClientListPager) NextPage(ctx context.Context) (VirtualHubsC
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualHubsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualHubsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6090,7 +5740,6 @@ func (p *VirtualHubsClientListPager) NextPage(ctx context.Context) (VirtualHubsC
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualHubsClientListResponse{}, err
 	}
 	p.current = result
@@ -6128,12 +5777,10 @@ func (p *VirtualNetworkGatewayConnectionsClientListPager) NextPage(ctx context.C
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworkGatewayConnectionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworkGatewayConnectionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6142,7 +5789,6 @@ func (p *VirtualNetworkGatewayConnectionsClientListPager) NextPage(ctx context.C
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworkGatewayConnectionsClientListResponse{}, err
 	}
 	p.current = result
@@ -6180,12 +5826,10 @@ func (p *VirtualNetworkGatewaysClientListConnectionsPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworkGatewaysClientListConnectionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworkGatewaysClientListConnectionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6194,7 +5838,6 @@ func (p *VirtualNetworkGatewaysClientListConnectionsPager) NextPage(ctx context.
 	}
 	result, err := p.client.listConnectionsHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworkGatewaysClientListConnectionsResponse{}, err
 	}
 	p.current = result
@@ -6232,12 +5875,10 @@ func (p *VirtualNetworkGatewaysClientListPager) NextPage(ctx context.Context) (V
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworkGatewaysClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworkGatewaysClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6246,7 +5887,6 @@ func (p *VirtualNetworkGatewaysClientListPager) NextPage(ctx context.Context) (V
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworkGatewaysClientListResponse{}, err
 	}
 	p.current = result
@@ -6284,12 +5924,10 @@ func (p *VirtualNetworkPeeringsClientListPager) NextPage(ctx context.Context) (V
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworkPeeringsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworkPeeringsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6298,7 +5936,6 @@ func (p *VirtualNetworkPeeringsClientListPager) NextPage(ctx context.Context) (V
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworkPeeringsClientListResponse{}, err
 	}
 	p.current = result
@@ -6336,12 +5973,10 @@ func (p *VirtualNetworkTapsClientListAllPager) NextPage(ctx context.Context) (Vi
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworkTapsClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworkTapsClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6350,7 +5985,6 @@ func (p *VirtualNetworkTapsClientListAllPager) NextPage(ctx context.Context) (Vi
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworkTapsClientListAllResponse{}, err
 	}
 	p.current = result
@@ -6388,12 +6022,10 @@ func (p *VirtualNetworkTapsClientListByResourceGroupPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworkTapsClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworkTapsClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6402,7 +6034,6 @@ func (p *VirtualNetworkTapsClientListByResourceGroupPager) NextPage(ctx context.
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworkTapsClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -6440,12 +6071,10 @@ func (p *VirtualNetworksClientListAllPager) NextPage(ctx context.Context) (Virtu
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworksClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworksClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6454,7 +6083,6 @@ func (p *VirtualNetworksClientListAllPager) NextPage(ctx context.Context) (Virtu
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworksClientListAllResponse{}, err
 	}
 	p.current = result
@@ -6492,12 +6120,10 @@ func (p *VirtualNetworksClientListPager) NextPage(ctx context.Context) (VirtualN
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworksClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworksClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6506,7 +6132,6 @@ func (p *VirtualNetworksClientListPager) NextPage(ctx context.Context) (VirtualN
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworksClientListResponse{}, err
 	}
 	p.current = result
@@ -6544,12 +6169,10 @@ func (p *VirtualNetworksClientListUsagePager) NextPage(ctx context.Context) (Vir
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualNetworksClientListUsageResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualNetworksClientListUsageResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6558,7 +6181,6 @@ func (p *VirtualNetworksClientListUsagePager) NextPage(ctx context.Context) (Vir
 	}
 	result, err := p.client.listUsageHandleResponse(resp)
 	if err != nil {
-
 		return VirtualNetworksClientListUsageResponse{}, err
 	}
 	p.current = result
@@ -6596,12 +6218,10 @@ func (p *VirtualRouterPeeringsClientListPager) NextPage(ctx context.Context) (Vi
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualRouterPeeringsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualRouterPeeringsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6610,7 +6230,6 @@ func (p *VirtualRouterPeeringsClientListPager) NextPage(ctx context.Context) (Vi
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualRouterPeeringsClientListResponse{}, err
 	}
 	p.current = result
@@ -6648,12 +6267,10 @@ func (p *VirtualRoutersClientListByResourceGroupPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualRoutersClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualRoutersClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6662,7 +6279,6 @@ func (p *VirtualRoutersClientListByResourceGroupPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VirtualRoutersClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -6700,12 +6316,10 @@ func (p *VirtualRoutersClientListPager) NextPage(ctx context.Context) (VirtualRo
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualRoutersClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualRoutersClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6714,7 +6328,6 @@ func (p *VirtualRoutersClientListPager) NextPage(ctx context.Context) (VirtualRo
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualRoutersClientListResponse{}, err
 	}
 	p.current = result
@@ -6752,12 +6365,10 @@ func (p *VirtualWansClientListByResourceGroupPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualWansClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualWansClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6766,7 +6377,6 @@ func (p *VirtualWansClientListByResourceGroupPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return VirtualWansClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -6804,12 +6414,10 @@ func (p *VirtualWansClientListPager) NextPage(ctx context.Context) (VirtualWansC
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return VirtualWansClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return VirtualWansClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6818,7 +6426,6 @@ func (p *VirtualWansClientListPager) NextPage(ctx context.Context) (VirtualWansC
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return VirtualWansClientListResponse{}, err
 	}
 	p.current = result
@@ -6856,12 +6463,10 @@ func (p *WebApplicationFirewallPoliciesClientListAllPager) NextPage(ctx context.
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return WebApplicationFirewallPoliciesClientListAllResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return WebApplicationFirewallPoliciesClientListAllResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6870,7 +6475,6 @@ func (p *WebApplicationFirewallPoliciesClientListAllPager) NextPage(ctx context.
 	}
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
-
 		return WebApplicationFirewallPoliciesClientListAllResponse{}, err
 	}
 	p.current = result
@@ -6908,12 +6512,10 @@ func (p *WebApplicationFirewallPoliciesClientListPager) NextPage(ctx context.Con
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return WebApplicationFirewallPoliciesClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return WebApplicationFirewallPoliciesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -6922,7 +6524,6 @@ func (p *WebApplicationFirewallPoliciesClientListPager) NextPage(ctx context.Con
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return WebApplicationFirewallPoliciesClientListResponse{}, err
 	}
 	p.current = result

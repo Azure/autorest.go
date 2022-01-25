@@ -48,12 +48,10 @@ func (p *ClientGetCertificateIssuersPager) NextPage(ctx context.Context) (Client
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetCertificateIssuersResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetCertificateIssuersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *ClientGetCertificateIssuersPager) NextPage(ctx context.Context) (Client
 	}
 	result, err := p.client.getCertificateIssuersHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetCertificateIssuersResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *ClientGetCertificateVersionsPager) NextPage(ctx context.Context) (Clien
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetCertificateVersionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetCertificateVersionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *ClientGetCertificateVersionsPager) NextPage(ctx context.Context) (Clien
 	}
 	result, err := p.client.getCertificateVersionsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetCertificateVersionsResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *ClientGetCertificatesPager) NextPage(ctx context.Context) (ClientGetCer
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetCertificatesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetCertificatesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *ClientGetCertificatesPager) NextPage(ctx context.Context) (ClientGetCer
 	}
 	result, err := p.client.getCertificatesHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetCertificatesResponse{}, err
 	}
 	p.current = result
@@ -204,12 +195,10 @@ func (p *ClientGetDeletedCertificatesPager) NextPage(ctx context.Context) (Clien
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetDeletedCertificatesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetDeletedCertificatesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -218,7 +207,6 @@ func (p *ClientGetDeletedCertificatesPager) NextPage(ctx context.Context) (Clien
 	}
 	result, err := p.client.getDeletedCertificatesHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetDeletedCertificatesResponse{}, err
 	}
 	p.current = result
@@ -256,12 +244,10 @@ func (p *ClientGetDeletedKeysPager) NextPage(ctx context.Context) (ClientGetDele
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetDeletedKeysResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetDeletedKeysResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -270,7 +256,6 @@ func (p *ClientGetDeletedKeysPager) NextPage(ctx context.Context) (ClientGetDele
 	}
 	result, err := p.client.getDeletedKeysHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetDeletedKeysResponse{}, err
 	}
 	p.current = result
@@ -308,12 +293,10 @@ func (p *ClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Context) (Cli
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetDeletedSasDefinitionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetDeletedSasDefinitionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -322,7 +305,6 @@ func (p *ClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Context) (Cli
 	}
 	result, err := p.client.getDeletedSasDefinitionsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetDeletedSasDefinitionsResponse{}, err
 	}
 	p.current = result
@@ -360,12 +342,10 @@ func (p *ClientGetDeletedSecretsPager) NextPage(ctx context.Context) (ClientGetD
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetDeletedSecretsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetDeletedSecretsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -374,7 +354,6 @@ func (p *ClientGetDeletedSecretsPager) NextPage(ctx context.Context) (ClientGetD
 	}
 	result, err := p.client.getDeletedSecretsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetDeletedSecretsResponse{}, err
 	}
 	p.current = result
@@ -412,12 +391,10 @@ func (p *ClientGetDeletedStorageAccountsPager) NextPage(ctx context.Context) (Cl
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetDeletedStorageAccountsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetDeletedStorageAccountsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -426,7 +403,6 @@ func (p *ClientGetDeletedStorageAccountsPager) NextPage(ctx context.Context) (Cl
 	}
 	result, err := p.client.getDeletedStorageAccountsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetDeletedStorageAccountsResponse{}, err
 	}
 	p.current = result
@@ -464,12 +440,10 @@ func (p *ClientGetKeyVersionsPager) NextPage(ctx context.Context) (ClientGetKeyV
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetKeyVersionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetKeyVersionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -478,7 +452,6 @@ func (p *ClientGetKeyVersionsPager) NextPage(ctx context.Context) (ClientGetKeyV
 	}
 	result, err := p.client.getKeyVersionsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetKeyVersionsResponse{}, err
 	}
 	p.current = result
@@ -516,12 +489,10 @@ func (p *ClientGetKeysPager) NextPage(ctx context.Context) (ClientGetKeysRespons
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetKeysResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetKeysResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -530,7 +501,6 @@ func (p *ClientGetKeysPager) NextPage(ctx context.Context) (ClientGetKeysRespons
 	}
 	result, err := p.client.getKeysHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetKeysResponse{}, err
 	}
 	p.current = result
@@ -568,12 +538,10 @@ func (p *ClientGetSasDefinitionsPager) NextPage(ctx context.Context) (ClientGetS
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetSasDefinitionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetSasDefinitionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -582,7 +550,6 @@ func (p *ClientGetSasDefinitionsPager) NextPage(ctx context.Context) (ClientGetS
 	}
 	result, err := p.client.getSasDefinitionsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetSasDefinitionsResponse{}, err
 	}
 	p.current = result
@@ -620,12 +587,10 @@ func (p *ClientGetSecretVersionsPager) NextPage(ctx context.Context) (ClientGetS
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetSecretVersionsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetSecretVersionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -634,7 +599,6 @@ func (p *ClientGetSecretVersionsPager) NextPage(ctx context.Context) (ClientGetS
 	}
 	result, err := p.client.getSecretVersionsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetSecretVersionsResponse{}, err
 	}
 	p.current = result
@@ -672,12 +636,10 @@ func (p *ClientGetSecretsPager) NextPage(ctx context.Context) (ClientGetSecretsR
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetSecretsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetSecretsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -686,7 +648,6 @@ func (p *ClientGetSecretsPager) NextPage(ctx context.Context) (ClientGetSecretsR
 	}
 	result, err := p.client.getSecretsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetSecretsResponse{}, err
 	}
 	p.current = result
@@ -724,12 +685,10 @@ func (p *ClientGetStorageAccountsPager) NextPage(ctx context.Context) (ClientGet
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ClientGetStorageAccountsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ClientGetStorageAccountsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -738,7 +697,6 @@ func (p *ClientGetStorageAccountsPager) NextPage(ctx context.Context) (ClientGet
 	}
 	result, err := p.client.getStorageAccountsHandleResponse(resp)
 	if err != nil {
-
 		return ClientGetStorageAccountsResponse{}, err
 	}
 	p.current = result
@@ -776,12 +734,10 @@ func (p *RoleAssignmentsClientListForScopePager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RoleAssignmentsClientListForScopeResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RoleAssignmentsClientListForScopeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -790,7 +746,6 @@ func (p *RoleAssignmentsClientListForScopePager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.listForScopeHandleResponse(resp)
 	if err != nil {
-
 		return RoleAssignmentsClientListForScopeResponse{}, err
 	}
 	p.current = result
@@ -828,12 +783,10 @@ func (p *RoleDefinitionsClientListPager) NextPage(ctx context.Context) (RoleDefi
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RoleDefinitionsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RoleDefinitionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -842,7 +795,6 @@ func (p *RoleDefinitionsClientListPager) NextPage(ctx context.Context) (RoleDefi
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return RoleDefinitionsClientListResponse{}, err
 	}
 	p.current = result

@@ -48,12 +48,10 @@ func (p *AddonsClientListByRolePager) NextPage(ctx context.Context) (AddonsClien
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AddonsClientListByRoleResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AddonsClientListByRoleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *AddonsClientListByRolePager) NextPage(ctx context.Context) (AddonsClien
 	}
 	result, err := p.client.listByRoleHandleResponse(resp)
 	if err != nil {
-
 		return AddonsClientListByRoleResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *AlertsClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AlertsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AlertsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *AlertsClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return AlertsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *AvailableSKUsClientListPager) NextPage(ctx context.Context) (AvailableS
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return AvailableSKUsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return AvailableSKUsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *AvailableSKUsClientListPager) NextPage(ctx context.Context) (AvailableS
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return AvailableSKUsClientListResponse{}, err
 	}
 	p.current = result
@@ -204,12 +195,10 @@ func (p *BandwidthSchedulesClientListByDataBoxEdgeDevicePager) NextPage(ctx cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -218,7 +207,6 @@ func (p *BandwidthSchedulesClientListByDataBoxEdgeDevicePager) NextPage(ctx cont
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -256,12 +244,10 @@ func (p *ContainersClientListByStorageAccountPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return ContainersClientListByStorageAccountResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return ContainersClientListByStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -270,7 +256,6 @@ func (p *ContainersClientListByStorageAccountPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.listByStorageAccountHandleResponse(resp)
 	if err != nil {
-
 		return ContainersClientListByStorageAccountResponse{}, err
 	}
 	p.current = result
@@ -308,12 +293,10 @@ func (p *DevicesClientListByResourceGroupPager) NextPage(ctx context.Context) (D
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DevicesClientListByResourceGroupResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DevicesClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -322,7 +305,6 @@ func (p *DevicesClientListByResourceGroupPager) NextPage(ctx context.Context) (D
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
 	if err != nil {
-
 		return DevicesClientListByResourceGroupResponse{}, err
 	}
 	p.current = result
@@ -360,12 +342,10 @@ func (p *DevicesClientListBySubscriptionPager) NextPage(ctx context.Context) (De
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return DevicesClientListBySubscriptionResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return DevicesClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -374,7 +354,6 @@ func (p *DevicesClientListBySubscriptionPager) NextPage(ctx context.Context) (De
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
 	if err != nil {
-
 		return DevicesClientListBySubscriptionResponse{}, err
 	}
 	p.current = result
@@ -412,12 +391,10 @@ func (p *MonitoringConfigClientListPager) NextPage(ctx context.Context) (Monitor
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return MonitoringConfigClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return MonitoringConfigClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -426,7 +403,6 @@ func (p *MonitoringConfigClientListPager) NextPage(ctx context.Context) (Monitor
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return MonitoringConfigClientListResponse{}, err
 	}
 	p.current = result
@@ -464,12 +440,10 @@ func (p *NodesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return NodesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return NodesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -478,7 +452,6 @@ func (p *NodesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return NodesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -516,12 +489,10 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsCli
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -530,7 +501,6 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsCli
 	}
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
-
 		return OperationsClientListResponse{}, err
 	}
 	p.current = result
@@ -568,12 +538,10 @@ func (p *OrdersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return OrdersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return OrdersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -582,7 +550,6 @@ func (p *OrdersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return OrdersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -620,12 +587,10 @@ func (p *RolesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return RolesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return RolesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -634,7 +599,6 @@ func (p *RolesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return RolesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -672,12 +636,10 @@ func (p *SharesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return SharesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return SharesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -686,7 +648,6 @@ func (p *SharesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return SharesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -724,12 +685,10 @@ func (p *StorageAccountCredentialsClientListByDataBoxEdgeDevicePager) NextPage(c
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -738,7 +697,6 @@ func (p *StorageAccountCredentialsClientListByDataBoxEdgeDevicePager) NextPage(c
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -776,12 +734,10 @@ func (p *StorageAccountsClientListByDataBoxEdgeDevicePager) NextPage(ctx context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return StorageAccountsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return StorageAccountsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -790,7 +746,6 @@ func (p *StorageAccountsClientListByDataBoxEdgeDevicePager) NextPage(ctx context
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return StorageAccountsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -828,12 +783,10 @@ func (p *TriggersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Contex
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -842,7 +795,6 @@ func (p *TriggersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Contex
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result
@@ -880,12 +832,10 @@ func (p *UsersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return UsersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return UsersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -894,7 +844,6 @@ func (p *UsersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
 	if err != nil {
-
 		return UsersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	p.current = result

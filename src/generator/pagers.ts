@@ -77,9 +77,9 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += '\t} else {\n';
       text += '\t\treq, err = p.requester(ctx)\n\t}\n';
     }
-    text += `\tif err != nil {\n\n\t\treturn ${respEnv}{}, err\n\t}\n`;
+    text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
     text += `\tresp, err := p.client.pl.Do(req)\n`;
-    text += `\tif err != nil {\n\n\t\treturn ${respEnv}{}, err\n\t}\n`;
+    text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
     let statusCodes: string;
     if (isLROOperation(pager.op)) {
       // 204 no content excluded because why would you get a 204 for paged results?
@@ -90,7 +90,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     text += `\tif !runtime.HasStatusCode(resp, ${statusCodes}) {\n`;
     text += `\n\t\treturn ${respEnv}{}, runtime.NewResponseError(resp)\n\t}\n`;
     text += `\tresult, err := p.client.${pager.op.language.go!.protocolNaming.responseMethod}(resp)\n`;
-    text += `\tif err != nil {\n\n\t\treturn ${respEnv}{}, err\n\t}\n`;
+    text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
     text += '\tp.current = result\n\treturn p.current, nil\n';
     text += '}\n\n';
   }

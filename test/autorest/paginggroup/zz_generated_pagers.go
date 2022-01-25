@@ -48,12 +48,10 @@ func (p *PagingClientFirstResponseEmptyPager) NextPage(ctx context.Context) (Pag
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientFirstResponseEmptyResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientFirstResponseEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *PagingClientFirstResponseEmptyPager) NextPage(ctx context.Context) (Pag
 	}
 	result, err := p.client.firstResponseEmptyHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientFirstResponseEmptyResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *PagingClientGetMultiplePagesFailurePager) NextPage(ctx context.Context)
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *PagingClientGetMultiplePagesFailurePager) NextPage(ctx context.Context)
 	}
 	result, err := p.client.getMultiplePagesFailureHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *PagingClientGetMultiplePagesFailureURIPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *PagingClientGetMultiplePagesFailureURIPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.getMultiplePagesFailureURIHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
 	p.current = result
@@ -204,12 +195,10 @@ func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -218,7 +207,6 @@ func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context
 	}
 	result, err := p.client.getMultiplePagesFragmentNextLinkHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
 	p.current = result
@@ -256,12 +244,10 @@ func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -270,7 +256,6 @@ func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage
 	}
 	result, err := p.client.getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
 	p.current = result
@@ -306,12 +291,10 @@ func (p *PagingClientGetMultiplePagesLROPager) NextPage(ctx context.Context) (Pa
 	}
 	req, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.ProductResult.NextLink)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesLROResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesLROResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
@@ -320,7 +303,6 @@ func (p *PagingClientGetMultiplePagesLROPager) NextPage(ctx context.Context) (Pa
 	}
 	result, err := p.client.getMultiplePagesLROHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesLROResponse{}, err
 	}
 	p.current = result
@@ -358,12 +340,10 @@ func (p *PagingClientGetMultiplePagesPager) NextPage(ctx context.Context) (Pagin
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -372,7 +352,6 @@ func (p *PagingClientGetMultiplePagesPager) NextPage(ctx context.Context) (Pagin
 	}
 	result, err := p.client.getMultiplePagesHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesResponse{}, err
 	}
 	p.current = result
@@ -410,12 +389,10 @@ func (p *PagingClientGetMultiplePagesRetryFirstPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -424,7 +401,6 @@ func (p *PagingClientGetMultiplePagesRetryFirstPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.getMultiplePagesRetryFirstHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
 	p.current = result
@@ -462,12 +438,10 @@ func (p *PagingClientGetMultiplePagesRetrySecondPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -476,7 +450,6 @@ func (p *PagingClientGetMultiplePagesRetrySecondPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.getMultiplePagesRetrySecondHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
 	p.current = result
@@ -514,12 +487,10 @@ func (p *PagingClientGetMultiplePagesWithOffsetPager) NextPage(ctx context.Conte
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -528,7 +499,6 @@ func (p *PagingClientGetMultiplePagesWithOffsetPager) NextPage(ctx context.Conte
 	}
 	result, err := p.client.getMultiplePagesWithOffsetHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
 	p.current = result
@@ -566,12 +536,10 @@ func (p *PagingClientGetNoItemNamePagesPager) NextPage(ctx context.Context) (Pag
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -580,7 +548,6 @@ func (p *PagingClientGetNoItemNamePagesPager) NextPage(ctx context.Context) (Pag
 	}
 	result, err := p.client.getNoItemNamePagesHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
 	p.current = result
@@ -618,12 +585,10 @@ func (p *PagingClientGetODataMultiplePagesPager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -632,7 +597,6 @@ func (p *PagingClientGetODataMultiplePagesPager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.getODataMultiplePagesHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
 	p.current = result
@@ -670,12 +634,10 @@ func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -684,7 +646,6 @@ func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(
 	}
 	result, err := p.client.getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
 	p.current = result
@@ -722,12 +683,10 @@ func (p *PagingClientGetSinglePagesFailurePager) NextPage(ctx context.Context) (
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -736,7 +695,6 @@ func (p *PagingClientGetSinglePagesFailurePager) NextPage(ctx context.Context) (
 	}
 	result, err := p.client.getSinglePagesFailureHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
 	p.current = result
@@ -774,12 +732,10 @@ func (p *PagingClientGetSinglePagesPager) NextPage(ctx context.Context) (PagingC
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetSinglePagesResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetSinglePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -788,7 +744,6 @@ func (p *PagingClientGetSinglePagesPager) NextPage(ctx context.Context) (PagingC
 	}
 	result, err := p.client.getSinglePagesHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetSinglePagesResponse{}, err
 	}
 	p.current = result
@@ -826,12 +781,10 @@ func (p *PagingClientGetWithQueryParamsPager) NextPage(ctx context.Context) (Pag
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -840,7 +793,6 @@ func (p *PagingClientGetWithQueryParamsPager) NextPage(ctx context.Context) (Pag
 	}
 	result, err := p.client.getWithQueryParamsHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientGetWithQueryParamsResponse{}, err
 	}
 	p.current = result
@@ -878,12 +830,10 @@ func (p *PagingClientNextFragmentPager) NextPage(ctx context.Context) (PagingCli
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientNextFragmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientNextFragmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -892,7 +842,6 @@ func (p *PagingClientNextFragmentPager) NextPage(ctx context.Context) (PagingCli
 	}
 	result, err := p.client.nextFragmentHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientNextFragmentResponse{}, err
 	}
 	p.current = result
@@ -930,12 +879,10 @@ func (p *PagingClientNextFragmentWithGroupingPager) NextPage(ctx context.Context
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -944,7 +891,6 @@ func (p *PagingClientNextFragmentWithGroupingPager) NextPage(ctx context.Context
 	}
 	result, err := p.client.nextFragmentWithGroupingHandleResponse(resp)
 	if err != nil {
-
 		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
 	p.current = result

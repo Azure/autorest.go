@@ -48,12 +48,10 @@ func (p *containerClientListBlobFlatSegmentPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -62,7 +60,6 @@ func (p *containerClientListBlobFlatSegmentPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listBlobFlatSegmentHandleResponse(resp)
 	if err != nil {
-
 		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	p.current = result
@@ -100,12 +97,10 @@ func (p *containerClientListBlobHierarchySegmentPager) NextPage(ctx context.Cont
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -114,7 +109,6 @@ func (p *containerClientListBlobHierarchySegmentPager) NextPage(ctx context.Cont
 	}
 	result, err := p.client.listBlobHierarchySegmentHandleResponse(resp)
 	if err != nil {
-
 		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	p.current = result
@@ -152,12 +146,10 @@ func (p *serviceClientListContainersSegmentPager) NextPage(ctx context.Context) 
 		req, err = p.requester(ctx)
 	}
 	if err != nil {
-
 		return serviceClientListContainersSegmentResponse{}, err
 	}
 	resp, err := p.client.pl.Do(req)
 	if err != nil {
-
 		return serviceClientListContainersSegmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
@@ -166,7 +158,6 @@ func (p *serviceClientListContainersSegmentPager) NextPage(ctx context.Context) 
 	}
 	result, err := p.client.listContainersSegmentHandleResponse(resp)
 	if err != nil {
-
 		return serviceClientListContainersSegmentResponse{}, err
 	}
 	p.current = result
