@@ -20,6 +20,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   // add standard imports
   const imports = new ImportManager();
   imports.add('context');
+  imports.add('errors');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   imports.add('net/http');
@@ -38,7 +39,6 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     text += `type ${pager.name} struct {\n`;
     text += `\tclient *${pager.op.language.go!.clientName}\n`;
     text += `\tcurrent ${respEnv}\n`;
-    text += '\terr error\n';
     if (isLROOperation(pager.op)) {
       text += '\tsecond bool\n';
     } else {
@@ -47,24 +47,29 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     }
     text += '}\n\n';
     // pager methods
-    text += '// Err returns the last error encountered while paging.\n';
-    text += `func (p *${pager.name}) Err() error {\n\treturn p.err\n}\n\n`;
-    text += '// NextPage returns true if the pager advanced to the next page.\n'
-    text += '// Returns false if there are no more pages or an error occurred.\n';
-    text += `func (p *${pager.name}) NextPage(ctx context.Context) bool {\n`;
+    const nextLinkField = `${getResultFieldName(pager.op)}.${pager.op.language.go!.paging.nextLinkName}`;
+    text += '// More returns true if there are more pages to retrieve.\n';
+    text += `func (p *${pager.name}) More() bool {\n`;
+    text += '\tif !reflect.ValueOf(p.current).IsZero() {\n';
+    text += `\t\tif p.current.${nextLinkField} == nil || len(*p.current.${nextLinkField}) == 0 {\n`;
+    text += '\t\t\treturn false\n\t\t}\n';
+    text += '\t}\n\treturn true\n';
+    text += '}\n\n';
+
+    text += '// NextPage advances the pager to the next page.\n'
+    text += `func (p *${pager.name}) NextPage(ctx context.Context) (${respEnv}, error) {\n`;
     if (isLROOperation(pager.op)) {
       text += '\tif !p.second {\n';
       text += '\t\tp.second = true\n';
-      text += '\t\treturn true\n';
+      text += '\t\treturn p.current, nil\n';
       text += '\t} else ';
     } else {
       // note the trailing tab for the next line
       text += '\tvar req *policy.Request\n\tvar err error\n\t';
     }
     text += 'if !reflect.ValueOf(p.current).IsZero() {\n';
-    const nextLinkField = `${getResultFieldName(pager.op)}.${pager.op.language.go!.paging.nextLinkName}`;
-    text += `\t\tif p.current.${nextLinkField} == nil || len(*p.current.${nextLinkField}) == 0 {\n`;
-    text += '\t\t\treturn false\n\t\t}\n';
+    text += `\t\tif !p.More() {\n`;
+    text += `\t\t\treturn ${respEnv}{}, errors.New("no more pages")\n\t\t}\n`;
     if (isLROOperation(pager.op)) {
       text += `\t}\n\treq, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.${nextLinkField})\n`;
     } else {
@@ -72,9 +77,9 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += '\t} else {\n';
       text += '\t\treq, err = p.requester(ctx)\n\t}\n';
     }
-    text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
+    text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
     text += `\tresp, err := p.client.pl.Do(req)\n`;
-    text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
+    text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
     let statusCodes: string;
     if (isLROOperation(pager.op)) {
       // 204 no content excluded because why would you get a 204 for paged results?
@@ -83,13 +88,11 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       statusCodes = formatStatusCodes(getStatusCodes(pager.op));
     }
     text += `\tif !runtime.HasStatusCode(resp, ${statusCodes}) {\n`;
-    text += `\t\tp.err = runtime.NewResponseError(resp)\n\t\treturn false\n\t}\n`;
+    text += `\n\t\treturn ${respEnv}{}, runtime.NewResponseError(resp)\n\t}\n`;
     text += `\tresult, err := p.client.${pager.op.language.go!.protocolNaming.responseMethod}(resp)\n`;
-    text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
-    text += '\tp.current = result\n\treturn true\n';
+    text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
+    text += '\tp.current = result\n\treturn p.current, nil\n';
     text += '}\n\n';
-    text += `// PageResponse returns the current ${respEnv} page.\n`;
-    text += `func (p *${pager.name}) PageResponse() ${respEnv} {\n\treturn p.current\n}\n\n`;
   }
   return text;
 }
