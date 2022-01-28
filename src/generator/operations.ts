@@ -505,7 +505,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     text += `\t\trequester: func(ctx context.Context) (*policy.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
     text += '\t\t},\n';
-    // this is no advancer for single-page pagers
+    // there is no advancer for single-page pagers
     if (op.language.go!.paging.nextLinkName) {
       text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*policy.Request, error) {\n`;
       const nextLink = op.language.go!.paging.nextLinkName;
