@@ -332,19 +332,13 @@ func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, 
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
 // options - PacketCapturesClientListOptions contains the optional parameters for the PacketCapturesClient.List method.
-func (client *PacketCapturesClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesClientListOptions) (PacketCapturesClientListResponse, error) {
-	req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
-	if err != nil {
-		return PacketCapturesClientListResponse{}, err
+func (client *PacketCapturesClient) List(resourceGroupName string, networkWatcherName string, options *PacketCapturesClientListOptions) *PacketCapturesClientListPager {
+	return &PacketCapturesClientListPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return PacketCapturesClientListResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PacketCapturesClientListResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.

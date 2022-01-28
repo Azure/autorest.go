@@ -260,19 +260,13 @@ func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // options - ConnectionMonitorsClientListOptions contains the optional parameters for the ConnectionMonitorsClient.List method.
-func (client *ConnectionMonitorsClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsClientListOptions) (ConnectionMonitorsClientListResponse, error) {
-	req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
-	if err != nil {
-		return ConnectionMonitorsClientListResponse{}, err
+func (client *ConnectionMonitorsClient) List(resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsClientListOptions) *ConnectionMonitorsClientListPager {
+	return &ConnectionMonitorsClientListPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return ConnectionMonitorsClientListResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsClientListResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.

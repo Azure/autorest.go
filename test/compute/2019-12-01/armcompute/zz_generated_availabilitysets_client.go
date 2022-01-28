@@ -261,19 +261,13 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (A
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
 // method.
-func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) (AvailabilitySetsClientListAvailableSizesResponse, error) {
-	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
-	if err != nil {
-		return AvailabilitySetsClientListAvailableSizesResponse{}, err
+func (client *AvailabilitySetsClient) ListAvailableSizes(resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) *AvailabilitySetsClientListAvailableSizesPager {
+	return &AvailabilitySetsClientListAvailableSizesPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return AvailabilitySetsClientListAvailableSizesResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listAvailableSizesHandleResponse(resp)
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.

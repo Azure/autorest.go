@@ -55,19 +55,13 @@ func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.Token
 // location - The location upon which virtual-machine-sizes is queried.
 // options - VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.List
 // method.
-func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesClientListOptions) (VirtualMachineSizesClientListResponse, error) {
-	req, err := client.listCreateRequest(ctx, location, options)
-	if err != nil {
-		return VirtualMachineSizesClientListResponse{}, err
+func (client *VirtualMachineSizesClient) List(location string, options *VirtualMachineSizesClientListOptions) *VirtualMachineSizesClientListPager {
+	return &VirtualMachineSizesClientListPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listCreateRequest(ctx, location, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return VirtualMachineSizesClientListResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineSizesClientListResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.

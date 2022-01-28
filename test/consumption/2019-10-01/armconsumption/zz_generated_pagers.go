@@ -115,6 +115,46 @@ func (p *EventsClientListPager) NextPage(ctx context.Context) (EventsClientListR
 	return p.current, nil
 }
 
+// ForecastsClientListPager provides operations for iterating over paged responses.
+type ForecastsClientListPager struct {
+	client    *ForecastsClient
+	current   ForecastsClientListResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *ForecastsClientListPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *ForecastsClientListPager) NextPage(ctx context.Context) (ForecastsClientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !p.More() {
+		return ForecastsClientListResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return ForecastsClientListResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return ForecastsClientListResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return ForecastsClientListResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		return ForecastsClientListResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
 // LotsClientListPager provides operations for iterating over paged responses.
 type LotsClientListPager struct {
 	client    *LotsClient

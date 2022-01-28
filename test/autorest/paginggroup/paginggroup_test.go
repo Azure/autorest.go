@@ -52,6 +52,9 @@ func TestGetMultiplePages(t *testing.T) {
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
 	}
+	if _, err := pager.NextPage(context.Background()); err == nil {
+		t.Fatal("unexpected nil error")
+	}
 }
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
@@ -265,12 +268,24 @@ func TestGetNoItemNamePages(t *testing.T) {
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 func TestGetNullNextLinkNamePages(t *testing.T) {
 	client := newPagingClient()
-	resp, err := client.GetNullNextLinkNamePages(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
+	pager := client.GetNullNextLinkNamePages(nil)
+	count := 0
+	for pager.More() {
+		page, err := pager.NextPage(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		} else if reflect.ValueOf(page).IsZero() {
+			t.Fatal("unexpected empty payload")
+		} else if len(page.ProductResult.Values) == 0 {
+			t.Fatal("missing payload")
+		}
+		count++
 	}
-	if len(resp.ProductResult.Values) == 0 {
-		t.Fatal("missing payload")
+	if r := cmp.Diff(count, 1); r != "" {
+		t.Fatal(r)
+	}
+	if _, err := pager.NextPage(context.Background()); err == nil {
+		t.Fatal("unexpected nil error")
 	}
 }
 

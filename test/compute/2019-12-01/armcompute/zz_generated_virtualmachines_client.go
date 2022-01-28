@@ -663,19 +663,13 @@ func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) 
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
 // method.
-func (client *VirtualMachinesClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientListAvailableSizesOptions) (VirtualMachinesClientListAvailableSizesResponse, error) {
-	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, vmName, options)
-	if err != nil {
-		return VirtualMachinesClientListAvailableSizesResponse{}, err
+func (client *VirtualMachinesClient) ListAvailableSizes(resourceGroupName string, vmName string, options *VirtualMachinesClientListAvailableSizesOptions) *VirtualMachinesClientListAvailableSizesPager {
+	return &VirtualMachinesClientListAvailableSizesPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listAvailableSizesCreateRequest(ctx, resourceGroupName, vmName, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return VirtualMachinesClientListAvailableSizesResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachinesClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listAvailableSizesHandleResponse(resp)
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
