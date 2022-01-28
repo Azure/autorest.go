@@ -74,8 +74,8 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       // note the trailing tab for the next line
       text += '\tvar req *policy.Request\n\tvar err error\n\t';
     }
-    text += 'if !reflect.ValueOf(p.current).IsZero() {\n';
     if (pager.op.language.go!.paging.nextLinkName) {
+      text += 'if !reflect.ValueOf(p.current).IsZero() {\n';
       text += `\t\tif !p.More() {\n`;
       text += `\t\t\treturn ${respEnv}{}, errors.New("no more pages")\n\t\t}\n`;
       if (isLROOperation(pager.op)) {
@@ -86,6 +86,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
         text += '\t\treq, err = p.requester(ctx)\n\t}\n';
       }
     } else {
+      text += 'if !p.More() {\n';
       text += `\t\treturn ${respEnv}{}, errors.New("no more pages")\n\t} else {\n\treq, err = p.requester(ctx)\n\t}\n`;
     }
     text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;

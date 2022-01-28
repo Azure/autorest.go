@@ -33,7 +33,7 @@ func (p *AvailabilitySetsClientListAvailableSizesPager) More() bool {
 func (p *AvailabilitySetsClientListAvailableSizesPager) NextPage(ctx context.Context) (AvailabilitySetsClientListAvailableSizesResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return AvailabilitySetsClientListAvailableSizesResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -1004,7 +1004,7 @@ func (p *OperationsClientListPager) More() bool {
 func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsClientListResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return OperationsClientListResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -1779,7 +1779,7 @@ func (p *VirtualMachineSizesClientListPager) More() bool {
 func (p *VirtualMachineSizesClientListPager) NextPage(ctx context.Context) (VirtualMachineSizesClientListResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return VirtualMachineSizesClientListResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -1868,7 +1868,7 @@ func (p *VirtualMachinesClientListAvailableSizesPager) More() bool {
 func (p *VirtualMachinesClientListAvailableSizesPager) NextPage(ctx context.Context) (VirtualMachinesClientListAvailableSizesResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return VirtualMachinesClientListAvailableSizesResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)

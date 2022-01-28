@@ -915,7 +915,7 @@ func (p *ConnectionMonitorsClientListPager) More() bool {
 func (p *ConnectionMonitorsClientListPager) NextPage(ctx context.Context) (ConnectionMonitorsClientListResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return ConnectionMonitorsClientListResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -3499,7 +3499,7 @@ func (p *PacketCapturesClientListPager) More() bool {
 func (p *PacketCapturesClientListPager) NextPage(ctx context.Context) (PacketCapturesClientListResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return PacketCapturesClientListResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -6528,7 +6528,7 @@ func (p *WatchersClientListAllPager) More() bool {
 func (p *WatchersClientListAllPager) NextPage(ctx context.Context) (WatchersClientListAllResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return WatchersClientListAllResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -6568,7 +6568,7 @@ func (p *WatchersClientListPager) More() bool {
 func (p *WatchersClientListPager) NextPage(ctx context.Context) (WatchersClientListResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return WatchersClientListResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)

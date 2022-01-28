@@ -570,7 +570,7 @@ func (p *PagingClientGetNullNextLinkNamePagesPager) More() bool {
 func (p *PagingClientGetNullNextLinkNamePagesPager) NextPage(ctx context.Context) (PagingClientGetNullNextLinkNamePagesResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return PagingClientGetNullNextLinkNamePagesResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)
@@ -953,7 +953,7 @@ func (p *PagingClientNextOperationWithQueryParamsPager) More() bool {
 func (p *PagingClientNextOperationWithQueryParamsPager) NextPage(ctx context.Context) (PagingClientNextOperationWithQueryParamsResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return PagingClientNextOperationWithQueryParamsResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)

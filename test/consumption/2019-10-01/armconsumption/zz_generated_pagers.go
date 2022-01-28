@@ -131,7 +131,7 @@ func (p *ForecastsClientListPager) More() bool {
 func (p *ForecastsClientListPager) NextPage(ctx context.Context) (ForecastsClientListResponse, error) {
 	var req *policy.Request
 	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
+	if !p.More() {
 		return ForecastsClientListResponse{}, errors.New("no more pages")
 	} else {
 		req, err = p.requester(ctx)

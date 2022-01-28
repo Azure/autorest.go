@@ -52,6 +52,9 @@ func TestGetMultiplePages(t *testing.T) {
 	if r := cmp.Diff(count, 10); r != "" {
 		t.Fatal(r)
 	}
+	if _, err := pager.NextPage(context.Background()); err == nil {
+		t.Fatal("unexpected nil error")
+	}
 }
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
@@ -280,6 +283,9 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 	}
 	if r := cmp.Diff(count, 1); r != "" {
 		t.Fatal(r)
+	}
+	if _, err := pager.NextPage(context.Background()); err == nil {
+		t.Fatal("unexpected nil error")
 	}
 }
 
