@@ -510,19 +510,13 @@ func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
 // method.
-func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context, options *PagingClientGetNullNextLinkNamePagesOptions) (PagingClientGetNullNextLinkNamePagesResponse, error) {
-	req, err := client.getNullNextLinkNamePagesCreateRequest(ctx, options)
-	if err != nil {
-		return PagingClientGetNullNextLinkNamePagesResponse{}, err
+func (client *PagingClient) GetNullNextLinkNamePages(options *PagingClientGetNullNextLinkNamePagesOptions) *PagingClientGetNullNextLinkNamePagesPager {
+	return &PagingClientGetNullNextLinkNamePagesPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.getNullNextLinkNamePagesCreateRequest(ctx, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return PagingClientGetNullNextLinkNamePagesResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PagingClientGetNullNextLinkNamePagesResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.getNullNextLinkNamePagesHandleResponse(resp)
 }
 
 // getNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.

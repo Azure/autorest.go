@@ -505,27 +505,30 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     text += `\t\trequester: func(ctx context.Context) (*policy.Request, error) {\n`;
     text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
     text += '\t\t},\n';
-    text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*policy.Request, error) {\n`;
-    const nextLink = op.language.go!.paging.nextLinkName;
-    const response = getResultFieldName(op);
-    // nextLinkOperation might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
-    if (op.language.go!.paging.nextLinkOperation) {
-      const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
-      // keep the parameter names from the name/type tuples and find nextLink param
-      for (let i = 0; i < nextOpParams.length; ++i) {
-        const paramName = nextOpParams[i].trim().split(' ')[0];
-        const paramType = nextOpParams[i].trim().split(' ')[1];
-        if (paramName.startsWith('next') && paramType === 'string') {
-          nextOpParams[i] = `*resp.${response}.${nextLink}`;
-        } else {
-          nextOpParams[i] = paramName;
+    // this is no advancer for single-page pagers
+    if (op.language.go!.paging.nextLinkName) {
+      text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*policy.Request, error) {\n`;
+      const nextLink = op.language.go!.paging.nextLinkName;
+      const response = getResultFieldName(op);
+      // nextLinkOperation might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
+      if (op.language.go!.paging.nextLinkOperation) {
+        const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
+        // keep the parameter names from the name/type tuples and find nextLink param
+        for (let i = 0; i < nextOpParams.length; ++i) {
+          const paramName = nextOpParams[i].trim().split(' ')[0];
+          const paramType = nextOpParams[i].trim().split(' ')[1];
+          if (paramName.startsWith('next') && paramType === 'string') {
+            nextOpParams[i] = `*resp.${response}.${nextLink}`;
+          } else {
+            nextOpParams[i] = paramName;
+          }
         }
+        text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
+      } else {
+        text += `\t\t\treturn runtime.NewRequest(ctx, http.MethodGet, *resp.${response}.${nextLink})\n`;
       }
-      text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
-    } else {
-      text += `\t\t\treturn runtime.NewRequest(ctx, http.MethodGet, *resp.${response}.${nextLink})\n`;
+      text += '\t\t},\n';
     }
-    text += '\t\t},\n';
     text += `\t}\n`;
     text += '}\n\n';
     return text;

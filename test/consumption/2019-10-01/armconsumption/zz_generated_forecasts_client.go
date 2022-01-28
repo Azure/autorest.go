@@ -54,19 +54,13 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
-func (client *ForecastsClient) List(ctx context.Context, options *ForecastsClientListOptions) (ForecastsClientListResponse, error) {
-	req, err := client.listCreateRequest(ctx, options)
-	if err != nil {
-		return ForecastsClientListResponse{}, err
+func (client *ForecastsClient) List(options *ForecastsClientListOptions) *ForecastsClientListPager {
+	return &ForecastsClientListPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listCreateRequest(ctx, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return ForecastsClientListResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ForecastsClientListResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.

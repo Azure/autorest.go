@@ -899,6 +899,46 @@ func (p *BgpServiceCommunitiesClientListPager) NextPage(ctx context.Context) (Bg
 	return p.current, nil
 }
 
+// ConnectionMonitorsClientListPager provides operations for iterating over paged responses.
+type ConnectionMonitorsClientListPager struct {
+	client    *ConnectionMonitorsClient
+	current   ConnectionMonitorsClientListResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *ConnectionMonitorsClientListPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *ConnectionMonitorsClientListPager) NextPage(ctx context.Context) (ConnectionMonitorsClientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return ConnectionMonitorsClientListResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return ConnectionMonitorsClientListResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return ConnectionMonitorsClientListResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return ConnectionMonitorsClientListResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		return ConnectionMonitorsClientListResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
 // DdosProtectionPlansClientListByResourceGroupPager provides operations for iterating over paged responses.
 type DdosProtectionPlansClientListByResourceGroupPager struct {
 	client    *DdosProtectionPlansClient
@@ -3438,6 +3478,46 @@ func (p *P2SVPNGatewaysClientListPager) NextPage(ctx context.Context) (P2SVPNGat
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
 		return P2SVPNGatewaysClientListResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
+// PacketCapturesClientListPager provides operations for iterating over paged responses.
+type PacketCapturesClientListPager struct {
+	client    *PacketCapturesClient
+	current   PacketCapturesClientListResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *PacketCapturesClientListPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *PacketCapturesClientListPager) NextPage(ctx context.Context) (PacketCapturesClientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return PacketCapturesClientListResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return PacketCapturesClientListResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return PacketCapturesClientListResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return PacketCapturesClientListResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		return PacketCapturesClientListResponse{}, err
 	}
 	p.current = result
 	return p.current, nil
@@ -6427,6 +6507,86 @@ func (p *VirtualWansClientListPager) NextPage(ctx context.Context) (VirtualWansC
 	result, err := p.client.listHandleResponse(resp)
 	if err != nil {
 		return VirtualWansClientListResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
+// WatchersClientListAllPager provides operations for iterating over paged responses.
+type WatchersClientListAllPager struct {
+	client    *WatchersClient
+	current   WatchersClientListAllResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *WatchersClientListAllPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *WatchersClientListAllPager) NextPage(ctx context.Context) (WatchersClientListAllResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return WatchersClientListAllResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return WatchersClientListAllResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return WatchersClientListAllResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return WatchersClientListAllResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listAllHandleResponse(resp)
+	if err != nil {
+		return WatchersClientListAllResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
+// WatchersClientListPager provides operations for iterating over paged responses.
+type WatchersClientListPager struct {
+	client    *WatchersClient
+	current   WatchersClientListResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *WatchersClientListPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *WatchersClientListPager) NextPage(ctx context.Context) (WatchersClientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return WatchersClientListResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return WatchersClientListResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return WatchersClientListResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return WatchersClientListResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		return WatchersClientListResponse{}, err
 	}
 	p.current = result
 	return p.current, nil

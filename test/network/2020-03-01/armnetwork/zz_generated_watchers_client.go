@@ -843,19 +843,13 @@ func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - WatchersClientListOptions contains the optional parameters for the WatchersClient.List method.
-func (client *WatchersClient) List(ctx context.Context, resourceGroupName string, options *WatchersClientListOptions) (WatchersClientListResponse, error) {
-	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
-	if err != nil {
-		return WatchersClientListResponse{}, err
+func (client *WatchersClient) List(resourceGroupName string, options *WatchersClientListOptions) *WatchersClientListPager {
+	return &WatchersClientListPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listCreateRequest(ctx, resourceGroupName, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return WatchersClientListResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return WatchersClientListResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
@@ -892,19 +886,13 @@ func (client *WatchersClient) listHandleResponse(resp *http.Response) (WatchersC
 // ListAll - Gets all network watchers by subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - WatchersClientListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
-func (client *WatchersClient) ListAll(ctx context.Context, options *WatchersClientListAllOptions) (WatchersClientListAllResponse, error) {
-	req, err := client.listAllCreateRequest(ctx, options)
-	if err != nil {
-		return WatchersClientListAllResponse{}, err
+func (client *WatchersClient) ListAll(options *WatchersClientListAllOptions) *WatchersClientListAllPager {
+	return &WatchersClientListAllPager{
+		client: client,
+		requester: func(ctx context.Context) (*policy.Request, error) {
+			return client.listAllCreateRequest(ctx, options)
+		},
 	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return WatchersClientListAllResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return WatchersClientListAllResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.listAllHandleResponse(resp)
 }
 
 // listAllCreateRequest creates the ListAll request.

@@ -17,6 +17,46 @@ import (
 	"reflect"
 )
 
+// AvailabilitySetsClientListAvailableSizesPager provides operations for iterating over paged responses.
+type AvailabilitySetsClientListAvailableSizesPager struct {
+	client    *AvailabilitySetsClient
+	current   AvailabilitySetsClientListAvailableSizesResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *AvailabilitySetsClientListAvailableSizesPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *AvailabilitySetsClientListAvailableSizesPager) NextPage(ctx context.Context) (AvailabilitySetsClientListAvailableSizesResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return AvailabilitySetsClientListAvailableSizesResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return AvailabilitySetsClientListAvailableSizesResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return AvailabilitySetsClientListAvailableSizesResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listAvailableSizesHandleResponse(resp)
+	if err != nil {
+		return AvailabilitySetsClientListAvailableSizesResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
 // AvailabilitySetsClientListBySubscriptionPager provides operations for iterating over paged responses.
 type AvailabilitySetsClientListBySubscriptionPager struct {
 	client    *AvailabilitySetsClient
@@ -948,6 +988,46 @@ func (p *ImagesClientListPager) NextPage(ctx context.Context) (ImagesClientListR
 	return p.current, nil
 }
 
+// OperationsClientListPager provides operations for iterating over paged responses.
+type OperationsClientListPager struct {
+	client    *OperationsClient
+	current   OperationsClientListResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *OperationsClientListPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *OperationsClientListPager) NextPage(ctx context.Context) (OperationsClientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return OperationsClientListResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return OperationsClientListResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return OperationsClientListResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return OperationsClientListResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		return OperationsClientListResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
 // ProximityPlacementGroupsClientListByResourceGroupPager provides operations for iterating over paged responses.
 type ProximityPlacementGroupsClientListByResourceGroupPager struct {
 	client    *ProximityPlacementGroupsClient
@@ -1683,6 +1763,46 @@ func (p *VirtualMachineScaleSetsClientListSKUsPager) NextPage(ctx context.Contex
 	return p.current, nil
 }
 
+// VirtualMachineSizesClientListPager provides operations for iterating over paged responses.
+type VirtualMachineSizesClientListPager struct {
+	client    *VirtualMachineSizesClient
+	current   VirtualMachineSizesClientListResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *VirtualMachineSizesClientListPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *VirtualMachineSizesClientListPager) NextPage(ctx context.Context) (VirtualMachineSizesClientListResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return VirtualMachineSizesClientListResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return VirtualMachineSizesClientListResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return VirtualMachineSizesClientListResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return VirtualMachineSizesClientListResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listHandleResponse(resp)
+	if err != nil {
+		return VirtualMachineSizesClientListResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
 // VirtualMachinesClientListAllPager provides operations for iterating over paged responses.
 type VirtualMachinesClientListAllPager struct {
 	client    *VirtualMachinesClient
@@ -1727,6 +1847,46 @@ func (p *VirtualMachinesClientListAllPager) NextPage(ctx context.Context) (Virtu
 	result, err := p.client.listAllHandleResponse(resp)
 	if err != nil {
 		return VirtualMachinesClientListAllResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
+// VirtualMachinesClientListAvailableSizesPager provides operations for iterating over paged responses.
+type VirtualMachinesClientListAvailableSizesPager struct {
+	client    *VirtualMachinesClient
+	current   VirtualMachinesClientListAvailableSizesResponse
+	requester func(context.Context) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *VirtualMachinesClientListAvailableSizesPager) More() bool {
+	return reflect.ValueOf(p.current).IsZero()
+}
+
+// NextPage advances the pager to the next page.
+func (p *VirtualMachinesClientListAvailableSizesPager) NextPage(ctx context.Context) (VirtualMachinesClientListAvailableSizesResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		return VirtualMachinesClientListAvailableSizesResponse{}, errors.New("no more pages")
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return VirtualMachinesClientListAvailableSizesResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return VirtualMachinesClientListAvailableSizesResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return VirtualMachinesClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.listAvailableSizesHandleResponse(resp)
+	if err != nil {
+		return VirtualMachinesClientListAvailableSizesResponse{}, err
 	}
 	p.current = result
 	return p.current, nil

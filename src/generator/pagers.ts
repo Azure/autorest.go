@@ -43,17 +43,24 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += '\tsecond bool\n';
     } else {
       text += '\trequester func(context.Context) (*policy.Request, error)\n';
-      text += `\tadvancer func(context.Context, ${respEnv}) (*policy.Request, error)\n`;
+      if (pager.op.language.go!.paging.nextLinkName) {
+        text += `\tadvancer func(context.Context, ${respEnv}) (*policy.Request, error)\n`;
+      }
     }
     text += '}\n\n';
     // pager methods
-    const nextLinkField = `${getResultFieldName(pager.op)}.${pager.op.language.go!.paging.nextLinkName}`;
     text += '// More returns true if there are more pages to retrieve.\n';
     text += `func (p *${pager.name}) More() bool {\n`;
-    text += '\tif !reflect.ValueOf(p.current).IsZero() {\n';
-    text += `\t\tif p.current.${nextLinkField} == nil || len(*p.current.${nextLinkField}) == 0 {\n`;
-    text += '\t\t\treturn false\n\t\t}\n';
-    text += '\t}\n\treturn true\n';
+    if (pager.op.language.go!.paging.nextLinkName) {
+      const nextLinkField = nextLinkFieldName(pager);
+      text += '\tif !reflect.ValueOf(p.current).IsZero() {\n';
+      text += `\t\tif p.current.${nextLinkField} == nil || len(*p.current.${nextLinkField}) == 0 {\n`;
+      text += '\t\t\treturn false\n\t\t}\n';
+      text += '\t}\n\treturn true\n';
+    } else {
+      // single page
+      text += '\treturn reflect.ValueOf(p.current).IsZero()\n';
+    }
     text += '}\n\n';
 
     text += '// NextPage advances the pager to the next page.\n'
@@ -68,14 +75,18 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += '\tvar req *policy.Request\n\tvar err error\n\t';
     }
     text += 'if !reflect.ValueOf(p.current).IsZero() {\n';
-    text += `\t\tif !p.More() {\n`;
-    text += `\t\t\treturn ${respEnv}{}, errors.New("no more pages")\n\t\t}\n`;
-    if (isLROOperation(pager.op)) {
-      text += `\t}\n\treq, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.${nextLinkField})\n`;
+    if (pager.op.language.go!.paging.nextLinkName) {
+      text += `\t\tif !p.More() {\n`;
+      text += `\t\t\treturn ${respEnv}{}, errors.New("no more pages")\n\t\t}\n`;
+      if (isLROOperation(pager.op)) {
+        text += `\t}\n\treq, err := runtime.NewRequest(ctx, http.MethodGet, *p.current.${nextLinkFieldName(pager)})\n`;
+      } else {
+        text += '\t\treq, err = p.advancer(ctx, p.current)\n';
+        text += '\t} else {\n';
+        text += '\t\treq, err = p.requester(ctx)\n\t}\n';
+      }
     } else {
-      text += '\t\treq, err = p.advancer(ctx, p.current)\n';
-      text += '\t} else {\n';
-      text += '\t\treq, err = p.requester(ctx)\n\t}\n';
+      text += `\t\treturn ${respEnv}{}, errors.New("no more pages")\n\t} else {\n\treq, err = p.requester(ctx)\n\t}\n`;
     }
     text += `\tif err != nil {\n\t\treturn ${respEnv}{}, err\n\t}\n`;
     text += `\tresp, err := p.client.pl.Do(req)\n`;
@@ -95,4 +106,8 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
     text += '}\n\n';
   }
   return text;
+}
+
+function nextLinkFieldName(pager: PagerInfo): string {
+  return `${getResultFieldName(pager.op)}.${pager.op.language.go!.paging.nextLinkName}`;
 }

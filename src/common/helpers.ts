@@ -48,7 +48,7 @@ export interface PagerInfo {
 
 // returns true if the operation is pageable
 export function isPageableOperation(op: Operation): boolean {
-  return op.language.go!.paging && op.language.go!.paging.nextLinkName !== null;
+  return op.language.go!.paging;
 }
 
 export interface PollerInfo {
