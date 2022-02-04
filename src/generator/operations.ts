@@ -9,7 +9,7 @@ import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, Con
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, emitPoller, formatParameterTypeName, formatStatusCodes, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired } from './helpers';
+import { contentPreamble, elementByValueForParam, emitPoller, formatParameterTypeName, formatStatusCodes, formatValue, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -40,6 +40,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
     }
+
+    // TODO: split client and client ctor generation out of this
 
     // generate client type
     let clientText = '';
@@ -86,13 +88,24 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       for (const clientParam of values(clientParams)) {
-        clientText += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
-        if (isARM && (clientParam.clientDefaultValue || clientParam.required === false)) {
-          // add to optional params struct for ARM variants
-          optionalParams.push(clientParam);
+        clientText += `\t${clientParam.language.go!.name} `;
+        if (clientParam.required) {
+          clientText += `${substituteDiscriminator(clientParam.schema, elementByValueForParam(clientParam))}\n`;
         } else {
-          clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+          clientText += `${formatParameterTypeName(clientParam)}\n`;
         }
+        if (clientParam.clientDefaultValue || clientParam.required === false) {
+          optionalParams.push(clientParam);
+        }
+        let clientLiteral = `${clientParam.language.go!.name}: `;
+        // for client-side default values, the parameters are declared as pointer-to-type
+        // however the fields on the client type are not.  so when creating the client struct
+        // literal we need to dereference the optional value as it will never be nil at that point.
+        if (clientParam.clientDefaultValue) {
+          clientLiteral += '*';
+        }
+        clientLiteral += clientParam.language.go!.name;
+        clientLiterals.push(clientLiteral);
       }
     }
     clientText += '\tpl runtime.Pipeline\n';
@@ -105,7 +118,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
     // if there are any optional client params, create a client options struct and put them there.
     // note that we don't do this for data-plane as it takes a pipeline, not an options struct.
-    if (optionalParams.length > 0) {
+    if (isARM && optionalParams.length > 0) {
       optionsType = `${clientName}Options`;
       clientText += `// ${optionsType} contains the optional parameters for ${clientCtor}.\n`;
       clientText += `type ${optionsType} struct {\n`;
@@ -257,12 +270,26 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         parameterizedURL = 'hostURL';
       }
     }
+    // populate any default values.  this only applies to non-ARM
+    // scenarios as they don't generate an options struct.
+    if (!isARM) {
+      for (const optionalParam of values(optionalParams)) {
+        if (optionalParam.clientDefaultValue) {
+          clientText += `\tif ${optionalParam.language.go!.name} == nil {\n`;
+          clientText += `\t\t${optionalParam.language.go!.name}Default := ${getClientDefaultValue(optionalParam)}\n`;
+          clientText += `\t\t${optionalParam.language.go!.name} = &${optionalParam.language.go!.name}Default\n`;
+          clientText += '\t}\n';
+        }
+      }
+    }
     // construct client literal
     clientText += `\tclient := &${clientName}{\n`;
     // populate any default values
-    for (const optionalParam of values(optionalParams)) {
-      if (optionalParam.clientDefaultValue) {
-        clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam)},\n`;
+    if (isARM) {
+      for (const optionalParam of values(optionalParams)) {
+        if (optionalParam.clientDefaultValue) {
+          clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam)},\n`;
+        }
       }
     }
     if (parameterizedURL !== '') {
@@ -289,15 +316,17 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     clientText += '\t}\n';
     // propagate optional params
     for (const optionalParam of values(optionalParams)) {
-      if (optionalParam.clientDefaultValue || optionalParam.required === false) {
-        let paramName = optionalParam.language.go!.name;
-        if (isARM) {
-          paramName = `options.${capitalize(optionalParam.language.go!.name)}`;
-        }
-        clientText += `\tif ${paramName} != nil {\n`;
-        clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
-        clientText += '\t}\n';
+      if (optionalParam.clientDefaultValue && !isARM) {
+        // in the non-ARM case, these were handled earlier
+        continue;
       }
+      let paramName = optionalParam.language.go!.name;
+      if (isARM) {
+        paramName = `options.${capitalize(optionalParam.language.go!.name)}`;
+      }
+      clientText += `\tif ${paramName} != nil {\n`;
+      clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
+      clientText += '\t}\n';
     }
     clientText += '\treturn client\n';
     clientText += '}\n\n';
@@ -346,6 +375,16 @@ function getClientDefaultValue(param: Parameter): string {
   switch (param.schema.type) {
     case SchemaType.Choice:
       return getChoiceValue((<ChoiceSchema>param.schema).choices);
+    case SchemaType.Integer:
+      if ((<NumberSchema>param.schema).precision === 32) {
+        return `int32(${param.clientDefaultValue})`;
+      }
+      return `int64(${param.clientDefaultValue})`;
+    case SchemaType.Number:
+      if ((<NumberSchema>param.schema).precision === 32) {
+        return `float32(${param.clientDefaultValue})`;
+      }
+      return `float64(${param.clientDefaultValue})`;
     case SchemaType.SealedChoice:
       return getChoiceValue((<SealedChoiceSchema>param.schema).choices);
     case SchemaType.String:
@@ -682,7 +721,9 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     }
     const emitQueryParam = function (qp: Parameter, setter: string): string {
       let qpText = '';
-      if (qp.required === true) {
+      if (qp.clientDefaultValue && qp.implementation === ImplementationLocation.Method) {
+        qpText = emitClientSideDefault(qp, '\treqQP.Set', imports);
+      } else if (qp.required === true) {
         qpText = `\t${setter}\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
         // global optional param
@@ -767,7 +808,9 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
   headerParam.forEach(header => {
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
-      if (header.schema.language.go!.headerCollectionPrefix) {
+      if (headerParam.clientDefaultValue && headerParam.implementation === ImplementationLocation.Method) {
+        return emitClientSideDefault(headerParam, `${prefix}req.Raw().Header.Set`, imports);
+      } else if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
         headerText += `${prefix}\treq.Raw().Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
         headerText += `${prefix}}\n`;
@@ -776,7 +819,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         return `${prefix}req.Raw().Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports)})\n`;
       }
     }
-    if (header.required) {
+    if (header.required || header.clientDefaultValue) {
       text += emitHeaderSet(header, '\t');
     } else {
       text += emitParamGroupCheck(<GroupProperty>header.language.go!.paramGroup, header);
@@ -896,6 +939,16 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     text += `\treturn req, nil\n`;
   }
   text += '}\n\n';
+  return text;
+}
+
+function emitClientSideDefault(param: Parameter, setter: string, imports: ImportManager): string {
+  const defaultVar = uncapitalize(param.language.go!.name) + 'Default';
+  let text = `\t${defaultVar} := ${getClientDefaultValue(param)}\n`;
+  text += `\tif options != nil && options.${capitalize(param.language.go!.name)} != nil {\n`;
+  text += `\t\t${defaultVar} = *options.${capitalize(param.language.go!.name)}\n`;
+  text += '}\n';
+  text += `${setter}("${param.language.go!.serializedName}", ${formatValue(defaultVar, param.schema, imports)})\n`;
   return text;
 }
 

@@ -150,9 +150,11 @@ func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
+	modelsDefault := "value1"
 	if options != nil && options.Models != nil {
-		reqQP.Set("models", *options.Models)
+		modelsDefault = *options.Models
 	}
+	reqQP.Set("models", modelsDefault)
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil

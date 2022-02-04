@@ -51,28 +51,41 @@
   ],
   "responses": {},
   "parameters": {
-    "AliasApiVersionV2": {
-      "name": "api-version",
+    "SomeClientVersion": {
+      "name": "client-version",
       "description": "Version number of Azure Maps API.",
       "type": "string",
       "in": "query",
-      "default": "2.0",
-      "x-ms-parameter-location": "client"
+      "required": true,
+      "x-ms-parameter-location": "client",
+      "x-ms-client-default": "2.0"
+    },
+    "SomeClientIndex": {
+      "name": "client-index",
+      "description": "Version number of Azure Maps API.",
+      "type": "integer",
+      "in": "header",
+      "required": true,
+      "x-ms-parameter-location": "client",
+      "x-ms-client-default": "567"
     },
     "CreateCreatorDataItemId": {
-      "name": "creatorDataItemId",
+      "name": "creator-id",
       "description": "The unique id that references a creator data item to be aliased.",
-      "type": "string",
-      "in": "query",
-      "x-ms-parameter-location": "method"
-    },
-    "AssignCreatorDataItemId": {
-      "name": "creatorDataItemId",
-      "description": "The unique id that references a creator data item to be aliased.",
-      "type": "string",
+      "type": "integer",
       "in": "query",
       "required": true,
-      "x-ms-parameter-location": "method"
+      "x-ms-parameter-location": "method",
+      "x-ms-client-default": "123"
+    },
+    "AssignCreatorDataItemId": {
+      "name": "assigned-id",
+      "description": "The unique id that references a creator data item to be aliased.",
+      "type": "number",
+      "in": "header",
+      "required": true,
+      "x-ms-parameter-location": "method",
+      "x-ms-client-default": "8989"
     },
     "AliasId": {
       "name": "aliasId",
@@ -138,10 +151,16 @@
         },
         "parameters": [
           {
-            "$ref": "#/parameters/AliasApiVersionV2"
+            "$ref": "#/parameters/SomeClientVersion"
+          },
+          {
+            "$ref": "#/parameters/SomeClientIndex"
           },
           {
             "$ref": "#/parameters/CreateCreatorDataItemId"
+          },
+          {
+            "$ref": "#/parameters/AssignCreatorDataItemId"
           },
           {
             "name": "groupBy",
@@ -191,7 +210,7 @@
         },
         "parameters": [
           {
-            "$ref": "#/parameters/AliasApiVersionV2"
+            "$ref": "#/parameters/SomeClientVersion"
           },
           {
             "name": "groupBy",
