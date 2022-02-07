@@ -62,7 +62,7 @@
     },
     "SomeClientIndex": {
       "name": "client-index",
-      "description": "Version number of Azure Maps API.",
+      "description": "Index number of Azure Maps API.",
       "type": "integer",
       "in": "header",
       "required": true,
@@ -80,7 +80,7 @@
     },
     "AssignCreatorDataItemId": {
       "name": "assigned-id",
-      "description": "The unique id that references a creator data item to be aliased.",
+      "description": "The unique id that references the assigned data item to be aliased.",
       "type": "number",
       "in": "header",
       "required": true,

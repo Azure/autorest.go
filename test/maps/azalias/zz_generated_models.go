@@ -149,7 +149,7 @@ type ScheduleCreateOrUpdateProperties struct {
 // clientCreateOptions contains the optional parameters for the client.Create method.
 type clientCreateOptions struct {
 	GroupBy []SomethingCount
-	// The unique id that references a creator data item to be aliased.
+	// The unique id that references the assigned data item to be aliased.
 	AssignedID *float32
 	// The unique id that references a creator data item to be aliased.
 	CreatorID *int32
