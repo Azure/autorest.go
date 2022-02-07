@@ -228,6 +228,25 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
           imports.add('strings');
           return `strings.Join(strings.Fields(strings.Trim(fmt.Sprint(${paramName}), "[]")), "${separator}")`;
       }
+    case SchemaType.Date:
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substring(1);
+      }
+    case SchemaType.DateTime:
+      imports.add('time');
+      if (param.required !== true && paramName[0] === '*') {
+        // remove the dereference
+        paramName = paramName.substring(1);
+      }
+  }
+  return formatValue(paramName, param.schema, imports);
+}
+
+export function formatValue(paramName: string, schema: Schema, imports: ImportManager): string {
+  switch (schema.type) {
+    case SchemaType.Array:
+      throw new Error(`can't format array without parameter info`);
     case SchemaType.Boolean:
       imports.add('strconv');
       return `strconv.FormatBool(${paramName})`;
@@ -235,7 +254,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
       // ByteArray is a base-64 encoded value in string format
       imports.add('encoding/base64');
       let byteFormat = 'Std';
-      if ((<ByteArraySchema>param.schema).format === 'base64url') {
+      if ((<ByteArraySchema>schema).format === 'base64url') {
         byteFormat = 'RawURL';
       }
       return `base64.${byteFormat}Encoding.EncodeToString(${paramName})`;
@@ -243,23 +262,15 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
     case SchemaType.SealedChoice:
       return `string(${paramName})`;
     case SchemaType.Constant:
-      const constSchema = <ConstantSchema>param.schema;
+      const constSchema = <ConstantSchema>schema;
       // cannot use formatConstantValue() since all values are treated as strings
       return `"${constSchema.value.value}"`;
     case SchemaType.Date:
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substring(1);
-      }
       return `${paramName}.Format("${dateFormat}")`;
     case SchemaType.DateTime:
       imports.add('time');
-      if (param.required !== true && paramName[0] === '*') {
-        // remove the dereference
-        paramName = paramName.substring(1);
-      }
       let format = datetimeRFC3339Format;
-      const dateTime = <DateTimeSchema>param.schema;
+      const dateTime = <DateTimeSchema>schema;
       if (dateTime.format === 'date-time-rfc1123') {
         format = datetimeRFC1123Format;
       }
@@ -268,7 +279,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
       return `timeUnix(${paramName}).String()`;
     case SchemaType.Integer:
       imports.add('strconv');
-      const intSchema = <NumberSchema>param.schema;
+      const intSchema = <NumberSchema>schema;
       let intParam = paramName;
       if (intSchema.precision === 32) {
         intParam = `int64(${intParam})`;
@@ -276,7 +287,7 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
       return `strconv.FormatInt(${intParam}, 10)`;
     case SchemaType.Number:
       imports.add('strconv');
-      const numberSchema = <NumberSchema>param.schema;
+      const numberSchema = <NumberSchema>schema;
       let floatParam = paramName;
       if (numberSchema.precision === 32) {
         floatParam = `float64(${floatParam})`;

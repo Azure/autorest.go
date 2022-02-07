@@ -366,6 +366,12 @@ function processOperationRequests(session: Session<CodeModel>) {
         if (param.language.go!.description) {
           param.language.go!.description = parseComments(param.language.go!.description);
         }
+        if (param.clientDefaultValue && param.implementation === ImplementationLocation.Method) {
+          // we treat method params with a client-side default as optional
+          // since if you don't specify a value, a default is sent and the
+          // zero-value is ambiguous.
+          param.required = false;
+        }
         if (!param.required && param.schema.type === SchemaType.Constant && !param.language.go!.amendedDesc) {
           if (param.language.go!.description) {
             param.language.go!.description += '. ';

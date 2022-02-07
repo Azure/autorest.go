@@ -14,30 +14,42 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
 type client struct {
-	endpoint   string
-	apiVersion *string
-	pl         runtime.Pipeline
+	endpoint      string
+	clientVersion string
+	clientIndex   int32
+	pl            runtime.Pipeline
 }
 
 // newClient creates a new instance of client with the specified values.
 // geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
-// apiVersion - Api Version. Specifying any value will set the value to 2.0.
+// clientVersion - Version number of Azure Maps API.
+// clientIndex - Index number of Azure Maps API.
 // pl - the pipeline used for sending requests and handling responses.
-func newClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *client {
+func newClient(geography *Geography, clientVersion *string, clientIndex *int32, pl runtime.Pipeline) *client {
 	hostURL := "https://{geography}.atlas.microsoft.com"
 	if geography == nil {
 		defaultValue := GeographyUs
 		geography = &defaultValue
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
+	if clientVersion == nil {
+		clientVersionDefault := "2.0"
+		clientVersion = &clientVersionDefault
+	}
+	if clientIndex == nil {
+		clientIndexDefault := int32(567)
+		clientIndex = &clientIndexDefault
+	}
 	client := &client{
-		endpoint:   hostURL,
-		apiVersion: apiVersion,
-		pl:         pl,
+		endpoint:      hostURL,
+		clientVersion: *clientVersion,
+		clientIndex:   *clientIndex,
+		pl:            pl,
 	}
 	return client
 }
@@ -81,18 +93,24 @@ func (client *client) createCreateRequest(ctx context.Context, options *clientCr
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if client.apiVersion != nil {
-		reqQP.Set("api-version", "2.0")
+	reqQP.Set("client-version", client.clientVersion)
+	creatorIDDefault := int32(123)
+	if options != nil && options.CreatorID != nil {
+		creatorIDDefault = *options.CreatorID
 	}
-	if options != nil && options.CreatorDataItemID != nil {
-		reqQP.Set("creatorDataItemId", *options.CreatorDataItemID)
-	}
+	reqQP.Set("creator-id", strconv.FormatInt(int64(creatorIDDefault), 10))
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header.Set("client-index", strconv.FormatInt(int64(client.clientIndex), 10))
+	assignedIDDefault := float32(8989)
+	if options != nil && options.AssignedID != nil {
+		assignedIDDefault = *options.AssignedID
+	}
+	req.Raw().Header.Set("assigned-id", strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32))
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
@@ -190,9 +208,7 @@ func (client *client) listCreateRequest(ctx context.Context, options *clientList
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if client.apiVersion != nil {
-		reqQP.Set("api-version", "2.0")
-	}
+	reqQP.Set("client-version", client.clientVersion)
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", string(qv))
