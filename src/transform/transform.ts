@@ -657,7 +657,7 @@ const scalarResponsePropName = 'Value';
 //   Header1 *string <== modeled header response
 //   Header2 *int    <== modeled header response
 //   Widget          <== this is the result property, i.e. the schema result if the operation returns a model
-//}
+// }
 //
 function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
