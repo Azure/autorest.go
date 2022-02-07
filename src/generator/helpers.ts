@@ -103,13 +103,13 @@ export function substituteDiscriminator(schema: Schema, elemByVal: boolean): str
   }
 }
 
-// if an LRO returns a discriminated type, unmarshall the response into the result envelope, else the property field
-export function discriminatorFinalResponse(resultEnv: Property): string {
-  const resultProp = <Property>resultEnv.language.go!.resultField;
+// if an LRO returns a discriminated type, unmarshall the response into the response envelope, else the property field
+export function discriminatorFinalResponse(respEnv: ObjectSchema): string {
+  const resultProp = <Property>respEnv.language.go!.resultProp;
   if (resultProp.schema.language.go!.discriminatorInterface) {
-    return resultEnv.language.go!.name;
+    return '';
   }
-  return resultProp.language.go!.name;
+  return '.' + resultProp.language.go!.name;
 }
 
 // returns the parameters for the internal request creator method.
@@ -321,11 +321,11 @@ export function getFinalResponseEnvelopeName(op: Operation): string {
   return op.language.go!.finalResponseEnv.language.go!.name;
 }
 
-// returns the result envelope for the operation or undefined if it doesn't return a model
-export function hasResultEnvelope(op: Operation): Property | undefined {
+// returns the result property for the operation or undefined if it doesn't return a model
+export function hasResultProperty(op: Operation): Property | undefined {
   const responseEnv = getResponseEnvelope(op);
-  if (responseEnv.language.go!.resultEnv) {
-    return responseEnv.language.go!.resultEnv;
+  if (responseEnv.language.go!.resultProp) {
+    return responseEnv.language.go!.resultProp;
   }
   return undefined;
 }
@@ -339,7 +339,7 @@ export function getResponseEnvelope(op: Operation): ObjectSchema {
   return responseEnv;
 }
 
-// returns the name of the response field within the result envelope
+// returns the name of the response field within the response envelope
 export function getResultFieldName(op: Operation): string {
   if (isMultiRespOperation(op)) {
     return 'Value';
@@ -349,12 +349,12 @@ export function getResultFieldName(op: Operation): string {
     // we need to consult the final response envelope for LROs
     responseEnv = op.language.go!.finalResponseEnv;
   }
-  if (responseEnv.language.go!.resultEnv.language.go!.resultField.schema.serialization?.xml?.name) {
-    // here we use the schema name instead of the result field name as it's anonymously embedded in the result envelope.
+  if (responseEnv.language.go!.resultProp.schema.serialization?.xml?.name) {
+    // here we use the schema name instead of the result field name as it's anonymously embedded in the response envelope.
     // this is to handle XML cases that specify a custom XML name for the propery within the result field.
-    return responseEnv.language.go!.resultEnv.language.go!.resultField.schema.language.go!.name;
+    return responseEnv.language.go!.resultProp.schema.language.go!.name;
   }
-  return responseEnv.language.go!.resultEnv.language.go!.resultField.language.go!.name;
+  return responseEnv.language.go!.resultProp.language.go!.name;
 }
 
 export function getStatusCodes(op: Operation): string[] {

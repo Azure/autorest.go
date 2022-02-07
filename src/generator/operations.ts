@@ -5,11 +5,11 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
-import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, ObjectSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
+import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, emitPoller, formatParameterTypeName, formatStatusCodes, formatValue, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultEnvelope, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, emitPoller, formatParameterTypeName, formatStatusCodes, formatValue, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -498,11 +498,8 @@ function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): s
 
 // returns true if the response contains any headers
 function responseHasHeaders(op: Operation): boolean {
-  const resultEnv = hasResultEnvelope(op);
-  if (!resultEnv) {
-    return false;
-  }
-  for (const prop of values((<ObjectSchema>resultEnv.schema).properties)) {
+  const respEnv = getResponseEnvelope(op);
+  for (const prop of values(respEnv.properties)) {
     if (prop.language.go!.fromHeader) {
       return true;
     }
@@ -990,7 +987,7 @@ function isArrayOfDatesForMarshalling(schema: Schema): boolean {
 }
 
 function needsResponseHandler(op: Operation): boolean {
-  return hasSchemaResponse(op) || responseHasHeaders(op) || (isLROOperation(op) && hasResultEnvelope(op) !== undefined) || isPageableOperation(op);
+  return hasSchemaResponse(op) || responseHasHeaders(op) || (isLROOperation(op) && hasResultProperty(op) !== undefined) || isPageableOperation(op);
 }
 
 function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, unmarshalTarget: string): string {
@@ -1068,14 +1065,14 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     }
   }
   if (!isMultiRespOperation(op)) {
-    let respEnv = getResponseEnvelopeName(op);
+    let respEnvName = getResponseEnvelopeName(op);
     if (isLROOperation(op)) {
-      respEnv = getFinalResponseEnvelopeName(op);
+      respEnvName = getFinalResponseEnvelopeName(op);
     }
-    text += `\tresult := ${respEnv}{RawResponse: resp}\n`;
+    text += `\tresult := ${respEnvName}{RawResponse: resp}\n`;
     // we know there's a result envelope at this point
-    const resultEnv = hasResultEnvelope(op);
-    addHeaders((<ObjectSchema>resultEnv!.schema).properties);
+    const respEnv = getResponseEnvelope(op);
+    addHeaders(respEnv.properties);
     const schemaResponse = getSchemaResponse(op);
     if (op.language.go!.headAsBoolean === true) {
       text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';

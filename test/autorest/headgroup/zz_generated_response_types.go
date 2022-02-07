@@ -12,39 +12,27 @@ import "net/http"
 
 // HTTPSuccessClientHead200Response contains the response from method HTTPSuccessClient.Head200.
 type HTTPSuccessClientHead200Response struct {
-	HTTPSuccessClientHead200Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientHead200Result contains the result from method HTTPSuccessClient.Head200.
-type HTTPSuccessClientHead200Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientHead204Response contains the response from method HTTPSuccessClient.Head204.
 type HTTPSuccessClientHead204Response struct {
-	HTTPSuccessClientHead204Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientHead204Result contains the result from method HTTPSuccessClient.Head204.
-type HTTPSuccessClientHead204Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientHead404Response contains the response from method HTTPSuccessClient.Head404.
 type HTTPSuccessClientHead404Response struct {
-	HTTPSuccessClientHead404Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientHead404Result contains the result from method HTTPSuccessClient.Head404.
-type HTTPSuccessClientHead404Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }

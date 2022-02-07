@@ -148,14 +148,9 @@ func (l *LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse)
 
 // LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse contains the response from method LRORetrysClient.DeleteProvisioning202Accepted200Succeeded.
 type LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse struct {
-	LRORetrysClientDeleteProvisioning202Accepted200SucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LRORetrysClientDeleteProvisioning202Accepted200SucceededResult contains the result from method LRORetrysClient.DeleteProvisioning202Accepted200Succeeded.
-type LRORetrysClientDeleteProvisioning202Accepted200SucceededResult struct {
-	Product
 }
 
 // LRORetrysClientPost202Retry200PollerResponse contains the response from method LRORetrysClient.Post202Retry200.
@@ -289,14 +284,9 @@ func (l *LRORetrysClientPut201CreatingSucceeded200PollerResponse) Resume(ctx con
 
 // LRORetrysClientPut201CreatingSucceeded200Response contains the response from method LRORetrysClient.Put201CreatingSucceeded200.
 type LRORetrysClientPut201CreatingSucceeded200Response struct {
-	LRORetrysClientPut201CreatingSucceeded200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LRORetrysClientPut201CreatingSucceeded200Result contains the result from method LRORetrysClient.Put201CreatingSucceeded200.
-type LRORetrysClientPut201CreatingSucceeded200Result struct {
-	Product
 }
 
 // LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrysClient.PutAsyncRelativeRetrySucceeded.
@@ -340,14 +330,9 @@ func (l *LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse) Resume(ctx
 
 // LRORetrysClientPutAsyncRelativeRetrySucceededResponse contains the response from method LRORetrysClient.PutAsyncRelativeRetrySucceeded.
 type LRORetrysClientPutAsyncRelativeRetrySucceededResponse struct {
-	LRORetrysClientPutAsyncRelativeRetrySucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LRORetrysClientPutAsyncRelativeRetrySucceededResult contains the result from method LRORetrysClient.PutAsyncRelativeRetrySucceeded.
-type LRORetrysClientPutAsyncRelativeRetrySucceededResult struct {
-	Product
 }
 
 // LROSADsClientDelete202NonRetry400PollerResponse contains the response from method LROSADsClient.Delete202NonRetry400.
@@ -1115,14 +1100,9 @@ func (l *LROSADsClientPut200InvalidJSONPollerResponse) Resume(ctx context.Contex
 
 // LROSADsClientPut200InvalidJSONResponse contains the response from method LROSADsClient.Put200InvalidJSON.
 type LROSADsClientPut200InvalidJSONResponse struct {
-	LROSADsClientPut200InvalidJSONResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPut200InvalidJSONResult contains the result from method LROSADsClient.Put200InvalidJSON.
-type LROSADsClientPut200InvalidJSONResult struct {
-	Product
 }
 
 // LROSADsClientPutAsyncRelativeRetry400PollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetry400.
@@ -1166,14 +1146,9 @@ func (l *LROSADsClientPutAsyncRelativeRetry400PollerResponse) Resume(ctx context
 
 // LROSADsClientPutAsyncRelativeRetry400Response contains the response from method LROSADsClient.PutAsyncRelativeRetry400.
 type LROSADsClientPutAsyncRelativeRetry400Response struct {
-	LROSADsClientPutAsyncRelativeRetry400Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutAsyncRelativeRetry400Result contains the result from method LROSADsClient.PutAsyncRelativeRetry400.
-type LROSADsClientPutAsyncRelativeRetry400Result struct {
-	Product
 }
 
 // LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidHeader.
@@ -1217,14 +1192,9 @@ func (l *LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(c
 
 // LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidHeader.
 type LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse struct {
-	LROSADsClientPutAsyncRelativeRetryInvalidHeaderResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutAsyncRelativeRetryInvalidHeaderResult contains the result from method LROSADsClient.PutAsyncRelativeRetryInvalidHeader.
-type LROSADsClientPutAsyncRelativeRetryInvalidHeaderResult struct {
-	Product
 }
 
 // LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling.
@@ -1269,14 +1239,9 @@ func (l *LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse) Res
 
 // LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling.
 type LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse struct {
-	LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResult contains the result from method LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling.
-type LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResult struct {
-	Product
 }
 
 // LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatusPayload.
@@ -1321,14 +1286,9 @@ func (l *LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse) Resume
 
 // LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatusPayload.
 type LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse struct {
-	LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResult contains the result from method LROSADsClient.PutAsyncRelativeRetryNoStatusPayload.
-type LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResult struct {
-	Product
 }
 
 // LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatus.
@@ -1372,14 +1332,9 @@ func (l *LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse) Resume(ctx co
 
 // LROSADsClientPutAsyncRelativeRetryNoStatusResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatus.
 type LROSADsClientPutAsyncRelativeRetryNoStatusResponse struct {
-	LROSADsClientPutAsyncRelativeRetryNoStatusResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutAsyncRelativeRetryNoStatusResult contains the result from method LROSADsClient.PutAsyncRelativeRetryNoStatus.
-type LROSADsClientPutAsyncRelativeRetryNoStatusResult struct {
-	Product
 }
 
 // LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse contains the response from method LROSADsClient.PutError201NoProvisioningStatePayload.
@@ -1424,14 +1379,9 @@ func (l *LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse) Resum
 
 // LROSADsClientPutError201NoProvisioningStatePayloadResponse contains the response from method LROSADsClient.PutError201NoProvisioningStatePayload.
 type LROSADsClientPutError201NoProvisioningStatePayloadResponse struct {
-	LROSADsClientPutError201NoProvisioningStatePayloadResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutError201NoProvisioningStatePayloadResult contains the result from method LROSADsClient.PutError201NoProvisioningStatePayload.
-type LROSADsClientPutError201NoProvisioningStatePayloadResult struct {
-	Product
 }
 
 // LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse contains the response from method LROSADsClient.PutNonRetry201Creating400InvalidJSON.
@@ -1476,14 +1426,9 @@ func (l *LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse) Resume
 
 // LROSADsClientPutNonRetry201Creating400InvalidJSONResponse contains the response from method LROSADsClient.PutNonRetry201Creating400InvalidJSON.
 type LROSADsClientPutNonRetry201Creating400InvalidJSONResponse struct {
-	LROSADsClientPutNonRetry201Creating400InvalidJSONResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutNonRetry201Creating400InvalidJSONResult contains the result from method LROSADsClient.PutNonRetry201Creating400InvalidJSON.
-type LROSADsClientPutNonRetry201Creating400InvalidJSONResult struct {
-	Product
 }
 
 // LROSADsClientPutNonRetry201Creating400PollerResponse contains the response from method LROSADsClient.PutNonRetry201Creating400.
@@ -1527,14 +1472,9 @@ func (l *LROSADsClientPutNonRetry201Creating400PollerResponse) Resume(ctx contex
 
 // LROSADsClientPutNonRetry201Creating400Response contains the response from method LROSADsClient.PutNonRetry201Creating400.
 type LROSADsClientPutNonRetry201Creating400Response struct {
-	LROSADsClientPutNonRetry201Creating400Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutNonRetry201Creating400Result contains the result from method LROSADsClient.PutNonRetry201Creating400.
-type LROSADsClientPutNonRetry201Creating400Result struct {
-	Product
 }
 
 // LROSADsClientPutNonRetry400PollerResponse contains the response from method LROSADsClient.PutNonRetry400.
@@ -1578,14 +1518,9 @@ func (l *LROSADsClientPutNonRetry400PollerResponse) Resume(ctx context.Context, 
 
 // LROSADsClientPutNonRetry400Response contains the response from method LROSADsClient.PutNonRetry400.
 type LROSADsClientPutNonRetry400Response struct {
-	LROSADsClientPutNonRetry400Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROSADsClientPutNonRetry400Result contains the result from method LROSADsClient.PutNonRetry400.
-type LROSADsClientPutNonRetry400Result struct {
-	Product
 }
 
 // LROsClientDelete202NoRetry204PollerResponse contains the response from method LROsClient.Delete202NoRetry204.
@@ -1629,14 +1564,9 @@ func (l *LROsClientDelete202NoRetry204PollerResponse) Resume(ctx context.Context
 
 // LROsClientDelete202NoRetry204Response contains the response from method LROsClient.Delete202NoRetry204.
 type LROsClientDelete202NoRetry204Response struct {
-	LROsClientDelete202NoRetry204Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientDelete202NoRetry204Result contains the result from method LROsClient.Delete202NoRetry204.
-type LROsClientDelete202NoRetry204Result struct {
-	Product
 }
 
 // LROsClientDelete202Retry200PollerResponse contains the response from method LROsClient.Delete202Retry200.
@@ -1680,14 +1610,9 @@ func (l *LROsClientDelete202Retry200PollerResponse) Resume(ctx context.Context, 
 
 // LROsClientDelete202Retry200Response contains the response from method LROsClient.Delete202Retry200.
 type LROsClientDelete202Retry200Response struct {
-	LROsClientDelete202Retry200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientDelete202Retry200Result contains the result from method LROsClient.Delete202Retry200.
-type LROsClientDelete202Retry200Result struct {
-	Product
 }
 
 // LROsClientDelete204SucceededPollerResponse contains the response from method LROsClient.Delete204Succeeded.
@@ -2047,14 +1972,9 @@ func (l *LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse) Resu
 
 // LROsClientDeleteProvisioning202Accepted200SucceededResponse contains the response from method LROsClient.DeleteProvisioning202Accepted200Succeeded.
 type LROsClientDeleteProvisioning202Accepted200SucceededResponse struct {
-	LROsClientDeleteProvisioning202Accepted200SucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientDeleteProvisioning202Accepted200SucceededResult contains the result from method LROsClient.DeleteProvisioning202Accepted200Succeeded.
-type LROsClientDeleteProvisioning202Accepted200SucceededResult struct {
-	Product
 }
 
 // LROsClientDeleteProvisioning202DeletingFailed200PollerResponse contains the response from method LROsClient.DeleteProvisioning202DeletingFailed200.
@@ -2099,14 +2019,9 @@ func (l *LROsClientDeleteProvisioning202DeletingFailed200PollerResponse) Resume(
 
 // LROsClientDeleteProvisioning202DeletingFailed200Response contains the response from method LROsClient.DeleteProvisioning202DeletingFailed200.
 type LROsClientDeleteProvisioning202DeletingFailed200Response struct {
-	LROsClientDeleteProvisioning202DeletingFailed200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientDeleteProvisioning202DeletingFailed200Result contains the result from method LROsClient.DeleteProvisioning202DeletingFailed200.
-type LROsClientDeleteProvisioning202DeletingFailed200Result struct {
-	Product
 }
 
 // LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse contains the response from method LROsClient.DeleteProvisioning202Deletingcanceled200.
@@ -2151,14 +2066,9 @@ func (l *LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse) Resum
 
 // LROsClientDeleteProvisioning202Deletingcanceled200Response contains the response from method LROsClient.DeleteProvisioning202Deletingcanceled200.
 type LROsClientDeleteProvisioning202Deletingcanceled200Response struct {
-	LROsClientDeleteProvisioning202Deletingcanceled200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientDeleteProvisioning202Deletingcanceled200Result contains the result from method LROsClient.DeleteProvisioning202Deletingcanceled200.
-type LROsClientDeleteProvisioning202Deletingcanceled200Result struct {
-	Product
 }
 
 // LROsClientPatch200SucceededIgnoreHeadersPollerResponse contains the response from method LROsClient.Patch200SucceededIgnoreHeaders.
@@ -2202,14 +2112,9 @@ func (l *LROsClientPatch200SucceededIgnoreHeadersPollerResponse) Resume(ctx cont
 
 // LROsClientPatch200SucceededIgnoreHeadersResponse contains the response from method LROsClient.Patch200SucceededIgnoreHeaders.
 type LROsClientPatch200SucceededIgnoreHeadersResponse struct {
-	LROsClientPatch200SucceededIgnoreHeadersResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPatch200SucceededIgnoreHeadersResult contains the result from method LROsClient.Patch200SucceededIgnoreHeaders.
-type LROsClientPatch200SucceededIgnoreHeadersResult struct {
-	Product
 }
 
 // LROsClientPost200WithPayloadPollerResponse contains the response from method LROsClient.Post200WithPayload.
@@ -2253,14 +2158,9 @@ func (l *LROsClientPost200WithPayloadPollerResponse) Resume(ctx context.Context,
 
 // LROsClientPost200WithPayloadResponse contains the response from method LROsClient.Post200WithPayload.
 type LROsClientPost200WithPayloadResponse struct {
-	LROsClientPost200WithPayloadResult
+	SKU
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPost200WithPayloadResult contains the result from method LROsClient.Post200WithPayload.
-type LROsClientPost200WithPayloadResult struct {
-	SKU
 }
 
 // LROsClientPost202ListPollerResponse contains the response from method LROsClient.Post202List.
@@ -2304,15 +2204,11 @@ func (l *LROsClientPost202ListPollerResponse) Resume(ctx context.Context, client
 
 // LROsClientPost202ListResponse contains the response from method LROsClient.Post202List.
 type LROsClientPost202ListResponse struct {
-	LROsClientPost202ListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// LROsClientPost202ListResult contains the result from method LROsClient.Post202List.
-type LROsClientPost202ListResult struct {
 	// Array of Product
 	ProductArray []*Product
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // LROsClientPost202NoRetry204PollerResponse contains the response from method LROsClient.Post202NoRetry204.
@@ -2356,14 +2252,9 @@ func (l *LROsClientPost202NoRetry204PollerResponse) Resume(ctx context.Context, 
 
 // LROsClientPost202NoRetry204Response contains the response from method LROsClient.Post202NoRetry204.
 type LROsClientPost202NoRetry204Response struct {
-	LROsClientPost202NoRetry204Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPost202NoRetry204Result contains the result from method LROsClient.Post202NoRetry204.
-type LROsClientPost202NoRetry204Result struct {
-	Product
 }
 
 // LROsClientPost202Retry200PollerResponse contains the response from method LROsClient.Post202Retry200.
@@ -2452,14 +2343,9 @@ func (l *LROsClientPostAsyncNoRetrySucceededPollerResponse) Resume(ctx context.C
 
 // LROsClientPostAsyncNoRetrySucceededResponse contains the response from method LROsClient.PostAsyncNoRetrySucceeded.
 type LROsClientPostAsyncNoRetrySucceededResponse struct {
-	LROsClientPostAsyncNoRetrySucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPostAsyncNoRetrySucceededResult contains the result from method LROsClient.PostAsyncNoRetrySucceeded.
-type LROsClientPostAsyncNoRetrySucceededResult struct {
-	Product
 }
 
 // LROsClientPostAsyncRetryFailedPollerResponse contains the response from method LROsClient.PostAsyncRetryFailed.
@@ -2548,14 +2434,9 @@ func (l *LROsClientPostAsyncRetrySucceededPollerResponse) Resume(ctx context.Con
 
 // LROsClientPostAsyncRetrySucceededResponse contains the response from method LROsClient.PostAsyncRetrySucceeded.
 type LROsClientPostAsyncRetrySucceededResponse struct {
-	LROsClientPostAsyncRetrySucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPostAsyncRetrySucceededResult contains the result from method LROsClient.PostAsyncRetrySucceeded.
-type LROsClientPostAsyncRetrySucceededResult struct {
-	Product
 }
 
 // LROsClientPostAsyncRetrycanceledPollerResponse contains the response from method LROsClient.PostAsyncRetrycanceled.
@@ -2645,14 +2526,9 @@ func (l *LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse) Re
 
 // LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault.
 type LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse struct {
-	LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResult contains the result from method LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault.
-type LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResult struct {
-	Product
 }
 
 // LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGet.
@@ -2696,14 +2572,9 @@ func (l *LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse) Resume(ct
 
 // LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGet.
 type LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse struct {
-	LROsClientPostDoubleHeadersFinalAzureHeaderGetResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPostDoubleHeadersFinalAzureHeaderGetResult contains the result from method LROsClient.PostDoubleHeadersFinalAzureHeaderGet.
-type LROsClientPostDoubleHeadersFinalAzureHeaderGetResult struct {
-	Product
 }
 
 // LROsClientPostDoubleHeadersFinalLocationGetPollerResponse contains the response from method LROsClient.PostDoubleHeadersFinalLocationGet.
@@ -2747,14 +2618,9 @@ func (l *LROsClientPostDoubleHeadersFinalLocationGetPollerResponse) Resume(ctx c
 
 // LROsClientPostDoubleHeadersFinalLocationGetResponse contains the response from method LROsClient.PostDoubleHeadersFinalLocationGet.
 type LROsClientPostDoubleHeadersFinalLocationGetResponse struct {
-	LROsClientPostDoubleHeadersFinalLocationGetResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPostDoubleHeadersFinalLocationGetResult contains the result from method LROsClient.PostDoubleHeadersFinalLocationGet.
-type LROsClientPostDoubleHeadersFinalLocationGetResult struct {
-	Product
 }
 
 // LROsClientPut200Acceptedcanceled200PollerResponse contains the response from method LROsClient.Put200Acceptedcanceled200.
@@ -2798,14 +2664,9 @@ func (l *LROsClientPut200Acceptedcanceled200PollerResponse) Resume(ctx context.C
 
 // LROsClientPut200Acceptedcanceled200Response contains the response from method LROsClient.Put200Acceptedcanceled200.
 type LROsClientPut200Acceptedcanceled200Response struct {
-	LROsClientPut200Acceptedcanceled200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut200Acceptedcanceled200Result contains the result from method LROsClient.Put200Acceptedcanceled200.
-type LROsClientPut200Acceptedcanceled200Result struct {
-	Product
 }
 
 // LROsClientPut200SucceededNoStatePollerResponse contains the response from method LROsClient.Put200SucceededNoState.
@@ -2849,14 +2710,9 @@ func (l *LROsClientPut200SucceededNoStatePollerResponse) Resume(ctx context.Cont
 
 // LROsClientPut200SucceededNoStateResponse contains the response from method LROsClient.Put200SucceededNoState.
 type LROsClientPut200SucceededNoStateResponse struct {
-	LROsClientPut200SucceededNoStateResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut200SucceededNoStateResult contains the result from method LROsClient.Put200SucceededNoState.
-type LROsClientPut200SucceededNoStateResult struct {
-	Product
 }
 
 // LROsClientPut200SucceededPollerResponse contains the response from method LROsClient.Put200Succeeded.
@@ -2900,14 +2756,9 @@ func (l *LROsClientPut200SucceededPollerResponse) Resume(ctx context.Context, cl
 
 // LROsClientPut200SucceededResponse contains the response from method LROsClient.Put200Succeeded.
 type LROsClientPut200SucceededResponse struct {
-	LROsClientPut200SucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut200SucceededResult contains the result from method LROsClient.Put200Succeeded.
-type LROsClientPut200SucceededResult struct {
-	Product
 }
 
 // LROsClientPut200UpdatingSucceeded204PollerResponse contains the response from method LROsClient.Put200UpdatingSucceeded204.
@@ -2951,14 +2802,9 @@ func (l *LROsClientPut200UpdatingSucceeded204PollerResponse) Resume(ctx context.
 
 // LROsClientPut200UpdatingSucceeded204Response contains the response from method LROsClient.Put200UpdatingSucceeded204.
 type LROsClientPut200UpdatingSucceeded204Response struct {
-	LROsClientPut200UpdatingSucceeded204Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut200UpdatingSucceeded204Result contains the result from method LROsClient.Put200UpdatingSucceeded204.
-type LROsClientPut200UpdatingSucceeded204Result struct {
-	Product
 }
 
 // LROsClientPut201CreatingFailed200PollerResponse contains the response from method LROsClient.Put201CreatingFailed200.
@@ -3002,14 +2848,9 @@ func (l *LROsClientPut201CreatingFailed200PollerResponse) Resume(ctx context.Con
 
 // LROsClientPut201CreatingFailed200Response contains the response from method LROsClient.Put201CreatingFailed200.
 type LROsClientPut201CreatingFailed200Response struct {
-	LROsClientPut201CreatingFailed200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut201CreatingFailed200Result contains the result from method LROsClient.Put201CreatingFailed200.
-type LROsClientPut201CreatingFailed200Result struct {
-	Product
 }
 
 // LROsClientPut201CreatingSucceeded200PollerResponse contains the response from method LROsClient.Put201CreatingSucceeded200.
@@ -3053,14 +2894,9 @@ func (l *LROsClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.
 
 // LROsClientPut201CreatingSucceeded200Response contains the response from method LROsClient.Put201CreatingSucceeded200.
 type LROsClientPut201CreatingSucceeded200Response struct {
-	LROsClientPut201CreatingSucceeded200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut201CreatingSucceeded200Result contains the result from method LROsClient.Put201CreatingSucceeded200.
-type LROsClientPut201CreatingSucceeded200Result struct {
-	Product
 }
 
 // LROsClientPut201SucceededPollerResponse contains the response from method LROsClient.Put201Succeeded.
@@ -3104,14 +2940,9 @@ func (l *LROsClientPut201SucceededPollerResponse) Resume(ctx context.Context, cl
 
 // LROsClientPut201SucceededResponse contains the response from method LROsClient.Put201Succeeded.
 type LROsClientPut201SucceededResponse struct {
-	LROsClientPut201SucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut201SucceededResult contains the result from method LROsClient.Put201Succeeded.
-type LROsClientPut201SucceededResult struct {
-	Product
 }
 
 // LROsClientPut202Retry200PollerResponse contains the response from method LROsClient.Put202Retry200.
@@ -3155,14 +2986,9 @@ func (l *LROsClientPut202Retry200PollerResponse) Resume(ctx context.Context, cli
 
 // LROsClientPut202Retry200Response contains the response from method LROsClient.Put202Retry200.
 type LROsClientPut202Retry200Response struct {
-	LROsClientPut202Retry200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPut202Retry200Result contains the result from method LROsClient.Put202Retry200.
-type LROsClientPut202Retry200Result struct {
-	Product
 }
 
 // LROsClientPutAsyncNoHeaderInRetryPollerResponse contains the response from method LROsClient.PutAsyncNoHeaderInRetry.
@@ -3206,14 +3032,9 @@ func (l *LROsClientPutAsyncNoHeaderInRetryPollerResponse) Resume(ctx context.Con
 
 // LROsClientPutAsyncNoHeaderInRetryResponse contains the response from method LROsClient.PutAsyncNoHeaderInRetry.
 type LROsClientPutAsyncNoHeaderInRetryResponse struct {
-	LROsClientPutAsyncNoHeaderInRetryResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncNoHeaderInRetryResult contains the result from method LROsClient.PutAsyncNoHeaderInRetry.
-type LROsClientPutAsyncNoHeaderInRetryResult struct {
-	Product
 }
 
 // LROsClientPutAsyncNoRetrySucceededPollerResponse contains the response from method LROsClient.PutAsyncNoRetrySucceeded.
@@ -3257,14 +3078,9 @@ func (l *LROsClientPutAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Co
 
 // LROsClientPutAsyncNoRetrySucceededResponse contains the response from method LROsClient.PutAsyncNoRetrySucceeded.
 type LROsClientPutAsyncNoRetrySucceededResponse struct {
-	LROsClientPutAsyncNoRetrySucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncNoRetrySucceededResult contains the result from method LROsClient.PutAsyncNoRetrySucceeded.
-type LROsClientPutAsyncNoRetrySucceededResult struct {
-	Product
 }
 
 // LROsClientPutAsyncNoRetrycanceledPollerResponse contains the response from method LROsClient.PutAsyncNoRetrycanceled.
@@ -3308,14 +3124,9 @@ func (l *LROsClientPutAsyncNoRetrycanceledPollerResponse) Resume(ctx context.Con
 
 // LROsClientPutAsyncNoRetrycanceledResponse contains the response from method LROsClient.PutAsyncNoRetrycanceled.
 type LROsClientPutAsyncNoRetrycanceledResponse struct {
-	LROsClientPutAsyncNoRetrycanceledResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncNoRetrycanceledResult contains the result from method LROsClient.PutAsyncNoRetrycanceled.
-type LROsClientPutAsyncNoRetrycanceledResult struct {
-	Product
 }
 
 // LROsClientPutAsyncNonResourcePollerResponse contains the response from method LROsClient.PutAsyncNonResource.
@@ -3359,14 +3170,9 @@ func (l *LROsClientPutAsyncNonResourcePollerResponse) Resume(ctx context.Context
 
 // LROsClientPutAsyncNonResourceResponse contains the response from method LROsClient.PutAsyncNonResource.
 type LROsClientPutAsyncNonResourceResponse struct {
-	LROsClientPutAsyncNonResourceResult
+	SKU
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncNonResourceResult contains the result from method LROsClient.PutAsyncNonResource.
-type LROsClientPutAsyncNonResourceResult struct {
-	SKU
 }
 
 // LROsClientPutAsyncRetryFailedPollerResponse contains the response from method LROsClient.PutAsyncRetryFailed.
@@ -3410,14 +3216,9 @@ func (l *LROsClientPutAsyncRetryFailedPollerResponse) Resume(ctx context.Context
 
 // LROsClientPutAsyncRetryFailedResponse contains the response from method LROsClient.PutAsyncRetryFailed.
 type LROsClientPutAsyncRetryFailedResponse struct {
-	LROsClientPutAsyncRetryFailedResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncRetryFailedResult contains the result from method LROsClient.PutAsyncRetryFailed.
-type LROsClientPutAsyncRetryFailedResult struct {
-	Product
 }
 
 // LROsClientPutAsyncRetrySucceededPollerResponse contains the response from method LROsClient.PutAsyncRetrySucceeded.
@@ -3461,14 +3262,9 @@ func (l *LROsClientPutAsyncRetrySucceededPollerResponse) Resume(ctx context.Cont
 
 // LROsClientPutAsyncRetrySucceededResponse contains the response from method LROsClient.PutAsyncRetrySucceeded.
 type LROsClientPutAsyncRetrySucceededResponse struct {
-	LROsClientPutAsyncRetrySucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncRetrySucceededResult contains the result from method LROsClient.PutAsyncRetrySucceeded.
-type LROsClientPutAsyncRetrySucceededResult struct {
-	Product
 }
 
 // LROsClientPutAsyncSubResourcePollerResponse contains the response from method LROsClient.PutAsyncSubResource.
@@ -3512,14 +3308,9 @@ func (l *LROsClientPutAsyncSubResourcePollerResponse) Resume(ctx context.Context
 
 // LROsClientPutAsyncSubResourceResponse contains the response from method LROsClient.PutAsyncSubResource.
 type LROsClientPutAsyncSubResourceResponse struct {
-	LROsClientPutAsyncSubResourceResult
+	SubProduct
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutAsyncSubResourceResult contains the result from method LROsClient.PutAsyncSubResource.
-type LROsClientPutAsyncSubResourceResult struct {
-	SubProduct
 }
 
 // LROsClientPutNoHeaderInRetryPollerResponse contains the response from method LROsClient.PutNoHeaderInRetry.
@@ -3563,14 +3354,9 @@ func (l *LROsClientPutNoHeaderInRetryPollerResponse) Resume(ctx context.Context,
 
 // LROsClientPutNoHeaderInRetryResponse contains the response from method LROsClient.PutNoHeaderInRetry.
 type LROsClientPutNoHeaderInRetryResponse struct {
-	LROsClientPutNoHeaderInRetryResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutNoHeaderInRetryResult contains the result from method LROsClient.PutNoHeaderInRetry.
-type LROsClientPutNoHeaderInRetryResult struct {
-	Product
 }
 
 // LROsClientPutNonResourcePollerResponse contains the response from method LROsClient.PutNonResource.
@@ -3614,14 +3400,9 @@ func (l *LROsClientPutNonResourcePollerResponse) Resume(ctx context.Context, cli
 
 // LROsClientPutNonResourceResponse contains the response from method LROsClient.PutNonResource.
 type LROsClientPutNonResourceResponse struct {
-	LROsClientPutNonResourceResult
+	SKU
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutNonResourceResult contains the result from method LROsClient.PutNonResource.
-type LROsClientPutNonResourceResult struct {
-	SKU
 }
 
 // LROsClientPutSubResourcePollerResponse contains the response from method LROsClient.PutSubResource.
@@ -3665,14 +3446,9 @@ func (l *LROsClientPutSubResourcePollerResponse) Resume(ctx context.Context, cli
 
 // LROsClientPutSubResourceResponse contains the response from method LROsClient.PutSubResource.
 type LROsClientPutSubResourceResponse struct {
-	LROsClientPutSubResourceResult
+	SubProduct
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsClientPutSubResourceResult contains the result from method LROsClient.PutSubResource.
-type LROsClientPutSubResourceResult struct {
-	SubProduct
 }
 
 // LROsCustomHeaderClientPost202Retry200PollerResponse contains the response from method LROsCustomHeaderClient.Post202Retry200.
@@ -3807,14 +3583,9 @@ func (l *LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse) Resume(
 
 // LROsCustomHeaderClientPut201CreatingSucceeded200Response contains the response from method LROsCustomHeaderClient.Put201CreatingSucceeded200.
 type LROsCustomHeaderClientPut201CreatingSucceeded200Response struct {
-	LROsCustomHeaderClientPut201CreatingSucceeded200Result
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsCustomHeaderClientPut201CreatingSucceeded200Result contains the result from method LROsCustomHeaderClient.Put201CreatingSucceeded200.
-type LROsCustomHeaderClientPut201CreatingSucceeded200Result struct {
-	Product
 }
 
 // LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse contains the response from method LROsCustomHeaderClient.PutAsyncRetrySucceeded.
@@ -3858,12 +3629,7 @@ func (l *LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse) Resume(ctx 
 
 // LROsCustomHeaderClientPutAsyncRetrySucceededResponse contains the response from method LROsCustomHeaderClient.PutAsyncRetrySucceeded.
 type LROsCustomHeaderClientPutAsyncRetrySucceededResponse struct {
-	LROsCustomHeaderClientPutAsyncRetrySucceededResult
+	Product
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LROsCustomHeaderClientPutAsyncRetrySucceededResult contains the result from method LROsCustomHeaderClient.PutAsyncRetrySucceeded.
-type LROsCustomHeaderClientPutAsyncRetrySucceededResult struct {
-	Product
 }

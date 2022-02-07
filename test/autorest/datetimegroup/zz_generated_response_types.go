@@ -15,182 +15,107 @@ import (
 
 // DatetimeClientGetInvalidResponse contains the response from method DatetimeClient.GetInvalid.
 type DatetimeClientGetInvalidResponse struct {
-	DatetimeClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetInvalidResult contains the result from method DatetimeClient.GetInvalid.
-type DatetimeClientGetInvalidResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse contains the response from method DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime.
 type DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse struct {
-	DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResult contains the result from method DatetimeClient.GetLocalNegativeOffsetLowercaseMaxDateTime.
-type DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse contains the response from method DatetimeClient.GetLocalNegativeOffsetMinDateTime.
 type DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse struct {
-	DatetimeClientGetLocalNegativeOffsetMinDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalNegativeOffsetMinDateTimeResult contains the result from method DatetimeClient.GetLocalNegativeOffsetMinDateTime.
-type DatetimeClientGetLocalNegativeOffsetMinDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse contains the response from method DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime.
 type DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse struct {
-	DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResult contains the result from method DatetimeClient.GetLocalNegativeOffsetUppercaseMaxDateTime.
-type DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalNoOffsetMinDateTimeResponse contains the response from method DatetimeClient.GetLocalNoOffsetMinDateTime.
 type DatetimeClientGetLocalNoOffsetMinDateTimeResponse struct {
-	DatetimeClientGetLocalNoOffsetMinDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalNoOffsetMinDateTimeResult contains the result from method DatetimeClient.GetLocalNoOffsetMinDateTime.
-type DatetimeClientGetLocalNoOffsetMinDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse contains the response from method DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime.
 type DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse struct {
-	DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResult contains the result from method DatetimeClient.GetLocalPositiveOffsetLowercaseMaxDateTime.
-type DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse contains the response from method DatetimeClient.GetLocalPositiveOffsetMinDateTime.
 type DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse struct {
-	DatetimeClientGetLocalPositiveOffsetMinDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalPositiveOffsetMinDateTimeResult contains the result from method DatetimeClient.GetLocalPositiveOffsetMinDateTime.
-type DatetimeClientGetLocalPositiveOffsetMinDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse contains the response from method DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime.
 type DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse struct {
-	DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResult contains the result from method DatetimeClient.GetLocalPositiveOffsetUppercaseMaxDateTime.
-type DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetNullResponse contains the response from method DatetimeClient.GetNull.
 type DatetimeClientGetNullResponse struct {
-	DatetimeClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetNullResult contains the result from method DatetimeClient.GetNull.
-type DatetimeClientGetNullResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetOverflowResponse contains the response from method DatetimeClient.GetOverflow.
 type DatetimeClientGetOverflowResponse struct {
-	DatetimeClientGetOverflowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetOverflowResult contains the result from method DatetimeClient.GetOverflow.
-type DatetimeClientGetOverflowResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetUTCLowercaseMaxDateTimeResponse contains the response from method DatetimeClient.GetUTCLowercaseMaxDateTime.
 type DatetimeClientGetUTCLowercaseMaxDateTimeResponse struct {
-	DatetimeClientGetUTCLowercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetUTCLowercaseMaxDateTimeResult contains the result from method DatetimeClient.GetUTCLowercaseMaxDateTime.
-type DatetimeClientGetUTCLowercaseMaxDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetUTCMinDateTimeResponse contains the response from method DatetimeClient.GetUTCMinDateTime.
 type DatetimeClientGetUTCMinDateTimeResponse struct {
-	DatetimeClientGetUTCMinDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetUTCMinDateTimeResult contains the result from method DatetimeClient.GetUTCMinDateTime.
-type DatetimeClientGetUTCMinDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse contains the response from method DatetimeClient.GetUTCUppercaseMaxDateTime7Digits.
 type DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse struct {
-	DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResult contains the result from method DatetimeClient.GetUTCUppercaseMaxDateTime7Digits.
-type DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetUTCUppercaseMaxDateTimeResponse contains the response from method DatetimeClient.GetUTCUppercaseMaxDateTime.
 type DatetimeClientGetUTCUppercaseMaxDateTimeResponse struct {
-	DatetimeClientGetUTCUppercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetUTCUppercaseMaxDateTimeResult contains the result from method DatetimeClient.GetUTCUppercaseMaxDateTime.
-type DatetimeClientGetUTCUppercaseMaxDateTimeResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientGetUnderflowResponse contains the response from method DatetimeClient.GetUnderflow.
 type DatetimeClientGetUnderflowResponse struct {
-	DatetimeClientGetUnderflowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DatetimeClientGetUnderflowResult contains the result from method DatetimeClient.GetUnderflow.
-type DatetimeClientGetUnderflowResult struct {
-	Value *time.Time
+	Value       *time.Time
 }
 
 // DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse contains the response from method DatetimeClient.PutLocalNegativeOffsetMaxDateTime.

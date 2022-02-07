@@ -12,50 +12,31 @@ import "net/http"
 
 // clientCreateResponse contains the response from method client.Create.
 type clientCreateResponse struct {
-	clientCreateResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// clientCreateResult contains the result from method client.Create.
-type clientCreateResult struct {
 	AliasesCreateResponse
 	// AccessControlExposeHeaders contains the information returned from the Access-Control-Expose-Headers header response.
 	AccessControlExposeHeaders *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // clientGetScriptResponse contains the response from method client.GetScript.
 type clientGetScriptResponse struct {
-	clientGetScriptResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// clientGetScriptResult contains the result from method client.GetScript.
-type clientGetScriptResult struct {
-	Value *string
+	Value       *string
 }
 
 // clientListResponse contains the response from method client.List.
 type clientListResponse struct {
-	clientListResult
+	ListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// clientListResult contains the result from method client.List.
-type clientListResult struct {
-	ListResponse
 }
 
 // clientPolicyAssignmentResponse contains the response from method client.PolicyAssignment.
 type clientPolicyAssignmentResponse struct {
-	clientPolicyAssignmentResult
+	PolicyAssignmentProperties
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// clientPolicyAssignmentResult contains the result from method client.PolicyAssignment.
-type clientPolicyAssignmentResult struct {
-	PolicyAssignmentProperties
 }

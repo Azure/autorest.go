@@ -12,52 +12,36 @@ import "net/http"
 
 // ByteClientGetEmptyResponse contains the response from method ByteClient.GetEmpty.
 type ByteClientGetEmptyResponse struct {
-	ByteClientGetEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ByteClientGetEmptyResult contains the result from method ByteClient.GetEmpty.
-type ByteClientGetEmptyResult struct {
 	// The empty byte value ''
 	Value []byte
 }
 
 // ByteClientGetInvalidResponse contains the response from method ByteClient.GetInvalid.
 type ByteClientGetInvalidResponse struct {
-	ByteClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ByteClientGetInvalidResult contains the result from method ByteClient.GetInvalid.
-type ByteClientGetInvalidResult struct {
 	// The invalid byte value '::::SWAGGER::::'
 	Value []byte
 }
 
 // ByteClientGetNonASCIIResponse contains the response from method ByteClient.GetNonASCII.
 type ByteClientGetNonASCIIResponse struct {
-	ByteClientGetNonASCIIResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ByteClientGetNonASCIIResult contains the result from method ByteClient.GetNonASCII.
-type ByteClientGetNonASCIIResult struct {
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 	Value []byte
 }
 
 // ByteClientGetNullResponse contains the response from method ByteClient.GetNull.
 type ByteClientGetNullResponse struct {
-	ByteClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ByteClientGetNullResult contains the result from method ByteClient.GetNull.
-type ByteClientGetNullResult struct {
 	// The null byte value
 	Value []byte
 }

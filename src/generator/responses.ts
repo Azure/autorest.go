@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { commentLength, isObjectSchema, PagerInfo, PollerInfo } from '../common/helpers';
+import { commentLength, PagerInfo, PollerInfo } from '../common/helpers';
 import { contentPreamble, discriminatorFinalResponse, emitPoller, getFinalResponseEnvelopeName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
@@ -27,16 +27,8 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
       generatePollUntilDoneForResponse(respType, <boolean>session.model.language.go!.azureARM);
       generateResumeForResponse(respType, session.model.language.go!.openApiType === 'arm', imports);
     }
+    generateUnmarshallerForResponeEnvelope(respType);
     structs.push(respType);
-    // if the response envelope contains a result envelope, generate that too
-    if (respEnv.language.go!.resultEnv) {
-      const resultEnv = <Property>respEnv.language.go!.resultEnv;
-      if (isObjectSchema(resultEnv.schema)) {
-        const resultType = generateStruct(imports, resultEnv.schema.language.go!, resultEnv.schema.properties)
-        generateUnmarshallerForResultEnvelope(resultType);
-        structs.push(resultType);
-      }
-    }
   }
   imports.add('net/http');
   text += imports.text();
@@ -55,8 +47,8 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   return text;
 }
 
-// if the response envelope has a result envelope, check if the result envelope requires an unmarshaller
-function generateUnmarshallerForResultEnvelope(structDef: StructDef) {
+// check if the response envelope requires an unmarshaller
+function generateUnmarshallerForResponeEnvelope(structDef: StructDef) {
   // if the response envelope contains a discriminated type we need an unmarshaller
   let found = false;
   for (const prop of values(structDef.Properties)) {
@@ -105,13 +97,13 @@ function generatePollUntilDoneForResponse(structDef: StructDef, isAzureARM: bool
   }
   pollUntilDone += `${respType}{}\n`;
   const finalRespEnv = <ObjectSchema>structDef.Language.pollerInfo.op.language.go!.finalResponseEnv;
-  const resultEnv = <Property>finalRespEnv.language.go!.resultEnv;
-  if (resultEnv) {
+  const resultProp = <Property>finalRespEnv.language.go!.resultProp;
+  if (resultProp) {
     let current = '';
     if (pagedResponse) {
       current = '.current';
     }
-    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}.${discriminatorFinalResponse(resultEnv)})\n`;
+    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}${discriminatorFinalResponse(finalRespEnv)})\n`;
   } else {
     // the operation doesn't return a model
     pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;

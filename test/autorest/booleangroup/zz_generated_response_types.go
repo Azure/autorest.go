@@ -12,50 +12,32 @@ import "net/http"
 
 // BoolClientGetFalseResponse contains the response from method BoolClient.GetFalse.
 type BoolClientGetFalseResponse struct {
-	BoolClientGetFalseResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// BoolClientGetFalseResult contains the result from method BoolClient.GetFalse.
-type BoolClientGetFalseResult struct {
 	// simple boolean
 	Value *bool
 }
 
 // BoolClientGetInvalidResponse contains the response from method BoolClient.GetInvalid.
 type BoolClientGetInvalidResponse struct {
-	BoolClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BoolClientGetInvalidResult contains the result from method BoolClient.GetInvalid.
-type BoolClientGetInvalidResult struct {
-	Value *bool
+	Value       *bool
 }
 
 // BoolClientGetNullResponse contains the response from method BoolClient.GetNull.
 type BoolClientGetNullResponse struct {
-	BoolClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BoolClientGetNullResult contains the result from method BoolClient.GetNull.
-type BoolClientGetNullResult struct {
-	Value *bool
+	Value       *bool
 }
 
 // BoolClientGetTrueResponse contains the response from method BoolClient.GetTrue.
 type BoolClientGetTrueResponse struct {
-	BoolClientGetTrueResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// BoolClientGetTrueResult contains the result from method BoolClient.GetTrue.
-type BoolClientGetTrueResult struct {
 	// simple boolean
 	Value *bool
 }

@@ -57,14 +57,9 @@ func (l *ApplicationGatewaysClientBackendHealthOnDemandPollerResponse) Resume(ct
 
 // ApplicationGatewaysClientBackendHealthOnDemandResponse contains the response from method ApplicationGatewaysClient.BackendHealthOnDemand.
 type ApplicationGatewaysClientBackendHealthOnDemandResponse struct {
-	ApplicationGatewaysClientBackendHealthOnDemandResult
+	ApplicationGatewayBackendHealthOnDemand
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientBackendHealthOnDemandResult contains the result from method ApplicationGatewaysClient.BackendHealthOnDemand.
-type ApplicationGatewaysClientBackendHealthOnDemandResult struct {
-	ApplicationGatewayBackendHealthOnDemand
 }
 
 // ApplicationGatewaysClientBackendHealthPollerResponse contains the response from method ApplicationGatewaysClient.BackendHealth.
@@ -109,14 +104,9 @@ func (l *ApplicationGatewaysClientBackendHealthPollerResponse) Resume(ctx contex
 
 // ApplicationGatewaysClientBackendHealthResponse contains the response from method ApplicationGatewaysClient.BackendHealth.
 type ApplicationGatewaysClientBackendHealthResponse struct {
-	ApplicationGatewaysClientBackendHealthResult
+	ApplicationGatewayBackendHealth
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientBackendHealthResult contains the result from method ApplicationGatewaysClient.BackendHealth.
-type ApplicationGatewaysClientBackendHealthResult struct {
-	ApplicationGatewayBackendHealth
 }
 
 // ApplicationGatewaysClientCreateOrUpdatePollerResponse contains the response from method ApplicationGatewaysClient.CreateOrUpdate.
@@ -161,14 +151,9 @@ func (l *ApplicationGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx conte
 
 // ApplicationGatewaysClientCreateOrUpdateResponse contains the response from method ApplicationGatewaysClient.CreateOrUpdate.
 type ApplicationGatewaysClientCreateOrUpdateResponse struct {
-	ApplicationGatewaysClientCreateOrUpdateResult
+	ApplicationGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientCreateOrUpdateResult contains the result from method ApplicationGatewaysClient.CreateOrUpdate.
-type ApplicationGatewaysClientCreateOrUpdateResult struct {
-	ApplicationGateway
 }
 
 // ApplicationGatewaysClientDeletePollerResponse contains the response from method ApplicationGatewaysClient.Delete.
@@ -219,125 +204,78 @@ type ApplicationGatewaysClientDeleteResponse struct {
 
 // ApplicationGatewaysClientGetResponse contains the response from method ApplicationGatewaysClient.Get.
 type ApplicationGatewaysClientGetResponse struct {
-	ApplicationGatewaysClientGetResult
+	ApplicationGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientGetResult contains the result from method ApplicationGatewaysClient.Get.
-type ApplicationGatewaysClientGetResult struct {
-	ApplicationGateway
 }
 
 // ApplicationGatewaysClientGetSSLPredefinedPolicyResponse contains the response from method ApplicationGatewaysClient.GetSSLPredefinedPolicy.
 type ApplicationGatewaysClientGetSSLPredefinedPolicyResponse struct {
-	ApplicationGatewaysClientGetSSLPredefinedPolicyResult
+	ApplicationGatewaySSLPredefinedPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientGetSSLPredefinedPolicyResult contains the result from method ApplicationGatewaysClient.GetSSLPredefinedPolicy.
-type ApplicationGatewaysClientGetSSLPredefinedPolicyResult struct {
-	ApplicationGatewaySSLPredefinedPolicy
 }
 
 // ApplicationGatewaysClientListAllResponse contains the response from method ApplicationGatewaysClient.ListAll.
 type ApplicationGatewaysClientListAllResponse struct {
-	ApplicationGatewaysClientListAllResult
+	ApplicationGatewayListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientListAllResult contains the result from method ApplicationGatewaysClient.ListAll.
-type ApplicationGatewaysClientListAllResult struct {
-	ApplicationGatewayListResult
 }
 
 // ApplicationGatewaysClientListAvailableRequestHeadersResponse contains the response from method ApplicationGatewaysClient.ListAvailableRequestHeaders.
 type ApplicationGatewaysClientListAvailableRequestHeadersResponse struct {
-	ApplicationGatewaysClientListAvailableRequestHeadersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ApplicationGatewaysClientListAvailableRequestHeadersResult contains the result from method ApplicationGatewaysClient.ListAvailableRequestHeaders.
-type ApplicationGatewaysClientListAvailableRequestHeadersResult struct {
 	// Response for ApplicationGatewayAvailableRequestHeaders API service call.
 	StringArray []*string
 }
 
 // ApplicationGatewaysClientListAvailableResponseHeadersResponse contains the response from method ApplicationGatewaysClient.ListAvailableResponseHeaders.
 type ApplicationGatewaysClientListAvailableResponseHeadersResponse struct {
-	ApplicationGatewaysClientListAvailableResponseHeadersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ApplicationGatewaysClientListAvailableResponseHeadersResult contains the result from method ApplicationGatewaysClient.ListAvailableResponseHeaders.
-type ApplicationGatewaysClientListAvailableResponseHeadersResult struct {
 	// Response for ApplicationGatewayAvailableResponseHeaders API service call.
 	StringArray []*string
 }
 
 // ApplicationGatewaysClientListAvailableSSLOptionsResponse contains the response from method ApplicationGatewaysClient.ListAvailableSSLOptions.
 type ApplicationGatewaysClientListAvailableSSLOptionsResponse struct {
-	ApplicationGatewaysClientListAvailableSSLOptionsResult
+	ApplicationGatewayAvailableSSLOptions
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientListAvailableSSLOptionsResult contains the result from method ApplicationGatewaysClient.ListAvailableSSLOptions.
-type ApplicationGatewaysClientListAvailableSSLOptionsResult struct {
-	ApplicationGatewayAvailableSSLOptions
 }
 
 // ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse contains the response from method ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies.
 type ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse struct {
-	ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResult
+	ApplicationGatewayAvailableSSLPredefinedPolicies
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResult contains the result from method ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies.
-type ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResult struct {
-	ApplicationGatewayAvailableSSLPredefinedPolicies
 }
 
 // ApplicationGatewaysClientListAvailableServerVariablesResponse contains the response from method ApplicationGatewaysClient.ListAvailableServerVariables.
 type ApplicationGatewaysClientListAvailableServerVariablesResponse struct {
-	ApplicationGatewaysClientListAvailableServerVariablesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// ApplicationGatewaysClientListAvailableServerVariablesResult contains the result from method ApplicationGatewaysClient.ListAvailableServerVariables.
-type ApplicationGatewaysClientListAvailableServerVariablesResult struct {
 	// Response for ApplicationGatewayAvailableServerVariables API service call.
 	StringArray []*string
 }
 
 // ApplicationGatewaysClientListAvailableWafRuleSetsResponse contains the response from method ApplicationGatewaysClient.ListAvailableWafRuleSets.
 type ApplicationGatewaysClientListAvailableWafRuleSetsResponse struct {
-	ApplicationGatewaysClientListAvailableWafRuleSetsResult
+	ApplicationGatewayAvailableWafRuleSetsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientListAvailableWafRuleSetsResult contains the result from method ApplicationGatewaysClient.ListAvailableWafRuleSets.
-type ApplicationGatewaysClientListAvailableWafRuleSetsResult struct {
-	ApplicationGatewayAvailableWafRuleSetsResult
 }
 
 // ApplicationGatewaysClientListResponse contains the response from method ApplicationGatewaysClient.List.
 type ApplicationGatewaysClientListResponse struct {
-	ApplicationGatewaysClientListResult
+	ApplicationGatewayListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientListResult contains the result from method ApplicationGatewaysClient.List.
-type ApplicationGatewaysClientListResult struct {
-	ApplicationGatewayListResult
 }
 
 // ApplicationGatewaysClientStartPollerResponse contains the response from method ApplicationGatewaysClient.Start.
@@ -434,14 +372,9 @@ type ApplicationGatewaysClientStopResponse struct {
 
 // ApplicationGatewaysClientUpdateTagsResponse contains the response from method ApplicationGatewaysClient.UpdateTags.
 type ApplicationGatewaysClientUpdateTagsResponse struct {
-	ApplicationGatewaysClientUpdateTagsResult
+	ApplicationGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationGatewaysClientUpdateTagsResult contains the result from method ApplicationGatewaysClient.UpdateTags.
-type ApplicationGatewaysClientUpdateTagsResult struct {
-	ApplicationGateway
 }
 
 // ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse contains the response from method ApplicationSecurityGroupsClient.CreateOrUpdate.
@@ -486,14 +419,9 @@ func (l *ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse) Resume(ctx
 
 // ApplicationSecurityGroupsClientCreateOrUpdateResponse contains the response from method ApplicationSecurityGroupsClient.CreateOrUpdate.
 type ApplicationSecurityGroupsClientCreateOrUpdateResponse struct {
-	ApplicationSecurityGroupsClientCreateOrUpdateResult
+	ApplicationSecurityGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupsClientCreateOrUpdateResult contains the result from method ApplicationSecurityGroupsClient.CreateOrUpdate.
-type ApplicationSecurityGroupsClientCreateOrUpdateResult struct {
-	ApplicationSecurityGroup
 }
 
 // ApplicationSecurityGroupsClientDeletePollerResponse contains the response from method ApplicationSecurityGroupsClient.Delete.
@@ -544,146 +472,86 @@ type ApplicationSecurityGroupsClientDeleteResponse struct {
 
 // ApplicationSecurityGroupsClientGetResponse contains the response from method ApplicationSecurityGroupsClient.Get.
 type ApplicationSecurityGroupsClientGetResponse struct {
-	ApplicationSecurityGroupsClientGetResult
+	ApplicationSecurityGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupsClientGetResult contains the result from method ApplicationSecurityGroupsClient.Get.
-type ApplicationSecurityGroupsClientGetResult struct {
-	ApplicationSecurityGroup
 }
 
 // ApplicationSecurityGroupsClientListAllResponse contains the response from method ApplicationSecurityGroupsClient.ListAll.
 type ApplicationSecurityGroupsClientListAllResponse struct {
-	ApplicationSecurityGroupsClientListAllResult
+	ApplicationSecurityGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupsClientListAllResult contains the result from method ApplicationSecurityGroupsClient.ListAll.
-type ApplicationSecurityGroupsClientListAllResult struct {
-	ApplicationSecurityGroupListResult
 }
 
 // ApplicationSecurityGroupsClientListResponse contains the response from method ApplicationSecurityGroupsClient.List.
 type ApplicationSecurityGroupsClientListResponse struct {
-	ApplicationSecurityGroupsClientListResult
+	ApplicationSecurityGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupsClientListResult contains the result from method ApplicationSecurityGroupsClient.List.
-type ApplicationSecurityGroupsClientListResult struct {
-	ApplicationSecurityGroupListResult
 }
 
 // ApplicationSecurityGroupsClientUpdateTagsResponse contains the response from method ApplicationSecurityGroupsClient.UpdateTags.
 type ApplicationSecurityGroupsClientUpdateTagsResponse struct {
-	ApplicationSecurityGroupsClientUpdateTagsResult
+	ApplicationSecurityGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ApplicationSecurityGroupsClientUpdateTagsResult contains the result from method ApplicationSecurityGroupsClient.UpdateTags.
-type ApplicationSecurityGroupsClientUpdateTagsResult struct {
-	ApplicationSecurityGroup
 }
 
 // AvailableDelegationsClientListResponse contains the response from method AvailableDelegationsClient.List.
 type AvailableDelegationsClientListResponse struct {
-	AvailableDelegationsClientListResult
+	AvailableDelegationsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailableDelegationsClientListResult contains the result from method AvailableDelegationsClient.List.
-type AvailableDelegationsClientListResult struct {
-	AvailableDelegationsResult
 }
 
 // AvailableEndpointServicesClientListResponse contains the response from method AvailableEndpointServicesClient.List.
 type AvailableEndpointServicesClientListResponse struct {
-	AvailableEndpointServicesClientListResult
+	EndpointServicesListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailableEndpointServicesClientListResult contains the result from method AvailableEndpointServicesClient.List.
-type AvailableEndpointServicesClientListResult struct {
-	EndpointServicesListResult
 }
 
 // AvailablePrivateEndpointTypesClientListByResourceGroupResponse contains the response from method AvailablePrivateEndpointTypesClient.ListByResourceGroup.
 type AvailablePrivateEndpointTypesClientListByResourceGroupResponse struct {
-	AvailablePrivateEndpointTypesClientListByResourceGroupResult
+	AvailablePrivateEndpointTypesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailablePrivateEndpointTypesClientListByResourceGroupResult contains the result from method AvailablePrivateEndpointTypesClient.ListByResourceGroup.
-type AvailablePrivateEndpointTypesClientListByResourceGroupResult struct {
-	AvailablePrivateEndpointTypesResult
 }
 
 // AvailablePrivateEndpointTypesClientListResponse contains the response from method AvailablePrivateEndpointTypesClient.List.
 type AvailablePrivateEndpointTypesClientListResponse struct {
-	AvailablePrivateEndpointTypesClientListResult
+	AvailablePrivateEndpointTypesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailablePrivateEndpointTypesClientListResult contains the result from method AvailablePrivateEndpointTypesClient.List.
-type AvailablePrivateEndpointTypesClientListResult struct {
-	AvailablePrivateEndpointTypesResult
 }
 
 // AvailableResourceGroupDelegationsClientListResponse contains the response from method AvailableResourceGroupDelegationsClient.List.
 type AvailableResourceGroupDelegationsClientListResponse struct {
-	AvailableResourceGroupDelegationsClientListResult
+	AvailableDelegationsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailableResourceGroupDelegationsClientListResult contains the result from method AvailableResourceGroupDelegationsClient.List.
-type AvailableResourceGroupDelegationsClientListResult struct {
-	AvailableDelegationsResult
 }
 
 // AvailableServiceAliasesClientListByResourceGroupResponse contains the response from method AvailableServiceAliasesClient.ListByResourceGroup.
 type AvailableServiceAliasesClientListByResourceGroupResponse struct {
-	AvailableServiceAliasesClientListByResourceGroupResult
+	AvailableServiceAliasesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailableServiceAliasesClientListByResourceGroupResult contains the result from method AvailableServiceAliasesClient.ListByResourceGroup.
-type AvailableServiceAliasesClientListByResourceGroupResult struct {
-	AvailableServiceAliasesResult
 }
 
 // AvailableServiceAliasesClientListResponse contains the response from method AvailableServiceAliasesClient.List.
 type AvailableServiceAliasesClientListResponse struct {
-	AvailableServiceAliasesClientListResult
+	AvailableServiceAliasesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailableServiceAliasesClientListResult contains the result from method AvailableServiceAliasesClient.List.
-type AvailableServiceAliasesClientListResult struct {
-	AvailableServiceAliasesResult
 }
 
 // AzureFirewallFqdnTagsClientListAllResponse contains the response from method AzureFirewallFqdnTagsClient.ListAll.
 type AzureFirewallFqdnTagsClientListAllResponse struct {
-	AzureFirewallFqdnTagsClientListAllResult
+	AzureFirewallFqdnTagListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AzureFirewallFqdnTagsClientListAllResult contains the result from method AzureFirewallFqdnTagsClient.ListAll.
-type AzureFirewallFqdnTagsClientListAllResult struct {
-	AzureFirewallFqdnTagListResult
 }
 
 // AzureFirewallsClientCreateOrUpdatePollerResponse contains the response from method AzureFirewallsClient.CreateOrUpdate.
@@ -728,14 +596,9 @@ func (l *AzureFirewallsClientCreateOrUpdatePollerResponse) Resume(ctx context.Co
 
 // AzureFirewallsClientCreateOrUpdateResponse contains the response from method AzureFirewallsClient.CreateOrUpdate.
 type AzureFirewallsClientCreateOrUpdateResponse struct {
-	AzureFirewallsClientCreateOrUpdateResult
+	AzureFirewall
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AzureFirewallsClientCreateOrUpdateResult contains the result from method AzureFirewallsClient.CreateOrUpdate.
-type AzureFirewallsClientCreateOrUpdateResult struct {
-	AzureFirewall
 }
 
 // AzureFirewallsClientDeletePollerResponse contains the response from method AzureFirewallsClient.Delete.
@@ -786,38 +649,23 @@ type AzureFirewallsClientDeleteResponse struct {
 
 // AzureFirewallsClientGetResponse contains the response from method AzureFirewallsClient.Get.
 type AzureFirewallsClientGetResponse struct {
-	AzureFirewallsClientGetResult
+	AzureFirewall
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AzureFirewallsClientGetResult contains the result from method AzureFirewallsClient.Get.
-type AzureFirewallsClientGetResult struct {
-	AzureFirewall
 }
 
 // AzureFirewallsClientListAllResponse contains the response from method AzureFirewallsClient.ListAll.
 type AzureFirewallsClientListAllResponse struct {
-	AzureFirewallsClientListAllResult
+	AzureFirewallListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AzureFirewallsClientListAllResult contains the result from method AzureFirewallsClient.ListAll.
-type AzureFirewallsClientListAllResult struct {
-	AzureFirewallListResult
 }
 
 // AzureFirewallsClientListResponse contains the response from method AzureFirewallsClient.List.
 type AzureFirewallsClientListResponse struct {
-	AzureFirewallsClientListResult
+	AzureFirewallListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AzureFirewallsClientListResult contains the result from method AzureFirewallsClient.List.
-type AzureFirewallsClientListResult struct {
-	AzureFirewallListResult
 }
 
 // AzureFirewallsClientUpdateTagsPollerResponse contains the response from method AzureFirewallsClient.UpdateTags.
@@ -862,14 +710,9 @@ func (l *AzureFirewallsClientUpdateTagsPollerResponse) Resume(ctx context.Contex
 
 // AzureFirewallsClientUpdateTagsResponse contains the response from method AzureFirewallsClient.UpdateTags.
 type AzureFirewallsClientUpdateTagsResponse struct {
-	AzureFirewallsClientUpdateTagsResult
+	AzureFirewall
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AzureFirewallsClientUpdateTagsResult contains the result from method AzureFirewallsClient.UpdateTags.
-type AzureFirewallsClientUpdateTagsResult struct {
-	AzureFirewall
 }
 
 // BastionHostsClientCreateOrUpdatePollerResponse contains the response from method BastionHostsClient.CreateOrUpdate.
@@ -914,14 +757,9 @@ func (l *BastionHostsClientCreateOrUpdatePollerResponse) Resume(ctx context.Cont
 
 // BastionHostsClientCreateOrUpdateResponse contains the response from method BastionHostsClient.CreateOrUpdate.
 type BastionHostsClientCreateOrUpdateResponse struct {
-	BastionHostsClientCreateOrUpdateResult
+	BastionHost
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BastionHostsClientCreateOrUpdateResult contains the result from method BastionHostsClient.CreateOrUpdate.
-type BastionHostsClientCreateOrUpdateResult struct {
-	BastionHost
 }
 
 // BastionHostsClientDeletePollerResponse contains the response from method BastionHostsClient.Delete.
@@ -972,50 +810,30 @@ type BastionHostsClientDeleteResponse struct {
 
 // BastionHostsClientGetResponse contains the response from method BastionHostsClient.Get.
 type BastionHostsClientGetResponse struct {
-	BastionHostsClientGetResult
+	BastionHost
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BastionHostsClientGetResult contains the result from method BastionHostsClient.Get.
-type BastionHostsClientGetResult struct {
-	BastionHost
 }
 
 // BastionHostsClientListByResourceGroupResponse contains the response from method BastionHostsClient.ListByResourceGroup.
 type BastionHostsClientListByResourceGroupResponse struct {
-	BastionHostsClientListByResourceGroupResult
+	BastionHostListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BastionHostsClientListByResourceGroupResult contains the result from method BastionHostsClient.ListByResourceGroup.
-type BastionHostsClientListByResourceGroupResult struct {
-	BastionHostListResult
 }
 
 // BastionHostsClientListResponse contains the response from method BastionHostsClient.List.
 type BastionHostsClientListResponse struct {
-	BastionHostsClientListResult
+	BastionHostListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BastionHostsClientListResult contains the result from method BastionHostsClient.List.
-type BastionHostsClientListResult struct {
-	BastionHostListResult
 }
 
 // BgpServiceCommunitiesClientListResponse contains the response from method BgpServiceCommunitiesClient.List.
 type BgpServiceCommunitiesClientListResponse struct {
-	BgpServiceCommunitiesClientListResult
+	BgpServiceCommunityListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BgpServiceCommunitiesClientListResult contains the result from method BgpServiceCommunitiesClient.List.
-type BgpServiceCommunitiesClientListResult struct {
-	BgpServiceCommunityListResult
 }
 
 // ConnectionMonitorsClientCreateOrUpdatePollerResponse contains the response from method ConnectionMonitorsClient.CreateOrUpdate.
@@ -1060,14 +878,9 @@ func (l *ConnectionMonitorsClientCreateOrUpdatePollerResponse) Resume(ctx contex
 
 // ConnectionMonitorsClientCreateOrUpdateResponse contains the response from method ConnectionMonitorsClient.CreateOrUpdate.
 type ConnectionMonitorsClientCreateOrUpdateResponse struct {
-	ConnectionMonitorsClientCreateOrUpdateResult
+	ConnectionMonitorResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ConnectionMonitorsClientCreateOrUpdateResult contains the result from method ConnectionMonitorsClient.CreateOrUpdate.
-type ConnectionMonitorsClientCreateOrUpdateResult struct {
-	ConnectionMonitorResult
 }
 
 // ConnectionMonitorsClientDeletePollerResponse contains the response from method ConnectionMonitorsClient.Delete.
@@ -1118,26 +931,16 @@ type ConnectionMonitorsClientDeleteResponse struct {
 
 // ConnectionMonitorsClientGetResponse contains the response from method ConnectionMonitorsClient.Get.
 type ConnectionMonitorsClientGetResponse struct {
-	ConnectionMonitorsClientGetResult
+	ConnectionMonitorResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ConnectionMonitorsClientGetResult contains the result from method ConnectionMonitorsClient.Get.
-type ConnectionMonitorsClientGetResult struct {
-	ConnectionMonitorResult
 }
 
 // ConnectionMonitorsClientListResponse contains the response from method ConnectionMonitorsClient.List.
 type ConnectionMonitorsClientListResponse struct {
-	ConnectionMonitorsClientListResult
+	ConnectionMonitorListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ConnectionMonitorsClientListResult contains the result from method ConnectionMonitorsClient.List.
-type ConnectionMonitorsClientListResult struct {
-	ConnectionMonitorListResult
 }
 
 // ConnectionMonitorsClientQueryPollerResponse contains the response from method ConnectionMonitorsClient.Query.
@@ -1182,14 +985,9 @@ func (l *ConnectionMonitorsClientQueryPollerResponse) Resume(ctx context.Context
 
 // ConnectionMonitorsClientQueryResponse contains the response from method ConnectionMonitorsClient.Query.
 type ConnectionMonitorsClientQueryResponse struct {
-	ConnectionMonitorsClientQueryResult
+	ConnectionMonitorQueryResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ConnectionMonitorsClientQueryResult contains the result from method ConnectionMonitorsClient.Query.
-type ConnectionMonitorsClientQueryResult struct {
-	ConnectionMonitorQueryResult
 }
 
 // ConnectionMonitorsClientStartPollerResponse contains the response from method ConnectionMonitorsClient.Start.
@@ -1286,14 +1084,9 @@ type ConnectionMonitorsClientStopResponse struct {
 
 // ConnectionMonitorsClientUpdateTagsResponse contains the response from method ConnectionMonitorsClient.UpdateTags.
 type ConnectionMonitorsClientUpdateTagsResponse struct {
-	ConnectionMonitorsClientUpdateTagsResult
+	ConnectionMonitorResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ConnectionMonitorsClientUpdateTagsResult contains the result from method ConnectionMonitorsClient.UpdateTags.
-type ConnectionMonitorsClientUpdateTagsResult struct {
-	ConnectionMonitorResult
 }
 
 // DdosCustomPoliciesClientCreateOrUpdatePollerResponse contains the response from method DdosCustomPoliciesClient.CreateOrUpdate.
@@ -1338,14 +1131,9 @@ func (l *DdosCustomPoliciesClientCreateOrUpdatePollerResponse) Resume(ctx contex
 
 // DdosCustomPoliciesClientCreateOrUpdateResponse contains the response from method DdosCustomPoliciesClient.CreateOrUpdate.
 type DdosCustomPoliciesClientCreateOrUpdateResponse struct {
-	DdosCustomPoliciesClientCreateOrUpdateResult
+	DdosCustomPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosCustomPoliciesClientCreateOrUpdateResult contains the result from method DdosCustomPoliciesClient.CreateOrUpdate.
-type DdosCustomPoliciesClientCreateOrUpdateResult struct {
-	DdosCustomPolicy
 }
 
 // DdosCustomPoliciesClientDeletePollerResponse contains the response from method DdosCustomPoliciesClient.Delete.
@@ -1396,26 +1184,16 @@ type DdosCustomPoliciesClientDeleteResponse struct {
 
 // DdosCustomPoliciesClientGetResponse contains the response from method DdosCustomPoliciesClient.Get.
 type DdosCustomPoliciesClientGetResponse struct {
-	DdosCustomPoliciesClientGetResult
+	DdosCustomPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosCustomPoliciesClientGetResult contains the result from method DdosCustomPoliciesClient.Get.
-type DdosCustomPoliciesClientGetResult struct {
-	DdosCustomPolicy
 }
 
 // DdosCustomPoliciesClientUpdateTagsResponse contains the response from method DdosCustomPoliciesClient.UpdateTags.
 type DdosCustomPoliciesClientUpdateTagsResponse struct {
-	DdosCustomPoliciesClientUpdateTagsResult
+	DdosCustomPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosCustomPoliciesClientUpdateTagsResult contains the result from method DdosCustomPoliciesClient.UpdateTags.
-type DdosCustomPoliciesClientUpdateTagsResult struct {
-	DdosCustomPolicy
 }
 
 // DdosProtectionPlansClientCreateOrUpdatePollerResponse contains the response from method DdosProtectionPlansClient.CreateOrUpdate.
@@ -1460,14 +1238,9 @@ func (l *DdosProtectionPlansClientCreateOrUpdatePollerResponse) Resume(ctx conte
 
 // DdosProtectionPlansClientCreateOrUpdateResponse contains the response from method DdosProtectionPlansClient.CreateOrUpdate.
 type DdosProtectionPlansClientCreateOrUpdateResponse struct {
-	DdosProtectionPlansClientCreateOrUpdateResult
+	DdosProtectionPlan
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosProtectionPlansClientCreateOrUpdateResult contains the result from method DdosProtectionPlansClient.CreateOrUpdate.
-type DdosProtectionPlansClientCreateOrUpdateResult struct {
-	DdosProtectionPlan
 }
 
 // DdosProtectionPlansClientDeletePollerResponse contains the response from method DdosProtectionPlansClient.Delete.
@@ -1518,74 +1291,44 @@ type DdosProtectionPlansClientDeleteResponse struct {
 
 // DdosProtectionPlansClientGetResponse contains the response from method DdosProtectionPlansClient.Get.
 type DdosProtectionPlansClientGetResponse struct {
-	DdosProtectionPlansClientGetResult
+	DdosProtectionPlan
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosProtectionPlansClientGetResult contains the result from method DdosProtectionPlansClient.Get.
-type DdosProtectionPlansClientGetResult struct {
-	DdosProtectionPlan
 }
 
 // DdosProtectionPlansClientListByResourceGroupResponse contains the response from method DdosProtectionPlansClient.ListByResourceGroup.
 type DdosProtectionPlansClientListByResourceGroupResponse struct {
-	DdosProtectionPlansClientListByResourceGroupResult
+	DdosProtectionPlanListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosProtectionPlansClientListByResourceGroupResult contains the result from method DdosProtectionPlansClient.ListByResourceGroup.
-type DdosProtectionPlansClientListByResourceGroupResult struct {
-	DdosProtectionPlanListResult
 }
 
 // DdosProtectionPlansClientListResponse contains the response from method DdosProtectionPlansClient.List.
 type DdosProtectionPlansClientListResponse struct {
-	DdosProtectionPlansClientListResult
+	DdosProtectionPlanListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosProtectionPlansClientListResult contains the result from method DdosProtectionPlansClient.List.
-type DdosProtectionPlansClientListResult struct {
-	DdosProtectionPlanListResult
 }
 
 // DdosProtectionPlansClientUpdateTagsResponse contains the response from method DdosProtectionPlansClient.UpdateTags.
 type DdosProtectionPlansClientUpdateTagsResponse struct {
-	DdosProtectionPlansClientUpdateTagsResult
+	DdosProtectionPlan
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DdosProtectionPlansClientUpdateTagsResult contains the result from method DdosProtectionPlansClient.UpdateTags.
-type DdosProtectionPlansClientUpdateTagsResult struct {
-	DdosProtectionPlan
 }
 
 // DefaultSecurityRulesClientGetResponse contains the response from method DefaultSecurityRulesClient.Get.
 type DefaultSecurityRulesClientGetResponse struct {
-	DefaultSecurityRulesClientGetResult
+	SecurityRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DefaultSecurityRulesClientGetResult contains the result from method DefaultSecurityRulesClient.Get.
-type DefaultSecurityRulesClientGetResult struct {
-	SecurityRule
 }
 
 // DefaultSecurityRulesClientListResponse contains the response from method DefaultSecurityRulesClient.List.
 type DefaultSecurityRulesClientListResponse struct {
-	DefaultSecurityRulesClientListResult
+	SecurityRuleListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DefaultSecurityRulesClientListResult contains the result from method DefaultSecurityRulesClient.List.
-type DefaultSecurityRulesClientListResult struct {
-	SecurityRuleListResult
 }
 
 // ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate.
@@ -1631,14 +1374,9 @@ func (l *ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse) Re
 
 // ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResponse contains the response from method ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate.
 type ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResponse struct {
-	ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResult
+	ExpressRouteCircuitAuthorization
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResult contains the result from method ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate.
-type ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResult struct {
-	ExpressRouteCircuitAuthorization
 }
 
 // ExpressRouteCircuitAuthorizationsClientDeletePollerResponse contains the response from method ExpressRouteCircuitAuthorizationsClient.Delete.
@@ -1689,26 +1427,16 @@ type ExpressRouteCircuitAuthorizationsClientDeleteResponse struct {
 
 // ExpressRouteCircuitAuthorizationsClientGetResponse contains the response from method ExpressRouteCircuitAuthorizationsClient.Get.
 type ExpressRouteCircuitAuthorizationsClientGetResponse struct {
-	ExpressRouteCircuitAuthorizationsClientGetResult
+	ExpressRouteCircuitAuthorization
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitAuthorizationsClientGetResult contains the result from method ExpressRouteCircuitAuthorizationsClient.Get.
-type ExpressRouteCircuitAuthorizationsClientGetResult struct {
-	ExpressRouteCircuitAuthorization
 }
 
 // ExpressRouteCircuitAuthorizationsClientListResponse contains the response from method ExpressRouteCircuitAuthorizationsClient.List.
 type ExpressRouteCircuitAuthorizationsClientListResponse struct {
-	ExpressRouteCircuitAuthorizationsClientListResult
+	AuthorizationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitAuthorizationsClientListResult contains the result from method ExpressRouteCircuitAuthorizationsClient.List.
-type ExpressRouteCircuitAuthorizationsClientListResult struct {
-	AuthorizationListResult
 }
 
 // ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitConnectionsClient.CreateOrUpdate.
@@ -1754,14 +1482,9 @@ func (l *ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse) Resum
 
 // ExpressRouteCircuitConnectionsClientCreateOrUpdateResponse contains the response from method ExpressRouteCircuitConnectionsClient.CreateOrUpdate.
 type ExpressRouteCircuitConnectionsClientCreateOrUpdateResponse struct {
-	ExpressRouteCircuitConnectionsClientCreateOrUpdateResult
+	ExpressRouteCircuitConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionsClientCreateOrUpdateResult contains the result from method ExpressRouteCircuitConnectionsClient.CreateOrUpdate.
-type ExpressRouteCircuitConnectionsClientCreateOrUpdateResult struct {
-	ExpressRouteCircuitConnection
 }
 
 // ExpressRouteCircuitConnectionsClientDeletePollerResponse contains the response from method ExpressRouteCircuitConnectionsClient.Delete.
@@ -1812,26 +1535,16 @@ type ExpressRouteCircuitConnectionsClientDeleteResponse struct {
 
 // ExpressRouteCircuitConnectionsClientGetResponse contains the response from method ExpressRouteCircuitConnectionsClient.Get.
 type ExpressRouteCircuitConnectionsClientGetResponse struct {
-	ExpressRouteCircuitConnectionsClientGetResult
+	ExpressRouteCircuitConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionsClientGetResult contains the result from method ExpressRouteCircuitConnectionsClient.Get.
-type ExpressRouteCircuitConnectionsClientGetResult struct {
-	ExpressRouteCircuitConnection
 }
 
 // ExpressRouteCircuitConnectionsClientListResponse contains the response from method ExpressRouteCircuitConnectionsClient.List.
 type ExpressRouteCircuitConnectionsClientListResponse struct {
-	ExpressRouteCircuitConnectionsClientListResult
+	ExpressRouteCircuitConnectionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitConnectionsClientListResult contains the result from method ExpressRouteCircuitConnectionsClient.List.
-type ExpressRouteCircuitConnectionsClientListResult struct {
-	ExpressRouteCircuitConnectionListResult
 }
 
 // ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitPeeringsClient.CreateOrUpdate.
@@ -1876,14 +1589,9 @@ func (l *ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse) Resume(c
 
 // ExpressRouteCircuitPeeringsClientCreateOrUpdateResponse contains the response from method ExpressRouteCircuitPeeringsClient.CreateOrUpdate.
 type ExpressRouteCircuitPeeringsClientCreateOrUpdateResponse struct {
-	ExpressRouteCircuitPeeringsClientCreateOrUpdateResult
+	ExpressRouteCircuitPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringsClientCreateOrUpdateResult contains the result from method ExpressRouteCircuitPeeringsClient.CreateOrUpdate.
-type ExpressRouteCircuitPeeringsClientCreateOrUpdateResult struct {
-	ExpressRouteCircuitPeering
 }
 
 // ExpressRouteCircuitPeeringsClientDeletePollerResponse contains the response from method ExpressRouteCircuitPeeringsClient.Delete.
@@ -1934,26 +1642,16 @@ type ExpressRouteCircuitPeeringsClientDeleteResponse struct {
 
 // ExpressRouteCircuitPeeringsClientGetResponse contains the response from method ExpressRouteCircuitPeeringsClient.Get.
 type ExpressRouteCircuitPeeringsClientGetResponse struct {
-	ExpressRouteCircuitPeeringsClientGetResult
+	ExpressRouteCircuitPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringsClientGetResult contains the result from method ExpressRouteCircuitPeeringsClient.Get.
-type ExpressRouteCircuitPeeringsClientGetResult struct {
-	ExpressRouteCircuitPeering
 }
 
 // ExpressRouteCircuitPeeringsClientListResponse contains the response from method ExpressRouteCircuitPeeringsClient.List.
 type ExpressRouteCircuitPeeringsClientListResponse struct {
-	ExpressRouteCircuitPeeringsClientListResult
+	ExpressRouteCircuitPeeringListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitPeeringsClientListResult contains the result from method ExpressRouteCircuitPeeringsClient.List.
-type ExpressRouteCircuitPeeringsClientListResult struct {
-	ExpressRouteCircuitPeeringListResult
 }
 
 // ExpressRouteCircuitsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteCircuitsClient.CreateOrUpdate.
@@ -1998,14 +1696,9 @@ func (l *ExpressRouteCircuitsClientCreateOrUpdatePollerResponse) Resume(ctx cont
 
 // ExpressRouteCircuitsClientCreateOrUpdateResponse contains the response from method ExpressRouteCircuitsClient.CreateOrUpdate.
 type ExpressRouteCircuitsClientCreateOrUpdateResponse struct {
-	ExpressRouteCircuitsClientCreateOrUpdateResult
+	ExpressRouteCircuit
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientCreateOrUpdateResult contains the result from method ExpressRouteCircuitsClient.CreateOrUpdate.
-type ExpressRouteCircuitsClientCreateOrUpdateResult struct {
-	ExpressRouteCircuit
 }
 
 // ExpressRouteCircuitsClientDeletePollerResponse contains the response from method ExpressRouteCircuitsClient.Delete.
@@ -2056,50 +1749,30 @@ type ExpressRouteCircuitsClientDeleteResponse struct {
 
 // ExpressRouteCircuitsClientGetPeeringStatsResponse contains the response from method ExpressRouteCircuitsClient.GetPeeringStats.
 type ExpressRouteCircuitsClientGetPeeringStatsResponse struct {
-	ExpressRouteCircuitsClientGetPeeringStatsResult
+	ExpressRouteCircuitStats
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientGetPeeringStatsResult contains the result from method ExpressRouteCircuitsClient.GetPeeringStats.
-type ExpressRouteCircuitsClientGetPeeringStatsResult struct {
-	ExpressRouteCircuitStats
 }
 
 // ExpressRouteCircuitsClientGetResponse contains the response from method ExpressRouteCircuitsClient.Get.
 type ExpressRouteCircuitsClientGetResponse struct {
-	ExpressRouteCircuitsClientGetResult
+	ExpressRouteCircuit
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientGetResult contains the result from method ExpressRouteCircuitsClient.Get.
-type ExpressRouteCircuitsClientGetResult struct {
-	ExpressRouteCircuit
 }
 
 // ExpressRouteCircuitsClientGetStatsResponse contains the response from method ExpressRouteCircuitsClient.GetStats.
 type ExpressRouteCircuitsClientGetStatsResponse struct {
-	ExpressRouteCircuitsClientGetStatsResult
+	ExpressRouteCircuitStats
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientGetStatsResult contains the result from method ExpressRouteCircuitsClient.GetStats.
-type ExpressRouteCircuitsClientGetStatsResult struct {
-	ExpressRouteCircuitStats
 }
 
 // ExpressRouteCircuitsClientListAllResponse contains the response from method ExpressRouteCircuitsClient.ListAll.
 type ExpressRouteCircuitsClientListAllResponse struct {
-	ExpressRouteCircuitsClientListAllResult
+	ExpressRouteCircuitListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientListAllResult contains the result from method ExpressRouteCircuitsClient.ListAll.
-type ExpressRouteCircuitsClientListAllResult struct {
-	ExpressRouteCircuitListResult
 }
 
 // ExpressRouteCircuitsClientListArpTablePollerResponse contains the response from method ExpressRouteCircuitsClient.ListArpTable.
@@ -2144,26 +1817,16 @@ func (l *ExpressRouteCircuitsClientListArpTablePollerResponse) Resume(ctx contex
 
 // ExpressRouteCircuitsClientListArpTableResponse contains the response from method ExpressRouteCircuitsClient.ListArpTable.
 type ExpressRouteCircuitsClientListArpTableResponse struct {
-	ExpressRouteCircuitsClientListArpTableResult
+	ExpressRouteCircuitsArpTableListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientListArpTableResult contains the result from method ExpressRouteCircuitsClient.ListArpTable.
-type ExpressRouteCircuitsClientListArpTableResult struct {
-	ExpressRouteCircuitsArpTableListResult
 }
 
 // ExpressRouteCircuitsClientListResponse contains the response from method ExpressRouteCircuitsClient.List.
 type ExpressRouteCircuitsClientListResponse struct {
-	ExpressRouteCircuitsClientListResult
+	ExpressRouteCircuitListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientListResult contains the result from method ExpressRouteCircuitsClient.List.
-type ExpressRouteCircuitsClientListResult struct {
-	ExpressRouteCircuitListResult
 }
 
 // ExpressRouteCircuitsClientListRoutesTablePollerResponse contains the response from method ExpressRouteCircuitsClient.ListRoutesTable.
@@ -2208,14 +1871,9 @@ func (l *ExpressRouteCircuitsClientListRoutesTablePollerResponse) Resume(ctx con
 
 // ExpressRouteCircuitsClientListRoutesTableResponse contains the response from method ExpressRouteCircuitsClient.ListRoutesTable.
 type ExpressRouteCircuitsClientListRoutesTableResponse struct {
-	ExpressRouteCircuitsClientListRoutesTableResult
+	ExpressRouteCircuitsRoutesTableListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientListRoutesTableResult contains the result from method ExpressRouteCircuitsClient.ListRoutesTable.
-type ExpressRouteCircuitsClientListRoutesTableResult struct {
-	ExpressRouteCircuitsRoutesTableListResult
 }
 
 // ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse contains the response from method ExpressRouteCircuitsClient.ListRoutesTableSummary.
@@ -2261,26 +1919,16 @@ func (l *ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse) Resume(
 
 // ExpressRouteCircuitsClientListRoutesTableSummaryResponse contains the response from method ExpressRouteCircuitsClient.ListRoutesTableSummary.
 type ExpressRouteCircuitsClientListRoutesTableSummaryResponse struct {
-	ExpressRouteCircuitsClientListRoutesTableSummaryResult
+	ExpressRouteCircuitsRoutesTableSummaryListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientListRoutesTableSummaryResult contains the result from method ExpressRouteCircuitsClient.ListRoutesTableSummary.
-type ExpressRouteCircuitsClientListRoutesTableSummaryResult struct {
-	ExpressRouteCircuitsRoutesTableSummaryListResult
 }
 
 // ExpressRouteCircuitsClientUpdateTagsResponse contains the response from method ExpressRouteCircuitsClient.UpdateTags.
 type ExpressRouteCircuitsClientUpdateTagsResponse struct {
-	ExpressRouteCircuitsClientUpdateTagsResult
+	ExpressRouteCircuit
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCircuitsClientUpdateTagsResult contains the result from method ExpressRouteCircuitsClient.UpdateTags.
-type ExpressRouteCircuitsClientUpdateTagsResult struct {
-	ExpressRouteCircuit
 }
 
 // ExpressRouteConnectionsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteConnectionsClient.CreateOrUpdate.
@@ -2325,14 +1973,9 @@ func (l *ExpressRouteConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx c
 
 // ExpressRouteConnectionsClientCreateOrUpdateResponse contains the response from method ExpressRouteConnectionsClient.CreateOrUpdate.
 type ExpressRouteConnectionsClientCreateOrUpdateResponse struct {
-	ExpressRouteConnectionsClientCreateOrUpdateResult
+	ExpressRouteConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionsClientCreateOrUpdateResult contains the result from method ExpressRouteConnectionsClient.CreateOrUpdate.
-type ExpressRouteConnectionsClientCreateOrUpdateResult struct {
-	ExpressRouteConnection
 }
 
 // ExpressRouteConnectionsClientDeletePollerResponse contains the response from method ExpressRouteConnectionsClient.Delete.
@@ -2383,26 +2026,16 @@ type ExpressRouteConnectionsClientDeleteResponse struct {
 
 // ExpressRouteConnectionsClientGetResponse contains the response from method ExpressRouteConnectionsClient.Get.
 type ExpressRouteConnectionsClientGetResponse struct {
-	ExpressRouteConnectionsClientGetResult
+	ExpressRouteConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionsClientGetResult contains the result from method ExpressRouteConnectionsClient.Get.
-type ExpressRouteConnectionsClientGetResult struct {
-	ExpressRouteConnection
 }
 
 // ExpressRouteConnectionsClientListResponse contains the response from method ExpressRouteConnectionsClient.List.
 type ExpressRouteConnectionsClientListResponse struct {
-	ExpressRouteConnectionsClientListResult
+	ExpressRouteConnectionList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteConnectionsClientListResult contains the result from method ExpressRouteConnectionsClient.List.
-type ExpressRouteConnectionsClientListResult struct {
-	ExpressRouteConnectionList
 }
 
 // ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate.
@@ -2448,14 +2081,9 @@ func (l *ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse) 
 
 // ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate.
 type ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse struct {
-	ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResult
+	ExpressRouteCrossConnectionPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResult contains the result from method ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate.
-type ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResult struct {
-	ExpressRouteCrossConnectionPeering
 }
 
 // ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse contains the response from method ExpressRouteCrossConnectionPeeringsClient.Delete.
@@ -2506,26 +2134,16 @@ type ExpressRouteCrossConnectionPeeringsClientDeleteResponse struct {
 
 // ExpressRouteCrossConnectionPeeringsClientGetResponse contains the response from method ExpressRouteCrossConnectionPeeringsClient.Get.
 type ExpressRouteCrossConnectionPeeringsClientGetResponse struct {
-	ExpressRouteCrossConnectionPeeringsClientGetResult
+	ExpressRouteCrossConnectionPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringsClientGetResult contains the result from method ExpressRouteCrossConnectionPeeringsClient.Get.
-type ExpressRouteCrossConnectionPeeringsClientGetResult struct {
-	ExpressRouteCrossConnectionPeering
 }
 
 // ExpressRouteCrossConnectionPeeringsClientListResponse contains the response from method ExpressRouteCrossConnectionPeeringsClient.List.
 type ExpressRouteCrossConnectionPeeringsClientListResponse struct {
-	ExpressRouteCrossConnectionPeeringsClientListResult
+	ExpressRouteCrossConnectionPeeringList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionPeeringsClientListResult contains the result from method ExpressRouteCrossConnectionPeeringsClient.List.
-type ExpressRouteCrossConnectionPeeringsClientListResult struct {
-	ExpressRouteCrossConnectionPeeringList
 }
 
 // ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteCrossConnectionsClient.CreateOrUpdate.
@@ -2571,26 +2189,16 @@ func (l *ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse) Resume(
 
 // ExpressRouteCrossConnectionsClientCreateOrUpdateResponse contains the response from method ExpressRouteCrossConnectionsClient.CreateOrUpdate.
 type ExpressRouteCrossConnectionsClientCreateOrUpdateResponse struct {
-	ExpressRouteCrossConnectionsClientCreateOrUpdateResult
+	ExpressRouteCrossConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientCreateOrUpdateResult contains the result from method ExpressRouteCrossConnectionsClient.CreateOrUpdate.
-type ExpressRouteCrossConnectionsClientCreateOrUpdateResult struct {
-	ExpressRouteCrossConnection
 }
 
 // ExpressRouteCrossConnectionsClientGetResponse contains the response from method ExpressRouteCrossConnectionsClient.Get.
 type ExpressRouteCrossConnectionsClientGetResponse struct {
-	ExpressRouteCrossConnectionsClientGetResult
+	ExpressRouteCrossConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientGetResult contains the result from method ExpressRouteCrossConnectionsClient.Get.
-type ExpressRouteCrossConnectionsClientGetResult struct {
-	ExpressRouteCrossConnection
 }
 
 // ExpressRouteCrossConnectionsClientListArpTablePollerResponse contains the response from method ExpressRouteCrossConnectionsClient.ListArpTable.
@@ -2635,38 +2243,23 @@ func (l *ExpressRouteCrossConnectionsClientListArpTablePollerResponse) Resume(ct
 
 // ExpressRouteCrossConnectionsClientListArpTableResponse contains the response from method ExpressRouteCrossConnectionsClient.ListArpTable.
 type ExpressRouteCrossConnectionsClientListArpTableResponse struct {
-	ExpressRouteCrossConnectionsClientListArpTableResult
+	ExpressRouteCircuitsArpTableListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientListArpTableResult contains the result from method ExpressRouteCrossConnectionsClient.ListArpTable.
-type ExpressRouteCrossConnectionsClientListArpTableResult struct {
-	ExpressRouteCircuitsArpTableListResult
 }
 
 // ExpressRouteCrossConnectionsClientListByResourceGroupResponse contains the response from method ExpressRouteCrossConnectionsClient.ListByResourceGroup.
 type ExpressRouteCrossConnectionsClientListByResourceGroupResponse struct {
-	ExpressRouteCrossConnectionsClientListByResourceGroupResult
+	ExpressRouteCrossConnectionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientListByResourceGroupResult contains the result from method ExpressRouteCrossConnectionsClient.ListByResourceGroup.
-type ExpressRouteCrossConnectionsClientListByResourceGroupResult struct {
-	ExpressRouteCrossConnectionListResult
 }
 
 // ExpressRouteCrossConnectionsClientListResponse contains the response from method ExpressRouteCrossConnectionsClient.List.
 type ExpressRouteCrossConnectionsClientListResponse struct {
-	ExpressRouteCrossConnectionsClientListResult
+	ExpressRouteCrossConnectionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientListResult contains the result from method ExpressRouteCrossConnectionsClient.List.
-type ExpressRouteCrossConnectionsClientListResult struct {
-	ExpressRouteCrossConnectionListResult
 }
 
 // ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse contains the response from method ExpressRouteCrossConnectionsClient.ListRoutesTable.
@@ -2712,14 +2305,9 @@ func (l *ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse) Resume
 
 // ExpressRouteCrossConnectionsClientListRoutesTableResponse contains the response from method ExpressRouteCrossConnectionsClient.ListRoutesTable.
 type ExpressRouteCrossConnectionsClientListRoutesTableResponse struct {
-	ExpressRouteCrossConnectionsClientListRoutesTableResult
+	ExpressRouteCircuitsRoutesTableListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientListRoutesTableResult contains the result from method ExpressRouteCrossConnectionsClient.ListRoutesTable.
-type ExpressRouteCrossConnectionsClientListRoutesTableResult struct {
-	ExpressRouteCircuitsRoutesTableListResult
 }
 
 // ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse contains the response from method ExpressRouteCrossConnectionsClient.ListRoutesTableSummary.
@@ -2765,26 +2353,16 @@ func (l *ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse)
 
 // ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse contains the response from method ExpressRouteCrossConnectionsClient.ListRoutesTableSummary.
 type ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse struct {
-	ExpressRouteCrossConnectionsClientListRoutesTableSummaryResult
+	ExpressRouteCrossConnectionsRoutesTableSummaryListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientListRoutesTableSummaryResult contains the result from method ExpressRouteCrossConnectionsClient.ListRoutesTableSummary.
-type ExpressRouteCrossConnectionsClientListRoutesTableSummaryResult struct {
-	ExpressRouteCrossConnectionsRoutesTableSummaryListResult
 }
 
 // ExpressRouteCrossConnectionsClientUpdateTagsResponse contains the response from method ExpressRouteCrossConnectionsClient.UpdateTags.
 type ExpressRouteCrossConnectionsClientUpdateTagsResponse struct {
-	ExpressRouteCrossConnectionsClientUpdateTagsResult
+	ExpressRouteCrossConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteCrossConnectionsClientUpdateTagsResult contains the result from method ExpressRouteCrossConnectionsClient.UpdateTags.
-type ExpressRouteCrossConnectionsClientUpdateTagsResult struct {
-	ExpressRouteCrossConnection
 }
 
 // ExpressRouteGatewaysClientCreateOrUpdatePollerResponse contains the response from method ExpressRouteGatewaysClient.CreateOrUpdate.
@@ -2829,14 +2407,9 @@ func (l *ExpressRouteGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx cont
 
 // ExpressRouteGatewaysClientCreateOrUpdateResponse contains the response from method ExpressRouteGatewaysClient.CreateOrUpdate.
 type ExpressRouteGatewaysClientCreateOrUpdateResponse struct {
-	ExpressRouteGatewaysClientCreateOrUpdateResult
+	ExpressRouteGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteGatewaysClientCreateOrUpdateResult contains the result from method ExpressRouteGatewaysClient.CreateOrUpdate.
-type ExpressRouteGatewaysClientCreateOrUpdateResult struct {
-	ExpressRouteGateway
 }
 
 // ExpressRouteGatewaysClientDeletePollerResponse contains the response from method ExpressRouteGatewaysClient.Delete.
@@ -2887,62 +2460,37 @@ type ExpressRouteGatewaysClientDeleteResponse struct {
 
 // ExpressRouteGatewaysClientGetResponse contains the response from method ExpressRouteGatewaysClient.Get.
 type ExpressRouteGatewaysClientGetResponse struct {
-	ExpressRouteGatewaysClientGetResult
+	ExpressRouteGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteGatewaysClientGetResult contains the result from method ExpressRouteGatewaysClient.Get.
-type ExpressRouteGatewaysClientGetResult struct {
-	ExpressRouteGateway
 }
 
 // ExpressRouteGatewaysClientListByResourceGroupResponse contains the response from method ExpressRouteGatewaysClient.ListByResourceGroup.
 type ExpressRouteGatewaysClientListByResourceGroupResponse struct {
-	ExpressRouteGatewaysClientListByResourceGroupResult
+	ExpressRouteGatewayList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteGatewaysClientListByResourceGroupResult contains the result from method ExpressRouteGatewaysClient.ListByResourceGroup.
-type ExpressRouteGatewaysClientListByResourceGroupResult struct {
-	ExpressRouteGatewayList
 }
 
 // ExpressRouteGatewaysClientListBySubscriptionResponse contains the response from method ExpressRouteGatewaysClient.ListBySubscription.
 type ExpressRouteGatewaysClientListBySubscriptionResponse struct {
-	ExpressRouteGatewaysClientListBySubscriptionResult
+	ExpressRouteGatewayList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteGatewaysClientListBySubscriptionResult contains the result from method ExpressRouteGatewaysClient.ListBySubscription.
-type ExpressRouteGatewaysClientListBySubscriptionResult struct {
-	ExpressRouteGatewayList
 }
 
 // ExpressRouteLinksClientGetResponse contains the response from method ExpressRouteLinksClient.Get.
 type ExpressRouteLinksClientGetResponse struct {
-	ExpressRouteLinksClientGetResult
+	ExpressRouteLink
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteLinksClientGetResult contains the result from method ExpressRouteLinksClient.Get.
-type ExpressRouteLinksClientGetResult struct {
-	ExpressRouteLink
 }
 
 // ExpressRouteLinksClientListResponse contains the response from method ExpressRouteLinksClient.List.
 type ExpressRouteLinksClientListResponse struct {
-	ExpressRouteLinksClientListResult
+	ExpressRouteLinkListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteLinksClientListResult contains the result from method ExpressRouteLinksClient.List.
-type ExpressRouteLinksClientListResult struct {
-	ExpressRouteLinkListResult
 }
 
 // ExpressRoutePortsClientCreateOrUpdatePollerResponse contains the response from method ExpressRoutePortsClient.CreateOrUpdate.
@@ -2987,14 +2535,9 @@ func (l *ExpressRoutePortsClientCreateOrUpdatePollerResponse) Resume(ctx context
 
 // ExpressRoutePortsClientCreateOrUpdateResponse contains the response from method ExpressRoutePortsClient.CreateOrUpdate.
 type ExpressRoutePortsClientCreateOrUpdateResponse struct {
-	ExpressRoutePortsClientCreateOrUpdateResult
+	ExpressRoutePort
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsClientCreateOrUpdateResult contains the result from method ExpressRoutePortsClient.CreateOrUpdate.
-type ExpressRoutePortsClientCreateOrUpdateResult struct {
-	ExpressRoutePort
 }
 
 // ExpressRoutePortsClientDeletePollerResponse contains the response from method ExpressRoutePortsClient.Delete.
@@ -3045,86 +2588,51 @@ type ExpressRoutePortsClientDeleteResponse struct {
 
 // ExpressRoutePortsClientGetResponse contains the response from method ExpressRoutePortsClient.Get.
 type ExpressRoutePortsClientGetResponse struct {
-	ExpressRoutePortsClientGetResult
+	ExpressRoutePort
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsClientGetResult contains the result from method ExpressRoutePortsClient.Get.
-type ExpressRoutePortsClientGetResult struct {
-	ExpressRoutePort
 }
 
 // ExpressRoutePortsClientListByResourceGroupResponse contains the response from method ExpressRoutePortsClient.ListByResourceGroup.
 type ExpressRoutePortsClientListByResourceGroupResponse struct {
-	ExpressRoutePortsClientListByResourceGroupResult
+	ExpressRoutePortListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsClientListByResourceGroupResult contains the result from method ExpressRoutePortsClient.ListByResourceGroup.
-type ExpressRoutePortsClientListByResourceGroupResult struct {
-	ExpressRoutePortListResult
 }
 
 // ExpressRoutePortsClientListResponse contains the response from method ExpressRoutePortsClient.List.
 type ExpressRoutePortsClientListResponse struct {
-	ExpressRoutePortsClientListResult
+	ExpressRoutePortListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsClientListResult contains the result from method ExpressRoutePortsClient.List.
-type ExpressRoutePortsClientListResult struct {
-	ExpressRoutePortListResult
 }
 
 // ExpressRoutePortsClientUpdateTagsResponse contains the response from method ExpressRoutePortsClient.UpdateTags.
 type ExpressRoutePortsClientUpdateTagsResponse struct {
-	ExpressRoutePortsClientUpdateTagsResult
+	ExpressRoutePort
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsClientUpdateTagsResult contains the result from method ExpressRoutePortsClient.UpdateTags.
-type ExpressRoutePortsClientUpdateTagsResult struct {
-	ExpressRoutePort
 }
 
 // ExpressRoutePortsLocationsClientGetResponse contains the response from method ExpressRoutePortsLocationsClient.Get.
 type ExpressRoutePortsLocationsClientGetResponse struct {
-	ExpressRoutePortsLocationsClientGetResult
+	ExpressRoutePortsLocation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsLocationsClientGetResult contains the result from method ExpressRoutePortsLocationsClient.Get.
-type ExpressRoutePortsLocationsClientGetResult struct {
-	ExpressRoutePortsLocation
 }
 
 // ExpressRoutePortsLocationsClientListResponse contains the response from method ExpressRoutePortsLocationsClient.List.
 type ExpressRoutePortsLocationsClientListResponse struct {
-	ExpressRoutePortsLocationsClientListResult
+	ExpressRoutePortsLocationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRoutePortsLocationsClientListResult contains the result from method ExpressRoutePortsLocationsClient.List.
-type ExpressRoutePortsLocationsClientListResult struct {
-	ExpressRoutePortsLocationListResult
 }
 
 // ExpressRouteServiceProvidersClientListResponse contains the response from method ExpressRouteServiceProvidersClient.List.
 type ExpressRouteServiceProvidersClientListResponse struct {
-	ExpressRouteServiceProvidersClientListResult
+	ExpressRouteServiceProviderListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ExpressRouteServiceProvidersClientListResult contains the result from method ExpressRouteServiceProvidersClient.List.
-type ExpressRouteServiceProvidersClientListResult struct {
-	ExpressRouteServiceProviderListResult
 }
 
 // FirewallPoliciesClientCreateOrUpdatePollerResponse contains the response from method FirewallPoliciesClient.CreateOrUpdate.
@@ -3169,14 +2677,9 @@ func (l *FirewallPoliciesClientCreateOrUpdatePollerResponse) Resume(ctx context.
 
 // FirewallPoliciesClientCreateOrUpdateResponse contains the response from method FirewallPoliciesClient.CreateOrUpdate.
 type FirewallPoliciesClientCreateOrUpdateResponse struct {
-	FirewallPoliciesClientCreateOrUpdateResult
+	FirewallPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPoliciesClientCreateOrUpdateResult contains the result from method FirewallPoliciesClient.CreateOrUpdate.
-type FirewallPoliciesClientCreateOrUpdateResult struct {
-	FirewallPolicy
 }
 
 // FirewallPoliciesClientDeletePollerResponse contains the response from method FirewallPoliciesClient.Delete.
@@ -3227,38 +2730,23 @@ type FirewallPoliciesClientDeleteResponse struct {
 
 // FirewallPoliciesClientGetResponse contains the response from method FirewallPoliciesClient.Get.
 type FirewallPoliciesClientGetResponse struct {
-	FirewallPoliciesClientGetResult
+	FirewallPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPoliciesClientGetResult contains the result from method FirewallPoliciesClient.Get.
-type FirewallPoliciesClientGetResult struct {
-	FirewallPolicy
 }
 
 // FirewallPoliciesClientListAllResponse contains the response from method FirewallPoliciesClient.ListAll.
 type FirewallPoliciesClientListAllResponse struct {
-	FirewallPoliciesClientListAllResult
+	FirewallPolicyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPoliciesClientListAllResult contains the result from method FirewallPoliciesClient.ListAll.
-type FirewallPoliciesClientListAllResult struct {
-	FirewallPolicyListResult
 }
 
 // FirewallPoliciesClientListResponse contains the response from method FirewallPoliciesClient.List.
 type FirewallPoliciesClientListResponse struct {
-	FirewallPoliciesClientListResult
+	FirewallPolicyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPoliciesClientListResult contains the result from method FirewallPoliciesClient.List.
-type FirewallPoliciesClientListResult struct {
-	FirewallPolicyListResult
 }
 
 // FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse contains the response from method FirewallPolicyRuleGroupsClient.CreateOrUpdate.
@@ -3303,14 +2791,9 @@ func (l *FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse) Resume(ctx 
 
 // FirewallPolicyRuleGroupsClientCreateOrUpdateResponse contains the response from method FirewallPolicyRuleGroupsClient.CreateOrUpdate.
 type FirewallPolicyRuleGroupsClientCreateOrUpdateResponse struct {
-	FirewallPolicyRuleGroupsClientCreateOrUpdateResult
+	FirewallPolicyRuleGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupsClientCreateOrUpdateResult contains the result from method FirewallPolicyRuleGroupsClient.CreateOrUpdate.
-type FirewallPolicyRuleGroupsClientCreateOrUpdateResult struct {
-	FirewallPolicyRuleGroup
 }
 
 // FirewallPolicyRuleGroupsClientDeletePollerResponse contains the response from method FirewallPolicyRuleGroupsClient.Delete.
@@ -3361,26 +2844,16 @@ type FirewallPolicyRuleGroupsClientDeleteResponse struct {
 
 // FirewallPolicyRuleGroupsClientGetResponse contains the response from method FirewallPolicyRuleGroupsClient.Get.
 type FirewallPolicyRuleGroupsClientGetResponse struct {
-	FirewallPolicyRuleGroupsClientGetResult
+	FirewallPolicyRuleGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupsClientGetResult contains the result from method FirewallPolicyRuleGroupsClient.Get.
-type FirewallPolicyRuleGroupsClientGetResult struct {
-	FirewallPolicyRuleGroup
 }
 
 // FirewallPolicyRuleGroupsClientListResponse contains the response from method FirewallPolicyRuleGroupsClient.List.
 type FirewallPolicyRuleGroupsClientListResponse struct {
-	FirewallPolicyRuleGroupsClientListResult
+	FirewallPolicyRuleGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FirewallPolicyRuleGroupsClientListResult contains the result from method FirewallPolicyRuleGroupsClient.List.
-type FirewallPolicyRuleGroupsClientListResult struct {
-	FirewallPolicyRuleGroupListResult
 }
 
 // FlowLogsClientCreateOrUpdatePollerResponse contains the response from method FlowLogsClient.CreateOrUpdate.
@@ -3425,14 +2898,9 @@ func (l *FlowLogsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context,
 
 // FlowLogsClientCreateOrUpdateResponse contains the response from method FlowLogsClient.CreateOrUpdate.
 type FlowLogsClientCreateOrUpdateResponse struct {
-	FlowLogsClientCreateOrUpdateResult
+	FlowLog
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FlowLogsClientCreateOrUpdateResult contains the result from method FlowLogsClient.CreateOrUpdate.
-type FlowLogsClientCreateOrUpdateResult struct {
-	FlowLog
 }
 
 // FlowLogsClientDeletePollerResponse contains the response from method FlowLogsClient.Delete.
@@ -3483,50 +2951,30 @@ type FlowLogsClientDeleteResponse struct {
 
 // FlowLogsClientGetResponse contains the response from method FlowLogsClient.Get.
 type FlowLogsClientGetResponse struct {
-	FlowLogsClientGetResult
+	FlowLog
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FlowLogsClientGetResult contains the result from method FlowLogsClient.Get.
-type FlowLogsClientGetResult struct {
-	FlowLog
 }
 
 // FlowLogsClientListResponse contains the response from method FlowLogsClient.List.
 type FlowLogsClientListResponse struct {
-	FlowLogsClientListResult
+	FlowLogListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FlowLogsClientListResult contains the result from method FlowLogsClient.List.
-type FlowLogsClientListResult struct {
-	FlowLogListResult
 }
 
 // HubVirtualNetworkConnectionsClientGetResponse contains the response from method HubVirtualNetworkConnectionsClient.Get.
 type HubVirtualNetworkConnectionsClientGetResponse struct {
-	HubVirtualNetworkConnectionsClientGetResult
+	HubVirtualNetworkConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HubVirtualNetworkConnectionsClientGetResult contains the result from method HubVirtualNetworkConnectionsClient.Get.
-type HubVirtualNetworkConnectionsClientGetResult struct {
-	HubVirtualNetworkConnection
 }
 
 // HubVirtualNetworkConnectionsClientListResponse contains the response from method HubVirtualNetworkConnectionsClient.List.
 type HubVirtualNetworkConnectionsClientListResponse struct {
-	HubVirtualNetworkConnectionsClientListResult
+	ListHubVirtualNetworkConnectionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HubVirtualNetworkConnectionsClientListResult contains the result from method HubVirtualNetworkConnectionsClient.List.
-type HubVirtualNetworkConnectionsClientListResult struct {
-	ListHubVirtualNetworkConnectionsResult
 }
 
 // IPAllocationsClientCreateOrUpdatePollerResponse contains the response from method IPAllocationsClient.CreateOrUpdate.
@@ -3571,14 +3019,9 @@ func (l *IPAllocationsClientCreateOrUpdatePollerResponse) Resume(ctx context.Con
 
 // IPAllocationsClientCreateOrUpdateResponse contains the response from method IPAllocationsClient.CreateOrUpdate.
 type IPAllocationsClientCreateOrUpdateResponse struct {
-	IPAllocationsClientCreateOrUpdateResult
+	IPAllocation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPAllocationsClientCreateOrUpdateResult contains the result from method IPAllocationsClient.CreateOrUpdate.
-type IPAllocationsClientCreateOrUpdateResult struct {
-	IPAllocation
 }
 
 // IPAllocationsClientDeletePollerResponse contains the response from method IPAllocationsClient.Delete.
@@ -3629,50 +3072,30 @@ type IPAllocationsClientDeleteResponse struct {
 
 // IPAllocationsClientGetResponse contains the response from method IPAllocationsClient.Get.
 type IPAllocationsClientGetResponse struct {
-	IPAllocationsClientGetResult
+	IPAllocation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPAllocationsClientGetResult contains the result from method IPAllocationsClient.Get.
-type IPAllocationsClientGetResult struct {
-	IPAllocation
 }
 
 // IPAllocationsClientListByResourceGroupResponse contains the response from method IPAllocationsClient.ListByResourceGroup.
 type IPAllocationsClientListByResourceGroupResponse struct {
-	IPAllocationsClientListByResourceGroupResult
+	IPAllocationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPAllocationsClientListByResourceGroupResult contains the result from method IPAllocationsClient.ListByResourceGroup.
-type IPAllocationsClientListByResourceGroupResult struct {
-	IPAllocationListResult
 }
 
 // IPAllocationsClientListResponse contains the response from method IPAllocationsClient.List.
 type IPAllocationsClientListResponse struct {
-	IPAllocationsClientListResult
+	IPAllocationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPAllocationsClientListResult contains the result from method IPAllocationsClient.List.
-type IPAllocationsClientListResult struct {
-	IPAllocationListResult
 }
 
 // IPAllocationsClientUpdateTagsResponse contains the response from method IPAllocationsClient.UpdateTags.
 type IPAllocationsClientUpdateTagsResponse struct {
-	IPAllocationsClientUpdateTagsResult
+	IPAllocation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPAllocationsClientUpdateTagsResult contains the result from method IPAllocationsClient.UpdateTags.
-type IPAllocationsClientUpdateTagsResult struct {
-	IPAllocation
 }
 
 // IPGroupsClientCreateOrUpdatePollerResponse contains the response from method IPGroupsClient.CreateOrUpdate.
@@ -3717,14 +3140,9 @@ func (l *IPGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context,
 
 // IPGroupsClientCreateOrUpdateResponse contains the response from method IPGroupsClient.CreateOrUpdate.
 type IPGroupsClientCreateOrUpdateResponse struct {
-	IPGroupsClientCreateOrUpdateResult
+	IPGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPGroupsClientCreateOrUpdateResult contains the result from method IPGroupsClient.CreateOrUpdate.
-type IPGroupsClientCreateOrUpdateResult struct {
-	IPGroup
 }
 
 // IPGroupsClientDeletePollerResponse contains the response from method IPGroupsClient.Delete.
@@ -3775,50 +3193,30 @@ type IPGroupsClientDeleteResponse struct {
 
 // IPGroupsClientGetResponse contains the response from method IPGroupsClient.Get.
 type IPGroupsClientGetResponse struct {
-	IPGroupsClientGetResult
+	IPGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPGroupsClientGetResult contains the result from method IPGroupsClient.Get.
-type IPGroupsClientGetResult struct {
-	IPGroup
 }
 
 // IPGroupsClientListByResourceGroupResponse contains the response from method IPGroupsClient.ListByResourceGroup.
 type IPGroupsClientListByResourceGroupResponse struct {
-	IPGroupsClientListByResourceGroupResult
+	IPGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPGroupsClientListByResourceGroupResult contains the result from method IPGroupsClient.ListByResourceGroup.
-type IPGroupsClientListByResourceGroupResult struct {
-	IPGroupListResult
 }
 
 // IPGroupsClientListResponse contains the response from method IPGroupsClient.List.
 type IPGroupsClientListResponse struct {
-	IPGroupsClientListResult
+	IPGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPGroupsClientListResult contains the result from method IPGroupsClient.List.
-type IPGroupsClientListResult struct {
-	IPGroupListResult
 }
 
 // IPGroupsClientUpdateGroupsResponse contains the response from method IPGroupsClient.UpdateGroups.
 type IPGroupsClientUpdateGroupsResponse struct {
-	IPGroupsClientUpdateGroupsResult
+	IPGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IPGroupsClientUpdateGroupsResult contains the result from method IPGroupsClient.UpdateGroups.
-type IPGroupsClientUpdateGroupsResult struct {
-	IPGroup
 }
 
 // InboundNatRulesClientCreateOrUpdatePollerResponse contains the response from method InboundNatRulesClient.CreateOrUpdate.
@@ -3863,14 +3261,9 @@ func (l *InboundNatRulesClientCreateOrUpdatePollerResponse) Resume(ctx context.C
 
 // InboundNatRulesClientCreateOrUpdateResponse contains the response from method InboundNatRulesClient.CreateOrUpdate.
 type InboundNatRulesClientCreateOrUpdateResponse struct {
-	InboundNatRulesClientCreateOrUpdateResult
+	InboundNatRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InboundNatRulesClientCreateOrUpdateResult contains the result from method InboundNatRulesClient.CreateOrUpdate.
-type InboundNatRulesClientCreateOrUpdateResult struct {
-	InboundNatRule
 }
 
 // InboundNatRulesClientDeletePollerResponse contains the response from method InboundNatRulesClient.Delete.
@@ -3921,62 +3314,37 @@ type InboundNatRulesClientDeleteResponse struct {
 
 // InboundNatRulesClientGetResponse contains the response from method InboundNatRulesClient.Get.
 type InboundNatRulesClientGetResponse struct {
-	InboundNatRulesClientGetResult
+	InboundNatRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InboundNatRulesClientGetResult contains the result from method InboundNatRulesClient.Get.
-type InboundNatRulesClientGetResult struct {
-	InboundNatRule
 }
 
 // InboundNatRulesClientListResponse contains the response from method InboundNatRulesClient.List.
 type InboundNatRulesClientListResponse struct {
-	InboundNatRulesClientListResult
+	InboundNatRuleListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InboundNatRulesClientListResult contains the result from method InboundNatRulesClient.List.
-type InboundNatRulesClientListResult struct {
-	InboundNatRuleListResult
 }
 
 // InterfaceIPConfigurationsClientGetResponse contains the response from method InterfaceIPConfigurationsClient.Get.
 type InterfaceIPConfigurationsClientGetResponse struct {
-	InterfaceIPConfigurationsClientGetResult
+	InterfaceIPConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfaceIPConfigurationsClientGetResult contains the result from method InterfaceIPConfigurationsClient.Get.
-type InterfaceIPConfigurationsClientGetResult struct {
-	InterfaceIPConfiguration
 }
 
 // InterfaceIPConfigurationsClientListResponse contains the response from method InterfaceIPConfigurationsClient.List.
 type InterfaceIPConfigurationsClientListResponse struct {
-	InterfaceIPConfigurationsClientListResult
+	InterfaceIPConfigurationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfaceIPConfigurationsClientListResult contains the result from method InterfaceIPConfigurationsClient.List.
-type InterfaceIPConfigurationsClientListResult struct {
-	InterfaceIPConfigurationListResult
 }
 
 // InterfaceLoadBalancersClientListResponse contains the response from method InterfaceLoadBalancersClient.List.
 type InterfaceLoadBalancersClientListResponse struct {
-	InterfaceLoadBalancersClientListResult
+	InterfaceLoadBalancerListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfaceLoadBalancersClientListResult contains the result from method InterfaceLoadBalancersClient.List.
-type InterfaceLoadBalancersClientListResult struct {
-	InterfaceLoadBalancerListResult
 }
 
 // InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse contains the response from method InterfaceTapConfigurationsClient.CreateOrUpdate.
@@ -4021,14 +3389,9 @@ func (l *InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse) Resume(ct
 
 // InterfaceTapConfigurationsClientCreateOrUpdateResponse contains the response from method InterfaceTapConfigurationsClient.CreateOrUpdate.
 type InterfaceTapConfigurationsClientCreateOrUpdateResponse struct {
-	InterfaceTapConfigurationsClientCreateOrUpdateResult
+	InterfaceTapConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfaceTapConfigurationsClientCreateOrUpdateResult contains the result from method InterfaceTapConfigurationsClient.CreateOrUpdate.
-type InterfaceTapConfigurationsClientCreateOrUpdateResult struct {
-	InterfaceTapConfiguration
 }
 
 // InterfaceTapConfigurationsClientDeletePollerResponse contains the response from method InterfaceTapConfigurationsClient.Delete.
@@ -4079,26 +3442,16 @@ type InterfaceTapConfigurationsClientDeleteResponse struct {
 
 // InterfaceTapConfigurationsClientGetResponse contains the response from method InterfaceTapConfigurationsClient.Get.
 type InterfaceTapConfigurationsClientGetResponse struct {
-	InterfaceTapConfigurationsClientGetResult
+	InterfaceTapConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfaceTapConfigurationsClientGetResult contains the result from method InterfaceTapConfigurationsClient.Get.
-type InterfaceTapConfigurationsClientGetResult struct {
-	InterfaceTapConfiguration
 }
 
 // InterfaceTapConfigurationsClientListResponse contains the response from method InterfaceTapConfigurationsClient.List.
 type InterfaceTapConfigurationsClientListResponse struct {
-	InterfaceTapConfigurationsClientListResult
+	InterfaceTapConfigurationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfaceTapConfigurationsClientListResult contains the result from method InterfaceTapConfigurationsClient.List.
-type InterfaceTapConfigurationsClientListResult struct {
-	InterfaceTapConfigurationListResult
 }
 
 // InterfacesClientCreateOrUpdatePollerResponse contains the response from method InterfacesClient.CreateOrUpdate.
@@ -4143,14 +3496,9 @@ func (l *InterfacesClientCreateOrUpdatePollerResponse) Resume(ctx context.Contex
 
 // InterfacesClientCreateOrUpdateResponse contains the response from method InterfacesClient.CreateOrUpdate.
 type InterfacesClientCreateOrUpdateResponse struct {
-	InterfacesClientCreateOrUpdateResult
+	Interface
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientCreateOrUpdateResult contains the result from method InterfacesClient.CreateOrUpdate.
-type InterfacesClientCreateOrUpdateResult struct {
-	Interface
 }
 
 // InterfacesClientDeletePollerResponse contains the response from method InterfacesClient.Delete.
@@ -4241,62 +3589,37 @@ func (l *InterfacesClientGetEffectiveRouteTablePollerResponse) Resume(ctx contex
 
 // InterfacesClientGetEffectiveRouteTableResponse contains the response from method InterfacesClient.GetEffectiveRouteTable.
 type InterfacesClientGetEffectiveRouteTableResponse struct {
-	InterfacesClientGetEffectiveRouteTableResult
+	EffectiveRouteListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientGetEffectiveRouteTableResult contains the result from method InterfacesClient.GetEffectiveRouteTable.
-type InterfacesClientGetEffectiveRouteTableResult struct {
-	EffectiveRouteListResult
 }
 
 // InterfacesClientGetResponse contains the response from method InterfacesClient.Get.
 type InterfacesClientGetResponse struct {
-	InterfacesClientGetResult
+	Interface
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientGetResult contains the result from method InterfacesClient.Get.
-type InterfacesClientGetResult struct {
-	Interface
 }
 
 // InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse contains the response from method InterfacesClient.GetVirtualMachineScaleSetIPConfiguration.
 type InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse struct {
-	InterfacesClientGetVirtualMachineScaleSetIPConfigurationResult
+	InterfaceIPConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientGetVirtualMachineScaleSetIPConfigurationResult contains the result from method InterfacesClient.GetVirtualMachineScaleSetIPConfiguration.
-type InterfacesClientGetVirtualMachineScaleSetIPConfigurationResult struct {
-	InterfaceIPConfiguration
 }
 
 // InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse contains the response from method InterfacesClient.GetVirtualMachineScaleSetNetworkInterface.
 type InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse struct {
-	InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResult
+	Interface
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResult contains the result from method InterfacesClient.GetVirtualMachineScaleSetNetworkInterface.
-type InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResult struct {
-	Interface
 }
 
 // InterfacesClientListAllResponse contains the response from method InterfacesClient.ListAll.
 type InterfacesClientListAllResponse struct {
-	InterfacesClientListAllResult
+	InterfaceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientListAllResult contains the result from method InterfacesClient.ListAll.
-type InterfacesClientListAllResult struct {
-	InterfaceListResult
 }
 
 // InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse contains the response from method InterfacesClient.ListEffectiveNetworkSecurityGroups.
@@ -4342,206 +3665,121 @@ func (l *InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse) Resum
 
 // InterfacesClientListEffectiveNetworkSecurityGroupsResponse contains the response from method InterfacesClient.ListEffectiveNetworkSecurityGroups.
 type InterfacesClientListEffectiveNetworkSecurityGroupsResponse struct {
-	InterfacesClientListEffectiveNetworkSecurityGroupsResult
+	EffectiveNetworkSecurityGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientListEffectiveNetworkSecurityGroupsResult contains the result from method InterfacesClient.ListEffectiveNetworkSecurityGroups.
-type InterfacesClientListEffectiveNetworkSecurityGroupsResult struct {
-	EffectiveNetworkSecurityGroupListResult
 }
 
 // InterfacesClientListResponse contains the response from method InterfacesClient.List.
 type InterfacesClientListResponse struct {
-	InterfacesClientListResult
+	InterfaceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientListResult contains the result from method InterfacesClient.List.
-type InterfacesClientListResult struct {
-	InterfaceListResult
 }
 
 // InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse contains the response from method InterfacesClient.ListVirtualMachineScaleSetIPConfigurations.
 type InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse struct {
-	InterfacesClientListVirtualMachineScaleSetIPConfigurationsResult
+	InterfaceIPConfigurationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientListVirtualMachineScaleSetIPConfigurationsResult contains the result from method InterfacesClient.ListVirtualMachineScaleSetIPConfigurations.
-type InterfacesClientListVirtualMachineScaleSetIPConfigurationsResult struct {
-	InterfaceIPConfigurationListResult
 }
 
 // InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse contains the response from method InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces.
 type InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse struct {
-	InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResult
+	InterfaceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResult contains the result from method InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces.
-type InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResult struct {
-	InterfaceListResult
 }
 
 // InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse contains the response from method InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces.
 type InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse struct {
-	InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResult
+	InterfaceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResult contains the result from method InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces.
-type InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResult struct {
-	InterfaceListResult
 }
 
 // InterfacesClientUpdateTagsResponse contains the response from method InterfacesClient.UpdateTags.
 type InterfacesClientUpdateTagsResponse struct {
-	InterfacesClientUpdateTagsResult
+	Interface
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// InterfacesClientUpdateTagsResult contains the result from method InterfacesClient.UpdateTags.
-type InterfacesClientUpdateTagsResult struct {
-	Interface
 }
 
 // LoadBalancerBackendAddressPoolsClientGetResponse contains the response from method LoadBalancerBackendAddressPoolsClient.Get.
 type LoadBalancerBackendAddressPoolsClientGetResponse struct {
-	LoadBalancerBackendAddressPoolsClientGetResult
+	BackendAddressPool
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerBackendAddressPoolsClientGetResult contains the result from method LoadBalancerBackendAddressPoolsClient.Get.
-type LoadBalancerBackendAddressPoolsClientGetResult struct {
-	BackendAddressPool
 }
 
 // LoadBalancerBackendAddressPoolsClientListResponse contains the response from method LoadBalancerBackendAddressPoolsClient.List.
 type LoadBalancerBackendAddressPoolsClientListResponse struct {
-	LoadBalancerBackendAddressPoolsClientListResult
+	LoadBalancerBackendAddressPoolListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerBackendAddressPoolsClientListResult contains the result from method LoadBalancerBackendAddressPoolsClient.List.
-type LoadBalancerBackendAddressPoolsClientListResult struct {
-	LoadBalancerBackendAddressPoolListResult
 }
 
 // LoadBalancerFrontendIPConfigurationsClientGetResponse contains the response from method LoadBalancerFrontendIPConfigurationsClient.Get.
 type LoadBalancerFrontendIPConfigurationsClientGetResponse struct {
-	LoadBalancerFrontendIPConfigurationsClientGetResult
+	FrontendIPConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerFrontendIPConfigurationsClientGetResult contains the result from method LoadBalancerFrontendIPConfigurationsClient.Get.
-type LoadBalancerFrontendIPConfigurationsClientGetResult struct {
-	FrontendIPConfiguration
 }
 
 // LoadBalancerFrontendIPConfigurationsClientListResponse contains the response from method LoadBalancerFrontendIPConfigurationsClient.List.
 type LoadBalancerFrontendIPConfigurationsClientListResponse struct {
-	LoadBalancerFrontendIPConfigurationsClientListResult
+	LoadBalancerFrontendIPConfigurationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerFrontendIPConfigurationsClientListResult contains the result from method LoadBalancerFrontendIPConfigurationsClient.List.
-type LoadBalancerFrontendIPConfigurationsClientListResult struct {
-	LoadBalancerFrontendIPConfigurationListResult
 }
 
 // LoadBalancerLoadBalancingRulesClientGetResponse contains the response from method LoadBalancerLoadBalancingRulesClient.Get.
 type LoadBalancerLoadBalancingRulesClientGetResponse struct {
-	LoadBalancerLoadBalancingRulesClientGetResult
+	LoadBalancingRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerLoadBalancingRulesClientGetResult contains the result from method LoadBalancerLoadBalancingRulesClient.Get.
-type LoadBalancerLoadBalancingRulesClientGetResult struct {
-	LoadBalancingRule
 }
 
 // LoadBalancerLoadBalancingRulesClientListResponse contains the response from method LoadBalancerLoadBalancingRulesClient.List.
 type LoadBalancerLoadBalancingRulesClientListResponse struct {
-	LoadBalancerLoadBalancingRulesClientListResult
+	LoadBalancerLoadBalancingRuleListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerLoadBalancingRulesClientListResult contains the result from method LoadBalancerLoadBalancingRulesClient.List.
-type LoadBalancerLoadBalancingRulesClientListResult struct {
-	LoadBalancerLoadBalancingRuleListResult
 }
 
 // LoadBalancerNetworkInterfacesClientListResponse contains the response from method LoadBalancerNetworkInterfacesClient.List.
 type LoadBalancerNetworkInterfacesClientListResponse struct {
-	LoadBalancerNetworkInterfacesClientListResult
+	InterfaceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerNetworkInterfacesClientListResult contains the result from method LoadBalancerNetworkInterfacesClient.List.
-type LoadBalancerNetworkInterfacesClientListResult struct {
-	InterfaceListResult
 }
 
 // LoadBalancerOutboundRulesClientGetResponse contains the response from method LoadBalancerOutboundRulesClient.Get.
 type LoadBalancerOutboundRulesClientGetResponse struct {
-	LoadBalancerOutboundRulesClientGetResult
+	OutboundRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerOutboundRulesClientGetResult contains the result from method LoadBalancerOutboundRulesClient.Get.
-type LoadBalancerOutboundRulesClientGetResult struct {
-	OutboundRule
 }
 
 // LoadBalancerOutboundRulesClientListResponse contains the response from method LoadBalancerOutboundRulesClient.List.
 type LoadBalancerOutboundRulesClientListResponse struct {
-	LoadBalancerOutboundRulesClientListResult
+	LoadBalancerOutboundRuleListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerOutboundRulesClientListResult contains the result from method LoadBalancerOutboundRulesClient.List.
-type LoadBalancerOutboundRulesClientListResult struct {
-	LoadBalancerOutboundRuleListResult
 }
 
 // LoadBalancerProbesClientGetResponse contains the response from method LoadBalancerProbesClient.Get.
 type LoadBalancerProbesClientGetResponse struct {
-	LoadBalancerProbesClientGetResult
+	Probe
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerProbesClientGetResult contains the result from method LoadBalancerProbesClient.Get.
-type LoadBalancerProbesClientGetResult struct {
-	Probe
 }
 
 // LoadBalancerProbesClientListResponse contains the response from method LoadBalancerProbesClient.List.
 type LoadBalancerProbesClientListResponse struct {
-	LoadBalancerProbesClientListResult
+	LoadBalancerProbeListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancerProbesClientListResult contains the result from method LoadBalancerProbesClient.List.
-type LoadBalancerProbesClientListResult struct {
-	LoadBalancerProbeListResult
 }
 
 // LoadBalancersClientCreateOrUpdatePollerResponse contains the response from method LoadBalancersClient.CreateOrUpdate.
@@ -4586,14 +3824,9 @@ func (l *LoadBalancersClientCreateOrUpdatePollerResponse) Resume(ctx context.Con
 
 // LoadBalancersClientCreateOrUpdateResponse contains the response from method LoadBalancersClient.CreateOrUpdate.
 type LoadBalancersClientCreateOrUpdateResponse struct {
-	LoadBalancersClientCreateOrUpdateResult
+	LoadBalancer
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancersClientCreateOrUpdateResult contains the result from method LoadBalancersClient.CreateOrUpdate.
-type LoadBalancersClientCreateOrUpdateResult struct {
-	LoadBalancer
 }
 
 // LoadBalancersClientDeletePollerResponse contains the response from method LoadBalancersClient.Delete.
@@ -4644,50 +3877,30 @@ type LoadBalancersClientDeleteResponse struct {
 
 // LoadBalancersClientGetResponse contains the response from method LoadBalancersClient.Get.
 type LoadBalancersClientGetResponse struct {
-	LoadBalancersClientGetResult
+	LoadBalancer
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancersClientGetResult contains the result from method LoadBalancersClient.Get.
-type LoadBalancersClientGetResult struct {
-	LoadBalancer
 }
 
 // LoadBalancersClientListAllResponse contains the response from method LoadBalancersClient.ListAll.
 type LoadBalancersClientListAllResponse struct {
-	LoadBalancersClientListAllResult
+	LoadBalancerListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancersClientListAllResult contains the result from method LoadBalancersClient.ListAll.
-type LoadBalancersClientListAllResult struct {
-	LoadBalancerListResult
 }
 
 // LoadBalancersClientListResponse contains the response from method LoadBalancersClient.List.
 type LoadBalancersClientListResponse struct {
-	LoadBalancersClientListResult
+	LoadBalancerListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancersClientListResult contains the result from method LoadBalancersClient.List.
-type LoadBalancersClientListResult struct {
-	LoadBalancerListResult
 }
 
 // LoadBalancersClientUpdateTagsResponse contains the response from method LoadBalancersClient.UpdateTags.
 type LoadBalancersClientUpdateTagsResponse struct {
-	LoadBalancersClientUpdateTagsResult
+	LoadBalancer
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LoadBalancersClientUpdateTagsResult contains the result from method LoadBalancersClient.UpdateTags.
-type LoadBalancersClientUpdateTagsResult struct {
-	LoadBalancer
 }
 
 // LocalNetworkGatewaysClientCreateOrUpdatePollerResponse contains the response from method LocalNetworkGatewaysClient.CreateOrUpdate.
@@ -4732,14 +3945,9 @@ func (l *LocalNetworkGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx cont
 
 // LocalNetworkGatewaysClientCreateOrUpdateResponse contains the response from method LocalNetworkGatewaysClient.CreateOrUpdate.
 type LocalNetworkGatewaysClientCreateOrUpdateResponse struct {
-	LocalNetworkGatewaysClientCreateOrUpdateResult
+	LocalNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LocalNetworkGatewaysClientCreateOrUpdateResult contains the result from method LocalNetworkGatewaysClient.CreateOrUpdate.
-type LocalNetworkGatewaysClientCreateOrUpdateResult struct {
-	LocalNetworkGateway
 }
 
 // LocalNetworkGatewaysClientDeletePollerResponse contains the response from method LocalNetworkGatewaysClient.Delete.
@@ -4790,50 +3998,30 @@ type LocalNetworkGatewaysClientDeleteResponse struct {
 
 // LocalNetworkGatewaysClientGetResponse contains the response from method LocalNetworkGatewaysClient.Get.
 type LocalNetworkGatewaysClientGetResponse struct {
-	LocalNetworkGatewaysClientGetResult
+	LocalNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LocalNetworkGatewaysClientGetResult contains the result from method LocalNetworkGatewaysClient.Get.
-type LocalNetworkGatewaysClientGetResult struct {
-	LocalNetworkGateway
 }
 
 // LocalNetworkGatewaysClientListResponse contains the response from method LocalNetworkGatewaysClient.List.
 type LocalNetworkGatewaysClientListResponse struct {
-	LocalNetworkGatewaysClientListResult
+	LocalNetworkGatewayListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LocalNetworkGatewaysClientListResult contains the result from method LocalNetworkGatewaysClient.List.
-type LocalNetworkGatewaysClientListResult struct {
-	LocalNetworkGatewayListResult
 }
 
 // LocalNetworkGatewaysClientUpdateTagsResponse contains the response from method LocalNetworkGatewaysClient.UpdateTags.
 type LocalNetworkGatewaysClientUpdateTagsResponse struct {
-	LocalNetworkGatewaysClientUpdateTagsResult
+	LocalNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LocalNetworkGatewaysClientUpdateTagsResult contains the result from method LocalNetworkGatewaysClient.UpdateTags.
-type LocalNetworkGatewaysClientUpdateTagsResult struct {
-	LocalNetworkGateway
 }
 
 // ManagementClientCheckDNSNameAvailabilityResponse contains the response from method ManagementClient.CheckDNSNameAvailability.
 type ManagementClientCheckDNSNameAvailabilityResponse struct {
-	ManagementClientCheckDNSNameAvailabilityResult
+	DNSNameAvailabilityResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientCheckDNSNameAvailabilityResult contains the result from method ManagementClient.CheckDNSNameAvailability.
-type ManagementClientCheckDNSNameAvailabilityResult struct {
-	DNSNameAvailabilityResult
 }
 
 // ManagementClientDeleteBastionShareableLinkPollerResponse contains the response from method ManagementClient.DeleteBastionShareableLink.
@@ -4884,14 +4072,9 @@ type ManagementClientDeleteBastionShareableLinkResponse struct {
 
 // ManagementClientDisconnectActiveSessionsResponse contains the response from method ManagementClient.DisconnectActiveSessions.
 type ManagementClientDisconnectActiveSessionsResponse struct {
-	ManagementClientDisconnectActiveSessionsResult
+	BastionSessionDeleteResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientDisconnectActiveSessionsResult contains the result from method ManagementClient.DisconnectActiveSessions.
-type ManagementClientDisconnectActiveSessionsResult struct {
-	BastionSessionDeleteResult
 }
 
 // ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse contains the response from method ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
@@ -4937,14 +4120,9 @@ func (l *ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePolle
 
 // ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse contains the response from method ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
 type ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse struct {
-	ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult
+	VPNProfileResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult contains the result from method ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
-type ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResult struct {
-	VPNProfileResponse
 }
 
 // ManagementClientGetActiveSessionsPollerResponse contains the response from method ManagementClient.GetActiveSessions.
@@ -4991,26 +4169,16 @@ func (l *ManagementClientGetActiveSessionsPollerResponse) Resume(ctx context.Con
 
 // ManagementClientGetActiveSessionsResponse contains the response from method ManagementClient.GetActiveSessions.
 type ManagementClientGetActiveSessionsResponse struct {
-	ManagementClientGetActiveSessionsResult
+	BastionActiveSessionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientGetActiveSessionsResult contains the result from method ManagementClient.GetActiveSessions.
-type ManagementClientGetActiveSessionsResult struct {
-	BastionActiveSessionListResult
 }
 
 // ManagementClientGetBastionShareableLinkResponse contains the response from method ManagementClient.GetBastionShareableLink.
 type ManagementClientGetBastionShareableLinkResponse struct {
-	ManagementClientGetBastionShareableLinkResult
+	BastionShareableLinkListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientGetBastionShareableLinkResult contains the result from method ManagementClient.GetBastionShareableLink.
-type ManagementClientGetBastionShareableLinkResult struct {
-	BastionShareableLinkListResult
 }
 
 // ManagementClientPutBastionShareableLinkPollerResponse contains the response from method ManagementClient.PutBastionShareableLink.
@@ -5057,26 +4225,16 @@ func (l *ManagementClientPutBastionShareableLinkPollerResponse) Resume(ctx conte
 
 // ManagementClientPutBastionShareableLinkResponse contains the response from method ManagementClient.PutBastionShareableLink.
 type ManagementClientPutBastionShareableLinkResponse struct {
-	ManagementClientPutBastionShareableLinkResult
+	BastionShareableLinkListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientPutBastionShareableLinkResult contains the result from method ManagementClient.PutBastionShareableLink.
-type ManagementClientPutBastionShareableLinkResult struct {
-	BastionShareableLinkListResult
 }
 
 // ManagementClientSupportedSecurityProvidersResponse contains the response from method ManagementClient.SupportedSecurityProviders.
 type ManagementClientSupportedSecurityProvidersResponse struct {
-	ManagementClientSupportedSecurityProvidersResult
+	VirtualWanSecurityProviders
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ManagementClientSupportedSecurityProvidersResult contains the result from method ManagementClient.SupportedSecurityProviders.
-type ManagementClientSupportedSecurityProvidersResult struct {
-	VirtualWanSecurityProviders
 }
 
 // NatGatewaysClientCreateOrUpdatePollerResponse contains the response from method NatGatewaysClient.CreateOrUpdate.
@@ -5121,14 +4279,9 @@ func (l *NatGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Conte
 
 // NatGatewaysClientCreateOrUpdateResponse contains the response from method NatGatewaysClient.CreateOrUpdate.
 type NatGatewaysClientCreateOrUpdateResponse struct {
-	NatGatewaysClientCreateOrUpdateResult
+	NatGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// NatGatewaysClientCreateOrUpdateResult contains the result from method NatGatewaysClient.CreateOrUpdate.
-type NatGatewaysClientCreateOrUpdateResult struct {
-	NatGateway
 }
 
 // NatGatewaysClientDeletePollerResponse contains the response from method NatGatewaysClient.Delete.
@@ -5179,62 +4332,37 @@ type NatGatewaysClientDeleteResponse struct {
 
 // NatGatewaysClientGetResponse contains the response from method NatGatewaysClient.Get.
 type NatGatewaysClientGetResponse struct {
-	NatGatewaysClientGetResult
+	NatGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// NatGatewaysClientGetResult contains the result from method NatGatewaysClient.Get.
-type NatGatewaysClientGetResult struct {
-	NatGateway
 }
 
 // NatGatewaysClientListAllResponse contains the response from method NatGatewaysClient.ListAll.
 type NatGatewaysClientListAllResponse struct {
-	NatGatewaysClientListAllResult
+	NatGatewayListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// NatGatewaysClientListAllResult contains the result from method NatGatewaysClient.ListAll.
-type NatGatewaysClientListAllResult struct {
-	NatGatewayListResult
 }
 
 // NatGatewaysClientListResponse contains the response from method NatGatewaysClient.List.
 type NatGatewaysClientListResponse struct {
-	NatGatewaysClientListResult
+	NatGatewayListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// NatGatewaysClientListResult contains the result from method NatGatewaysClient.List.
-type NatGatewaysClientListResult struct {
-	NatGatewayListResult
 }
 
 // NatGatewaysClientUpdateTagsResponse contains the response from method NatGatewaysClient.UpdateTags.
 type NatGatewaysClientUpdateTagsResponse struct {
-	NatGatewaysClientUpdateTagsResult
+	NatGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// NatGatewaysClientUpdateTagsResult contains the result from method NatGatewaysClient.UpdateTags.
-type NatGatewaysClientUpdateTagsResult struct {
-	NatGateway
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.List.
 type OperationsClientListResponse struct {
-	OperationsClientListResult
+	OperationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OperationsClientListResult contains the result from method OperationsClient.List.
-type OperationsClientListResult struct {
-	OperationListResult
 }
 
 // P2SVPNGatewaysClientCreateOrUpdatePollerResponse contains the response from method P2SVPNGatewaysClient.CreateOrUpdate.
@@ -5279,14 +4407,9 @@ func (l *P2SVPNGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Co
 
 // P2SVPNGatewaysClientCreateOrUpdateResponse contains the response from method P2SVPNGatewaysClient.CreateOrUpdate.
 type P2SVPNGatewaysClientCreateOrUpdateResponse struct {
-	P2SVPNGatewaysClientCreateOrUpdateResult
+	P2SVPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientCreateOrUpdateResult contains the result from method P2SVPNGatewaysClient.CreateOrUpdate.
-type P2SVPNGatewaysClientCreateOrUpdateResult struct {
-	P2SVPNGateway
 }
 
 // P2SVPNGatewaysClientDeletePollerResponse contains the response from method P2SVPNGatewaysClient.Delete.
@@ -5423,14 +4546,9 @@ func (l *P2SVPNGatewaysClientGenerateVPNProfilePollerResponse) Resume(ctx contex
 
 // P2SVPNGatewaysClientGenerateVPNProfileResponse contains the response from method P2SVPNGatewaysClient.GenerateVPNProfile.
 type P2SVPNGatewaysClientGenerateVPNProfileResponse struct {
-	P2SVPNGatewaysClientGenerateVPNProfileResult
+	VPNProfileResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientGenerateVPNProfileResult contains the result from method P2SVPNGatewaysClient.GenerateVPNProfile.
-type P2SVPNGatewaysClientGenerateVPNProfileResult struct {
-	VPNProfileResponse
 }
 
 // P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse contains the response from method P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed.
@@ -5476,14 +4594,9 @@ func (l *P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse) Re
 
 // P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse contains the response from method P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed.
 type P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse struct {
-	P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResult
+	P2SVPNConnectionHealth
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResult contains the result from method P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed.
-type P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResult struct {
-	P2SVPNConnectionHealth
 }
 
 // P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse contains the response from method P2SVPNGatewaysClient.GetP2SVPNConnectionHealth.
@@ -5528,62 +4641,37 @@ func (l *P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse) Resume(ctx
 
 // P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse contains the response from method P2SVPNGatewaysClient.GetP2SVPNConnectionHealth.
 type P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse struct {
-	P2SVPNGatewaysClientGetP2SVPNConnectionHealthResult
+	P2SVPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientGetP2SVPNConnectionHealthResult contains the result from method P2SVPNGatewaysClient.GetP2SVPNConnectionHealth.
-type P2SVPNGatewaysClientGetP2SVPNConnectionHealthResult struct {
-	P2SVPNGateway
 }
 
 // P2SVPNGatewaysClientGetResponse contains the response from method P2SVPNGatewaysClient.Get.
 type P2SVPNGatewaysClientGetResponse struct {
-	P2SVPNGatewaysClientGetResult
+	P2SVPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientGetResult contains the result from method P2SVPNGatewaysClient.Get.
-type P2SVPNGatewaysClientGetResult struct {
-	P2SVPNGateway
 }
 
 // P2SVPNGatewaysClientListByResourceGroupResponse contains the response from method P2SVPNGatewaysClient.ListByResourceGroup.
 type P2SVPNGatewaysClientListByResourceGroupResponse struct {
-	P2SVPNGatewaysClientListByResourceGroupResult
+	ListP2SVPNGatewaysResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientListByResourceGroupResult contains the result from method P2SVPNGatewaysClient.ListByResourceGroup.
-type P2SVPNGatewaysClientListByResourceGroupResult struct {
-	ListP2SVPNGatewaysResult
 }
 
 // P2SVPNGatewaysClientListResponse contains the response from method P2SVPNGatewaysClient.List.
 type P2SVPNGatewaysClientListResponse struct {
-	P2SVPNGatewaysClientListResult
+	ListP2SVPNGatewaysResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientListResult contains the result from method P2SVPNGatewaysClient.List.
-type P2SVPNGatewaysClientListResult struct {
-	ListP2SVPNGatewaysResult
 }
 
 // P2SVPNGatewaysClientUpdateTagsResponse contains the response from method P2SVPNGatewaysClient.UpdateTags.
 type P2SVPNGatewaysClientUpdateTagsResponse struct {
-	P2SVPNGatewaysClientUpdateTagsResult
+	P2SVPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// P2SVPNGatewaysClientUpdateTagsResult contains the result from method P2SVPNGatewaysClient.UpdateTags.
-type P2SVPNGatewaysClientUpdateTagsResult struct {
-	P2SVPNGateway
 }
 
 // PacketCapturesClientCreatePollerResponse contains the response from method PacketCapturesClient.Create.
@@ -5628,14 +4716,9 @@ func (l *PacketCapturesClientCreatePollerResponse) Resume(ctx context.Context, c
 
 // PacketCapturesClientCreateResponse contains the response from method PacketCapturesClient.Create.
 type PacketCapturesClientCreateResponse struct {
-	PacketCapturesClientCreateResult
+	PacketCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PacketCapturesClientCreateResult contains the result from method PacketCapturesClient.Create.
-type PacketCapturesClientCreateResult struct {
-	PacketCaptureResult
 }
 
 // PacketCapturesClientDeletePollerResponse contains the response from method PacketCapturesClient.Delete.
@@ -5686,14 +4769,9 @@ type PacketCapturesClientDeleteResponse struct {
 
 // PacketCapturesClientGetResponse contains the response from method PacketCapturesClient.Get.
 type PacketCapturesClientGetResponse struct {
-	PacketCapturesClientGetResult
+	PacketCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PacketCapturesClientGetResult contains the result from method PacketCapturesClient.Get.
-type PacketCapturesClientGetResult struct {
-	PacketCaptureResult
 }
 
 // PacketCapturesClientGetStatusPollerResponse contains the response from method PacketCapturesClient.GetStatus.
@@ -5738,26 +4816,16 @@ func (l *PacketCapturesClientGetStatusPollerResponse) Resume(ctx context.Context
 
 // PacketCapturesClientGetStatusResponse contains the response from method PacketCapturesClient.GetStatus.
 type PacketCapturesClientGetStatusResponse struct {
-	PacketCapturesClientGetStatusResult
+	PacketCaptureQueryStatusResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PacketCapturesClientGetStatusResult contains the result from method PacketCapturesClient.GetStatus.
-type PacketCapturesClientGetStatusResult struct {
-	PacketCaptureQueryStatusResult
 }
 
 // PacketCapturesClientListResponse contains the response from method PacketCapturesClient.List.
 type PacketCapturesClientListResponse struct {
-	PacketCapturesClientListResult
+	PacketCaptureListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PacketCapturesClientListResult contains the result from method PacketCapturesClient.List.
-type PacketCapturesClientListResult struct {
-	PacketCaptureListResult
 }
 
 // PacketCapturesClientStopPollerResponse contains the response from method PacketCapturesClient.Stop.
@@ -5808,26 +4876,16 @@ type PacketCapturesClientStopResponse struct {
 
 // PeerExpressRouteCircuitConnectionsClientGetResponse contains the response from method PeerExpressRouteCircuitConnectionsClient.Get.
 type PeerExpressRouteCircuitConnectionsClientGetResponse struct {
-	PeerExpressRouteCircuitConnectionsClientGetResult
+	PeerExpressRouteCircuitConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PeerExpressRouteCircuitConnectionsClientGetResult contains the result from method PeerExpressRouteCircuitConnectionsClient.Get.
-type PeerExpressRouteCircuitConnectionsClientGetResult struct {
-	PeerExpressRouteCircuitConnection
 }
 
 // PeerExpressRouteCircuitConnectionsClientListResponse contains the response from method PeerExpressRouteCircuitConnectionsClient.List.
 type PeerExpressRouteCircuitConnectionsClientListResponse struct {
-	PeerExpressRouteCircuitConnectionsClientListResult
+	PeerExpressRouteCircuitConnectionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PeerExpressRouteCircuitConnectionsClientListResult contains the result from method PeerExpressRouteCircuitConnectionsClient.List.
-type PeerExpressRouteCircuitConnectionsClientListResult struct {
-	PeerExpressRouteCircuitConnectionListResult
 }
 
 // PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse contains the response from method PrivateDNSZoneGroupsClient.CreateOrUpdate.
@@ -5872,14 +4930,9 @@ func (l *PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse) Resume(ctx cont
 
 // PrivateDNSZoneGroupsClientCreateOrUpdateResponse contains the response from method PrivateDNSZoneGroupsClient.CreateOrUpdate.
 type PrivateDNSZoneGroupsClientCreateOrUpdateResponse struct {
-	PrivateDNSZoneGroupsClientCreateOrUpdateResult
+	PrivateDNSZoneGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupsClientCreateOrUpdateResult contains the result from method PrivateDNSZoneGroupsClient.CreateOrUpdate.
-type PrivateDNSZoneGroupsClientCreateOrUpdateResult struct {
-	PrivateDNSZoneGroup
 }
 
 // PrivateDNSZoneGroupsClientDeletePollerResponse contains the response from method PrivateDNSZoneGroupsClient.Delete.
@@ -5930,26 +4983,16 @@ type PrivateDNSZoneGroupsClientDeleteResponse struct {
 
 // PrivateDNSZoneGroupsClientGetResponse contains the response from method PrivateDNSZoneGroupsClient.Get.
 type PrivateDNSZoneGroupsClientGetResponse struct {
-	PrivateDNSZoneGroupsClientGetResult
+	PrivateDNSZoneGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupsClientGetResult contains the result from method PrivateDNSZoneGroupsClient.Get.
-type PrivateDNSZoneGroupsClientGetResult struct {
-	PrivateDNSZoneGroup
 }
 
 // PrivateDNSZoneGroupsClientListResponse contains the response from method PrivateDNSZoneGroupsClient.List.
 type PrivateDNSZoneGroupsClientListResponse struct {
-	PrivateDNSZoneGroupsClientListResult
+	PrivateDNSZoneGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateDNSZoneGroupsClientListResult contains the result from method PrivateDNSZoneGroupsClient.List.
-type PrivateDNSZoneGroupsClientListResult struct {
-	PrivateDNSZoneGroupListResult
 }
 
 // PrivateEndpointsClientCreateOrUpdatePollerResponse contains the response from method PrivateEndpointsClient.CreateOrUpdate.
@@ -5994,14 +5037,9 @@ func (l *PrivateEndpointsClientCreateOrUpdatePollerResponse) Resume(ctx context.
 
 // PrivateEndpointsClientCreateOrUpdateResponse contains the response from method PrivateEndpointsClient.CreateOrUpdate.
 type PrivateEndpointsClientCreateOrUpdateResponse struct {
-	PrivateEndpointsClientCreateOrUpdateResult
+	PrivateEndpoint
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateEndpointsClientCreateOrUpdateResult contains the result from method PrivateEndpointsClient.CreateOrUpdate.
-type PrivateEndpointsClientCreateOrUpdateResult struct {
-	PrivateEndpoint
 }
 
 // PrivateEndpointsClientDeletePollerResponse contains the response from method PrivateEndpointsClient.Delete.
@@ -6052,38 +5090,23 @@ type PrivateEndpointsClientDeleteResponse struct {
 
 // PrivateEndpointsClientGetResponse contains the response from method PrivateEndpointsClient.Get.
 type PrivateEndpointsClientGetResponse struct {
-	PrivateEndpointsClientGetResult
+	PrivateEndpoint
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateEndpointsClientGetResult contains the result from method PrivateEndpointsClient.Get.
-type PrivateEndpointsClientGetResult struct {
-	PrivateEndpoint
 }
 
 // PrivateEndpointsClientListBySubscriptionResponse contains the response from method PrivateEndpointsClient.ListBySubscription.
 type PrivateEndpointsClientListBySubscriptionResponse struct {
-	PrivateEndpointsClientListBySubscriptionResult
+	PrivateEndpointListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateEndpointsClientListBySubscriptionResult contains the result from method PrivateEndpointsClient.ListBySubscription.
-type PrivateEndpointsClientListBySubscriptionResult struct {
-	PrivateEndpointListResult
 }
 
 // PrivateEndpointsClientListResponse contains the response from method PrivateEndpointsClient.List.
 type PrivateEndpointsClientListResponse struct {
-	PrivateEndpointsClientListResult
+	PrivateEndpointListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateEndpointsClientListResult contains the result from method PrivateEndpointsClient.List.
-type PrivateEndpointsClientListResult struct {
-	PrivateEndpointListResult
 }
 
 // PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse contains the response from method
@@ -6130,14 +5153,9 @@ func (l *PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGro
 
 // PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse contains the response from method PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup.
 type PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse struct {
-	PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResult
+	PrivateLinkServiceVisibility
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResult contains the result from method PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup.
-type PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResult struct {
-	PrivateLinkServiceVisibility
 }
 
 // PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse contains the response from method PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility.
@@ -6183,14 +5201,9 @@ func (l *PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerRespons
 
 // PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse contains the response from method PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility.
 type PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse struct {
-	PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResult
+	PrivateLinkServiceVisibility
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResult contains the result from method PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility.
-type PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResult struct {
-	PrivateLinkServiceVisibility
 }
 
 // PrivateLinkServicesClientCreateOrUpdatePollerResponse contains the response from method PrivateLinkServicesClient.CreateOrUpdate.
@@ -6235,14 +5248,9 @@ func (l *PrivateLinkServicesClientCreateOrUpdatePollerResponse) Resume(ctx conte
 
 // PrivateLinkServicesClientCreateOrUpdateResponse contains the response from method PrivateLinkServicesClient.CreateOrUpdate.
 type PrivateLinkServicesClientCreateOrUpdateResponse struct {
-	PrivateLinkServicesClientCreateOrUpdateResult
+	PrivateLinkService
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientCreateOrUpdateResult contains the result from method PrivateLinkServicesClient.CreateOrUpdate.
-type PrivateLinkServicesClientCreateOrUpdateResult struct {
-	PrivateLinkService
 }
 
 // PrivateLinkServicesClientDeletePollerResponse contains the response from method PrivateLinkServicesClient.Delete.
@@ -6340,110 +5348,65 @@ type PrivateLinkServicesClientDeleteResponse struct {
 
 // PrivateLinkServicesClientGetPrivateEndpointConnectionResponse contains the response from method PrivateLinkServicesClient.GetPrivateEndpointConnection.
 type PrivateLinkServicesClientGetPrivateEndpointConnectionResponse struct {
-	PrivateLinkServicesClientGetPrivateEndpointConnectionResult
+	PrivateEndpointConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientGetPrivateEndpointConnectionResult contains the result from method PrivateLinkServicesClient.GetPrivateEndpointConnection.
-type PrivateLinkServicesClientGetPrivateEndpointConnectionResult struct {
-	PrivateEndpointConnection
 }
 
 // PrivateLinkServicesClientGetResponse contains the response from method PrivateLinkServicesClient.Get.
 type PrivateLinkServicesClientGetResponse struct {
-	PrivateLinkServicesClientGetResult
+	PrivateLinkService
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientGetResult contains the result from method PrivateLinkServicesClient.Get.
-type PrivateLinkServicesClientGetResult struct {
-	PrivateLinkService
 }
 
 // PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse contains the response from method PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServicesByResourceGroup.
 type PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse struct {
-	PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResult
+	AutoApprovedPrivateLinkServicesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResult contains the result from method PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServicesByResourceGroup.
-type PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResult struct {
-	AutoApprovedPrivateLinkServicesResult
 }
 
 // PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse contains the response from method PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServices.
 type PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse struct {
-	PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResult
+	AutoApprovedPrivateLinkServicesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResult contains the result from method PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServices.
-type PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResult struct {
-	AutoApprovedPrivateLinkServicesResult
 }
 
 // PrivateLinkServicesClientListBySubscriptionResponse contains the response from method PrivateLinkServicesClient.ListBySubscription.
 type PrivateLinkServicesClientListBySubscriptionResponse struct {
-	PrivateLinkServicesClientListBySubscriptionResult
+	PrivateLinkServiceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientListBySubscriptionResult contains the result from method PrivateLinkServicesClient.ListBySubscription.
-type PrivateLinkServicesClientListBySubscriptionResult struct {
-	PrivateLinkServiceListResult
 }
 
 // PrivateLinkServicesClientListPrivateEndpointConnectionsResponse contains the response from method PrivateLinkServicesClient.ListPrivateEndpointConnections.
 type PrivateLinkServicesClientListPrivateEndpointConnectionsResponse struct {
-	PrivateLinkServicesClientListPrivateEndpointConnectionsResult
+	PrivateEndpointConnectionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientListPrivateEndpointConnectionsResult contains the result from method PrivateLinkServicesClient.ListPrivateEndpointConnections.
-type PrivateLinkServicesClientListPrivateEndpointConnectionsResult struct {
-	PrivateEndpointConnectionListResult
 }
 
 // PrivateLinkServicesClientListResponse contains the response from method PrivateLinkServicesClient.List.
 type PrivateLinkServicesClientListResponse struct {
-	PrivateLinkServicesClientListResult
+	PrivateLinkServiceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientListResult contains the result from method PrivateLinkServicesClient.List.
-type PrivateLinkServicesClientListResult struct {
-	PrivateLinkServiceListResult
 }
 
 // PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse contains the response from method PrivateLinkServicesClient.UpdatePrivateEndpointConnection.
 type PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse struct {
-	PrivateLinkServicesClientUpdatePrivateEndpointConnectionResult
+	PrivateEndpointConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PrivateLinkServicesClientUpdatePrivateEndpointConnectionResult contains the result from method PrivateLinkServicesClient.UpdatePrivateEndpointConnection.
-type PrivateLinkServicesClientUpdatePrivateEndpointConnectionResult struct {
-	PrivateEndpointConnection
 }
 
 // ProfilesClientCreateOrUpdateResponse contains the response from method ProfilesClient.CreateOrUpdate.
 type ProfilesClientCreateOrUpdateResponse struct {
-	ProfilesClientCreateOrUpdateResult
+	Profile
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProfilesClientCreateOrUpdateResult contains the result from method ProfilesClient.CreateOrUpdate.
-type ProfilesClientCreateOrUpdateResult struct {
-	Profile
 }
 
 // ProfilesClientDeletePollerResponse contains the response from method ProfilesClient.Delete.
@@ -6494,50 +5457,30 @@ type ProfilesClientDeleteResponse struct {
 
 // ProfilesClientGetResponse contains the response from method ProfilesClient.Get.
 type ProfilesClientGetResponse struct {
-	ProfilesClientGetResult
+	Profile
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProfilesClientGetResult contains the result from method ProfilesClient.Get.
-type ProfilesClientGetResult struct {
-	Profile
 }
 
 // ProfilesClientListAllResponse contains the response from method ProfilesClient.ListAll.
 type ProfilesClientListAllResponse struct {
-	ProfilesClientListAllResult
+	ProfileListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProfilesClientListAllResult contains the result from method ProfilesClient.ListAll.
-type ProfilesClientListAllResult struct {
-	ProfileListResult
 }
 
 // ProfilesClientListResponse contains the response from method ProfilesClient.List.
 type ProfilesClientListResponse struct {
-	ProfilesClientListResult
+	ProfileListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProfilesClientListResult contains the result from method ProfilesClient.List.
-type ProfilesClientListResult struct {
-	ProfileListResult
 }
 
 // ProfilesClientUpdateTagsResponse contains the response from method ProfilesClient.UpdateTags.
 type ProfilesClientUpdateTagsResponse struct {
-	ProfilesClientUpdateTagsResult
+	Profile
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProfilesClientUpdateTagsResult contains the result from method ProfilesClient.UpdateTags.
-type ProfilesClientUpdateTagsResult struct {
-	Profile
 }
 
 // PublicIPAddressesClientCreateOrUpdatePollerResponse contains the response from method PublicIPAddressesClient.CreateOrUpdate.
@@ -6582,14 +5525,9 @@ func (l *PublicIPAddressesClientCreateOrUpdatePollerResponse) Resume(ctx context
 
 // PublicIPAddressesClientCreateOrUpdateResponse contains the response from method PublicIPAddressesClient.CreateOrUpdate.
 type PublicIPAddressesClientCreateOrUpdateResponse struct {
-	PublicIPAddressesClientCreateOrUpdateResult
+	PublicIPAddress
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientCreateOrUpdateResult contains the result from method PublicIPAddressesClient.CreateOrUpdate.
-type PublicIPAddressesClientCreateOrUpdateResult struct {
-	PublicIPAddress
 }
 
 // PublicIPAddressesClientDeletePollerResponse contains the response from method PublicIPAddressesClient.Delete.
@@ -6640,86 +5578,51 @@ type PublicIPAddressesClientDeleteResponse struct {
 
 // PublicIPAddressesClientGetResponse contains the response from method PublicIPAddressesClient.Get.
 type PublicIPAddressesClientGetResponse struct {
-	PublicIPAddressesClientGetResult
+	PublicIPAddress
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientGetResult contains the result from method PublicIPAddressesClient.Get.
-type PublicIPAddressesClientGetResult struct {
-	PublicIPAddress
 }
 
 // PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse contains the response from method PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress.
 type PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse struct {
-	PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResult
+	PublicIPAddress
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResult contains the result from method PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress.
-type PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResult struct {
-	PublicIPAddress
 }
 
 // PublicIPAddressesClientListAllResponse contains the response from method PublicIPAddressesClient.ListAll.
 type PublicIPAddressesClientListAllResponse struct {
-	PublicIPAddressesClientListAllResult
+	PublicIPAddressListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientListAllResult contains the result from method PublicIPAddressesClient.ListAll.
-type PublicIPAddressesClientListAllResult struct {
-	PublicIPAddressListResult
 }
 
 // PublicIPAddressesClientListResponse contains the response from method PublicIPAddressesClient.List.
 type PublicIPAddressesClientListResponse struct {
-	PublicIPAddressesClientListResult
+	PublicIPAddressListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientListResult contains the result from method PublicIPAddressesClient.List.
-type PublicIPAddressesClientListResult struct {
-	PublicIPAddressListResult
 }
 
 // PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse contains the response from method PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses.
 type PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse struct {
-	PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResult
+	PublicIPAddressListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResult contains the result from method PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses.
-type PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResult struct {
-	PublicIPAddressListResult
 }
 
 // PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse contains the response from method PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses.
 type PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse struct {
-	PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResult
+	PublicIPAddressListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResult contains the result from method PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses.
-type PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResult struct {
-	PublicIPAddressListResult
 }
 
 // PublicIPAddressesClientUpdateTagsResponse contains the response from method PublicIPAddressesClient.UpdateTags.
 type PublicIPAddressesClientUpdateTagsResponse struct {
-	PublicIPAddressesClientUpdateTagsResult
+	PublicIPAddress
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPAddressesClientUpdateTagsResult contains the result from method PublicIPAddressesClient.UpdateTags.
-type PublicIPAddressesClientUpdateTagsResult struct {
-	PublicIPAddress
 }
 
 // PublicIPPrefixesClientCreateOrUpdatePollerResponse contains the response from method PublicIPPrefixesClient.CreateOrUpdate.
@@ -6764,14 +5667,9 @@ func (l *PublicIPPrefixesClientCreateOrUpdatePollerResponse) Resume(ctx context.
 
 // PublicIPPrefixesClientCreateOrUpdateResponse contains the response from method PublicIPPrefixesClient.CreateOrUpdate.
 type PublicIPPrefixesClientCreateOrUpdateResponse struct {
-	PublicIPPrefixesClientCreateOrUpdateResult
+	PublicIPPrefix
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPPrefixesClientCreateOrUpdateResult contains the result from method PublicIPPrefixesClient.CreateOrUpdate.
-type PublicIPPrefixesClientCreateOrUpdateResult struct {
-	PublicIPPrefix
 }
 
 // PublicIPPrefixesClientDeletePollerResponse contains the response from method PublicIPPrefixesClient.Delete.
@@ -6822,62 +5720,37 @@ type PublicIPPrefixesClientDeleteResponse struct {
 
 // PublicIPPrefixesClientGetResponse contains the response from method PublicIPPrefixesClient.Get.
 type PublicIPPrefixesClientGetResponse struct {
-	PublicIPPrefixesClientGetResult
+	PublicIPPrefix
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPPrefixesClientGetResult contains the result from method PublicIPPrefixesClient.Get.
-type PublicIPPrefixesClientGetResult struct {
-	PublicIPPrefix
 }
 
 // PublicIPPrefixesClientListAllResponse contains the response from method PublicIPPrefixesClient.ListAll.
 type PublicIPPrefixesClientListAllResponse struct {
-	PublicIPPrefixesClientListAllResult
+	PublicIPPrefixListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPPrefixesClientListAllResult contains the result from method PublicIPPrefixesClient.ListAll.
-type PublicIPPrefixesClientListAllResult struct {
-	PublicIPPrefixListResult
 }
 
 // PublicIPPrefixesClientListResponse contains the response from method PublicIPPrefixesClient.List.
 type PublicIPPrefixesClientListResponse struct {
-	PublicIPPrefixesClientListResult
+	PublicIPPrefixListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPPrefixesClientListResult contains the result from method PublicIPPrefixesClient.List.
-type PublicIPPrefixesClientListResult struct {
-	PublicIPPrefixListResult
 }
 
 // PublicIPPrefixesClientUpdateTagsResponse contains the response from method PublicIPPrefixesClient.UpdateTags.
 type PublicIPPrefixesClientUpdateTagsResponse struct {
-	PublicIPPrefixesClientUpdateTagsResult
+	PublicIPPrefix
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PublicIPPrefixesClientUpdateTagsResult contains the result from method PublicIPPrefixesClient.UpdateTags.
-type PublicIPPrefixesClientUpdateTagsResult struct {
-	PublicIPPrefix
 }
 
 // ResourceNavigationLinksClientListResponse contains the response from method ResourceNavigationLinksClient.List.
 type ResourceNavigationLinksClientListResponse struct {
-	ResourceNavigationLinksClientListResult
+	ResourceNavigationLinksListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ResourceNavigationLinksClientListResult contains the result from method ResourceNavigationLinksClient.List.
-type ResourceNavigationLinksClientListResult struct {
-	ResourceNavigationLinksListResult
 }
 
 // RouteFilterRulesClientCreateOrUpdatePollerResponse contains the response from method RouteFilterRulesClient.CreateOrUpdate.
@@ -6922,14 +5795,9 @@ func (l *RouteFilterRulesClientCreateOrUpdatePollerResponse) Resume(ctx context.
 
 // RouteFilterRulesClientCreateOrUpdateResponse contains the response from method RouteFilterRulesClient.CreateOrUpdate.
 type RouteFilterRulesClientCreateOrUpdateResponse struct {
-	RouteFilterRulesClientCreateOrUpdateResult
+	RouteFilterRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFilterRulesClientCreateOrUpdateResult contains the result from method RouteFilterRulesClient.CreateOrUpdate.
-type RouteFilterRulesClientCreateOrUpdateResult struct {
-	RouteFilterRule
 }
 
 // RouteFilterRulesClientDeletePollerResponse contains the response from method RouteFilterRulesClient.Delete.
@@ -6980,26 +5848,16 @@ type RouteFilterRulesClientDeleteResponse struct {
 
 // RouteFilterRulesClientGetResponse contains the response from method RouteFilterRulesClient.Get.
 type RouteFilterRulesClientGetResponse struct {
-	RouteFilterRulesClientGetResult
+	RouteFilterRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFilterRulesClientGetResult contains the result from method RouteFilterRulesClient.Get.
-type RouteFilterRulesClientGetResult struct {
-	RouteFilterRule
 }
 
 // RouteFilterRulesClientListByRouteFilterResponse contains the response from method RouteFilterRulesClient.ListByRouteFilter.
 type RouteFilterRulesClientListByRouteFilterResponse struct {
-	RouteFilterRulesClientListByRouteFilterResult
+	RouteFilterRuleListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFilterRulesClientListByRouteFilterResult contains the result from method RouteFilterRulesClient.ListByRouteFilter.
-type RouteFilterRulesClientListByRouteFilterResult struct {
-	RouteFilterRuleListResult
 }
 
 // RouteFiltersClientCreateOrUpdatePollerResponse contains the response from method RouteFiltersClient.CreateOrUpdate.
@@ -7044,14 +5902,9 @@ func (l *RouteFiltersClientCreateOrUpdatePollerResponse) Resume(ctx context.Cont
 
 // RouteFiltersClientCreateOrUpdateResponse contains the response from method RouteFiltersClient.CreateOrUpdate.
 type RouteFiltersClientCreateOrUpdateResponse struct {
-	RouteFiltersClientCreateOrUpdateResult
+	RouteFilter
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFiltersClientCreateOrUpdateResult contains the result from method RouteFiltersClient.CreateOrUpdate.
-type RouteFiltersClientCreateOrUpdateResult struct {
-	RouteFilter
 }
 
 // RouteFiltersClientDeletePollerResponse contains the response from method RouteFiltersClient.Delete.
@@ -7102,50 +5955,30 @@ type RouteFiltersClientDeleteResponse struct {
 
 // RouteFiltersClientGetResponse contains the response from method RouteFiltersClient.Get.
 type RouteFiltersClientGetResponse struct {
-	RouteFiltersClientGetResult
+	RouteFilter
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFiltersClientGetResult contains the result from method RouteFiltersClient.Get.
-type RouteFiltersClientGetResult struct {
-	RouteFilter
 }
 
 // RouteFiltersClientListByResourceGroupResponse contains the response from method RouteFiltersClient.ListByResourceGroup.
 type RouteFiltersClientListByResourceGroupResponse struct {
-	RouteFiltersClientListByResourceGroupResult
+	RouteFilterListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFiltersClientListByResourceGroupResult contains the result from method RouteFiltersClient.ListByResourceGroup.
-type RouteFiltersClientListByResourceGroupResult struct {
-	RouteFilterListResult
 }
 
 // RouteFiltersClientListResponse contains the response from method RouteFiltersClient.List.
 type RouteFiltersClientListResponse struct {
-	RouteFiltersClientListResult
+	RouteFilterListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFiltersClientListResult contains the result from method RouteFiltersClient.List.
-type RouteFiltersClientListResult struct {
-	RouteFilterListResult
 }
 
 // RouteFiltersClientUpdateTagsResponse contains the response from method RouteFiltersClient.UpdateTags.
 type RouteFiltersClientUpdateTagsResponse struct {
-	RouteFiltersClientUpdateTagsResult
+	RouteFilter
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteFiltersClientUpdateTagsResult contains the result from method RouteFiltersClient.UpdateTags.
-type RouteFiltersClientUpdateTagsResult struct {
-	RouteFilter
 }
 
 // RouteTablesClientCreateOrUpdatePollerResponse contains the response from method RouteTablesClient.CreateOrUpdate.
@@ -7190,14 +6023,9 @@ func (l *RouteTablesClientCreateOrUpdatePollerResponse) Resume(ctx context.Conte
 
 // RouteTablesClientCreateOrUpdateResponse contains the response from method RouteTablesClient.CreateOrUpdate.
 type RouteTablesClientCreateOrUpdateResponse struct {
-	RouteTablesClientCreateOrUpdateResult
+	RouteTable
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteTablesClientCreateOrUpdateResult contains the result from method RouteTablesClient.CreateOrUpdate.
-type RouteTablesClientCreateOrUpdateResult struct {
-	RouteTable
 }
 
 // RouteTablesClientDeletePollerResponse contains the response from method RouteTablesClient.Delete.
@@ -7248,50 +6076,30 @@ type RouteTablesClientDeleteResponse struct {
 
 // RouteTablesClientGetResponse contains the response from method RouteTablesClient.Get.
 type RouteTablesClientGetResponse struct {
-	RouteTablesClientGetResult
+	RouteTable
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteTablesClientGetResult contains the result from method RouteTablesClient.Get.
-type RouteTablesClientGetResult struct {
-	RouteTable
 }
 
 // RouteTablesClientListAllResponse contains the response from method RouteTablesClient.ListAll.
 type RouteTablesClientListAllResponse struct {
-	RouteTablesClientListAllResult
+	RouteTableListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteTablesClientListAllResult contains the result from method RouteTablesClient.ListAll.
-type RouteTablesClientListAllResult struct {
-	RouteTableListResult
 }
 
 // RouteTablesClientListResponse contains the response from method RouteTablesClient.List.
 type RouteTablesClientListResponse struct {
-	RouteTablesClientListResult
+	RouteTableListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteTablesClientListResult contains the result from method RouteTablesClient.List.
-type RouteTablesClientListResult struct {
-	RouteTableListResult
 }
 
 // RouteTablesClientUpdateTagsResponse contains the response from method RouteTablesClient.UpdateTags.
 type RouteTablesClientUpdateTagsResponse struct {
-	RouteTablesClientUpdateTagsResult
+	RouteTable
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RouteTablesClientUpdateTagsResult contains the result from method RouteTablesClient.UpdateTags.
-type RouteTablesClientUpdateTagsResult struct {
-	RouteTable
 }
 
 // RoutesClientCreateOrUpdatePollerResponse contains the response from method RoutesClient.CreateOrUpdate.
@@ -7336,14 +6144,9 @@ func (l *RoutesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, c
 
 // RoutesClientCreateOrUpdateResponse contains the response from method RoutesClient.CreateOrUpdate.
 type RoutesClientCreateOrUpdateResponse struct {
-	RoutesClientCreateOrUpdateResult
+	Route
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoutesClientCreateOrUpdateResult contains the result from method RoutesClient.CreateOrUpdate.
-type RoutesClientCreateOrUpdateResult struct {
-	Route
 }
 
 // RoutesClientDeletePollerResponse contains the response from method RoutesClient.Delete.
@@ -7394,26 +6197,16 @@ type RoutesClientDeleteResponse struct {
 
 // RoutesClientGetResponse contains the response from method RoutesClient.Get.
 type RoutesClientGetResponse struct {
-	RoutesClientGetResult
+	Route
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoutesClientGetResult contains the result from method RoutesClient.Get.
-type RoutesClientGetResult struct {
-	Route
 }
 
 // RoutesClientListResponse contains the response from method RoutesClient.List.
 type RoutesClientListResponse struct {
-	RoutesClientListResult
+	RouteListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoutesClientListResult contains the result from method RoutesClient.List.
-type RoutesClientListResult struct {
-	RouteListResult
 }
 
 // SecurityGroupsClientCreateOrUpdatePollerResponse contains the response from method SecurityGroupsClient.CreateOrUpdate.
@@ -7458,14 +6251,9 @@ func (l *SecurityGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Co
 
 // SecurityGroupsClientCreateOrUpdateResponse contains the response from method SecurityGroupsClient.CreateOrUpdate.
 type SecurityGroupsClientCreateOrUpdateResponse struct {
-	SecurityGroupsClientCreateOrUpdateResult
+	SecurityGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityGroupsClientCreateOrUpdateResult contains the result from method SecurityGroupsClient.CreateOrUpdate.
-type SecurityGroupsClientCreateOrUpdateResult struct {
-	SecurityGroup
 }
 
 // SecurityGroupsClientDeletePollerResponse contains the response from method SecurityGroupsClient.Delete.
@@ -7516,50 +6304,30 @@ type SecurityGroupsClientDeleteResponse struct {
 
 // SecurityGroupsClientGetResponse contains the response from method SecurityGroupsClient.Get.
 type SecurityGroupsClientGetResponse struct {
-	SecurityGroupsClientGetResult
+	SecurityGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityGroupsClientGetResult contains the result from method SecurityGroupsClient.Get.
-type SecurityGroupsClientGetResult struct {
-	SecurityGroup
 }
 
 // SecurityGroupsClientListAllResponse contains the response from method SecurityGroupsClient.ListAll.
 type SecurityGroupsClientListAllResponse struct {
-	SecurityGroupsClientListAllResult
+	SecurityGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityGroupsClientListAllResult contains the result from method SecurityGroupsClient.ListAll.
-type SecurityGroupsClientListAllResult struct {
-	SecurityGroupListResult
 }
 
 // SecurityGroupsClientListResponse contains the response from method SecurityGroupsClient.List.
 type SecurityGroupsClientListResponse struct {
-	SecurityGroupsClientListResult
+	SecurityGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityGroupsClientListResult contains the result from method SecurityGroupsClient.List.
-type SecurityGroupsClientListResult struct {
-	SecurityGroupListResult
 }
 
 // SecurityGroupsClientUpdateTagsResponse contains the response from method SecurityGroupsClient.UpdateTags.
 type SecurityGroupsClientUpdateTagsResponse struct {
-	SecurityGroupsClientUpdateTagsResult
+	SecurityGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityGroupsClientUpdateTagsResult contains the result from method SecurityGroupsClient.UpdateTags.
-type SecurityGroupsClientUpdateTagsResult struct {
-	SecurityGroup
 }
 
 // SecurityPartnerProvidersClientCreateOrUpdatePollerResponse contains the response from method SecurityPartnerProvidersClient.CreateOrUpdate.
@@ -7604,14 +6372,9 @@ func (l *SecurityPartnerProvidersClientCreateOrUpdatePollerResponse) Resume(ctx 
 
 // SecurityPartnerProvidersClientCreateOrUpdateResponse contains the response from method SecurityPartnerProvidersClient.CreateOrUpdate.
 type SecurityPartnerProvidersClientCreateOrUpdateResponse struct {
-	SecurityPartnerProvidersClientCreateOrUpdateResult
+	SecurityPartnerProvider
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityPartnerProvidersClientCreateOrUpdateResult contains the result from method SecurityPartnerProvidersClient.CreateOrUpdate.
-type SecurityPartnerProvidersClientCreateOrUpdateResult struct {
-	SecurityPartnerProvider
 }
 
 // SecurityPartnerProvidersClientDeletePollerResponse contains the response from method SecurityPartnerProvidersClient.Delete.
@@ -7662,50 +6425,30 @@ type SecurityPartnerProvidersClientDeleteResponse struct {
 
 // SecurityPartnerProvidersClientGetResponse contains the response from method SecurityPartnerProvidersClient.Get.
 type SecurityPartnerProvidersClientGetResponse struct {
-	SecurityPartnerProvidersClientGetResult
+	SecurityPartnerProvider
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityPartnerProvidersClientGetResult contains the result from method SecurityPartnerProvidersClient.Get.
-type SecurityPartnerProvidersClientGetResult struct {
-	SecurityPartnerProvider
 }
 
 // SecurityPartnerProvidersClientListByResourceGroupResponse contains the response from method SecurityPartnerProvidersClient.ListByResourceGroup.
 type SecurityPartnerProvidersClientListByResourceGroupResponse struct {
-	SecurityPartnerProvidersClientListByResourceGroupResult
+	SecurityPartnerProviderListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityPartnerProvidersClientListByResourceGroupResult contains the result from method SecurityPartnerProvidersClient.ListByResourceGroup.
-type SecurityPartnerProvidersClientListByResourceGroupResult struct {
-	SecurityPartnerProviderListResult
 }
 
 // SecurityPartnerProvidersClientListResponse contains the response from method SecurityPartnerProvidersClient.List.
 type SecurityPartnerProvidersClientListResponse struct {
-	SecurityPartnerProvidersClientListResult
+	SecurityPartnerProviderListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityPartnerProvidersClientListResult contains the result from method SecurityPartnerProvidersClient.List.
-type SecurityPartnerProvidersClientListResult struct {
-	SecurityPartnerProviderListResult
 }
 
 // SecurityPartnerProvidersClientUpdateTagsResponse contains the response from method SecurityPartnerProvidersClient.UpdateTags.
 type SecurityPartnerProvidersClientUpdateTagsResponse struct {
-	SecurityPartnerProvidersClientUpdateTagsResult
+	SecurityPartnerProvider
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityPartnerProvidersClientUpdateTagsResult contains the result from method SecurityPartnerProvidersClient.UpdateTags.
-type SecurityPartnerProvidersClientUpdateTagsResult struct {
-	SecurityPartnerProvider
 }
 
 // SecurityRulesClientCreateOrUpdatePollerResponse contains the response from method SecurityRulesClient.CreateOrUpdate.
@@ -7750,14 +6493,9 @@ func (l *SecurityRulesClientCreateOrUpdatePollerResponse) Resume(ctx context.Con
 
 // SecurityRulesClientCreateOrUpdateResponse contains the response from method SecurityRulesClient.CreateOrUpdate.
 type SecurityRulesClientCreateOrUpdateResponse struct {
-	SecurityRulesClientCreateOrUpdateResult
+	SecurityRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityRulesClientCreateOrUpdateResult contains the result from method SecurityRulesClient.CreateOrUpdate.
-type SecurityRulesClientCreateOrUpdateResult struct {
-	SecurityRule
 }
 
 // SecurityRulesClientDeletePollerResponse contains the response from method SecurityRulesClient.Delete.
@@ -7808,38 +6546,23 @@ type SecurityRulesClientDeleteResponse struct {
 
 // SecurityRulesClientGetResponse contains the response from method SecurityRulesClient.Get.
 type SecurityRulesClientGetResponse struct {
-	SecurityRulesClientGetResult
+	SecurityRule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityRulesClientGetResult contains the result from method SecurityRulesClient.Get.
-type SecurityRulesClientGetResult struct {
-	SecurityRule
 }
 
 // SecurityRulesClientListResponse contains the response from method SecurityRulesClient.List.
 type SecurityRulesClientListResponse struct {
-	SecurityRulesClientListResult
+	SecurityRuleListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SecurityRulesClientListResult contains the result from method SecurityRulesClient.List.
-type SecurityRulesClientListResult struct {
-	SecurityRuleListResult
 }
 
 // ServiceAssociationLinksClientListResponse contains the response from method ServiceAssociationLinksClient.List.
 type ServiceAssociationLinksClientListResponse struct {
-	ServiceAssociationLinksClientListResult
+	ServiceAssociationLinksListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceAssociationLinksClientListResult contains the result from method ServiceAssociationLinksClient.List.
-type ServiceAssociationLinksClientListResult struct {
-	ServiceAssociationLinksListResult
 }
 
 // ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse contains the response from method ServiceEndpointPoliciesClient.CreateOrUpdate.
@@ -7884,14 +6607,9 @@ func (l *ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse) Resume(ctx c
 
 // ServiceEndpointPoliciesClientCreateOrUpdateResponse contains the response from method ServiceEndpointPoliciesClient.CreateOrUpdate.
 type ServiceEndpointPoliciesClientCreateOrUpdateResponse struct {
-	ServiceEndpointPoliciesClientCreateOrUpdateResult
+	ServiceEndpointPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPoliciesClientCreateOrUpdateResult contains the result from method ServiceEndpointPoliciesClient.CreateOrUpdate.
-type ServiceEndpointPoliciesClientCreateOrUpdateResult struct {
-	ServiceEndpointPolicy
 }
 
 // ServiceEndpointPoliciesClientDeletePollerResponse contains the response from method ServiceEndpointPoliciesClient.Delete.
@@ -7942,50 +6660,30 @@ type ServiceEndpointPoliciesClientDeleteResponse struct {
 
 // ServiceEndpointPoliciesClientGetResponse contains the response from method ServiceEndpointPoliciesClient.Get.
 type ServiceEndpointPoliciesClientGetResponse struct {
-	ServiceEndpointPoliciesClientGetResult
+	ServiceEndpointPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPoliciesClientGetResult contains the result from method ServiceEndpointPoliciesClient.Get.
-type ServiceEndpointPoliciesClientGetResult struct {
-	ServiceEndpointPolicy
 }
 
 // ServiceEndpointPoliciesClientListByResourceGroupResponse contains the response from method ServiceEndpointPoliciesClient.ListByResourceGroup.
 type ServiceEndpointPoliciesClientListByResourceGroupResponse struct {
-	ServiceEndpointPoliciesClientListByResourceGroupResult
+	ServiceEndpointPolicyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPoliciesClientListByResourceGroupResult contains the result from method ServiceEndpointPoliciesClient.ListByResourceGroup.
-type ServiceEndpointPoliciesClientListByResourceGroupResult struct {
-	ServiceEndpointPolicyListResult
 }
 
 // ServiceEndpointPoliciesClientListResponse contains the response from method ServiceEndpointPoliciesClient.List.
 type ServiceEndpointPoliciesClientListResponse struct {
-	ServiceEndpointPoliciesClientListResult
+	ServiceEndpointPolicyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPoliciesClientListResult contains the result from method ServiceEndpointPoliciesClient.List.
-type ServiceEndpointPoliciesClientListResult struct {
-	ServiceEndpointPolicyListResult
 }
 
 // ServiceEndpointPoliciesClientUpdateTagsResponse contains the response from method ServiceEndpointPoliciesClient.UpdateTags.
 type ServiceEndpointPoliciesClientUpdateTagsResponse struct {
-	ServiceEndpointPoliciesClientUpdateTagsResult
+	ServiceEndpointPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPoliciesClientUpdateTagsResult contains the result from method ServiceEndpointPoliciesClient.UpdateTags.
-type ServiceEndpointPoliciesClientUpdateTagsResult struct {
-	ServiceEndpointPolicy
 }
 
 // ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse contains the response from method ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate.
@@ -8031,14 +6729,9 @@ func (l *ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse) Res
 
 // ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse contains the response from method ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate.
 type ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse struct {
-	ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResult
+	ServiceEndpointPolicyDefinition
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResult contains the result from method ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate.
-type ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResult struct {
-	ServiceEndpointPolicyDefinition
 }
 
 // ServiceEndpointPolicyDefinitionsClientDeletePollerResponse contains the response from method ServiceEndpointPolicyDefinitionsClient.Delete.
@@ -8089,38 +6782,23 @@ type ServiceEndpointPolicyDefinitionsClientDeleteResponse struct {
 
 // ServiceEndpointPolicyDefinitionsClientGetResponse contains the response from method ServiceEndpointPolicyDefinitionsClient.Get.
 type ServiceEndpointPolicyDefinitionsClientGetResponse struct {
-	ServiceEndpointPolicyDefinitionsClientGetResult
+	ServiceEndpointPolicyDefinition
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPolicyDefinitionsClientGetResult contains the result from method ServiceEndpointPolicyDefinitionsClient.Get.
-type ServiceEndpointPolicyDefinitionsClientGetResult struct {
-	ServiceEndpointPolicyDefinition
 }
 
 // ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse contains the response from method ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup.
 type ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse struct {
-	ServiceEndpointPolicyDefinitionsClientListByResourceGroupResult
+	ServiceEndpointPolicyDefinitionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceEndpointPolicyDefinitionsClientListByResourceGroupResult contains the result from method ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup.
-type ServiceEndpointPolicyDefinitionsClientListByResourceGroupResult struct {
-	ServiceEndpointPolicyDefinitionListResult
 }
 
 // ServiceTagsClientListResponse contains the response from method ServiceTagsClient.List.
 type ServiceTagsClientListResponse struct {
-	ServiceTagsClientListResult
+	ServiceTagsListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ServiceTagsClientListResult contains the result from method ServiceTagsClient.List.
-type ServiceTagsClientListResult struct {
-	ServiceTagsListResult
 }
 
 // SubnetsClientCreateOrUpdatePollerResponse contains the response from method SubnetsClient.CreateOrUpdate.
@@ -8165,14 +6843,9 @@ func (l *SubnetsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, 
 
 // SubnetsClientCreateOrUpdateResponse contains the response from method SubnetsClient.CreateOrUpdate.
 type SubnetsClientCreateOrUpdateResponse struct {
-	SubnetsClientCreateOrUpdateResult
+	Subnet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SubnetsClientCreateOrUpdateResult contains the result from method SubnetsClient.CreateOrUpdate.
-type SubnetsClientCreateOrUpdateResult struct {
-	Subnet
 }
 
 // SubnetsClientDeletePollerResponse contains the response from method SubnetsClient.Delete.
@@ -8223,26 +6896,16 @@ type SubnetsClientDeleteResponse struct {
 
 // SubnetsClientGetResponse contains the response from method SubnetsClient.Get.
 type SubnetsClientGetResponse struct {
-	SubnetsClientGetResult
+	Subnet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SubnetsClientGetResult contains the result from method SubnetsClient.Get.
-type SubnetsClientGetResult struct {
-	Subnet
 }
 
 // SubnetsClientListResponse contains the response from method SubnetsClient.List.
 type SubnetsClientListResponse struct {
-	SubnetsClientListResult
+	SubnetListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SubnetsClientListResult contains the result from method SubnetsClient.List.
-type SubnetsClientListResult struct {
-	SubnetListResult
 }
 
 // SubnetsClientPrepareNetworkPoliciesPollerResponse contains the response from method SubnetsClient.PrepareNetworkPolicies.
@@ -8339,14 +7002,9 @@ type SubnetsClientUnprepareNetworkPoliciesResponse struct {
 
 // UsagesClientListResponse contains the response from method UsagesClient.List.
 type UsagesClientListResponse struct {
-	UsagesClientListResult
+	UsagesListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// UsagesClientListResult contains the result from method UsagesClient.List.
-type UsagesClientListResult struct {
-	UsagesListResult
 }
 
 // VPNConnectionsClientCreateOrUpdatePollerResponse contains the response from method VPNConnectionsClient.CreateOrUpdate.
@@ -8391,14 +7049,9 @@ func (l *VPNConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Co
 
 // VPNConnectionsClientCreateOrUpdateResponse contains the response from method VPNConnectionsClient.CreateOrUpdate.
 type VPNConnectionsClientCreateOrUpdateResponse struct {
-	VPNConnectionsClientCreateOrUpdateResult
+	VPNConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNConnectionsClientCreateOrUpdateResult contains the result from method VPNConnectionsClient.CreateOrUpdate.
-type VPNConnectionsClientCreateOrUpdateResult struct {
-	VPNConnection
 }
 
 // VPNConnectionsClientDeletePollerResponse contains the response from method VPNConnectionsClient.Delete.
@@ -8449,26 +7102,16 @@ type VPNConnectionsClientDeleteResponse struct {
 
 // VPNConnectionsClientGetResponse contains the response from method VPNConnectionsClient.Get.
 type VPNConnectionsClientGetResponse struct {
-	VPNConnectionsClientGetResult
+	VPNConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNConnectionsClientGetResult contains the result from method VPNConnectionsClient.Get.
-type VPNConnectionsClientGetResult struct {
-	VPNConnection
 }
 
 // VPNConnectionsClientListByVPNGatewayResponse contains the response from method VPNConnectionsClient.ListByVPNGateway.
 type VPNConnectionsClientListByVPNGatewayResponse struct {
-	VPNConnectionsClientListByVPNGatewayResult
+	ListVPNConnectionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNConnectionsClientListByVPNGatewayResult contains the result from method VPNConnectionsClient.ListByVPNGateway.
-type VPNConnectionsClientListByVPNGatewayResult struct {
-	ListVPNConnectionsResult
 }
 
 // VPNGatewaysClientCreateOrUpdatePollerResponse contains the response from method VPNGatewaysClient.CreateOrUpdate.
@@ -8513,14 +7156,9 @@ func (l *VPNGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Conte
 
 // VPNGatewaysClientCreateOrUpdateResponse contains the response from method VPNGatewaysClient.CreateOrUpdate.
 type VPNGatewaysClientCreateOrUpdateResponse struct {
-	VPNGatewaysClientCreateOrUpdateResult
+	VPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNGatewaysClientCreateOrUpdateResult contains the result from method VPNGatewaysClient.CreateOrUpdate.
-type VPNGatewaysClientCreateOrUpdateResult struct {
-	VPNGateway
 }
 
 // VPNGatewaysClientDeletePollerResponse contains the response from method VPNGatewaysClient.Delete.
@@ -8571,38 +7209,23 @@ type VPNGatewaysClientDeleteResponse struct {
 
 // VPNGatewaysClientGetResponse contains the response from method VPNGatewaysClient.Get.
 type VPNGatewaysClientGetResponse struct {
-	VPNGatewaysClientGetResult
+	VPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNGatewaysClientGetResult contains the result from method VPNGatewaysClient.Get.
-type VPNGatewaysClientGetResult struct {
-	VPNGateway
 }
 
 // VPNGatewaysClientListByResourceGroupResponse contains the response from method VPNGatewaysClient.ListByResourceGroup.
 type VPNGatewaysClientListByResourceGroupResponse struct {
-	VPNGatewaysClientListByResourceGroupResult
+	ListVPNGatewaysResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNGatewaysClientListByResourceGroupResult contains the result from method VPNGatewaysClient.ListByResourceGroup.
-type VPNGatewaysClientListByResourceGroupResult struct {
-	ListVPNGatewaysResult
 }
 
 // VPNGatewaysClientListResponse contains the response from method VPNGatewaysClient.List.
 type VPNGatewaysClientListResponse struct {
-	VPNGatewaysClientListResult
+	ListVPNGatewaysResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNGatewaysClientListResult contains the result from method VPNGatewaysClient.List.
-type VPNGatewaysClientListResult struct {
-	ListVPNGatewaysResult
 }
 
 // VPNGatewaysClientResetPollerResponse contains the response from method VPNGatewaysClient.Reset.
@@ -8647,38 +7270,23 @@ func (l *VPNGatewaysClientResetPollerResponse) Resume(ctx context.Context, clien
 
 // VPNGatewaysClientResetResponse contains the response from method VPNGatewaysClient.Reset.
 type VPNGatewaysClientResetResponse struct {
-	VPNGatewaysClientResetResult
+	VPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNGatewaysClientResetResult contains the result from method VPNGatewaysClient.Reset.
-type VPNGatewaysClientResetResult struct {
-	VPNGateway
 }
 
 // VPNGatewaysClientUpdateTagsResponse contains the response from method VPNGatewaysClient.UpdateTags.
 type VPNGatewaysClientUpdateTagsResponse struct {
-	VPNGatewaysClientUpdateTagsResult
+	VPNGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNGatewaysClientUpdateTagsResult contains the result from method VPNGatewaysClient.UpdateTags.
-type VPNGatewaysClientUpdateTagsResult struct {
-	VPNGateway
 }
 
 // VPNLinkConnectionsClientListByVPNConnectionResponse contains the response from method VPNLinkConnectionsClient.ListByVPNConnection.
 type VPNLinkConnectionsClientListByVPNConnectionResponse struct {
-	VPNLinkConnectionsClientListByVPNConnectionResult
+	ListVPNSiteLinkConnectionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNLinkConnectionsClientListByVPNConnectionResult contains the result from method VPNLinkConnectionsClient.ListByVPNConnection.
-type VPNLinkConnectionsClientListByVPNConnectionResult struct {
-	ListVPNSiteLinkConnectionsResult
 }
 
 // VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWanClient.List.
@@ -8724,14 +7332,9 @@ func (l *VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse
 
 // VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse contains the response from method VPNServerConfigurationsAssociatedWithVirtualWanClient.List.
 type VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse struct {
-	VPNServerConfigurationsAssociatedWithVirtualWanClientListResult
+	VPNServerConfigurationsResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsAssociatedWithVirtualWanClientListResult contains the result from method VPNServerConfigurationsAssociatedWithVirtualWanClient.List.
-type VPNServerConfigurationsAssociatedWithVirtualWanClientListResult struct {
-	VPNServerConfigurationsResponse
 }
 
 // VPNServerConfigurationsClientCreateOrUpdatePollerResponse contains the response from method VPNServerConfigurationsClient.CreateOrUpdate.
@@ -8776,14 +7379,9 @@ func (l *VPNServerConfigurationsClientCreateOrUpdatePollerResponse) Resume(ctx c
 
 // VPNServerConfigurationsClientCreateOrUpdateResponse contains the response from method VPNServerConfigurationsClient.CreateOrUpdate.
 type VPNServerConfigurationsClientCreateOrUpdateResponse struct {
-	VPNServerConfigurationsClientCreateOrUpdateResult
+	VPNServerConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsClientCreateOrUpdateResult contains the result from method VPNServerConfigurationsClient.CreateOrUpdate.
-type VPNServerConfigurationsClientCreateOrUpdateResult struct {
-	VPNServerConfiguration
 }
 
 // VPNServerConfigurationsClientDeletePollerResponse contains the response from method VPNServerConfigurationsClient.Delete.
@@ -8834,86 +7432,51 @@ type VPNServerConfigurationsClientDeleteResponse struct {
 
 // VPNServerConfigurationsClientGetResponse contains the response from method VPNServerConfigurationsClient.Get.
 type VPNServerConfigurationsClientGetResponse struct {
-	VPNServerConfigurationsClientGetResult
+	VPNServerConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsClientGetResult contains the result from method VPNServerConfigurationsClient.Get.
-type VPNServerConfigurationsClientGetResult struct {
-	VPNServerConfiguration
 }
 
 // VPNServerConfigurationsClientListByResourceGroupResponse contains the response from method VPNServerConfigurationsClient.ListByResourceGroup.
 type VPNServerConfigurationsClientListByResourceGroupResponse struct {
-	VPNServerConfigurationsClientListByResourceGroupResult
+	ListVPNServerConfigurationsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsClientListByResourceGroupResult contains the result from method VPNServerConfigurationsClient.ListByResourceGroup.
-type VPNServerConfigurationsClientListByResourceGroupResult struct {
-	ListVPNServerConfigurationsResult
 }
 
 // VPNServerConfigurationsClientListResponse contains the response from method VPNServerConfigurationsClient.List.
 type VPNServerConfigurationsClientListResponse struct {
-	VPNServerConfigurationsClientListResult
+	ListVPNServerConfigurationsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsClientListResult contains the result from method VPNServerConfigurationsClient.List.
-type VPNServerConfigurationsClientListResult struct {
-	ListVPNServerConfigurationsResult
 }
 
 // VPNServerConfigurationsClientUpdateTagsResponse contains the response from method VPNServerConfigurationsClient.UpdateTags.
 type VPNServerConfigurationsClientUpdateTagsResponse struct {
-	VPNServerConfigurationsClientUpdateTagsResult
+	VPNServerConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNServerConfigurationsClientUpdateTagsResult contains the result from method VPNServerConfigurationsClient.UpdateTags.
-type VPNServerConfigurationsClientUpdateTagsResult struct {
-	VPNServerConfiguration
 }
 
 // VPNSiteLinkConnectionsClientGetResponse contains the response from method VPNSiteLinkConnectionsClient.Get.
 type VPNSiteLinkConnectionsClientGetResponse struct {
-	VPNSiteLinkConnectionsClientGetResult
+	VPNSiteLinkConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSiteLinkConnectionsClientGetResult contains the result from method VPNSiteLinkConnectionsClient.Get.
-type VPNSiteLinkConnectionsClientGetResult struct {
-	VPNSiteLinkConnection
 }
 
 // VPNSiteLinksClientGetResponse contains the response from method VPNSiteLinksClient.Get.
 type VPNSiteLinksClientGetResponse struct {
-	VPNSiteLinksClientGetResult
+	VPNSiteLink
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSiteLinksClientGetResult contains the result from method VPNSiteLinksClient.Get.
-type VPNSiteLinksClientGetResult struct {
-	VPNSiteLink
 }
 
 // VPNSiteLinksClientListByVPNSiteResponse contains the response from method VPNSiteLinksClient.ListByVPNSite.
 type VPNSiteLinksClientListByVPNSiteResponse struct {
-	VPNSiteLinksClientListByVPNSiteResult
+	ListVPNSiteLinksResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSiteLinksClientListByVPNSiteResult contains the result from method VPNSiteLinksClient.ListByVPNSite.
-type VPNSiteLinksClientListByVPNSiteResult struct {
-	ListVPNSiteLinksResult
 }
 
 // VPNSitesClientCreateOrUpdatePollerResponse contains the response from method VPNSitesClient.CreateOrUpdate.
@@ -8958,14 +7521,9 @@ func (l *VPNSitesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context,
 
 // VPNSitesClientCreateOrUpdateResponse contains the response from method VPNSitesClient.CreateOrUpdate.
 type VPNSitesClientCreateOrUpdateResponse struct {
-	VPNSitesClientCreateOrUpdateResult
+	VPNSite
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSitesClientCreateOrUpdateResult contains the result from method VPNSitesClient.CreateOrUpdate.
-type VPNSitesClientCreateOrUpdateResult struct {
-	VPNSite
 }
 
 // VPNSitesClientDeletePollerResponse contains the response from method VPNSitesClient.Delete.
@@ -9016,50 +7574,30 @@ type VPNSitesClientDeleteResponse struct {
 
 // VPNSitesClientGetResponse contains the response from method VPNSitesClient.Get.
 type VPNSitesClientGetResponse struct {
-	VPNSitesClientGetResult
+	VPNSite
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSitesClientGetResult contains the result from method VPNSitesClient.Get.
-type VPNSitesClientGetResult struct {
-	VPNSite
 }
 
 // VPNSitesClientListByResourceGroupResponse contains the response from method VPNSitesClient.ListByResourceGroup.
 type VPNSitesClientListByResourceGroupResponse struct {
-	VPNSitesClientListByResourceGroupResult
+	ListVPNSitesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSitesClientListByResourceGroupResult contains the result from method VPNSitesClient.ListByResourceGroup.
-type VPNSitesClientListByResourceGroupResult struct {
-	ListVPNSitesResult
 }
 
 // VPNSitesClientListResponse contains the response from method VPNSitesClient.List.
 type VPNSitesClientListResponse struct {
-	VPNSitesClientListResult
+	ListVPNSitesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSitesClientListResult contains the result from method VPNSitesClient.List.
-type VPNSitesClientListResult struct {
-	ListVPNSitesResult
 }
 
 // VPNSitesClientUpdateTagsResponse contains the response from method VPNSitesClient.UpdateTags.
 type VPNSitesClientUpdateTagsResponse struct {
-	VPNSitesClientUpdateTagsResult
+	VPNSite
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VPNSitesClientUpdateTagsResult contains the result from method VPNSitesClient.UpdateTags.
-type VPNSitesClientUpdateTagsResult struct {
-	VPNSite
 }
 
 // VPNSitesConfigurationClientDownloadPollerResponse contains the response from method VPNSitesConfigurationClient.Download.
@@ -9150,14 +7688,9 @@ func (l *VirtualAppliancesClientCreateOrUpdatePollerResponse) Resume(ctx context
 
 // VirtualAppliancesClientCreateOrUpdateResponse contains the response from method VirtualAppliancesClient.CreateOrUpdate.
 type VirtualAppliancesClientCreateOrUpdateResponse struct {
-	VirtualAppliancesClientCreateOrUpdateResult
+	VirtualAppliance
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualAppliancesClientCreateOrUpdateResult contains the result from method VirtualAppliancesClient.CreateOrUpdate.
-type VirtualAppliancesClientCreateOrUpdateResult struct {
-	VirtualAppliance
 }
 
 // VirtualAppliancesClientDeletePollerResponse contains the response from method VirtualAppliancesClient.Delete.
@@ -9208,50 +7741,30 @@ type VirtualAppliancesClientDeleteResponse struct {
 
 // VirtualAppliancesClientGetResponse contains the response from method VirtualAppliancesClient.Get.
 type VirtualAppliancesClientGetResponse struct {
-	VirtualAppliancesClientGetResult
+	VirtualAppliance
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualAppliancesClientGetResult contains the result from method VirtualAppliancesClient.Get.
-type VirtualAppliancesClientGetResult struct {
-	VirtualAppliance
 }
 
 // VirtualAppliancesClientListByResourceGroupResponse contains the response from method VirtualAppliancesClient.ListByResourceGroup.
 type VirtualAppliancesClientListByResourceGroupResponse struct {
-	VirtualAppliancesClientListByResourceGroupResult
+	VirtualApplianceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualAppliancesClientListByResourceGroupResult contains the result from method VirtualAppliancesClient.ListByResourceGroup.
-type VirtualAppliancesClientListByResourceGroupResult struct {
-	VirtualApplianceListResult
 }
 
 // VirtualAppliancesClientListResponse contains the response from method VirtualAppliancesClient.List.
 type VirtualAppliancesClientListResponse struct {
-	VirtualAppliancesClientListResult
+	VirtualApplianceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualAppliancesClientListResult contains the result from method VirtualAppliancesClient.List.
-type VirtualAppliancesClientListResult struct {
-	VirtualApplianceListResult
 }
 
 // VirtualAppliancesClientUpdateTagsResponse contains the response from method VirtualAppliancesClient.UpdateTags.
 type VirtualAppliancesClientUpdateTagsResponse struct {
-	VirtualAppliancesClientUpdateTagsResult
+	VirtualAppliance
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualAppliancesClientUpdateTagsResult contains the result from method VirtualAppliancesClient.UpdateTags.
-type VirtualAppliancesClientUpdateTagsResult struct {
-	VirtualAppliance
 }
 
 // VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse contains the response from method VirtualHubRouteTableV2SClient.CreateOrUpdate.
@@ -9296,14 +7809,9 @@ func (l *VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse) Resume(ctx c
 
 // VirtualHubRouteTableV2SClientCreateOrUpdateResponse contains the response from method VirtualHubRouteTableV2SClient.CreateOrUpdate.
 type VirtualHubRouteTableV2SClientCreateOrUpdateResponse struct {
-	VirtualHubRouteTableV2SClientCreateOrUpdateResult
+	VirtualHubRouteTableV2
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubRouteTableV2SClientCreateOrUpdateResult contains the result from method VirtualHubRouteTableV2SClient.CreateOrUpdate.
-type VirtualHubRouteTableV2SClientCreateOrUpdateResult struct {
-	VirtualHubRouteTableV2
 }
 
 // VirtualHubRouteTableV2SClientDeletePollerResponse contains the response from method VirtualHubRouteTableV2SClient.Delete.
@@ -9354,26 +7862,16 @@ type VirtualHubRouteTableV2SClientDeleteResponse struct {
 
 // VirtualHubRouteTableV2SClientGetResponse contains the response from method VirtualHubRouteTableV2SClient.Get.
 type VirtualHubRouteTableV2SClientGetResponse struct {
-	VirtualHubRouteTableV2SClientGetResult
+	VirtualHubRouteTableV2
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubRouteTableV2SClientGetResult contains the result from method VirtualHubRouteTableV2SClient.Get.
-type VirtualHubRouteTableV2SClientGetResult struct {
-	VirtualHubRouteTableV2
 }
 
 // VirtualHubRouteTableV2SClientListResponse contains the response from method VirtualHubRouteTableV2SClient.List.
 type VirtualHubRouteTableV2SClientListResponse struct {
-	VirtualHubRouteTableV2SClientListResult
+	ListVirtualHubRouteTableV2SResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubRouteTableV2SClientListResult contains the result from method VirtualHubRouteTableV2SClient.List.
-type VirtualHubRouteTableV2SClientListResult struct {
-	ListVirtualHubRouteTableV2SResult
 }
 
 // VirtualHubsClientCreateOrUpdatePollerResponse contains the response from method VirtualHubsClient.CreateOrUpdate.
@@ -9418,14 +7916,9 @@ func (l *VirtualHubsClientCreateOrUpdatePollerResponse) Resume(ctx context.Conte
 
 // VirtualHubsClientCreateOrUpdateResponse contains the response from method VirtualHubsClient.CreateOrUpdate.
 type VirtualHubsClientCreateOrUpdateResponse struct {
-	VirtualHubsClientCreateOrUpdateResult
+	VirtualHub
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubsClientCreateOrUpdateResult contains the result from method VirtualHubsClient.CreateOrUpdate.
-type VirtualHubsClientCreateOrUpdateResult struct {
-	VirtualHub
 }
 
 // VirtualHubsClientDeletePollerResponse contains the response from method VirtualHubsClient.Delete.
@@ -9476,50 +7969,30 @@ type VirtualHubsClientDeleteResponse struct {
 
 // VirtualHubsClientGetResponse contains the response from method VirtualHubsClient.Get.
 type VirtualHubsClientGetResponse struct {
-	VirtualHubsClientGetResult
+	VirtualHub
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubsClientGetResult contains the result from method VirtualHubsClient.Get.
-type VirtualHubsClientGetResult struct {
-	VirtualHub
 }
 
 // VirtualHubsClientListByResourceGroupResponse contains the response from method VirtualHubsClient.ListByResourceGroup.
 type VirtualHubsClientListByResourceGroupResponse struct {
-	VirtualHubsClientListByResourceGroupResult
+	ListVirtualHubsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubsClientListByResourceGroupResult contains the result from method VirtualHubsClient.ListByResourceGroup.
-type VirtualHubsClientListByResourceGroupResult struct {
-	ListVirtualHubsResult
 }
 
 // VirtualHubsClientListResponse contains the response from method VirtualHubsClient.List.
 type VirtualHubsClientListResponse struct {
-	VirtualHubsClientListResult
+	ListVirtualHubsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubsClientListResult contains the result from method VirtualHubsClient.List.
-type VirtualHubsClientListResult struct {
-	ListVirtualHubsResult
 }
 
 // VirtualHubsClientUpdateTagsResponse contains the response from method VirtualHubsClient.UpdateTags.
 type VirtualHubsClientUpdateTagsResponse struct {
-	VirtualHubsClientUpdateTagsResult
+	VirtualHub
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualHubsClientUpdateTagsResult contains the result from method VirtualHubsClient.UpdateTags.
-type VirtualHubsClientUpdateTagsResult struct {
-	VirtualHub
 }
 
 // VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.CreateOrUpdate.
@@ -9565,14 +8038,9 @@ func (l *VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse) Res
 
 // VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse contains the response from method VirtualNetworkGatewayConnectionsClient.CreateOrUpdate.
 type VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse struct {
-	VirtualNetworkGatewayConnectionsClientCreateOrUpdateResult
+	VirtualNetworkGatewayConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientCreateOrUpdateResult contains the result from method VirtualNetworkGatewayConnectionsClient.CreateOrUpdate.
-type VirtualNetworkGatewayConnectionsClientCreateOrUpdateResult struct {
-	VirtualNetworkGatewayConnection
 }
 
 // VirtualNetworkGatewayConnectionsClientDeletePollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.Delete.
@@ -9623,38 +8091,23 @@ type VirtualNetworkGatewayConnectionsClientDeleteResponse struct {
 
 // VirtualNetworkGatewayConnectionsClientGetResponse contains the response from method VirtualNetworkGatewayConnectionsClient.Get.
 type VirtualNetworkGatewayConnectionsClientGetResponse struct {
-	VirtualNetworkGatewayConnectionsClientGetResult
+	VirtualNetworkGatewayConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientGetResult contains the result from method VirtualNetworkGatewayConnectionsClient.Get.
-type VirtualNetworkGatewayConnectionsClientGetResult struct {
-	VirtualNetworkGatewayConnection
 }
 
 // VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnectionsClient.GetSharedKey.
 type VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse struct {
-	VirtualNetworkGatewayConnectionsClientGetSharedKeyResult
+	ConnectionSharedKey
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientGetSharedKeyResult contains the result from method VirtualNetworkGatewayConnectionsClient.GetSharedKey.
-type VirtualNetworkGatewayConnectionsClientGetSharedKeyResult struct {
-	ConnectionSharedKey
 }
 
 // VirtualNetworkGatewayConnectionsClientListResponse contains the response from method VirtualNetworkGatewayConnectionsClient.List.
 type VirtualNetworkGatewayConnectionsClientListResponse struct {
-	VirtualNetworkGatewayConnectionsClientListResult
+	VirtualNetworkGatewayConnectionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientListResult contains the result from method VirtualNetworkGatewayConnectionsClient.List.
-type VirtualNetworkGatewayConnectionsClientListResult struct {
-	VirtualNetworkGatewayConnectionListResult
 }
 
 // VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.ResetSharedKey.
@@ -9700,14 +8153,9 @@ func (l *VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse) Res
 
 // VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnectionsClient.ResetSharedKey.
 type VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse struct {
-	VirtualNetworkGatewayConnectionsClientResetSharedKeyResult
+	ConnectionResetSharedKey
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientResetSharedKeyResult contains the result from method VirtualNetworkGatewayConnectionsClient.ResetSharedKey.
-type VirtualNetworkGatewayConnectionsClientResetSharedKeyResult struct {
-	ConnectionResetSharedKey
 }
 
 // VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.SetSharedKey.
@@ -9753,14 +8201,9 @@ func (l *VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse) Resum
 
 // VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse contains the response from method VirtualNetworkGatewayConnectionsClient.SetSharedKey.
 type VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse struct {
-	VirtualNetworkGatewayConnectionsClientSetSharedKeyResult
+	ConnectionSharedKey
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientSetSharedKeyResult contains the result from method VirtualNetworkGatewayConnectionsClient.SetSharedKey.
-type VirtualNetworkGatewayConnectionsClientSetSharedKeyResult struct {
-	ConnectionSharedKey
 }
 
 // VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.StartPacketCapture.
@@ -9806,14 +8249,9 @@ func (l *VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse)
 
 // VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnectionsClient.StartPacketCapture.
 type VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse struct {
-	VirtualNetworkGatewayConnectionsClientStartPacketCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientStartPacketCaptureResult contains the result from method VirtualNetworkGatewayConnectionsClient.StartPacketCapture.
-type VirtualNetworkGatewayConnectionsClientStartPacketCaptureResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.StopPacketCapture.
@@ -9859,14 +8297,9 @@ func (l *VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse) 
 
 // VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse contains the response from method VirtualNetworkGatewayConnectionsClient.StopPacketCapture.
 type VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse struct {
-	VirtualNetworkGatewayConnectionsClientStopPacketCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientStopPacketCaptureResult contains the result from method VirtualNetworkGatewayConnectionsClient.StopPacketCapture.
-type VirtualNetworkGatewayConnectionsClientStopPacketCaptureResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse contains the response from method VirtualNetworkGatewayConnectionsClient.UpdateTags.
@@ -9912,14 +8345,9 @@ func (l *VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse) Resume(
 
 // VirtualNetworkGatewayConnectionsClientUpdateTagsResponse contains the response from method VirtualNetworkGatewayConnectionsClient.UpdateTags.
 type VirtualNetworkGatewayConnectionsClientUpdateTagsResponse struct {
-	VirtualNetworkGatewayConnectionsClientUpdateTagsResult
+	VirtualNetworkGatewayConnection
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewayConnectionsClientUpdateTagsResult contains the result from method VirtualNetworkGatewayConnectionsClient.UpdateTags.
-type VirtualNetworkGatewayConnectionsClientUpdateTagsResult struct {
-	VirtualNetworkGatewayConnection
 }
 
 // VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse contains the response from method VirtualNetworkGatewaysClient.CreateOrUpdate.
@@ -9964,14 +8392,9 @@ func (l *VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx co
 
 // VirtualNetworkGatewaysClientCreateOrUpdateResponse contains the response from method VirtualNetworkGatewaysClient.CreateOrUpdate.
 type VirtualNetworkGatewaysClientCreateOrUpdateResponse struct {
-	VirtualNetworkGatewaysClientCreateOrUpdateResult
+	VirtualNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientCreateOrUpdateResult contains the result from method VirtualNetworkGatewaysClient.CreateOrUpdate.
-type VirtualNetworkGatewaysClientCreateOrUpdateResult struct {
-	VirtualNetworkGateway
 }
 
 // VirtualNetworkGatewaysClientDeletePollerResponse contains the response from method VirtualNetworkGatewaysClient.Delete.
@@ -10110,14 +8533,9 @@ func (l *VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse) Resume(ct
 
 // VirtualNetworkGatewaysClientGenerateVPNProfileResponse contains the response from method VirtualNetworkGatewaysClient.GenerateVPNProfile.
 type VirtualNetworkGatewaysClientGenerateVPNProfileResponse struct {
-	VirtualNetworkGatewaysClientGenerateVPNProfileResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGenerateVPNProfileResult contains the result from method VirtualNetworkGatewaysClient.GenerateVPNProfile.
-type VirtualNetworkGatewaysClientGenerateVPNProfileResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse contains the response from method VirtualNetworkGatewaysClient.Generatevpnclientpackage.
@@ -10163,14 +8581,9 @@ func (l *VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse) Res
 
 // VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse contains the response from method VirtualNetworkGatewaysClient.Generatevpnclientpackage.
 type VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse struct {
-	VirtualNetworkGatewaysClientGeneratevpnclientpackageResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGeneratevpnclientpackageResult contains the result from method VirtualNetworkGatewaysClient.Generatevpnclientpackage.
-type VirtualNetworkGatewaysClientGeneratevpnclientpackageResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse contains the response from method VirtualNetworkGatewaysClient.GetAdvertisedRoutes.
@@ -10215,14 +8628,9 @@ func (l *VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse) Resume(c
 
 // VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse contains the response from method VirtualNetworkGatewaysClient.GetAdvertisedRoutes.
 type VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse struct {
-	VirtualNetworkGatewaysClientGetAdvertisedRoutesResult
+	GatewayRouteListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetAdvertisedRoutesResult contains the result from method VirtualNetworkGatewaysClient.GetAdvertisedRoutes.
-type VirtualNetworkGatewaysClientGetAdvertisedRoutesResult struct {
-	GatewayRouteListResult
 }
 
 // VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse contains the response from method VirtualNetworkGatewaysClient.GetBgpPeerStatus.
@@ -10267,14 +8675,9 @@ func (l *VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse) Resume(ctx 
 
 // VirtualNetworkGatewaysClientGetBgpPeerStatusResponse contains the response from method VirtualNetworkGatewaysClient.GetBgpPeerStatus.
 type VirtualNetworkGatewaysClientGetBgpPeerStatusResponse struct {
-	VirtualNetworkGatewaysClientGetBgpPeerStatusResult
+	BgpPeerStatusListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetBgpPeerStatusResult contains the result from method VirtualNetworkGatewaysClient.GetBgpPeerStatus.
-type VirtualNetworkGatewaysClientGetBgpPeerStatusResult struct {
-	BgpPeerStatusListResult
 }
 
 // VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse contains the response from method VirtualNetworkGatewaysClient.GetLearnedRoutes.
@@ -10319,26 +8722,16 @@ func (l *VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse) Resume(ctx 
 
 // VirtualNetworkGatewaysClientGetLearnedRoutesResponse contains the response from method VirtualNetworkGatewaysClient.GetLearnedRoutes.
 type VirtualNetworkGatewaysClientGetLearnedRoutesResponse struct {
-	VirtualNetworkGatewaysClientGetLearnedRoutesResult
+	GatewayRouteListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetLearnedRoutesResult contains the result from method VirtualNetworkGatewaysClient.GetLearnedRoutes.
-type VirtualNetworkGatewaysClientGetLearnedRoutesResult struct {
-	GatewayRouteListResult
 }
 
 // VirtualNetworkGatewaysClientGetResponse contains the response from method VirtualNetworkGatewaysClient.Get.
 type VirtualNetworkGatewaysClientGetResponse struct {
-	VirtualNetworkGatewaysClientGetResult
+	VirtualNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetResult contains the result from method VirtualNetworkGatewaysClient.Get.
-type VirtualNetworkGatewaysClientGetResult struct {
-	VirtualNetworkGateway
 }
 
 // VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse contains the response from method VirtualNetworkGatewaysClient.GetVPNProfilePackageURL.
@@ -10384,14 +8777,9 @@ func (l *VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse) Resu
 
 // VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse contains the response from method VirtualNetworkGatewaysClient.GetVPNProfilePackageURL.
 type VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse struct {
-	VirtualNetworkGatewaysClientGetVPNProfilePackageURLResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetVPNProfilePackageURLResult contains the result from method VirtualNetworkGatewaysClient.GetVPNProfilePackageURL.
-type VirtualNetworkGatewaysClientGetVPNProfilePackageURLResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse contains the response from method VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth.
@@ -10437,14 +8825,9 @@ func (l *VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse)
 
 // VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse contains the response from method VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth.
 type VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse struct {
-	VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResult
+	VPNClientConnectionHealthDetailListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResult contains the result from method VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth.
-type VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResult struct {
-	VPNClientConnectionHealthDetailListResult
 }
 
 // VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse contains the response from method VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters.
@@ -10490,38 +8873,23 @@ func (l *VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse) 
 
 // VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters.
 type VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse struct {
-	VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResult
+	VPNClientIPsecParameters
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResult contains the result from method VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters.
-type VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResult struct {
-	VPNClientIPsecParameters
 }
 
 // VirtualNetworkGatewaysClientListConnectionsResponse contains the response from method VirtualNetworkGatewaysClient.ListConnections.
 type VirtualNetworkGatewaysClientListConnectionsResponse struct {
-	VirtualNetworkGatewaysClientListConnectionsResult
+	VirtualNetworkGatewayListConnectionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientListConnectionsResult contains the result from method VirtualNetworkGatewaysClient.ListConnections.
-type VirtualNetworkGatewaysClientListConnectionsResult struct {
-	VirtualNetworkGatewayListConnectionsResult
 }
 
 // VirtualNetworkGatewaysClientListResponse contains the response from method VirtualNetworkGatewaysClient.List.
 type VirtualNetworkGatewaysClientListResponse struct {
-	VirtualNetworkGatewaysClientListResult
+	VirtualNetworkGatewayListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientListResult contains the result from method VirtualNetworkGatewaysClient.List.
-type VirtualNetworkGatewaysClientListResult struct {
-	VirtualNetworkGatewayListResult
 }
 
 // VirtualNetworkGatewaysClientResetPollerResponse contains the response from method VirtualNetworkGatewaysClient.Reset.
@@ -10566,14 +8934,9 @@ func (l *VirtualNetworkGatewaysClientResetPollerResponse) Resume(ctx context.Con
 
 // VirtualNetworkGatewaysClientResetResponse contains the response from method VirtualNetworkGatewaysClient.Reset.
 type VirtualNetworkGatewaysClientResetResponse struct {
-	VirtualNetworkGatewaysClientResetResult
+	VirtualNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientResetResult contains the result from method VirtualNetworkGatewaysClient.Reset.
-type VirtualNetworkGatewaysClientResetResult struct {
-	VirtualNetworkGateway
 }
 
 // VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse contains the response from method VirtualNetworkGatewaysClient.ResetVPNClientSharedKey.
@@ -10666,14 +9029,9 @@ func (l *VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse) 
 
 // VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse contains the response from method VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters.
 type VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse struct {
-	VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResult
+	VPNClientIPsecParameters
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResult contains the result from method VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters.
-type VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResult struct {
-	VPNClientIPsecParameters
 }
 
 // VirtualNetworkGatewaysClientStartPacketCapturePollerResponse contains the response from method VirtualNetworkGatewaysClient.StartPacketCapture.
@@ -10718,14 +9076,9 @@ func (l *VirtualNetworkGatewaysClientStartPacketCapturePollerResponse) Resume(ct
 
 // VirtualNetworkGatewaysClientStartPacketCaptureResponse contains the response from method VirtualNetworkGatewaysClient.StartPacketCapture.
 type VirtualNetworkGatewaysClientStartPacketCaptureResponse struct {
-	VirtualNetworkGatewaysClientStartPacketCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientStartPacketCaptureResult contains the result from method VirtualNetworkGatewaysClient.StartPacketCapture.
-type VirtualNetworkGatewaysClientStartPacketCaptureResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewaysClientStopPacketCapturePollerResponse contains the response from method VirtualNetworkGatewaysClient.StopPacketCapture.
@@ -10770,26 +9123,16 @@ func (l *VirtualNetworkGatewaysClientStopPacketCapturePollerResponse) Resume(ctx
 
 // VirtualNetworkGatewaysClientStopPacketCaptureResponse contains the response from method VirtualNetworkGatewaysClient.StopPacketCapture.
 type VirtualNetworkGatewaysClientStopPacketCaptureResponse struct {
-	VirtualNetworkGatewaysClientStopPacketCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientStopPacketCaptureResult contains the result from method VirtualNetworkGatewaysClient.StopPacketCapture.
-type VirtualNetworkGatewaysClientStopPacketCaptureResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewaysClientSupportedVPNDevicesResponse contains the response from method VirtualNetworkGatewaysClient.SupportedVPNDevices.
 type VirtualNetworkGatewaysClientSupportedVPNDevicesResponse struct {
-	VirtualNetworkGatewaysClientSupportedVPNDevicesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientSupportedVPNDevicesResult contains the result from method VirtualNetworkGatewaysClient.SupportedVPNDevices.
-type VirtualNetworkGatewaysClientSupportedVPNDevicesResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkGatewaysClientUpdateTagsPollerResponse contains the response from method VirtualNetworkGatewaysClient.UpdateTags.
@@ -10834,26 +9177,16 @@ func (l *VirtualNetworkGatewaysClientUpdateTagsPollerResponse) Resume(ctx contex
 
 // VirtualNetworkGatewaysClientUpdateTagsResponse contains the response from method VirtualNetworkGatewaysClient.UpdateTags.
 type VirtualNetworkGatewaysClientUpdateTagsResponse struct {
-	VirtualNetworkGatewaysClientUpdateTagsResult
+	VirtualNetworkGateway
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientUpdateTagsResult contains the result from method VirtualNetworkGatewaysClient.UpdateTags.
-type VirtualNetworkGatewaysClientUpdateTagsResult struct {
-	VirtualNetworkGateway
 }
 
 // VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse contains the response from method VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript.
 type VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse struct {
-	VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResult contains the result from method VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript.
-type VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResult struct {
-	Value *string
+	Value       *string
 }
 
 // VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse contains the response from method VirtualNetworkPeeringsClient.CreateOrUpdate.
@@ -10898,14 +9231,9 @@ func (l *VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse) Resume(ctx co
 
 // VirtualNetworkPeeringsClientCreateOrUpdateResponse contains the response from method VirtualNetworkPeeringsClient.CreateOrUpdate.
 type VirtualNetworkPeeringsClientCreateOrUpdateResponse struct {
-	VirtualNetworkPeeringsClientCreateOrUpdateResult
+	VirtualNetworkPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkPeeringsClientCreateOrUpdateResult contains the result from method VirtualNetworkPeeringsClient.CreateOrUpdate.
-type VirtualNetworkPeeringsClientCreateOrUpdateResult struct {
-	VirtualNetworkPeering
 }
 
 // VirtualNetworkPeeringsClientDeletePollerResponse contains the response from method VirtualNetworkPeeringsClient.Delete.
@@ -10956,26 +9284,16 @@ type VirtualNetworkPeeringsClientDeleteResponse struct {
 
 // VirtualNetworkPeeringsClientGetResponse contains the response from method VirtualNetworkPeeringsClient.Get.
 type VirtualNetworkPeeringsClientGetResponse struct {
-	VirtualNetworkPeeringsClientGetResult
+	VirtualNetworkPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkPeeringsClientGetResult contains the result from method VirtualNetworkPeeringsClient.Get.
-type VirtualNetworkPeeringsClientGetResult struct {
-	VirtualNetworkPeering
 }
 
 // VirtualNetworkPeeringsClientListResponse contains the response from method VirtualNetworkPeeringsClient.List.
 type VirtualNetworkPeeringsClientListResponse struct {
-	VirtualNetworkPeeringsClientListResult
+	VirtualNetworkPeeringListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkPeeringsClientListResult contains the result from method VirtualNetworkPeeringsClient.List.
-type VirtualNetworkPeeringsClientListResult struct {
-	VirtualNetworkPeeringListResult
 }
 
 // VirtualNetworkTapsClientCreateOrUpdatePollerResponse contains the response from method VirtualNetworkTapsClient.CreateOrUpdate.
@@ -11020,14 +9338,9 @@ func (l *VirtualNetworkTapsClientCreateOrUpdatePollerResponse) Resume(ctx contex
 
 // VirtualNetworkTapsClientCreateOrUpdateResponse contains the response from method VirtualNetworkTapsClient.CreateOrUpdate.
 type VirtualNetworkTapsClientCreateOrUpdateResponse struct {
-	VirtualNetworkTapsClientCreateOrUpdateResult
+	VirtualNetworkTap
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkTapsClientCreateOrUpdateResult contains the result from method VirtualNetworkTapsClient.CreateOrUpdate.
-type VirtualNetworkTapsClientCreateOrUpdateResult struct {
-	VirtualNetworkTap
 }
 
 // VirtualNetworkTapsClientDeletePollerResponse contains the response from method VirtualNetworkTapsClient.Delete.
@@ -11078,62 +9391,37 @@ type VirtualNetworkTapsClientDeleteResponse struct {
 
 // VirtualNetworkTapsClientGetResponse contains the response from method VirtualNetworkTapsClient.Get.
 type VirtualNetworkTapsClientGetResponse struct {
-	VirtualNetworkTapsClientGetResult
+	VirtualNetworkTap
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkTapsClientGetResult contains the result from method VirtualNetworkTapsClient.Get.
-type VirtualNetworkTapsClientGetResult struct {
-	VirtualNetworkTap
 }
 
 // VirtualNetworkTapsClientListAllResponse contains the response from method VirtualNetworkTapsClient.ListAll.
 type VirtualNetworkTapsClientListAllResponse struct {
-	VirtualNetworkTapsClientListAllResult
+	VirtualNetworkTapListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkTapsClientListAllResult contains the result from method VirtualNetworkTapsClient.ListAll.
-type VirtualNetworkTapsClientListAllResult struct {
-	VirtualNetworkTapListResult
 }
 
 // VirtualNetworkTapsClientListByResourceGroupResponse contains the response from method VirtualNetworkTapsClient.ListByResourceGroup.
 type VirtualNetworkTapsClientListByResourceGroupResponse struct {
-	VirtualNetworkTapsClientListByResourceGroupResult
+	VirtualNetworkTapListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkTapsClientListByResourceGroupResult contains the result from method VirtualNetworkTapsClient.ListByResourceGroup.
-type VirtualNetworkTapsClientListByResourceGroupResult struct {
-	VirtualNetworkTapListResult
 }
 
 // VirtualNetworkTapsClientUpdateTagsResponse contains the response from method VirtualNetworkTapsClient.UpdateTags.
 type VirtualNetworkTapsClientUpdateTagsResponse struct {
-	VirtualNetworkTapsClientUpdateTagsResult
+	VirtualNetworkTap
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworkTapsClientUpdateTagsResult contains the result from method VirtualNetworkTapsClient.UpdateTags.
-type VirtualNetworkTapsClientUpdateTagsResult struct {
-	VirtualNetworkTap
 }
 
 // VirtualNetworksClientCheckIPAddressAvailabilityResponse contains the response from method VirtualNetworksClient.CheckIPAddressAvailability.
 type VirtualNetworksClientCheckIPAddressAvailabilityResponse struct {
-	VirtualNetworksClientCheckIPAddressAvailabilityResult
+	IPAddressAvailabilityResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientCheckIPAddressAvailabilityResult contains the result from method VirtualNetworksClient.CheckIPAddressAvailability.
-type VirtualNetworksClientCheckIPAddressAvailabilityResult struct {
-	IPAddressAvailabilityResult
 }
 
 // VirtualNetworksClientCreateOrUpdatePollerResponse contains the response from method VirtualNetworksClient.CreateOrUpdate.
@@ -11178,14 +9466,9 @@ func (l *VirtualNetworksClientCreateOrUpdatePollerResponse) Resume(ctx context.C
 
 // VirtualNetworksClientCreateOrUpdateResponse contains the response from method VirtualNetworksClient.CreateOrUpdate.
 type VirtualNetworksClientCreateOrUpdateResponse struct {
-	VirtualNetworksClientCreateOrUpdateResult
+	VirtualNetwork
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientCreateOrUpdateResult contains the result from method VirtualNetworksClient.CreateOrUpdate.
-type VirtualNetworksClientCreateOrUpdateResult struct {
-	VirtualNetwork
 }
 
 // VirtualNetworksClientDeletePollerResponse contains the response from method VirtualNetworksClient.Delete.
@@ -11236,62 +9519,37 @@ type VirtualNetworksClientDeleteResponse struct {
 
 // VirtualNetworksClientGetResponse contains the response from method VirtualNetworksClient.Get.
 type VirtualNetworksClientGetResponse struct {
-	VirtualNetworksClientGetResult
+	VirtualNetwork
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientGetResult contains the result from method VirtualNetworksClient.Get.
-type VirtualNetworksClientGetResult struct {
-	VirtualNetwork
 }
 
 // VirtualNetworksClientListAllResponse contains the response from method VirtualNetworksClient.ListAll.
 type VirtualNetworksClientListAllResponse struct {
-	VirtualNetworksClientListAllResult
+	VirtualNetworkListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientListAllResult contains the result from method VirtualNetworksClient.ListAll.
-type VirtualNetworksClientListAllResult struct {
-	VirtualNetworkListResult
 }
 
 // VirtualNetworksClientListResponse contains the response from method VirtualNetworksClient.List.
 type VirtualNetworksClientListResponse struct {
-	VirtualNetworksClientListResult
+	VirtualNetworkListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientListResult contains the result from method VirtualNetworksClient.List.
-type VirtualNetworksClientListResult struct {
-	VirtualNetworkListResult
 }
 
 // VirtualNetworksClientListUsageResponse contains the response from method VirtualNetworksClient.ListUsage.
 type VirtualNetworksClientListUsageResponse struct {
-	VirtualNetworksClientListUsageResult
+	VirtualNetworkListUsageResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientListUsageResult contains the result from method VirtualNetworksClient.ListUsage.
-type VirtualNetworksClientListUsageResult struct {
-	VirtualNetworkListUsageResult
 }
 
 // VirtualNetworksClientUpdateTagsResponse contains the response from method VirtualNetworksClient.UpdateTags.
 type VirtualNetworksClientUpdateTagsResponse struct {
-	VirtualNetworksClientUpdateTagsResult
+	VirtualNetwork
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualNetworksClientUpdateTagsResult contains the result from method VirtualNetworksClient.UpdateTags.
-type VirtualNetworksClientUpdateTagsResult struct {
-	VirtualNetwork
 }
 
 // VirtualRouterPeeringsClientCreateOrUpdatePollerResponse contains the response from method VirtualRouterPeeringsClient.CreateOrUpdate.
@@ -11336,14 +9594,9 @@ func (l *VirtualRouterPeeringsClientCreateOrUpdatePollerResponse) Resume(ctx con
 
 // VirtualRouterPeeringsClientCreateOrUpdateResponse contains the response from method VirtualRouterPeeringsClient.CreateOrUpdate.
 type VirtualRouterPeeringsClientCreateOrUpdateResponse struct {
-	VirtualRouterPeeringsClientCreateOrUpdateResult
+	VirtualRouterPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRouterPeeringsClientCreateOrUpdateResult contains the result from method VirtualRouterPeeringsClient.CreateOrUpdate.
-type VirtualRouterPeeringsClientCreateOrUpdateResult struct {
-	VirtualRouterPeering
 }
 
 // VirtualRouterPeeringsClientDeletePollerResponse contains the response from method VirtualRouterPeeringsClient.Delete.
@@ -11394,26 +9647,16 @@ type VirtualRouterPeeringsClientDeleteResponse struct {
 
 // VirtualRouterPeeringsClientGetResponse contains the response from method VirtualRouterPeeringsClient.Get.
 type VirtualRouterPeeringsClientGetResponse struct {
-	VirtualRouterPeeringsClientGetResult
+	VirtualRouterPeering
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRouterPeeringsClientGetResult contains the result from method VirtualRouterPeeringsClient.Get.
-type VirtualRouterPeeringsClientGetResult struct {
-	VirtualRouterPeering
 }
 
 // VirtualRouterPeeringsClientListResponse contains the response from method VirtualRouterPeeringsClient.List.
 type VirtualRouterPeeringsClientListResponse struct {
-	VirtualRouterPeeringsClientListResult
+	VirtualRouterPeeringListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRouterPeeringsClientListResult contains the result from method VirtualRouterPeeringsClient.List.
-type VirtualRouterPeeringsClientListResult struct {
-	VirtualRouterPeeringListResult
 }
 
 // VirtualRoutersClientCreateOrUpdatePollerResponse contains the response from method VirtualRoutersClient.CreateOrUpdate.
@@ -11458,14 +9701,9 @@ func (l *VirtualRoutersClientCreateOrUpdatePollerResponse) Resume(ctx context.Co
 
 // VirtualRoutersClientCreateOrUpdateResponse contains the response from method VirtualRoutersClient.CreateOrUpdate.
 type VirtualRoutersClientCreateOrUpdateResponse struct {
-	VirtualRoutersClientCreateOrUpdateResult
+	VirtualRouter
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRoutersClientCreateOrUpdateResult contains the result from method VirtualRoutersClient.CreateOrUpdate.
-type VirtualRoutersClientCreateOrUpdateResult struct {
-	VirtualRouter
 }
 
 // VirtualRoutersClientDeletePollerResponse contains the response from method VirtualRoutersClient.Delete.
@@ -11516,38 +9754,23 @@ type VirtualRoutersClientDeleteResponse struct {
 
 // VirtualRoutersClientGetResponse contains the response from method VirtualRoutersClient.Get.
 type VirtualRoutersClientGetResponse struct {
-	VirtualRoutersClientGetResult
+	VirtualRouter
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRoutersClientGetResult contains the result from method VirtualRoutersClient.Get.
-type VirtualRoutersClientGetResult struct {
-	VirtualRouter
 }
 
 // VirtualRoutersClientListByResourceGroupResponse contains the response from method VirtualRoutersClient.ListByResourceGroup.
 type VirtualRoutersClientListByResourceGroupResponse struct {
-	VirtualRoutersClientListByResourceGroupResult
+	VirtualRouterListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRoutersClientListByResourceGroupResult contains the result from method VirtualRoutersClient.ListByResourceGroup.
-type VirtualRoutersClientListByResourceGroupResult struct {
-	VirtualRouterListResult
 }
 
 // VirtualRoutersClientListResponse contains the response from method VirtualRoutersClient.List.
 type VirtualRoutersClientListResponse struct {
-	VirtualRoutersClientListResult
+	VirtualRouterListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualRoutersClientListResult contains the result from method VirtualRoutersClient.List.
-type VirtualRoutersClientListResult struct {
-	VirtualRouterListResult
 }
 
 // VirtualWansClientCreateOrUpdatePollerResponse contains the response from method VirtualWansClient.CreateOrUpdate.
@@ -11592,14 +9815,9 @@ func (l *VirtualWansClientCreateOrUpdatePollerResponse) Resume(ctx context.Conte
 
 // VirtualWansClientCreateOrUpdateResponse contains the response from method VirtualWansClient.CreateOrUpdate.
 type VirtualWansClientCreateOrUpdateResponse struct {
-	VirtualWansClientCreateOrUpdateResult
+	VirtualWAN
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualWansClientCreateOrUpdateResult contains the result from method VirtualWansClient.CreateOrUpdate.
-type VirtualWansClientCreateOrUpdateResult struct {
-	VirtualWAN
 }
 
 // VirtualWansClientDeletePollerResponse contains the response from method VirtualWansClient.Delete.
@@ -11650,50 +9868,30 @@ type VirtualWansClientDeleteResponse struct {
 
 // VirtualWansClientGetResponse contains the response from method VirtualWansClient.Get.
 type VirtualWansClientGetResponse struct {
-	VirtualWansClientGetResult
+	VirtualWAN
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualWansClientGetResult contains the result from method VirtualWansClient.Get.
-type VirtualWansClientGetResult struct {
-	VirtualWAN
 }
 
 // VirtualWansClientListByResourceGroupResponse contains the response from method VirtualWansClient.ListByResourceGroup.
 type VirtualWansClientListByResourceGroupResponse struct {
-	VirtualWansClientListByResourceGroupResult
+	ListVirtualWANsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualWansClientListByResourceGroupResult contains the result from method VirtualWansClient.ListByResourceGroup.
-type VirtualWansClientListByResourceGroupResult struct {
-	ListVirtualWANsResult
 }
 
 // VirtualWansClientListResponse contains the response from method VirtualWansClient.List.
 type VirtualWansClientListResponse struct {
-	VirtualWansClientListResult
+	ListVirtualWANsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualWansClientListResult contains the result from method VirtualWansClient.List.
-type VirtualWansClientListResult struct {
-	ListVirtualWANsResult
 }
 
 // VirtualWansClientUpdateTagsResponse contains the response from method VirtualWansClient.UpdateTags.
 type VirtualWansClientUpdateTagsResponse struct {
-	VirtualWansClientUpdateTagsResult
+	VirtualWAN
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualWansClientUpdateTagsResult contains the result from method VirtualWansClient.UpdateTags.
-type VirtualWansClientUpdateTagsResult struct {
-	VirtualWAN
 }
 
 // WatchersClientCheckConnectivityPollerResponse contains the response from method WatchersClient.CheckConnectivity.
@@ -11738,26 +9936,16 @@ func (l *WatchersClientCheckConnectivityPollerResponse) Resume(ctx context.Conte
 
 // WatchersClientCheckConnectivityResponse contains the response from method WatchersClient.CheckConnectivity.
 type WatchersClientCheckConnectivityResponse struct {
-	WatchersClientCheckConnectivityResult
+	ConnectivityInformation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientCheckConnectivityResult contains the result from method WatchersClient.CheckConnectivity.
-type WatchersClientCheckConnectivityResult struct {
-	ConnectivityInformation
 }
 
 // WatchersClientCreateOrUpdateResponse contains the response from method WatchersClient.CreateOrUpdate.
 type WatchersClientCreateOrUpdateResponse struct {
-	WatchersClientCreateOrUpdateResult
+	Watcher
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientCreateOrUpdateResult contains the result from method WatchersClient.CreateOrUpdate.
-type WatchersClientCreateOrUpdateResult struct {
-	Watcher
 }
 
 // WatchersClientDeletePollerResponse contains the response from method WatchersClient.Delete.
@@ -11848,14 +10036,9 @@ func (l *WatchersClientGetAzureReachabilityReportPollerResponse) Resume(ctx cont
 
 // WatchersClientGetAzureReachabilityReportResponse contains the response from method WatchersClient.GetAzureReachabilityReport.
 type WatchersClientGetAzureReachabilityReportResponse struct {
-	WatchersClientGetAzureReachabilityReportResult
+	AzureReachabilityReport
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetAzureReachabilityReportResult contains the result from method WatchersClient.GetAzureReachabilityReport.
-type WatchersClientGetAzureReachabilityReportResult struct {
-	AzureReachabilityReport
 }
 
 // WatchersClientGetFlowLogStatusPollerResponse contains the response from method WatchersClient.GetFlowLogStatus.
@@ -11900,14 +10083,9 @@ func (l *WatchersClientGetFlowLogStatusPollerResponse) Resume(ctx context.Contex
 
 // WatchersClientGetFlowLogStatusResponse contains the response from method WatchersClient.GetFlowLogStatus.
 type WatchersClientGetFlowLogStatusResponse struct {
-	WatchersClientGetFlowLogStatusResult
+	FlowLogInformation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetFlowLogStatusResult contains the result from method WatchersClient.GetFlowLogStatus.
-type WatchersClientGetFlowLogStatusResult struct {
-	FlowLogInformation
 }
 
 // WatchersClientGetNetworkConfigurationDiagnosticPollerResponse contains the response from method WatchersClient.GetNetworkConfigurationDiagnostic.
@@ -11952,14 +10130,9 @@ func (l *WatchersClientGetNetworkConfigurationDiagnosticPollerResponse) Resume(c
 
 // WatchersClientGetNetworkConfigurationDiagnosticResponse contains the response from method WatchersClient.GetNetworkConfigurationDiagnostic.
 type WatchersClientGetNetworkConfigurationDiagnosticResponse struct {
-	WatchersClientGetNetworkConfigurationDiagnosticResult
+	ConfigurationDiagnosticResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetNetworkConfigurationDiagnosticResult contains the result from method WatchersClient.GetNetworkConfigurationDiagnostic.
-type WatchersClientGetNetworkConfigurationDiagnosticResult struct {
-	ConfigurationDiagnosticResponse
 }
 
 // WatchersClientGetNextHopPollerResponse contains the response from method WatchersClient.GetNextHop.
@@ -12004,38 +10177,23 @@ func (l *WatchersClientGetNextHopPollerResponse) Resume(ctx context.Context, cli
 
 // WatchersClientGetNextHopResponse contains the response from method WatchersClient.GetNextHop.
 type WatchersClientGetNextHopResponse struct {
-	WatchersClientGetNextHopResult
+	NextHopResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetNextHopResult contains the result from method WatchersClient.GetNextHop.
-type WatchersClientGetNextHopResult struct {
-	NextHopResult
 }
 
 // WatchersClientGetResponse contains the response from method WatchersClient.Get.
 type WatchersClientGetResponse struct {
-	WatchersClientGetResult
+	Watcher
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetResult contains the result from method WatchersClient.Get.
-type WatchersClientGetResult struct {
-	Watcher
 }
 
 // WatchersClientGetTopologyResponse contains the response from method WatchersClient.GetTopology.
 type WatchersClientGetTopologyResponse struct {
-	WatchersClientGetTopologyResult
+	Topology
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetTopologyResult contains the result from method WatchersClient.GetTopology.
-type WatchersClientGetTopologyResult struct {
-	Topology
 }
 
 // WatchersClientGetTroubleshootingPollerResponse contains the response from method WatchersClient.GetTroubleshooting.
@@ -12080,14 +10238,9 @@ func (l *WatchersClientGetTroubleshootingPollerResponse) Resume(ctx context.Cont
 
 // WatchersClientGetTroubleshootingResponse contains the response from method WatchersClient.GetTroubleshooting.
 type WatchersClientGetTroubleshootingResponse struct {
-	WatchersClientGetTroubleshootingResult
+	TroubleshootingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetTroubleshootingResult contains the result from method WatchersClient.GetTroubleshooting.
-type WatchersClientGetTroubleshootingResult struct {
-	TroubleshootingResult
 }
 
 // WatchersClientGetTroubleshootingResultPollerResponse contains the response from method WatchersClient.GetTroubleshootingResult.
@@ -12132,14 +10285,9 @@ func (l *WatchersClientGetTroubleshootingResultPollerResponse) Resume(ctx contex
 
 // WatchersClientGetTroubleshootingResultResponse contains the response from method WatchersClient.GetTroubleshootingResult.
 type WatchersClientGetTroubleshootingResultResponse struct {
-	WatchersClientGetTroubleshootingResultResult
+	TroubleshootingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetTroubleshootingResultResult contains the result from method WatchersClient.GetTroubleshootingResult.
-type WatchersClientGetTroubleshootingResultResult struct {
-	TroubleshootingResult
 }
 
 // WatchersClientGetVMSecurityRulesPollerResponse contains the response from method WatchersClient.GetVMSecurityRules.
@@ -12184,26 +10332,16 @@ func (l *WatchersClientGetVMSecurityRulesPollerResponse) Resume(ctx context.Cont
 
 // WatchersClientGetVMSecurityRulesResponse contains the response from method WatchersClient.GetVMSecurityRules.
 type WatchersClientGetVMSecurityRulesResponse struct {
-	WatchersClientGetVMSecurityRulesResult
+	SecurityGroupViewResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientGetVMSecurityRulesResult contains the result from method WatchersClient.GetVMSecurityRules.
-type WatchersClientGetVMSecurityRulesResult struct {
-	SecurityGroupViewResult
 }
 
 // WatchersClientListAllResponse contains the response from method WatchersClient.ListAll.
 type WatchersClientListAllResponse struct {
-	WatchersClientListAllResult
+	WatcherListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientListAllResult contains the result from method WatchersClient.ListAll.
-type WatchersClientListAllResult struct {
-	WatcherListResult
 }
 
 // WatchersClientListAvailableProvidersPollerResponse contains the response from method WatchersClient.ListAvailableProviders.
@@ -12248,26 +10386,16 @@ func (l *WatchersClientListAvailableProvidersPollerResponse) Resume(ctx context.
 
 // WatchersClientListAvailableProvidersResponse contains the response from method WatchersClient.ListAvailableProviders.
 type WatchersClientListAvailableProvidersResponse struct {
-	WatchersClientListAvailableProvidersResult
+	AvailableProvidersList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientListAvailableProvidersResult contains the result from method WatchersClient.ListAvailableProviders.
-type WatchersClientListAvailableProvidersResult struct {
-	AvailableProvidersList
 }
 
 // WatchersClientListResponse contains the response from method WatchersClient.List.
 type WatchersClientListResponse struct {
-	WatchersClientListResult
+	WatcherListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientListResult contains the result from method WatchersClient.List.
-type WatchersClientListResult struct {
-	WatcherListResult
 }
 
 // WatchersClientSetFlowLogConfigurationPollerResponse contains the response from method WatchersClient.SetFlowLogConfiguration.
@@ -12312,26 +10440,16 @@ func (l *WatchersClientSetFlowLogConfigurationPollerResponse) Resume(ctx context
 
 // WatchersClientSetFlowLogConfigurationResponse contains the response from method WatchersClient.SetFlowLogConfiguration.
 type WatchersClientSetFlowLogConfigurationResponse struct {
-	WatchersClientSetFlowLogConfigurationResult
+	FlowLogInformation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientSetFlowLogConfigurationResult contains the result from method WatchersClient.SetFlowLogConfiguration.
-type WatchersClientSetFlowLogConfigurationResult struct {
-	FlowLogInformation
 }
 
 // WatchersClientUpdateTagsResponse contains the response from method WatchersClient.UpdateTags.
 type WatchersClientUpdateTagsResponse struct {
-	WatchersClientUpdateTagsResult
+	Watcher
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientUpdateTagsResult contains the result from method WatchersClient.UpdateTags.
-type WatchersClientUpdateTagsResult struct {
-	Watcher
 }
 
 // WatchersClientVerifyIPFlowPollerResponse contains the response from method WatchersClient.VerifyIPFlow.
@@ -12376,26 +10494,16 @@ func (l *WatchersClientVerifyIPFlowPollerResponse) Resume(ctx context.Context, c
 
 // WatchersClientVerifyIPFlowResponse contains the response from method WatchersClient.VerifyIPFlow.
 type WatchersClientVerifyIPFlowResponse struct {
-	WatchersClientVerifyIPFlowResult
+	VerificationIPFlowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WatchersClientVerifyIPFlowResult contains the result from method WatchersClient.VerifyIPFlow.
-type WatchersClientVerifyIPFlowResult struct {
-	VerificationIPFlowResult
 }
 
 // WebApplicationFirewallPoliciesClientCreateOrUpdateResponse contains the response from method WebApplicationFirewallPoliciesClient.CreateOrUpdate.
 type WebApplicationFirewallPoliciesClientCreateOrUpdateResponse struct {
-	WebApplicationFirewallPoliciesClientCreateOrUpdateResult
+	WebApplicationFirewallPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WebApplicationFirewallPoliciesClientCreateOrUpdateResult contains the result from method WebApplicationFirewallPoliciesClient.CreateOrUpdate.
-type WebApplicationFirewallPoliciesClientCreateOrUpdateResult struct {
-	WebApplicationFirewallPolicy
 }
 
 // WebApplicationFirewallPoliciesClientDeletePollerResponse contains the response from method WebApplicationFirewallPoliciesClient.Delete.
@@ -12446,36 +10554,21 @@ type WebApplicationFirewallPoliciesClientDeleteResponse struct {
 
 // WebApplicationFirewallPoliciesClientGetResponse contains the response from method WebApplicationFirewallPoliciesClient.Get.
 type WebApplicationFirewallPoliciesClientGetResponse struct {
-	WebApplicationFirewallPoliciesClientGetResult
+	WebApplicationFirewallPolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WebApplicationFirewallPoliciesClientGetResult contains the result from method WebApplicationFirewallPoliciesClient.Get.
-type WebApplicationFirewallPoliciesClientGetResult struct {
-	WebApplicationFirewallPolicy
 }
 
 // WebApplicationFirewallPoliciesClientListAllResponse contains the response from method WebApplicationFirewallPoliciesClient.ListAll.
 type WebApplicationFirewallPoliciesClientListAllResponse struct {
-	WebApplicationFirewallPoliciesClientListAllResult
+	WebApplicationFirewallPolicyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WebApplicationFirewallPoliciesClientListAllResult contains the result from method WebApplicationFirewallPoliciesClient.ListAll.
-type WebApplicationFirewallPoliciesClientListAllResult struct {
-	WebApplicationFirewallPolicyListResult
 }
 
 // WebApplicationFirewallPoliciesClientListResponse contains the response from method WebApplicationFirewallPoliciesClient.List.
 type WebApplicationFirewallPoliciesClientListResponse struct {
-	WebApplicationFirewallPoliciesClientListResult
+	WebApplicationFirewallPolicyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// WebApplicationFirewallPoliciesClientListResult contains the result from method WebApplicationFirewallPoliciesClient.List.
-type WebApplicationFirewallPoliciesClientListResult struct {
-	WebApplicationFirewallPolicyListResult
 }

@@ -29,7 +29,7 @@ type AddonsClientCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l AddonsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AddonsClientCreateOrUpdateResponse, error) {
 	respType := AddonsClientCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AddonsClientCreateOrUpdateResult)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType)
 	if err != nil {
 		return respType, err
 	}
@@ -57,18 +57,13 @@ func (l *AddonsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, c
 
 // AddonsClientCreateOrUpdateResponse contains the response from method AddonsClient.CreateOrUpdate.
 type AddonsClientCreateOrUpdateResponse struct {
-	AddonsClientCreateOrUpdateResult
+	AddonClassification
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AddonsClientCreateOrUpdateResult contains the result from method AddonsClient.CreateOrUpdate.
-type AddonsClientCreateOrUpdateResult struct {
-	AddonClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AddonsClientCreateOrUpdateResult.
-func (a *AddonsClientCreateOrUpdateResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AddonsClientCreateOrUpdateResponse.
+func (a *AddonsClientCreateOrUpdateResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalAddonClassification(data)
 	if err != nil {
 		return err
@@ -125,18 +120,13 @@ type AddonsClientDeleteResponse struct {
 
 // AddonsClientGetResponse contains the response from method AddonsClient.Get.
 type AddonsClientGetResponse struct {
-	AddonsClientGetResult
+	AddonClassification
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AddonsClientGetResult contains the result from method AddonsClient.Get.
-type AddonsClientGetResult struct {
-	AddonClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type AddonsClientGetResult.
-func (a *AddonsClientGetResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type AddonsClientGetResponse.
+func (a *AddonsClientGetResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalAddonClassification(data)
 	if err != nil {
 		return err
@@ -147,50 +137,30 @@ func (a *AddonsClientGetResult) UnmarshalJSON(data []byte) error {
 
 // AddonsClientListByRoleResponse contains the response from method AddonsClient.ListByRole.
 type AddonsClientListByRoleResponse struct {
-	AddonsClientListByRoleResult
+	AddonList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AddonsClientListByRoleResult contains the result from method AddonsClient.ListByRole.
-type AddonsClientListByRoleResult struct {
-	AddonList
 }
 
 // AlertsClientGetResponse contains the response from method AlertsClient.Get.
 type AlertsClientGetResponse struct {
-	AlertsClientGetResult
+	Alert
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AlertsClientGetResult contains the result from method AlertsClient.Get.
-type AlertsClientGetResult struct {
-	Alert
 }
 
 // AlertsClientListByDataBoxEdgeDeviceResponse contains the response from method AlertsClient.ListByDataBoxEdgeDevice.
 type AlertsClientListByDataBoxEdgeDeviceResponse struct {
-	AlertsClientListByDataBoxEdgeDeviceResult
+	AlertList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AlertsClientListByDataBoxEdgeDeviceResult contains the result from method AlertsClient.ListByDataBoxEdgeDevice.
-type AlertsClientListByDataBoxEdgeDeviceResult struct {
-	AlertList
 }
 
 // AvailableSKUsClientListResponse contains the response from method AvailableSKUsClient.List.
 type AvailableSKUsClientListResponse struct {
-	AvailableSKUsClientListResult
+	SKUList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailableSKUsClientListResult contains the result from method AvailableSKUsClient.List.
-type AvailableSKUsClientListResult struct {
-	SKUList
 }
 
 // BandwidthSchedulesClientCreateOrUpdatePollerResponse contains the response from method BandwidthSchedulesClient.CreateOrUpdate.
@@ -235,14 +205,9 @@ func (l *BandwidthSchedulesClientCreateOrUpdatePollerResponse) Resume(ctx contex
 
 // BandwidthSchedulesClientCreateOrUpdateResponse contains the response from method BandwidthSchedulesClient.CreateOrUpdate.
 type BandwidthSchedulesClientCreateOrUpdateResponse struct {
-	BandwidthSchedulesClientCreateOrUpdateResult
+	BandwidthSchedule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BandwidthSchedulesClientCreateOrUpdateResult contains the result from method BandwidthSchedulesClient.CreateOrUpdate.
-type BandwidthSchedulesClientCreateOrUpdateResult struct {
-	BandwidthSchedule
 }
 
 // BandwidthSchedulesClientDeletePollerResponse contains the response from method BandwidthSchedulesClient.Delete.
@@ -293,26 +258,16 @@ type BandwidthSchedulesClientDeleteResponse struct {
 
 // BandwidthSchedulesClientGetResponse contains the response from method BandwidthSchedulesClient.Get.
 type BandwidthSchedulesClientGetResponse struct {
-	BandwidthSchedulesClientGetResult
+	BandwidthSchedule
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BandwidthSchedulesClientGetResult contains the result from method BandwidthSchedulesClient.Get.
-type BandwidthSchedulesClientGetResult struct {
-	BandwidthSchedule
 }
 
 // BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse contains the response from method BandwidthSchedulesClient.ListByDataBoxEdgeDevice.
 type BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse struct {
-	BandwidthSchedulesClientListByDataBoxEdgeDeviceResult
+	BandwidthSchedulesList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// BandwidthSchedulesClientListByDataBoxEdgeDeviceResult contains the result from method BandwidthSchedulesClient.ListByDataBoxEdgeDevice.
-type BandwidthSchedulesClientListByDataBoxEdgeDeviceResult struct {
-	BandwidthSchedulesList
 }
 
 // ContainersClientCreateOrUpdatePollerResponse contains the response from method ContainersClient.CreateOrUpdate.
@@ -357,14 +312,9 @@ func (l *ContainersClientCreateOrUpdatePollerResponse) Resume(ctx context.Contex
 
 // ContainersClientCreateOrUpdateResponse contains the response from method ContainersClient.CreateOrUpdate.
 type ContainersClientCreateOrUpdateResponse struct {
-	ContainersClientCreateOrUpdateResult
+	Container
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainersClientCreateOrUpdateResult contains the result from method ContainersClient.CreateOrUpdate.
-type ContainersClientCreateOrUpdateResult struct {
-	Container
 }
 
 // ContainersClientDeletePollerResponse contains the response from method ContainersClient.Delete.
@@ -415,26 +365,16 @@ type ContainersClientDeleteResponse struct {
 
 // ContainersClientGetResponse contains the response from method ContainersClient.Get.
 type ContainersClientGetResponse struct {
-	ContainersClientGetResult
+	Container
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainersClientGetResult contains the result from method ContainersClient.Get.
-type ContainersClientGetResult struct {
-	Container
 }
 
 // ContainersClientListByStorageAccountResponse contains the response from method ContainersClient.ListByStorageAccount.
 type ContainersClientListByStorageAccountResponse struct {
-	ContainersClientListByStorageAccountResult
+	ContainerList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainersClientListByStorageAccountResult contains the result from method ContainersClient.ListByStorageAccount.
-type ContainersClientListByStorageAccountResult struct {
-	ContainerList
 }
 
 // ContainersClientRefreshPollerResponse contains the response from method ContainersClient.Refresh.
@@ -485,14 +425,9 @@ type ContainersClientRefreshResponse struct {
 
 // DevicesClientCreateOrUpdateResponse contains the response from method DevicesClient.CreateOrUpdate.
 type DevicesClientCreateOrUpdateResponse struct {
-	DevicesClientCreateOrUpdateResult
+	Device
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientCreateOrUpdateResult contains the result from method DevicesClient.CreateOrUpdate.
-type DevicesClientCreateOrUpdateResult struct {
-	Device
 }
 
 // DevicesClientCreateOrUpdateSecuritySettingsPollerResponse contains the response from method DevicesClient.CreateOrUpdateSecuritySettings.
@@ -635,62 +570,37 @@ type DevicesClientDownloadUpdatesResponse struct {
 
 // DevicesClientGenerateCertificateResponse contains the response from method DevicesClient.GenerateCertificate.
 type DevicesClientGenerateCertificateResponse struct {
-	DevicesClientGenerateCertificateResult
+	GenerateCertResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientGenerateCertificateResult contains the result from method DevicesClient.GenerateCertificate.
-type DevicesClientGenerateCertificateResult struct {
-	GenerateCertResponse
 }
 
 // DevicesClientGetExtendedInformationResponse contains the response from method DevicesClient.GetExtendedInformation.
 type DevicesClientGetExtendedInformationResponse struct {
-	DevicesClientGetExtendedInformationResult
+	DeviceExtendedInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientGetExtendedInformationResult contains the result from method DevicesClient.GetExtendedInformation.
-type DevicesClientGetExtendedInformationResult struct {
-	DeviceExtendedInfo
 }
 
 // DevicesClientGetNetworkSettingsResponse contains the response from method DevicesClient.GetNetworkSettings.
 type DevicesClientGetNetworkSettingsResponse struct {
-	DevicesClientGetNetworkSettingsResult
+	NetworkSettings
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientGetNetworkSettingsResult contains the result from method DevicesClient.GetNetworkSettings.
-type DevicesClientGetNetworkSettingsResult struct {
-	NetworkSettings
 }
 
 // DevicesClientGetResponse contains the response from method DevicesClient.Get.
 type DevicesClientGetResponse struct {
-	DevicesClientGetResult
+	Device
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientGetResult contains the result from method DevicesClient.Get.
-type DevicesClientGetResult struct {
-	Device
 }
 
 // DevicesClientGetUpdateSummaryResponse contains the response from method DevicesClient.GetUpdateSummary.
 type DevicesClientGetUpdateSummaryResponse struct {
-	DevicesClientGetUpdateSummaryResult
+	UpdateSummary
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientGetUpdateSummaryResult contains the result from method DevicesClient.GetUpdateSummary.
-type DevicesClientGetUpdateSummaryResult struct {
-	UpdateSummary
 }
 
 // DevicesClientInstallUpdatesPollerResponse contains the response from method DevicesClient.InstallUpdates.
@@ -741,26 +651,16 @@ type DevicesClientInstallUpdatesResponse struct {
 
 // DevicesClientListByResourceGroupResponse contains the response from method DevicesClient.ListByResourceGroup.
 type DevicesClientListByResourceGroupResponse struct {
-	DevicesClientListByResourceGroupResult
+	DeviceList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientListByResourceGroupResult contains the result from method DevicesClient.ListByResourceGroup.
-type DevicesClientListByResourceGroupResult struct {
-	DeviceList
 }
 
 // DevicesClientListBySubscriptionResponse contains the response from method DevicesClient.ListBySubscription.
 type DevicesClientListBySubscriptionResponse struct {
-	DevicesClientListBySubscriptionResult
+	DeviceList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientListBySubscriptionResult contains the result from method DevicesClient.ListBySubscription.
-type DevicesClientListBySubscriptionResult struct {
-	DeviceList
 }
 
 // DevicesClientScanForUpdatesPollerResponse contains the response from method DevicesClient.ScanForUpdates.
@@ -811,62 +711,37 @@ type DevicesClientScanForUpdatesResponse struct {
 
 // DevicesClientUpdateExtendedInformationResponse contains the response from method DevicesClient.UpdateExtendedInformation.
 type DevicesClientUpdateExtendedInformationResponse struct {
-	DevicesClientUpdateExtendedInformationResult
+	DeviceExtendedInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientUpdateExtendedInformationResult contains the result from method DevicesClient.UpdateExtendedInformation.
-type DevicesClientUpdateExtendedInformationResult struct {
-	DeviceExtendedInfo
 }
 
 // DevicesClientUpdateResponse contains the response from method DevicesClient.Update.
 type DevicesClientUpdateResponse struct {
-	DevicesClientUpdateResult
+	Device
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientUpdateResult contains the result from method DevicesClient.Update.
-type DevicesClientUpdateResult struct {
-	Device
 }
 
 // DevicesClientUploadCertificateResponse contains the response from method DevicesClient.UploadCertificate.
 type DevicesClientUploadCertificateResponse struct {
-	DevicesClientUploadCertificateResult
+	UploadCertificateResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DevicesClientUploadCertificateResult contains the result from method DevicesClient.UploadCertificate.
-type DevicesClientUploadCertificateResult struct {
-	UploadCertificateResponse
 }
 
 // DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse contains the response from method DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings.
 type DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse struct {
-	DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResult
+	DiagnosticProactiveLogCollectionSettings
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResult contains the result from method DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings.
-type DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResult struct {
-	DiagnosticProactiveLogCollectionSettings
 }
 
 // DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse contains the response from method DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings.
 type DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse struct {
-	DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResult
+	DiagnosticRemoteSupportSettings
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResult contains the result from method DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings.
-type DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResult struct {
-	DiagnosticRemoteSupportSettings
 }
 
 // DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse contains the response from method
@@ -966,14 +841,9 @@ type DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse struc
 
 // JobsClientGetResponse contains the response from method JobsClient.Get.
 type JobsClientGetResponse struct {
-	JobsClientGetResult
+	Job
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// JobsClientGetResult contains the result from method JobsClient.Get.
-type JobsClientGetResult struct {
-	Job
 }
 
 // MonitoringConfigClientCreateOrUpdatePollerResponse contains the response from method MonitoringConfigClient.CreateOrUpdate.
@@ -1018,14 +888,9 @@ func (l *MonitoringConfigClientCreateOrUpdatePollerResponse) Resume(ctx context.
 
 // MonitoringConfigClientCreateOrUpdateResponse contains the response from method MonitoringConfigClient.CreateOrUpdate.
 type MonitoringConfigClientCreateOrUpdateResponse struct {
-	MonitoringConfigClientCreateOrUpdateResult
+	MonitoringMetricConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MonitoringConfigClientCreateOrUpdateResult contains the result from method MonitoringConfigClient.CreateOrUpdate.
-type MonitoringConfigClientCreateOrUpdateResult struct {
-	MonitoringMetricConfiguration
 }
 
 // MonitoringConfigClientDeletePollerResponse contains the response from method MonitoringConfigClient.Delete.
@@ -1076,62 +941,37 @@ type MonitoringConfigClientDeleteResponse struct {
 
 // MonitoringConfigClientGetResponse contains the response from method MonitoringConfigClient.Get.
 type MonitoringConfigClientGetResponse struct {
-	MonitoringConfigClientGetResult
+	MonitoringMetricConfiguration
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MonitoringConfigClientGetResult contains the result from method MonitoringConfigClient.Get.
-type MonitoringConfigClientGetResult struct {
-	MonitoringMetricConfiguration
 }
 
 // MonitoringConfigClientListResponse contains the response from method MonitoringConfigClient.List.
 type MonitoringConfigClientListResponse struct {
-	MonitoringConfigClientListResult
+	MonitoringMetricConfigurationList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MonitoringConfigClientListResult contains the result from method MonitoringConfigClient.List.
-type MonitoringConfigClientListResult struct {
-	MonitoringMetricConfigurationList
 }
 
 // NodesClientListByDataBoxEdgeDeviceResponse contains the response from method NodesClient.ListByDataBoxEdgeDevice.
 type NodesClientListByDataBoxEdgeDeviceResponse struct {
-	NodesClientListByDataBoxEdgeDeviceResult
+	NodeList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// NodesClientListByDataBoxEdgeDeviceResult contains the result from method NodesClient.ListByDataBoxEdgeDevice.
-type NodesClientListByDataBoxEdgeDeviceResult struct {
-	NodeList
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.List.
 type OperationsClientListResponse struct {
-	OperationsClientListResult
+	OperationsList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OperationsClientListResult contains the result from method OperationsClient.List.
-type OperationsClientListResult struct {
-	OperationsList
 }
 
 // OperationsStatusClientGetResponse contains the response from method OperationsStatusClient.Get.
 type OperationsStatusClientGetResponse struct {
-	OperationsStatusClientGetResult
+	Job
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OperationsStatusClientGetResult contains the result from method OperationsStatusClient.Get.
-type OperationsStatusClientGetResult struct {
-	Job
 }
 
 // OrdersClientCreateOrUpdatePollerResponse contains the response from method OrdersClient.CreateOrUpdate.
@@ -1176,14 +1016,9 @@ func (l *OrdersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, c
 
 // OrdersClientCreateOrUpdateResponse contains the response from method OrdersClient.CreateOrUpdate.
 type OrdersClientCreateOrUpdateResponse struct {
-	OrdersClientCreateOrUpdateResult
+	Order
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OrdersClientCreateOrUpdateResult contains the result from method OrdersClient.CreateOrUpdate.
-type OrdersClientCreateOrUpdateResult struct {
-	Order
 }
 
 // OrdersClientDeletePollerResponse contains the response from method OrdersClient.Delete.
@@ -1234,38 +1069,23 @@ type OrdersClientDeleteResponse struct {
 
 // OrdersClientGetResponse contains the response from method OrdersClient.Get.
 type OrdersClientGetResponse struct {
-	OrdersClientGetResult
+	Order
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OrdersClientGetResult contains the result from method OrdersClient.Get.
-type OrdersClientGetResult struct {
-	Order
 }
 
 // OrdersClientListByDataBoxEdgeDeviceResponse contains the response from method OrdersClient.ListByDataBoxEdgeDevice.
 type OrdersClientListByDataBoxEdgeDeviceResponse struct {
-	OrdersClientListByDataBoxEdgeDeviceResult
+	OrderList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OrdersClientListByDataBoxEdgeDeviceResult contains the result from method OrdersClient.ListByDataBoxEdgeDevice.
-type OrdersClientListByDataBoxEdgeDeviceResult struct {
-	OrderList
 }
 
 // OrdersClientListDCAccessCodeResponse contains the response from method OrdersClient.ListDCAccessCode.
 type OrdersClientListDCAccessCodeResponse struct {
-	OrdersClientListDCAccessCodeResult
+	DCAccessCode
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OrdersClientListDCAccessCodeResult contains the result from method OrdersClient.ListDCAccessCode.
-type OrdersClientListDCAccessCodeResult struct {
-	DCAccessCode
 }
 
 // RolesClientCreateOrUpdatePollerResponse contains the response from method RolesClient.CreateOrUpdate.
@@ -1282,7 +1102,7 @@ type RolesClientCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l RolesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RolesClientCreateOrUpdateResponse, error) {
 	respType := RolesClientCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RolesClientCreateOrUpdateResult)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType)
 	if err != nil {
 		return respType, err
 	}
@@ -1310,18 +1130,13 @@ func (l *RolesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, cl
 
 // RolesClientCreateOrUpdateResponse contains the response from method RolesClient.CreateOrUpdate.
 type RolesClientCreateOrUpdateResponse struct {
-	RolesClientCreateOrUpdateResult
+	RoleClassification
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// RolesClientCreateOrUpdateResult contains the result from method RolesClient.CreateOrUpdate.
-type RolesClientCreateOrUpdateResult struct {
-	RoleClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type RolesClientCreateOrUpdateResult.
-func (r *RolesClientCreateOrUpdateResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type RolesClientCreateOrUpdateResponse.
+func (r *RolesClientCreateOrUpdateResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalRoleClassification(data)
 	if err != nil {
 		return err
@@ -1378,18 +1193,13 @@ type RolesClientDeleteResponse struct {
 
 // RolesClientGetResponse contains the response from method RolesClient.Get.
 type RolesClientGetResponse struct {
-	RolesClientGetResult
+	RoleClassification
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// RolesClientGetResult contains the result from method RolesClient.Get.
-type RolesClientGetResult struct {
-	RoleClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type RolesClientGetResult.
-func (r *RolesClientGetResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type RolesClientGetResponse.
+func (r *RolesClientGetResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalRoleClassification(data)
 	if err != nil {
 		return err
@@ -1400,14 +1210,9 @@ func (r *RolesClientGetResult) UnmarshalJSON(data []byte) error {
 
 // RolesClientListByDataBoxEdgeDeviceResponse contains the response from method RolesClient.ListByDataBoxEdgeDevice.
 type RolesClientListByDataBoxEdgeDeviceResponse struct {
-	RolesClientListByDataBoxEdgeDeviceResult
+	RoleList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RolesClientListByDataBoxEdgeDeviceResult contains the result from method RolesClient.ListByDataBoxEdgeDevice.
-type RolesClientListByDataBoxEdgeDeviceResult struct {
-	RoleList
 }
 
 // SharesClientCreateOrUpdatePollerResponse contains the response from method SharesClient.CreateOrUpdate.
@@ -1452,14 +1257,9 @@ func (l *SharesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, c
 
 // SharesClientCreateOrUpdateResponse contains the response from method SharesClient.CreateOrUpdate.
 type SharesClientCreateOrUpdateResponse struct {
-	SharesClientCreateOrUpdateResult
+	Share
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SharesClientCreateOrUpdateResult contains the result from method SharesClient.CreateOrUpdate.
-type SharesClientCreateOrUpdateResult struct {
-	Share
 }
 
 // SharesClientDeletePollerResponse contains the response from method SharesClient.Delete.
@@ -1510,26 +1310,16 @@ type SharesClientDeleteResponse struct {
 
 // SharesClientGetResponse contains the response from method SharesClient.Get.
 type SharesClientGetResponse struct {
-	SharesClientGetResult
+	Share
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SharesClientGetResult contains the result from method SharesClient.Get.
-type SharesClientGetResult struct {
-	Share
 }
 
 // SharesClientListByDataBoxEdgeDeviceResponse contains the response from method SharesClient.ListByDataBoxEdgeDevice.
 type SharesClientListByDataBoxEdgeDeviceResponse struct {
-	SharesClientListByDataBoxEdgeDeviceResult
+	ShareList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SharesClientListByDataBoxEdgeDeviceResult contains the result from method SharesClient.ListByDataBoxEdgeDevice.
-type SharesClientListByDataBoxEdgeDeviceResult struct {
-	ShareList
 }
 
 // SharesClientRefreshPollerResponse contains the response from method SharesClient.Refresh.
@@ -1620,14 +1410,9 @@ func (l *StorageAccountCredentialsClientCreateOrUpdatePollerResponse) Resume(ctx
 
 // StorageAccountCredentialsClientCreateOrUpdateResponse contains the response from method StorageAccountCredentialsClient.CreateOrUpdate.
 type StorageAccountCredentialsClientCreateOrUpdateResponse struct {
-	StorageAccountCredentialsClientCreateOrUpdateResult
+	StorageAccountCredential
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// StorageAccountCredentialsClientCreateOrUpdateResult contains the result from method StorageAccountCredentialsClient.CreateOrUpdate.
-type StorageAccountCredentialsClientCreateOrUpdateResult struct {
-	StorageAccountCredential
 }
 
 // StorageAccountCredentialsClientDeletePollerResponse contains the response from method StorageAccountCredentialsClient.Delete.
@@ -1678,26 +1463,16 @@ type StorageAccountCredentialsClientDeleteResponse struct {
 
 // StorageAccountCredentialsClientGetResponse contains the response from method StorageAccountCredentialsClient.Get.
 type StorageAccountCredentialsClientGetResponse struct {
-	StorageAccountCredentialsClientGetResult
+	StorageAccountCredential
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// StorageAccountCredentialsClientGetResult contains the result from method StorageAccountCredentialsClient.Get.
-type StorageAccountCredentialsClientGetResult struct {
-	StorageAccountCredential
 }
 
 // StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse contains the response from method StorageAccountCredentialsClient.ListByDataBoxEdgeDevice.
 type StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse struct {
-	StorageAccountCredentialsClientListByDataBoxEdgeDeviceResult
+	StorageAccountCredentialList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// StorageAccountCredentialsClientListByDataBoxEdgeDeviceResult contains the result from method StorageAccountCredentialsClient.ListByDataBoxEdgeDevice.
-type StorageAccountCredentialsClientListByDataBoxEdgeDeviceResult struct {
-	StorageAccountCredentialList
 }
 
 // StorageAccountsClientCreateOrUpdatePollerResponse contains the response from method StorageAccountsClient.CreateOrUpdate.
@@ -1742,14 +1517,9 @@ func (l *StorageAccountsClientCreateOrUpdatePollerResponse) Resume(ctx context.C
 
 // StorageAccountsClientCreateOrUpdateResponse contains the response from method StorageAccountsClient.CreateOrUpdate.
 type StorageAccountsClientCreateOrUpdateResponse struct {
-	StorageAccountsClientCreateOrUpdateResult
+	StorageAccount
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// StorageAccountsClientCreateOrUpdateResult contains the result from method StorageAccountsClient.CreateOrUpdate.
-type StorageAccountsClientCreateOrUpdateResult struct {
-	StorageAccount
 }
 
 // StorageAccountsClientDeletePollerResponse contains the response from method StorageAccountsClient.Delete.
@@ -1800,26 +1570,16 @@ type StorageAccountsClientDeleteResponse struct {
 
 // StorageAccountsClientGetResponse contains the response from method StorageAccountsClient.Get.
 type StorageAccountsClientGetResponse struct {
-	StorageAccountsClientGetResult
+	StorageAccount
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// StorageAccountsClientGetResult contains the result from method StorageAccountsClient.Get.
-type StorageAccountsClientGetResult struct {
-	StorageAccount
 }
 
 // StorageAccountsClientListByDataBoxEdgeDeviceResponse contains the response from method StorageAccountsClient.ListByDataBoxEdgeDevice.
 type StorageAccountsClientListByDataBoxEdgeDeviceResponse struct {
-	StorageAccountsClientListByDataBoxEdgeDeviceResult
+	StorageAccountList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// StorageAccountsClientListByDataBoxEdgeDeviceResult contains the result from method StorageAccountsClient.ListByDataBoxEdgeDevice.
-type StorageAccountsClientListByDataBoxEdgeDeviceResult struct {
-	StorageAccountList
 }
 
 // SupportPackagesClientTriggerSupportPackagePollerResponse contains the response from method SupportPackagesClient.TriggerSupportPackage.
@@ -1882,7 +1642,7 @@ type TriggersClientCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l TriggersClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (TriggersClientCreateOrUpdateResponse, error) {
 	respType := TriggersClientCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggersClientCreateOrUpdateResult)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType)
 	if err != nil {
 		return respType, err
 	}
@@ -1910,18 +1670,13 @@ func (l *TriggersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context,
 
 // TriggersClientCreateOrUpdateResponse contains the response from method TriggersClient.CreateOrUpdate.
 type TriggersClientCreateOrUpdateResponse struct {
-	TriggersClientCreateOrUpdateResult
+	TriggerClassification
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// TriggersClientCreateOrUpdateResult contains the result from method TriggersClient.CreateOrUpdate.
-type TriggersClientCreateOrUpdateResult struct {
-	TriggerClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type TriggersClientCreateOrUpdateResult.
-func (t *TriggersClientCreateOrUpdateResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type TriggersClientCreateOrUpdateResponse.
+func (t *TriggersClientCreateOrUpdateResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalTriggerClassification(data)
 	if err != nil {
 		return err
@@ -1978,18 +1733,13 @@ type TriggersClientDeleteResponse struct {
 
 // TriggersClientGetResponse contains the response from method TriggersClient.Get.
 type TriggersClientGetResponse struct {
-	TriggersClientGetResult
+	TriggerClassification
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// TriggersClientGetResult contains the result from method TriggersClient.Get.
-type TriggersClientGetResult struct {
-	TriggerClassification
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type TriggersClientGetResult.
-func (t *TriggersClientGetResult) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type TriggersClientGetResponse.
+func (t *TriggersClientGetResponse) UnmarshalJSON(data []byte) error {
 	res, err := unmarshalTriggerClassification(data)
 	if err != nil {
 		return err
@@ -2000,14 +1750,9 @@ func (t *TriggersClientGetResult) UnmarshalJSON(data []byte) error {
 
 // TriggersClientListByDataBoxEdgeDeviceResponse contains the response from method TriggersClient.ListByDataBoxEdgeDevice.
 type TriggersClientListByDataBoxEdgeDeviceResponse struct {
-	TriggersClientListByDataBoxEdgeDeviceResult
+	TriggerList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// TriggersClientListByDataBoxEdgeDeviceResult contains the result from method TriggersClient.ListByDataBoxEdgeDevice.
-type TriggersClientListByDataBoxEdgeDeviceResult struct {
-	TriggerList
 }
 
 // UsersClientCreateOrUpdatePollerResponse contains the response from method UsersClient.CreateOrUpdate.
@@ -2052,14 +1797,9 @@ func (l *UsersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, cl
 
 // UsersClientCreateOrUpdateResponse contains the response from method UsersClient.CreateOrUpdate.
 type UsersClientCreateOrUpdateResponse struct {
-	UsersClientCreateOrUpdateResult
+	User
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// UsersClientCreateOrUpdateResult contains the result from method UsersClient.CreateOrUpdate.
-type UsersClientCreateOrUpdateResult struct {
-	User
 }
 
 // UsersClientDeletePollerResponse contains the response from method UsersClient.Delete.
@@ -2110,24 +1850,14 @@ type UsersClientDeleteResponse struct {
 
 // UsersClientGetResponse contains the response from method UsersClient.Get.
 type UsersClientGetResponse struct {
-	UsersClientGetResult
+	User
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// UsersClientGetResult contains the result from method UsersClient.Get.
-type UsersClientGetResult struct {
-	User
 }
 
 // UsersClientListByDataBoxEdgeDeviceResponse contains the response from method UsersClient.ListByDataBoxEdgeDevice.
 type UsersClientListByDataBoxEdgeDeviceResponse struct {
-	UsersClientListByDataBoxEdgeDeviceResult
+	UserList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// UsersClientListByDataBoxEdgeDeviceResult contains the result from method UsersClient.ListByDataBoxEdgeDevice.
-type UsersClientListByDataBoxEdgeDeviceResult struct {
-	UserList
 }

@@ -36,7 +36,7 @@ func TestPolymorphicLROResult(t *testing.T) {
 	// needs to be kept in sync with AddonsCreateOrUpdatePollerResponse.PollUntilDone
 	// TODO: having a recording would be a better way to test this end-to-end
 	respType := AddonsClientCreateOrUpdateResponse{}
-	err := json.Unmarshal([]byte(lroResp), &respType.AddonsClientCreateOrUpdateResult)
+	err := json.Unmarshal([]byte(lroResp), &respType)
 	if err != nil {
 		t.Fatal(err)
 	}

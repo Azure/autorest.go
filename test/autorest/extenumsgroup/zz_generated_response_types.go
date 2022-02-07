@@ -12,24 +12,14 @@ import "net/http"
 
 // PetClientAddPetResponse contains the response from method PetClient.AddPet.
 type PetClientAddPetResponse struct {
-	PetClientAddPetResult
+	Pet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PetClientAddPetResult contains the result from method PetClient.AddPet.
-type PetClientAddPetResult struct {
-	Pet
 }
 
 // PetClientGetByPetIDResponse contains the response from method PetClient.GetByPetID.
 type PetClientGetByPetIDResponse struct {
-	PetClientGetByPetIDResult
+	Pet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PetClientGetByPetIDResult contains the result from method PetClient.GetByPetID.
-type PetClientGetByPetIDResult struct {
-	Pet
 }

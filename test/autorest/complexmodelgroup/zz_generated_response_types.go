@@ -12,36 +12,21 @@ import "net/http"
 
 // ComplexModelClientCreateResponse contains the response from method ComplexModelClient.Create.
 type ComplexModelClientCreateResponse struct {
-	ComplexModelClientCreateResult
+	CatalogDictionary
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ComplexModelClientCreateResult contains the result from method ComplexModelClient.Create.
-type ComplexModelClientCreateResult struct {
-	CatalogDictionary
 }
 
 // ComplexModelClientListResponse contains the response from method ComplexModelClient.List.
 type ComplexModelClientListResponse struct {
-	ComplexModelClientListResult
+	CatalogArray
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ComplexModelClientListResult contains the result from method ComplexModelClient.List.
-type ComplexModelClientListResult struct {
-	CatalogArray
 }
 
 // ComplexModelClientUpdateResponse contains the response from method ComplexModelClient.Update.
 type ComplexModelClientUpdateResponse struct {
-	ComplexModelClientUpdateResult
+	CatalogArray
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ComplexModelClientUpdateResult contains the result from method ComplexModelClient.Update.
-type ComplexModelClientUpdateResult struct {
-	CatalogArray
 }

@@ -17,14 +17,9 @@ import (
 
 // AvailabilitySetsClientCreateOrUpdateResponse contains the response from method AvailabilitySetsClient.CreateOrUpdate.
 type AvailabilitySetsClientCreateOrUpdateResponse struct {
-	AvailabilitySetsClientCreateOrUpdateResult
+	AvailabilitySet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailabilitySetsClientCreateOrUpdateResult contains the result from method AvailabilitySetsClient.CreateOrUpdate.
-type AvailabilitySetsClientCreateOrUpdateResult struct {
-	AvailabilitySet
 }
 
 // AvailabilitySetsClientDeleteResponse contains the response from method AvailabilitySetsClient.Delete.
@@ -35,62 +30,37 @@ type AvailabilitySetsClientDeleteResponse struct {
 
 // AvailabilitySetsClientGetResponse contains the response from method AvailabilitySetsClient.Get.
 type AvailabilitySetsClientGetResponse struct {
-	AvailabilitySetsClientGetResult
+	AvailabilitySet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailabilitySetsClientGetResult contains the result from method AvailabilitySetsClient.Get.
-type AvailabilitySetsClientGetResult struct {
-	AvailabilitySet
 }
 
 // AvailabilitySetsClientListAvailableSizesResponse contains the response from method AvailabilitySetsClient.ListAvailableSizes.
 type AvailabilitySetsClientListAvailableSizesResponse struct {
-	AvailabilitySetsClientListAvailableSizesResult
+	VirtualMachineSizeListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailabilitySetsClientListAvailableSizesResult contains the result from method AvailabilitySetsClient.ListAvailableSizes.
-type AvailabilitySetsClientListAvailableSizesResult struct {
-	VirtualMachineSizeListResult
 }
 
 // AvailabilitySetsClientListBySubscriptionResponse contains the response from method AvailabilitySetsClient.ListBySubscription.
 type AvailabilitySetsClientListBySubscriptionResponse struct {
-	AvailabilitySetsClientListBySubscriptionResult
+	AvailabilitySetListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailabilitySetsClientListBySubscriptionResult contains the result from method AvailabilitySetsClient.ListBySubscription.
-type AvailabilitySetsClientListBySubscriptionResult struct {
-	AvailabilitySetListResult
 }
 
 // AvailabilitySetsClientListResponse contains the response from method AvailabilitySetsClient.List.
 type AvailabilitySetsClientListResponse struct {
-	AvailabilitySetsClientListResult
+	AvailabilitySetListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailabilitySetsClientListResult contains the result from method AvailabilitySetsClient.List.
-type AvailabilitySetsClientListResult struct {
-	AvailabilitySetListResult
 }
 
 // AvailabilitySetsClientUpdateResponse contains the response from method AvailabilitySetsClient.Update.
 type AvailabilitySetsClientUpdateResponse struct {
-	AvailabilitySetsClientUpdateResult
+	AvailabilitySet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// AvailabilitySetsClientUpdateResult contains the result from method AvailabilitySetsClient.Update.
-type AvailabilitySetsClientUpdateResult struct {
-	AvailabilitySet
 }
 
 // ContainerServicesClientCreateOrUpdatePollerResponse contains the response from method ContainerServicesClient.CreateOrUpdate.
@@ -135,14 +105,9 @@ func (l *ContainerServicesClientCreateOrUpdatePollerResponse) Resume(ctx context
 
 // ContainerServicesClientCreateOrUpdateResponse contains the response from method ContainerServicesClient.CreateOrUpdate.
 type ContainerServicesClientCreateOrUpdateResponse struct {
-	ContainerServicesClientCreateOrUpdateResult
+	ContainerService
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainerServicesClientCreateOrUpdateResult contains the result from method ContainerServicesClient.CreateOrUpdate.
-type ContainerServicesClientCreateOrUpdateResult struct {
-	ContainerService
 }
 
 // ContainerServicesClientDeletePollerResponse contains the response from method ContainerServicesClient.Delete.
@@ -193,50 +158,30 @@ type ContainerServicesClientDeleteResponse struct {
 
 // ContainerServicesClientGetResponse contains the response from method ContainerServicesClient.Get.
 type ContainerServicesClientGetResponse struct {
-	ContainerServicesClientGetResult
+	ContainerService
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainerServicesClientGetResult contains the result from method ContainerServicesClient.Get.
-type ContainerServicesClientGetResult struct {
-	ContainerService
 }
 
 // ContainerServicesClientListByResourceGroupResponse contains the response from method ContainerServicesClient.ListByResourceGroup.
 type ContainerServicesClientListByResourceGroupResponse struct {
-	ContainerServicesClientListByResourceGroupResult
+	ContainerServiceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainerServicesClientListByResourceGroupResult contains the result from method ContainerServicesClient.ListByResourceGroup.
-type ContainerServicesClientListByResourceGroupResult struct {
-	ContainerServiceListResult
 }
 
 // ContainerServicesClientListResponse contains the response from method ContainerServicesClient.List.
 type ContainerServicesClientListResponse struct {
-	ContainerServicesClientListResult
+	ContainerServiceListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ContainerServicesClientListResult contains the result from method ContainerServicesClient.List.
-type ContainerServicesClientListResult struct {
-	ContainerServiceListResult
 }
 
 // DedicatedHostGroupsClientCreateOrUpdateResponse contains the response from method DedicatedHostGroupsClient.CreateOrUpdate.
 type DedicatedHostGroupsClientCreateOrUpdateResponse struct {
-	DedicatedHostGroupsClientCreateOrUpdateResult
+	DedicatedHostGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostGroupsClientCreateOrUpdateResult contains the result from method DedicatedHostGroupsClient.CreateOrUpdate.
-type DedicatedHostGroupsClientCreateOrUpdateResult struct {
-	DedicatedHostGroup
 }
 
 // DedicatedHostGroupsClientDeleteResponse contains the response from method DedicatedHostGroupsClient.Delete.
@@ -247,50 +192,30 @@ type DedicatedHostGroupsClientDeleteResponse struct {
 
 // DedicatedHostGroupsClientGetResponse contains the response from method DedicatedHostGroupsClient.Get.
 type DedicatedHostGroupsClientGetResponse struct {
-	DedicatedHostGroupsClientGetResult
+	DedicatedHostGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostGroupsClientGetResult contains the result from method DedicatedHostGroupsClient.Get.
-type DedicatedHostGroupsClientGetResult struct {
-	DedicatedHostGroup
 }
 
 // DedicatedHostGroupsClientListByResourceGroupResponse contains the response from method DedicatedHostGroupsClient.ListByResourceGroup.
 type DedicatedHostGroupsClientListByResourceGroupResponse struct {
-	DedicatedHostGroupsClientListByResourceGroupResult
+	DedicatedHostGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostGroupsClientListByResourceGroupResult contains the result from method DedicatedHostGroupsClient.ListByResourceGroup.
-type DedicatedHostGroupsClientListByResourceGroupResult struct {
-	DedicatedHostGroupListResult
 }
 
 // DedicatedHostGroupsClientListBySubscriptionResponse contains the response from method DedicatedHostGroupsClient.ListBySubscription.
 type DedicatedHostGroupsClientListBySubscriptionResponse struct {
-	DedicatedHostGroupsClientListBySubscriptionResult
+	DedicatedHostGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostGroupsClientListBySubscriptionResult contains the result from method DedicatedHostGroupsClient.ListBySubscription.
-type DedicatedHostGroupsClientListBySubscriptionResult struct {
-	DedicatedHostGroupListResult
 }
 
 // DedicatedHostGroupsClientUpdateResponse contains the response from method DedicatedHostGroupsClient.Update.
 type DedicatedHostGroupsClientUpdateResponse struct {
-	DedicatedHostGroupsClientUpdateResult
+	DedicatedHostGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostGroupsClientUpdateResult contains the result from method DedicatedHostGroupsClient.Update.
-type DedicatedHostGroupsClientUpdateResult struct {
-	DedicatedHostGroup
 }
 
 // DedicatedHostsClientCreateOrUpdatePollerResponse contains the response from method DedicatedHostsClient.CreateOrUpdate.
@@ -335,14 +260,9 @@ func (l *DedicatedHostsClientCreateOrUpdatePollerResponse) Resume(ctx context.Co
 
 // DedicatedHostsClientCreateOrUpdateResponse contains the response from method DedicatedHostsClient.CreateOrUpdate.
 type DedicatedHostsClientCreateOrUpdateResponse struct {
-	DedicatedHostsClientCreateOrUpdateResult
+	DedicatedHost
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostsClientCreateOrUpdateResult contains the result from method DedicatedHostsClient.CreateOrUpdate.
-type DedicatedHostsClientCreateOrUpdateResult struct {
-	DedicatedHost
 }
 
 // DedicatedHostsClientDeletePollerResponse contains the response from method DedicatedHostsClient.Delete.
@@ -393,26 +313,16 @@ type DedicatedHostsClientDeleteResponse struct {
 
 // DedicatedHostsClientGetResponse contains the response from method DedicatedHostsClient.Get.
 type DedicatedHostsClientGetResponse struct {
-	DedicatedHostsClientGetResult
+	DedicatedHost
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostsClientGetResult contains the result from method DedicatedHostsClient.Get.
-type DedicatedHostsClientGetResult struct {
-	DedicatedHost
 }
 
 // DedicatedHostsClientListByHostGroupResponse contains the response from method DedicatedHostsClient.ListByHostGroup.
 type DedicatedHostsClientListByHostGroupResponse struct {
-	DedicatedHostsClientListByHostGroupResult
+	DedicatedHostListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostsClientListByHostGroupResult contains the result from method DedicatedHostsClient.ListByHostGroup.
-type DedicatedHostsClientListByHostGroupResult struct {
-	DedicatedHostListResult
 }
 
 // DedicatedHostsClientUpdatePollerResponse contains the response from method DedicatedHostsClient.Update.
@@ -457,14 +367,9 @@ func (l *DedicatedHostsClientUpdatePollerResponse) Resume(ctx context.Context, c
 
 // DedicatedHostsClientUpdateResponse contains the response from method DedicatedHostsClient.Update.
 type DedicatedHostsClientUpdateResponse struct {
-	DedicatedHostsClientUpdateResult
+	DedicatedHost
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DedicatedHostsClientUpdateResult contains the result from method DedicatedHostsClient.Update.
-type DedicatedHostsClientUpdateResult struct {
-	DedicatedHost
 }
 
 // DiskEncryptionSetsClientCreateOrUpdatePollerResponse contains the response from method DiskEncryptionSetsClient.CreateOrUpdate.
@@ -509,14 +414,9 @@ func (l *DiskEncryptionSetsClientCreateOrUpdatePollerResponse) Resume(ctx contex
 
 // DiskEncryptionSetsClientCreateOrUpdateResponse contains the response from method DiskEncryptionSetsClient.CreateOrUpdate.
 type DiskEncryptionSetsClientCreateOrUpdateResponse struct {
-	DiskEncryptionSetsClientCreateOrUpdateResult
+	DiskEncryptionSet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiskEncryptionSetsClientCreateOrUpdateResult contains the result from method DiskEncryptionSetsClient.CreateOrUpdate.
-type DiskEncryptionSetsClientCreateOrUpdateResult struct {
-	DiskEncryptionSet
 }
 
 // DiskEncryptionSetsClientDeletePollerResponse contains the response from method DiskEncryptionSetsClient.Delete.
@@ -567,38 +467,23 @@ type DiskEncryptionSetsClientDeleteResponse struct {
 
 // DiskEncryptionSetsClientGetResponse contains the response from method DiskEncryptionSetsClient.Get.
 type DiskEncryptionSetsClientGetResponse struct {
-	DiskEncryptionSetsClientGetResult
+	DiskEncryptionSet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiskEncryptionSetsClientGetResult contains the result from method DiskEncryptionSetsClient.Get.
-type DiskEncryptionSetsClientGetResult struct {
-	DiskEncryptionSet
 }
 
 // DiskEncryptionSetsClientListByResourceGroupResponse contains the response from method DiskEncryptionSetsClient.ListByResourceGroup.
 type DiskEncryptionSetsClientListByResourceGroupResponse struct {
-	DiskEncryptionSetsClientListByResourceGroupResult
+	DiskEncryptionSetList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiskEncryptionSetsClientListByResourceGroupResult contains the result from method DiskEncryptionSetsClient.ListByResourceGroup.
-type DiskEncryptionSetsClientListByResourceGroupResult struct {
-	DiskEncryptionSetList
 }
 
 // DiskEncryptionSetsClientListResponse contains the response from method DiskEncryptionSetsClient.List.
 type DiskEncryptionSetsClientListResponse struct {
-	DiskEncryptionSetsClientListResult
+	DiskEncryptionSetList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiskEncryptionSetsClientListResult contains the result from method DiskEncryptionSetsClient.List.
-type DiskEncryptionSetsClientListResult struct {
-	DiskEncryptionSetList
 }
 
 // DiskEncryptionSetsClientUpdatePollerResponse contains the response from method DiskEncryptionSetsClient.Update.
@@ -643,14 +528,9 @@ func (l *DiskEncryptionSetsClientUpdatePollerResponse) Resume(ctx context.Contex
 
 // DiskEncryptionSetsClientUpdateResponse contains the response from method DiskEncryptionSetsClient.Update.
 type DiskEncryptionSetsClientUpdateResponse struct {
-	DiskEncryptionSetsClientUpdateResult
+	DiskEncryptionSet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DiskEncryptionSetsClientUpdateResult contains the result from method DiskEncryptionSetsClient.Update.
-type DiskEncryptionSetsClientUpdateResult struct {
-	DiskEncryptionSet
 }
 
 // DisksClientCreateOrUpdatePollerResponse contains the response from method DisksClient.CreateOrUpdate.
@@ -695,14 +575,9 @@ func (l *DisksClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, cl
 
 // DisksClientCreateOrUpdateResponse contains the response from method DisksClient.CreateOrUpdate.
 type DisksClientCreateOrUpdateResponse struct {
-	DisksClientCreateOrUpdateResult
+	Disk
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DisksClientCreateOrUpdateResult contains the result from method DisksClient.CreateOrUpdate.
-type DisksClientCreateOrUpdateResult struct {
-	Disk
 }
 
 // DisksClientDeletePollerResponse contains the response from method DisksClient.Delete.
@@ -753,14 +628,9 @@ type DisksClientDeleteResponse struct {
 
 // DisksClientGetResponse contains the response from method DisksClient.Get.
 type DisksClientGetResponse struct {
-	DisksClientGetResult
+	Disk
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DisksClientGetResult contains the result from method DisksClient.Get.
-type DisksClientGetResult struct {
-	Disk
 }
 
 // DisksClientGrantAccessPollerResponse contains the response from method DisksClient.GrantAccess.
@@ -805,38 +675,23 @@ func (l *DisksClientGrantAccessPollerResponse) Resume(ctx context.Context, clien
 
 // DisksClientGrantAccessResponse contains the response from method DisksClient.GrantAccess.
 type DisksClientGrantAccessResponse struct {
-	DisksClientGrantAccessResult
+	AccessURI
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DisksClientGrantAccessResult contains the result from method DisksClient.GrantAccess.
-type DisksClientGrantAccessResult struct {
-	AccessURI
 }
 
 // DisksClientListByResourceGroupResponse contains the response from method DisksClient.ListByResourceGroup.
 type DisksClientListByResourceGroupResponse struct {
-	DisksClientListByResourceGroupResult
+	DiskList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DisksClientListByResourceGroupResult contains the result from method DisksClient.ListByResourceGroup.
-type DisksClientListByResourceGroupResult struct {
-	DiskList
 }
 
 // DisksClientListResponse contains the response from method DisksClient.List.
 type DisksClientListResponse struct {
-	DisksClientListResult
+	DiskList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DisksClientListResult contains the result from method DisksClient.List.
-type DisksClientListResult struct {
-	DiskList
 }
 
 // DisksClientRevokeAccessPollerResponse contains the response from method DisksClient.RevokeAccess.
@@ -927,14 +782,9 @@ func (l *DisksClientUpdatePollerResponse) Resume(ctx context.Context, client *Di
 
 // DisksClientUpdateResponse contains the response from method DisksClient.Update.
 type DisksClientUpdateResponse struct {
-	DisksClientUpdateResult
+	Disk
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DisksClientUpdateResult contains the result from method DisksClient.Update.
-type DisksClientUpdateResult struct {
-	Disk
 }
 
 // GalleriesClientCreateOrUpdatePollerResponse contains the response from method GalleriesClient.CreateOrUpdate.
@@ -979,14 +829,9 @@ func (l *GalleriesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context
 
 // GalleriesClientCreateOrUpdateResponse contains the response from method GalleriesClient.CreateOrUpdate.
 type GalleriesClientCreateOrUpdateResponse struct {
-	GalleriesClientCreateOrUpdateResult
+	Gallery
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleriesClientCreateOrUpdateResult contains the result from method GalleriesClient.CreateOrUpdate.
-type GalleriesClientCreateOrUpdateResult struct {
-	Gallery
 }
 
 // GalleriesClientDeletePollerResponse contains the response from method GalleriesClient.Delete.
@@ -1037,38 +882,23 @@ type GalleriesClientDeleteResponse struct {
 
 // GalleriesClientGetResponse contains the response from method GalleriesClient.Get.
 type GalleriesClientGetResponse struct {
-	GalleriesClientGetResult
+	Gallery
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleriesClientGetResult contains the result from method GalleriesClient.Get.
-type GalleriesClientGetResult struct {
-	Gallery
 }
 
 // GalleriesClientListByResourceGroupResponse contains the response from method GalleriesClient.ListByResourceGroup.
 type GalleriesClientListByResourceGroupResponse struct {
-	GalleriesClientListByResourceGroupResult
+	GalleryList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleriesClientListByResourceGroupResult contains the result from method GalleriesClient.ListByResourceGroup.
-type GalleriesClientListByResourceGroupResult struct {
-	GalleryList
 }
 
 // GalleriesClientListResponse contains the response from method GalleriesClient.List.
 type GalleriesClientListResponse struct {
-	GalleriesClientListResult
+	GalleryList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleriesClientListResult contains the result from method GalleriesClient.List.
-type GalleriesClientListResult struct {
-	GalleryList
 }
 
 // GalleriesClientUpdatePollerResponse contains the response from method GalleriesClient.Update.
@@ -1113,14 +943,9 @@ func (l *GalleriesClientUpdatePollerResponse) Resume(ctx context.Context, client
 
 // GalleriesClientUpdateResponse contains the response from method GalleriesClient.Update.
 type GalleriesClientUpdateResponse struct {
-	GalleriesClientUpdateResult
+	Gallery
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleriesClientUpdateResult contains the result from method GalleriesClient.Update.
-type GalleriesClientUpdateResult struct {
-	Gallery
 }
 
 // GalleryApplicationVersionsClientCreateOrUpdatePollerResponse contains the response from method GalleryApplicationVersionsClient.CreateOrUpdate.
@@ -1165,14 +990,9 @@ func (l *GalleryApplicationVersionsClientCreateOrUpdatePollerResponse) Resume(ct
 
 // GalleryApplicationVersionsClientCreateOrUpdateResponse contains the response from method GalleryApplicationVersionsClient.CreateOrUpdate.
 type GalleryApplicationVersionsClientCreateOrUpdateResponse struct {
-	GalleryApplicationVersionsClientCreateOrUpdateResult
+	GalleryApplicationVersion
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationVersionsClientCreateOrUpdateResult contains the result from method GalleryApplicationVersionsClient.CreateOrUpdate.
-type GalleryApplicationVersionsClientCreateOrUpdateResult struct {
-	GalleryApplicationVersion
 }
 
 // GalleryApplicationVersionsClientDeletePollerResponse contains the response from method GalleryApplicationVersionsClient.Delete.
@@ -1223,26 +1043,16 @@ type GalleryApplicationVersionsClientDeleteResponse struct {
 
 // GalleryApplicationVersionsClientGetResponse contains the response from method GalleryApplicationVersionsClient.Get.
 type GalleryApplicationVersionsClientGetResponse struct {
-	GalleryApplicationVersionsClientGetResult
+	GalleryApplicationVersion
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationVersionsClientGetResult contains the result from method GalleryApplicationVersionsClient.Get.
-type GalleryApplicationVersionsClientGetResult struct {
-	GalleryApplicationVersion
 }
 
 // GalleryApplicationVersionsClientListByGalleryApplicationResponse contains the response from method GalleryApplicationVersionsClient.ListByGalleryApplication.
 type GalleryApplicationVersionsClientListByGalleryApplicationResponse struct {
-	GalleryApplicationVersionsClientListByGalleryApplicationResult
+	GalleryApplicationVersionList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationVersionsClientListByGalleryApplicationResult contains the result from method GalleryApplicationVersionsClient.ListByGalleryApplication.
-type GalleryApplicationVersionsClientListByGalleryApplicationResult struct {
-	GalleryApplicationVersionList
 }
 
 // GalleryApplicationVersionsClientUpdatePollerResponse contains the response from method GalleryApplicationVersionsClient.Update.
@@ -1287,14 +1097,9 @@ func (l *GalleryApplicationVersionsClientUpdatePollerResponse) Resume(ctx contex
 
 // GalleryApplicationVersionsClientUpdateResponse contains the response from method GalleryApplicationVersionsClient.Update.
 type GalleryApplicationVersionsClientUpdateResponse struct {
-	GalleryApplicationVersionsClientUpdateResult
+	GalleryApplicationVersion
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationVersionsClientUpdateResult contains the result from method GalleryApplicationVersionsClient.Update.
-type GalleryApplicationVersionsClientUpdateResult struct {
-	GalleryApplicationVersion
 }
 
 // GalleryApplicationsClientCreateOrUpdatePollerResponse contains the response from method GalleryApplicationsClient.CreateOrUpdate.
@@ -1339,14 +1144,9 @@ func (l *GalleryApplicationsClientCreateOrUpdatePollerResponse) Resume(ctx conte
 
 // GalleryApplicationsClientCreateOrUpdateResponse contains the response from method GalleryApplicationsClient.CreateOrUpdate.
 type GalleryApplicationsClientCreateOrUpdateResponse struct {
-	GalleryApplicationsClientCreateOrUpdateResult
+	GalleryApplication
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationsClientCreateOrUpdateResult contains the result from method GalleryApplicationsClient.CreateOrUpdate.
-type GalleryApplicationsClientCreateOrUpdateResult struct {
-	GalleryApplication
 }
 
 // GalleryApplicationsClientDeletePollerResponse contains the response from method GalleryApplicationsClient.Delete.
@@ -1397,26 +1197,16 @@ type GalleryApplicationsClientDeleteResponse struct {
 
 // GalleryApplicationsClientGetResponse contains the response from method GalleryApplicationsClient.Get.
 type GalleryApplicationsClientGetResponse struct {
-	GalleryApplicationsClientGetResult
+	GalleryApplication
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationsClientGetResult contains the result from method GalleryApplicationsClient.Get.
-type GalleryApplicationsClientGetResult struct {
-	GalleryApplication
 }
 
 // GalleryApplicationsClientListByGalleryResponse contains the response from method GalleryApplicationsClient.ListByGallery.
 type GalleryApplicationsClientListByGalleryResponse struct {
-	GalleryApplicationsClientListByGalleryResult
+	GalleryApplicationList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationsClientListByGalleryResult contains the result from method GalleryApplicationsClient.ListByGallery.
-type GalleryApplicationsClientListByGalleryResult struct {
-	GalleryApplicationList
 }
 
 // GalleryApplicationsClientUpdatePollerResponse contains the response from method GalleryApplicationsClient.Update.
@@ -1461,14 +1251,9 @@ func (l *GalleryApplicationsClientUpdatePollerResponse) Resume(ctx context.Conte
 
 // GalleryApplicationsClientUpdateResponse contains the response from method GalleryApplicationsClient.Update.
 type GalleryApplicationsClientUpdateResponse struct {
-	GalleryApplicationsClientUpdateResult
+	GalleryApplication
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryApplicationsClientUpdateResult contains the result from method GalleryApplicationsClient.Update.
-type GalleryApplicationsClientUpdateResult struct {
-	GalleryApplication
 }
 
 // GalleryImageVersionsClientCreateOrUpdatePollerResponse contains the response from method GalleryImageVersionsClient.CreateOrUpdate.
@@ -1513,14 +1298,9 @@ func (l *GalleryImageVersionsClientCreateOrUpdatePollerResponse) Resume(ctx cont
 
 // GalleryImageVersionsClientCreateOrUpdateResponse contains the response from method GalleryImageVersionsClient.CreateOrUpdate.
 type GalleryImageVersionsClientCreateOrUpdateResponse struct {
-	GalleryImageVersionsClientCreateOrUpdateResult
+	GalleryImageVersion
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImageVersionsClientCreateOrUpdateResult contains the result from method GalleryImageVersionsClient.CreateOrUpdate.
-type GalleryImageVersionsClientCreateOrUpdateResult struct {
-	GalleryImageVersion
 }
 
 // GalleryImageVersionsClientDeletePollerResponse contains the response from method GalleryImageVersionsClient.Delete.
@@ -1571,26 +1351,16 @@ type GalleryImageVersionsClientDeleteResponse struct {
 
 // GalleryImageVersionsClientGetResponse contains the response from method GalleryImageVersionsClient.Get.
 type GalleryImageVersionsClientGetResponse struct {
-	GalleryImageVersionsClientGetResult
+	GalleryImageVersion
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImageVersionsClientGetResult contains the result from method GalleryImageVersionsClient.Get.
-type GalleryImageVersionsClientGetResult struct {
-	GalleryImageVersion
 }
 
 // GalleryImageVersionsClientListByGalleryImageResponse contains the response from method GalleryImageVersionsClient.ListByGalleryImage.
 type GalleryImageVersionsClientListByGalleryImageResponse struct {
-	GalleryImageVersionsClientListByGalleryImageResult
+	GalleryImageVersionList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImageVersionsClientListByGalleryImageResult contains the result from method GalleryImageVersionsClient.ListByGalleryImage.
-type GalleryImageVersionsClientListByGalleryImageResult struct {
-	GalleryImageVersionList
 }
 
 // GalleryImageVersionsClientUpdatePollerResponse contains the response from method GalleryImageVersionsClient.Update.
@@ -1635,14 +1405,9 @@ func (l *GalleryImageVersionsClientUpdatePollerResponse) Resume(ctx context.Cont
 
 // GalleryImageVersionsClientUpdateResponse contains the response from method GalleryImageVersionsClient.Update.
 type GalleryImageVersionsClientUpdateResponse struct {
-	GalleryImageVersionsClientUpdateResult
+	GalleryImageVersion
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImageVersionsClientUpdateResult contains the result from method GalleryImageVersionsClient.Update.
-type GalleryImageVersionsClientUpdateResult struct {
-	GalleryImageVersion
 }
 
 // GalleryImagesClientCreateOrUpdatePollerResponse contains the response from method GalleryImagesClient.CreateOrUpdate.
@@ -1687,14 +1452,9 @@ func (l *GalleryImagesClientCreateOrUpdatePollerResponse) Resume(ctx context.Con
 
 // GalleryImagesClientCreateOrUpdateResponse contains the response from method GalleryImagesClient.CreateOrUpdate.
 type GalleryImagesClientCreateOrUpdateResponse struct {
-	GalleryImagesClientCreateOrUpdateResult
+	GalleryImage
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImagesClientCreateOrUpdateResult contains the result from method GalleryImagesClient.CreateOrUpdate.
-type GalleryImagesClientCreateOrUpdateResult struct {
-	GalleryImage
 }
 
 // GalleryImagesClientDeletePollerResponse contains the response from method GalleryImagesClient.Delete.
@@ -1745,26 +1505,16 @@ type GalleryImagesClientDeleteResponse struct {
 
 // GalleryImagesClientGetResponse contains the response from method GalleryImagesClient.Get.
 type GalleryImagesClientGetResponse struct {
-	GalleryImagesClientGetResult
+	GalleryImage
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImagesClientGetResult contains the result from method GalleryImagesClient.Get.
-type GalleryImagesClientGetResult struct {
-	GalleryImage
 }
 
 // GalleryImagesClientListByGalleryResponse contains the response from method GalleryImagesClient.ListByGallery.
 type GalleryImagesClientListByGalleryResponse struct {
-	GalleryImagesClientListByGalleryResult
+	GalleryImageList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImagesClientListByGalleryResult contains the result from method GalleryImagesClient.ListByGallery.
-type GalleryImagesClientListByGalleryResult struct {
-	GalleryImageList
 }
 
 // GalleryImagesClientUpdatePollerResponse contains the response from method GalleryImagesClient.Update.
@@ -1809,14 +1559,9 @@ func (l *GalleryImagesClientUpdatePollerResponse) Resume(ctx context.Context, cl
 
 // GalleryImagesClientUpdateResponse contains the response from method GalleryImagesClient.Update.
 type GalleryImagesClientUpdateResponse struct {
-	GalleryImagesClientUpdateResult
+	GalleryImage
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// GalleryImagesClientUpdateResult contains the result from method GalleryImagesClient.Update.
-type GalleryImagesClientUpdateResult struct {
-	GalleryImage
 }
 
 // ImagesClientCreateOrUpdatePollerResponse contains the response from method ImagesClient.CreateOrUpdate.
@@ -1861,14 +1606,9 @@ func (l *ImagesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, c
 
 // ImagesClientCreateOrUpdateResponse contains the response from method ImagesClient.CreateOrUpdate.
 type ImagesClientCreateOrUpdateResponse struct {
-	ImagesClientCreateOrUpdateResult
+	Image
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ImagesClientCreateOrUpdateResult contains the result from method ImagesClient.CreateOrUpdate.
-type ImagesClientCreateOrUpdateResult struct {
-	Image
 }
 
 // ImagesClientDeletePollerResponse contains the response from method ImagesClient.Delete.
@@ -1919,38 +1659,23 @@ type ImagesClientDeleteResponse struct {
 
 // ImagesClientGetResponse contains the response from method ImagesClient.Get.
 type ImagesClientGetResponse struct {
-	ImagesClientGetResult
+	Image
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ImagesClientGetResult contains the result from method ImagesClient.Get.
-type ImagesClientGetResult struct {
-	Image
 }
 
 // ImagesClientListByResourceGroupResponse contains the response from method ImagesClient.ListByResourceGroup.
 type ImagesClientListByResourceGroupResponse struct {
-	ImagesClientListByResourceGroupResult
+	ImageListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ImagesClientListByResourceGroupResult contains the result from method ImagesClient.ListByResourceGroup.
-type ImagesClientListByResourceGroupResult struct {
-	ImageListResult
 }
 
 // ImagesClientListResponse contains the response from method ImagesClient.List.
 type ImagesClientListResponse struct {
-	ImagesClientListResult
+	ImageListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ImagesClientListResult contains the result from method ImagesClient.List.
-type ImagesClientListResult struct {
-	ImageListResult
 }
 
 // ImagesClientUpdatePollerResponse contains the response from method ImagesClient.Update.
@@ -1995,14 +1720,9 @@ func (l *ImagesClientUpdatePollerResponse) Resume(ctx context.Context, client *I
 
 // ImagesClientUpdateResponse contains the response from method ImagesClient.Update.
 type ImagesClientUpdateResponse struct {
-	ImagesClientUpdateResult
+	Image
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ImagesClientUpdateResult contains the result from method ImagesClient.Update.
-type ImagesClientUpdateResult struct {
-	Image
 }
 
 // LogAnalyticsClientExportRequestRateByIntervalPollerResponse contains the response from method LogAnalyticsClient.ExportRequestRateByInterval.
@@ -2047,14 +1767,9 @@ func (l *LogAnalyticsClientExportRequestRateByIntervalPollerResponse) Resume(ctx
 
 // LogAnalyticsClientExportRequestRateByIntervalResponse contains the response from method LogAnalyticsClient.ExportRequestRateByInterval.
 type LogAnalyticsClientExportRequestRateByIntervalResponse struct {
-	LogAnalyticsClientExportRequestRateByIntervalResult
+	LogAnalyticsOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LogAnalyticsClientExportRequestRateByIntervalResult contains the result from method LogAnalyticsClient.ExportRequestRateByInterval.
-type LogAnalyticsClientExportRequestRateByIntervalResult struct {
-	LogAnalyticsOperationResult
 }
 
 // LogAnalyticsClientExportThrottledRequestsPollerResponse contains the response from method LogAnalyticsClient.ExportThrottledRequests.
@@ -2099,38 +1814,23 @@ func (l *LogAnalyticsClientExportThrottledRequestsPollerResponse) Resume(ctx con
 
 // LogAnalyticsClientExportThrottledRequestsResponse contains the response from method LogAnalyticsClient.ExportThrottledRequests.
 type LogAnalyticsClientExportThrottledRequestsResponse struct {
-	LogAnalyticsClientExportThrottledRequestsResult
+	LogAnalyticsOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// LogAnalyticsClientExportThrottledRequestsResult contains the result from method LogAnalyticsClient.ExportThrottledRequests.
-type LogAnalyticsClientExportThrottledRequestsResult struct {
-	LogAnalyticsOperationResult
 }
 
 // OperationsClientListResponse contains the response from method OperationsClient.List.
 type OperationsClientListResponse struct {
-	OperationsClientListResult
+	OperationListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// OperationsClientListResult contains the result from method OperationsClient.List.
-type OperationsClientListResult struct {
-	OperationListResult
 }
 
 // ProximityPlacementGroupsClientCreateOrUpdateResponse contains the response from method ProximityPlacementGroupsClient.CreateOrUpdate.
 type ProximityPlacementGroupsClientCreateOrUpdateResponse struct {
-	ProximityPlacementGroupsClientCreateOrUpdateResult
+	ProximityPlacementGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProximityPlacementGroupsClientCreateOrUpdateResult contains the result from method ProximityPlacementGroupsClient.CreateOrUpdate.
-type ProximityPlacementGroupsClientCreateOrUpdateResult struct {
-	ProximityPlacementGroup
 }
 
 // ProximityPlacementGroupsClientDeleteResponse contains the response from method ProximityPlacementGroupsClient.Delete.
@@ -2141,74 +1841,44 @@ type ProximityPlacementGroupsClientDeleteResponse struct {
 
 // ProximityPlacementGroupsClientGetResponse contains the response from method ProximityPlacementGroupsClient.Get.
 type ProximityPlacementGroupsClientGetResponse struct {
-	ProximityPlacementGroupsClientGetResult
+	ProximityPlacementGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProximityPlacementGroupsClientGetResult contains the result from method ProximityPlacementGroupsClient.Get.
-type ProximityPlacementGroupsClientGetResult struct {
-	ProximityPlacementGroup
 }
 
 // ProximityPlacementGroupsClientListByResourceGroupResponse contains the response from method ProximityPlacementGroupsClient.ListByResourceGroup.
 type ProximityPlacementGroupsClientListByResourceGroupResponse struct {
-	ProximityPlacementGroupsClientListByResourceGroupResult
+	ProximityPlacementGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProximityPlacementGroupsClientListByResourceGroupResult contains the result from method ProximityPlacementGroupsClient.ListByResourceGroup.
-type ProximityPlacementGroupsClientListByResourceGroupResult struct {
-	ProximityPlacementGroupListResult
 }
 
 // ProximityPlacementGroupsClientListBySubscriptionResponse contains the response from method ProximityPlacementGroupsClient.ListBySubscription.
 type ProximityPlacementGroupsClientListBySubscriptionResponse struct {
-	ProximityPlacementGroupsClientListBySubscriptionResult
+	ProximityPlacementGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProximityPlacementGroupsClientListBySubscriptionResult contains the result from method ProximityPlacementGroupsClient.ListBySubscription.
-type ProximityPlacementGroupsClientListBySubscriptionResult struct {
-	ProximityPlacementGroupListResult
 }
 
 // ProximityPlacementGroupsClientUpdateResponse contains the response from method ProximityPlacementGroupsClient.Update.
 type ProximityPlacementGroupsClientUpdateResponse struct {
-	ProximityPlacementGroupsClientUpdateResult
+	ProximityPlacementGroup
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ProximityPlacementGroupsClientUpdateResult contains the result from method ProximityPlacementGroupsClient.Update.
-type ProximityPlacementGroupsClientUpdateResult struct {
-	ProximityPlacementGroup
 }
 
 // ResourceSKUsClientListResponse contains the response from method ResourceSKUsClient.List.
 type ResourceSKUsClientListResponse struct {
-	ResourceSKUsClientListResult
+	ResourceSKUsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ResourceSKUsClientListResult contains the result from method ResourceSKUsClient.List.
-type ResourceSKUsClientListResult struct {
-	ResourceSKUsResult
 }
 
 // SSHPublicKeysClientCreateResponse contains the response from method SSHPublicKeysClient.Create.
 type SSHPublicKeysClientCreateResponse struct {
-	SSHPublicKeysClientCreateResult
+	SSHPublicKeyResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SSHPublicKeysClientCreateResult contains the result from method SSHPublicKeysClient.Create.
-type SSHPublicKeysClientCreateResult struct {
-	SSHPublicKeyResource
 }
 
 // SSHPublicKeysClientDeleteResponse contains the response from method SSHPublicKeysClient.Delete.
@@ -2219,62 +1889,37 @@ type SSHPublicKeysClientDeleteResponse struct {
 
 // SSHPublicKeysClientGenerateKeyPairResponse contains the response from method SSHPublicKeysClient.GenerateKeyPair.
 type SSHPublicKeysClientGenerateKeyPairResponse struct {
-	SSHPublicKeysClientGenerateKeyPairResult
+	SSHPublicKeyGenerateKeyPairResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SSHPublicKeysClientGenerateKeyPairResult contains the result from method SSHPublicKeysClient.GenerateKeyPair.
-type SSHPublicKeysClientGenerateKeyPairResult struct {
-	SSHPublicKeyGenerateKeyPairResult
 }
 
 // SSHPublicKeysClientGetResponse contains the response from method SSHPublicKeysClient.Get.
 type SSHPublicKeysClientGetResponse struct {
-	SSHPublicKeysClientGetResult
+	SSHPublicKeyResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SSHPublicKeysClientGetResult contains the result from method SSHPublicKeysClient.Get.
-type SSHPublicKeysClientGetResult struct {
-	SSHPublicKeyResource
 }
 
 // SSHPublicKeysClientListByResourceGroupResponse contains the response from method SSHPublicKeysClient.ListByResourceGroup.
 type SSHPublicKeysClientListByResourceGroupResponse struct {
-	SSHPublicKeysClientListByResourceGroupResult
+	SSHPublicKeysGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SSHPublicKeysClientListByResourceGroupResult contains the result from method SSHPublicKeysClient.ListByResourceGroup.
-type SSHPublicKeysClientListByResourceGroupResult struct {
-	SSHPublicKeysGroupListResult
 }
 
 // SSHPublicKeysClientListBySubscriptionResponse contains the response from method SSHPublicKeysClient.ListBySubscription.
 type SSHPublicKeysClientListBySubscriptionResponse struct {
-	SSHPublicKeysClientListBySubscriptionResult
+	SSHPublicKeysGroupListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SSHPublicKeysClientListBySubscriptionResult contains the result from method SSHPublicKeysClient.ListBySubscription.
-type SSHPublicKeysClientListBySubscriptionResult struct {
-	SSHPublicKeysGroupListResult
 }
 
 // SSHPublicKeysClientUpdateResponse contains the response from method SSHPublicKeysClient.Update.
 type SSHPublicKeysClientUpdateResponse struct {
-	SSHPublicKeysClientUpdateResult
+	SSHPublicKeyResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SSHPublicKeysClientUpdateResult contains the result from method SSHPublicKeysClient.Update.
-type SSHPublicKeysClientUpdateResult struct {
-	SSHPublicKeyResource
 }
 
 // SnapshotsClientCreateOrUpdatePollerResponse contains the response from method SnapshotsClient.CreateOrUpdate.
@@ -2319,14 +1964,9 @@ func (l *SnapshotsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context
 
 // SnapshotsClientCreateOrUpdateResponse contains the response from method SnapshotsClient.CreateOrUpdate.
 type SnapshotsClientCreateOrUpdateResponse struct {
-	SnapshotsClientCreateOrUpdateResult
+	Snapshot
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SnapshotsClientCreateOrUpdateResult contains the result from method SnapshotsClient.CreateOrUpdate.
-type SnapshotsClientCreateOrUpdateResult struct {
-	Snapshot
 }
 
 // SnapshotsClientDeletePollerResponse contains the response from method SnapshotsClient.Delete.
@@ -2377,14 +2017,9 @@ type SnapshotsClientDeleteResponse struct {
 
 // SnapshotsClientGetResponse contains the response from method SnapshotsClient.Get.
 type SnapshotsClientGetResponse struct {
-	SnapshotsClientGetResult
+	Snapshot
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SnapshotsClientGetResult contains the result from method SnapshotsClient.Get.
-type SnapshotsClientGetResult struct {
-	Snapshot
 }
 
 // SnapshotsClientGrantAccessPollerResponse contains the response from method SnapshotsClient.GrantAccess.
@@ -2429,38 +2064,23 @@ func (l *SnapshotsClientGrantAccessPollerResponse) Resume(ctx context.Context, c
 
 // SnapshotsClientGrantAccessResponse contains the response from method SnapshotsClient.GrantAccess.
 type SnapshotsClientGrantAccessResponse struct {
-	SnapshotsClientGrantAccessResult
+	AccessURI
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SnapshotsClientGrantAccessResult contains the result from method SnapshotsClient.GrantAccess.
-type SnapshotsClientGrantAccessResult struct {
-	AccessURI
 }
 
 // SnapshotsClientListByResourceGroupResponse contains the response from method SnapshotsClient.ListByResourceGroup.
 type SnapshotsClientListByResourceGroupResponse struct {
-	SnapshotsClientListByResourceGroupResult
+	SnapshotList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SnapshotsClientListByResourceGroupResult contains the result from method SnapshotsClient.ListByResourceGroup.
-type SnapshotsClientListByResourceGroupResult struct {
-	SnapshotList
 }
 
 // SnapshotsClientListResponse contains the response from method SnapshotsClient.List.
 type SnapshotsClientListResponse struct {
-	SnapshotsClientListResult
+	SnapshotList
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SnapshotsClientListResult contains the result from method SnapshotsClient.List.
-type SnapshotsClientListResult struct {
-	SnapshotList
 }
 
 // SnapshotsClientRevokeAccessPollerResponse contains the response from method SnapshotsClient.RevokeAccess.
@@ -2551,62 +2171,39 @@ func (l *SnapshotsClientUpdatePollerResponse) Resume(ctx context.Context, client
 
 // SnapshotsClientUpdateResponse contains the response from method SnapshotsClient.Update.
 type SnapshotsClientUpdateResponse struct {
-	SnapshotsClientUpdateResult
+	Snapshot
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// SnapshotsClientUpdateResult contains the result from method SnapshotsClient.Update.
-type SnapshotsClientUpdateResult struct {
-	Snapshot
 }
 
 // UsageClientListResponse contains the response from method UsageClient.List.
 type UsageClientListResponse struct {
-	UsageClientListResult
+	ListUsagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// UsageClientListResult contains the result from method UsageClient.List.
-type UsageClientListResult struct {
-	ListUsagesResult
 }
 
 // VirtualMachineExtensionImagesClientGetResponse contains the response from method VirtualMachineExtensionImagesClient.Get.
 type VirtualMachineExtensionImagesClientGetResponse struct {
-	VirtualMachineExtensionImagesClientGetResult
+	VirtualMachineExtensionImage
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineExtensionImagesClientGetResult contains the result from method VirtualMachineExtensionImagesClient.Get.
-type VirtualMachineExtensionImagesClientGetResult struct {
-	VirtualMachineExtensionImage
 }
 
 // VirtualMachineExtensionImagesClientListTypesResponse contains the response from method VirtualMachineExtensionImagesClient.ListTypes.
 type VirtualMachineExtensionImagesClientListTypesResponse struct {
-	VirtualMachineExtensionImagesClientListTypesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// VirtualMachineExtensionImagesClientListTypesResult contains the result from method VirtualMachineExtensionImagesClient.ListTypes.
-type VirtualMachineExtensionImagesClientListTypesResult struct {
 	// Array of VirtualMachineExtensionImage
 	VirtualMachineExtensionImageArray []*VirtualMachineExtensionImage
 }
 
 // VirtualMachineExtensionImagesClientListVersionsResponse contains the response from method VirtualMachineExtensionImagesClient.ListVersions.
 type VirtualMachineExtensionImagesClientListVersionsResponse struct {
-	VirtualMachineExtensionImagesClientListVersionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// VirtualMachineExtensionImagesClientListVersionsResult contains the result from method VirtualMachineExtensionImagesClient.ListVersions.
-type VirtualMachineExtensionImagesClientListVersionsResult struct {
 	// Array of VirtualMachineExtensionImage
 	VirtualMachineExtensionImageArray []*VirtualMachineExtensionImage
 }
@@ -2653,14 +2250,9 @@ func (l *VirtualMachineExtensionsClientCreateOrUpdatePollerResponse) Resume(ctx 
 
 // VirtualMachineExtensionsClientCreateOrUpdateResponse contains the response from method VirtualMachineExtensionsClient.CreateOrUpdate.
 type VirtualMachineExtensionsClientCreateOrUpdateResponse struct {
-	VirtualMachineExtensionsClientCreateOrUpdateResult
+	VirtualMachineExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineExtensionsClientCreateOrUpdateResult contains the result from method VirtualMachineExtensionsClient.CreateOrUpdate.
-type VirtualMachineExtensionsClientCreateOrUpdateResult struct {
-	VirtualMachineExtension
 }
 
 // VirtualMachineExtensionsClientDeletePollerResponse contains the response from method VirtualMachineExtensionsClient.Delete.
@@ -2711,26 +2303,16 @@ type VirtualMachineExtensionsClientDeleteResponse struct {
 
 // VirtualMachineExtensionsClientGetResponse contains the response from method VirtualMachineExtensionsClient.Get.
 type VirtualMachineExtensionsClientGetResponse struct {
-	VirtualMachineExtensionsClientGetResult
+	VirtualMachineExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineExtensionsClientGetResult contains the result from method VirtualMachineExtensionsClient.Get.
-type VirtualMachineExtensionsClientGetResult struct {
-	VirtualMachineExtension
 }
 
 // VirtualMachineExtensionsClientListResponse contains the response from method VirtualMachineExtensionsClient.List.
 type VirtualMachineExtensionsClientListResponse struct {
-	VirtualMachineExtensionsClientListResult
+	VirtualMachineExtensionsListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineExtensionsClientListResult contains the result from method VirtualMachineExtensionsClient.List.
-type VirtualMachineExtensionsClientListResult struct {
-	VirtualMachineExtensionsListResult
 }
 
 // VirtualMachineExtensionsClientUpdatePollerResponse contains the response from method VirtualMachineExtensionsClient.Update.
@@ -2775,102 +2357,66 @@ func (l *VirtualMachineExtensionsClientUpdatePollerResponse) Resume(ctx context.
 
 // VirtualMachineExtensionsClientUpdateResponse contains the response from method VirtualMachineExtensionsClient.Update.
 type VirtualMachineExtensionsClientUpdateResponse struct {
-	VirtualMachineExtensionsClientUpdateResult
+	VirtualMachineExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineExtensionsClientUpdateResult contains the result from method VirtualMachineExtensionsClient.Update.
-type VirtualMachineExtensionsClientUpdateResult struct {
-	VirtualMachineExtension
 }
 
 // VirtualMachineImagesClientGetResponse contains the response from method VirtualMachineImagesClient.Get.
 type VirtualMachineImagesClientGetResponse struct {
-	VirtualMachineImagesClientGetResult
+	VirtualMachineImage
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineImagesClientGetResult contains the result from method VirtualMachineImagesClient.Get.
-type VirtualMachineImagesClientGetResult struct {
-	VirtualMachineImage
 }
 
 // VirtualMachineImagesClientListOffersResponse contains the response from method VirtualMachineImagesClient.ListOffers.
 type VirtualMachineImagesClientListOffersResponse struct {
-	VirtualMachineImagesClientListOffersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// VirtualMachineImagesClientListOffersResult contains the result from method VirtualMachineImagesClient.ListOffers.
-type VirtualMachineImagesClientListOffersResult struct {
 	// Array of VirtualMachineImageResource
 	VirtualMachineImageResourceArray []*VirtualMachineImageResource
 }
 
 // VirtualMachineImagesClientListPublishersResponse contains the response from method VirtualMachineImagesClient.ListPublishers.
 type VirtualMachineImagesClientListPublishersResponse struct {
-	VirtualMachineImagesClientListPublishersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// VirtualMachineImagesClientListPublishersResult contains the result from method VirtualMachineImagesClient.ListPublishers.
-type VirtualMachineImagesClientListPublishersResult struct {
 	// Array of VirtualMachineImageResource
 	VirtualMachineImageResourceArray []*VirtualMachineImageResource
 }
 
 // VirtualMachineImagesClientListResponse contains the response from method VirtualMachineImagesClient.List.
 type VirtualMachineImagesClientListResponse struct {
-	VirtualMachineImagesClientListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// VirtualMachineImagesClientListResult contains the result from method VirtualMachineImagesClient.List.
-type VirtualMachineImagesClientListResult struct {
 	// Array of VirtualMachineImageResource
 	VirtualMachineImageResourceArray []*VirtualMachineImageResource
 }
 
 // VirtualMachineImagesClientListSKUsResponse contains the response from method VirtualMachineImagesClient.ListSKUs.
 type VirtualMachineImagesClientListSKUsResponse struct {
-	VirtualMachineImagesClientListSKUsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// VirtualMachineImagesClientListSKUsResult contains the result from method VirtualMachineImagesClient.ListSKUs.
-type VirtualMachineImagesClientListSKUsResult struct {
 	// Array of VirtualMachineImageResource
 	VirtualMachineImageResourceArray []*VirtualMachineImageResource
 }
 
 // VirtualMachineRunCommandsClientGetResponse contains the response from method VirtualMachineRunCommandsClient.Get.
 type VirtualMachineRunCommandsClientGetResponse struct {
-	VirtualMachineRunCommandsClientGetResult
+	RunCommandDocument
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineRunCommandsClientGetResult contains the result from method VirtualMachineRunCommandsClient.Get.
-type VirtualMachineRunCommandsClientGetResult struct {
-	RunCommandDocument
 }
 
 // VirtualMachineRunCommandsClientListResponse contains the response from method VirtualMachineRunCommandsClient.List.
 type VirtualMachineRunCommandsClientListResponse struct {
-	VirtualMachineRunCommandsClientListResult
+	RunCommandListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineRunCommandsClientListResult contains the result from method VirtualMachineRunCommandsClient.List.
-type VirtualMachineRunCommandsClientListResult struct {
-	RunCommandListResult
 }
 
 // VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse contains the response from method VirtualMachineScaleSetExtensionsClient.CreateOrUpdate.
@@ -2916,14 +2462,9 @@ func (l *VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse) Res
 
 // VirtualMachineScaleSetExtensionsClientCreateOrUpdateResponse contains the response from method VirtualMachineScaleSetExtensionsClient.CreateOrUpdate.
 type VirtualMachineScaleSetExtensionsClientCreateOrUpdateResponse struct {
-	VirtualMachineScaleSetExtensionsClientCreateOrUpdateResult
+	VirtualMachineScaleSetExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetExtensionsClientCreateOrUpdateResult contains the result from method VirtualMachineScaleSetExtensionsClient.CreateOrUpdate.
-type VirtualMachineScaleSetExtensionsClientCreateOrUpdateResult struct {
-	VirtualMachineScaleSetExtension
 }
 
 // VirtualMachineScaleSetExtensionsClientDeletePollerResponse contains the response from method VirtualMachineScaleSetExtensionsClient.Delete.
@@ -2974,26 +2515,16 @@ type VirtualMachineScaleSetExtensionsClientDeleteResponse struct {
 
 // VirtualMachineScaleSetExtensionsClientGetResponse contains the response from method VirtualMachineScaleSetExtensionsClient.Get.
 type VirtualMachineScaleSetExtensionsClientGetResponse struct {
-	VirtualMachineScaleSetExtensionsClientGetResult
+	VirtualMachineScaleSetExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetExtensionsClientGetResult contains the result from method VirtualMachineScaleSetExtensionsClient.Get.
-type VirtualMachineScaleSetExtensionsClientGetResult struct {
-	VirtualMachineScaleSetExtension
 }
 
 // VirtualMachineScaleSetExtensionsClientListResponse contains the response from method VirtualMachineScaleSetExtensionsClient.List.
 type VirtualMachineScaleSetExtensionsClientListResponse struct {
-	VirtualMachineScaleSetExtensionsClientListResult
+	VirtualMachineScaleSetExtensionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetExtensionsClientListResult contains the result from method VirtualMachineScaleSetExtensionsClient.List.
-type VirtualMachineScaleSetExtensionsClientListResult struct {
-	VirtualMachineScaleSetExtensionListResult
 }
 
 // VirtualMachineScaleSetExtensionsClientUpdatePollerResponse contains the response from method VirtualMachineScaleSetExtensionsClient.Update.
@@ -3038,14 +2569,9 @@ func (l *VirtualMachineScaleSetExtensionsClientUpdatePollerResponse) Resume(ctx 
 
 // VirtualMachineScaleSetExtensionsClientUpdateResponse contains the response from method VirtualMachineScaleSetExtensionsClient.Update.
 type VirtualMachineScaleSetExtensionsClientUpdateResponse struct {
-	VirtualMachineScaleSetExtensionsClientUpdateResult
+	VirtualMachineScaleSetExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetExtensionsClientUpdateResult contains the result from method VirtualMachineScaleSetExtensionsClient.Update.
-type VirtualMachineScaleSetExtensionsClientUpdateResult struct {
-	VirtualMachineScaleSetExtension
 }
 
 // VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse contains the response from method VirtualMachineScaleSetRollingUpgradesClient.Cancel.
@@ -3097,14 +2623,9 @@ type VirtualMachineScaleSetRollingUpgradesClientCancelResponse struct {
 
 // VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse contains the response from method VirtualMachineScaleSetRollingUpgradesClient.GetLatest.
 type VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse struct {
-	VirtualMachineScaleSetRollingUpgradesClientGetLatestResult
+	RollingUpgradeStatusInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetRollingUpgradesClientGetLatestResult contains the result from method VirtualMachineScaleSetRollingUpgradesClient.GetLatest.
-type VirtualMachineScaleSetRollingUpgradesClientGetLatestResult struct {
-	RollingUpgradeStatusInfo
 }
 
 // VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse contains the response from method VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade.
@@ -3244,14 +2765,9 @@ func (l *VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse) R
 
 // VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse contains the response from method VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate.
 type VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse struct {
-	VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResult
+	VirtualMachineExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResult contains the result from method VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate.
-type VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResult struct {
-	VirtualMachineExtension
 }
 
 // VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse contains the response from method VirtualMachineScaleSetVMExtensionsClient.Delete.
@@ -3302,26 +2818,16 @@ type VirtualMachineScaleSetVMExtensionsClientDeleteResponse struct {
 
 // VirtualMachineScaleSetVMExtensionsClientGetResponse contains the response from method VirtualMachineScaleSetVMExtensionsClient.Get.
 type VirtualMachineScaleSetVMExtensionsClientGetResponse struct {
-	VirtualMachineScaleSetVMExtensionsClientGetResult
+	VirtualMachineExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMExtensionsClientGetResult contains the result from method VirtualMachineScaleSetVMExtensionsClient.Get.
-type VirtualMachineScaleSetVMExtensionsClientGetResult struct {
-	VirtualMachineExtension
 }
 
 // VirtualMachineScaleSetVMExtensionsClientListResponse contains the response from method VirtualMachineScaleSetVMExtensionsClient.List.
 type VirtualMachineScaleSetVMExtensionsClientListResponse struct {
-	VirtualMachineScaleSetVMExtensionsClientListResult
+	VirtualMachineExtensionsListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMExtensionsClientListResult contains the result from method VirtualMachineScaleSetVMExtensionsClient.List.
-type VirtualMachineScaleSetVMExtensionsClientListResult struct {
-	VirtualMachineExtensionsListResult
 }
 
 // VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse contains the response from method VirtualMachineScaleSetVMExtensionsClient.Update.
@@ -3366,14 +2872,9 @@ func (l *VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse) Resume(ct
 
 // VirtualMachineScaleSetVMExtensionsClientUpdateResponse contains the response from method VirtualMachineScaleSetVMExtensionsClient.Update.
 type VirtualMachineScaleSetVMExtensionsClientUpdateResponse struct {
-	VirtualMachineScaleSetVMExtensionsClientUpdateResult
+	VirtualMachineExtension
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMExtensionsClientUpdateResult contains the result from method VirtualMachineScaleSetVMExtensionsClient.Update.
-type VirtualMachineScaleSetVMExtensionsClientUpdateResult struct {
-	VirtualMachineExtension
 }
 
 // VirtualMachineScaleSetVMsClientDeallocatePollerResponse contains the response from method VirtualMachineScaleSetVMsClient.Deallocate.
@@ -3470,38 +2971,23 @@ type VirtualMachineScaleSetVMsClientDeleteResponse struct {
 
 // VirtualMachineScaleSetVMsClientGetInstanceViewResponse contains the response from method VirtualMachineScaleSetVMsClient.GetInstanceView.
 type VirtualMachineScaleSetVMsClientGetInstanceViewResponse struct {
-	VirtualMachineScaleSetVMsClientGetInstanceViewResult
+	VirtualMachineScaleSetVMInstanceView
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMsClientGetInstanceViewResult contains the result from method VirtualMachineScaleSetVMsClient.GetInstanceView.
-type VirtualMachineScaleSetVMsClientGetInstanceViewResult struct {
-	VirtualMachineScaleSetVMInstanceView
 }
 
 // VirtualMachineScaleSetVMsClientGetResponse contains the response from method VirtualMachineScaleSetVMsClient.Get.
 type VirtualMachineScaleSetVMsClientGetResponse struct {
-	VirtualMachineScaleSetVMsClientGetResult
+	VirtualMachineScaleSetVM
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMsClientGetResult contains the result from method VirtualMachineScaleSetVMsClient.Get.
-type VirtualMachineScaleSetVMsClientGetResult struct {
-	VirtualMachineScaleSetVM
 }
 
 // VirtualMachineScaleSetVMsClientListResponse contains the response from method VirtualMachineScaleSetVMsClient.List.
 type VirtualMachineScaleSetVMsClientListResponse struct {
-	VirtualMachineScaleSetVMsClientListResult
+	VirtualMachineScaleSetVMListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMsClientListResult contains the result from method VirtualMachineScaleSetVMsClient.List.
-type VirtualMachineScaleSetVMsClientListResult struct {
-	VirtualMachineScaleSetVMListResult
 }
 
 // VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse contains the response from method VirtualMachineScaleSetVMsClient.PerformMaintenance.
@@ -3823,14 +3309,9 @@ func (l *VirtualMachineScaleSetVMsClientRunCommandPollerResponse) Resume(ctx con
 
 // VirtualMachineScaleSetVMsClientRunCommandResponse contains the response from method VirtualMachineScaleSetVMsClient.RunCommand.
 type VirtualMachineScaleSetVMsClientRunCommandResponse struct {
-	VirtualMachineScaleSetVMsClientRunCommandResult
+	RunCommandResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMsClientRunCommandResult contains the result from method VirtualMachineScaleSetVMsClient.RunCommand.
-type VirtualMachineScaleSetVMsClientRunCommandResult struct {
-	RunCommandResult
 }
 
 // VirtualMachineScaleSetVMsClientSimulateEvictionResponse contains the response from method VirtualMachineScaleSetVMsClient.SimulateEviction.
@@ -3927,14 +3408,9 @@ func (l *VirtualMachineScaleSetVMsClientUpdatePollerResponse) Resume(ctx context
 
 // VirtualMachineScaleSetVMsClientUpdateResponse contains the response from method VirtualMachineScaleSetVMsClient.Update.
 type VirtualMachineScaleSetVMsClientUpdateResponse struct {
-	VirtualMachineScaleSetVMsClientUpdateResult
+	VirtualMachineScaleSetVM
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetVMsClientUpdateResult contains the result from method VirtualMachineScaleSetVMsClient.Update.
-type VirtualMachineScaleSetVMsClientUpdateResult struct {
-	VirtualMachineScaleSetVM
 }
 
 // VirtualMachineScaleSetsClientConvertToSinglePlacementGroupResponse contains the response from method VirtualMachineScaleSetsClient.ConvertToSinglePlacementGroup.
@@ -3985,14 +3461,9 @@ func (l *VirtualMachineScaleSetsClientCreateOrUpdatePollerResponse) Resume(ctx c
 
 // VirtualMachineScaleSetsClientCreateOrUpdateResponse contains the response from method VirtualMachineScaleSetsClient.CreateOrUpdate.
 type VirtualMachineScaleSetsClientCreateOrUpdateResponse struct {
-	VirtualMachineScaleSetsClientCreateOrUpdateResult
+	VirtualMachineScaleSet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientCreateOrUpdateResult contains the result from method VirtualMachineScaleSetsClient.CreateOrUpdate.
-type VirtualMachineScaleSetsClientCreateOrUpdateResult struct {
-	VirtualMachineScaleSet
 }
 
 // VirtualMachineScaleSetsClientDeallocatePollerResponse contains the response from method VirtualMachineScaleSetsClient.Deallocate.
@@ -4136,86 +3607,51 @@ type VirtualMachineScaleSetsClientDeleteResponse struct {
 // VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse contains the response from method
 // VirtualMachineScaleSetsClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk.
 type VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse struct {
-	VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResult
+	RecoveryWalkResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResult contains the result from method VirtualMachineScaleSetsClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk.
-type VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResult struct {
-	RecoveryWalkResponse
 }
 
 // VirtualMachineScaleSetsClientGetInstanceViewResponse contains the response from method VirtualMachineScaleSetsClient.GetInstanceView.
 type VirtualMachineScaleSetsClientGetInstanceViewResponse struct {
-	VirtualMachineScaleSetsClientGetInstanceViewResult
+	VirtualMachineScaleSetInstanceView
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientGetInstanceViewResult contains the result from method VirtualMachineScaleSetsClient.GetInstanceView.
-type VirtualMachineScaleSetsClientGetInstanceViewResult struct {
-	VirtualMachineScaleSetInstanceView
 }
 
 // VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse contains the response from method VirtualMachineScaleSetsClient.GetOSUpgradeHistory.
 type VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse struct {
-	VirtualMachineScaleSetsClientGetOSUpgradeHistoryResult
+	VirtualMachineScaleSetListOSUpgradeHistory
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientGetOSUpgradeHistoryResult contains the result from method VirtualMachineScaleSetsClient.GetOSUpgradeHistory.
-type VirtualMachineScaleSetsClientGetOSUpgradeHistoryResult struct {
-	VirtualMachineScaleSetListOSUpgradeHistory
 }
 
 // VirtualMachineScaleSetsClientGetResponse contains the response from method VirtualMachineScaleSetsClient.Get.
 type VirtualMachineScaleSetsClientGetResponse struct {
-	VirtualMachineScaleSetsClientGetResult
+	VirtualMachineScaleSet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientGetResult contains the result from method VirtualMachineScaleSetsClient.Get.
-type VirtualMachineScaleSetsClientGetResult struct {
-	VirtualMachineScaleSet
 }
 
 // VirtualMachineScaleSetsClientListAllResponse contains the response from method VirtualMachineScaleSetsClient.ListAll.
 type VirtualMachineScaleSetsClientListAllResponse struct {
-	VirtualMachineScaleSetsClientListAllResult
+	VirtualMachineScaleSetListWithLinkResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientListAllResult contains the result from method VirtualMachineScaleSetsClient.ListAll.
-type VirtualMachineScaleSetsClientListAllResult struct {
-	VirtualMachineScaleSetListWithLinkResult
 }
 
 // VirtualMachineScaleSetsClientListResponse contains the response from method VirtualMachineScaleSetsClient.List.
 type VirtualMachineScaleSetsClientListResponse struct {
-	VirtualMachineScaleSetsClientListResult
+	VirtualMachineScaleSetListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientListResult contains the result from method VirtualMachineScaleSetsClient.List.
-type VirtualMachineScaleSetsClientListResult struct {
-	VirtualMachineScaleSetListResult
 }
 
 // VirtualMachineScaleSetsClientListSKUsResponse contains the response from method VirtualMachineScaleSetsClient.ListSKUs.
 type VirtualMachineScaleSetsClientListSKUsResponse struct {
-	VirtualMachineScaleSetsClientListSKUsResult
+	VirtualMachineScaleSetListSKUsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientListSKUsResult contains the result from method VirtualMachineScaleSetsClient.ListSKUs.
-type VirtualMachineScaleSetsClientListSKUsResult struct {
-	VirtualMachineScaleSetListSKUsResult
 }
 
 // VirtualMachineScaleSetsClientPerformMaintenancePollerResponse contains the response from method VirtualMachineScaleSetsClient.PerformMaintenance.
@@ -4675,26 +4111,16 @@ func (l *VirtualMachineScaleSetsClientUpdatePollerResponse) Resume(ctx context.C
 
 // VirtualMachineScaleSetsClientUpdateResponse contains the response from method VirtualMachineScaleSetsClient.Update.
 type VirtualMachineScaleSetsClientUpdateResponse struct {
-	VirtualMachineScaleSetsClientUpdateResult
+	VirtualMachineScaleSet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineScaleSetsClientUpdateResult contains the result from method VirtualMachineScaleSetsClient.Update.
-type VirtualMachineScaleSetsClientUpdateResult struct {
-	VirtualMachineScaleSet
 }
 
 // VirtualMachineSizesClientListResponse contains the response from method VirtualMachineSizesClient.List.
 type VirtualMachineSizesClientListResponse struct {
-	VirtualMachineSizesClientListResult
+	VirtualMachineSizeListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachineSizesClientListResult contains the result from method VirtualMachineSizesClient.List.
-type VirtualMachineSizesClientListResult struct {
-	VirtualMachineSizeListResult
 }
 
 // VirtualMachinesClientCapturePollerResponse contains the response from method VirtualMachinesClient.Capture.
@@ -4739,14 +4165,9 @@ func (l *VirtualMachinesClientCapturePollerResponse) Resume(ctx context.Context,
 
 // VirtualMachinesClientCaptureResponse contains the response from method VirtualMachinesClient.Capture.
 type VirtualMachinesClientCaptureResponse struct {
-	VirtualMachinesClientCaptureResult
+	VirtualMachineCaptureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientCaptureResult contains the result from method VirtualMachinesClient.Capture.
-type VirtualMachinesClientCaptureResult struct {
-	VirtualMachineCaptureResult
 }
 
 // VirtualMachinesClientConvertToManagedDisksPollerResponse contains the response from method VirtualMachinesClient.ConvertToManagedDisks.
@@ -4837,14 +4258,9 @@ func (l *VirtualMachinesClientCreateOrUpdatePollerResponse) Resume(ctx context.C
 
 // VirtualMachinesClientCreateOrUpdateResponse contains the response from method VirtualMachinesClient.CreateOrUpdate.
 type VirtualMachinesClientCreateOrUpdateResponse struct {
-	VirtualMachinesClientCreateOrUpdateResult
+	VirtualMachine
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientCreateOrUpdateResult contains the result from method VirtualMachinesClient.CreateOrUpdate.
-type VirtualMachinesClientCreateOrUpdateResult struct {
-	VirtualMachine
 }
 
 // VirtualMachinesClientDeallocatePollerResponse contains the response from method VirtualMachinesClient.Deallocate.
@@ -4947,74 +4363,44 @@ type VirtualMachinesClientGeneralizeResponse struct {
 
 // VirtualMachinesClientGetResponse contains the response from method VirtualMachinesClient.Get.
 type VirtualMachinesClientGetResponse struct {
-	VirtualMachinesClientGetResult
+	VirtualMachine
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientGetResult contains the result from method VirtualMachinesClient.Get.
-type VirtualMachinesClientGetResult struct {
-	VirtualMachine
 }
 
 // VirtualMachinesClientInstanceViewResponse contains the response from method VirtualMachinesClient.InstanceView.
 type VirtualMachinesClientInstanceViewResponse struct {
-	VirtualMachinesClientInstanceViewResult
+	VirtualMachineInstanceView
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientInstanceViewResult contains the result from method VirtualMachinesClient.InstanceView.
-type VirtualMachinesClientInstanceViewResult struct {
-	VirtualMachineInstanceView
 }
 
 // VirtualMachinesClientListAllResponse contains the response from method VirtualMachinesClient.ListAll.
 type VirtualMachinesClientListAllResponse struct {
-	VirtualMachinesClientListAllResult
+	VirtualMachineListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientListAllResult contains the result from method VirtualMachinesClient.ListAll.
-type VirtualMachinesClientListAllResult struct {
-	VirtualMachineListResult
 }
 
 // VirtualMachinesClientListAvailableSizesResponse contains the response from method VirtualMachinesClient.ListAvailableSizes.
 type VirtualMachinesClientListAvailableSizesResponse struct {
-	VirtualMachinesClientListAvailableSizesResult
+	VirtualMachineSizeListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientListAvailableSizesResult contains the result from method VirtualMachinesClient.ListAvailableSizes.
-type VirtualMachinesClientListAvailableSizesResult struct {
-	VirtualMachineSizeListResult
 }
 
 // VirtualMachinesClientListByLocationResponse contains the response from method VirtualMachinesClient.ListByLocation.
 type VirtualMachinesClientListByLocationResponse struct {
-	VirtualMachinesClientListByLocationResult
+	VirtualMachineListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientListByLocationResult contains the result from method VirtualMachinesClient.ListByLocation.
-type VirtualMachinesClientListByLocationResult struct {
-	VirtualMachineListResult
 }
 
 // VirtualMachinesClientListResponse contains the response from method VirtualMachinesClient.List.
 type VirtualMachinesClientListResponse struct {
-	VirtualMachinesClientListResult
+	VirtualMachineListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientListResult contains the result from method VirtualMachinesClient.List.
-type VirtualMachinesClientListResult struct {
-	VirtualMachineListResult
 }
 
 // VirtualMachinesClientPerformMaintenancePollerResponse contains the response from method VirtualMachinesClient.PerformMaintenance.
@@ -5335,14 +4721,9 @@ func (l *VirtualMachinesClientRunCommandPollerResponse) Resume(ctx context.Conte
 
 // VirtualMachinesClientRunCommandResponse contains the response from method VirtualMachinesClient.RunCommand.
 type VirtualMachinesClientRunCommandResponse struct {
-	VirtualMachinesClientRunCommandResult
+	RunCommandResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientRunCommandResult contains the result from method VirtualMachinesClient.RunCommand.
-type VirtualMachinesClientRunCommandResult struct {
-	RunCommandResult
 }
 
 // VirtualMachinesClientSimulateEvictionResponse contains the response from method VirtualMachinesClient.SimulateEviction.
@@ -5439,12 +4820,7 @@ func (l *VirtualMachinesClientUpdatePollerResponse) Resume(ctx context.Context, 
 
 // VirtualMachinesClientUpdateResponse contains the response from method VirtualMachinesClient.Update.
 type VirtualMachinesClientUpdateResponse struct {
-	VirtualMachinesClientUpdateResult
+	VirtualMachine
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// VirtualMachinesClientUpdateResult contains the result from method VirtualMachinesClient.Update.
-type VirtualMachinesClientUpdateResult struct {
-	VirtualMachine
 }

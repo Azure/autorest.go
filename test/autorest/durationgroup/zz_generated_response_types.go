@@ -12,38 +12,23 @@ import "net/http"
 
 // DurationClientGetInvalidResponse contains the response from method DurationClient.GetInvalid.
 type DurationClientGetInvalidResponse struct {
-	DurationClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DurationClientGetInvalidResult contains the result from method DurationClient.GetInvalid.
-type DurationClientGetInvalidResult struct {
-	Value *string
+	Value       *string
 }
 
 // DurationClientGetNullResponse contains the response from method DurationClient.GetNull.
 type DurationClientGetNullResponse struct {
-	DurationClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DurationClientGetNullResult contains the result from method DurationClient.GetNull.
-type DurationClientGetNullResult struct {
-	Value *string
+	Value       *string
 }
 
 // DurationClientGetPositiveDurationResponse contains the response from method DurationClient.GetPositiveDuration.
 type DurationClientGetPositiveDurationResponse struct {
-	DurationClientGetPositiveDurationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// DurationClientGetPositiveDurationResult contains the result from method DurationClient.GetPositiveDuration.
-type DurationClientGetPositiveDurationResult struct {
-	Value *string
+	Value       *string
 }
 
 // DurationClientPutPositiveDurationResponse contains the response from method DurationClient.PutPositiveDuration.

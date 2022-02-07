@@ -17,26 +17,16 @@ import (
 
 // bigDataPoolsClientGetResponse contains the response from method bigDataPoolsClient.Get.
 type bigDataPoolsClientGetResponse struct {
-	bigDataPoolsClientGetResult
+	BigDataPoolResourceInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// bigDataPoolsClientGetResult contains the result from method bigDataPoolsClient.Get.
-type bigDataPoolsClientGetResult struct {
-	BigDataPoolResourceInfo
 }
 
 // bigDataPoolsClientListResponse contains the response from method bigDataPoolsClient.List.
 type bigDataPoolsClientListResponse struct {
-	bigDataPoolsClientListResult
+	BigDataPoolResourceInfoListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// bigDataPoolsClientListResult contains the result from method bigDataPoolsClient.List.
-type bigDataPoolsClientListResult struct {
-	BigDataPoolResourceInfoListResult
 }
 
 // dataFlowClientCreateOrUpdateDataFlowPollerResponse contains the response from method dataFlowClient.CreateOrUpdateDataFlow.
@@ -80,14 +70,9 @@ func (l *dataFlowClientCreateOrUpdateDataFlowPollerResponse) Resume(ctx context.
 
 // dataFlowClientCreateOrUpdateDataFlowResponse contains the response from method dataFlowClient.CreateOrUpdateDataFlow.
 type dataFlowClientCreateOrUpdateDataFlowResponse struct {
-	dataFlowClientCreateOrUpdateDataFlowResult
+	DataFlowResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowClientCreateOrUpdateDataFlowResult contains the result from method dataFlowClient.CreateOrUpdateDataFlow.
-type dataFlowClientCreateOrUpdateDataFlowResult struct {
-	DataFlowResource
 }
 
 // dataFlowClientDeleteDataFlowPollerResponse contains the response from method dataFlowClient.DeleteDataFlow.
@@ -137,26 +122,16 @@ type dataFlowClientDeleteDataFlowResponse struct {
 
 // dataFlowClientGetDataFlowResponse contains the response from method dataFlowClient.GetDataFlow.
 type dataFlowClientGetDataFlowResponse struct {
-	dataFlowClientGetDataFlowResult
+	DataFlowResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowClientGetDataFlowResult contains the result from method dataFlowClient.GetDataFlow.
-type dataFlowClientGetDataFlowResult struct {
-	DataFlowResource
 }
 
 // dataFlowClientGetDataFlowsByWorkspaceResponse contains the response from method dataFlowClient.GetDataFlowsByWorkspace.
 type dataFlowClientGetDataFlowsByWorkspaceResponse struct {
-	dataFlowClientGetDataFlowsByWorkspaceResult
+	DataFlowListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowClientGetDataFlowsByWorkspaceResult contains the result from method dataFlowClient.GetDataFlowsByWorkspace.
-type dataFlowClientGetDataFlowsByWorkspaceResult struct {
-	DataFlowListResponse
 }
 
 // dataFlowClientRenameDataFlowPollerResponse contains the response from method dataFlowClient.RenameDataFlow.
@@ -206,14 +181,9 @@ type dataFlowClientRenameDataFlowResponse struct {
 
 // dataFlowDebugSessionClientAddDataFlowResponse contains the response from method dataFlowDebugSessionClient.AddDataFlow.
 type dataFlowDebugSessionClientAddDataFlowResponse struct {
-	dataFlowDebugSessionClientAddDataFlowResult
+	AddDataFlowToDebugSessionResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowDebugSessionClientAddDataFlowResult contains the result from method dataFlowDebugSessionClient.AddDataFlow.
-type dataFlowDebugSessionClientAddDataFlowResult struct {
-	AddDataFlowToDebugSessionResponse
 }
 
 // dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse contains the response from method dataFlowDebugSessionClient.CreateDataFlowDebugSession.
@@ -258,14 +228,9 @@ func (l *dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse) Res
 
 // dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse contains the response from method dataFlowDebugSessionClient.CreateDataFlowDebugSession.
 type dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse struct {
-	dataFlowDebugSessionClientCreateDataFlowDebugSessionResult
+	CreateDataFlowDebugSessionResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowDebugSessionClientCreateDataFlowDebugSessionResult contains the result from method dataFlowDebugSessionClient.CreateDataFlowDebugSession.
-type dataFlowDebugSessionClientCreateDataFlowDebugSessionResult struct {
-	CreateDataFlowDebugSessionResponse
 }
 
 // dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse contains the response from method dataFlowDebugSessionClient.DeleteDataFlowDebugSession.
@@ -315,26 +280,16 @@ func (l *dataFlowDebugSessionClientExecuteCommandPollerResponse) Resume(ctx cont
 
 // dataFlowDebugSessionClientExecuteCommandResponse contains the response from method dataFlowDebugSessionClient.ExecuteCommand.
 type dataFlowDebugSessionClientExecuteCommandResponse struct {
-	dataFlowDebugSessionClientExecuteCommandResult
+	DataFlowDebugCommandResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowDebugSessionClientExecuteCommandResult contains the result from method dataFlowDebugSessionClient.ExecuteCommand.
-type dataFlowDebugSessionClientExecuteCommandResult struct {
-	DataFlowDebugCommandResponse
 }
 
 // dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse contains the response from method dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace.
 type dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse struct {
-	dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResult
+	QueryDataFlowDebugSessionsResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResult contains the result from method dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace.
-type dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResult struct {
-	QueryDataFlowDebugSessionsResponse
 }
 
 // datasetClientCreateOrUpdateDatasetPollerResponse contains the response from method datasetClient.CreateOrUpdateDataset.
@@ -378,14 +333,9 @@ func (l *datasetClientCreateOrUpdateDatasetPollerResponse) Resume(ctx context.Co
 
 // datasetClientCreateOrUpdateDatasetResponse contains the response from method datasetClient.CreateOrUpdateDataset.
 type datasetClientCreateOrUpdateDatasetResponse struct {
-	datasetClientCreateOrUpdateDatasetResult
+	DatasetResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// datasetClientCreateOrUpdateDatasetResult contains the result from method datasetClient.CreateOrUpdateDataset.
-type datasetClientCreateOrUpdateDatasetResult struct {
-	DatasetResource
 }
 
 // datasetClientDeleteDatasetPollerResponse contains the response from method datasetClient.DeleteDataset.
@@ -435,26 +385,16 @@ type datasetClientDeleteDatasetResponse struct {
 
 // datasetClientGetDatasetResponse contains the response from method datasetClient.GetDataset.
 type datasetClientGetDatasetResponse struct {
-	datasetClientGetDatasetResult
+	DatasetResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// datasetClientGetDatasetResult contains the result from method datasetClient.GetDataset.
-type datasetClientGetDatasetResult struct {
-	DatasetResource
 }
 
 // datasetClientGetDatasetsByWorkspaceResponse contains the response from method datasetClient.GetDatasetsByWorkspace.
 type datasetClientGetDatasetsByWorkspaceResponse struct {
-	datasetClientGetDatasetsByWorkspaceResult
+	DatasetListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// datasetClientGetDatasetsByWorkspaceResult contains the result from method datasetClient.GetDatasetsByWorkspace.
-type datasetClientGetDatasetsByWorkspaceResult struct {
-	DatasetListResponse
 }
 
 // datasetClientRenameDatasetPollerResponse contains the response from method datasetClient.RenameDataset.
@@ -504,26 +444,16 @@ type datasetClientRenameDatasetResponse struct {
 
 // integrationRuntimesClientGetResponse contains the response from method integrationRuntimesClient.Get.
 type integrationRuntimesClientGetResponse struct {
-	integrationRuntimesClientGetResult
+	IntegrationRuntimeResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// integrationRuntimesClientGetResult contains the result from method integrationRuntimesClient.Get.
-type integrationRuntimesClientGetResult struct {
-	IntegrationRuntimeResource
 }
 
 // integrationRuntimesClientListResponse contains the response from method integrationRuntimesClient.List.
 type integrationRuntimesClientListResponse struct {
-	integrationRuntimesClientListResult
+	IntegrationRuntimeListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// integrationRuntimesClientListResult contains the result from method integrationRuntimesClient.List.
-type integrationRuntimesClientListResult struct {
-	IntegrationRuntimeListResponse
 }
 
 // libraryClientAppendResponse contains the response from method libraryClient.Append.
@@ -573,14 +503,9 @@ func (l *libraryClientCreatePollerResponse) Resume(ctx context.Context, client *
 
 // libraryClientCreateResponse contains the response from method libraryClient.Create.
 type libraryClientCreateResponse struct {
-	libraryClientCreateResult
+	LibraryResourceInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// libraryClientCreateResult contains the result from method libraryClient.Create.
-type libraryClientCreateResult struct {
-	LibraryResourceInfo
 }
 
 // libraryClientDeletePollerResponse contains the response from method libraryClient.Delete.
@@ -624,14 +549,9 @@ func (l *libraryClientDeletePollerResponse) Resume(ctx context.Context, client *
 
 // libraryClientDeleteResponse contains the response from method libraryClient.Delete.
 type libraryClientDeleteResponse struct {
-	libraryClientDeleteResult
+	LibraryResourceInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// libraryClientDeleteResult contains the result from method libraryClient.Delete.
-type libraryClientDeleteResult struct {
-	LibraryResourceInfo
 }
 
 // libraryClientFlushPollerResponse contains the response from method libraryClient.Flush.
@@ -675,14 +595,9 @@ func (l *libraryClientFlushPollerResponse) Resume(ctx context.Context, client *l
 
 // libraryClientFlushResponse contains the response from method libraryClient.Flush.
 type libraryClientFlushResponse struct {
-	libraryClientFlushResult
+	LibraryResourceInfo
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// libraryClientFlushResult contains the result from method libraryClient.Flush.
-type libraryClientFlushResult struct {
-	LibraryResourceInfo
 }
 
 // libraryClientGetOperationResultResponse contains the response from method libraryClient.GetOperationResult.
@@ -696,26 +611,16 @@ type libraryClientGetOperationResultResponse struct {
 
 // libraryClientGetResponse contains the response from method libraryClient.Get.
 type libraryClientGetResponse struct {
-	libraryClientGetResult
+	LibraryResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// libraryClientGetResult contains the result from method libraryClient.Get.
-type libraryClientGetResult struct {
-	LibraryResource
 }
 
 // libraryClientListResponse contains the response from method libraryClient.List.
 type libraryClientListResponse struct {
-	libraryClientListResult
+	LibraryListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// libraryClientListResult contains the result from method libraryClient.List.
-type libraryClientListResult struct {
-	LibraryListResponse
 }
 
 // linkedServiceClientCreateOrUpdateLinkedServicePollerResponse contains the response from method linkedServiceClient.CreateOrUpdateLinkedService.
@@ -759,14 +664,9 @@ func (l *linkedServiceClientCreateOrUpdateLinkedServicePollerResponse) Resume(ct
 
 // linkedServiceClientCreateOrUpdateLinkedServiceResponse contains the response from method linkedServiceClient.CreateOrUpdateLinkedService.
 type linkedServiceClientCreateOrUpdateLinkedServiceResponse struct {
-	linkedServiceClientCreateOrUpdateLinkedServiceResult
+	LinkedServiceResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// linkedServiceClientCreateOrUpdateLinkedServiceResult contains the result from method linkedServiceClient.CreateOrUpdateLinkedService.
-type linkedServiceClientCreateOrUpdateLinkedServiceResult struct {
-	LinkedServiceResource
 }
 
 // linkedServiceClientDeleteLinkedServicePollerResponse contains the response from method linkedServiceClient.DeleteLinkedService.
@@ -816,26 +716,16 @@ type linkedServiceClientDeleteLinkedServiceResponse struct {
 
 // linkedServiceClientGetLinkedServiceResponse contains the response from method linkedServiceClient.GetLinkedService.
 type linkedServiceClientGetLinkedServiceResponse struct {
-	linkedServiceClientGetLinkedServiceResult
+	LinkedServiceResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// linkedServiceClientGetLinkedServiceResult contains the result from method linkedServiceClient.GetLinkedService.
-type linkedServiceClientGetLinkedServiceResult struct {
-	LinkedServiceResource
 }
 
 // linkedServiceClientGetLinkedServicesByWorkspaceResponse contains the response from method linkedServiceClient.GetLinkedServicesByWorkspace.
 type linkedServiceClientGetLinkedServicesByWorkspaceResponse struct {
-	linkedServiceClientGetLinkedServicesByWorkspaceResult
+	LinkedServiceListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// linkedServiceClientGetLinkedServicesByWorkspaceResult contains the result from method linkedServiceClient.GetLinkedServicesByWorkspace.
-type linkedServiceClientGetLinkedServicesByWorkspaceResult struct {
-	LinkedServiceListResponse
 }
 
 // linkedServiceClientRenameLinkedServicePollerResponse contains the response from method linkedServiceClient.RenameLinkedService.
@@ -924,14 +814,9 @@ func (l *notebookClientCreateOrUpdateNotebookPollerResponse) Resume(ctx context.
 
 // notebookClientCreateOrUpdateNotebookResponse contains the response from method notebookClient.CreateOrUpdateNotebook.
 type notebookClientCreateOrUpdateNotebookResponse struct {
-	notebookClientCreateOrUpdateNotebookResult
+	NotebookResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// notebookClientCreateOrUpdateNotebookResult contains the result from method notebookClient.CreateOrUpdateNotebook.
-type notebookClientCreateOrUpdateNotebookResult struct {
-	NotebookResource
 }
 
 // notebookClientDeleteNotebookPollerResponse contains the response from method notebookClient.DeleteNotebook.
@@ -981,38 +866,23 @@ type notebookClientDeleteNotebookResponse struct {
 
 // notebookClientGetNotebookResponse contains the response from method notebookClient.GetNotebook.
 type notebookClientGetNotebookResponse struct {
-	notebookClientGetNotebookResult
+	NotebookResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// notebookClientGetNotebookResult contains the result from method notebookClient.GetNotebook.
-type notebookClientGetNotebookResult struct {
-	NotebookResource
 }
 
 // notebookClientGetNotebookSummaryByWorkSpaceResponse contains the response from method notebookClient.GetNotebookSummaryByWorkSpace.
 type notebookClientGetNotebookSummaryByWorkSpaceResponse struct {
-	notebookClientGetNotebookSummaryByWorkSpaceResult
+	NotebookListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// notebookClientGetNotebookSummaryByWorkSpaceResult contains the result from method notebookClient.GetNotebookSummaryByWorkSpace.
-type notebookClientGetNotebookSummaryByWorkSpaceResult struct {
-	NotebookListResponse
 }
 
 // notebookClientGetNotebooksByWorkspaceResponse contains the response from method notebookClient.GetNotebooksByWorkspace.
 type notebookClientGetNotebooksByWorkspaceResponse struct {
-	notebookClientGetNotebooksByWorkspaceResult
+	NotebookListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// notebookClientGetNotebooksByWorkspaceResult contains the result from method notebookClient.GetNotebooksByWorkspace.
-type notebookClientGetNotebooksByWorkspaceResult struct {
-	NotebookListResponse
 }
 
 // notebookClientRenameNotebookPollerResponse contains the response from method notebookClient.RenameNotebook.
@@ -1101,26 +971,16 @@ func (l *pipelineClientCreateOrUpdatePipelinePollerResponse) Resume(ctx context.
 
 // pipelineClientCreateOrUpdatePipelineResponse contains the response from method pipelineClient.CreateOrUpdatePipeline.
 type pipelineClientCreateOrUpdatePipelineResponse struct {
-	pipelineClientCreateOrUpdatePipelineResult
+	PipelineResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineClientCreateOrUpdatePipelineResult contains the result from method pipelineClient.CreateOrUpdatePipeline.
-type pipelineClientCreateOrUpdatePipelineResult struct {
-	PipelineResource
 }
 
 // pipelineClientCreatePipelineRunResponse contains the response from method pipelineClient.CreatePipelineRun.
 type pipelineClientCreatePipelineRunResponse struct {
-	pipelineClientCreatePipelineRunResult
+	CreateRunResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineClientCreatePipelineRunResult contains the result from method pipelineClient.CreatePipelineRun.
-type pipelineClientCreatePipelineRunResult struct {
-	CreateRunResponse
 }
 
 // pipelineClientDeletePipelinePollerResponse contains the response from method pipelineClient.DeletePipeline.
@@ -1170,26 +1030,16 @@ type pipelineClientDeletePipelineResponse struct {
 
 // pipelineClientGetPipelineResponse contains the response from method pipelineClient.GetPipeline.
 type pipelineClientGetPipelineResponse struct {
-	pipelineClientGetPipelineResult
+	PipelineResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineClientGetPipelineResult contains the result from method pipelineClient.GetPipeline.
-type pipelineClientGetPipelineResult struct {
-	PipelineResource
 }
 
 // pipelineClientGetPipelinesByWorkspaceResponse contains the response from method pipelineClient.GetPipelinesByWorkspace.
 type pipelineClientGetPipelinesByWorkspaceResponse struct {
-	pipelineClientGetPipelinesByWorkspaceResult
+	PipelineListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineClientGetPipelinesByWorkspaceResult contains the result from method pipelineClient.GetPipelinesByWorkspace.
-type pipelineClientGetPipelinesByWorkspaceResult struct {
-	PipelineListResponse
 }
 
 // pipelineClientRenamePipelinePollerResponse contains the response from method pipelineClient.RenamePipeline.
@@ -1245,38 +1095,23 @@ type pipelineRunClientCancelPipelineRunResponse struct {
 
 // pipelineRunClientGetPipelineRunResponse contains the response from method pipelineRunClient.GetPipelineRun.
 type pipelineRunClientGetPipelineRunResponse struct {
-	pipelineRunClientGetPipelineRunResult
+	PipelineRun
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineRunClientGetPipelineRunResult contains the result from method pipelineRunClient.GetPipelineRun.
-type pipelineRunClientGetPipelineRunResult struct {
-	PipelineRun
 }
 
 // pipelineRunClientQueryActivityRunsResponse contains the response from method pipelineRunClient.QueryActivityRuns.
 type pipelineRunClientQueryActivityRunsResponse struct {
-	pipelineRunClientQueryActivityRunsResult
+	ActivityRunsQueryResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineRunClientQueryActivityRunsResult contains the result from method pipelineRunClient.QueryActivityRuns.
-type pipelineRunClientQueryActivityRunsResult struct {
-	ActivityRunsQueryResponse
 }
 
 // pipelineRunClientQueryPipelineRunsByWorkspaceResponse contains the response from method pipelineRunClient.QueryPipelineRunsByWorkspace.
 type pipelineRunClientQueryPipelineRunsByWorkspaceResponse struct {
-	pipelineRunClientQueryPipelineRunsByWorkspaceResult
+	PipelineRunsQueryResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// pipelineRunClientQueryPipelineRunsByWorkspaceResult contains the result from method pipelineRunClient.QueryPipelineRunsByWorkspace.
-type pipelineRunClientQueryPipelineRunsByWorkspaceResult struct {
-	PipelineRunsQueryResponse
 }
 
 // sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
@@ -1321,14 +1156,9 @@ func (l *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse)
 
 // sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
 type sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse struct {
-	sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResult
+	SparkJobDefinitionResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResult contains the result from method sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
-type sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResult struct {
-	SparkJobDefinitionResource
 }
 
 // sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.DebugSparkJobDefinition.
@@ -1372,14 +1202,9 @@ func (l *sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse) Resume(c
 
 // sparkJobDefinitionClientDebugSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.DebugSparkJobDefinition.
 type sparkJobDefinitionClientDebugSparkJobDefinitionResponse struct {
-	sparkJobDefinitionClientDebugSparkJobDefinitionResult
+	SparkBatchJob
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sparkJobDefinitionClientDebugSparkJobDefinitionResult contains the result from method sparkJobDefinitionClient.DebugSparkJobDefinition.
-type sparkJobDefinitionClientDebugSparkJobDefinitionResult struct {
-	SparkBatchJob
 }
 
 // sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.DeleteSparkJobDefinition.
@@ -1470,38 +1295,23 @@ func (l *sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse) Resume
 
 // sparkJobDefinitionClientExecuteSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.ExecuteSparkJobDefinition.
 type sparkJobDefinitionClientExecuteSparkJobDefinitionResponse struct {
-	sparkJobDefinitionClientExecuteSparkJobDefinitionResult
+	SparkBatchJob
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sparkJobDefinitionClientExecuteSparkJobDefinitionResult contains the result from method sparkJobDefinitionClient.ExecuteSparkJobDefinition.
-type sparkJobDefinitionClientExecuteSparkJobDefinitionResult struct {
-	SparkBatchJob
 }
 
 // sparkJobDefinitionClientGetSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.GetSparkJobDefinition.
 type sparkJobDefinitionClientGetSparkJobDefinitionResponse struct {
-	sparkJobDefinitionClientGetSparkJobDefinitionResult
+	SparkJobDefinitionResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sparkJobDefinitionClientGetSparkJobDefinitionResult contains the result from method sparkJobDefinitionClient.GetSparkJobDefinition.
-type sparkJobDefinitionClientGetSparkJobDefinitionResult struct {
-	SparkJobDefinitionResource
 }
 
 // sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse contains the response from method sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace.
 type sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse struct {
-	sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResult
+	SparkJobDefinitionsListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResult contains the result from method sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace.
-type sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResult struct {
-	SparkJobDefinitionsListResponse
 }
 
 // sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.RenameSparkJobDefinition.
@@ -1552,26 +1362,16 @@ type sparkJobDefinitionClientRenameSparkJobDefinitionResponse struct {
 
 // sqlPoolsClientGetResponse contains the response from method sqlPoolsClient.Get.
 type sqlPoolsClientGetResponse struct {
-	sqlPoolsClientGetResult
+	SQLPool
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sqlPoolsClientGetResult contains the result from method sqlPoolsClient.Get.
-type sqlPoolsClientGetResult struct {
-	SQLPool
 }
 
 // sqlPoolsClientListResponse contains the response from method sqlPoolsClient.List.
 type sqlPoolsClientListResponse struct {
-	sqlPoolsClientListResult
+	SQLPoolInfoListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sqlPoolsClientListResult contains the result from method sqlPoolsClient.List.
-type sqlPoolsClientListResult struct {
-	SQLPoolInfoListResult
 }
 
 // sqlScriptClientCreateOrUpdateSQLScriptPollerResponse contains the response from method sqlScriptClient.CreateOrUpdateSQLScript.
@@ -1615,14 +1415,9 @@ func (l *sqlScriptClientCreateOrUpdateSQLScriptPollerResponse) Resume(ctx contex
 
 // sqlScriptClientCreateOrUpdateSQLScriptResponse contains the response from method sqlScriptClient.CreateOrUpdateSQLScript.
 type sqlScriptClientCreateOrUpdateSQLScriptResponse struct {
-	sqlScriptClientCreateOrUpdateSQLScriptResult
+	SQLScriptResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sqlScriptClientCreateOrUpdateSQLScriptResult contains the result from method sqlScriptClient.CreateOrUpdateSQLScript.
-type sqlScriptClientCreateOrUpdateSQLScriptResult struct {
-	SQLScriptResource
 }
 
 // sqlScriptClientDeleteSQLScriptPollerResponse contains the response from method sqlScriptClient.DeleteSQLScript.
@@ -1672,26 +1467,16 @@ type sqlScriptClientDeleteSQLScriptResponse struct {
 
 // sqlScriptClientGetSQLScriptResponse contains the response from method sqlScriptClient.GetSQLScript.
 type sqlScriptClientGetSQLScriptResponse struct {
-	sqlScriptClientGetSQLScriptResult
+	SQLScriptResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sqlScriptClientGetSQLScriptResult contains the result from method sqlScriptClient.GetSQLScript.
-type sqlScriptClientGetSQLScriptResult struct {
-	SQLScriptResource
 }
 
 // sqlScriptClientGetSQLScriptsByWorkspaceResponse contains the response from method sqlScriptClient.GetSQLScriptsByWorkspace.
 type sqlScriptClientGetSQLScriptsByWorkspaceResponse struct {
-	sqlScriptClientGetSQLScriptsByWorkspaceResult
+	SQLScriptsListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// sqlScriptClientGetSQLScriptsByWorkspaceResult contains the result from method sqlScriptClient.GetSQLScriptsByWorkspace.
-type sqlScriptClientGetSQLScriptsByWorkspaceResult struct {
-	SQLScriptsListResponse
 }
 
 // sqlScriptClientRenameSQLScriptPollerResponse contains the response from method sqlScriptClient.RenameSQLScript.
@@ -1780,14 +1565,9 @@ func (l *triggerClientCreateOrUpdateTriggerPollerResponse) Resume(ctx context.Co
 
 // triggerClientCreateOrUpdateTriggerResponse contains the response from method triggerClient.CreateOrUpdateTrigger.
 type triggerClientCreateOrUpdateTriggerResponse struct {
-	triggerClientCreateOrUpdateTriggerResult
+	TriggerResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerClientCreateOrUpdateTriggerResult contains the result from method triggerClient.CreateOrUpdateTrigger.
-type triggerClientCreateOrUpdateTriggerResult struct {
-	TriggerResource
 }
 
 // triggerClientDeleteTriggerPollerResponse contains the response from method triggerClient.DeleteTrigger.
@@ -1837,38 +1617,23 @@ type triggerClientDeleteTriggerResponse struct {
 
 // triggerClientGetEventSubscriptionStatusResponse contains the response from method triggerClient.GetEventSubscriptionStatus.
 type triggerClientGetEventSubscriptionStatusResponse struct {
-	triggerClientGetEventSubscriptionStatusResult
+	TriggerSubscriptionOperationStatus
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerClientGetEventSubscriptionStatusResult contains the result from method triggerClient.GetEventSubscriptionStatus.
-type triggerClientGetEventSubscriptionStatusResult struct {
-	TriggerSubscriptionOperationStatus
 }
 
 // triggerClientGetTriggerResponse contains the response from method triggerClient.GetTrigger.
 type triggerClientGetTriggerResponse struct {
-	triggerClientGetTriggerResult
+	TriggerResource
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerClientGetTriggerResult contains the result from method triggerClient.GetTrigger.
-type triggerClientGetTriggerResult struct {
-	TriggerResource
 }
 
 // triggerClientGetTriggersByWorkspaceResponse contains the response from method triggerClient.GetTriggersByWorkspace.
 type triggerClientGetTriggersByWorkspaceResponse struct {
-	triggerClientGetTriggersByWorkspaceResult
+	TriggerListResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerClientGetTriggersByWorkspaceResult contains the result from method triggerClient.GetTriggersByWorkspace.
-type triggerClientGetTriggersByWorkspaceResult struct {
-	TriggerListResponse
 }
 
 // triggerClientStartTriggerPollerResponse contains the response from method triggerClient.StartTrigger.
@@ -2002,14 +1767,9 @@ func (l *triggerClientSubscribeTriggerToEventsPollerResponse) Resume(ctx context
 
 // triggerClientSubscribeTriggerToEventsResponse contains the response from method triggerClient.SubscribeTriggerToEvents.
 type triggerClientSubscribeTriggerToEventsResponse struct {
-	triggerClientSubscribeTriggerToEventsResult
+	TriggerSubscriptionOperationStatus
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerClientSubscribeTriggerToEventsResult contains the result from method triggerClient.SubscribeTriggerToEvents.
-type triggerClientSubscribeTriggerToEventsResult struct {
-	TriggerSubscriptionOperationStatus
 }
 
 // triggerClientUnsubscribeTriggerFromEventsPollerResponse contains the response from method triggerClient.UnsubscribeTriggerFromEvents.
@@ -2053,14 +1813,9 @@ func (l *triggerClientUnsubscribeTriggerFromEventsPollerResponse) Resume(ctx con
 
 // triggerClientUnsubscribeTriggerFromEventsResponse contains the response from method triggerClient.UnsubscribeTriggerFromEvents.
 type triggerClientUnsubscribeTriggerFromEventsResponse struct {
-	triggerClientUnsubscribeTriggerFromEventsResult
+	TriggerSubscriptionOperationStatus
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerClientUnsubscribeTriggerFromEventsResult contains the result from method triggerClient.UnsubscribeTriggerFromEvents.
-type triggerClientUnsubscribeTriggerFromEventsResult struct {
-	TriggerSubscriptionOperationStatus
 }
 
 // triggerRunClientCancelTriggerInstanceResponse contains the response from method triggerRunClient.CancelTriggerInstance.
@@ -2071,14 +1826,9 @@ type triggerRunClientCancelTriggerInstanceResponse struct {
 
 // triggerRunClientQueryTriggerRunsByWorkspaceResponse contains the response from method triggerRunClient.QueryTriggerRunsByWorkspace.
 type triggerRunClientQueryTriggerRunsByWorkspaceResponse struct {
-	triggerRunClientQueryTriggerRunsByWorkspaceResult
+	TriggerRunsQueryResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// triggerRunClientQueryTriggerRunsByWorkspaceResult contains the result from method triggerRunClient.QueryTriggerRunsByWorkspace.
-type triggerRunClientQueryTriggerRunsByWorkspaceResult struct {
-	TriggerRunsQueryResponse
 }
 
 // triggerRunClientRerunTriggerInstanceResponse contains the response from method triggerRunClient.RerunTriggerInstance.
@@ -2089,24 +1839,14 @@ type triggerRunClientRerunTriggerInstanceResponse struct {
 
 // workspaceClientGetResponse contains the response from method workspaceClient.Get.
 type workspaceClientGetResponse struct {
-	workspaceClientGetResult
+	Workspace
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// workspaceClientGetResult contains the result from method workspaceClient.Get.
-type workspaceClientGetResult struct {
-	Workspace
 }
 
 // workspaceGitRepoManagementClientGetGitHubAccessTokenResponse contains the response from method workspaceGitRepoManagementClient.GetGitHubAccessToken.
 type workspaceGitRepoManagementClientGetGitHubAccessTokenResponse struct {
-	workspaceGitRepoManagementClientGetGitHubAccessTokenResult
+	GitHubAccessTokenResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// workspaceGitRepoManagementClientGetGitHubAccessTokenResult contains the result from method workspaceGitRepoManagementClient.GetGitHubAccessToken.
-type workspaceGitRepoManagementClientGetGitHubAccessTokenResult struct {
-	GitHubAccessTokenResponse
 }

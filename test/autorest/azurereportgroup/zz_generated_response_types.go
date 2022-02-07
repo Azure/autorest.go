@@ -12,13 +12,9 @@ import "net/http"
 
 // AutoRestReportServiceForAzureClientGetReportResponse contains the response from method AutoRestReportServiceForAzureClient.GetReport.
 type AutoRestReportServiceForAzureClientGetReportResponse struct {
-	AutoRestReportServiceForAzureClientGetReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// AutoRestReportServiceForAzureClientGetReportResult contains the result from method AutoRestReportServiceForAzureClient.GetReport.
-type AutoRestReportServiceForAzureClientGetReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

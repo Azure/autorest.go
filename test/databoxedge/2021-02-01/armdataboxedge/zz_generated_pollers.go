@@ -43,7 +43,7 @@ func (p *AddonsClientCreateOrUpdatePoller) Poll(ctx context.Context) (*http.Resp
 // If the final GET succeeded then the final AddonsClientCreateOrUpdateResponse will be returned.
 func (p *AddonsClientCreateOrUpdatePoller) FinalResponse(ctx context.Context) (AddonsClientCreateOrUpdateResponse, error) {
 	respType := AddonsClientCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.AddonsClientCreateOrUpdateResult)
+	resp, err := p.pt.FinalResponse(ctx, &respType)
 	if err != nil {
 		return AddonsClientCreateOrUpdateResponse{}, err
 	}
@@ -817,7 +817,7 @@ func (p *RolesClientCreateOrUpdatePoller) Poll(ctx context.Context) (*http.Respo
 // If the final GET succeeded then the final RolesClientCreateOrUpdateResponse will be returned.
 func (p *RolesClientCreateOrUpdatePoller) FinalResponse(ctx context.Context) (RolesClientCreateOrUpdateResponse, error) {
 	respType := RolesClientCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.RolesClientCreateOrUpdateResult)
+	resp, err := p.pt.FinalResponse(ctx, &respType)
 	if err != nil {
 		return RolesClientCreateOrUpdateResponse{}, err
 	}
@@ -1247,7 +1247,7 @@ func (p *TriggersClientCreateOrUpdatePoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final TriggersClientCreateOrUpdateResponse will be returned.
 func (p *TriggersClientCreateOrUpdatePoller) FinalResponse(ctx context.Context) (TriggersClientCreateOrUpdateResponse, error) {
 	respType := TriggersClientCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.TriggersClientCreateOrUpdateResult)
+	resp, err := p.pt.FinalResponse(ctx, &respType)
 	if err != nil {
 		return TriggersClientCreateOrUpdateResponse{}, err
 	}
