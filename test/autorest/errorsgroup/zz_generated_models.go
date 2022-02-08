@@ -12,6 +12,42 @@ type Animal struct {
 	AniType *string `json:"aniType,omitempty"`
 }
 
+type AnimalNotFound struct {
+	// REQUIRED
+	WhatNotFound *string `json:"whatNotFound,omitempty"`
+	Name         *string `json:"name,omitempty"`
+	Reason       *string `json:"reason,omitempty"`
+	SomeBaseProp *string `json:"someBaseProp,omitempty"`
+}
+
+type BaseError struct {
+	SomeBaseProp *string `json:"someBaseProp,omitempty"`
+}
+
+type LinkNotFound struct {
+	// REQUIRED
+	WhatNotFound   *string `json:"whatNotFound,omitempty"`
+	Reason         *string `json:"reason,omitempty"`
+	SomeBaseProp   *string `json:"someBaseProp,omitempty"`
+	WhatSubAddress *string `json:"whatSubAddress,omitempty"`
+}
+
+// NotFoundErrorBaseClassification provides polymorphic access to related types.
+// Call the interface's GetNotFoundErrorBase() method to access the common type.
+// Use a type switch to determine the concrete type.  The possible types are:
+// - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
+type NotFoundErrorBaseClassification interface {
+	// GetNotFoundErrorBase returns the NotFoundErrorBase content of the underlying type.
+	GetNotFoundErrorBase() *NotFoundErrorBase
+}
+
+type NotFoundErrorBase struct {
+	// REQUIRED
+	WhatNotFound *string `json:"whatNotFound,omitempty"`
+	Reason       *string `json:"reason,omitempty"`
+	SomeBaseProp *string `json:"someBaseProp,omitempty"`
+}
+
 type Pet struct {
 	AniType *string `json:"aniType,omitempty"`
 

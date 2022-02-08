@@ -869,6 +869,16 @@ func (b BgpSettings) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// MarshalJSON implements the json.Marshaller interface for type CloudErrorBody.
+func (c CloudErrorBody) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "code", c.Code)
+	populate(objectMap, "details", c.Details)
+	populate(objectMap, "message", c.Message)
+	populate(objectMap, "target", c.Target)
+	return json.Marshal(objectMap)
+}
+
 // MarshalJSON implements the json.Marshaller interface for type ConfigurationDiagnosticParameters.
 func (c ConfigurationDiagnosticParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -1293,6 +1303,17 @@ func (e EndpointServicesListResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Error.
+func (e Error) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "code", e.Code)
+	populate(objectMap, "details", e.Details)
+	populate(objectMap, "innerError", e.InnerError)
+	populate(objectMap, "message", e.Message)
+	populate(objectMap, "target", e.Target)
 	return json.Marshal(objectMap)
 }
 

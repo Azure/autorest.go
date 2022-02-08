@@ -16,6 +16,11 @@ type Cat struct {
 	Meows     *bool   `json:"meows,omitempty"`
 }
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 type Feline struct {
 	Hisses *bool `json:"hisses,omitempty"`
 	Meows  *bool `json:"meows,omitempty"`

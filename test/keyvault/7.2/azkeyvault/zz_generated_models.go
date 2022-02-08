@@ -1138,6 +1138,12 @@ type DeletedStorageListResult struct {
 	Value []*DeletedStorageAccountItem `json:"value,omitempty" azure:"ro"`
 }
 
+// Error - The key vault error exception.
+type Error struct {
+	// READ-ONLY; The key vault server error.
+	Error *ErrorInfo `json:"error,omitempty" azure:"ro"`
+}
+
 // ErrorInfo - The key vault server error.
 type ErrorInfo struct {
 	// READ-ONLY; The error code.
@@ -1525,6 +1531,12 @@ type OrganizationDetails struct {
 	ID *string `json:"id,omitempty"`
 }
 
+// PendingCertificateSigningRequestResult - The pending certificate signing request result.
+type PendingCertificateSigningRequestResult struct {
+	// READ-ONLY; The pending certificate signing request as Base64 encoded string.
+	Value *string `json:"value,omitempty" azure:"ro"`
+}
+
 // Permission - Role definition permissions.
 type Permission struct {
 	// Action permissions that are granted.
@@ -1588,6 +1600,12 @@ type RoleAssignment struct {
 type RoleAssignmentCreateParameters struct {
 	// REQUIRED; Role assignment properties.
 	Properties *RoleAssignmentProperties `json:"properties,omitempty"`
+}
+
+// RoleAssignmentFilter - Role Assignments filter
+type RoleAssignmentFilter struct {
+	// Returns role assignment of the specific principal.
+	PrincipalID *string `json:"principalId,omitempty"`
 }
 
 // RoleAssignmentListResult - Role assignment list operation result.
@@ -1663,6 +1681,12 @@ type RoleDefinition struct {
 type RoleDefinitionCreateParameters struct {
 	// REQUIRED; Role definition properties.
 	Properties *RoleDefinitionProperties `json:"properties,omitempty"`
+}
+
+// RoleDefinitionFilter - Role Definitions filter
+type RoleDefinitionFilter struct {
+	// Returns role definition with the specific name.
+	RoleName *string `json:"roleName,omitempty"`
 }
 
 // RoleDefinitionListResult - Role definition list operation result.

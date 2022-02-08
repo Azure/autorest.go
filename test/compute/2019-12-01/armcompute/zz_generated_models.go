@@ -267,6 +267,12 @@ type BootDiagnosticsInstanceView struct {
 	Status *InstanceViewStatus `json:"status,omitempty" azure:"ro"`
 }
 
+// CloudError - An error response from the Compute service.
+type CloudError struct {
+	// Api error.
+	Error *APIError `json:"error,omitempty"`
+}
+
 // ContainerService - Container service.
 type ContainerService struct {
 	// REQUIRED; Resource location
@@ -1520,6 +1526,12 @@ type GalleryArtifactPublishingProfileBase struct {
 	PublishedDate *time.Time `json:"publishedDate,omitempty" azure:"ro"`
 }
 
+// GalleryArtifactSource - The source image from which the Image Version is going to be created.
+type GalleryArtifactSource struct {
+	// REQUIRED; The managed artifact.
+	ManagedImage *ManagedArtifact `json:"managedImage,omitempty"`
+}
+
 // GalleryArtifactVersionSource - The gallery artifact version source.
 type GalleryArtifactVersionSource struct {
 	// The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, or user image.
@@ -2321,6 +2333,12 @@ type MaintenanceRedeployStatus struct {
 
 	// Start Time for the Pre Maintenance Window.
 	PreMaintenanceWindowStartTime *time.Time `json:"preMaintenanceWindowStartTime,omitempty"`
+}
+
+// ManagedArtifact - The managed artifact.
+type ManagedArtifact struct {
+	// REQUIRED; The managed artifact id.
+	ID *string `json:"id,omitempty"`
 }
 
 // ManagedDiskParameters - The parameters of a managed disk.

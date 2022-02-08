@@ -21,6 +21,11 @@ type D struct {
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 // HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400 method.
 type HTTPClientFailureClientDelete400Options struct {
 	// placeholder for future optional parameters

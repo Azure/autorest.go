@@ -57,6 +57,13 @@ type APIVersionLocalClientGetSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
+type Error struct {
+	// REQUIRED
+	ConstantID *int32  `json:"constantId,omitempty"`
+	Message    *string `json:"message,omitempty"`
+	Status     *int32  `json:"status,omitempty"`
+}
+
 // HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
 // method.
 type HeaderClientCustomNamedRequestIDHeadOptions struct {
@@ -89,6 +96,11 @@ type ODataClientGetWithFilterOptions struct {
 	Orderby *string
 	// The top parameter with value 10.
 	Top *int32
+}
+
+type ODataFilter struct {
+	ID   *int32  `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // SkipURLEncodingClientGetMethodPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodPathValid

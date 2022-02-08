@@ -21,6 +21,11 @@ type CatAPTrue struct {
 	Status *bool `json:"status,omitempty" azure:"ro"`
 }
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 type PetAPInProperties struct {
 	// REQUIRED
 	ID *int32 `json:"id,omitempty"`

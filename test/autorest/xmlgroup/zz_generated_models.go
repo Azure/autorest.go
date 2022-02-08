@@ -163,6 +163,11 @@ type CorsRule struct {
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 type JSONInput struct {
 	ID *int32 `json:"id,omitempty"`
 }

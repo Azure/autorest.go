@@ -28,6 +28,11 @@ type ClassWrapper struct {
 	Value *Product `json:"value,omitempty"`
 }
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 // ExplicitClientPostOptionalArrayHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayHeader
 // method.
 type ExplicitClientPostOptionalArrayHeaderOptions struct {

@@ -25,6 +25,15 @@ type AliasesCreateResponse struct {
 	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
 }
 
+// ErrorResponse - An error happened.
+type ErrorResponse struct {
+	// READ-ONLY; The error code.
+	Code *string `json:"code,omitempty" azure:"ro"`
+
+	// READ-ONLY; The error message.
+	Message *string `json:"message,omitempty" azure:"ro"`
+}
+
 // GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2]
 // for details.
 type GeoJSONFeature struct {

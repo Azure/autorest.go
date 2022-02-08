@@ -8,6 +8,11 @@
 
 package lrogroup
 
+type CloudError struct {
+	Code    *int32  `json:"code,omitempty"`
+	Message *string `json:"message,omitempty"`
+}
+
 // LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
 // method.
 type LRORetrysClientBeginDelete202Retry200Options struct {
@@ -517,6 +522,21 @@ type LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options struct {
 type LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
+}
+
+type OperationResult struct {
+	Error *OperationResultError `json:"error,omitempty"`
+
+	// The status of the request
+	Status *OperationResultStatus `json:"status,omitempty"`
+}
+
+type OperationResultError struct {
+	// The error code for an operation failure
+	Code *int32 `json:"code,omitempty"`
+
+	// The detailed arror message
+	Message *string `json:"message,omitempty"`
 }
 
 type Product struct {
