@@ -8,6 +8,11 @@
 
 package filegroup
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 // FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
 type FilesClientGetEmptyFileOptions struct {
 	// placeholder for future optional parameters

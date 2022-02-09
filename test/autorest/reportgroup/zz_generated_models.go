@@ -23,3 +23,8 @@ type AutoRestReportServiceClientGetReportOptions struct {
 	// that run all tests several times, can distinguish the generated reports.
 	Qualifier *string
 }
+
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}

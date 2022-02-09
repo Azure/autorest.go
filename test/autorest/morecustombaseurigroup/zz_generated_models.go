@@ -8,6 +8,11 @@
 
 package morecustombaseurigroup
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 // PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 type PathsClientGetEmptyOptions struct {
 	// The key version. Default value 'v1'.

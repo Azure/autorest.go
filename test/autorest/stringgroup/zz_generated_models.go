@@ -38,6 +38,11 @@ type EnumClientPutReferencedOptions struct {
 	// placeholder for future optional parameters
 }
 
+type Error struct {
+	Message *string `json:"message,omitempty"`
+	Status  *int32  `json:"status,omitempty"`
+}
+
 type RefColorConstant struct {
 	// REQUIRED; Referenced Color Constant Description.
 	ColorConstant *string `json:"ColorConstant,omitempty"`

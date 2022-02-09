@@ -342,6 +342,12 @@ type ServiceClientSetPropertiesOptions struct {
 	Timeout *int32
 }
 
+// ServiceError - Table Service error.
+type ServiceError struct {
+	// The error message.
+	Message *string `json:"Message,omitempty"`
+}
+
 // ServiceProperties - Table Service Properties.
 type ServiceProperties struct {
 	// The set of CORS rules.

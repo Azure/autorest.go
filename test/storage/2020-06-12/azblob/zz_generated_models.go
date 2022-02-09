@@ -189,6 +189,20 @@ type CpkScopeInfo struct {
 	EncryptionScope *string
 }
 
+type DataLakeStorageError struct {
+	// The service error response object.
+	DataLakeStorageErrorDetails *DataLakeStorageErrorError `json:"error,omitempty"`
+}
+
+// DataLakeStorageErrorError - The service error response object.
+type DataLakeStorageErrorError struct {
+	// The service error code.
+	Code *string `json:"Code,omitempty"`
+
+	// The service error message.
+	Message *string `json:"Message,omitempty"`
+}
+
 // DelimitedTextConfiguration - delimited text configuration
 type DelimitedTextConfiguration struct {
 	// REQUIRED; column separator
@@ -574,6 +588,10 @@ type StaticWebsite struct {
 
 	// The default name of the index page under each directory
 	IndexDocument *string `xml:"IndexDocument"`
+}
+
+type StorageError struct {
+	Message *string `json:"Message,omitempty"`
 }
 
 // StorageServiceProperties - Storage Service Properties.

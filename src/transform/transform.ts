@@ -6,7 +6,7 @@
 import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema } from '@autorest/codemodel';
-import { clone, items, length, values } from '@azure-tools/linq';
+import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isMultiRespOperation, isTypePassedByValue, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
@@ -132,31 +132,6 @@ async function process(session: Session<CodeModel>) {
       addProps.language.go!.isAdditionalProperties = true;
       addProps.language.go!.byValue = true;
       obj.properties?.push(addProps);
-    }
-    if (length(session.model.operationGroups) === 0) {
-      // this is a model-only build, don't attempt to filter out any models
-      continue;
-    }
-    // model filtering must happen at the very end so that the type and its properties have
-    // been fixed up so that things like aggregate parameter comparisons properly work.
-    if (!obj.usage) {
-      // skip types that aren't used.  note that a missing usage field isn't enough
-      // to make the determination as the type might be a possible polymorphic value.  
-      if (!obj.discriminator && !obj.discriminatorValue) {
-        obj.language.go!.omitType = true;
-        continue;
-      }
-      // check if the type contains an unused exception model
-      // e,g, AzureAsyncOperationResult contains Error in NRP
-      for (const prop of values(obj.properties)) {
-        if (isObjectSchema(prop.schema) && prop.schema.usage?.length === 1 && prop.schema.usage[0] === 'exception') {
-          obj.language.go!.omitType = true;
-          break;
-        }
-      }
-    } else if (obj.usage.length === 1 && obj.usage[0] === 'exception') {
-      // skip exception models as we don't use them
-      obj.language.go!.omitType = true;
     }
   }
   // fix up enum types
