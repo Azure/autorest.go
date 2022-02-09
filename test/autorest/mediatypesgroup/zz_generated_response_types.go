@@ -24,96 +24,56 @@ type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse struct {
 
 // MediaTypesClientAnalyzeBodyResponse contains the response from method MediaTypesClient.AnalyzeBody.
 type MediaTypesClientAnalyzeBodyResponse struct {
-	MediaTypesClientAnalyzeBodyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientAnalyzeBodyResult contains the result from method MediaTypesClient.AnalyzeBody.
-type MediaTypesClientAnalyzeBodyResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientAnalyzeBodyWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyWithJSON.
 type MediaTypesClientAnalyzeBodyWithJSONResponse struct {
-	MediaTypesClientAnalyzeBodyWithJSONResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientAnalyzeBodyWithJSONResult contains the result from method MediaTypesClient.AnalyzeBodyWithJSON.
-type MediaTypesClientAnalyzeBodyWithJSONResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientBinaryBodyWithThreeContentTypesResponse contains the response from method MediaTypesClient.BinaryBodyWithThreeContentTypes.
 type MediaTypesClientBinaryBodyWithThreeContentTypesResponse struct {
-	MediaTypesClientBinaryBodyWithThreeContentTypesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientBinaryBodyWithThreeContentTypesResult contains the result from method MediaTypesClient.BinaryBodyWithThreeContentTypes.
-type MediaTypesClientBinaryBodyWithThreeContentTypesResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse contains the response from method MediaTypesClient.BinaryBodyWithThreeContentTypesWithText.
 type MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse struct {
-	MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResult contains the result from method MediaTypesClient.BinaryBodyWithThreeContentTypesWithText.
-type MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientBinaryBodyWithTwoContentTypesResponse contains the response from method MediaTypesClient.BinaryBodyWithTwoContentTypes.
 type MediaTypesClientBinaryBodyWithTwoContentTypesResponse struct {
-	MediaTypesClientBinaryBodyWithTwoContentTypesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientBinaryBodyWithTwoContentTypesResult contains the result from method MediaTypesClient.BinaryBodyWithTwoContentTypes.
-type MediaTypesClientBinaryBodyWithTwoContentTypesResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientContentTypeWithEncodingResponse contains the response from method MediaTypesClient.ContentTypeWithEncoding.
 type MediaTypesClientContentTypeWithEncodingResponse struct {
-	MediaTypesClientContentTypeWithEncodingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientContentTypeWithEncodingResult contains the result from method MediaTypesClient.ContentTypeWithEncoding.
-type MediaTypesClientContentTypeWithEncodingResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientPutTextAndJSONBodyWithJSONResponse contains the response from method MediaTypesClient.PutTextAndJSONBodyWithJSON.
 type MediaTypesClientPutTextAndJSONBodyWithJSONResponse struct {
-	MediaTypesClientPutTextAndJSONBodyWithJSONResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientPutTextAndJSONBodyWithJSONResult contains the result from method MediaTypesClient.PutTextAndJSONBodyWithJSON.
-type MediaTypesClientPutTextAndJSONBodyWithJSONResult struct {
-	Value *string
+	Value       *string
 }
 
 // MediaTypesClientPutTextAndJSONBodyWithTextResponse contains the response from method MediaTypesClient.PutTextAndJSONBodyWithText.
 type MediaTypesClientPutTextAndJSONBodyWithTextResponse struct {
-	MediaTypesClientPutTextAndJSONBodyWithTextResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MediaTypesClientPutTextAndJSONBodyWithTextResult contains the result from method MediaTypesClient.PutTextAndJSONBodyWithText.
-type MediaTypesClientPutTextAndJSONBodyWithTextResult struct {
-	Value *string
+	Value       *string
 }

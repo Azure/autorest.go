@@ -649,21 +649,16 @@ interface HttpHeaderWithDescription extends HttpHeader {
 // the name of the struct field for scalar responses (int, string, etc)
 const scalarResponsePropName = 'Value';
 
-// creates the response/result envelope types to be returned from an operation and updates the operation.
+// creates the response envelope type to be returned from an operation and updates the operation.
 // for LROs, this is also called to create the final response envelope.
-// the response envelope consists of two parts, the outer response envelope and the inner result envelope.
-// each operation gets its own response/result envelope pair
 //
-// type GetWidgetResponse struct { <== this is the response envelope, it groups the result with the raw HTTP response (to be replaced by Result[T any])
-//   GetWidgetResult
+// type GetWidgetResponse struct { <== this is the response envelope, it groups the raw HTTP response with any headers and body
 //   RawResponse *http.Response
-//}
-//
-// type GetWidgetResult struct { <== this is the result envelope, it groups the schema result along with any per-operation header values
-//   Widget <== this is the result field, i.e. the schema result
 //   Header1 *string <== modeled header response
 //   Header2 *int    <== modeled header response
-//}
+//   Widget          <== this is the result property, i.e. the schema result if the operation returns a model
+// }
+//
 function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
   // type with a `RawResponse *http.Response` field
@@ -690,21 +685,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       }
     }
   }
-  const addHeadersToSchema = function (resultEnv: ObjectSchema) {
-    if (headers.size === 0) {
-      return;
-    }
-    if (!resultEnv.properties) {
-      resultEnv.properties = new Array<Property>();
-    }
-    for (const item of items(headers)) {
-      const prop = newRespProperty(item.key, item.value.description, item.value.schema, false);
-      // propagate any extensions so we can access them through the property
-      prop.extensions = item.value.extensions;
-      prop.language.go!.fromHeader = item.value.header;
-      resultEnv.properties.push(prop);
-    }
-  }
+
   // contains all the response envelopes
   const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
@@ -716,24 +697,23 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   responseEnvelopes.push(respEnv);
   op.language.go!.responseEnv = respEnv;
 
-  // now create the appropriate result envelope
+  // add any headers to the response
+  for (const item of items(headers)) {
+    const prop = newRespProperty(item.key, item.value.description, item.value.schema, false);
+    // propagate any extensions so we can access them through the property
+    prop.extensions = item.value.extensions;
+    prop.language.go!.fromHeader = item.value.header;
+    respEnv.properties.push(prop);
+  }
+
+  // now create the result field
 
   if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
     op.language.go!.headAsBoolean = true;
-    const name = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Result`, 'Envelope');
-    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
-    resultEnv.language.go!.responseType = true;
     const successProp = newProperty('Success', 'Success indicates if the operation succeeded or failed.', newBoolean('bool', 'bool response'));
     successProp.language.go!.byValue = true;
-    resultEnv.properties = [
-      successProp,
-    ];
-    addHeadersToSchema(resultEnv);
-    // now add the result envelope to the response envelope
-    const resultProp = newRespProperty(name, 'Contains the result of the operation.', resultEnv, true);
-    respEnv.properties.push(resultProp);
-    respEnv.language.go!.resultEnv = resultProp;
-    op.language.go!.responseEnv = respEnv;
+    respEnv.properties.push(successProp);
+    respEnv.language.go!.resultProp = successProp;
     return;
   }
   if (isMultiRespOperation(op)) {
@@ -745,23 +725,16 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         resultTypes.push(response.schema.language.go!.name);
       }
     }
-    // for multi-response operations, we don't create result envelopes.
-    // instead, we add the header responses to the response envelope.
-    addHeadersToSchema(respEnv);
     const resultProp = newRespProperty('Value', `// Possible types are ${resultTypes.join(', ')}\n`, newAny('multi-response value'), true);
     respEnv.properties.push(resultProp);
-    respEnv.language.go!.resultEnv = resultProp;
+    respEnv.language.go!.resultProp = resultProp;
     return;
   }
   const response = getSchemaResponse(op);
-  // if the response defines a schema then create a result envelope and add it to the response envelope.
+  // if the response defines a schema then add it to the response envelope
   if (response) {
-    const name = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Result`, 'Envelope');
-    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
-    resultEnv.language.go!.responseType = true;
-    // propagate marshalling format to the result envelope
-    resultEnv.language.go!.marshallingFormat = response.schema.language.go!.marshallingFormat;
-    resultEnv.properties = new Array<Property>();
+    // propagate marshalling format to the response envelope
+    respEnv.language.go!.marshallingFormat = response.schema.language.go!.marshallingFormat;
     // for operations that return scalar types we use a fixed field name
     let propName = scalarResponsePropName;
     if (response.schema.type === SchemaType.Object) {
@@ -779,29 +752,11 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       // always prefer the XML name
       propName = capitalize(response.schema.serialization.xml.name);
     }
-    // add any headers to the response type
-    addHeadersToSchema(resultEnv);
     // we want to pass integral types byref to maintain parity with struct fields
     const byValue = isTypePassedByValue(response.schema) || response.schema.type === SchemaType.Object;
-    const respProp = newRespProperty(propName, response.schema.language.go!.description, response.schema, byValue);
-    resultEnv.properties.push(respProp);
-    // now add the result type to the response envelope
-    const resultEnvProp = newRespProperty(name, 'Contains the result of the operation.', resultEnv, true);
-    respEnv.properties.push(resultEnvProp);
-    respEnv.language.go!.resultEnv = resultEnvProp;
-    // shortcut to aid finding the result property
-    resultEnvProp.language.go!.resultField = respProp;
-  } else if (headers.size > 0) {
-    // the response doesn't return a model.  if it returns
-    // headers then create a result envelope that contains them.
-    const name = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Result`, 'Envelope');
-    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
-    resultEnv.language.go!.responseType = true;
-    resultEnv.properties = new Array<Property>();
-    addHeadersToSchema(resultEnv);
-    const resultEnvProp = newRespProperty(name, 'Contains the result of the operation.', resultEnv, true);
-    respEnv.properties.push(resultEnvProp);
-    respEnv.language.go!.resultEnv = resultEnvProp;
+    const resultProp = newRespProperty(propName, response.schema.language.go!.description, response.schema, byValue);
+    respEnv.properties.push(resultProp);
+    respEnv.language.go!.resultProp = resultProp;
   }
 }
 
@@ -932,7 +887,7 @@ function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, 
   }
   // LROs have two response envelopes.
   // the outer is the response envelope returned by the Begin* and Resume* methods, it depends on the poller.
-  // the inner is the response/result envelope returned by the PollUntilDone and FinalResponse methods, the poller depends on it.
+  // the inner is the response envelope returned by the PollUntilDone and FinalResponse methods, the poller depends on it.
   // so we create them in the following order: inner, poller, outer
 
   // contains all the response envelopes

@@ -79,10 +79,10 @@ function finalResp(poller: PollerInfo): string {
     text += '\treturn respType, nil\n';
   } else {
     const finalRespEnv = <ObjectSchema>poller.op.language.go!.finalResponseEnv;
-    const resultEnv = <Property>finalRespEnv.language.go!.resultEnv;
+    const resultProp = <Property>finalRespEnv.language.go!.resultProp;
     text += `\trespType := ${finalRespEnv.language.go!.name}{}\n`;
-    if (resultEnv) {
-      text += `\tresp, err := p.pt.FinalResponse(ctx, &respType.${discriminatorFinalResponse(resultEnv)})\n`;
+    if (resultProp) {
+      text += `\tresp, err := p.pt.FinalResponse(ctx, &respType${discriminatorFinalResponse(finalRespEnv)})\n`;
     } else {
       // the operation doesn't return a model
       text += `\tresp, err := p.pt.FinalResponse(ctx, nil)\n`;

@@ -60,15 +60,11 @@ type APIVersionLocalClientGetSwaggerLocalValidResponse struct {
 
 // HeaderClientCustomNamedRequestIDHeadResponse contains the response from method HeaderClient.CustomNamedRequestIDHead.
 type HeaderClientCustomNamedRequestIDHeadResponse struct {
-	HeaderClientCustomNamedRequestIDHeadResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderClientCustomNamedRequestIDHeadResult contains the result from method HeaderClient.CustomNamedRequestIDHead.
-type HeaderClientCustomNamedRequestIDHeadResult struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
 	FooRequestID *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 
 	// Success indicates if the operation succeeded or failed.
 	Success bool
@@ -76,28 +72,20 @@ type HeaderClientCustomNamedRequestIDHeadResult struct {
 
 // HeaderClientCustomNamedRequestIDParamGroupingResponse contains the response from method HeaderClient.CustomNamedRequestIDParamGrouping.
 type HeaderClientCustomNamedRequestIDParamGroupingResponse struct {
-	HeaderClientCustomNamedRequestIDParamGroupingResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderClientCustomNamedRequestIDParamGroupingResult contains the result from method HeaderClient.CustomNamedRequestIDParamGrouping.
-type HeaderClientCustomNamedRequestIDParamGroupingResult struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
 	FooRequestID *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HeaderClientCustomNamedRequestIDResponse contains the response from method HeaderClient.CustomNamedRequestID.
 type HeaderClientCustomNamedRequestIDResponse struct {
-	HeaderClientCustomNamedRequestIDResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HeaderClientCustomNamedRequestIDResult contains the result from method HeaderClient.CustomNamedRequestID.
-type HeaderClientCustomNamedRequestIDResult struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
 	FooRequestID *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // ODataClientGetWithFilterResponse contains the response from method ODataClient.GetWithFilter.

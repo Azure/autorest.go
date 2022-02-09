@@ -12,199 +12,124 @@ import "net/http"
 
 // XMLClientGetACLsResponse contains the response from method XMLClient.GetACLs.
 type XMLClientGetACLsResponse struct {
-	XMLClientGetACLsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// XMLClientGetACLsResult contains the result from method XMLClient.GetACLs.
-type XMLClientGetACLsResult struct {
 	// a collection of signed identifiers
 	SignedIdentifiers []*SignedIdentifier `xml:"SignedIdentifier"`
 }
 
 // XMLClientGetBytesResponse contains the response from method XMLClient.GetBytes.
 type XMLClientGetBytesResponse struct {
-	XMLClientGetBytesResult
+	ModelWithByteProperty
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetBytesResult contains the result from method XMLClient.GetBytes.
-type XMLClientGetBytesResult struct {
-	ModelWithByteProperty
 }
 
 // XMLClientGetComplexTypeRefNoMetaResponse contains the response from method XMLClient.GetComplexTypeRefNoMeta.
 type XMLClientGetComplexTypeRefNoMetaResponse struct {
-	XMLClientGetComplexTypeRefNoMetaResult
+	RootWithRefAndNoMeta
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetComplexTypeRefNoMetaResult contains the result from method XMLClient.GetComplexTypeRefNoMeta.
-type XMLClientGetComplexTypeRefNoMetaResult struct {
-	RootWithRefAndNoMeta
 }
 
 // XMLClientGetComplexTypeRefWithMetaResponse contains the response from method XMLClient.GetComplexTypeRefWithMeta.
 type XMLClientGetComplexTypeRefWithMetaResponse struct {
-	XMLClientGetComplexTypeRefWithMetaResult
+	RootWithRefAndMeta
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetComplexTypeRefWithMetaResult contains the result from method XMLClient.GetComplexTypeRefWithMeta.
-type XMLClientGetComplexTypeRefWithMetaResult struct {
-	RootWithRefAndMeta
 }
 
 // XMLClientGetEmptyChildElementResponse contains the response from method XMLClient.GetEmptyChildElement.
 type XMLClientGetEmptyChildElementResponse struct {
-	XMLClientGetEmptyChildElementResult
+	Banana
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetEmptyChildElementResult contains the result from method XMLClient.GetEmptyChildElement.
-type XMLClientGetEmptyChildElementResult struct {
-	Banana
 }
 
 // XMLClientGetEmptyListResponse contains the response from method XMLClient.GetEmptyList.
 type XMLClientGetEmptyListResponse struct {
-	XMLClientGetEmptyListResult
+	Slideshow
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetEmptyListResult contains the result from method XMLClient.GetEmptyList.
-type XMLClientGetEmptyListResult struct {
-	Slideshow
 }
 
 // XMLClientGetEmptyRootListResponse contains the response from method XMLClient.GetEmptyRootList.
 type XMLClientGetEmptyRootListResponse struct {
-	XMLClientGetEmptyRootListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLClientGetEmptyRootListResult contains the result from method XMLClient.GetEmptyRootList.
-type XMLClientGetEmptyRootListResult struct {
 	// Array of Banana
 	Bananas []*Banana `xml:"banana"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // XMLClientGetEmptyWrappedListsResponse contains the response from method XMLClient.GetEmptyWrappedLists.
 type XMLClientGetEmptyWrappedListsResponse struct {
-	XMLClientGetEmptyWrappedListsResult
+	AppleBarrel
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetEmptyWrappedListsResult contains the result from method XMLClient.GetEmptyWrappedLists.
-type XMLClientGetEmptyWrappedListsResult struct {
-	AppleBarrel
 }
 
 // XMLClientGetHeadersResponse contains the response from method XMLClient.GetHeaders.
 type XMLClientGetHeadersResponse struct {
-	XMLClientGetHeadersResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLClientGetHeadersResult contains the result from method XMLClient.GetHeaders.
-type XMLClientGetHeadersResult struct {
 	// CustomHeader contains the information returned from the Custom-Header header response.
 	CustomHeader *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // XMLClientGetRootListResponse contains the response from method XMLClient.GetRootList.
 type XMLClientGetRootListResponse struct {
-	XMLClientGetRootListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLClientGetRootListResult contains the result from method XMLClient.GetRootList.
-type XMLClientGetRootListResult struct {
 	// Array of Banana
 	Bananas []*Banana `xml:"banana"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // XMLClientGetRootListSingleItemResponse contains the response from method XMLClient.GetRootListSingleItem.
 type XMLClientGetRootListSingleItemResponse struct {
-	XMLClientGetRootListSingleItemResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// XMLClientGetRootListSingleItemResult contains the result from method XMLClient.GetRootListSingleItem.
-type XMLClientGetRootListSingleItemResult struct {
 	// Array of Banana
 	Bananas []*Banana `xml:"banana"`
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // XMLClientGetServicePropertiesResponse contains the response from method XMLClient.GetServiceProperties.
 type XMLClientGetServicePropertiesResponse struct {
-	XMLClientGetServicePropertiesResult
+	StorageServiceProperties
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetServicePropertiesResult contains the result from method XMLClient.GetServiceProperties.
-type XMLClientGetServicePropertiesResult struct {
-	StorageServiceProperties
 }
 
 // XMLClientGetSimpleResponse contains the response from method XMLClient.GetSimple.
 type XMLClientGetSimpleResponse struct {
-	XMLClientGetSimpleResult
+	Slideshow
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetSimpleResult contains the result from method XMLClient.GetSimple.
-type XMLClientGetSimpleResult struct {
-	Slideshow
 }
 
 // XMLClientGetURIResponse contains the response from method XMLClient.GetURI.
 type XMLClientGetURIResponse struct {
-	XMLClientGetURIResult
+	ModelWithURLProperty
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetURIResult contains the result from method XMLClient.GetURI.
-type XMLClientGetURIResult struct {
-	ModelWithURLProperty
 }
 
 // XMLClientGetWrappedListsResponse contains the response from method XMLClient.GetWrappedLists.
 type XMLClientGetWrappedListsResponse struct {
-	XMLClientGetWrappedListsResult
+	AppleBarrel
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetWrappedListsResult contains the result from method XMLClient.GetWrappedLists.
-type XMLClientGetWrappedListsResult struct {
-	AppleBarrel
 }
 
 // XMLClientGetXMsTextResponse contains the response from method XMLClient.GetXMsText.
 type XMLClientGetXMsTextResponse struct {
-	XMLClientGetXMsTextResult
+	ObjectWithXMsTextProperty
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientGetXMsTextResult contains the result from method XMLClient.GetXMsText.
-type XMLClientGetXMsTextResult struct {
-	ObjectWithXMsTextProperty
 }
 
 // XMLClientJSONInputResponse contains the response from method XMLClient.JSONInput.
@@ -215,38 +140,23 @@ type XMLClientJSONInputResponse struct {
 
 // XMLClientJSONOutputResponse contains the response from method XMLClient.JSONOutput.
 type XMLClientJSONOutputResponse struct {
-	XMLClientJSONOutputResult
+	JSONOutput
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientJSONOutputResult contains the result from method XMLClient.JSONOutput.
-type XMLClientJSONOutputResult struct {
-	JSONOutput
 }
 
 // XMLClientListBlobsResponse contains the response from method XMLClient.ListBlobs.
 type XMLClientListBlobsResponse struct {
-	XMLClientListBlobsResult
+	ListBlobsResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientListBlobsResult contains the result from method XMLClient.ListBlobs.
-type XMLClientListBlobsResult struct {
-	ListBlobsResponse
 }
 
 // XMLClientListContainersResponse contains the response from method XMLClient.ListContainers.
 type XMLClientListContainersResponse struct {
-	XMLClientListContainersResult
+	ListContainersResponse
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// XMLClientListContainersResult contains the result from method XMLClient.ListContainers.
-type XMLClientListContainersResult struct {
-	ListContainersResponse
 }
 
 // XMLClientPutACLsResponse contains the response from method XMLClient.PutACLs.

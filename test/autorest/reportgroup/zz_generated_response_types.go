@@ -12,26 +12,18 @@ import "net/http"
 
 // AutoRestReportServiceClientGetOptionalReportResponse contains the response from method AutoRestReportServiceClient.GetOptionalReport.
 type AutoRestReportServiceClientGetOptionalReportResponse struct {
-	AutoRestReportServiceClientGetOptionalReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// AutoRestReportServiceClientGetOptionalReportResult contains the result from method AutoRestReportServiceClient.GetOptionalReport.
-type AutoRestReportServiceClientGetOptionalReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }
 
 // AutoRestReportServiceClientGetReportResponse contains the response from method AutoRestReportServiceClient.GetReport.
 type AutoRestReportServiceClientGetReportResponse struct {
-	AutoRestReportServiceClientGetReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// AutoRestReportServiceClientGetReportResult contains the result from method AutoRestReportServiceClient.GetReport.
-type AutoRestReportServiceClientGetReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

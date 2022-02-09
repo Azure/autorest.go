@@ -66,52 +66,36 @@ type HTTPClientFailureClientGet416Response struct {
 
 // HTTPClientFailureClientHead400Response contains the response from method HTTPClientFailureClient.Head400.
 type HTTPClientFailureClientHead400Response struct {
-	HTTPClientFailureClientHead400Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPClientFailureClientHead400Result contains the result from method HTTPClientFailureClient.Head400.
-type HTTPClientFailureClientHead400Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPClientFailureClientHead401Response contains the response from method HTTPClientFailureClient.Head401.
 type HTTPClientFailureClientHead401Response struct {
-	HTTPClientFailureClientHead401Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPClientFailureClientHead401Result contains the result from method HTTPClientFailureClient.Head401.
-type HTTPClientFailureClientHead401Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPClientFailureClientHead410Response contains the response from method HTTPClientFailureClient.Head410.
 type HTTPClientFailureClientHead410Response struct {
-	HTTPClientFailureClientHead410Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPClientFailureClientHead410Result contains the result from method HTTPClientFailureClient.Head410.
-type HTTPClientFailureClientHead410Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPClientFailureClientHead429Response contains the response from method HTTPClientFailureClient.Head429.
 type HTTPClientFailureClientHead429Response struct {
-	HTTPClientFailureClientHead429Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPClientFailureClientHead429Result contains the result from method HTTPClientFailureClient.Head429.
-type HTTPClientFailureClientHead429Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
@@ -196,39 +180,27 @@ type HTTPClientFailureClientPut413Response struct {
 
 // HTTPFailureClientGetEmptyErrorResponse contains the response from method HTTPFailureClient.GetEmptyError.
 type HTTPFailureClientGetEmptyErrorResponse struct {
-	HTTPFailureClientGetEmptyErrorResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPFailureClientGetEmptyErrorResult contains the result from method HTTPFailureClient.GetEmptyError.
-type HTTPFailureClientGetEmptyErrorResult struct {
 	// simple boolean
 	Value *bool
 }
 
 // HTTPFailureClientGetNoModelEmptyResponse contains the response from method HTTPFailureClient.GetNoModelEmpty.
 type HTTPFailureClientGetNoModelEmptyResponse struct {
-	HTTPFailureClientGetNoModelEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPFailureClientGetNoModelEmptyResult contains the result from method HTTPFailureClient.GetNoModelEmpty.
-type HTTPFailureClientGetNoModelEmptyResult struct {
 	// simple boolean
 	Value *bool
 }
 
 // HTTPFailureClientGetNoModelErrorResponse contains the response from method HTTPFailureClient.GetNoModelError.
 type HTTPFailureClientGetNoModelErrorResponse struct {
-	HTTPFailureClientGetNoModelErrorResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPFailureClientGetNoModelErrorResult contains the result from method HTTPFailureClient.GetNoModelError.
-type HTTPFailureClientGetNoModelErrorResult struct {
 	// simple boolean
 	Value *bool
 }
@@ -241,15 +213,11 @@ type HTTPRedirectsClientDelete307Response struct {
 
 // HTTPRedirectsClientGet300Response contains the response from method HTTPRedirectsClient.Get300.
 type HTTPRedirectsClientGet300Response struct {
-	HTTPRedirectsClientGet300Result
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsClientGet300Result contains the result from method HTTPRedirectsClient.Get300.
-type HTTPRedirectsClientGet300Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 
 	// A list of location options for the request ['/http/success/get/200']
 	StringArray []*string
@@ -275,15 +243,11 @@ type HTTPRedirectsClientGet307Response struct {
 
 // HTTPRedirectsClientHead300Response contains the response from method HTTPRedirectsClient.Head300.
 type HTTPRedirectsClientHead300Response struct {
-	HTTPRedirectsClientHead300Result
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsClientHead300Result contains the result from method HTTPRedirectsClient.Head300.
-type HTTPRedirectsClientHead300Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 
 	// Success indicates if the operation succeeded or failed.
 	Success bool
@@ -291,39 +255,27 @@ type HTTPRedirectsClientHead300Result struct {
 
 // HTTPRedirectsClientHead301Response contains the response from method HTTPRedirectsClient.Head301.
 type HTTPRedirectsClientHead301Response struct {
-	HTTPRedirectsClientHead301Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPRedirectsClientHead301Result contains the result from method HTTPRedirectsClient.Head301.
-type HTTPRedirectsClientHead301Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPRedirectsClientHead302Response contains the response from method HTTPRedirectsClient.Head302.
 type HTTPRedirectsClientHead302Response struct {
-	HTTPRedirectsClientHead302Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPRedirectsClientHead302Result contains the result from method HTTPRedirectsClient.Head302.
-type HTTPRedirectsClientHead302Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPRedirectsClientHead307Response contains the response from method HTTPRedirectsClient.Head307.
 type HTTPRedirectsClientHead307Response struct {
-	HTTPRedirectsClientHead307Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPRedirectsClientHead307Result contains the result from method HTTPRedirectsClient.Head307.
-type HTTPRedirectsClientHead307Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
@@ -336,15 +288,11 @@ type HTTPRedirectsClientOptions307Response struct {
 
 // HTTPRedirectsClientPatch302Response contains the response from method HTTPRedirectsClient.Patch302.
 type HTTPRedirectsClientPatch302Response struct {
-	HTTPRedirectsClientPatch302Result
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsClientPatch302Result contains the result from method HTTPRedirectsClient.Patch302.
-type HTTPRedirectsClientPatch302Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HTTPRedirectsClientPatch307Response contains the response from method HTTPRedirectsClient.Patch307.
@@ -355,15 +303,11 @@ type HTTPRedirectsClientPatch307Response struct {
 
 // HTTPRedirectsClientPost303Response contains the response from method HTTPRedirectsClient.Post303.
 type HTTPRedirectsClientPost303Response struct {
-	HTTPRedirectsClientPost303Result
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsClientPost303Result contains the result from method HTTPRedirectsClient.Post303.
-type HTTPRedirectsClientPost303Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HTTPRedirectsClientPost307Response contains the response from method HTTPRedirectsClient.Post307.
@@ -374,15 +318,11 @@ type HTTPRedirectsClientPost307Response struct {
 
 // HTTPRedirectsClientPut301Response contains the response from method HTTPRedirectsClient.Put301.
 type HTTPRedirectsClientPut301Response struct {
-	HTTPRedirectsClientPut301Result
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-}
-
-// HTTPRedirectsClientPut301Result contains the result from method HTTPRedirectsClient.Put301.
-type HTTPRedirectsClientPut301Result struct {
 	// Location contains the information returned from the Location header response.
 	Location *string
+
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
 }
 
 // HTTPRedirectsClientPut307Response contains the response from method HTTPRedirectsClient.Put307.
@@ -405,26 +345,18 @@ type HTTPRetryClientGet502Response struct {
 
 // HTTPRetryClientHead408Response contains the response from method HTTPRetryClient.Head408.
 type HTTPRetryClientHead408Response struct {
-	HTTPRetryClientHead408Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPRetryClientHead408Result contains the result from method HTTPRetryClient.Head408.
-type HTTPRetryClientHead408Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPRetryClientOptions502Response contains the response from method HTTPRetryClient.Options502.
 type HTTPRetryClientOptions502Response struct {
-	HTTPRetryClientOptions502Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPRetryClientOptions502Result contains the result from method HTTPRetryClient.Options502.
-type HTTPRetryClientOptions502Result struct {
 	// simple boolean
 	Value *bool
 }
@@ -473,13 +405,9 @@ type HTTPServerFailureClientGet501Response struct {
 
 // HTTPServerFailureClientHead501Response contains the response from method HTTPServerFailureClient.Head501.
 type HTTPServerFailureClientHead501Response struct {
-	HTTPServerFailureClientHead501Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPServerFailureClientHead501Result contains the result from method HTTPServerFailureClient.Head501.
-type HTTPServerFailureClientHead501Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
@@ -510,65 +438,45 @@ type HTTPSuccessClientDelete204Response struct {
 
 // HTTPSuccessClientGet200Response contains the response from method HTTPSuccessClient.Get200.
 type HTTPSuccessClientGet200Response struct {
-	HTTPSuccessClientGet200Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientGet200Result contains the result from method HTTPSuccessClient.Get200.
-type HTTPSuccessClientGet200Result struct {
 	// simple boolean
 	Value *bool
 }
 
 // HTTPSuccessClientHead200Response contains the response from method HTTPSuccessClient.Head200.
 type HTTPSuccessClientHead200Response struct {
-	HTTPSuccessClientHead200Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientHead200Result contains the result from method HTTPSuccessClient.Head200.
-type HTTPSuccessClientHead200Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientHead204Response contains the response from method HTTPSuccessClient.Head204.
 type HTTPSuccessClientHead204Response struct {
-	HTTPSuccessClientHead204Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientHead204Result contains the result from method HTTPSuccessClient.Head204.
-type HTTPSuccessClientHead204Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientHead404Response contains the response from method HTTPSuccessClient.Head404.
 type HTTPSuccessClientHead404Response struct {
-	HTTPSuccessClientHead404Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientHead404Result contains the result from method HTTPSuccessClient.Head404.
-type HTTPSuccessClientHead404Result struct {
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientOptions200Response contains the response from method HTTPSuccessClient.Options200.
 type HTTPSuccessClientOptions200Response struct {
-	HTTPSuccessClientOptions200Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// HTTPSuccessClientOptions200Result contains the result from method HTTPSuccessClient.Options200.
-type HTTPSuccessClientOptions200Result struct {
 	// simple boolean
 	Value *bool
 }
@@ -668,98 +576,58 @@ type MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse stru
 
 // MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse contains the response from method MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid.
 type MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse struct {
-	MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResult contains the result from method MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid.
-type MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse contains the response from method MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid.
 type MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse struct {
-	MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResult contains the result from method MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid.
-type MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse contains the response from method MultipleResponsesClient.Get200Model204NoModelDefaultError202None.
 type MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse struct {
-	MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResult contains the result from method MultipleResponsesClient.Get200Model204NoModelDefaultError202None.
-type MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse contains the response from method MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid.
 type MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse struct {
-	MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResult contains the result from method MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid.
-type MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse contains the response from method MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid.
 type MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse struct {
-	MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResult contains the result from method MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid.
-type MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA200InvalidResponse contains the response from method MultipleResponsesClient.Get200ModelA200Invalid.
 type MultipleResponsesClientGet200ModelA200InvalidResponse struct {
-	MultipleResponsesClientGet200ModelA200InvalidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA200InvalidResult contains the result from method MultipleResponsesClient.Get200ModelA200Invalid.
-type MultipleResponsesClientGet200ModelA200InvalidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA200NoneResponse contains the response from method MultipleResponsesClient.Get200ModelA200None.
 type MultipleResponsesClientGet200ModelA200NoneResponse struct {
-	MultipleResponsesClientGet200ModelA200NoneResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA200NoneResult contains the result from method MultipleResponsesClient.Get200ModelA200None.
-type MultipleResponsesClientGet200ModelA200NoneResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA200ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA200Valid.
 type MultipleResponsesClientGet200ModelA200ValidResponse struct {
-	MultipleResponsesClientGet200ModelA200ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA200ValidResult contains the result from method MultipleResponsesClient.Get200ModelA200Valid.
-type MultipleResponsesClientGet200ModelA200ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid.
@@ -800,50 +668,30 @@ type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidRe
 
 // MultipleResponsesClientGet200ModelA202ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA202Valid.
 type MultipleResponsesClientGet200ModelA202ValidResponse struct {
-	MultipleResponsesClientGet200ModelA202ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA202ValidResult contains the result from method MultipleResponsesClient.Get200ModelA202Valid.
-type MultipleResponsesClientGet200ModelA202ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA400InvalidResponse contains the response from method MultipleResponsesClient.Get200ModelA400Invalid.
 type MultipleResponsesClientGet200ModelA400InvalidResponse struct {
-	MultipleResponsesClientGet200ModelA400InvalidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA400InvalidResult contains the result from method MultipleResponsesClient.Get200ModelA400Invalid.
-type MultipleResponsesClientGet200ModelA400InvalidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA400NoneResponse contains the response from method MultipleResponsesClient.Get200ModelA400None.
 type MultipleResponsesClientGet200ModelA400NoneResponse struct {
-	MultipleResponsesClientGet200ModelA400NoneResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA400NoneResult contains the result from method MultipleResponsesClient.Get200ModelA400None.
-type MultipleResponsesClientGet200ModelA400NoneResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet200ModelA400ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA400Valid.
 type MultipleResponsesClientGet200ModelA400ValidResponse struct {
-	MultipleResponsesClientGet200ModelA400ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGet200ModelA400ValidResult contains the result from method MultipleResponsesClient.Get200ModelA400Valid.
-type MultipleResponsesClientGet200ModelA400ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse contains the response from method MultipleResponsesClient.Get202None204NoneDefaultError202None.
@@ -890,26 +738,16 @@ type MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse struct {
 
 // MultipleResponsesClientGetDefaultModelA200NoneResponse contains the response from method MultipleResponsesClient.GetDefaultModelA200None.
 type MultipleResponsesClientGetDefaultModelA200NoneResponse struct {
-	MultipleResponsesClientGetDefaultModelA200NoneResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGetDefaultModelA200NoneResult contains the result from method MultipleResponsesClient.GetDefaultModelA200None.
-type MultipleResponsesClientGetDefaultModelA200NoneResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGetDefaultModelA200ValidResponse contains the response from method MultipleResponsesClient.GetDefaultModelA200Valid.
 type MultipleResponsesClientGetDefaultModelA200ValidResponse struct {
-	MultipleResponsesClientGetDefaultModelA200ValidResult
+	MyException
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// MultipleResponsesClientGetDefaultModelA200ValidResult contains the result from method MultipleResponsesClient.GetDefaultModelA200Valid.
-type MultipleResponsesClientGetDefaultModelA200ValidResult struct {
-	MyException
 }
 
 // MultipleResponsesClientGetDefaultModelA400NoneResponse contains the response from method MultipleResponsesClient.GetDefaultModelA400None.

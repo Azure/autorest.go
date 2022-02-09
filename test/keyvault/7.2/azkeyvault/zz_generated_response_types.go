@@ -17,194 +17,114 @@ import (
 
 // ClientBackupCertificateResponse contains the response from method Client.BackupCertificate.
 type ClientBackupCertificateResponse struct {
-	ClientBackupCertificateResult
+	BackupCertificateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientBackupCertificateResult contains the result from method Client.BackupCertificate.
-type ClientBackupCertificateResult struct {
-	BackupCertificateResult
 }
 
 // ClientBackupKeyResponse contains the response from method Client.BackupKey.
 type ClientBackupKeyResponse struct {
-	ClientBackupKeyResult
+	BackupKeyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientBackupKeyResult contains the result from method Client.BackupKey.
-type ClientBackupKeyResult struct {
-	BackupKeyResult
 }
 
 // ClientBackupSecretResponse contains the response from method Client.BackupSecret.
 type ClientBackupSecretResponse struct {
-	ClientBackupSecretResult
+	BackupSecretResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientBackupSecretResult contains the result from method Client.BackupSecret.
-type ClientBackupSecretResult struct {
-	BackupSecretResult
 }
 
 // ClientBackupStorageAccountResponse contains the response from method Client.BackupStorageAccount.
 type ClientBackupStorageAccountResponse struct {
-	ClientBackupStorageAccountResult
+	BackupStorageResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientBackupStorageAccountResult contains the result from method Client.BackupStorageAccount.
-type ClientBackupStorageAccountResult struct {
-	BackupStorageResult
 }
 
 // ClientCreateCertificateResponse contains the response from method Client.CreateCertificate.
 type ClientCreateCertificateResponse struct {
-	ClientCreateCertificateResult
+	CertificateOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientCreateCertificateResult contains the result from method Client.CreateCertificate.
-type ClientCreateCertificateResult struct {
-	CertificateOperation
 }
 
 // ClientCreateKeyResponse contains the response from method Client.CreateKey.
 type ClientCreateKeyResponse struct {
-	ClientCreateKeyResult
+	KeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientCreateKeyResult contains the result from method Client.CreateKey.
-type ClientCreateKeyResult struct {
-	KeyBundle
 }
 
 // ClientDecryptResponse contains the response from method Client.Decrypt.
 type ClientDecryptResponse struct {
-	ClientDecryptResult
+	KeyOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDecryptResult contains the result from method Client.Decrypt.
-type ClientDecryptResult struct {
-	KeyOperationResult
 }
 
 // ClientDeleteCertificateContactsResponse contains the response from method Client.DeleteCertificateContacts.
 type ClientDeleteCertificateContactsResponse struct {
-	ClientDeleteCertificateContactsResult
+	Contacts
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteCertificateContactsResult contains the result from method Client.DeleteCertificateContacts.
-type ClientDeleteCertificateContactsResult struct {
-	Contacts
 }
 
 // ClientDeleteCertificateIssuerResponse contains the response from method Client.DeleteCertificateIssuer.
 type ClientDeleteCertificateIssuerResponse struct {
-	ClientDeleteCertificateIssuerResult
+	IssuerBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteCertificateIssuerResult contains the result from method Client.DeleteCertificateIssuer.
-type ClientDeleteCertificateIssuerResult struct {
-	IssuerBundle
 }
 
 // ClientDeleteCertificateOperationResponse contains the response from method Client.DeleteCertificateOperation.
 type ClientDeleteCertificateOperationResponse struct {
-	ClientDeleteCertificateOperationResult
+	CertificateOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteCertificateOperationResult contains the result from method Client.DeleteCertificateOperation.
-type ClientDeleteCertificateOperationResult struct {
-	CertificateOperation
 }
 
 // ClientDeleteCertificateResponse contains the response from method Client.DeleteCertificate.
 type ClientDeleteCertificateResponse struct {
-	ClientDeleteCertificateResult
+	DeletedCertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteCertificateResult contains the result from method Client.DeleteCertificate.
-type ClientDeleteCertificateResult struct {
-	DeletedCertificateBundle
 }
 
 // ClientDeleteKeyResponse contains the response from method Client.DeleteKey.
 type ClientDeleteKeyResponse struct {
-	ClientDeleteKeyResult
+	DeletedKeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteKeyResult contains the result from method Client.DeleteKey.
-type ClientDeleteKeyResult struct {
-	DeletedKeyBundle
 }
 
 // ClientDeleteSasDefinitionResponse contains the response from method Client.DeleteSasDefinition.
 type ClientDeleteSasDefinitionResponse struct {
-	ClientDeleteSasDefinitionResult
+	DeletedSasDefinitionBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteSasDefinitionResult contains the result from method Client.DeleteSasDefinition.
-type ClientDeleteSasDefinitionResult struct {
-	DeletedSasDefinitionBundle
 }
 
 // ClientDeleteSecretResponse contains the response from method Client.DeleteSecret.
 type ClientDeleteSecretResponse struct {
-	ClientDeleteSecretResult
+	DeletedSecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteSecretResult contains the result from method Client.DeleteSecret.
-type ClientDeleteSecretResult struct {
-	DeletedSecretBundle
 }
 
 // ClientDeleteStorageAccountResponse contains the response from method Client.DeleteStorageAccount.
 type ClientDeleteStorageAccountResponse struct {
-	ClientDeleteStorageAccountResult
+	DeletedStorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientDeleteStorageAccountResult contains the result from method Client.DeleteStorageAccount.
-type ClientDeleteStorageAccountResult struct {
-	DeletedStorageBundle
 }
 
 // ClientEncryptResponse contains the response from method Client.Encrypt.
 type ClientEncryptResponse struct {
-	ClientEncryptResult
+	KeyOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientEncryptResult contains the result from method Client.Encrypt.
-type ClientEncryptResult struct {
-	KeyOperationResult
 }
 
 // ClientFullBackupPollerResponse contains the response from method Client.FullBackup.
@@ -248,26 +168,16 @@ func (l *ClientFullBackupPollerResponse) Resume(ctx context.Context, client *Cli
 
 // ClientFullBackupResponse contains the response from method Client.FullBackup.
 type ClientFullBackupResponse struct {
-	ClientFullBackupResult
+	FullBackupOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientFullBackupResult contains the result from method Client.FullBackup.
-type ClientFullBackupResult struct {
-	FullBackupOperation
 }
 
 // ClientFullBackupStatusResponse contains the response from method Client.FullBackupStatus.
 type ClientFullBackupStatusResponse struct {
-	ClientFullBackupStatusResult
+	FullBackupOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientFullBackupStatusResult contains the result from method Client.FullBackupStatus.
-type ClientFullBackupStatusResult struct {
-	FullBackupOperation
 }
 
 // ClientFullRestoreOperationPollerResponse contains the response from method Client.FullRestoreOperation.
@@ -311,386 +221,226 @@ func (l *ClientFullRestoreOperationPollerResponse) Resume(ctx context.Context, c
 
 // ClientFullRestoreOperationResponse contains the response from method Client.FullRestoreOperation.
 type ClientFullRestoreOperationResponse struct {
-	ClientFullRestoreOperationResult
+	RestoreOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientFullRestoreOperationResult contains the result from method Client.FullRestoreOperation.
-type ClientFullRestoreOperationResult struct {
-	RestoreOperation
 }
 
 // ClientGetCertificateContactsResponse contains the response from method Client.GetCertificateContacts.
 type ClientGetCertificateContactsResponse struct {
-	ClientGetCertificateContactsResult
+	Contacts
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificateContactsResult contains the result from method Client.GetCertificateContacts.
-type ClientGetCertificateContactsResult struct {
-	Contacts
 }
 
 // ClientGetCertificateIssuerResponse contains the response from method Client.GetCertificateIssuer.
 type ClientGetCertificateIssuerResponse struct {
-	ClientGetCertificateIssuerResult
+	IssuerBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificateIssuerResult contains the result from method Client.GetCertificateIssuer.
-type ClientGetCertificateIssuerResult struct {
-	IssuerBundle
 }
 
 // ClientGetCertificateIssuersResponse contains the response from method Client.GetCertificateIssuers.
 type ClientGetCertificateIssuersResponse struct {
-	ClientGetCertificateIssuersResult
+	CertificateIssuerListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificateIssuersResult contains the result from method Client.GetCertificateIssuers.
-type ClientGetCertificateIssuersResult struct {
-	CertificateIssuerListResult
 }
 
 // ClientGetCertificateOperationResponse contains the response from method Client.GetCertificateOperation.
 type ClientGetCertificateOperationResponse struct {
-	ClientGetCertificateOperationResult
+	CertificateOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificateOperationResult contains the result from method Client.GetCertificateOperation.
-type ClientGetCertificateOperationResult struct {
-	CertificateOperation
 }
 
 // ClientGetCertificatePolicyResponse contains the response from method Client.GetCertificatePolicy.
 type ClientGetCertificatePolicyResponse struct {
-	ClientGetCertificatePolicyResult
+	CertificatePolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificatePolicyResult contains the result from method Client.GetCertificatePolicy.
-type ClientGetCertificatePolicyResult struct {
-	CertificatePolicy
 }
 
 // ClientGetCertificateResponse contains the response from method Client.GetCertificate.
 type ClientGetCertificateResponse struct {
-	ClientGetCertificateResult
+	CertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificateResult contains the result from method Client.GetCertificate.
-type ClientGetCertificateResult struct {
-	CertificateBundle
 }
 
 // ClientGetCertificateVersionsResponse contains the response from method Client.GetCertificateVersions.
 type ClientGetCertificateVersionsResponse struct {
-	ClientGetCertificateVersionsResult
+	CertificateListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificateVersionsResult contains the result from method Client.GetCertificateVersions.
-type ClientGetCertificateVersionsResult struct {
-	CertificateListResult
 }
 
 // ClientGetCertificatesResponse contains the response from method Client.GetCertificates.
 type ClientGetCertificatesResponse struct {
-	ClientGetCertificatesResult
+	CertificateListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetCertificatesResult contains the result from method Client.GetCertificates.
-type ClientGetCertificatesResult struct {
-	CertificateListResult
 }
 
 // ClientGetDeletedCertificateResponse contains the response from method Client.GetDeletedCertificate.
 type ClientGetDeletedCertificateResponse struct {
-	ClientGetDeletedCertificateResult
+	DeletedCertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedCertificateResult contains the result from method Client.GetDeletedCertificate.
-type ClientGetDeletedCertificateResult struct {
-	DeletedCertificateBundle
 }
 
 // ClientGetDeletedCertificatesResponse contains the response from method Client.GetDeletedCertificates.
 type ClientGetDeletedCertificatesResponse struct {
-	ClientGetDeletedCertificatesResult
+	DeletedCertificateListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedCertificatesResult contains the result from method Client.GetDeletedCertificates.
-type ClientGetDeletedCertificatesResult struct {
-	DeletedCertificateListResult
 }
 
 // ClientGetDeletedKeyResponse contains the response from method Client.GetDeletedKey.
 type ClientGetDeletedKeyResponse struct {
-	ClientGetDeletedKeyResult
+	DeletedKeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedKeyResult contains the result from method Client.GetDeletedKey.
-type ClientGetDeletedKeyResult struct {
-	DeletedKeyBundle
 }
 
 // ClientGetDeletedKeysResponse contains the response from method Client.GetDeletedKeys.
 type ClientGetDeletedKeysResponse struct {
-	ClientGetDeletedKeysResult
+	DeletedKeyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedKeysResult contains the result from method Client.GetDeletedKeys.
-type ClientGetDeletedKeysResult struct {
-	DeletedKeyListResult
 }
 
 // ClientGetDeletedSasDefinitionResponse contains the response from method Client.GetDeletedSasDefinition.
 type ClientGetDeletedSasDefinitionResponse struct {
-	ClientGetDeletedSasDefinitionResult
+	DeletedSasDefinitionBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedSasDefinitionResult contains the result from method Client.GetDeletedSasDefinition.
-type ClientGetDeletedSasDefinitionResult struct {
-	DeletedSasDefinitionBundle
 }
 
 // ClientGetDeletedSasDefinitionsResponse contains the response from method Client.GetDeletedSasDefinitions.
 type ClientGetDeletedSasDefinitionsResponse struct {
-	ClientGetDeletedSasDefinitionsResult
+	DeletedSasDefinitionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedSasDefinitionsResult contains the result from method Client.GetDeletedSasDefinitions.
-type ClientGetDeletedSasDefinitionsResult struct {
-	DeletedSasDefinitionListResult
 }
 
 // ClientGetDeletedSecretResponse contains the response from method Client.GetDeletedSecret.
 type ClientGetDeletedSecretResponse struct {
-	ClientGetDeletedSecretResult
+	DeletedSecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedSecretResult contains the result from method Client.GetDeletedSecret.
-type ClientGetDeletedSecretResult struct {
-	DeletedSecretBundle
 }
 
 // ClientGetDeletedSecretsResponse contains the response from method Client.GetDeletedSecrets.
 type ClientGetDeletedSecretsResponse struct {
-	ClientGetDeletedSecretsResult
+	DeletedSecretListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedSecretsResult contains the result from method Client.GetDeletedSecrets.
-type ClientGetDeletedSecretsResult struct {
-	DeletedSecretListResult
 }
 
 // ClientGetDeletedStorageAccountResponse contains the response from method Client.GetDeletedStorageAccount.
 type ClientGetDeletedStorageAccountResponse struct {
-	ClientGetDeletedStorageAccountResult
+	DeletedStorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedStorageAccountResult contains the result from method Client.GetDeletedStorageAccount.
-type ClientGetDeletedStorageAccountResult struct {
-	DeletedStorageBundle
 }
 
 // ClientGetDeletedStorageAccountsResponse contains the response from method Client.GetDeletedStorageAccounts.
 type ClientGetDeletedStorageAccountsResponse struct {
-	ClientGetDeletedStorageAccountsResult
+	DeletedStorageListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetDeletedStorageAccountsResult contains the result from method Client.GetDeletedStorageAccounts.
-type ClientGetDeletedStorageAccountsResult struct {
-	DeletedStorageListResult
 }
 
 // ClientGetKeyResponse contains the response from method Client.GetKey.
 type ClientGetKeyResponse struct {
-	ClientGetKeyResult
+	KeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetKeyResult contains the result from method Client.GetKey.
-type ClientGetKeyResult struct {
-	KeyBundle
 }
 
 // ClientGetKeyVersionsResponse contains the response from method Client.GetKeyVersions.
 type ClientGetKeyVersionsResponse struct {
-	ClientGetKeyVersionsResult
+	KeyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetKeyVersionsResult contains the result from method Client.GetKeyVersions.
-type ClientGetKeyVersionsResult struct {
-	KeyListResult
 }
 
 // ClientGetKeysResponse contains the response from method Client.GetKeys.
 type ClientGetKeysResponse struct {
-	ClientGetKeysResult
+	KeyListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetKeysResult contains the result from method Client.GetKeys.
-type ClientGetKeysResult struct {
-	KeyListResult
 }
 
 // ClientGetSasDefinitionResponse contains the response from method Client.GetSasDefinition.
 type ClientGetSasDefinitionResponse struct {
-	ClientGetSasDefinitionResult
+	SasDefinitionBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetSasDefinitionResult contains the result from method Client.GetSasDefinition.
-type ClientGetSasDefinitionResult struct {
-	SasDefinitionBundle
 }
 
 // ClientGetSasDefinitionsResponse contains the response from method Client.GetSasDefinitions.
 type ClientGetSasDefinitionsResponse struct {
-	ClientGetSasDefinitionsResult
+	SasDefinitionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetSasDefinitionsResult contains the result from method Client.GetSasDefinitions.
-type ClientGetSasDefinitionsResult struct {
-	SasDefinitionListResult
 }
 
 // ClientGetSecretResponse contains the response from method Client.GetSecret.
 type ClientGetSecretResponse struct {
-	ClientGetSecretResult
+	SecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetSecretResult contains the result from method Client.GetSecret.
-type ClientGetSecretResult struct {
-	SecretBundle
 }
 
 // ClientGetSecretVersionsResponse contains the response from method Client.GetSecretVersions.
 type ClientGetSecretVersionsResponse struct {
-	ClientGetSecretVersionsResult
+	SecretListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetSecretVersionsResult contains the result from method Client.GetSecretVersions.
-type ClientGetSecretVersionsResult struct {
-	SecretListResult
 }
 
 // ClientGetSecretsResponse contains the response from method Client.GetSecrets.
 type ClientGetSecretsResponse struct {
-	ClientGetSecretsResult
+	SecretListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetSecretsResult contains the result from method Client.GetSecrets.
-type ClientGetSecretsResult struct {
-	SecretListResult
 }
 
 // ClientGetStorageAccountResponse contains the response from method Client.GetStorageAccount.
 type ClientGetStorageAccountResponse struct {
-	ClientGetStorageAccountResult
+	StorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetStorageAccountResult contains the result from method Client.GetStorageAccount.
-type ClientGetStorageAccountResult struct {
-	StorageBundle
 }
 
 // ClientGetStorageAccountsResponse contains the response from method Client.GetStorageAccounts.
 type ClientGetStorageAccountsResponse struct {
-	ClientGetStorageAccountsResult
+	StorageListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientGetStorageAccountsResult contains the result from method Client.GetStorageAccounts.
-type ClientGetStorageAccountsResult struct {
-	StorageListResult
 }
 
 // ClientImportCertificateResponse contains the response from method Client.ImportCertificate.
 type ClientImportCertificateResponse struct {
-	ClientImportCertificateResult
+	CertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientImportCertificateResult contains the result from method Client.ImportCertificate.
-type ClientImportCertificateResult struct {
-	CertificateBundle
 }
 
 // ClientImportKeyResponse contains the response from method Client.ImportKey.
 type ClientImportKeyResponse struct {
-	ClientImportKeyResult
+	KeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientImportKeyResult contains the result from method Client.ImportKey.
-type ClientImportKeyResult struct {
-	KeyBundle
 }
 
 // ClientMergeCertificateResponse contains the response from method Client.MergeCertificate.
 type ClientMergeCertificateResponse struct {
-	ClientMergeCertificateResult
+	CertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientMergeCertificateResult contains the result from method Client.MergeCertificate.
-type ClientMergeCertificateResult struct {
-	CertificateBundle
 }
 
 // ClientPurgeDeletedCertificateResponse contains the response from method Client.PurgeDeletedCertificate.
@@ -719,134 +469,79 @@ type ClientPurgeDeletedStorageAccountResponse struct {
 
 // ClientRecoverDeletedCertificateResponse contains the response from method Client.RecoverDeletedCertificate.
 type ClientRecoverDeletedCertificateResponse struct {
-	ClientRecoverDeletedCertificateResult
+	CertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRecoverDeletedCertificateResult contains the result from method Client.RecoverDeletedCertificate.
-type ClientRecoverDeletedCertificateResult struct {
-	CertificateBundle
 }
 
 // ClientRecoverDeletedKeyResponse contains the response from method Client.RecoverDeletedKey.
 type ClientRecoverDeletedKeyResponse struct {
-	ClientRecoverDeletedKeyResult
+	KeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRecoverDeletedKeyResult contains the result from method Client.RecoverDeletedKey.
-type ClientRecoverDeletedKeyResult struct {
-	KeyBundle
 }
 
 // ClientRecoverDeletedSasDefinitionResponse contains the response from method Client.RecoverDeletedSasDefinition.
 type ClientRecoverDeletedSasDefinitionResponse struct {
-	ClientRecoverDeletedSasDefinitionResult
+	SasDefinitionBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRecoverDeletedSasDefinitionResult contains the result from method Client.RecoverDeletedSasDefinition.
-type ClientRecoverDeletedSasDefinitionResult struct {
-	SasDefinitionBundle
 }
 
 // ClientRecoverDeletedSecretResponse contains the response from method Client.RecoverDeletedSecret.
 type ClientRecoverDeletedSecretResponse struct {
-	ClientRecoverDeletedSecretResult
+	SecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRecoverDeletedSecretResult contains the result from method Client.RecoverDeletedSecret.
-type ClientRecoverDeletedSecretResult struct {
-	SecretBundle
 }
 
 // ClientRecoverDeletedStorageAccountResponse contains the response from method Client.RecoverDeletedStorageAccount.
 type ClientRecoverDeletedStorageAccountResponse struct {
-	ClientRecoverDeletedStorageAccountResult
+	StorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRecoverDeletedStorageAccountResult contains the result from method Client.RecoverDeletedStorageAccount.
-type ClientRecoverDeletedStorageAccountResult struct {
-	StorageBundle
 }
 
 // ClientRegenerateStorageAccountKeyResponse contains the response from method Client.RegenerateStorageAccountKey.
 type ClientRegenerateStorageAccountKeyResponse struct {
-	ClientRegenerateStorageAccountKeyResult
+	StorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRegenerateStorageAccountKeyResult contains the result from method Client.RegenerateStorageAccountKey.
-type ClientRegenerateStorageAccountKeyResult struct {
-	StorageBundle
 }
 
 // ClientRestoreCertificateResponse contains the response from method Client.RestoreCertificate.
 type ClientRestoreCertificateResponse struct {
-	ClientRestoreCertificateResult
+	CertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRestoreCertificateResult contains the result from method Client.RestoreCertificate.
-type ClientRestoreCertificateResult struct {
-	CertificateBundle
 }
 
 // ClientRestoreKeyResponse contains the response from method Client.RestoreKey.
 type ClientRestoreKeyResponse struct {
-	ClientRestoreKeyResult
+	KeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRestoreKeyResult contains the result from method Client.RestoreKey.
-type ClientRestoreKeyResult struct {
-	KeyBundle
 }
 
 // ClientRestoreSecretResponse contains the response from method Client.RestoreSecret.
 type ClientRestoreSecretResponse struct {
-	ClientRestoreSecretResult
+	SecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRestoreSecretResult contains the result from method Client.RestoreSecret.
-type ClientRestoreSecretResult struct {
-	SecretBundle
 }
 
 // ClientRestoreStatusResponse contains the response from method Client.RestoreStatus.
 type ClientRestoreStatusResponse struct {
-	ClientRestoreStatusResult
+	RestoreOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRestoreStatusResult contains the result from method Client.RestoreStatus.
-type ClientRestoreStatusResult struct {
-	RestoreOperation
 }
 
 // ClientRestoreStorageAccountResponse contains the response from method Client.RestoreStorageAccount.
 type ClientRestoreStorageAccountResponse struct {
-	ClientRestoreStorageAccountResult
+	StorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientRestoreStorageAccountResult contains the result from method Client.RestoreStorageAccount.
-type ClientRestoreStorageAccountResult struct {
-	StorageBundle
 }
 
 // ClientSelectiveKeyRestoreOperationPollerResponse contains the response from method Client.SelectiveKeyRestoreOperation.
@@ -890,230 +585,135 @@ func (l *ClientSelectiveKeyRestoreOperationPollerResponse) Resume(ctx context.Co
 
 // ClientSelectiveKeyRestoreOperationResponse contains the response from method Client.SelectiveKeyRestoreOperation.
 type ClientSelectiveKeyRestoreOperationResponse struct {
-	ClientSelectiveKeyRestoreOperationResult
+	SelectiveKeyRestoreOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSelectiveKeyRestoreOperationResult contains the result from method Client.SelectiveKeyRestoreOperation.
-type ClientSelectiveKeyRestoreOperationResult struct {
-	SelectiveKeyRestoreOperation
 }
 
 // ClientSetCertificateContactsResponse contains the response from method Client.SetCertificateContacts.
 type ClientSetCertificateContactsResponse struct {
-	ClientSetCertificateContactsResult
+	Contacts
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSetCertificateContactsResult contains the result from method Client.SetCertificateContacts.
-type ClientSetCertificateContactsResult struct {
-	Contacts
 }
 
 // ClientSetCertificateIssuerResponse contains the response from method Client.SetCertificateIssuer.
 type ClientSetCertificateIssuerResponse struct {
-	ClientSetCertificateIssuerResult
+	IssuerBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSetCertificateIssuerResult contains the result from method Client.SetCertificateIssuer.
-type ClientSetCertificateIssuerResult struct {
-	IssuerBundle
 }
 
 // ClientSetSasDefinitionResponse contains the response from method Client.SetSasDefinition.
 type ClientSetSasDefinitionResponse struct {
-	ClientSetSasDefinitionResult
+	SasDefinitionBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSetSasDefinitionResult contains the result from method Client.SetSasDefinition.
-type ClientSetSasDefinitionResult struct {
-	SasDefinitionBundle
 }
 
 // ClientSetSecretResponse contains the response from method Client.SetSecret.
 type ClientSetSecretResponse struct {
-	ClientSetSecretResult
+	SecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSetSecretResult contains the result from method Client.SetSecret.
-type ClientSetSecretResult struct {
-	SecretBundle
 }
 
 // ClientSetStorageAccountResponse contains the response from method Client.SetStorageAccount.
 type ClientSetStorageAccountResponse struct {
-	ClientSetStorageAccountResult
+	StorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSetStorageAccountResult contains the result from method Client.SetStorageAccount.
-type ClientSetStorageAccountResult struct {
-	StorageBundle
 }
 
 // ClientSignResponse contains the response from method Client.Sign.
 type ClientSignResponse struct {
-	ClientSignResult
+	KeyOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientSignResult contains the result from method Client.Sign.
-type ClientSignResult struct {
-	KeyOperationResult
 }
 
 // ClientUnwrapKeyResponse contains the response from method Client.UnwrapKey.
 type ClientUnwrapKeyResponse struct {
-	ClientUnwrapKeyResult
+	KeyOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUnwrapKeyResult contains the result from method Client.UnwrapKey.
-type ClientUnwrapKeyResult struct {
-	KeyOperationResult
 }
 
 // ClientUpdateCertificateIssuerResponse contains the response from method Client.UpdateCertificateIssuer.
 type ClientUpdateCertificateIssuerResponse struct {
-	ClientUpdateCertificateIssuerResult
+	IssuerBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateCertificateIssuerResult contains the result from method Client.UpdateCertificateIssuer.
-type ClientUpdateCertificateIssuerResult struct {
-	IssuerBundle
 }
 
 // ClientUpdateCertificateOperationResponse contains the response from method Client.UpdateCertificateOperation.
 type ClientUpdateCertificateOperationResponse struct {
-	ClientUpdateCertificateOperationResult
+	CertificateOperation
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateCertificateOperationResult contains the result from method Client.UpdateCertificateOperation.
-type ClientUpdateCertificateOperationResult struct {
-	CertificateOperation
 }
 
 // ClientUpdateCertificatePolicyResponse contains the response from method Client.UpdateCertificatePolicy.
 type ClientUpdateCertificatePolicyResponse struct {
-	ClientUpdateCertificatePolicyResult
+	CertificatePolicy
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateCertificatePolicyResult contains the result from method Client.UpdateCertificatePolicy.
-type ClientUpdateCertificatePolicyResult struct {
-	CertificatePolicy
 }
 
 // ClientUpdateCertificateResponse contains the response from method Client.UpdateCertificate.
 type ClientUpdateCertificateResponse struct {
-	ClientUpdateCertificateResult
+	CertificateBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateCertificateResult contains the result from method Client.UpdateCertificate.
-type ClientUpdateCertificateResult struct {
-	CertificateBundle
 }
 
 // ClientUpdateKeyResponse contains the response from method Client.UpdateKey.
 type ClientUpdateKeyResponse struct {
-	ClientUpdateKeyResult
+	KeyBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateKeyResult contains the result from method Client.UpdateKey.
-type ClientUpdateKeyResult struct {
-	KeyBundle
 }
 
 // ClientUpdateSasDefinitionResponse contains the response from method Client.UpdateSasDefinition.
 type ClientUpdateSasDefinitionResponse struct {
-	ClientUpdateSasDefinitionResult
+	SasDefinitionBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateSasDefinitionResult contains the result from method Client.UpdateSasDefinition.
-type ClientUpdateSasDefinitionResult struct {
-	SasDefinitionBundle
 }
 
 // ClientUpdateSecretResponse contains the response from method Client.UpdateSecret.
 type ClientUpdateSecretResponse struct {
-	ClientUpdateSecretResult
+	SecretBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateSecretResult contains the result from method Client.UpdateSecret.
-type ClientUpdateSecretResult struct {
-	SecretBundle
 }
 
 // ClientUpdateStorageAccountResponse contains the response from method Client.UpdateStorageAccount.
 type ClientUpdateStorageAccountResponse struct {
-	ClientUpdateStorageAccountResult
+	StorageBundle
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientUpdateStorageAccountResult contains the result from method Client.UpdateStorageAccount.
-type ClientUpdateStorageAccountResult struct {
-	StorageBundle
 }
 
 // ClientVerifyResponse contains the response from method Client.Verify.
 type ClientVerifyResponse struct {
-	ClientVerifyResult
+	KeyVerifyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientVerifyResult contains the result from method Client.Verify.
-type ClientVerifyResult struct {
-	KeyVerifyResult
 }
 
 // ClientWrapKeyResponse contains the response from method Client.WrapKey.
 type ClientWrapKeyResponse struct {
-	ClientWrapKeyResult
+	KeyOperationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// ClientWrapKeyResult contains the result from method Client.WrapKey.
-type ClientWrapKeyResult struct {
-	KeyOperationResult
 }
 
 // HSMSecurityDomainClientDownloadPendingResponse contains the response from method HSMSecurityDomainClient.DownloadPending.
 type HSMSecurityDomainClientDownloadPendingResponse struct {
-	HSMSecurityDomainClientDownloadPendingResult
+	SecurityDomainOperationStatus
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HSMSecurityDomainClientDownloadPendingResult contains the result from method HSMSecurityDomainClient.DownloadPending.
-type HSMSecurityDomainClientDownloadPendingResult struct {
-	SecurityDomainOperationStatus
 }
 
 // HSMSecurityDomainClientDownloadPollerResponse contains the response from method HSMSecurityDomainClient.Download.
@@ -1157,38 +757,23 @@ func (l *HSMSecurityDomainClientDownloadPollerResponse) Resume(ctx context.Conte
 
 // HSMSecurityDomainClientDownloadResponse contains the response from method HSMSecurityDomainClient.Download.
 type HSMSecurityDomainClientDownloadResponse struct {
-	HSMSecurityDomainClientDownloadResult
+	SecurityDomainObject
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HSMSecurityDomainClientDownloadResult contains the result from method HSMSecurityDomainClient.Download.
-type HSMSecurityDomainClientDownloadResult struct {
-	SecurityDomainObject
 }
 
 // HSMSecurityDomainClientTransferKeyResponse contains the response from method HSMSecurityDomainClient.TransferKey.
 type HSMSecurityDomainClientTransferKeyResponse struct {
-	HSMSecurityDomainClientTransferKeyResult
+	TransferKey
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HSMSecurityDomainClientTransferKeyResult contains the result from method HSMSecurityDomainClient.TransferKey.
-type HSMSecurityDomainClientTransferKeyResult struct {
-	TransferKey
 }
 
 // HSMSecurityDomainClientUploadPendingResponse contains the response from method HSMSecurityDomainClient.UploadPending.
 type HSMSecurityDomainClientUploadPendingResponse struct {
-	HSMSecurityDomainClientUploadPendingResult
+	SecurityDomainOperationStatus
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HSMSecurityDomainClientUploadPendingResult contains the result from method HSMSecurityDomainClient.UploadPending.
-type HSMSecurityDomainClientUploadPendingResult struct {
-	SecurityDomainOperationStatus
 }
 
 // HSMSecurityDomainClientUploadPollerResponse contains the response from method HSMSecurityDomainClient.Upload.
@@ -1232,108 +817,63 @@ func (l *HSMSecurityDomainClientUploadPollerResponse) Resume(ctx context.Context
 
 // HSMSecurityDomainClientUploadResponse contains the response from method HSMSecurityDomainClient.Upload.
 type HSMSecurityDomainClientUploadResponse struct {
-	HSMSecurityDomainClientUploadResult
+	SecurityDomainOperationStatus
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// HSMSecurityDomainClientUploadResult contains the result from method HSMSecurityDomainClient.Upload.
-type HSMSecurityDomainClientUploadResult struct {
-	SecurityDomainOperationStatus
 }
 
 // RoleAssignmentsClientCreateResponse contains the response from method RoleAssignmentsClient.Create.
 type RoleAssignmentsClientCreateResponse struct {
-	RoleAssignmentsClientCreateResult
+	RoleAssignment
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleAssignmentsClientCreateResult contains the result from method RoleAssignmentsClient.Create.
-type RoleAssignmentsClientCreateResult struct {
-	RoleAssignment
 }
 
 // RoleAssignmentsClientDeleteResponse contains the response from method RoleAssignmentsClient.Delete.
 type RoleAssignmentsClientDeleteResponse struct {
-	RoleAssignmentsClientDeleteResult
+	RoleAssignment
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleAssignmentsClientDeleteResult contains the result from method RoleAssignmentsClient.Delete.
-type RoleAssignmentsClientDeleteResult struct {
-	RoleAssignment
 }
 
 // RoleAssignmentsClientGetResponse contains the response from method RoleAssignmentsClient.Get.
 type RoleAssignmentsClientGetResponse struct {
-	RoleAssignmentsClientGetResult
+	RoleAssignment
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleAssignmentsClientGetResult contains the result from method RoleAssignmentsClient.Get.
-type RoleAssignmentsClientGetResult struct {
-	RoleAssignment
 }
 
 // RoleAssignmentsClientListForScopeResponse contains the response from method RoleAssignmentsClient.ListForScope.
 type RoleAssignmentsClientListForScopeResponse struct {
-	RoleAssignmentsClientListForScopeResult
+	RoleAssignmentListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleAssignmentsClientListForScopeResult contains the result from method RoleAssignmentsClient.ListForScope.
-type RoleAssignmentsClientListForScopeResult struct {
-	RoleAssignmentListResult
 }
 
 // RoleDefinitionsClientCreateOrUpdateResponse contains the response from method RoleDefinitionsClient.CreateOrUpdate.
 type RoleDefinitionsClientCreateOrUpdateResponse struct {
-	RoleDefinitionsClientCreateOrUpdateResult
+	RoleDefinition
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleDefinitionsClientCreateOrUpdateResult contains the result from method RoleDefinitionsClient.CreateOrUpdate.
-type RoleDefinitionsClientCreateOrUpdateResult struct {
-	RoleDefinition
 }
 
 // RoleDefinitionsClientDeleteResponse contains the response from method RoleDefinitionsClient.Delete.
 type RoleDefinitionsClientDeleteResponse struct {
-	RoleDefinitionsClientDeleteResult
+	RoleDefinition
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleDefinitionsClientDeleteResult contains the result from method RoleDefinitionsClient.Delete.
-type RoleDefinitionsClientDeleteResult struct {
-	RoleDefinition
 }
 
 // RoleDefinitionsClientGetResponse contains the response from method RoleDefinitionsClient.Get.
 type RoleDefinitionsClientGetResponse struct {
-	RoleDefinitionsClientGetResult
+	RoleDefinition
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleDefinitionsClientGetResult contains the result from method RoleDefinitionsClient.Get.
-type RoleDefinitionsClientGetResult struct {
-	RoleDefinition
 }
 
 // RoleDefinitionsClientListResponse contains the response from method RoleDefinitionsClient.List.
 type RoleDefinitionsClientListResponse struct {
-	RoleDefinitionsClientListResult
+	RoleDefinitionListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// RoleDefinitionsClientListResult contains the result from method RoleDefinitionsClient.List.
-type RoleDefinitionsClientListResult struct {
-	RoleDefinitionListResult
 }

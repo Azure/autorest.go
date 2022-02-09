@@ -12,26 +12,16 @@ import "net/http"
 
 // PetClientDoSomethingResponse contains the response from method PetClient.DoSomething.
 type PetClientDoSomethingResponse struct {
-	PetClientDoSomethingResult
+	PetAction
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PetClientDoSomethingResult contains the result from method PetClient.DoSomething.
-type PetClientDoSomethingResult struct {
-	PetAction
 }
 
 // PetClientGetPetByIDResponse contains the response from method PetClient.GetPetByID.
 type PetClientGetPetByIDResponse struct {
-	PetClientGetPetByIDResult
+	Pet
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// PetClientGetPetByIDResult contains the result from method PetClient.GetPetByID.
-type PetClientGetPetByIDResult struct {
-	Pet
 }
 
 // PetClientHasModelsParamResponse contains the response from method PetClient.HasModelsParam.

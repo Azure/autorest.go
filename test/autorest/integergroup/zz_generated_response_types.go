@@ -15,111 +15,69 @@ import (
 
 // IntClientGetInvalidResponse contains the response from method IntClient.GetInvalid.
 type IntClientGetInvalidResponse struct {
-	IntClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientGetInvalidResult contains the result from method IntClient.GetInvalid.
-type IntClientGetInvalidResult struct {
-	Value *int32
+	Value       *int32
 }
 
 // IntClientGetInvalidUnixTimeResponse contains the response from method IntClient.GetInvalidUnixTime.
 type IntClientGetInvalidUnixTimeResponse struct {
-	IntClientGetInvalidUnixTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// IntClientGetInvalidUnixTimeResult contains the result from method IntClient.GetInvalidUnixTime.
-type IntClientGetInvalidUnixTimeResult struct {
 	// date in seconds since 1970-01-01T00:00:00Z.
 	Value *time.Time
 }
 
 // IntClientGetNullResponse contains the response from method IntClient.GetNull.
 type IntClientGetNullResponse struct {
-	IntClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientGetNullResult contains the result from method IntClient.GetNull.
-type IntClientGetNullResult struct {
-	Value *int32
+	Value       *int32
 }
 
 // IntClientGetNullUnixTimeResponse contains the response from method IntClient.GetNullUnixTime.
 type IntClientGetNullUnixTimeResponse struct {
-	IntClientGetNullUnixTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// IntClientGetNullUnixTimeResult contains the result from method IntClient.GetNullUnixTime.
-type IntClientGetNullUnixTimeResult struct {
 	// date in seconds since 1970-01-01T00:00:00Z.
 	Value *time.Time
 }
 
 // IntClientGetOverflowInt32Response contains the response from method IntClient.GetOverflowInt32.
 type IntClientGetOverflowInt32Response struct {
-	IntClientGetOverflowInt32Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientGetOverflowInt32Result contains the result from method IntClient.GetOverflowInt32.
-type IntClientGetOverflowInt32Result struct {
-	Value *int32
+	Value       *int32
 }
 
 // IntClientGetOverflowInt64Response contains the response from method IntClient.GetOverflowInt64.
 type IntClientGetOverflowInt64Response struct {
-	IntClientGetOverflowInt64Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientGetOverflowInt64Result contains the result from method IntClient.GetOverflowInt64.
-type IntClientGetOverflowInt64Result struct {
-	Value *int64
+	Value       *int64
 }
 
 // IntClientGetUnderflowInt32Response contains the response from method IntClient.GetUnderflowInt32.
 type IntClientGetUnderflowInt32Response struct {
-	IntClientGetUnderflowInt32Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientGetUnderflowInt32Result contains the result from method IntClient.GetUnderflowInt32.
-type IntClientGetUnderflowInt32Result struct {
-	Value *int32
+	Value       *int32
 }
 
 // IntClientGetUnderflowInt64Response contains the response from method IntClient.GetUnderflowInt64.
 type IntClientGetUnderflowInt64Response struct {
-	IntClientGetUnderflowInt64Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientGetUnderflowInt64Result contains the result from method IntClient.GetUnderflowInt64.
-type IntClientGetUnderflowInt64Result struct {
-	Value *int64
+	Value       *int64
 }
 
 // IntClientGetUnixTimeResponse contains the response from method IntClient.GetUnixTime.
 type IntClientGetUnixTimeResponse struct {
-	IntClientGetUnixTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// IntClientGetUnixTimeResult contains the result from method IntClient.GetUnixTime.
-type IntClientGetUnixTimeResult struct {
 	// date in seconds since 1970-01-01T00:00:00Z.
 	Value *time.Time
 }

@@ -12,50 +12,32 @@ import "net/http"
 
 // FloatClientGetResponse contains the response from method FloatClient.Get.
 type FloatClientGetResponse struct {
-	FloatClientGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// FloatClientGetResult contains the result from method FloatClient.Get.
-type FloatClientGetResult struct {
 	// List of float enums
 	Value *FloatEnum
 }
 
 // FloatClientPutResponse contains the response from method FloatClient.Put.
 type FloatClientPutResponse struct {
-	FloatClientPutResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// FloatClientPutResult contains the result from method FloatClient.Put.
-type FloatClientPutResult struct {
-	Value *string
+	Value       *string
 }
 
 // IntClientGetResponse contains the response from method IntClient.Get.
 type IntClientGetResponse struct {
-	IntClientGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
 
-// IntClientGetResult contains the result from method IntClient.Get.
-type IntClientGetResult struct {
 	// List of integer enums
 	Value *IntEnum
 }
 
 // IntClientPutResponse contains the response from method IntClient.Put.
 type IntClientPutResponse struct {
-	IntClientPutResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
-}
-
-// IntClientPutResult contains the result from method IntClient.Put.
-type IntClientPutResult struct {
-	Value *string
+	Value       *string
 }

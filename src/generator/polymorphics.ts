@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isDictionarySchema, isObjectSchema } from '../common/helpers';
+import { isArraySchema, isDictionarySchema } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
@@ -52,15 +52,10 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     }
   }
   for (const respEnv of values(<Array<ObjectSchema>>session.model.language.go!.responseEnvelopes)) {
-    if (respEnv.language.go!.resultEnv) {
-      const resultEnv = <Property>respEnv.language.go!.resultEnv;
-      if (isObjectSchema(resultEnv.schema)) {
-        for (const prop of values(resultEnv.schema.properties)) {
-          if (prop.isDiscriminator) {
-            trackDisciminator(prop);
-            break;
-          }
-        }
+    if (respEnv.language.go!.resultProp) {
+      const resultProp = <Property>respEnv.language.go!.resultProp;
+      if (resultProp.isDiscriminator) {
+        trackDisciminator(resultProp);
       }
     }
   }
