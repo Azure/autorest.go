@@ -199,7 +199,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const doc of values(paramDocs)) {
       clientText += `${doc}\n`;
     }
-    clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
+    if (<boolean>session.model.language.go!.azureARM) {
+      clientText += `func ${clientCtor}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
+    } else {
+      clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
+    }
     if (isARM) {
       // data-plane doesn't take client options
       clientText += '\tif options == nil {\n';
@@ -328,7 +332,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
       clientText += '\t}\n';
     }
-    clientText += '\treturn client\n';
+    if (<boolean>session.model.language.go!.azureARM) {
+      clientText += '\treturn client, nil\n';
+    } else {
+      clientText += '\treturn client\n';
+    }
     clientText += '}\n\n';
 
     // generate operations
