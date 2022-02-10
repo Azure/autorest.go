@@ -10,6 +10,7 @@ package azblob
 
 import (
 	"encoding/xml"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"time"
 )
 
@@ -287,7 +288,7 @@ func (p PropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	aux := &struct {
 		*alias
 		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
-		ContentMD5                  *[]byte      `xml:"Content-MD5"`
+		ContentMD5                  *string      `xml:"Content-MD5"`
 		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
 		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
 		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
@@ -307,7 +308,8 @@ func (p PropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		LastModified:                (*timeRFC1123)(p.LastModified),
 	}
 	if p.ContentMD5 != nil {
-		aux.ContentMD5 = &p.ContentMD5
+		encodedContentMD5 := runtime.EncodeByteArray(p.ContentMD5, runtime.Base64StdFormat)
+		aux.ContentMD5 = &encodedContentMD5
 	}
 	return e.EncodeElement(aux, start)
 }
@@ -318,7 +320,7 @@ func (p *PropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	aux := &struct {
 		*alias
 		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
-		ContentMD5                  *[]byte      `xml:"Content-MD5"`
+		ContentMD5                  *string      `xml:"Content-MD5"`
 		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
 		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
 		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
@@ -333,6 +335,11 @@ func (p *PropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 		return err
 	}
 	p.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
+	if aux.ContentMD5 != nil {
+		if err := runtime.DecodeByteArray(*aux.ContentMD5, &p.ContentMD5, runtime.Base64StdFormat); err != nil {
+			return err
+		}
+	}
 	p.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
 	p.CreationTime = (*time.Time)(aux.CreationTime)
 	p.DeletedTime = (*time.Time)(aux.DeletedTime)

@@ -108,9 +108,10 @@ async function process(session: Session<CodeModel>) {
         prop.language.go!.needsXMLDictionaryUnmarshalling = true;
         session.model.language.go!.needsXMLDictionaryUnmarshalling = true;
       } else if (prop.schema.type === SchemaType.ByteArray) {
+        prop.language.go!.byValue = true;
         obj.language.go!.byteArrayFormat = (<ByteArraySchema>prop.schema).format;
       }
-      if (prop.schema.type === SchemaType.Array || prop.schema.type === SchemaType.ByteArray || prop.schema.type === SchemaType.Dictionary) {
+      if (prop.schema.type === SchemaType.Array || prop.schema.type === SchemaType.Dictionary) {
         obj.language.go!.hasArrayMap = true;
         prop.language.go!.byValue = true;
         if (prop.schema.type !== SchemaType.Dictionary && obj.language.go!.marshallingFormat === 'xml') {
