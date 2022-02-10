@@ -55,6 +55,17 @@ func TestGetACLs(t *testing.T) {
 	}
 }
 
+func TestGetBytes(t *testing.T) {
+	client := newXMLClient()
+	result, err := client.GetBytes(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(result.Bytes) != "Hello world" {
+		t.Fatalf("unexpected bytes %s", string(result.Bytes))
+	}
+}
+
 func TestGetComplexTypeRefNoMeta(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetComplexTypeRefNoMeta(context.Background(), nil)
@@ -540,6 +551,16 @@ func TestPutACLs(t *testing.T) {
 	}
 	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
 		t.Fatalf("unexpected status code %d", s)
+	}
+}
+
+func TestPutBinary(t *testing.T) {
+	client := newXMLClient()
+	_, err := client.PutBinary(context.Background(), ModelWithByteProperty{
+		Bytes: []byte("Hello world"),
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
 

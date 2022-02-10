@@ -115,13 +115,13 @@ function generateStructs(modelImports: ImportManager, serdeImports: ImportManage
         serdeImports.add('time');
       }
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
-      if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj)) {
-        generateXMLMarshaller(structDef);
-        if (obj.language.go!.needsDateTimeMarshalling) {
-          generateXMLUnmarshaller(structDef);
+      if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj) || obj.language.go!.byteArrayFormat) {
+        generateXMLMarshaller(structDef, serdeImports);
+        if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.byteArrayFormat) {
+          generateXMLUnmarshaller(structDef, serdeImports);
         }
       } else if (needsXMLDictionaryUnmarshalling(obj)) {
-        generateXMLUnmarshaller(structDef);
+        generateXMLUnmarshaller(structDef, serdeImports);
       }
       structTypes.push(structDef);
       continue;
@@ -451,7 +451,7 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
   return unmarshalBody;
 }
 
-function generateXMLMarshaller(structDef: StructDef) {
+function generateXMLMarshaller(structDef: StructDef, imports: ImportManager) {
   // only needed for types with time.Time or where the XML name doesn't match the type name
   const receiver = structDef.receiverName();
   const desc = `MarshalXML implements the xml.Marshaller interface for type ${structDef.Language.name}.`;
@@ -460,24 +460,29 @@ function generateXMLMarshaller(structDef: StructDef) {
     text += `\tstart.Name.Local = "${structDef.Language.xmlWrapperName}"\n`;
   }
   text += generateAliasType(structDef, receiver, true);
-  // check for fields that require array marshalling
-  const arrays = new Array<Property>();
   for (const prop of values(structDef.Properties)) {
     if (prop.language.go!.needsXMLArrayMarshalling) {
-      arrays.push(prop);
+      text += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`;
+      text += `\t\taux.${prop.language.go!.name} = &${receiver}.${prop.language.go!.name}\n`;
+      text += '\t}\n';
+    } else if (prop.schema.type === SchemaType.ByteArray) {
+      let base64Format = 'Std';
+      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
+        base64Format = 'URL';
+      }
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      text += `\tif ${receiver}.${prop.language.go!.name} != nil {\n`
+      text += `\t\tencoded${prop.language.go!.name} := runtime.EncodeByteArray(${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
+      text += `\t\taux.${prop.language.go!.name} = &encoded${prop.language.go!.name}\n`;
+      text += '\t}\n';
     }
-  }
-  for (const array of values(arrays)) {
-    text += `\tif ${receiver}.${array.language.go!.name} != nil {\n`;
-    text += `\t\taux.${array.language.go!.name} = &${receiver}.${array.language.go!.name}\n`;
-    text += '\t}\n';
   }
   text += '\treturn e.EncodeElement(aux, start)\n';
   text += '}\n\n';
   structDef.Methods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
-function generateXMLUnmarshaller(structDef: StructDef) {
+function generateXMLUnmarshaller(structDef: StructDef, imports: ImportManager) {
   // non-polymorphic case, must be something with time.Time
   const receiver = structDef.receiverName();
   const desc = `UnmarshalXML implements the xml.Unmarshaller interface for type ${structDef.Language.name}.`;
@@ -491,6 +496,17 @@ function generateXMLUnmarshaller(structDef: StructDef) {
       text += `\t${receiver}.${prop.language.go!.name} = (*time.Time)(aux.${prop.language.go!.name})\n`;
     } else if (prop.language.go!.isAdditionalProperties || prop.language.go!.needsXMLDictionaryUnmarshalling) {
       text += `\t${receiver}.${prop.language.go!.name} = (map[string]*string)(aux.${prop.language.go!.name})\n`;
+    } else if (prop.schema.type === SchemaType.ByteArray) {
+      let base64Format = 'Std';
+      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
+        base64Format = 'URL';
+      }
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      text += `\tif aux.${prop.language.go!.name} != nil {\n`
+      text += `\t\tif err := runtime.DecodeByteArray(*aux.${prop.language.go!.name}, &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format); err != nil {\n`;
+      text += '\t\t\treturn err\n';
+      text += '\t\t}\n';
+      text += '\t}\n';
     }
   }
   text += '\treturn nil\n';
@@ -511,6 +527,8 @@ function generateAliasType(structDef: StructDef, receiver: string, forMarshal: b
       text += `\t\t${prop.language.go!.name} additionalProperties \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
     } else if (prop.language.go!.needsXMLArrayMarshalling) {
       text += `\t\t${prop.language.go!.name} *${prop.schema.language.go!.name} \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
+    } else if (prop.schema.type === SchemaType.ByteArray) {
+      text += `\t\t${prop.language.go!.name} *string \`${structDef.Language.marshallingFormat}:"${sn}"\`\n`;
     }
   }
   text += `\t}{\n`;

@@ -10,6 +10,7 @@ package xmlgroup
 
 import (
 	"encoding/xml"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"time"
 )
 
@@ -232,14 +233,35 @@ func (m ModelWithByteProperty) MarshalXML(e *xml.Encoder, start xml.StartElement
 	type alias ModelWithByteProperty
 	aux := &struct {
 		*alias
-		Bytes *[]byte `xml:"Bytes"`
+		Bytes *string `xml:"Bytes"`
 	}{
 		alias: (*alias)(&m),
 	}
 	if m.Bytes != nil {
-		aux.Bytes = &m.Bytes
+		encodedBytes := runtime.EncodeByteArray(m.Bytes, runtime.Base64StdFormat)
+		aux.Bytes = &encodedBytes
 	}
 	return e.EncodeElement(aux, start)
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type ModelWithByteProperty.
+func (m *ModelWithByteProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias ModelWithByteProperty
+	aux := &struct {
+		*alias
+		Bytes *string `xml:"Bytes"`
+	}{
+		alias: (*alias)(m),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	if aux.Bytes != nil {
+		if err := runtime.DecodeByteArray(*aux.Bytes, &m.Bytes, runtime.Base64StdFormat); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // MarshalXML implements the xml.Marshaller interface for type Slide.
