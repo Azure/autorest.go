@@ -52,7 +52,7 @@ func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return triggerRunClientCancelTriggerInstanceResponse{}, runtime.NewResponseError(resp)
 	}
-	return triggerRunClientCancelTriggerInstanceResponse{RawResponse: resp}, nil
+	return triggerRunClientCancelTriggerInstanceResponse{}, nil
 }
 
 // cancelTriggerInstanceCreateRequest creates the CancelTriggerInstance request.
@@ -113,7 +113,7 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 
 // queryTriggerRunsByWorkspaceHandleResponse handles the QueryTriggerRunsByWorkspace response.
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *http.Response) (triggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
-	result := triggerRunClientQueryTriggerRunsByWorkspaceResponse{RawResponse: resp}
+	result := triggerRunClientQueryTriggerRunsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerRunsQueryResponse); err != nil {
 		return triggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
 	}
@@ -138,7 +138,7 @@ func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return triggerRunClientRerunTriggerInstanceResponse{}, runtime.NewResponseError(resp)
 	}
-	return triggerRunClientRerunTriggerInstanceResponse{RawResponse: resp}, nil
+	return triggerRunClientRerunTriggerInstanceResponse{}, nil
 }
 
 // rerunTriggerInstanceCreateRequest creates the RerunTriggerInstance request.

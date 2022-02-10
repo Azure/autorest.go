@@ -64,9 +64,7 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 	if err != nil {
 		return SnapshotsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SnapshotsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := SnapshotsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientCreateOrUpdatePollerResponse{}, err
@@ -132,9 +130,7 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return SnapshotsClientDeletePollerResponse{}, err
 	}
-	result := SnapshotsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := SnapshotsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientDeletePollerResponse{}, err
@@ -237,7 +233,7 @@ func (client *SnapshotsClient) getCreateRequest(ctx context.Context, resourceGro
 
 // getHandleResponse handles the Get response.
 func (client *SnapshotsClient) getHandleResponse(resp *http.Response) (SnapshotsClientGetResponse, error) {
-	result := SnapshotsClientGetResponse{RawResponse: resp}
+	result := SnapshotsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Snapshot); err != nil {
 		return SnapshotsClientGetResponse{}, err
 	}
@@ -258,9 +254,7 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 	if err != nil {
 		return SnapshotsClientGrantAccessPollerResponse{}, err
 	}
-	result := SnapshotsClientGrantAccessPollerResponse{
-		RawResponse: resp,
-	}
+	result := SnapshotsClientGrantAccessPollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.GrantAccess", "location", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientGrantAccessPollerResponse{}, err
@@ -349,7 +343,7 @@ func (client *SnapshotsClient) listCreateRequest(ctx context.Context, options *S
 
 // listHandleResponse handles the List response.
 func (client *SnapshotsClient) listHandleResponse(resp *http.Response) (SnapshotsClientListResponse, error) {
-	result := SnapshotsClientListResponse{RawResponse: resp}
+	result := SnapshotsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SnapshotList); err != nil {
 		return SnapshotsClientListResponse{}, err
 	}
@@ -397,7 +391,7 @@ func (client *SnapshotsClient) listByResourceGroupCreateRequest(ctx context.Cont
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *SnapshotsClient) listByResourceGroupHandleResponse(resp *http.Response) (SnapshotsClientListByResourceGroupResponse, error) {
-	result := SnapshotsClientListByResourceGroupResponse{RawResponse: resp}
+	result := SnapshotsClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SnapshotList); err != nil {
 		return SnapshotsClientListByResourceGroupResponse{}, err
 	}
@@ -417,9 +411,7 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 	if err != nil {
 		return SnapshotsClientRevokeAccessPollerResponse{}, err
 	}
-	result := SnapshotsClientRevokeAccessPollerResponse{
-		RawResponse: resp,
-	}
+	result := SnapshotsClientRevokeAccessPollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.RevokeAccess", "location", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientRevokeAccessPollerResponse{}, err
@@ -485,9 +477,7 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	if err != nil {
 		return SnapshotsClientUpdatePollerResponse{}, err
 	}
-	result := SnapshotsClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := SnapshotsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientUpdatePollerResponse{}, err

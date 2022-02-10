@@ -96,7 +96,7 @@ func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope s
 
 // listHandleResponse handles the List response.
 func (client *MarketplacesClient) listHandleResponse(resp *http.Response) (MarketplacesClientListResponse, error) {
-	result := MarketplacesClientListResponse{RawResponse: resp}
+	result := MarketplacesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MarketplacesListResult); err != nil {
 		return MarketplacesClientListResponse{}, err
 	}

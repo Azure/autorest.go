@@ -64,9 +64,7 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesClientCapturePollerResponse{}, err
 	}
-	result := VirtualMachinesClientCapturePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientCapturePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Capture", "location", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientCapturePollerResponse{}, err
@@ -136,9 +134,7 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	if err != nil {
 		return VirtualMachinesClientConvertToManagedDisksPollerResponse{}, err
 	}
-	result := VirtualMachinesClientConvertToManagedDisksPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientConvertToManagedDisksPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.ConvertToManagedDisks", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientConvertToManagedDisksPollerResponse{}, err
@@ -208,9 +204,7 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return VirtualMachinesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualMachinesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientCreateOrUpdatePollerResponse{}, err
@@ -277,9 +271,7 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	if err != nil {
 		return VirtualMachinesClientDeallocatePollerResponse{}, err
 	}
-	result := VirtualMachinesClientDeallocatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientDeallocatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Deallocate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientDeallocatePollerResponse{}, err
@@ -344,9 +336,7 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualMachinesClientDeletePollerResponse{}, err
 	}
-	result := VirtualMachinesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientDeletePollerResponse{}, err
@@ -421,7 +411,7 @@ func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGro
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return VirtualMachinesClientGeneralizeResponse{}, runtime.NewResponseError(resp)
 	}
-	return VirtualMachinesClientGeneralizeResponse{RawResponse: resp}, nil
+	return VirtualMachinesClientGeneralizeResponse{}, nil
 }
 
 // generalizeCreateRequest creates the Generalize request.
@@ -500,7 +490,7 @@ func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client *VirtualMachinesClient) getHandleResponse(resp *http.Response) (VirtualMachinesClientGetResponse, error) {
-	result := VirtualMachinesClientGetResponse{RawResponse: resp}
+	result := VirtualMachinesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachine); err != nil {
 		return VirtualMachinesClientGetResponse{}, err
 	}
@@ -556,7 +546,7 @@ func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Conte
 
 // instanceViewHandleResponse handles the InstanceView response.
 func (client *VirtualMachinesClient) instanceViewHandleResponse(resp *http.Response) (VirtualMachinesClientInstanceViewResponse, error) {
-	result := VirtualMachinesClientInstanceViewResponse{RawResponse: resp}
+	result := VirtualMachinesClientInstanceViewResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineInstanceView); err != nil {
 		return VirtualMachinesClientInstanceViewResponse{}, err
 	}
@@ -604,7 +594,7 @@ func (client *VirtualMachinesClient) listCreateRequest(ctx context.Context, reso
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachinesClient) listHandleResponse(resp *http.Response) (VirtualMachinesClientListResponse, error) {
-	result := VirtualMachinesClientListResponse{RawResponse: resp}
+	result := VirtualMachinesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
 		return VirtualMachinesClientListResponse{}, err
 	}
@@ -650,7 +640,7 @@ func (client *VirtualMachinesClient) listAllCreateRequest(ctx context.Context, o
 
 // listAllHandleResponse handles the ListAll response.
 func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) (VirtualMachinesClientListAllResponse, error) {
-	result := VirtualMachinesClientListAllResponse{RawResponse: resp}
+	result := VirtualMachinesClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
 		return VirtualMachinesClientListAllResponse{}, err
 	}
@@ -700,7 +690,7 @@ func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context
 
 // listAvailableSizesHandleResponse handles the ListAvailableSizes response.
 func (client *VirtualMachinesClient) listAvailableSizesHandleResponse(resp *http.Response) (VirtualMachinesClientListAvailableSizesResponse, error) {
-	result := VirtualMachinesClientListAvailableSizesResponse{RawResponse: resp}
+	result := VirtualMachinesClientListAvailableSizesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
 		return VirtualMachinesClientListAvailableSizesResponse{}, err
 	}
@@ -748,7 +738,7 @@ func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Con
 
 // listByLocationHandleResponse handles the ListByLocation response.
 func (client *VirtualMachinesClient) listByLocationHandleResponse(resp *http.Response) (VirtualMachinesClientListByLocationResponse, error) {
-	result := VirtualMachinesClientListByLocationResponse{RawResponse: resp}
+	result := VirtualMachinesClientListByLocationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
 		return VirtualMachinesClientListByLocationResponse{}, err
 	}
@@ -767,9 +757,7 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	if err != nil {
 		return VirtualMachinesClientPerformMaintenancePollerResponse{}, err
 	}
-	result := VirtualMachinesClientPerformMaintenancePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientPerformMaintenancePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.PerformMaintenance", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientPerformMaintenancePollerResponse{}, err
@@ -835,9 +823,7 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	if err != nil {
 		return VirtualMachinesClientPowerOffPollerResponse{}, err
 	}
-	result := VirtualMachinesClientPowerOffPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientPowerOffPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.PowerOff", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientPowerOffPollerResponse{}, err
@@ -905,9 +891,7 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesClientReapplyPollerResponse{}, err
 	}
-	result := VirtualMachinesClientReapplyPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientReapplyPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Reapply", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientReapplyPollerResponse{}, err
@@ -972,9 +956,7 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 	if err != nil {
 		return VirtualMachinesClientRedeployPollerResponse{}, err
 	}
-	result := VirtualMachinesClientRedeployPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientRedeployPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Redeploy", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientRedeployPollerResponse{}, err
@@ -1038,9 +1020,7 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesClientReimagePollerResponse{}, err
 	}
-	result := VirtualMachinesClientReimagePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientReimagePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Reimage", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientReimagePollerResponse{}, err
@@ -1107,9 +1087,7 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 	if err != nil {
 		return VirtualMachinesClientRestartPollerResponse{}, err
 	}
-	result := VirtualMachinesClientRestartPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientRestartPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Restart", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientRestartPollerResponse{}, err
@@ -1174,9 +1152,7 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 	if err != nil {
 		return VirtualMachinesClientRunCommandPollerResponse{}, err
 	}
-	result := VirtualMachinesClientRunCommandPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientRunCommandPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.RunCommand", "location", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientRunCommandPollerResponse{}, err
@@ -1249,7 +1225,7 @@ func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resou
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return VirtualMachinesClientSimulateEvictionResponse{}, runtime.NewResponseError(resp)
 	}
-	return VirtualMachinesClientSimulateEvictionResponse{RawResponse: resp}, nil
+	return VirtualMachinesClientSimulateEvictionResponse{}, nil
 }
 
 // simulateEvictionCreateRequest creates the SimulateEviction request.
@@ -1288,9 +1264,7 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 	if err != nil {
 		return VirtualMachinesClientStartPollerResponse{}, err
 	}
-	result := VirtualMachinesClientStartPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientStartPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Start", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientStartPollerResponse{}, err
@@ -1355,9 +1329,7 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualMachinesClientUpdatePollerResponse{}, err
 	}
-	result := VirtualMachinesClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachinesClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Update", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachinesClientUpdatePollerResponse{}, err

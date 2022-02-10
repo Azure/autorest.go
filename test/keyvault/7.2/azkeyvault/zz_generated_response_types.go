@@ -11,140 +11,103 @@ package azkeyvault
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"net/http"
 	"time"
 )
 
 // ClientBackupCertificateResponse contains the response from method Client.BackupCertificate.
 type ClientBackupCertificateResponse struct {
 	BackupCertificateResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientBackupKeyResponse contains the response from method Client.BackupKey.
 type ClientBackupKeyResponse struct {
 	BackupKeyResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientBackupSecretResponse contains the response from method Client.BackupSecret.
 type ClientBackupSecretResponse struct {
 	BackupSecretResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientBackupStorageAccountResponse contains the response from method Client.BackupStorageAccount.
 type ClientBackupStorageAccountResponse struct {
 	BackupStorageResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientCreateCertificateResponse contains the response from method Client.CreateCertificate.
 type ClientCreateCertificateResponse struct {
 	CertificateOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientCreateKeyResponse contains the response from method Client.CreateKey.
 type ClientCreateKeyResponse struct {
 	KeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDecryptResponse contains the response from method Client.Decrypt.
 type ClientDecryptResponse struct {
 	KeyOperationResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteCertificateContactsResponse contains the response from method Client.DeleteCertificateContacts.
 type ClientDeleteCertificateContactsResponse struct {
 	Contacts
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteCertificateIssuerResponse contains the response from method Client.DeleteCertificateIssuer.
 type ClientDeleteCertificateIssuerResponse struct {
 	IssuerBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteCertificateOperationResponse contains the response from method Client.DeleteCertificateOperation.
 type ClientDeleteCertificateOperationResponse struct {
 	CertificateOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteCertificateResponse contains the response from method Client.DeleteCertificate.
 type ClientDeleteCertificateResponse struct {
 	DeletedCertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteKeyResponse contains the response from method Client.DeleteKey.
 type ClientDeleteKeyResponse struct {
 	DeletedKeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteSasDefinitionResponse contains the response from method Client.DeleteSasDefinition.
 type ClientDeleteSasDefinitionResponse struct {
 	DeletedSasDefinitionBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteSecretResponse contains the response from method Client.DeleteSecret.
 type ClientDeleteSecretResponse struct {
 	DeletedSecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientDeleteStorageAccountResponse contains the response from method Client.DeleteStorageAccount.
 type ClientDeleteStorageAccountResponse struct {
 	DeletedStorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientEncryptResponse contains the response from method Client.Encrypt.
 type ClientEncryptResponse struct {
 	KeyOperationResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientFullBackupPollerResponse contains the response from method Client.FullBackup.
 type ClientFullBackupPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *ClientFullBackupPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l ClientFullBackupPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ClientFullBackupResponse, error) {
 	respType := ClientFullBackupResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -157,47 +120,38 @@ func (l *ClientFullBackupPollerResponse) Resume(ctx context.Context, client *Cli
 	poller := &ClientFullBackupPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // ClientFullBackupResponse contains the response from method Client.FullBackup.
 type ClientFullBackupResponse struct {
 	FullBackupOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientFullBackupStatusResponse contains the response from method Client.FullBackupStatus.
 type ClientFullBackupStatusResponse struct {
 	FullBackupOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientFullRestoreOperationPollerResponse contains the response from method Client.FullRestoreOperation.
 type ClientFullRestoreOperationPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *ClientFullRestoreOperationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l ClientFullRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ClientFullRestoreOperationResponse, error) {
 	respType := ClientFullRestoreOperationResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -210,358 +164,263 @@ func (l *ClientFullRestoreOperationPollerResponse) Resume(ctx context.Context, c
 	poller := &ClientFullRestoreOperationPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // ClientFullRestoreOperationResponse contains the response from method Client.FullRestoreOperation.
 type ClientFullRestoreOperationResponse struct {
 	RestoreOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificateContactsResponse contains the response from method Client.GetCertificateContacts.
 type ClientGetCertificateContactsResponse struct {
 	Contacts
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificateIssuerResponse contains the response from method Client.GetCertificateIssuer.
 type ClientGetCertificateIssuerResponse struct {
 	IssuerBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificateIssuersResponse contains the response from method Client.GetCertificateIssuers.
 type ClientGetCertificateIssuersResponse struct {
 	CertificateIssuerListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificateOperationResponse contains the response from method Client.GetCertificateOperation.
 type ClientGetCertificateOperationResponse struct {
 	CertificateOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificatePolicyResponse contains the response from method Client.GetCertificatePolicy.
 type ClientGetCertificatePolicyResponse struct {
 	CertificatePolicy
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificateResponse contains the response from method Client.GetCertificate.
 type ClientGetCertificateResponse struct {
 	CertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificateVersionsResponse contains the response from method Client.GetCertificateVersions.
 type ClientGetCertificateVersionsResponse struct {
 	CertificateListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetCertificatesResponse contains the response from method Client.GetCertificates.
 type ClientGetCertificatesResponse struct {
 	CertificateListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedCertificateResponse contains the response from method Client.GetDeletedCertificate.
 type ClientGetDeletedCertificateResponse struct {
 	DeletedCertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedCertificatesResponse contains the response from method Client.GetDeletedCertificates.
 type ClientGetDeletedCertificatesResponse struct {
 	DeletedCertificateListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedKeyResponse contains the response from method Client.GetDeletedKey.
 type ClientGetDeletedKeyResponse struct {
 	DeletedKeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedKeysResponse contains the response from method Client.GetDeletedKeys.
 type ClientGetDeletedKeysResponse struct {
 	DeletedKeyListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedSasDefinitionResponse contains the response from method Client.GetDeletedSasDefinition.
 type ClientGetDeletedSasDefinitionResponse struct {
 	DeletedSasDefinitionBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedSasDefinitionsResponse contains the response from method Client.GetDeletedSasDefinitions.
 type ClientGetDeletedSasDefinitionsResponse struct {
 	DeletedSasDefinitionListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedSecretResponse contains the response from method Client.GetDeletedSecret.
 type ClientGetDeletedSecretResponse struct {
 	DeletedSecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedSecretsResponse contains the response from method Client.GetDeletedSecrets.
 type ClientGetDeletedSecretsResponse struct {
 	DeletedSecretListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedStorageAccountResponse contains the response from method Client.GetDeletedStorageAccount.
 type ClientGetDeletedStorageAccountResponse struct {
 	DeletedStorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetDeletedStorageAccountsResponse contains the response from method Client.GetDeletedStorageAccounts.
 type ClientGetDeletedStorageAccountsResponse struct {
 	DeletedStorageListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetKeyResponse contains the response from method Client.GetKey.
 type ClientGetKeyResponse struct {
 	KeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetKeyVersionsResponse contains the response from method Client.GetKeyVersions.
 type ClientGetKeyVersionsResponse struct {
 	KeyListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetKeysResponse contains the response from method Client.GetKeys.
 type ClientGetKeysResponse struct {
 	KeyListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetSasDefinitionResponse contains the response from method Client.GetSasDefinition.
 type ClientGetSasDefinitionResponse struct {
 	SasDefinitionBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetSasDefinitionsResponse contains the response from method Client.GetSasDefinitions.
 type ClientGetSasDefinitionsResponse struct {
 	SasDefinitionListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetSecretResponse contains the response from method Client.GetSecret.
 type ClientGetSecretResponse struct {
 	SecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetSecretVersionsResponse contains the response from method Client.GetSecretVersions.
 type ClientGetSecretVersionsResponse struct {
 	SecretListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetSecretsResponse contains the response from method Client.GetSecrets.
 type ClientGetSecretsResponse struct {
 	SecretListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetStorageAccountResponse contains the response from method Client.GetStorageAccount.
 type ClientGetStorageAccountResponse struct {
 	StorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientGetStorageAccountsResponse contains the response from method Client.GetStorageAccounts.
 type ClientGetStorageAccountsResponse struct {
 	StorageListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientImportCertificateResponse contains the response from method Client.ImportCertificate.
 type ClientImportCertificateResponse struct {
 	CertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientImportKeyResponse contains the response from method Client.ImportKey.
 type ClientImportKeyResponse struct {
 	KeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientMergeCertificateResponse contains the response from method Client.MergeCertificate.
 type ClientMergeCertificateResponse struct {
 	CertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientPurgeDeletedCertificateResponse contains the response from method Client.PurgeDeletedCertificate.
 type ClientPurgeDeletedCertificateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ClientPurgeDeletedKeyResponse contains the response from method Client.PurgeDeletedKey.
 type ClientPurgeDeletedKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ClientPurgeDeletedSecretResponse contains the response from method Client.PurgeDeletedSecret.
 type ClientPurgeDeletedSecretResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ClientPurgeDeletedStorageAccountResponse contains the response from method Client.PurgeDeletedStorageAccount.
 type ClientPurgeDeletedStorageAccountResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ClientRecoverDeletedCertificateResponse contains the response from method Client.RecoverDeletedCertificate.
 type ClientRecoverDeletedCertificateResponse struct {
 	CertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRecoverDeletedKeyResponse contains the response from method Client.RecoverDeletedKey.
 type ClientRecoverDeletedKeyResponse struct {
 	KeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRecoverDeletedSasDefinitionResponse contains the response from method Client.RecoverDeletedSasDefinition.
 type ClientRecoverDeletedSasDefinitionResponse struct {
 	SasDefinitionBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRecoverDeletedSecretResponse contains the response from method Client.RecoverDeletedSecret.
 type ClientRecoverDeletedSecretResponse struct {
 	SecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRecoverDeletedStorageAccountResponse contains the response from method Client.RecoverDeletedStorageAccount.
 type ClientRecoverDeletedStorageAccountResponse struct {
 	StorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRegenerateStorageAccountKeyResponse contains the response from method Client.RegenerateStorageAccountKey.
 type ClientRegenerateStorageAccountKeyResponse struct {
 	StorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRestoreCertificateResponse contains the response from method Client.RestoreCertificate.
 type ClientRestoreCertificateResponse struct {
 	CertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRestoreKeyResponse contains the response from method Client.RestoreKey.
 type ClientRestoreKeyResponse struct {
 	KeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRestoreSecretResponse contains the response from method Client.RestoreSecret.
 type ClientRestoreSecretResponse struct {
 	SecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRestoreStatusResponse contains the response from method Client.RestoreStatus.
 type ClientRestoreStatusResponse struct {
 	RestoreOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientRestoreStorageAccountResponse contains the response from method Client.RestoreStorageAccount.
 type ClientRestoreStorageAccountResponse struct {
 	StorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSelectiveKeyRestoreOperationPollerResponse contains the response from method Client.SelectiveKeyRestoreOperation.
 type ClientSelectiveKeyRestoreOperationPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *ClientSelectiveKeyRestoreOperationPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l ClientSelectiveKeyRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ClientSelectiveKeyRestoreOperationResponse, error) {
 	respType := ClientSelectiveKeyRestoreOperationResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -574,166 +433,123 @@ func (l *ClientSelectiveKeyRestoreOperationPollerResponse) Resume(ctx context.Co
 	poller := &ClientSelectiveKeyRestoreOperationPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // ClientSelectiveKeyRestoreOperationResponse contains the response from method Client.SelectiveKeyRestoreOperation.
 type ClientSelectiveKeyRestoreOperationResponse struct {
 	SelectiveKeyRestoreOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSetCertificateContactsResponse contains the response from method Client.SetCertificateContacts.
 type ClientSetCertificateContactsResponse struct {
 	Contacts
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSetCertificateIssuerResponse contains the response from method Client.SetCertificateIssuer.
 type ClientSetCertificateIssuerResponse struct {
 	IssuerBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSetSasDefinitionResponse contains the response from method Client.SetSasDefinition.
 type ClientSetSasDefinitionResponse struct {
 	SasDefinitionBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSetSecretResponse contains the response from method Client.SetSecret.
 type ClientSetSecretResponse struct {
 	SecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSetStorageAccountResponse contains the response from method Client.SetStorageAccount.
 type ClientSetStorageAccountResponse struct {
 	StorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientSignResponse contains the response from method Client.Sign.
 type ClientSignResponse struct {
 	KeyOperationResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUnwrapKeyResponse contains the response from method Client.UnwrapKey.
 type ClientUnwrapKeyResponse struct {
 	KeyOperationResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateCertificateIssuerResponse contains the response from method Client.UpdateCertificateIssuer.
 type ClientUpdateCertificateIssuerResponse struct {
 	IssuerBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateCertificateOperationResponse contains the response from method Client.UpdateCertificateOperation.
 type ClientUpdateCertificateOperationResponse struct {
 	CertificateOperation
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateCertificatePolicyResponse contains the response from method Client.UpdateCertificatePolicy.
 type ClientUpdateCertificatePolicyResponse struct {
 	CertificatePolicy
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateCertificateResponse contains the response from method Client.UpdateCertificate.
 type ClientUpdateCertificateResponse struct {
 	CertificateBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateKeyResponse contains the response from method Client.UpdateKey.
 type ClientUpdateKeyResponse struct {
 	KeyBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateSasDefinitionResponse contains the response from method Client.UpdateSasDefinition.
 type ClientUpdateSasDefinitionResponse struct {
 	SasDefinitionBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateSecretResponse contains the response from method Client.UpdateSecret.
 type ClientUpdateSecretResponse struct {
 	SecretBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientUpdateStorageAccountResponse contains the response from method Client.UpdateStorageAccount.
 type ClientUpdateStorageAccountResponse struct {
 	StorageBundle
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientVerifyResponse contains the response from method Client.Verify.
 type ClientVerifyResponse struct {
 	KeyVerifyResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ClientWrapKeyResponse contains the response from method Client.WrapKey.
 type ClientWrapKeyResponse struct {
 	KeyOperationResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HSMSecurityDomainClientDownloadPendingResponse contains the response from method HSMSecurityDomainClient.DownloadPending.
 type HSMSecurityDomainClientDownloadPendingResponse struct {
 	SecurityDomainOperationStatus
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HSMSecurityDomainClientDownloadPollerResponse contains the response from method HSMSecurityDomainClient.Download.
 type HSMSecurityDomainClientDownloadPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *HSMSecurityDomainClientDownloadPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l HSMSecurityDomainClientDownloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainClientDownloadResponse, error) {
 	respType := HSMSecurityDomainClientDownloadResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -746,54 +562,43 @@ func (l *HSMSecurityDomainClientDownloadPollerResponse) Resume(ctx context.Conte
 	poller := &HSMSecurityDomainClientDownloadPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // HSMSecurityDomainClientDownloadResponse contains the response from method HSMSecurityDomainClient.Download.
 type HSMSecurityDomainClientDownloadResponse struct {
 	SecurityDomainObject
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HSMSecurityDomainClientTransferKeyResponse contains the response from method HSMSecurityDomainClient.TransferKey.
 type HSMSecurityDomainClientTransferKeyResponse struct {
 	TransferKey
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HSMSecurityDomainClientUploadPendingResponse contains the response from method HSMSecurityDomainClient.UploadPending.
 type HSMSecurityDomainClientUploadPendingResponse struct {
 	SecurityDomainOperationStatus
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HSMSecurityDomainClientUploadPollerResponse contains the response from method HSMSecurityDomainClient.Upload.
 type HSMSecurityDomainClientUploadPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *HSMSecurityDomainClientUploadPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l HSMSecurityDomainClientUploadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainClientUploadResponse, error) {
 	respType := HSMSecurityDomainClientUploadResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -806,74 +611,55 @@ func (l *HSMSecurityDomainClientUploadPollerResponse) Resume(ctx context.Context
 	poller := &HSMSecurityDomainClientUploadPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // HSMSecurityDomainClientUploadResponse contains the response from method HSMSecurityDomainClient.Upload.
 type HSMSecurityDomainClientUploadResponse struct {
 	SecurityDomainOperationStatus
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleAssignmentsClientCreateResponse contains the response from method RoleAssignmentsClient.Create.
 type RoleAssignmentsClientCreateResponse struct {
 	RoleAssignment
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleAssignmentsClientDeleteResponse contains the response from method RoleAssignmentsClient.Delete.
 type RoleAssignmentsClientDeleteResponse struct {
 	RoleAssignment
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleAssignmentsClientGetResponse contains the response from method RoleAssignmentsClient.Get.
 type RoleAssignmentsClientGetResponse struct {
 	RoleAssignment
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleAssignmentsClientListForScopeResponse contains the response from method RoleAssignmentsClient.ListForScope.
 type RoleAssignmentsClientListForScopeResponse struct {
 	RoleAssignmentListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleDefinitionsClientCreateOrUpdateResponse contains the response from method RoleDefinitionsClient.CreateOrUpdate.
 type RoleDefinitionsClientCreateOrUpdateResponse struct {
 	RoleDefinition
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleDefinitionsClientDeleteResponse contains the response from method RoleDefinitionsClient.Delete.
 type RoleDefinitionsClientDeleteResponse struct {
 	RoleDefinition
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleDefinitionsClientGetResponse contains the response from method RoleDefinitionsClient.Get.
 type RoleDefinitionsClientGetResponse struct {
 	RoleDefinition
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // RoleDefinitionsClientListResponse contains the response from method RoleDefinitionsClient.List.
 type RoleDefinitionsClientListResponse struct {
 	RoleDefinitionListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

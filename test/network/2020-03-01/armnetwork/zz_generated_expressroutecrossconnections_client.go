@@ -62,9 +62,7 @@ func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx contex
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{}, err
@@ -167,7 +165,7 @@ func (client *ExpressRouteCrossConnectionsClient) getCreateRequest(ctx context.C
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientGetResponse, error) {
-	result := ExpressRouteCrossConnectionsClientGetResponse{RawResponse: resp}
+	result := ExpressRouteCrossConnectionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnection); err != nil {
 		return ExpressRouteCrossConnectionsClientGetResponse{}, err
 	}
@@ -210,7 +208,7 @@ func (client *ExpressRouteCrossConnectionsClient) listCreateRequest(ctx context.
 
 // listHandleResponse handles the List response.
 func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientListResponse, error) {
-	result := ExpressRouteCrossConnectionsClientListResponse{RawResponse: resp}
+	result := ExpressRouteCrossConnectionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionListResult); err != nil {
 		return ExpressRouteCrossConnectionsClientListResponse{}, err
 	}
@@ -231,9 +229,7 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientListArpTablePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionsClientListArpTablePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCrossConnectionsClientListArpTablePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.ListArpTable", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientListArpTablePollerResponse{}, err
@@ -337,7 +333,7 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupCreateReque
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientListByResourceGroupResponse, error) {
-	result := ExpressRouteCrossConnectionsClientListByResourceGroupResponse{RawResponse: resp}
+	result := ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionListResult); err != nil {
 		return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
 	}
@@ -358,9 +354,7 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx conte
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.ListRoutesTable", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{}, err
@@ -437,9 +431,7 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ct
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{}, err
@@ -552,7 +544,7 @@ func (client *ExpressRouteCrossConnectionsClient) updateTagsCreateRequest(ctx co
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *ExpressRouteCrossConnectionsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientUpdateTagsResponse, error) {
-	result := ExpressRouteCrossConnectionsClientUpdateTagsResponse{RawResponse: resp}
+	result := ExpressRouteCrossConnectionsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnection); err != nil {
 		return ExpressRouteCrossConnectionsClientUpdateTagsResponse{}, err
 	}

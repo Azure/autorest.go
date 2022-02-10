@@ -51,7 +51,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return UploadClientBinaryResponse{}, runtime.NewResponseError(resp)
 	}
-	return UploadClientBinaryResponse{RawResponse: resp}, nil
+	return UploadClientBinaryResponse{}, nil
 }
 
 // binaryCreateRequest creates the Binary request.
@@ -80,7 +80,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return UploadClientFileResponse{}, runtime.NewResponseError(resp)
 	}
-	return UploadClientFileResponse{RawResponse: resp}, nil
+	return UploadClientFileResponse{}, nil
 }
 
 // fileCreateRequest creates the File request.

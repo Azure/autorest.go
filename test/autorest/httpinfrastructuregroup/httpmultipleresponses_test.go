@@ -6,7 +6,6 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"errors"
-	"net/http"
 	"reflect"
 	"testing"
 
@@ -33,8 +32,8 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 			t.Fatal(r)
 		}
 	case B:
-		if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-			t.Fatalf("unexpected status code %d", s)
+		if !reflect.ValueOf(result).IsZero() {
+			t.Fatal("expected zero-value result")
 		}
 	default:
 		t.Fatalf("unhandled response type %T", x)
@@ -158,8 +157,8 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 	if !reflect.ValueOf(result.MyException).IsZero() {
 		t.Fatal("expected zero-value MyException")
@@ -355,8 +354,8 @@ func TestGet202None204NoneDefaultError202None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -367,8 +366,8 @@ func TestGet202None204NoneDefaultError204None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -391,8 +390,8 @@ func TestGet202None204NoneDefaultNone202Invalid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -403,8 +402,8 @@ func TestGet202None204NoneDefaultNone204None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -494,8 +493,8 @@ func TestGetDefaultNone200None(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 

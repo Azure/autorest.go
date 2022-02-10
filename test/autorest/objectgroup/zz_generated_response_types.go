@@ -8,19 +8,13 @@
 
 package objectgroup
 
-import "net/http"
-
 // ObjectTypeClientGetResponse contains the response from method ObjectTypeClient.Get.
 type ObjectTypeClientGetResponse struct {
 	// Anything
 	Interface interface{}
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ObjectTypeClientPutResponse contains the response from method ObjectTypeClient.Put.
 type ObjectTypeClientPutResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

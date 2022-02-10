@@ -8,61 +8,44 @@
 
 package dategroup
 
-import (
-	"net/http"
-	"time"
-)
+import "time"
 
 // DateClientGetInvalidDateResponse contains the response from method DateClient.GetInvalidDate.
 type DateClientGetInvalidDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
+	Value *time.Time
 }
 
 // DateClientGetMaxDateResponse contains the response from method DateClient.GetMaxDate.
 type DateClientGetMaxDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
+	Value *time.Time
 }
 
 // DateClientGetMinDateResponse contains the response from method DateClient.GetMinDate.
 type DateClientGetMinDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
+	Value *time.Time
 }
 
 // DateClientGetNullResponse contains the response from method DateClient.GetNull.
 type DateClientGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
+	Value *time.Time
 }
 
 // DateClientGetOverflowDateResponse contains the response from method DateClient.GetOverflowDate.
 type DateClientGetOverflowDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
+	Value *time.Time
 }
 
 // DateClientGetUnderflowDateResponse contains the response from method DateClient.GetUnderflowDate.
 type DateClientGetUnderflowDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *time.Time
+	Value *time.Time
 }
 
 // DateClientPutMaxDateResponse contains the response from method DateClient.PutMaxDate.
 type DateClientPutMaxDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // DateClientPutMinDateResponse contains the response from method DateClient.PutMinDate.
 type DateClientPutMinDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

@@ -6,7 +6,6 @@ package errorsgroup
 import (
 	"context"
 	"errors"
-	"net/http"
 	"reflect"
 	"testing"
 	"time"
@@ -139,8 +138,8 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 

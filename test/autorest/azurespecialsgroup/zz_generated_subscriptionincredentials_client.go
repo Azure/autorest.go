@@ -57,7 +57,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, nil
 }
 
 // postMethodGlobalNotProvidedValidCreateRequest creates the PostMethodGlobalNotProvidedValid request.
@@ -95,7 +95,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, nil
 }
 
 // postMethodGlobalNullCreateRequest creates the PostMethodGlobalNull request.
@@ -130,7 +130,7 @@ func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, nil
 }
 
 // postMethodGlobalValidCreateRequest creates the PostMethodGlobalValid request.
@@ -165,7 +165,7 @@ func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.C
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInCredentialsClientPostPathGlobalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, nil
 }
 
 // postPathGlobalValidCreateRequest creates the PostPathGlobalValid request.
@@ -200,7 +200,7 @@ func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx contex
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, nil
 }
 
 // postSwaggerGlobalValidCreateRequest creates the PostSwaggerGlobalValid request.

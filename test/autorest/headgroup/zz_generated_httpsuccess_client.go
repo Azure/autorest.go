@@ -45,7 +45,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead200Response{}, err
 	}
-	result := HTTPSuccessClientHead200Response{RawResponse: resp}
+	result := HTTPSuccessClientHead200Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -73,7 +73,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead204Response{}, err
 	}
-	result := HTTPSuccessClientHead204Response{RawResponse: resp}
+	result := HTTPSuccessClientHead204Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -101,7 +101,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead404Response{}, err
 	}
-	result := HTTPSuccessClientHead404Response{RawResponse: resp}
+	result := HTTPSuccessClientHead404Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}

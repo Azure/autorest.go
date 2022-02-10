@@ -61,9 +61,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 	if err != nil {
 		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
 	}
-	result := SupportPackagesClientTriggerSupportPackagePollerResponse{
-		RawResponse: resp,
-	}
+	result := SupportPackagesClientTriggerSupportPackagePollerResponse{}
 	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl)
 	if err != nil {
 		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err

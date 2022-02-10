@@ -86,7 +86,7 @@ func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, op
 
 // getHandleResponse handles the Get response.
 func (client *TagsClient) getHandleResponse(resp *http.Response) (TagsClientGetResponse, error) {
-	result := TagsClientGetResponse{RawResponse: resp}
+	result := TagsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TagsResult); err != nil {
 		return TagsClientGetResponse{}, err
 	}

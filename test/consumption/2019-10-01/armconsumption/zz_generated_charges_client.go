@@ -104,7 +104,7 @@ func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string
 
 // listHandleResponse handles the List response.
 func (client *ChargesClient) listHandleResponse(resp *http.Response) (ChargesClientListResponse, error) {
-	result := ChargesClientListResponse{RawResponse: resp}
+	result := ChargesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ChargesListResult); err != nil {
 		return ChargesClientListResponse{}, err
 	}

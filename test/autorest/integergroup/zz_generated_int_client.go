@@ -66,7 +66,7 @@ func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *I
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *IntClient) getInvalidHandleResponse(resp *http.Response) (IntClientGetInvalidResponse, error) {
-	result := IntClientGetInvalidResponse{RawResponse: resp}
+	result := IntClientGetInvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntClientGetInvalidResponse{}, err
 	}
@@ -104,7 +104,7 @@ func (client *IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, op
 
 // getInvalidUnixTimeHandleResponse handles the GetInvalidUnixTime response.
 func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (IntClientGetInvalidUnixTimeResponse, error) {
-	result := IntClientGetInvalidUnixTimeResponse{RawResponse: resp}
+	result := IntClientGetInvalidUnixTimeResponse{}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntClientGetInvalidUnixTimeResponse{}, err
@@ -144,7 +144,7 @@ func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntC
 
 // getNullHandleResponse handles the GetNull response.
 func (client *IntClient) getNullHandleResponse(resp *http.Response) (IntClientGetNullResponse, error) {
-	result := IntClientGetNullResponse{RawResponse: resp}
+	result := IntClientGetNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntClientGetNullResponse{}, err
 	}
@@ -182,7 +182,7 @@ func (client *IntClient) getNullUnixTimeCreateRequest(ctx context.Context, optio
 
 // getNullUnixTimeHandleResponse handles the GetNullUnixTime response.
 func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (IntClientGetNullUnixTimeResponse, error) {
-	result := IntClientGetNullUnixTimeResponse{RawResponse: resp}
+	result := IntClientGetNullUnixTimeResponse{}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntClientGetNullUnixTimeResponse{}, err
@@ -222,7 +222,7 @@ func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, opti
 
 // getOverflowInt32HandleResponse handles the GetOverflowInt32 response.
 func (client *IntClient) getOverflowInt32HandleResponse(resp *http.Response) (IntClientGetOverflowInt32Response, error) {
-	result := IntClientGetOverflowInt32Response{RawResponse: resp}
+	result := IntClientGetOverflowInt32Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntClientGetOverflowInt32Response{}, err
 	}
@@ -260,7 +260,7 @@ func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, opti
 
 // getOverflowInt64HandleResponse handles the GetOverflowInt64 response.
 func (client *IntClient) getOverflowInt64HandleResponse(resp *http.Response) (IntClientGetOverflowInt64Response, error) {
-	result := IntClientGetOverflowInt64Response{RawResponse: resp}
+	result := IntClientGetOverflowInt64Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntClientGetOverflowInt64Response{}, err
 	}
@@ -298,7 +298,7 @@ func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, opt
 
 // getUnderflowInt32HandleResponse handles the GetUnderflowInt32 response.
 func (client *IntClient) getUnderflowInt32HandleResponse(resp *http.Response) (IntClientGetUnderflowInt32Response, error) {
-	result := IntClientGetUnderflowInt32Response{RawResponse: resp}
+	result := IntClientGetUnderflowInt32Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntClientGetUnderflowInt32Response{}, err
 	}
@@ -336,7 +336,7 @@ func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, opt
 
 // getUnderflowInt64HandleResponse handles the GetUnderflowInt64 response.
 func (client *IntClient) getUnderflowInt64HandleResponse(resp *http.Response) (IntClientGetUnderflowInt64Response, error) {
-	result := IntClientGetUnderflowInt64Response{RawResponse: resp}
+	result := IntClientGetUnderflowInt64Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return IntClientGetUnderflowInt64Response{}, err
 	}
@@ -374,7 +374,7 @@ func (client *IntClient) getUnixTimeCreateRequest(ctx context.Context, options *
 
 // getUnixTimeHandleResponse handles the GetUnixTime response.
 func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntClientGetUnixTimeResponse, error) {
-	result := IntClientGetUnixTimeResponse{RawResponse: resp}
+	result := IntClientGetUnixTimeResponse{}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return IntClientGetUnixTimeResponse{}, err
@@ -399,7 +399,7 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *I
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntClientPutMax32Response{}, runtime.NewResponseError(resp)
 	}
-	return IntClientPutMax32Response{RawResponse: resp}, nil
+	return IntClientPutMax32Response{}, nil
 }
 
 // putMax32CreateRequest creates the PutMax32 request.
@@ -429,7 +429,7 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *I
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntClientPutMax64Response{}, runtime.NewResponseError(resp)
 	}
-	return IntClientPutMax64Response{RawResponse: resp}, nil
+	return IntClientPutMax64Response{}, nil
 }
 
 // putMax64CreateRequest creates the PutMax64 request.
@@ -459,7 +459,7 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *I
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntClientPutMin32Response{}, runtime.NewResponseError(resp)
 	}
-	return IntClientPutMin32Response{RawResponse: resp}, nil
+	return IntClientPutMin32Response{}, nil
 }
 
 // putMin32CreateRequest creates the PutMin32 request.
@@ -489,7 +489,7 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *I
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntClientPutMin64Response{}, runtime.NewResponseError(resp)
 	}
-	return IntClientPutMin64Response{RawResponse: resp}, nil
+	return IntClientPutMin64Response{}, nil
 }
 
 // putMin64CreateRequest creates the PutMin64 request.
@@ -519,7 +519,7 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time,
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return IntClientPutUnixTimeDateResponse{}, runtime.NewResponseError(resp)
 	}
-	return IntClientPutUnixTimeDateResponse{RawResponse: resp}, nil
+	return IntClientPutUnixTimeDateResponse{}, nil
 }
 
 // putUnixTimeDateCreateRequest creates the PutUnixTimeDate request.

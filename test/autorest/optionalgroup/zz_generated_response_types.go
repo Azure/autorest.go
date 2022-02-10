@@ -8,196 +8,162 @@
 
 package optionalgroup
 
-import "net/http"
-
 // ExplicitClientPostOptionalArrayHeaderResponse contains the response from method ExplicitClient.PostOptionalArrayHeader.
 type ExplicitClientPostOptionalArrayHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalArrayParameterResponse contains the response from method ExplicitClient.PostOptionalArrayParameter.
 type ExplicitClientPostOptionalArrayParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalArrayPropertyResponse contains the response from method ExplicitClient.PostOptionalArrayProperty.
 type ExplicitClientPostOptionalArrayPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalClassParameterResponse contains the response from method ExplicitClient.PostOptionalClassParameter.
 type ExplicitClientPostOptionalClassParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalClassPropertyResponse contains the response from method ExplicitClient.PostOptionalClassProperty.
 type ExplicitClientPostOptionalClassPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalIntegerHeaderResponse contains the response from method ExplicitClient.PostOptionalIntegerHeader.
 type ExplicitClientPostOptionalIntegerHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalIntegerParameterResponse contains the response from method ExplicitClient.PostOptionalIntegerParameter.
 type ExplicitClientPostOptionalIntegerParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalIntegerPropertyResponse contains the response from method ExplicitClient.PostOptionalIntegerProperty.
 type ExplicitClientPostOptionalIntegerPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalStringHeaderResponse contains the response from method ExplicitClient.PostOptionalStringHeader.
 type ExplicitClientPostOptionalStringHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalStringParameterResponse contains the response from method ExplicitClient.PostOptionalStringParameter.
 type ExplicitClientPostOptionalStringParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostOptionalStringPropertyResponse contains the response from method ExplicitClient.PostOptionalStringProperty.
 type ExplicitClientPostOptionalStringPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredArrayHeaderResponse contains the response from method ExplicitClient.PostRequiredArrayHeader.
 type ExplicitClientPostRequiredArrayHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredArrayParameterResponse contains the response from method ExplicitClient.PostRequiredArrayParameter.
 type ExplicitClientPostRequiredArrayParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredArrayPropertyResponse contains the response from method ExplicitClient.PostRequiredArrayProperty.
 type ExplicitClientPostRequiredArrayPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredClassParameterResponse contains the response from method ExplicitClient.PostRequiredClassParameter.
 type ExplicitClientPostRequiredClassParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredClassPropertyResponse contains the response from method ExplicitClient.PostRequiredClassProperty.
 type ExplicitClientPostRequiredClassPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredIntegerHeaderResponse contains the response from method ExplicitClient.PostRequiredIntegerHeader.
 type ExplicitClientPostRequiredIntegerHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredIntegerParameterResponse contains the response from method ExplicitClient.PostRequiredIntegerParameter.
 type ExplicitClientPostRequiredIntegerParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredIntegerPropertyResponse contains the response from method ExplicitClient.PostRequiredIntegerProperty.
 type ExplicitClientPostRequiredIntegerPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredStringHeaderResponse contains the response from method ExplicitClient.PostRequiredStringHeader.
 type ExplicitClientPostRequiredStringHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredStringParameterResponse contains the response from method ExplicitClient.PostRequiredStringParameter.
 type ExplicitClientPostRequiredStringParameterResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPostRequiredStringPropertyResponse contains the response from method ExplicitClient.PostRequiredStringProperty.
 type ExplicitClientPostRequiredStringPropertyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPutOptionalBinaryBodyResponse contains the response from method ExplicitClient.PutOptionalBinaryBody.
 type ExplicitClientPutOptionalBinaryBodyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ExplicitClientPutRequiredBinaryBodyResponse contains the response from method ExplicitClient.PutRequiredBinaryBody.
 type ExplicitClientPutRequiredBinaryBodyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientGetOptionalGlobalQueryResponse contains the response from method ImplicitClient.GetOptionalGlobalQuery.
 type ImplicitClientGetOptionalGlobalQueryResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientGetRequiredGlobalPathResponse contains the response from method ImplicitClient.GetRequiredGlobalPath.
 type ImplicitClientGetRequiredGlobalPathResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientGetRequiredGlobalQueryResponse contains the response from method ImplicitClient.GetRequiredGlobalQuery.
 type ImplicitClientGetRequiredGlobalQueryResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientGetRequiredPathResponse contains the response from method ImplicitClient.GetRequiredPath.
 type ImplicitClientGetRequiredPathResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientPutOptionalBinaryBodyResponse contains the response from method ImplicitClient.PutOptionalBinaryBody.
 type ImplicitClientPutOptionalBinaryBodyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientPutOptionalBodyResponse contains the response from method ImplicitClient.PutOptionalBody.
 type ImplicitClientPutOptionalBodyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientPutOptionalHeaderResponse contains the response from method ImplicitClient.PutOptionalHeader.
 type ImplicitClientPutOptionalHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ImplicitClientPutOptionalQueryResponse contains the response from method ImplicitClient.PutOptionalQuery.
 type ImplicitClientPutOptionalQueryResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

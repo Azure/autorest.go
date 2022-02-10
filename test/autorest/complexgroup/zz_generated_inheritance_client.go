@@ -65,7 +65,7 @@ func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, opti
 
 // getValidHandleResponse handles the GetValid response.
 func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (InheritanceClientGetValidResponse, error) {
-	result := InheritanceClientGetValidResponse{RawResponse: resp}
+	result := InheritanceClientGetValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Siamese); err != nil {
 		return InheritanceClientGetValidResponse{}, err
 	}
@@ -90,7 +90,7 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return InheritanceClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return InheritanceClientPutValidResponse{RawResponse: resp}, nil
+	return InheritanceClientPutValidResponse{}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.

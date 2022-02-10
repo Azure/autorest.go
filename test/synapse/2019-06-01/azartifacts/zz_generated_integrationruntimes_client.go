@@ -73,7 +73,7 @@ func (client *integrationRuntimesClient) getCreateRequest(ctx context.Context, i
 
 // getHandleResponse handles the Get response.
 func (client *integrationRuntimesClient) getHandleResponse(resp *http.Response) (integrationRuntimesClientGetResponse, error) {
-	result := integrationRuntimesClientGetResponse{RawResponse: resp}
+	result := integrationRuntimesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntegrationRuntimeResource); err != nil {
 		return integrationRuntimesClientGetResponse{}, err
 	}
@@ -115,7 +115,7 @@ func (client *integrationRuntimesClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client *integrationRuntimesClient) listHandleResponse(resp *http.Response) (integrationRuntimesClientListResponse, error) {
-	result := integrationRuntimesClientListResponse{RawResponse: resp}
+	result := integrationRuntimesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntegrationRuntimeListResponse); err != nil {
 		return integrationRuntimesClientListResponse{}, err
 	}

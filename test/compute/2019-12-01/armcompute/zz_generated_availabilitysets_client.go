@@ -100,7 +100,7 @@ func (client *AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Co
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Response) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
-	result := AvailabilitySetsClientCreateOrUpdateResponse{RawResponse: resp}
+	result := AvailabilitySetsClientCreateOrUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
 		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
 	}
@@ -124,7 +124,7 @@ func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupN
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
 		return AvailabilitySetsClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
-	return AvailabilitySetsClientDeleteResponse{RawResponse: resp}, nil
+	return AvailabilitySetsClientDeleteResponse{}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
@@ -200,7 +200,7 @@ func (client *AvailabilitySetsClient) getCreateRequest(ctx context.Context, reso
 
 // getHandleResponse handles the Get response.
 func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (AvailabilitySetsClientGetResponse, error) {
-	result := AvailabilitySetsClientGetResponse{RawResponse: resp}
+	result := AvailabilitySetsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
 		return AvailabilitySetsClientGetResponse{}, err
 	}
@@ -247,7 +247,7 @@ func (client *AvailabilitySetsClient) listCreateRequest(ctx context.Context, res
 
 // listHandleResponse handles the List response.
 func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (AvailabilitySetsClientListResponse, error) {
-	result := AvailabilitySetsClientListResponse{RawResponse: resp}
+	result := AvailabilitySetsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
 		return AvailabilitySetsClientListResponse{}, err
 	}
@@ -298,7 +298,7 @@ func (client *AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx contex
 
 // listAvailableSizesHandleResponse handles the ListAvailableSizes response.
 func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *http.Response) (AvailabilitySetsClientListAvailableSizesResponse, error) {
-	result := AvailabilitySetsClientListAvailableSizesResponse{RawResponse: resp}
+	result := AvailabilitySetsClientListAvailableSizesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
 		return AvailabilitySetsClientListAvailableSizesResponse{}, err
 	}
@@ -344,7 +344,7 @@ func (client *AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx contex
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *http.Response) (AvailabilitySetsClientListBySubscriptionResponse, error) {
-	result := AvailabilitySetsClientListBySubscriptionResponse{RawResponse: resp}
+	result := AvailabilitySetsClientListBySubscriptionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
 		return AvailabilitySetsClientListBySubscriptionResponse{}, err
 	}
@@ -400,7 +400,7 @@ func (client *AvailabilitySetsClient) updateCreateRequest(ctx context.Context, r
 
 // updateHandleResponse handles the Update response.
 func (client *AvailabilitySetsClient) updateHandleResponse(resp *http.Response) (AvailabilitySetsClientUpdateResponse, error) {
-	result := AvailabilitySetsClientUpdateResponse{RawResponse: resp}
+	result := AvailabilitySetsClientUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
 		return AvailabilitySetsClientUpdateResponse{}, err
 	}

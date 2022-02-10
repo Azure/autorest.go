@@ -5,7 +5,7 @@ package lrogroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -36,12 +36,12 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	result, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -60,12 +60,9 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -87,9 +84,6 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -117,12 +111,9 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -141,12 +132,9 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -168,9 +156,6 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -201,9 +186,6 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.StringPtr("100"),

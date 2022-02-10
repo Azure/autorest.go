@@ -63,9 +63,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 	if err != nil {
 		return ContainersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ContainersClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ContainersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ContainersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return ContainersClientCreateOrUpdatePollerResponse{}, err
@@ -139,9 +137,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 	if err != nil {
 		return ContainersClientDeletePollerResponse{}, err
 	}
-	result := ContainersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ContainersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ContainersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return ContainersClientDeletePollerResponse{}, err
@@ -261,7 +257,7 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 
 // getHandleResponse handles the Get response.
 func (client *ContainersClient) getHandleResponse(resp *http.Response) (ContainersClientGetResponse, error) {
-	result := ContainersClientGetResponse{RawResponse: resp}
+	result := ContainersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Container); err != nil {
 		return ContainersClientGetResponse{}, err
 	}
@@ -319,7 +315,7 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 
 // listByStorageAccountHandleResponse handles the ListByStorageAccount response.
 func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Response) (ContainersClientListByStorageAccountResponse, error) {
-	result := ContainersClientListByStorageAccountResponse{RawResponse: resp}
+	result := ContainersClientListByStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerList); err != nil {
 		return ContainersClientListByStorageAccountResponse{}, err
 	}
@@ -338,9 +334,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 	if err != nil {
 		return ContainersClientRefreshPollerResponse{}, err
 	}
-	result := ContainersClientRefreshPollerResponse{
-		RawResponse: resp,
-	}
+	result := ContainersClientRefreshPollerResponse{}
 	pt, err := armruntime.NewPoller("ContainersClient.Refresh", "", resp, client.pl)
 	if err != nil {
 		return ContainersClientRefreshPollerResponse{}, err

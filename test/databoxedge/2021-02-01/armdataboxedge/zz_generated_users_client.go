@@ -63,9 +63,7 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 	if err != nil {
 		return UsersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := UsersClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := UsersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return UsersClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 	if err != nil {
 		return UsersClientDeletePollerResponse{}, err
 	}
-	result := UsersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := UsersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return UsersClientDeletePollerResponse{}, err
@@ -247,7 +243,7 @@ func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName stri
 
 // getHandleResponse handles the Get response.
 func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersClientGetResponse, error) {
-	result := UsersClientGetResponse{RawResponse: resp}
+	result := UsersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.User); err != nil {
 		return UsersClientGetResponse{}, err
 	}
@@ -303,7 +299,7 @@ func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *UsersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (UsersClientListByDataBoxEdgeDeviceResponse, error) {
-	result := UsersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := UsersClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UserList); err != nil {
 		return UsersClientListByDataBoxEdgeDeviceResponse{}, err
 	}

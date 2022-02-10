@@ -54,7 +54,7 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *Q
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringCSVEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringCSVEmptyResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringCSVEmptyResponse{}, nil
 }
 
 // arrayStringCSVEmptyCreateRequest creates the ArrayStringCSVEmpty request.
@@ -89,7 +89,7 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringCSVNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringCSVNullResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringCSVNullResponse{}, nil
 }
 
 // arrayStringCSVNullCreateRequest creates the ArrayStringCSVNull request.
@@ -125,7 +125,7 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringCSVValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringCSVValidResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringCSVValidResponse{}, nil
 }
 
 // arrayStringCSVValidCreateRequest creates the ArrayStringCSVValid request.
@@ -161,7 +161,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringNoCollectionFormatEmptyResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, nil
 }
 
 // arrayStringNoCollectionFormatEmptyCreateRequest creates the ArrayStringNoCollectionFormatEmpty request.
@@ -197,7 +197,7 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringPipesValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringPipesValidResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringPipesValidResponse{}, nil
 }
 
 // arrayStringPipesValidCreateRequest creates the ArrayStringPipesValid request.
@@ -233,7 +233,7 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *Q
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringSsvValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringSsvValidResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringSsvValidResponse{}, nil
 }
 
 // arrayStringSsvValidCreateRequest creates the ArrayStringSsvValid request.
@@ -269,7 +269,7 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *Q
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringTsvValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringTsvValidResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringTsvValidResponse{}, nil
 }
 
 // arrayStringTsvValidCreateRequest creates the ArrayStringTsvValid request.
@@ -303,7 +303,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientByteEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientByteEmptyResponse{RawResponse: resp}, nil
+	return QueriesClientByteEmptyResponse{}, nil
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
@@ -335,7 +335,7 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *Queries
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientByteMultiByteResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientByteMultiByteResponse{RawResponse: resp}, nil
+	return QueriesClientByteMultiByteResponse{}, nil
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -369,7 +369,7 @@ func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClien
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientByteNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientByteNullResponse{RawResponse: resp}, nil
+	return QueriesClientByteNullResponse{}, nil
 }
 
 // byteNullCreateRequest creates the ByteNull request.
@@ -403,7 +403,7 @@ func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClien
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDateNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDateNullResponse{RawResponse: resp}, nil
+	return QueriesClientDateNullResponse{}, nil
 }
 
 // dateNullCreateRequest creates the DateNull request.
@@ -437,7 +437,7 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesC
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDateTimeNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDateTimeNullResponse{RawResponse: resp}, nil
+	return QueriesClientDateTimeNullResponse{}, nil
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
@@ -471,7 +471,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDateTimeValidResponse{RawResponse: resp}, nil
+	return QueriesClientDateTimeValidResponse{}, nil
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
@@ -503,7 +503,7 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDateValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDateValidResponse{RawResponse: resp}, nil
+	return QueriesClientDateValidResponse{}, nil
 }
 
 // dateValidCreateRequest creates the DateValid request.
@@ -536,7 +536,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDoubleDecimalNegativeResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDoubleDecimalNegativeResponse{RawResponse: resp}, nil
+	return QueriesClientDoubleDecimalNegativeResponse{}, nil
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -569,7 +569,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDoubleDecimalPositiveResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDoubleDecimalPositiveResponse{RawResponse: resp}, nil
+	return QueriesClientDoubleDecimalPositiveResponse{}, nil
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -601,7 +601,7 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientDoubleNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientDoubleNullResponse{RawResponse: resp}, nil
+	return QueriesClientDoubleNullResponse{}, nil
 }
 
 // doubleNullCreateRequest creates the DoubleNull request.
@@ -635,7 +635,7 @@ func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClien
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientEnumNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientEnumNullResponse{RawResponse: resp}, nil
+	return QueriesClientEnumNullResponse{}, nil
 }
 
 // enumNullCreateRequest creates the EnumNull request.
@@ -669,7 +669,7 @@ func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientEnumValidResponse{RawResponse: resp}, nil
+	return QueriesClientEnumValidResponse{}, nil
 }
 
 // enumValidCreateRequest creates the EnumValid request.
@@ -703,7 +703,7 @@ func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientFloatNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientFloatNullResponse{RawResponse: resp}, nil
+	return QueriesClientFloatNullResponse{}, nil
 }
 
 // floatNullCreateRequest creates the FloatNull request.
@@ -738,7 +738,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientFloatScientificNegativeResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientFloatScientificNegativeResponse{RawResponse: resp}, nil
+	return QueriesClientFloatScientificNegativeResponse{}, nil
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -771,7 +771,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientFloatScientificPositiveResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientFloatScientificPositiveResponse{RawResponse: resp}, nil
+	return QueriesClientFloatScientificPositiveResponse{}, nil
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -803,7 +803,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetBooleanFalseResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetBooleanFalseResponse{RawResponse: resp}, nil
+	return QueriesClientGetBooleanFalseResponse{}, nil
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -835,7 +835,7 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *Querie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetBooleanNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetBooleanNullResponse{RawResponse: resp}, nil
+	return QueriesClientGetBooleanNullResponse{}, nil
 }
 
 // getBooleanNullCreateRequest creates the GetBooleanNull request.
@@ -869,7 +869,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetBooleanTrueResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetBooleanTrueResponse{RawResponse: resp}, nil
+	return QueriesClientGetBooleanTrueResponse{}, nil
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -902,7 +902,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetIntNegativeOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
+	return QueriesClientGetIntNegativeOneMillionResponse{}, nil
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -934,7 +934,7 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetIntNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetIntNullResponse{RawResponse: resp}, nil
+	return QueriesClientGetIntNullResponse{}, nil
 }
 
 // getIntNullCreateRequest creates the GetIntNull request.
@@ -969,7 +969,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetIntOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetIntOneMillionResponse{RawResponse: resp}, nil
+	return QueriesClientGetIntOneMillionResponse{}, nil
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -1001,7 +1001,7 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesCl
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetLongNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetLongNullResponse{RawResponse: resp}, nil
+	return QueriesClientGetLongNullResponse{}, nil
 }
 
 // getLongNullCreateRequest creates the GetLongNull request.
@@ -1036,7 +1036,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetNegativeTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetNegativeTenBillionResponse{RawResponse: resp}, nil
+	return QueriesClientGetNegativeTenBillionResponse{}, nil
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -1068,7 +1068,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientGetTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientGetTenBillionResponse{RawResponse: resp}, nil
+	return QueriesClientGetTenBillionResponse{}, nil
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
@@ -1100,7 +1100,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesCl
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientStringEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientStringEmptyResponse{RawResponse: resp}, nil
+	return QueriesClientStringEmptyResponse{}, nil
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
@@ -1132,7 +1132,7 @@ func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientStringNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientStringNullResponse{RawResponse: resp}, nil
+	return QueriesClientStringNullResponse{}, nil
 }
 
 // stringNullCreateRequest creates the StringNull request.
@@ -1167,7 +1167,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientStringURLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientStringURLEncodedResponse{RawResponse: resp}, nil
+	return QueriesClientStringURLEncodedResponse{}, nil
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -1199,7 +1199,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientStringUnicodeResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientStringUnicodeResponse{RawResponse: resp}, nil
+	return QueriesClientStringUnicodeResponse{}, nil
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.

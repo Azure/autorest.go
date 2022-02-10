@@ -8,10 +8,7 @@
 
 package morecustombaseurigroup
 
-import "net/http"
-
 // PathsClientGetEmptyResponse contains the response from method PathsClient.GetEmpty.
 type PathsClientGetEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

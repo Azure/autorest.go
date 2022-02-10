@@ -65,7 +65,7 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyResponse, error) {
-	result := DictionaryClientGetEmptyResponse{RawResponse: resp}
+	result := DictionaryClientGetEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
 		return DictionaryClientGetEmptyResponse{}, err
 	}
@@ -104,7 +104,7 @@ func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context,
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
 func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response) (DictionaryClientGetNotProvidedResponse, error) {
-	result := DictionaryClientGetNotProvidedResponse{RawResponse: resp}
+	result := DictionaryClientGetNotProvidedResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
 		return DictionaryClientGetNotProvidedResponse{}, err
 	}
@@ -142,7 +142,7 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 
 // getNullHandleResponse handles the GetNull response.
 func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryClientGetNullResponse, error) {
-	result := DictionaryClientGetNullResponse{RawResponse: resp}
+	result := DictionaryClientGetNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
 		return DictionaryClientGetNullResponse{}, err
 	}
@@ -180,7 +180,7 @@ func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, optio
 
 // getValidHandleResponse handles the GetValid response.
 func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (DictionaryClientGetValidResponse, error) {
-	result := DictionaryClientGetValidResponse{RawResponse: resp}
+	result := DictionaryClientGetValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
 		return DictionaryClientGetValidResponse{}, err
 	}
@@ -203,7 +203,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DictionaryClientPutEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return DictionaryClientPutEmptyResponse{RawResponse: resp}, nil
+	return DictionaryClientPutEmptyResponse{}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
@@ -234,7 +234,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DictionaryClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return DictionaryClientPutValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutValidResponse{}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.

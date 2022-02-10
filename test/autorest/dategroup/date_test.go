@@ -5,7 +5,6 @@ package dategroup
 
 import (
 	"context"
-	"net/http"
 	"reflect"
 	"testing"
 	"time"
@@ -88,23 +87,23 @@ func TestGetUnderflowDate(t *testing.T) {
 func TestPutMaxDate(t *testing.T) {
 	client := newDateClient()
 	dt := time.Date(9999, 12, 31, 0, 0, 0, 0, time.UTC)
-	resp, err := client.PutMaxDate(context.Background(), dt, nil)
+	result, err := client.PutMaxDate(context.Background(), dt, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.RawResponse.StatusCode, http.StatusOK); r != "" {
-		t.Fatal(r)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
 func TestPutMinDate(t *testing.T) {
 	client := newDateClient()
 	dt := time.Date(0001, 01, 01, 0, 0, 0, 0, time.UTC)
-	resp, err := client.PutMinDate(context.Background(), dt, nil)
+	result, err := client.PutMinDate(context.Background(), dt, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if r := cmp.Diff(resp.RawResponse.StatusCode, http.StatusOK); r != "" {
-		t.Fatal(r)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

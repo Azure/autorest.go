@@ -55,7 +55,7 @@ func (client *libraryClient) Append(ctx context.Context, libraryName string, con
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return libraryClientAppendResponse{}, runtime.NewResponseError(resp)
 	}
-	return libraryClientAppendResponse{RawResponse: resp}, nil
+	return libraryClientAppendResponse{}, nil
 }
 
 // appendCreateRequest creates the Append request.
@@ -88,9 +88,7 @@ func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string
 	if err != nil {
 		return libraryClientCreatePollerResponse{}, err
 	}
-	result := libraryClientCreatePollerResponse{
-		RawResponse: resp,
-	}
+	result := libraryClientCreatePollerResponse{}
 	pt, err := runtime.NewPoller("libraryClient.Create", resp, client.pl)
 	if err != nil {
 		return libraryClientCreatePollerResponse{}, err
@@ -145,9 +143,7 @@ func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string
 	if err != nil {
 		return libraryClientDeletePollerResponse{}, err
 	}
-	result := libraryClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := libraryClientDeletePollerResponse{}
 	pt, err := runtime.NewPoller("libraryClient.Delete", resp, client.pl)
 	if err != nil {
 		return libraryClientDeletePollerResponse{}, err
@@ -202,9 +198,7 @@ func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string,
 	if err != nil {
 		return libraryClientFlushPollerResponse{}, err
 	}
-	result := libraryClientFlushPollerResponse{
-		RawResponse: resp,
-	}
+	result := libraryClientFlushPollerResponse{}
 	pt, err := runtime.NewPoller("libraryClient.Flush", resp, client.pl)
 	if err != nil {
 		return libraryClientFlushPollerResponse{}, err
@@ -289,7 +283,7 @@ func (client *libraryClient) getCreateRequest(ctx context.Context, libraryName s
 
 // getHandleResponse handles the Get response.
 func (client *libraryClient) getHandleResponse(resp *http.Response) (libraryClientGetResponse, error) {
-	result := libraryClientGetResponse{RawResponse: resp}
+	result := libraryClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryResource); err != nil {
 		return libraryClientGetResponse{}, err
 	}
@@ -336,7 +330,7 @@ func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context
 
 // getOperationResultHandleResponse handles the GetOperationResult response.
 func (client *libraryClient) getOperationResultHandleResponse(resp *http.Response) (libraryClientGetOperationResultResponse, error) {
-	result := libraryClientGetOperationResultResponse{RawResponse: resp}
+	result := libraryClientGetOperationResultResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val LibraryResource
@@ -387,7 +381,7 @@ func (client *libraryClient) listCreateRequest(ctx context.Context, options *lib
 
 // listHandleResponse handles the List response.
 func (client *libraryClient) listHandleResponse(resp *http.Response) (libraryClientListResponse, error) {
-	result := libraryClientListResponse{RawResponse: resp}
+	result := libraryClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryListResponse); err != nil {
 		return libraryClientListResponse{}, err
 	}

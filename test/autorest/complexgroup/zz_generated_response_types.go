@@ -8,127 +8,94 @@
 
 package complexgroup
 
-import "net/http"
-
 // ArrayClientGetEmptyResponse contains the response from method ArrayClient.GetEmpty.
 type ArrayClientGetEmptyResponse struct {
 	ArrayWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ArrayClientGetNotProvidedResponse contains the response from method ArrayClient.GetNotProvided.
 type ArrayClientGetNotProvidedResponse struct {
 	ArrayWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ArrayClientGetValidResponse contains the response from method ArrayClient.GetValid.
 type ArrayClientGetValidResponse struct {
 	ArrayWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ArrayClientPutEmptyResponse contains the response from method ArrayClient.PutEmpty.
 type ArrayClientPutEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ArrayClientPutValidResponse contains the response from method ArrayClient.PutValid.
 type ArrayClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // BasicClientGetEmptyResponse contains the response from method BasicClient.GetEmpty.
 type BasicClientGetEmptyResponse struct {
 	Basic
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BasicClientGetInvalidResponse contains the response from method BasicClient.GetInvalid.
 type BasicClientGetInvalidResponse struct {
 	Basic
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BasicClientGetNotProvidedResponse contains the response from method BasicClient.GetNotProvided.
 type BasicClientGetNotProvidedResponse struct {
 	Basic
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BasicClientGetNullResponse contains the response from method BasicClient.GetNull.
 type BasicClientGetNullResponse struct {
 	Basic
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BasicClientGetValidResponse contains the response from method BasicClient.GetValid.
 type BasicClientGetValidResponse struct {
 	Basic
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // BasicClientPutValidResponse contains the response from method BasicClient.PutValid.
 type BasicClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // DictionaryClientGetEmptyResponse contains the response from method DictionaryClient.GetEmpty.
 type DictionaryClientGetEmptyResponse struct {
 	DictionaryWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DictionaryClientGetNotProvidedResponse contains the response from method DictionaryClient.GetNotProvided.
 type DictionaryClientGetNotProvidedResponse struct {
 	DictionaryWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DictionaryClientGetNullResponse contains the response from method DictionaryClient.GetNull.
 type DictionaryClientGetNullResponse struct {
 	DictionaryWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DictionaryClientGetValidResponse contains the response from method DictionaryClient.GetValid.
 type DictionaryClientGetValidResponse struct {
 	DictionaryWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // DictionaryClientPutEmptyResponse contains the response from method DictionaryClient.PutEmpty.
 type DictionaryClientPutEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // DictionaryClientPutValidResponse contains the response from method DictionaryClient.PutValid.
 type DictionaryClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // FlattencomplexClientGetValidResponse contains the response from method FlattencomplexClient.GetValid.
 type FlattencomplexClientGetValidResponse struct {
 	MyBaseTypeClassification
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type FlattencomplexClientGetValidResponse.
@@ -144,21 +111,16 @@ func (f *FlattencomplexClientGetValidResponse) UnmarshalJSON(data []byte) error 
 // InheritanceClientGetValidResponse contains the response from method InheritanceClient.GetValid.
 type InheritanceClientGetValidResponse struct {
 	Siamese
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // InheritanceClientPutValidResponse contains the response from method InheritanceClient.PutValid.
 type InheritanceClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PolymorphicrecursiveClientGetValidResponse contains the response from method PolymorphicrecursiveClient.GetValid.
 type PolymorphicrecursiveClientGetValidResponse struct {
 	FishClassification
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphicrecursiveClientGetValidResponse.
@@ -173,15 +135,12 @@ func (p *PolymorphicrecursiveClientGetValidResponse) UnmarshalJSON(data []byte) 
 
 // PolymorphicrecursiveClientPutValidResponse contains the response from method PolymorphicrecursiveClient.PutValid.
 type PolymorphicrecursiveClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PolymorphismClientGetComplicatedResponse contains the response from method PolymorphismClient.GetComplicated.
 type PolymorphismClientGetComplicatedResponse struct {
 	SalmonClassification
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientGetComplicatedResponse.
@@ -197,22 +156,16 @@ func (p *PolymorphismClientGetComplicatedResponse) UnmarshalJSON(data []byte) er
 // PolymorphismClientGetComposedWithDiscriminatorResponse contains the response from method PolymorphismClient.GetComposedWithDiscriminator.
 type PolymorphismClientGetComposedWithDiscriminatorResponse struct {
 	DotFishMarket
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PolymorphismClientGetComposedWithoutDiscriminatorResponse contains the response from method PolymorphismClient.GetComposedWithoutDiscriminator.
 type PolymorphismClientGetComposedWithoutDiscriminatorResponse struct {
 	DotFishMarket
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PolymorphismClientGetDotSyntaxResponse contains the response from method PolymorphismClient.GetDotSyntax.
 type PolymorphismClientGetDotSyntaxResponse struct {
 	DotFishClassification
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientGetDotSyntaxResponse.
@@ -228,8 +181,6 @@ func (p *PolymorphismClientGetDotSyntaxResponse) UnmarshalJSON(data []byte) erro
 // PolymorphismClientGetValidResponse contains the response from method PolymorphismClient.GetValid.
 type PolymorphismClientGetValidResponse struct {
 	FishClassification
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientGetValidResponse.
@@ -244,15 +195,12 @@ func (p *PolymorphismClientGetValidResponse) UnmarshalJSON(data []byte) error {
 
 // PolymorphismClientPutComplicatedResponse contains the response from method PolymorphismClient.PutComplicated.
 type PolymorphismClientPutComplicatedResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PolymorphismClientPutMissingDiscriminatorResponse contains the response from method PolymorphismClient.PutMissingDiscriminator.
 type PolymorphismClientPutMissingDiscriminatorResponse struct {
 	SalmonClassification
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PolymorphismClientPutMissingDiscriminatorResponse.
@@ -267,168 +215,130 @@ func (p *PolymorphismClientPutMissingDiscriminatorResponse) UnmarshalJSON(data [
 
 // PolymorphismClientPutValidMissingRequiredResponse contains the response from method PolymorphismClient.PutValidMissingRequired.
 type PolymorphismClientPutValidMissingRequiredResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PolymorphismClientPutValidResponse contains the response from method PolymorphismClient.PutValid.
 type PolymorphismClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientGetBoolResponse contains the response from method PrimitiveClient.GetBool.
 type PrimitiveClientGetBoolResponse struct {
 	BooleanWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetByteResponse contains the response from method PrimitiveClient.GetByte.
 type PrimitiveClientGetByteResponse struct {
 	ByteWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetDateResponse contains the response from method PrimitiveClient.GetDate.
 type PrimitiveClientGetDateResponse struct {
 	DateWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetDateTimeRFC1123Response contains the response from method PrimitiveClient.GetDateTimeRFC1123.
 type PrimitiveClientGetDateTimeRFC1123Response struct {
 	Datetimerfc1123Wrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetDateTimeResponse contains the response from method PrimitiveClient.GetDateTime.
 type PrimitiveClientGetDateTimeResponse struct {
 	DatetimeWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetDoubleResponse contains the response from method PrimitiveClient.GetDouble.
 type PrimitiveClientGetDoubleResponse struct {
 	DoubleWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetDurationResponse contains the response from method PrimitiveClient.GetDuration.
 type PrimitiveClientGetDurationResponse struct {
 	DurationWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetFloatResponse contains the response from method PrimitiveClient.GetFloat.
 type PrimitiveClientGetFloatResponse struct {
 	FloatWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetIntResponse contains the response from method PrimitiveClient.GetInt.
 type PrimitiveClientGetIntResponse struct {
 	IntWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetLongResponse contains the response from method PrimitiveClient.GetLong.
 type PrimitiveClientGetLongResponse struct {
 	LongWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientGetStringResponse contains the response from method PrimitiveClient.GetString.
 type PrimitiveClientGetStringResponse struct {
 	StringWrapper
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PrimitiveClientPutBoolResponse contains the response from method PrimitiveClient.PutBool.
 type PrimitiveClientPutBoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutByteResponse contains the response from method PrimitiveClient.PutByte.
 type PrimitiveClientPutByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutDateResponse contains the response from method PrimitiveClient.PutDate.
 type PrimitiveClientPutDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutDateTimeRFC1123Response contains the response from method PrimitiveClient.PutDateTimeRFC1123.
 type PrimitiveClientPutDateTimeRFC1123Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutDateTimeResponse contains the response from method PrimitiveClient.PutDateTime.
 type PrimitiveClientPutDateTimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutDoubleResponse contains the response from method PrimitiveClient.PutDouble.
 type PrimitiveClientPutDoubleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutDurationResponse contains the response from method PrimitiveClient.PutDuration.
 type PrimitiveClientPutDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutFloatResponse contains the response from method PrimitiveClient.PutFloat.
 type PrimitiveClientPutFloatResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutIntResponse contains the response from method PrimitiveClient.PutInt.
 type PrimitiveClientPutIntResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutLongResponse contains the response from method PrimitiveClient.PutLong.
 type PrimitiveClientPutLongResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // PrimitiveClientPutStringResponse contains the response from method PrimitiveClient.PutString.
 type PrimitiveClientPutStringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ReadonlypropertyClientGetValidResponse contains the response from method ReadonlypropertyClient.GetValid.
 type ReadonlypropertyClientGetValidResponse struct {
 	ReadonlyObj
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ReadonlypropertyClientPutValidResponse contains the response from method ReadonlypropertyClient.PutValid.
 type ReadonlypropertyClientPutValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

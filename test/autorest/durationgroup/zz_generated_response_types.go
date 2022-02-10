@@ -8,31 +8,22 @@
 
 package durationgroup
 
-import "net/http"
-
 // DurationClientGetInvalidResponse contains the response from method DurationClient.GetInvalid.
 type DurationClientGetInvalidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // DurationClientGetNullResponse contains the response from method DurationClient.GetNull.
 type DurationClientGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // DurationClientGetPositiveDurationResponse contains the response from method DurationClient.GetPositiveDuration.
 type DurationClientGetPositiveDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // DurationClientPutPositiveDurationResponse contains the response from method DurationClient.PutPositiveDuration.
 type DurationClientPutPositiveDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

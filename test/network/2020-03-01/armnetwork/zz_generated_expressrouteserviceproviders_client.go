@@ -86,7 +86,7 @@ func (client *ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.
 
 // listHandleResponse handles the List response.
 func (client *ExpressRouteServiceProvidersClient) listHandleResponse(resp *http.Response) (ExpressRouteServiceProvidersClientListResponse, error) {
-	result := ExpressRouteServiceProvidersClientListResponse{RawResponse: resp}
+	result := ExpressRouteServiceProvidersClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteServiceProviderListResult); err != nil {
 		return ExpressRouteServiceProvidersClientListResponse{}, err
 	}

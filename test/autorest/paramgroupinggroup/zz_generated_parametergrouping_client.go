@@ -56,7 +56,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingClientPostMultiParamGroupsResponse{}, runtime.NewResponseError(resp)
 	}
-	return ParameterGroupingClientPostMultiParamGroupsResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostMultiParamGroupsResponse{}, nil
 }
 
 // postMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
@@ -100,7 +100,7 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingClientPostOptionalResponse{}, runtime.NewResponseError(resp)
 	}
-	return ParameterGroupingClientPostOptionalResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostOptionalResponse{}, nil
 }
 
 // postOptionalCreateRequest creates the PostOptional request.
@@ -138,7 +138,7 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingClientPostRequiredResponse{}, runtime.NewResponseError(resp)
 	}
-	return ParameterGroupingClientPostRequiredResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostRequiredResponse{}, nil
 }
 
 // postRequiredCreateRequest creates the PostRequired request.
@@ -180,7 +180,7 @@ func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingClientPostReservedWordsResponse{}, runtime.NewResponseError(resp)
 	}
-	return ParameterGroupingClientPostReservedWordsResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostReservedWordsResponse{}, nil
 }
 
 // postReservedWordsCreateRequest creates the PostReservedWords request.
@@ -217,7 +217,7 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, runtime.NewResponseError(resp)
 	}
-	return ParameterGroupingClientPostSharedParameterGroupObjectResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, nil
 }
 
 // postSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.

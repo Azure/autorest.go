@@ -5,7 +5,7 @@ package urlgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -20,8 +20,8 @@ func TestGetAllWithValues(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -33,8 +33,8 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -47,8 +47,8 @@ func TestGetGlobalQueryNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -58,7 +58,7 @@ func TestGetLocalPathItemQueryNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

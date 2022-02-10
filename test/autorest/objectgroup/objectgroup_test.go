@@ -5,7 +5,7 @@ package objectgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -30,13 +30,13 @@ func TestGet(t *testing.T) {
 
 func TestPut(t *testing.T) {
 	client := newObjectTypeClient()
-	resp, err := client.Put(context.Background(), map[string]interface{}{
+	result, err := client.Put(context.Background(), map[string]interface{}{
 		"foo": "bar",
 	}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.RawResponse.StatusCode != http.StatusOK {
-		t.Fatal("unexpected status code")
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

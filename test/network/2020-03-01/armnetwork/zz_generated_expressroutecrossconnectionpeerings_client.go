@@ -63,9 +63,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}, err
 	}
-	result := ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getCreateRequest(ctx co
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionPeeringsClientGetResponse, error) {
-	result := ExpressRouteCrossConnectionPeeringsClientGetResponse{RawResponse: resp}
+	result := ExpressRouteCrossConnectionPeeringsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionPeering); err != nil {
 		return ExpressRouteCrossConnectionPeeringsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) listCreateRequest(ctx c
 
 // listHandleResponse handles the List response.
 func (client *ExpressRouteCrossConnectionPeeringsClient) listHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionPeeringsClientListResponse, error) {
-	result := ExpressRouteCrossConnectionPeeringsClientListResponse{RawResponse: resp}
+	result := ExpressRouteCrossConnectionPeeringsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionPeeringList); err != nil {
 		return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
 	}

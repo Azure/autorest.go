@@ -88,7 +88,7 @@ func (client *Client) createCreateRequest(ctx context.Context, dataServiceVersio
 
 // createHandleResponse handles the Create response.
 func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateResponse, error) {
-	result := ClientCreateResponse{RawResponse: resp}
+	result := ClientCreateResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -154,7 +154,7 @@ func (client *Client) deleteCreateRequest(ctx context.Context, table string, opt
 
 // deleteHandleResponse handles the Delete response.
 func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteResponse, error) {
-	result := ClientDeleteResponse{RawResponse: resp}
+	result := ClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -237,7 +237,7 @@ func (client *Client) deleteEntityCreateRequest(ctx context.Context, dataService
 
 // deleteEntityHandleResponse handles the DeleteEntity response.
 func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDeleteEntityResponse, error) {
-	result := ClientDeleteEntityResponse{RawResponse: resp}
+	result := ClientDeleteEntityResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -305,7 +305,7 @@ func (client *Client) getAccessPolicyCreateRequest(ctx context.Context, table st
 
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (ClientGetAccessPolicyResponse, error) {
-	result := ClientGetAccessPolicyResponse{RawResponse: resp}
+	result := ClientGetAccessPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -384,7 +384,7 @@ func (client *Client) insertEntityCreateRequest(ctx context.Context, dataService
 
 // insertEntityHandleResponse handles the InsertEntity response.
 func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientInsertEntityResponse, error) {
-	result := ClientInsertEntityResponse{RawResponse: resp}
+	result := ClientInsertEntityResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -482,7 +482,7 @@ func (client *Client) mergeEntityCreateRequest(ctx context.Context, dataServiceV
 
 // mergeEntityHandleResponse handles the MergeEntity response.
 func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMergeEntityResponse, error) {
-	result := ClientMergeEntityResponse{RawResponse: resp}
+	result := ClientMergeEntityResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -559,7 +559,7 @@ func (client *Client) queryCreateRequest(ctx context.Context, dataServiceVersion
 
 // queryHandleResponse handles the Query response.
 func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryResponse, error) {
-	result := ClientQueryResponse{RawResponse: resp}
+	result := ClientQueryResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -650,7 +650,7 @@ func (client *Client) queryEntitiesCreateRequest(ctx context.Context, dataServic
 
 // queryEntitiesHandleResponse handles the QueryEntities response.
 func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQueryEntitiesResponse, error) {
-	result := ClientQueryEntitiesResponse{RawResponse: resp}
+	result := ClientQueryEntitiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -746,7 +746,7 @@ func (client *Client) queryEntityWithPartitionAndRowKeyCreateRequest(ctx context
 
 // queryEntityWithPartitionAndRowKeyHandleResponse handles the QueryEntityWithPartitionAndRowKey response.
 func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http.Response) (ClientQueryEntityWithPartitionAndRowKeyResponse, error) {
-	result := ClientQueryEntityWithPartitionAndRowKeyResponse{RawResponse: resp}
+	result := ClientQueryEntityWithPartitionAndRowKeyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -832,7 +832,7 @@ func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table st
 
 // setAccessPolicyHandleResponse handles the SetAccessPolicy response.
 func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (ClientSetAccessPolicyResponse, error) {
-	result := ClientSetAccessPolicyResponse{RawResponse: resp}
+	result := ClientSetAccessPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -918,7 +918,7 @@ func (client *Client) updateEntityCreateRequest(ctx context.Context, dataService
 
 // updateEntityHandleResponse handles the UpdateEntity response.
 func (client *Client) updateEntityHandleResponse(resp *http.Response) (ClientUpdateEntityResponse, error) {
-	result := ClientUpdateEntityResponse{RawResponse: resp}
+	result := ClientUpdateEntityResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}

@@ -46,9 +46,7 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 	if err != nil {
 		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	result := pipelineClientCreateOrUpdatePipelinePollerResponse{
-		RawResponse: resp,
-	}
+	result := pipelineClientCreateOrUpdatePipelinePollerResponse{}
 	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.pl)
 	if err != nil {
 		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
@@ -149,7 +147,7 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 
 // createPipelineRunHandleResponse handles the CreatePipelineRun response.
 func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Response) (pipelineClientCreatePipelineRunResponse, error) {
-	result := pipelineClientCreatePipelineRunResponse{RawResponse: resp}
+	result := pipelineClientCreatePipelineRunResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CreateRunResponse); err != nil {
 		return pipelineClientCreatePipelineRunResponse{}, err
 	}
@@ -166,9 +164,7 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 	if err != nil {
 		return pipelineClientDeletePipelinePollerResponse{}, err
 	}
-	result := pipelineClientDeletePipelinePollerResponse{
-		RawResponse: resp,
-	}
+	result := pipelineClientDeletePipelinePollerResponse{}
 	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.pl)
 	if err != nil {
 		return pipelineClientDeletePipelinePollerResponse{}, err
@@ -256,7 +252,7 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 
 // getPipelineHandleResponse handles the GetPipeline response.
 func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (pipelineClientGetPipelineResponse, error) {
-	result := pipelineClientGetPipelineResponse{RawResponse: resp}
+	result := pipelineClientGetPipelineResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineResource); err != nil {
 		return pipelineClientGetPipelineResponse{}, err
 	}
@@ -295,7 +291,7 @@ func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 
 // getPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
 func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.Response) (pipelineClientGetPipelinesByWorkspaceResponse, error) {
-	result := pipelineClientGetPipelinesByWorkspaceResponse{RawResponse: resp}
+	result := pipelineClientGetPipelinesByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineListResponse); err != nil {
 		return pipelineClientGetPipelinesByWorkspaceResponse{}, err
 	}
@@ -313,9 +309,7 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 	if err != nil {
 		return pipelineClientRenamePipelinePollerResponse{}, err
 	}
-	result := pipelineClientRenamePipelinePollerResponse{
-		RawResponse: resp,
-	}
+	result := pipelineClientRenamePipelinePollerResponse{}
 	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.pl)
 	if err != nil {
 		return pipelineClientRenamePipelinePollerResponse{}, err

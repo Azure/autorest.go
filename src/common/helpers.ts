@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
+import { ArraySchema, BinaryResponse, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
@@ -39,6 +39,11 @@ export function isDictionarySchema(resp: Schema): resp is DictionarySchema {
 // returns SchemaResponse type predicate if the response has a schema
 export function isSchemaResponse(resp: Response): resp is SchemaResponse {
   return (resp as SchemaResponse).schema !== undefined;
+}
+
+// returns BinaryResponse type predicate if the response is a binary response
+export function isBinaryResponse(resp: Response): resp is BinaryResponse {
+  return (resp as BinaryResponse).binary !== undefined;
 }
 
 export interface PagerInfo {
@@ -159,6 +164,20 @@ export function isMultiRespOperation(op: Operation): boolean {
     }
   }
   return schemaResponses.length > 1;
+}
+
+// returns the BinaryResponse if the operation returns a binary response or undefined.
+// throws an error if called on a multi-response operation.
+export function isBinaryResponseOperation(op: Operation): BinaryResponse | undefined {
+  if (!op.responses) {
+    return undefined;
+  } else if (isMultiRespOperation(op)) {
+    throw new Error('isBinaryResponseOperation() called for multi-response operation');
+  }
+  if (isBinaryResponse(op.responses[0])) {
+    return op.responses[0];
+  }
+  return undefined;
 }
 
 // returns true if the type is implicitly passed by value (map, slice, etc)

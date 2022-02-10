@@ -62,9 +62,7 @@ func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := BandwidthSchedulesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := BandwidthSchedulesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceN
 	if err != nil {
 		return BandwidthSchedulesClientDeletePollerResponse{}, err
 	}
-	result := BandwidthSchedulesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := BandwidthSchedulesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return BandwidthSchedulesClientDeletePollerResponse{}, err
@@ -247,7 +243,7 @@ func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, de
 
 // getHandleResponse handles the Get response.
 func (client *BandwidthSchedulesClient) getHandleResponse(resp *http.Response) (BandwidthSchedulesClientGetResponse, error) {
-	result := BandwidthSchedulesClientGetResponse{RawResponse: resp}
+	result := BandwidthSchedulesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedule); err != nil {
 		return BandwidthSchedulesClientGetResponse{}, err
 	}
@@ -300,7 +296,7 @@ func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse, error) {
-	result := BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedulesList); err != nil {
 		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
 	}

@@ -5,7 +5,7 @@ package morecustombaseurigroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -27,7 +27,7 @@ func TestGetEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

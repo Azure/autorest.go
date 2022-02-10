@@ -95,7 +95,7 @@ func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location
 
 // listHandleResponse handles the List response.
 func (client *ServiceTagsClient) listHandleResponse(resp *http.Response) (ServiceTagsClientListResponse, error) {
-	result := ServiceTagsClientListResponse{RawResponse: resp}
+	result := ServiceTagsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceTagsListResult); err != nil {
 		return ServiceTagsClientListResponse{}, err
 	}

@@ -8,31 +8,22 @@
 
 package validationgroup
 
-import "net/http"
-
 // AutoRestValidationTestClientGetWithConstantInPathResponse contains the response from method AutoRestValidationTestClient.GetWithConstantInPath.
 type AutoRestValidationTestClientGetWithConstantInPathResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // AutoRestValidationTestClientPostWithConstantInBodyResponse contains the response from method AutoRestValidationTestClient.PostWithConstantInBody.
 type AutoRestValidationTestClientPostWithConstantInBodyResponse struct {
 	Product
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AutoRestValidationTestClientValidationOfBodyResponse contains the response from method AutoRestValidationTestClient.ValidationOfBody.
 type AutoRestValidationTestClientValidationOfBodyResponse struct {
 	Product
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // AutoRestValidationTestClientValidationOfMethodParametersResponse contains the response from method AutoRestValidationTestClient.ValidationOfMethodParameters.
 type AutoRestValidationTestClientValidationOfMethodParametersResponse struct {
 	Product
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

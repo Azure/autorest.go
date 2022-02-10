@@ -91,7 +91,7 @@ func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client *AvailableDelegationsClient) listHandleResponse(resp *http.Response) (AvailableDelegationsClientListResponse, error) {
-	result := AvailableDelegationsClientListResponse{RawResponse: resp}
+	result := AvailableDelegationsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableDelegationsResult); err != nil {
 		return AvailableDelegationsClientListResponse{}, err
 	}

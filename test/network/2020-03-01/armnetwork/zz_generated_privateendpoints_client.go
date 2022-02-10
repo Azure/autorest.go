@@ -62,9 +62,7 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := PrivateEndpointsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := PrivateEndpointsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return PrivateEndpointsClientDeletePollerResponse{}, err
 	}
-	result := PrivateEndpointsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := PrivateEndpointsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateEndpointsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return PrivateEndpointsClientDeletePollerResponse{}, err
@@ -236,7 +232,7 @@ func (client *PrivateEndpointsClient) getCreateRequest(ctx context.Context, reso
 
 // getHandleResponse handles the Get response.
 func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (PrivateEndpointsClientGetResponse, error) {
-	result := PrivateEndpointsClientGetResponse{RawResponse: resp}
+	result := PrivateEndpointsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpoint); err != nil {
 		return PrivateEndpointsClientGetResponse{}, err
 	}
@@ -283,7 +279,7 @@ func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, res
 
 // listHandleResponse handles the List response.
 func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (PrivateEndpointsClientListResponse, error) {
-	result := PrivateEndpointsClientListResponse{RawResponse: resp}
+	result := PrivateEndpointsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
 		return PrivateEndpointsClientListResponse{}, err
 	}
@@ -326,7 +322,7 @@ func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx contex
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *PrivateEndpointsClient) listBySubscriptionHandleResponse(resp *http.Response) (PrivateEndpointsClientListBySubscriptionResponse, error) {
-	result := PrivateEndpointsClientListBySubscriptionResponse{RawResponse: resp}
+	result := PrivateEndpointsClientListBySubscriptionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
 		return PrivateEndpointsClientListBySubscriptionResponse{}, err
 	}

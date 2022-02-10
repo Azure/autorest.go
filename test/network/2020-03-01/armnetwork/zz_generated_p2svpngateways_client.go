@@ -62,9 +62,7 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := P2SVPNGatewaysClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return P2SVPNGatewaysClientDeletePollerResponse{}, err
 	}
-	result := P2SVPNGatewaysClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := P2SVPNGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientDeletePollerResponse{}, err
@@ -198,9 +194,7 @@ func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context
 	if err != nil {
 		return P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
-	result := P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{
-		RawResponse: resp,
-	}
+	result := P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}
 	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}, err
@@ -267,9 +261,7 @@ func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context,
 	if err != nil {
 		return P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}, err
 	}
-	result := P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{
-		RawResponse: resp,
-	}
+	result := P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}
 	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}, err
@@ -371,7 +363,7 @@ func (client *P2SVPNGatewaysClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client *P2SVPNGatewaysClient) getHandleResponse(resp *http.Response) (P2SVPNGatewaysClientGetResponse, error) {
-	result := P2SVPNGatewaysClientGetResponse{RawResponse: resp}
+	result := P2SVPNGatewaysClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.P2SVPNGateway); err != nil {
 		return P2SVPNGatewaysClientGetResponse{}, err
 	}
@@ -390,9 +382,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 	if err != nil {
 		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
-	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{
-		RawResponse: resp,
-	}
+	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}
 	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}, err
@@ -460,9 +450,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 	if err != nil {
 		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
-	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{
-		RawResponse: resp,
-	}
+	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}
 	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
@@ -552,7 +540,7 @@ func (client *P2SVPNGatewaysClient) listCreateRequest(ctx context.Context, optio
 
 // listHandleResponse handles the List response.
 func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2SVPNGatewaysClientListResponse, error) {
-	result := P2SVPNGatewaysClientListResponse{RawResponse: resp}
+	result := P2SVPNGatewaysClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListP2SVPNGatewaysResult); err != nil {
 		return P2SVPNGatewaysClientListResponse{}, err
 	}
@@ -600,7 +588,7 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupCreateRequest(ctx context
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (P2SVPNGatewaysClientListByResourceGroupResponse, error) {
-	result := P2SVPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
+	result := P2SVPNGatewaysClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListP2SVPNGatewaysResult); err != nil {
 		return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
 	}
@@ -657,7 +645,7 @@ func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context,
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *P2SVPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (P2SVPNGatewaysClientUpdateTagsResponse, error) {
-	result := P2SVPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
+	result := P2SVPNGatewaysClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.P2SVPNGateway); err != nil {
 		return P2SVPNGatewaysClientUpdateTagsResponse{}, err
 	}

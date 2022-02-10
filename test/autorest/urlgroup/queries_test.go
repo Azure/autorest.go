@@ -5,7 +5,7 @@ package urlgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -22,8 +22,8 @@ func TestArrayStringCSVEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -34,8 +34,8 @@ func TestArrayStringCSVNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -48,8 +48,8 @@ func TestArrayStringCsvValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -62,8 +62,8 @@ func TestArrayStringPipesValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -76,8 +76,8 @@ func TestArrayStringSsvValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -90,8 +90,8 @@ func TestArrayStringTsvValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -102,8 +102,8 @@ func TestByteEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -116,8 +116,8 @@ func TestByteMultiByte(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -128,8 +128,8 @@ func TestByteNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -140,8 +140,8 @@ func TestDateNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -152,8 +152,8 @@ func TestDateTimeNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -164,8 +164,8 @@ func TestDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -176,8 +176,8 @@ func TestDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -188,8 +188,8 @@ func TestDoubleDecimalNegative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -200,8 +200,8 @@ func TestDoubleDecimalPositive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -212,8 +212,8 @@ func TestDoubleNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -224,8 +224,8 @@ func TestEnumNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -238,8 +238,8 @@ func TestEnumValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -250,8 +250,8 @@ func TestFloatNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -262,8 +262,8 @@ func TestFloatScientificNegative(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -274,8 +274,8 @@ func TestFloatScientificPositive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -286,8 +286,8 @@ func TestGetBooleanFalse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -298,8 +298,8 @@ func TestGetBooleanNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -310,8 +310,8 @@ func TestGetBooleanTrue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -322,8 +322,8 @@ func TestGetIntNegativeOneMillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -334,8 +334,8 @@ func TestGetIntNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -346,8 +346,8 @@ func TestGetIntOneMillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -358,8 +358,8 @@ func TestGetLongNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -370,8 +370,8 @@ func TestGetNegativeTenBillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -382,8 +382,8 @@ func TestGetTenBillion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -394,8 +394,8 @@ func TestStringEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -406,8 +406,8 @@ func TestStringNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -418,8 +418,8 @@ func TestStringURLEncoded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -430,7 +430,7 @@ func TestStringUnicode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

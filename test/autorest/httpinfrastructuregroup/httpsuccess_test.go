@@ -5,7 +5,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -19,8 +19,8 @@ func TestHTTPSuccessDelete200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -30,8 +30,8 @@ func TestHTTPSuccessDelete202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -41,8 +41,8 @@ func TestHTTPSuccessDelete204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -52,8 +52,8 @@ func TestHTTPSuccessGet200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !*result.Value {
+		t.Fatal("expected Success")
 	}
 }
 
@@ -97,8 +97,8 @@ func TestHTTPSuccessOptions200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -108,8 +108,8 @@ func TestHTTPSuccessPatch200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -119,8 +119,8 @@ func TestHTTPSuccessPatch202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -130,8 +130,8 @@ func TestHTTPSuccessPatch204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -141,8 +141,8 @@ func TestHTTPSuccessPost200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -152,8 +152,8 @@ func TestHTTPSuccessPost201(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -163,8 +163,8 @@ func TestHTTPSuccessPost202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -174,8 +174,8 @@ func TestHTTPSuccessPost204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -185,8 +185,8 @@ func TestHTTPSuccessPut200(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -196,8 +196,8 @@ func TestHTTPSuccessPut201(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -207,8 +207,8 @@ func TestHTTPSuccessPut202(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusAccepted {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -218,7 +218,7 @@ func TestHTTPSuccessPut204(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Did not expect an error, but received: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

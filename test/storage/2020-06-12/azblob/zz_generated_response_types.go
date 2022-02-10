@@ -9,7 +9,7 @@
 package azblob
 
 import (
-	"net/http"
+	"io"
 	"time"
 )
 
@@ -41,9 +41,6 @@ type appendBlobClientAppendBlockFromURLResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -87,9 +84,6 @@ type appendBlobClientAppendBlockResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -126,9 +120,6 @@ type appendBlobClientCreateResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -155,9 +146,6 @@ type appendBlobClientSealResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -191,9 +179,6 @@ type blockBlobClientCommitBlockListResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -229,9 +214,6 @@ type blockBlobClientGetBlockListResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time `xml:"LastModified"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -265,9 +247,6 @@ type blockBlobClientPutBlobFromURLResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -298,9 +277,6 @@ type blockBlobClientStageBlockFromURLResponse struct {
 	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
 	IsServerEncrypted *bool
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -330,9 +306,6 @@ type blockBlobClientStageBlockResponse struct {
 
 	// IsServerEncrypted contains the information returned from the x-ms-request-server-encrypted header response.
 	IsServerEncrypted *bool
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -370,9 +343,6 @@ type blockBlobClientUploadResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -390,9 +360,6 @@ type clientAbortCopyFromURLResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -418,9 +385,6 @@ type clientAcquireLeaseResponse struct {
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -445,9 +409,6 @@ type clientBreakLeaseResponse struct {
 	// LeaseTime contains the information returned from the x-ms-lease-time header response.
 	LeaseTime *int32
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -471,9 +432,6 @@ type clientChangeLeaseResponse struct {
 
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -505,9 +463,6 @@ type clientCopyFromURLResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -538,9 +493,6 @@ type clientCreateSnapshotResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -562,9 +514,6 @@ type clientDeleteImmutabilityPolicyResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -579,9 +528,6 @@ type clientDeleteResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -606,6 +552,9 @@ type clientDownloadResponse struct {
 
 	// BlobType contains the information returned from the x-ms-blob-type header response.
 	BlobType *BlobType
+
+	// Body contains the streaming response.
+	Body io.ReadCloser
 
 	// CacheControl contains the information returned from the Cache-Control header response.
 	CacheControl *string
@@ -709,9 +658,6 @@ type clientDownloadResponse struct {
 	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
 	ObjectReplicationRules map[string]string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -735,9 +681,6 @@ type clientGetAccessControlResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -768,9 +711,6 @@ type clientGetAccountInfoResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -916,9 +856,6 @@ type clientGetPropertiesResponse struct {
 	// ObjectReplicationRules contains the information returned from the x-ms-or header response.
 	ObjectReplicationRules map[string]string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RehydratePriority contains the information returned from the x-ms-rehydrate-priority header response.
 	RehydratePriority *string
 
@@ -944,9 +881,6 @@ type clientGetTagsResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -970,6 +904,9 @@ type clientQueryResponse struct {
 
 	// BlobType contains the information returned from the x-ms-blob-type header response.
 	BlobType *BlobType
+
+	// Body contains the streaming response.
+	Body io.ReadCloser
 
 	// CacheControl contains the information returned from the Cache-Control header response.
 	CacheControl *string
@@ -1049,9 +986,6 @@ type clientQueryResponse struct {
 	// Metadata contains the information returned from the x-ms-meta header response.
 	Metadata map[string]string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1072,9 +1006,6 @@ type clientReleaseLeaseResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1100,9 +1031,6 @@ type clientRenameResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1127,9 +1055,6 @@ type clientRenewLeaseResponse struct {
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1147,9 +1072,6 @@ type clientSetAccessControlResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1171,9 +1093,6 @@ type clientSetExpiryResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1199,9 +1118,6 @@ type clientSetHTTPHeadersResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1223,9 +1139,6 @@ type clientSetImmutabilityPolicyResponse struct {
 	// ImmutabilityPolicyMode contains the information returned from the x-ms-immutability-policy-mode header response.
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1243,9 +1156,6 @@ type clientSetLegalHoldResponse struct {
 
 	// LegalHold contains the information returned from the x-ms-legal-hold header response.
 	LegalHold *bool
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1277,9 +1187,6 @@ type clientSetMetadataResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1298,9 +1205,6 @@ type clientSetTagsResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1312,9 +1216,6 @@ type clientSetTagsResponse struct {
 type clientSetTierResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1343,9 +1244,6 @@ type clientStartCopyFromURLResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1363,9 +1261,6 @@ type clientUndeleteResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1391,9 +1286,6 @@ type containerClientAcquireLeaseResponse struct {
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1417,9 +1309,6 @@ type containerClientBreakLeaseResponse struct {
 
 	// LeaseTime contains the information returned from the x-ms-lease-time header response.
 	LeaseTime *int32
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1445,9 +1334,6 @@ type containerClientChangeLeaseResponse struct {
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1469,9 +1355,6 @@ type containerClientCreateResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1486,9 +1369,6 @@ type containerClientDeleteResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1514,9 +1394,6 @@ type containerClientGetAccessPolicyResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time `xml:"LastModified"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -1537,9 +1414,6 @@ type containerClientGetAccountInfoResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1595,9 +1469,6 @@ type containerClientGetPropertiesResponse struct {
 	// Metadata contains the information returned from the x-ms-meta header response.
 	Metadata map[string]string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1617,9 +1488,6 @@ type containerClientListBlobFlatSegmentResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -1638,9 +1506,6 @@ type containerClientListBlobHierarchySegmentResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
@@ -1663,9 +1528,6 @@ type containerClientReleaseLeaseResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1680,9 +1542,6 @@ type containerClientRenameResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1708,9 +1567,6 @@ type containerClientRenewLeaseResponse struct {
 	// LeaseID contains the information returned from the x-ms-lease-id header response.
 	LeaseID *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1725,9 +1581,6 @@ type containerClientRestoreResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1750,9 +1603,6 @@ type containerClientSetAccessPolicyResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1774,9 +1624,6 @@ type containerClientSetMetadataResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1786,11 +1633,11 @@ type containerClientSetMetadataResponse struct {
 
 // containerClientSubmitBatchResponse contains the response from method containerClient.SubmitBatch.
 type containerClientSubmitBatchResponse struct {
+	// Body contains the streaming response.
+	Body io.ReadCloser
+
 	// ContentType contains the information returned from the Content-Type header response.
 	ContentType *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1816,9 +1663,6 @@ type directoryClientCreateResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1837,9 +1681,6 @@ type directoryClientDeleteResponse struct {
 	// Marker contains the information returned from the x-ms-continuation header response.
 	Marker *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1857,9 +1698,6 @@ type directoryClientGetAccessControlResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1900,9 +1738,6 @@ type directoryClientRenameResponse struct {
 	// Marker contains the information returned from the x-ms-continuation header response.
 	Marker *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -1920,9 +1755,6 @@ type directoryClientSetAccessControlResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1950,9 +1782,6 @@ type pageBlobClientClearPagesResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -1983,9 +1812,6 @@ type pageBlobClientCopyIncrementalResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -2020,9 +1846,6 @@ type pageBlobClientCreateResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -2051,9 +1874,6 @@ type pageBlobClientGetPageRangesDiffResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time `xml:"LastModified"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -2079,9 +1899,6 @@ type pageBlobClientGetPageRangesResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time `xml:"LastModified"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -2106,9 +1923,6 @@ type pageBlobClientResizeResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -2132,9 +1946,6 @@ type pageBlobClientUpdateSequenceNumberResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -2168,9 +1979,6 @@ type pageBlobClientUploadPagesFromURLResponse struct {
 
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -2211,9 +2019,6 @@ type pageBlobClientUploadPagesResponse struct {
 	// LastModified contains the information returned from the Last-Modified header response.
 	LastModified *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -2232,9 +2037,6 @@ type serviceClientFilterBlobsResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
@@ -2257,9 +2059,6 @@ type serviceClientGetAccountInfoResponse struct {
 	// IsHierarchicalNamespaceEnabled contains the information returned from the x-ms-is-hns-enabled header response.
 	IsHierarchicalNamespaceEnabled *bool
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -2275,9 +2074,6 @@ type serviceClientGetPropertiesResponse struct {
 	StorageServiceProperties
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
@@ -2295,9 +2091,6 @@ type serviceClientGetStatisticsResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -2314,9 +2107,6 @@ type serviceClientGetUserDelegationKeyResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -2330,9 +2120,6 @@ type serviceClientListContainersSegmentResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -2345,9 +2132,6 @@ type serviceClientSetPropertiesResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -2357,11 +2141,11 @@ type serviceClientSetPropertiesResponse struct {
 
 // serviceClientSubmitBatchResponse contains the response from method serviceClient.SubmitBatch.
 type serviceClientSubmitBatchResponse struct {
+	// Body contains the streaming response.
+	Body io.ReadCloser
+
 	// ContentType contains the information returned from the Content-Type header response.
 	ContentType *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string

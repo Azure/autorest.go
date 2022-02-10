@@ -65,7 +65,7 @@ func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options
 
 // getBoolHandleResponse handles the GetBool response.
 func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (PrimitiveClientGetBoolResponse, error) {
-	result := PrimitiveClientGetBoolResponse{RawResponse: resp}
+	result := PrimitiveClientGetBoolResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BooleanWrapper); err != nil {
 		return PrimitiveClientGetBoolResponse{}, err
 	}
@@ -103,7 +103,7 @@ func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options
 
 // getByteHandleResponse handles the GetByte response.
 func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (PrimitiveClientGetByteResponse, error) {
-	result := PrimitiveClientGetByteResponse{RawResponse: resp}
+	result := PrimitiveClientGetByteResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteWrapper); err != nil {
 		return PrimitiveClientGetByteResponse{}, err
 	}
@@ -141,7 +141,7 @@ func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options
 
 // getDateHandleResponse handles the GetDate response.
 func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (PrimitiveClientGetDateResponse, error) {
-	result := PrimitiveClientGetDateResponse{RawResponse: resp}
+	result := PrimitiveClientGetDateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DateWrapper); err != nil {
 		return PrimitiveClientGetDateResponse{}, err
 	}
@@ -179,7 +179,7 @@ func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, opt
 
 // getDateTimeHandleResponse handles the GetDateTime response.
 func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (PrimitiveClientGetDateTimeResponse, error) {
-	result := PrimitiveClientGetDateTimeResponse{RawResponse: resp}
+	result := PrimitiveClientGetDateTimeResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatetimeWrapper); err != nil {
 		return PrimitiveClientGetDateTimeResponse{}, err
 	}
@@ -218,7 +218,7 @@ func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Conte
 
 // getDateTimeRFC1123HandleResponse handles the GetDateTimeRFC1123 response.
 func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Response) (PrimitiveClientGetDateTimeRFC1123Response, error) {
-	result := PrimitiveClientGetDateTimeRFC1123Response{RawResponse: resp}
+	result := PrimitiveClientGetDateTimeRFC1123Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Datetimerfc1123Wrapper); err != nil {
 		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
@@ -256,7 +256,7 @@ func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, optio
 
 // getDoubleHandleResponse handles the GetDouble response.
 func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (PrimitiveClientGetDoubleResponse, error) {
-	result := PrimitiveClientGetDoubleResponse{RawResponse: resp}
+	result := PrimitiveClientGetDoubleResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DoubleWrapper); err != nil {
 		return PrimitiveClientGetDoubleResponse{}, err
 	}
@@ -294,7 +294,7 @@ func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, opt
 
 // getDurationHandleResponse handles the GetDuration response.
 func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (PrimitiveClientGetDurationResponse, error) {
-	result := PrimitiveClientGetDurationResponse{RawResponse: resp}
+	result := PrimitiveClientGetDurationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DurationWrapper); err != nil {
 		return PrimitiveClientGetDurationResponse{}, err
 	}
@@ -332,7 +332,7 @@ func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, option
 
 // getFloatHandleResponse handles the GetFloat response.
 func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (PrimitiveClientGetFloatResponse, error) {
-	result := PrimitiveClientGetFloatResponse{RawResponse: resp}
+	result := PrimitiveClientGetFloatResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FloatWrapper); err != nil {
 		return PrimitiveClientGetFloatResponse{}, err
 	}
@@ -370,7 +370,7 @@ func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options 
 
 // getIntHandleResponse handles the GetInt response.
 func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (PrimitiveClientGetIntResponse, error) {
-	result := PrimitiveClientGetIntResponse{RawResponse: resp}
+	result := PrimitiveClientGetIntResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntWrapper); err != nil {
 		return PrimitiveClientGetIntResponse{}, err
 	}
@@ -408,7 +408,7 @@ func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options
 
 // getLongHandleResponse handles the GetLong response.
 func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (PrimitiveClientGetLongResponse, error) {
-	result := PrimitiveClientGetLongResponse{RawResponse: resp}
+	result := PrimitiveClientGetLongResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LongWrapper); err != nil {
 		return PrimitiveClientGetLongResponse{}, err
 	}
@@ -446,7 +446,7 @@ func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, optio
 
 // getStringHandleResponse handles the GetString response.
 func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (PrimitiveClientGetStringResponse, error) {
-	result := PrimitiveClientGetStringResponse{RawResponse: resp}
+	result := PrimitiveClientGetStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringWrapper); err != nil {
 		return PrimitiveClientGetStringResponse{}, err
 	}
@@ -469,7 +469,7 @@ func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanW
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutBoolResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutBoolResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutBoolResponse{}, nil
 }
 
 // putBoolCreateRequest creates the PutBool request.
@@ -499,7 +499,7 @@ func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrap
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutByteResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutByteResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutByteResponse{}, nil
 }
 
 // putByteCreateRequest creates the PutByte request.
@@ -529,7 +529,7 @@ func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrap
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutDateResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutDateResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDateResponse{}, nil
 }
 
 // putDateCreateRequest creates the PutDate request.
@@ -559,7 +559,7 @@ func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody Date
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutDateTimeResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDateTimeResponse{}, nil
 }
 
 // putDateTimeCreateRequest creates the PutDateTime request.
@@ -590,7 +590,7 @@ func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBo
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutDateTimeRFC1123Response{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutDateTimeRFC1123Response{RawResponse: resp}, nil
+	return PrimitiveClientPutDateTimeRFC1123Response{}, nil
 }
 
 // putDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
@@ -620,7 +620,7 @@ func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody Double
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutDoubleResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutDoubleResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDoubleResponse{}, nil
 }
 
 // putDoubleCreateRequest creates the PutDouble request.
@@ -650,7 +650,7 @@ func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody Dura
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutDurationResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutDurationResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDurationResponse{}, nil
 }
 
 // putDurationCreateRequest creates the PutDuration request.
@@ -680,7 +680,7 @@ func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWr
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutFloatResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutFloatResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutFloatResponse{}, nil
 }
 
 // putFloatCreateRequest creates the PutFloat request.
@@ -710,7 +710,7 @@ func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrappe
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutIntResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutIntResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutIntResponse{}, nil
 }
 
 // putIntCreateRequest creates the PutInt request.
@@ -740,7 +740,7 @@ func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrap
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutLongResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutLongResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutLongResponse{}, nil
 }
 
 // putLongCreateRequest creates the PutLong request.
@@ -770,7 +770,7 @@ func (client *PrimitiveClient) PutString(ctx context.Context, complexBody String
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PrimitiveClientPutStringResponse{}, runtime.NewResponseError(resp)
 	}
-	return PrimitiveClientPutStringResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutStringResponse{}, nil
 }
 
 // putStringCreateRequest creates the PutString request.

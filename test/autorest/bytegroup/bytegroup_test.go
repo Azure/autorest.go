@@ -5,7 +5,6 @@ package bytegroup
 
 import (
 	"context"
-	"net/http"
 	"reflect"
 	"testing"
 
@@ -21,9 +20,6 @@ func TestGetEmpty(t *testing.T) {
 	result, err := client.GetEmpty(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetEmpty: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(result.Value, []byte{}); r != "" {
 		t.Fatal(r)
@@ -48,9 +44,6 @@ func TestGetNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNonASCII: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, []byte{0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6}); r != "" {
 		t.Fatal(r)
 	}
@@ -61,9 +54,6 @@ func TestGetNull(t *testing.T) {
 	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(result.Value, ([]byte)(nil)); r != "" {
 		t.Fatal(r)
@@ -76,7 +66,7 @@ func TestPutNonASCII(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNonASCII: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

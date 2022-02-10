@@ -5,7 +5,7 @@ package stringgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -21,9 +21,6 @@ func TestEnumGetNotExpandable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNotExpandable: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, ColorsRedColor.ToPtr()); r != "" {
 		t.Fatal(r)
 	}
@@ -35,9 +32,6 @@ func TestEnumGetReferenced(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetReferenced: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, ColorsRedColor.ToPtr()); r != "" {
 		t.Fatal(r)
 	}
@@ -48,9 +42,6 @@ func TestEnumGetReferencedConstant(t *testing.T) {
 	result, err := client.GetReferencedConstant(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetReferencedConstant: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	val := "Sample String"
 	if r := cmp.Diff(result.RefColorConstant, RefColorConstant{Field1: &val}); r != "" {
@@ -64,8 +55,8 @@ func TestEnumPutNotExpandable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutNotExpandable: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -75,8 +66,8 @@ func TestEnumPutReferenced(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferenced: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -87,8 +78,8 @@ func TestEnumPutReferencedConstant(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutReferencedConstant: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 }

@@ -5,10 +5,11 @@ package validationgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/google/go-cmp/cmp"
 )
 
 func newAutoRestValidationTestClient() *AutoRestValidationTestClient {
@@ -21,26 +22,27 @@ func TestValidationGetWithConstantInPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetWithConstantInPath: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
-	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestClientPostWithConstantInBodyOptions{Body: &Product{
+	product := Product{
 		Child: &ChildProduct{
 			ConstProperty: to.StringPtr("constant")},
 		ConstString: to.StringPtr("constant"),
 		ConstInt:    to.Int32Ptr(0),
 		ConstChild: &ConstantProduct{
 			ConstProperty:  to.StringPtr("constant"),
-			ConstProperty2: to.StringPtr("constant2")}}})
+			ConstProperty2: to.StringPtr("constant2")}}
+	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestClientPostWithConstantInBodyOptions{Body: &product})
 	if err != nil {
 		t.Fatalf("PostWithConstantInBody: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if r := cmp.Diff(product, result.Product); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -61,7 +63,7 @@ func TestValidationValidationOfBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ValidationOfBody: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

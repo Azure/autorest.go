@@ -8,205 +8,151 @@
 
 package headergroup
 
-import (
-	"net/http"
-	"time"
-)
+import "time"
 
 // HeaderClientCustomRequestIDResponse contains the response from method HeaderClient.CustomRequestID.
 type HeaderClientCustomRequestIDResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamBoolResponse contains the response from method HeaderClient.ParamBool.
 type HeaderClientParamBoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamByteResponse contains the response from method HeaderClient.ParamByte.
 type HeaderClientParamByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamDateResponse contains the response from method HeaderClient.ParamDate.
 type HeaderClientParamDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamDatetimeRFC1123Response contains the response from method HeaderClient.ParamDatetimeRFC1123.
 type HeaderClientParamDatetimeRFC1123Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamDatetimeResponse contains the response from method HeaderClient.ParamDatetime.
 type HeaderClientParamDatetimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamDoubleResponse contains the response from method HeaderClient.ParamDouble.
 type HeaderClientParamDoubleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamDurationResponse contains the response from method HeaderClient.ParamDuration.
 type HeaderClientParamDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamEnumResponse contains the response from method HeaderClient.ParamEnum.
 type HeaderClientParamEnumResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamExistingKeyResponse contains the response from method HeaderClient.ParamExistingKey.
 type HeaderClientParamExistingKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamFloatResponse contains the response from method HeaderClient.ParamFloat.
 type HeaderClientParamFloatResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamIntegerResponse contains the response from method HeaderClient.ParamInteger.
 type HeaderClientParamIntegerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamLongResponse contains the response from method HeaderClient.ParamLong.
 type HeaderClientParamLongResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamProtectedKeyResponse contains the response from method HeaderClient.ParamProtectedKey.
 type HeaderClientParamProtectedKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientParamStringResponse contains the response from method HeaderClient.ParamString.
 type HeaderClientParamStringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // HeaderClientResponseBoolResponse contains the response from method HeaderClient.ResponseBool.
 type HeaderClientResponseBoolResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *bool
 }
 
 // HeaderClientResponseByteResponse contains the response from method HeaderClient.ResponseByte.
 type HeaderClientResponseByteResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value []byte
 }
 
 // HeaderClientResponseDateResponse contains the response from method HeaderClient.ResponseDate.
 type HeaderClientResponseDateResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *time.Time
 }
 
 // HeaderClientResponseDatetimeRFC1123Response contains the response from method HeaderClient.ResponseDatetimeRFC1123.
 type HeaderClientResponseDatetimeRFC1123Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *time.Time
 }
 
 // HeaderClientResponseDatetimeResponse contains the response from method HeaderClient.ResponseDatetime.
 type HeaderClientResponseDatetimeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *time.Time
 }
 
 // HeaderClientResponseDoubleResponse contains the response from method HeaderClient.ResponseDouble.
 type HeaderClientResponseDoubleResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *float64
 }
 
 // HeaderClientResponseDurationResponse contains the response from method HeaderClient.ResponseDuration.
 type HeaderClientResponseDurationResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *string
 }
 
 // HeaderClientResponseEnumResponse contains the response from method HeaderClient.ResponseEnum.
 type HeaderClientResponseEnumResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *GreyscaleColors
 }
 
 // HeaderClientResponseExistingKeyResponse contains the response from method HeaderClient.ResponseExistingKey.
 type HeaderClientResponseExistingKeyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// UserAgent contains the information returned from the User-Agent header response.
 	UserAgent *string
 }
 
 // HeaderClientResponseFloatResponse contains the response from method HeaderClient.ResponseFloat.
 type HeaderClientResponseFloatResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *float32
 }
 
 // HeaderClientResponseIntegerResponse contains the response from method HeaderClient.ResponseInteger.
 type HeaderClientResponseIntegerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *int32
 }
 
 // HeaderClientResponseLongResponse contains the response from method HeaderClient.ResponseLong.
 type HeaderClientResponseLongResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *int64
 }
@@ -215,16 +161,10 @@ type HeaderClientResponseLongResponse struct {
 type HeaderClientResponseProtectedKeyResponse struct {
 	// ContentType contains the information returned from the Content-Type header response.
 	ContentType *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // HeaderClientResponseStringResponse contains the response from method HeaderClient.ResponseString.
 type HeaderClientResponseStringResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Value contains the information returned from the value header response.
 	Value *string
 }

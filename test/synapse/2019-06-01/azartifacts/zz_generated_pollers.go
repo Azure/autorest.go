@@ -43,11 +43,10 @@ func (p *dataFlowClientCreateOrUpdateDataFlowPoller) Poll(ctx context.Context) (
 // If the final GET succeeded then the final dataFlowClientCreateOrUpdateDataFlowResponse will be returned.
 func (p *dataFlowClientCreateOrUpdateDataFlowPoller) FinalResponse(ctx context.Context) (dataFlowClientCreateOrUpdateDataFlowResponse, error) {
 	respType := dataFlowClientCreateOrUpdateDataFlowResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.DataFlowResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.DataFlowResource)
 	if err != nil {
 		return dataFlowClientCreateOrUpdateDataFlowResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -86,11 +85,10 @@ func (p *dataFlowClientDeleteDataFlowPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final dataFlowClientDeleteDataFlowResponse will be returned.
 func (p *dataFlowClientDeleteDataFlowPoller) FinalResponse(ctx context.Context) (dataFlowClientDeleteDataFlowResponse, error) {
 	respType := dataFlowClientDeleteDataFlowResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return dataFlowClientDeleteDataFlowResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -129,11 +127,10 @@ func (p *dataFlowClientRenameDataFlowPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final dataFlowClientRenameDataFlowResponse will be returned.
 func (p *dataFlowClientRenameDataFlowPoller) FinalResponse(ctx context.Context) (dataFlowClientRenameDataFlowResponse, error) {
 	respType := dataFlowClientRenameDataFlowResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return dataFlowClientRenameDataFlowResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -172,11 +169,10 @@ func (p *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller) Poll(ctx co
 // If the final GET succeeded then the final dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse will be returned.
 func (p *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller) FinalResponse(ctx context.Context) (dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse, error) {
 	respType := dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.CreateDataFlowDebugSessionResponse)
+	_, err := p.pt.FinalResponse(ctx, &respType.CreateDataFlowDebugSessionResponse)
 	if err != nil {
 		return dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -215,11 +211,10 @@ func (p *dataFlowDebugSessionClientExecuteCommandPoller) Poll(ctx context.Contex
 // If the final GET succeeded then the final dataFlowDebugSessionClientExecuteCommandResponse will be returned.
 func (p *dataFlowDebugSessionClientExecuteCommandPoller) FinalResponse(ctx context.Context) (dataFlowDebugSessionClientExecuteCommandResponse, error) {
 	respType := dataFlowDebugSessionClientExecuteCommandResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.DataFlowDebugCommandResponse)
+	_, err := p.pt.FinalResponse(ctx, &respType.DataFlowDebugCommandResponse)
 	if err != nil {
 		return dataFlowDebugSessionClientExecuteCommandResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -258,11 +253,10 @@ func (p *datasetClientCreateOrUpdateDatasetPoller) Poll(ctx context.Context) (*h
 // If the final GET succeeded then the final datasetClientCreateOrUpdateDatasetResponse will be returned.
 func (p *datasetClientCreateOrUpdateDatasetPoller) FinalResponse(ctx context.Context) (datasetClientCreateOrUpdateDatasetResponse, error) {
 	respType := datasetClientCreateOrUpdateDatasetResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.DatasetResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.DatasetResource)
 	if err != nil {
 		return datasetClientCreateOrUpdateDatasetResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -301,11 +295,10 @@ func (p *datasetClientDeleteDatasetPoller) Poll(ctx context.Context) (*http.Resp
 // If the final GET succeeded then the final datasetClientDeleteDatasetResponse will be returned.
 func (p *datasetClientDeleteDatasetPoller) FinalResponse(ctx context.Context) (datasetClientDeleteDatasetResponse, error) {
 	respType := datasetClientDeleteDatasetResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return datasetClientDeleteDatasetResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -344,11 +337,10 @@ func (p *datasetClientRenameDatasetPoller) Poll(ctx context.Context) (*http.Resp
 // If the final GET succeeded then the final datasetClientRenameDatasetResponse will be returned.
 func (p *datasetClientRenameDatasetPoller) FinalResponse(ctx context.Context) (datasetClientRenameDatasetResponse, error) {
 	respType := datasetClientRenameDatasetResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return datasetClientRenameDatasetResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -387,11 +379,10 @@ func (p *libraryClientCreatePoller) Poll(ctx context.Context) (*http.Response, e
 // If the final GET succeeded then the final libraryClientCreateResponse will be returned.
 func (p *libraryClientCreatePoller) FinalResponse(ctx context.Context) (libraryClientCreateResponse, error) {
 	respType := libraryClientCreateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
+	_, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
 	if err != nil {
 		return libraryClientCreateResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -430,11 +421,10 @@ func (p *libraryClientDeletePoller) Poll(ctx context.Context) (*http.Response, e
 // If the final GET succeeded then the final libraryClientDeleteResponse will be returned.
 func (p *libraryClientDeletePoller) FinalResponse(ctx context.Context) (libraryClientDeleteResponse, error) {
 	respType := libraryClientDeleteResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
+	_, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
 	if err != nil {
 		return libraryClientDeleteResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -473,11 +463,10 @@ func (p *libraryClientFlushPoller) Poll(ctx context.Context) (*http.Response, er
 // If the final GET succeeded then the final libraryClientFlushResponse will be returned.
 func (p *libraryClientFlushPoller) FinalResponse(ctx context.Context) (libraryClientFlushResponse, error) {
 	respType := libraryClientFlushResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
+	_, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
 	if err != nil {
 		return libraryClientFlushResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -516,11 +505,10 @@ func (p *linkedServiceClientCreateOrUpdateLinkedServicePoller) Poll(ctx context.
 // If the final GET succeeded then the final linkedServiceClientCreateOrUpdateLinkedServiceResponse will be returned.
 func (p *linkedServiceClientCreateOrUpdateLinkedServicePoller) FinalResponse(ctx context.Context) (linkedServiceClientCreateOrUpdateLinkedServiceResponse, error) {
 	respType := linkedServiceClientCreateOrUpdateLinkedServiceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.LinkedServiceResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.LinkedServiceResource)
 	if err != nil {
 		return linkedServiceClientCreateOrUpdateLinkedServiceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -559,11 +547,10 @@ func (p *linkedServiceClientDeleteLinkedServicePoller) Poll(ctx context.Context)
 // If the final GET succeeded then the final linkedServiceClientDeleteLinkedServiceResponse will be returned.
 func (p *linkedServiceClientDeleteLinkedServicePoller) FinalResponse(ctx context.Context) (linkedServiceClientDeleteLinkedServiceResponse, error) {
 	respType := linkedServiceClientDeleteLinkedServiceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return linkedServiceClientDeleteLinkedServiceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -602,11 +589,10 @@ func (p *linkedServiceClientRenameLinkedServicePoller) Poll(ctx context.Context)
 // If the final GET succeeded then the final linkedServiceClientRenameLinkedServiceResponse will be returned.
 func (p *linkedServiceClientRenameLinkedServicePoller) FinalResponse(ctx context.Context) (linkedServiceClientRenameLinkedServiceResponse, error) {
 	respType := linkedServiceClientRenameLinkedServiceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return linkedServiceClientRenameLinkedServiceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -645,11 +631,10 @@ func (p *notebookClientCreateOrUpdateNotebookPoller) Poll(ctx context.Context) (
 // If the final GET succeeded then the final notebookClientCreateOrUpdateNotebookResponse will be returned.
 func (p *notebookClientCreateOrUpdateNotebookPoller) FinalResponse(ctx context.Context) (notebookClientCreateOrUpdateNotebookResponse, error) {
 	respType := notebookClientCreateOrUpdateNotebookResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.NotebookResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.NotebookResource)
 	if err != nil {
 		return notebookClientCreateOrUpdateNotebookResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -688,11 +673,10 @@ func (p *notebookClientDeleteNotebookPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final notebookClientDeleteNotebookResponse will be returned.
 func (p *notebookClientDeleteNotebookPoller) FinalResponse(ctx context.Context) (notebookClientDeleteNotebookResponse, error) {
 	respType := notebookClientDeleteNotebookResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return notebookClientDeleteNotebookResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -731,11 +715,10 @@ func (p *notebookClientRenameNotebookPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final notebookClientRenameNotebookResponse will be returned.
 func (p *notebookClientRenameNotebookPoller) FinalResponse(ctx context.Context) (notebookClientRenameNotebookResponse, error) {
 	respType := notebookClientRenameNotebookResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return notebookClientRenameNotebookResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -774,11 +757,10 @@ func (p *pipelineClientCreateOrUpdatePipelinePoller) Poll(ctx context.Context) (
 // If the final GET succeeded then the final pipelineClientCreateOrUpdatePipelineResponse will be returned.
 func (p *pipelineClientCreateOrUpdatePipelinePoller) FinalResponse(ctx context.Context) (pipelineClientCreateOrUpdatePipelineResponse, error) {
 	respType := pipelineClientCreateOrUpdatePipelineResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.PipelineResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.PipelineResource)
 	if err != nil {
 		return pipelineClientCreateOrUpdatePipelineResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -817,11 +799,10 @@ func (p *pipelineClientDeletePipelinePoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final pipelineClientDeletePipelineResponse will be returned.
 func (p *pipelineClientDeletePipelinePoller) FinalResponse(ctx context.Context) (pipelineClientDeletePipelineResponse, error) {
 	respType := pipelineClientDeletePipelineResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return pipelineClientDeletePipelineResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -860,11 +841,10 @@ func (p *pipelineClientRenamePipelinePoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final pipelineClientRenamePipelineResponse will be returned.
 func (p *pipelineClientRenamePipelinePoller) FinalResponse(ctx context.Context) (pipelineClientRenamePipelineResponse, error) {
 	respType := pipelineClientRenamePipelineResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return pipelineClientRenamePipelineResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -903,11 +883,10 @@ func (p *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller) Poll(ct
 // If the final GET succeeded then the final sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse will be returned.
 func (p *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SparkJobDefinitionResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.SparkJobDefinitionResource)
 	if err != nil {
 		return sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -946,11 +925,10 @@ func (p *sparkJobDefinitionClientDebugSparkJobDefinitionPoller) Poll(ctx context
 // If the final GET succeeded then the final sparkJobDefinitionClientDebugSparkJobDefinitionResponse will be returned.
 func (p *sparkJobDefinitionClientDebugSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientDebugSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientDebugSparkJobDefinitionResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SparkBatchJob)
+	_, err := p.pt.FinalResponse(ctx, &respType.SparkBatchJob)
 	if err != nil {
 		return sparkJobDefinitionClientDebugSparkJobDefinitionResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -989,11 +967,10 @@ func (p *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller) Poll(ctx contex
 // If the final GET succeeded then the final sparkJobDefinitionClientDeleteSparkJobDefinitionResponse will be returned.
 func (p *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientDeleteSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientDeleteSparkJobDefinitionResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return sparkJobDefinitionClientDeleteSparkJobDefinitionResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1032,11 +1009,10 @@ func (p *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller) Poll(ctx conte
 // If the final GET succeeded then the final sparkJobDefinitionClientExecuteSparkJobDefinitionResponse will be returned.
 func (p *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientExecuteSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientExecuteSparkJobDefinitionResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SparkBatchJob)
+	_, err := p.pt.FinalResponse(ctx, &respType.SparkBatchJob)
 	if err != nil {
 		return sparkJobDefinitionClientExecuteSparkJobDefinitionResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1075,11 +1051,10 @@ func (p *sparkJobDefinitionClientRenameSparkJobDefinitionPoller) Poll(ctx contex
 // If the final GET succeeded then the final sparkJobDefinitionClientRenameSparkJobDefinitionResponse will be returned.
 func (p *sparkJobDefinitionClientRenameSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientRenameSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientRenameSparkJobDefinitionResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return sparkJobDefinitionClientRenameSparkJobDefinitionResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1118,11 +1093,10 @@ func (p *sqlScriptClientCreateOrUpdateSQLScriptPoller) Poll(ctx context.Context)
 // If the final GET succeeded then the final sqlScriptClientCreateOrUpdateSQLScriptResponse will be returned.
 func (p *sqlScriptClientCreateOrUpdateSQLScriptPoller) FinalResponse(ctx context.Context) (sqlScriptClientCreateOrUpdateSQLScriptResponse, error) {
 	respType := sqlScriptClientCreateOrUpdateSQLScriptResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SQLScriptResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.SQLScriptResource)
 	if err != nil {
 		return sqlScriptClientCreateOrUpdateSQLScriptResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1161,11 +1135,10 @@ func (p *sqlScriptClientDeleteSQLScriptPoller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final sqlScriptClientDeleteSQLScriptResponse will be returned.
 func (p *sqlScriptClientDeleteSQLScriptPoller) FinalResponse(ctx context.Context) (sqlScriptClientDeleteSQLScriptResponse, error) {
 	respType := sqlScriptClientDeleteSQLScriptResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return sqlScriptClientDeleteSQLScriptResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1204,11 +1177,10 @@ func (p *sqlScriptClientRenameSQLScriptPoller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final sqlScriptClientRenameSQLScriptResponse will be returned.
 func (p *sqlScriptClientRenameSQLScriptPoller) FinalResponse(ctx context.Context) (sqlScriptClientRenameSQLScriptResponse, error) {
 	respType := sqlScriptClientRenameSQLScriptResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return sqlScriptClientRenameSQLScriptResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1247,11 +1219,10 @@ func (p *triggerClientCreateOrUpdateTriggerPoller) Poll(ctx context.Context) (*h
 // If the final GET succeeded then the final triggerClientCreateOrUpdateTriggerResponse will be returned.
 func (p *triggerClientCreateOrUpdateTriggerPoller) FinalResponse(ctx context.Context) (triggerClientCreateOrUpdateTriggerResponse, error) {
 	respType := triggerClientCreateOrUpdateTriggerResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.TriggerResource)
+	_, err := p.pt.FinalResponse(ctx, &respType.TriggerResource)
 	if err != nil {
 		return triggerClientCreateOrUpdateTriggerResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1290,11 +1261,10 @@ func (p *triggerClientDeleteTriggerPoller) Poll(ctx context.Context) (*http.Resp
 // If the final GET succeeded then the final triggerClientDeleteTriggerResponse will be returned.
 func (p *triggerClientDeleteTriggerPoller) FinalResponse(ctx context.Context) (triggerClientDeleteTriggerResponse, error) {
 	respType := triggerClientDeleteTriggerResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return triggerClientDeleteTriggerResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1333,11 +1303,10 @@ func (p *triggerClientStartTriggerPoller) Poll(ctx context.Context) (*http.Respo
 // If the final GET succeeded then the final triggerClientStartTriggerResponse will be returned.
 func (p *triggerClientStartTriggerPoller) FinalResponse(ctx context.Context) (triggerClientStartTriggerResponse, error) {
 	respType := triggerClientStartTriggerResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return triggerClientStartTriggerResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1376,11 +1345,10 @@ func (p *triggerClientStopTriggerPoller) Poll(ctx context.Context) (*http.Respon
 // If the final GET succeeded then the final triggerClientStopTriggerResponse will be returned.
 func (p *triggerClientStopTriggerPoller) FinalResponse(ctx context.Context) (triggerClientStopTriggerResponse, error) {
 	respType := triggerClientStopTriggerResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return triggerClientStopTriggerResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1419,11 +1387,10 @@ func (p *triggerClientSubscribeTriggerToEventsPoller) Poll(ctx context.Context) 
 // If the final GET succeeded then the final triggerClientSubscribeTriggerToEventsResponse will be returned.
 func (p *triggerClientSubscribeTriggerToEventsPoller) FinalResponse(ctx context.Context) (triggerClientSubscribeTriggerToEventsResponse, error) {
 	respType := triggerClientSubscribeTriggerToEventsResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.TriggerSubscriptionOperationStatus)
+	_, err := p.pt.FinalResponse(ctx, &respType.TriggerSubscriptionOperationStatus)
 	if err != nil {
 		return triggerClientSubscribeTriggerToEventsResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1462,11 +1429,10 @@ func (p *triggerClientUnsubscribeTriggerFromEventsPoller) Poll(ctx context.Conte
 // If the final GET succeeded then the final triggerClientUnsubscribeTriggerFromEventsResponse will be returned.
 func (p *triggerClientUnsubscribeTriggerFromEventsPoller) FinalResponse(ctx context.Context) (triggerClientUnsubscribeTriggerFromEventsResponse, error) {
 	respType := triggerClientUnsubscribeTriggerFromEventsResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.TriggerSubscriptionOperationStatus)
+	_, err := p.pt.FinalResponse(ctx, &respType.TriggerSubscriptionOperationStatus)
 	if err != nil {
 		return triggerClientUnsubscribeTriggerFromEventsResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 

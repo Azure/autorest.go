@@ -5,7 +5,7 @@ package xmlgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -36,9 +36,6 @@ func TestGetACLs(t *testing.T) {
 	result, err := client.GetACLs(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	expected := []*SignedIdentifier{
 		{
@@ -71,9 +68,6 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 	result, err := client.GetComplexTypeRefNoMeta(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	expected := RootWithRefAndNoMeta{
 		RefToModel: &ComplexTypeNoMeta{
@@ -109,9 +103,6 @@ func TestGetEmptyChildElement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := Banana{
 		Name:       to.StringPtr("Unknown Banana"),
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
@@ -128,9 +119,6 @@ func TestGetEmptyList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := Slideshow{}
 	if r := cmp.Diff(result.Slideshow, expected); r != "" {
 		t.Fatal(r)
@@ -143,9 +131,6 @@ func TestGetEmptyRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if result.Bananas != nil {
 		t.Fatal("expected nil slice")
 	}
@@ -156,9 +141,6 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 	result, err := client.GetEmptyWrappedLists(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	expected := AppleBarrel{}
 	if r := cmp.Diff(result.AppleBarrel, expected); r != "" {
@@ -183,9 +165,6 @@ func TestGetRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := []*Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -209,9 +188,6 @@ func TestGetRootListSingleItem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := []*Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -229,9 +205,6 @@ func TestGetServiceProperties(t *testing.T) {
 	result, err := client.GetServiceProperties(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	expected := StorageServiceProperties{
 		HourMetrics: &Metrics{
@@ -274,9 +247,6 @@ func TestGetSimple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := Slideshow{
 		Author: to.StringPtr("Yours Truly"),
 		Date:   to.StringPtr("Date of publication"),
@@ -304,9 +274,6 @@ func TestGetWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := AppleBarrel{
 		BadApples:  to.StringPtrArray("Red Delicious"),
 		GoodApples: to.StringPtrArray("Fuji", "Gala"),
@@ -322,9 +289,6 @@ func TestGetXMsText(t *testing.T) {
 	result, err := client.GetXMsText(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	expected := ObjectWithXMsTextProperty{
 		Content:  to.StringPtr("I am text"),
@@ -343,8 +307,8 @@ func TestJSONInput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -497,9 +461,6 @@ func TestListContainers(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	expected := ListContainersResponse{
 		ServiceEndpoint: to.StringPtr("https://myaccount.blob.core.windows.net/"),
 		MaxResults:      to.Int32Ptr(3),
@@ -549,8 +510,8 @@ func TestPutACLs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -575,8 +536,8 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -591,8 +552,8 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -606,8 +567,8 @@ func TestPutEmptyChildElement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -619,8 +580,8 @@ func TestPutEmptyList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -630,8 +591,8 @@ func TestPutEmptyRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -644,8 +605,8 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -666,8 +627,8 @@ func TestPutRootList(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -683,8 +644,8 @@ func TestPutRootListSingleItem(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -723,8 +684,8 @@ func TestPutServiceProperties(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -749,8 +710,8 @@ func TestPutSimple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -763,7 +724,7 @@ func TestPutWrappedLists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusCreated {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

@@ -69,7 +69,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetEmptyResponse{RawResponse: resp}, nil
+	return PathsClientGetEmptyResponse{}, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.

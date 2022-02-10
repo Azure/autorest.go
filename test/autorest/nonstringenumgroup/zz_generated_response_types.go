@@ -8,36 +8,24 @@
 
 package nonstringenumgroup
 
-import "net/http"
-
 // FloatClientGetResponse contains the response from method FloatClient.Get.
 type FloatClientGetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// List of float enums
 	Value *FloatEnum
 }
 
 // FloatClientPutResponse contains the response from method FloatClient.Put.
 type FloatClientPutResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // IntClientGetResponse contains the response from method IntClient.Get.
 type IntClientGetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// List of integer enums
 	Value *IntEnum
 }
 
 // IntClientPutResponse contains the response from method IntClient.Put.
 type IntClientPutResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }

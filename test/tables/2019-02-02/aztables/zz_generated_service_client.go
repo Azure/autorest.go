@@ -82,7 +82,7 @@ func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, res
 
 // getPropertiesHandleResponse handles the GetProperties response.
 func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (ServiceClientGetPropertiesResponse, error) {
-	result := ServiceClientGetPropertiesResponse{RawResponse: resp}
+	result := ServiceClientGetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -142,7 +142,7 @@ func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, res
 
 // getStatisticsHandleResponse handles the GetStatistics response.
 func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (ServiceClientGetStatisticsResponse, error) {
-	result := ServiceClientGetStatisticsResponse{RawResponse: resp}
+	result := ServiceClientGetStatisticsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -210,7 +210,7 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, res
 
 // setPropertiesHandleResponse handles the SetProperties response.
 func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (ServiceClientSetPropertiesResponse, error) {
-	result := ServiceClientSetPropertiesResponse{RawResponse: resp}
+	result := ServiceClientSetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}

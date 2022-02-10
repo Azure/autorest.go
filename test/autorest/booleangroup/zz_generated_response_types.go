@@ -8,48 +8,34 @@
 
 package booleangroup
 
-import "net/http"
-
 // BoolClientGetFalseResponse contains the response from method BoolClient.GetFalse.
 type BoolClientGetFalseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// simple boolean
 	Value *bool
 }
 
 // BoolClientGetInvalidResponse contains the response from method BoolClient.GetInvalid.
 type BoolClientGetInvalidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *bool
+	Value *bool
 }
 
 // BoolClientGetNullResponse contains the response from method BoolClient.GetNull.
 type BoolClientGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *bool
+	Value *bool
 }
 
 // BoolClientGetTrueResponse contains the response from method BoolClient.GetTrue.
 type BoolClientGetTrueResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// simple boolean
 	Value *bool
 }
 
 // BoolClientPutFalseResponse contains the response from method BoolClient.PutFalse.
 type BoolClientPutFalseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // BoolClientPutTrueResponse contains the response from method BoolClient.PutTrue.
 type BoolClientPutTrueResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

@@ -66,7 +66,7 @@ func (client *DatetimeClient) getInvalidCreateRequest(ctx context.Context, optio
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *DatetimeClient) getInvalidHandleResponse(resp *http.Response) (DatetimeClientGetInvalidResponse, error) {
-	result := DatetimeClientGetInvalidResponse{RawResponse: resp}
+	result := DatetimeClientGetInvalidResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetInvalidResponse{}, err
@@ -107,7 +107,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeCreateRe
 
 // getLocalNegativeOffsetLowercaseMaxDateTimeHandleResponse handles the GetLocalNegativeOffsetLowercaseMaxDateTime response.
 func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse, error) {
-	result := DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalNegativeOffsetLowercaseMaxDateTimeResponse{}, err
@@ -148,7 +148,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 
 // getLocalNegativeOffsetMinDateTimeHandleResponse handles the GetLocalNegativeOffsetMinDateTime response.
 func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse, error) {
-	result := DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalNegativeOffsetMinDateTimeResponse{}, err
@@ -189,7 +189,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeCreateRe
 
 // getLocalNegativeOffsetUppercaseMaxDateTimeHandleResponse handles the GetLocalNegativeOffsetUppercaseMaxDateTime response.
 func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse, error) {
-	result := DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalNegativeOffsetUppercaseMaxDateTimeResponse{}, err
@@ -230,7 +230,7 @@ func (client *DatetimeClient) getLocalNoOffsetMinDateTimeCreateRequest(ctx conte
 
 // getLocalNoOffsetMinDateTimeHandleResponse handles the GetLocalNoOffsetMinDateTime response.
 func (client *DatetimeClient) getLocalNoOffsetMinDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalNoOffsetMinDateTimeResponse, error) {
-	result := DatetimeClientGetLocalNoOffsetMinDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalNoOffsetMinDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalNoOffsetMinDateTimeResponse{}, err
@@ -271,7 +271,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeCreateRe
 
 // getLocalPositiveOffsetLowercaseMaxDateTimeHandleResponse handles the GetLocalPositiveOffsetLowercaseMaxDateTime response.
 func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse, error) {
-	result := DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalPositiveOffsetLowercaseMaxDateTimeResponse{}, err
@@ -312,7 +312,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 
 // getLocalPositiveOffsetMinDateTimeHandleResponse handles the GetLocalPositiveOffsetMinDateTime response.
 func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse, error) {
-	result := DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalPositiveOffsetMinDateTimeResponse{}, err
@@ -353,7 +353,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeCreateRe
 
 // getLocalPositiveOffsetUppercaseMaxDateTimeHandleResponse handles the GetLocalPositiveOffsetUppercaseMaxDateTime response.
 func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse, error) {
-	result := DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetLocalPositiveOffsetUppercaseMaxDateTimeResponse{}, err
@@ -393,7 +393,7 @@ func (client *DatetimeClient) getNullCreateRequest(ctx context.Context, options 
 
 // getNullHandleResponse handles the GetNull response.
 func (client *DatetimeClient) getNullHandleResponse(resp *http.Response) (DatetimeClientGetNullResponse, error) {
-	result := DatetimeClientGetNullResponse{RawResponse: resp}
+	result := DatetimeClientGetNullResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetNullResponse{}, err
@@ -433,7 +433,7 @@ func (client *DatetimeClient) getOverflowCreateRequest(ctx context.Context, opti
 
 // getOverflowHandleResponse handles the GetOverflow response.
 func (client *DatetimeClient) getOverflowHandleResponse(resp *http.Response) (DatetimeClientGetOverflowResponse, error) {
-	result := DatetimeClientGetOverflowResponse{RawResponse: resp}
+	result := DatetimeClientGetOverflowResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetOverflowResponse{}, err
@@ -474,7 +474,7 @@ func (client *DatetimeClient) getUTCLowercaseMaxDateTimeCreateRequest(ctx contex
 
 // getUTCLowercaseMaxDateTimeHandleResponse handles the GetUTCLowercaseMaxDateTime response.
 func (client *DatetimeClient) getUTCLowercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetUTCLowercaseMaxDateTimeResponse, error) {
-	result := DatetimeClientGetUTCLowercaseMaxDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetUTCLowercaseMaxDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetUTCLowercaseMaxDateTimeResponse{}, err
@@ -515,7 +515,7 @@ func (client *DatetimeClient) getUTCMinDateTimeCreateRequest(ctx context.Context
 
 // getUTCMinDateTimeHandleResponse handles the GetUTCMinDateTime response.
 func (client *DatetimeClient) getUTCMinDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetUTCMinDateTimeResponse, error) {
-	result := DatetimeClientGetUTCMinDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetUTCMinDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetUTCMinDateTimeResponse{}, err
@@ -556,7 +556,7 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeCreateRequest(ctx contex
 
 // getUTCUppercaseMaxDateTimeHandleResponse handles the GetUTCUppercaseMaxDateTime response.
 func (client *DatetimeClient) getUTCUppercaseMaxDateTimeHandleResponse(resp *http.Response) (DatetimeClientGetUTCUppercaseMaxDateTimeResponse, error) {
-	result := DatetimeClientGetUTCUppercaseMaxDateTimeResponse{RawResponse: resp}
+	result := DatetimeClientGetUTCUppercaseMaxDateTimeResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetUTCUppercaseMaxDateTimeResponse{}, err
@@ -598,7 +598,7 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx
 
 // getUTCUppercaseMaxDateTime7DigitsHandleResponse handles the GetUTCUppercaseMaxDateTime7Digits response.
 func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsHandleResponse(resp *http.Response) (DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse, error) {
-	result := DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse{RawResponse: resp}
+	result := DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetUTCUppercaseMaxDateTime7DigitsResponse{}, err
@@ -638,7 +638,7 @@ func (client *DatetimeClient) getUnderflowCreateRequest(ctx context.Context, opt
 
 // getUnderflowHandleResponse handles the GetUnderflow response.
 func (client *DatetimeClient) getUnderflowHandleResponse(resp *http.Response) (DatetimeClientGetUnderflowResponse, error) {
-	result := DatetimeClientGetUnderflowResponse{RawResponse: resp}
+	result := DatetimeClientGetUnderflowResponse{}
 	var aux *timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return DatetimeClientGetUnderflowResponse{}, err
@@ -664,7 +664,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMaxDateTime(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse{RawResponse: resp}, nil
+	return DatetimeClientPutLocalNegativeOffsetMaxDateTimeResponse{}, nil
 }
 
 // putLocalNegativeOffsetMaxDateTimeCreateRequest creates the PutLocalNegativeOffsetMaxDateTime request.
@@ -695,7 +695,7 @@ func (client *DatetimeClient) PutLocalNegativeOffsetMinDateTime(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutLocalNegativeOffsetMinDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutLocalNegativeOffsetMinDateTimeResponse{RawResponse: resp}, nil
+	return DatetimeClientPutLocalNegativeOffsetMinDateTimeResponse{}, nil
 }
 
 // putLocalNegativeOffsetMinDateTimeCreateRequest creates the PutLocalNegativeOffsetMinDateTime request.
@@ -726,7 +726,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMaxDateTime(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutLocalPositiveOffsetMaxDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutLocalPositiveOffsetMaxDateTimeResponse{RawResponse: resp}, nil
+	return DatetimeClientPutLocalPositiveOffsetMaxDateTimeResponse{}, nil
 }
 
 // putLocalPositiveOffsetMaxDateTimeCreateRequest creates the PutLocalPositiveOffsetMaxDateTime request.
@@ -757,7 +757,7 @@ func (client *DatetimeClient) PutLocalPositiveOffsetMinDateTime(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutLocalPositiveOffsetMinDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutLocalPositiveOffsetMinDateTimeResponse{RawResponse: resp}, nil
+	return DatetimeClientPutLocalPositiveOffsetMinDateTimeResponse{}, nil
 }
 
 // putLocalPositiveOffsetMinDateTimeCreateRequest creates the PutLocalPositiveOffsetMinDateTime request.
@@ -788,7 +788,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime(ctx context.Context, datetimeBod
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutUTCMaxDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutUTCMaxDateTimeResponse{RawResponse: resp}, nil
+	return DatetimeClientPutUTCMaxDateTimeResponse{}, nil
 }
 
 // putUTCMaxDateTimeCreateRequest creates the PutUTCMaxDateTime request.
@@ -820,7 +820,7 @@ func (client *DatetimeClient) PutUTCMaxDateTime7Digits(ctx context.Context, date
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutUTCMaxDateTime7DigitsResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutUTCMaxDateTime7DigitsResponse{RawResponse: resp}, nil
+	return DatetimeClientPutUTCMaxDateTime7DigitsResponse{}, nil
 }
 
 // putUTCMaxDateTime7DigitsCreateRequest creates the PutUTCMaxDateTime7Digits request.
@@ -851,7 +851,7 @@ func (client *DatetimeClient) PutUTCMinDateTime(ctx context.Context, datetimeBod
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DatetimeClientPutUTCMinDateTimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return DatetimeClientPutUTCMinDateTimeResponse{RawResponse: resp}, nil
+	return DatetimeClientPutUTCMinDateTimeResponse{}, nil
 }
 
 // putUTCMinDateTimeCreateRequest creates the PutUTCMinDateTime request.

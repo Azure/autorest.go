@@ -6,7 +6,7 @@ package binarygroup
 import (
 	"bytes"
 	"context"
-	"net/http"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -23,8 +23,8 @@ func TestBinary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if sc := resp.RawResponse.StatusCode; sc != http.StatusOK {
-		t.Fatalf("unexpected status code %d", sc)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -35,7 +35,7 @@ func TestFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if sc := resp.RawResponse.StatusCode; sc != http.StatusOK {
-		t.Fatalf("unexpected status code %d", sc)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

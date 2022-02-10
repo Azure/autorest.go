@@ -62,9 +62,7 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 	if err != nil {
 		return LogAnalyticsClientExportRequestRateByIntervalPollerResponse{}, err
 	}
-	result := LogAnalyticsClientExportRequestRateByIntervalPollerResponse{
-		RawResponse: resp,
-	}
+	result := LogAnalyticsClientExportRequestRateByIntervalPollerResponse{}
 	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportRequestRateByInterval", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return LogAnalyticsClientExportRequestRateByIntervalPollerResponse{}, err
@@ -127,9 +125,7 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 	if err != nil {
 		return LogAnalyticsClientExportThrottledRequestsPollerResponse{}, err
 	}
-	result := LogAnalyticsClientExportThrottledRequestsPollerResponse{
-		RawResponse: resp,
-	}
+	result := LogAnalyticsClientExportThrottledRequestsPollerResponse{}
 	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportThrottledRequests", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return LogAnalyticsClientExportThrottledRequestsPollerResponse{}, err

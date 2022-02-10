@@ -63,9 +63,7 @@ func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubRouteTableV2SClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return VirtualHubRouteTableV2SClientDeletePollerResponse{}, err
 	}
-	result := VirtualHubRouteTableV2SClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualHubRouteTableV2SClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubRouteTableV2SClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualHubRouteTableV2SClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *VirtualHubRouteTableV2SClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client *VirtualHubRouteTableV2SClient) getHandleResponse(resp *http.Response) (VirtualHubRouteTableV2SClientGetResponse, error) {
-	result := VirtualHubRouteTableV2SClientGetResponse{RawResponse: resp}
+	result := VirtualHubRouteTableV2SClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHubRouteTableV2); err != nil {
 		return VirtualHubRouteTableV2SClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *VirtualHubRouteTableV2SClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client *VirtualHubRouteTableV2SClient) listHandleResponse(resp *http.Response) (VirtualHubRouteTableV2SClientListResponse, error) {
-	result := VirtualHubRouteTableV2SClientListResponse{RawResponse: resp}
+	result := VirtualHubRouteTableV2SClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubRouteTableV2SResult); err != nil {
 		return VirtualHubRouteTableV2SClientListResponse{}, err
 	}

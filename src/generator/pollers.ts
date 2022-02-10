@@ -82,13 +82,12 @@ function finalResp(poller: PollerInfo): string {
     const resultProp = <Property>finalRespEnv.language.go!.resultProp;
     text += `\trespType := ${finalRespEnv.language.go!.name}{}\n`;
     if (resultProp) {
-      text += `\tresp, err := p.pt.FinalResponse(ctx, &respType${discriminatorFinalResponse(finalRespEnv)})\n`;
+      text += `\t_, err := p.pt.FinalResponse(ctx, &respType${discriminatorFinalResponse(finalRespEnv)})\n`;
     } else {
       // the operation doesn't return a model
-      text += `\tresp, err := p.pt.FinalResponse(ctx, nil)\n`;
+      text += `\t_, err := p.pt.FinalResponse(ctx, nil)\n`;
     }
     text += `\tif err != nil {\n\t\treturn ${finalRespEnv.language.go!.name}{}, err\n\t}\n`;
-    text += '\trespType.RawResponse = resp\n';
     text += '\treturn respType, nil\n';
   }
   text += '}\n\n';

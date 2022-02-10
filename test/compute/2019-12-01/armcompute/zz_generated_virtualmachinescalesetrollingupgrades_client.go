@@ -61,9 +61,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx conte
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetRollingUpgradesClient.Cancel", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{}, err
@@ -165,7 +163,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) getLatestCreateReques
 
 // getLatestHandleResponse handles the GetLatest response.
 func (client *VirtualMachineScaleSetRollingUpgradesClient) getLatestHandleResponse(resp *http.Response) (VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse, error) {
-	result := VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse{RawResponse: resp}
+	result := VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RollingUpgradeStatusInfo); err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse{}, err
 	}
@@ -185,9 +183,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUp
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{}, err
@@ -255,9 +251,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(c
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{}, err

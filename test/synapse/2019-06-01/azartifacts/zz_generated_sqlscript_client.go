@@ -45,9 +45,7 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 	if err != nil {
 		return sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
-	result := sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{
-		RawResponse: resp,
-	}
+	result := sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}
 	pt, err := runtime.NewPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.pl)
 	if err != nil {
 		return sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 	if err != nil {
 		return sqlScriptClientDeleteSQLScriptPollerResponse{}, err
 	}
-	result := sqlScriptClientDeleteSQLScriptPollerResponse{
-		RawResponse: resp,
-	}
+	result := sqlScriptClientDeleteSQLScriptPollerResponse{}
 	pt, err := runtime.NewPoller("sqlScriptClient.DeleteSQLScript", resp, client.pl)
 	if err != nil {
 		return sqlScriptClientDeleteSQLScriptPollerResponse{}, err
@@ -196,7 +192,7 @@ func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sq
 
 // getSQLScriptHandleResponse handles the GetSQLScript response.
 func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (sqlScriptClientGetSQLScriptResponse, error) {
-	result := sqlScriptClientGetSQLScriptResponse{RawResponse: resp}
+	result := sqlScriptClientGetSQLScriptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptResource); err != nil {
 		return sqlScriptClientGetSQLScriptResponse{}, err
 	}
@@ -235,7 +231,7 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context
 
 // getSQLScriptsByWorkspaceHandleResponse handles the GetSQLScriptsByWorkspace response.
 func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http.Response) (sqlScriptClientGetSQLScriptsByWorkspaceResponse, error) {
-	result := sqlScriptClientGetSQLScriptsByWorkspaceResponse{RawResponse: resp}
+	result := sqlScriptClientGetSQLScriptsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptsListResponse); err != nil {
 		return sqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
 	}
@@ -253,9 +249,7 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 	if err != nil {
 		return sqlScriptClientRenameSQLScriptPollerResponse{}, err
 	}
-	result := sqlScriptClientRenameSQLScriptPollerResponse{
-		RawResponse: resp,
-	}
+	result := sqlScriptClientRenameSQLScriptPollerResponse{}
 	pt, err := runtime.NewPoller("sqlScriptClient.RenameSQLScript", resp, client.pl)
 	if err != nil {
 		return sqlScriptClientRenameSQLScriptPollerResponse{}, err

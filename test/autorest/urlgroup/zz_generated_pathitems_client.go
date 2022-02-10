@@ -63,7 +63,7 @@ func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStr
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathItemsClientGetAllWithValuesResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathItemsClientGetAllWithValuesResponse{RawResponse: resp}, nil
+	return PathItemsClientGetAllWithValuesResponse{}, nil
 }
 
 // getAllWithValuesCreateRequest creates the GetAllWithValues request.
@@ -120,7 +120,7 @@ func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, p
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathItemsClientGetGlobalAndLocalQueryNullResponse{RawResponse: resp}, nil
+	return PathItemsClientGetGlobalAndLocalQueryNullResponse{}, nil
 }
 
 // getGlobalAndLocalQueryNullCreateRequest creates the GetGlobalAndLocalQueryNull request.
@@ -177,7 +177,7 @@ func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemS
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathItemsClientGetGlobalQueryNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathItemsClientGetGlobalQueryNullResponse{RawResponse: resp}, nil
+	return PathItemsClientGetGlobalQueryNullResponse{}, nil
 }
 
 // getGlobalQueryNullCreateRequest creates the GetGlobalQueryNull request.
@@ -234,7 +234,7 @@ func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pa
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathItemsClientGetLocalPathItemQueryNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathItemsClientGetLocalPathItemQueryNullResponse{RawResponse: resp}, nil
+	return PathItemsClientGetLocalPathItemQueryNullResponse{}, nil
 }
 
 // getLocalPathItemQueryNullCreateRequest creates the GetLocalPathItemQueryNull request.

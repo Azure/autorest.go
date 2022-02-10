@@ -65,7 +65,7 @@ func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *By
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *ByteClient) getEmptyHandleResponse(resp *http.Response) (ByteClientGetEmptyResponse, error) {
-	result := ByteClientGetEmptyResponse{RawResponse: resp}
+	result := ByteClientGetEmptyResponse{}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
 		return ByteClientGetEmptyResponse{}, err
 	}
@@ -103,7 +103,7 @@ func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *ByteClient) getInvalidHandleResponse(resp *http.Response) (ByteClientGetInvalidResponse, error) {
-	result := ByteClientGetInvalidResponse{RawResponse: resp}
+	result := ByteClientGetInvalidResponse{}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
 		return ByteClientGetInvalidResponse{}, err
 	}
@@ -141,7 +141,7 @@ func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options 
 
 // getNonASCIIHandleResponse handles the GetNonASCII response.
 func (client *ByteClient) getNonASCIIHandleResponse(resp *http.Response) (ByteClientGetNonASCIIResponse, error) {
-	result := ByteClientGetNonASCIIResponse{RawResponse: resp}
+	result := ByteClientGetNonASCIIResponse{}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
 		return ByteClientGetNonASCIIResponse{}, err
 	}
@@ -179,7 +179,7 @@ func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *Byt
 
 // getNullHandleResponse handles the GetNull response.
 func (client *ByteClient) getNullHandleResponse(resp *http.Response) (ByteClientGetNullResponse, error) {
-	result := ByteClientGetNullResponse{RawResponse: resp}
+	result := ByteClientGetNullResponse{}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
 		return ByteClientGetNullResponse{}, err
 	}
@@ -202,7 +202,7 @@ func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, opti
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ByteClientPutNonASCIIResponse{}, runtime.NewResponseError(resp)
 	}
-	return ByteClientPutNonASCIIResponse{RawResponse: resp}, nil
+	return ByteClientPutNonASCIIResponse{}, nil
 }
 
 // putNonASCIICreateRequest creates the PutNonASCII request.

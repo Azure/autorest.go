@@ -62,9 +62,7 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 	if err != nil {
 		return RouteFiltersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteFiltersClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := RouteFiltersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteFiltersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return RouteFiltersClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 	if err != nil {
 		return RouteFiltersClientDeletePollerResponse{}, err
 	}
-	result := RouteFiltersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := RouteFiltersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteFiltersClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return RouteFiltersClientDeletePollerResponse{}, err
@@ -236,7 +232,7 @@ func (client *RouteFiltersClient) getCreateRequest(ctx context.Context, resource
 
 // getHandleResponse handles the Get response.
 func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteFiltersClientGetResponse, error) {
-	result := RouteFiltersClientGetResponse{RawResponse: resp}
+	result := RouteFiltersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
 		return RouteFiltersClientGetResponse{}, err
 	}
@@ -278,7 +274,7 @@ func (client *RouteFiltersClient) listCreateRequest(ctx context.Context, options
 
 // listHandleResponse handles the List response.
 func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (RouteFiltersClientListResponse, error) {
-	result := RouteFiltersClientListResponse{RawResponse: resp}
+	result := RouteFiltersClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
 		return RouteFiltersClientListResponse{}, err
 	}
@@ -326,7 +322,7 @@ func (client *RouteFiltersClient) listByResourceGroupCreateRequest(ctx context.C
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *RouteFiltersClient) listByResourceGroupHandleResponse(resp *http.Response) (RouteFiltersClientListByResourceGroupResponse, error) {
-	result := RouteFiltersClientListByResourceGroupResponse{RawResponse: resp}
+	result := RouteFiltersClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
 		return RouteFiltersClientListByResourceGroupResponse{}, err
 	}
@@ -382,7 +378,7 @@ func (client *RouteFiltersClient) updateTagsCreateRequest(ctx context.Context, r
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *RouteFiltersClient) updateTagsHandleResponse(resp *http.Response) (RouteFiltersClientUpdateTagsResponse, error) {
-	result := RouteFiltersClientUpdateTagsResponse{RawResponse: resp}
+	result := RouteFiltersClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
 		return RouteFiltersClientUpdateTagsResponse{}, err
 	}

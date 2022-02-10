@@ -90,7 +90,7 @@ func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, comp 
 
 // filterBlobsHandleResponse handles the FilterBlobs response.
 func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (serviceClientFilterBlobsResponse, error) {
-	result := serviceClientFilterBlobsResponse{RawResponse: resp}
+	result := serviceClientFilterBlobsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -148,7 +148,7 @@ func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, re
 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (serviceClientGetAccountInfoResponse, error) {
-	result := serviceClientGetAccountInfoResponse{RawResponse: resp}
+	result := serviceClientGetAccountInfoResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -223,7 +223,7 @@ func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, res
 
 // getPropertiesHandleResponse handles the GetProperties response.
 func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (serviceClientGetPropertiesResponse, error) {
-	result := serviceClientGetPropertiesResponse{RawResponse: resp}
+	result := serviceClientGetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -281,7 +281,7 @@ func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, res
 
 // getStatisticsHandleResponse handles the GetStatistics response.
 func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (serviceClientGetStatisticsResponse, error) {
-	result := serviceClientGetStatisticsResponse{RawResponse: resp}
+	result := serviceClientGetStatisticsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -347,7 +347,7 @@ func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 
 // getUserDelegationKeyHandleResponse handles the GetUserDelegationKey response.
 func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Response) (serviceClientGetUserDelegationKeyResponse, error) {
-	result := serviceClientGetUserDelegationKeyResponse{RawResponse: resp}
+	result := serviceClientGetUserDelegationKeyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -420,7 +420,7 @@ func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Cont
 
 // listContainersSegmentHandleResponse handles the ListContainersSegment response.
 func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Response) (serviceClientListContainersSegmentResponse, error) {
-	result := serviceClientListContainersSegmentResponse{RawResponse: resp}
+	result := serviceClientListContainersSegmentResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -479,7 +479,7 @@ func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, res
 
 // setPropertiesHandleResponse handles the SetProperties response.
 func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (serviceClientSetPropertiesResponse, error) {
-	result := serviceClientSetPropertiesResponse{RawResponse: resp}
+	result := serviceClientSetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -539,7 +539,7 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp 
 
 // submitBatchHandleResponse handles the SubmitBatch response.
 func (client *serviceClient) submitBatchHandleResponse(resp *http.Response) (serviceClientSubmitBatchResponse, error) {
-	result := serviceClientSubmitBatchResponse{RawResponse: resp}
+	result := serviceClientSubmitBatchResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}

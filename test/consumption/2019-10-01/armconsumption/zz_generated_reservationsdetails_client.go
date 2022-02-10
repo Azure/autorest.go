@@ -98,7 +98,7 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response) (ReservationsDetailsClientListResponse, error) {
-	result := ReservationsDetailsClientListResponse{RawResponse: resp}
+	result := ReservationsDetailsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
 		return ReservationsDetailsClientListResponse{}, err
 	}
@@ -145,7 +145,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx
 
 // listByReservationOrderHandleResponse handles the ListByReservationOrder response.
 func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsDetailsClientListByReservationOrderResponse, error) {
-	result := ReservationsDetailsClientListByReservationOrderResponse{RawResponse: resp}
+	result := ReservationsDetailsClientListByReservationOrderResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
 		return ReservationsDetailsClientListByReservationOrderResponse{}, err
 	}
@@ -197,7 +197,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCre
 
 // listByReservationOrderAndReservationHandleResponse handles the ListByReservationOrderAndReservation response.
 func (client *ReservationsDetailsClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsDetailsClientListByReservationOrderAndReservationResponse, error) {
-	result := ReservationsDetailsClientListByReservationOrderAndReservationResponse{RawResponse: resp}
+	result := ReservationsDetailsClientListByReservationOrderAndReservationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
 		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 	}

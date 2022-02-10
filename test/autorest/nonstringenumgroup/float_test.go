@@ -5,7 +5,6 @@ package nonstringenumgroup
 
 import (
 	"context"
-	"net/http"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -36,7 +35,7 @@ func TestFloatPut(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != "Nice job posting a float enum" {
+		t.Fatalf("unexpected value %s", *result.Value)
 	}
 }

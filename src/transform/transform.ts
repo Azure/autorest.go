@@ -5,9 +5,9 @@
 
 import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
-import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema } from '@autorest/codemodel';
+import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isMultiRespOperation, isTypePassedByValue, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -628,8 +628,7 @@ const scalarResponsePropName = 'Value';
 // creates the response envelope type to be returned from an operation and updates the operation.
 // for LROs, this is also called to create the final response envelope.
 //
-// type GetWidgetResponse struct { <== this is the response envelope, it groups the raw HTTP response with any headers and body
-//   RawResponse *http.Response
+// type GetWidgetResponse struct { <== this is the response envelope, it groups the body with any headers
 //   Header1 *string <== modeled header response
 //   Header2 *int    <== modeled header response
 //   Widget          <== this is the result property, i.e. the schema result if the operation returns a model
@@ -637,7 +636,6 @@ const scalarResponsePropName = 'Value';
 //
 function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   // create the `type <type>Response struct` response
-  // type with a `RawResponse *http.Response` field
 
   // aggregate headers from all responses as all of them will go into the same result envelope
   const headers = new Map<string, HttpHeaderWithDescription>();
@@ -669,7 +667,6 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<Property>();
-  respEnv.properties.push(createRawResponseProp());
   responseEnvelopes.push(respEnv);
   op.language.go!.responseEnv = respEnv;
 
@@ -733,6 +730,16 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     const resultProp = newRespProperty(propName, response.schema.language.go!.description, response.schema, byValue);
     respEnv.properties.push(resultProp);
     respEnv.language.go!.resultProp = resultProp;
+  } else if (isBinaryResponseOperation(op)) {
+    const binaryProp = newProperty('Body', 'Body contains the streaming response.', newBinary('binary response'));
+    binaryProp.language.go!.byValue = true;
+    respEnv.properties.push(binaryProp);
+    respEnv.language.go!.resultProp = binaryProp;
+  }
+  if ((<Array<Property>>respEnv.properties).length === 0) {
+    // if we get here it means the operation doesn't return anything. we set
+    // this to undefined to simplify detection of an empty response envelope
+    respEnv.properties = undefined;
   }
 }
 
@@ -744,10 +751,6 @@ function ensureUniqueModelName(codeModel: CodeModel, name: string, suffix: strin
     }
   }
   return name;
-}
-
-function createRawResponseProp(): Property {
-  return newProperty('RawResponse', 'RawResponse contains the underlying HTTP response.', newObject('http.Response', 'raw HTTP response'));
 }
 
 function newObject(name: string, desc: string): ObjectSchema {
@@ -768,6 +771,13 @@ function newBoolean(name: string, desc: string): BooleanSchema {
   bool.language.go = bool.language.default;
   bool.language.go!.name = 'bool';
   return bool;
+}
+
+function newBinary(desc: string): BinarySchema {
+  const binary = new BinarySchema(desc);
+  binary.language.go = binary.language.default;
+  binary.language.go!.name = 'io.ReadCloser';
+  return binary;
 }
 
 function newProperty(name: string, desc: string, schema: Schema): Property {
@@ -895,7 +905,6 @@ function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, 
   outerRespEnv.language.go!.isLRO = true;
   outerRespEnv.language.go!.pollerInfo = poller;
   outerRespEnv.properties = new Array<Property>();
-  outerRespEnv.properties.push(createRawResponseProp());
   // create Poller
   const pollerType = newObject(pollerName, 'poller');
   const pollerProp = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);

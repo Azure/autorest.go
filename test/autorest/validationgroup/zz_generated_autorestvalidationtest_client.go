@@ -57,7 +57,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, runtime.NewResponseError(resp)
 	}
-	return AutoRestValidationTestClientGetWithConstantInPathResponse{RawResponse: resp}, nil
+	return AutoRestValidationTestClientGetWithConstantInPathResponse{}, nil
 }
 
 // getWithConstantInPathCreateRequest creates the GetWithConstantInPath request.
@@ -107,7 +107,7 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(
 
 // postWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
 func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *http.Response) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
-	result := AutoRestValidationTestClientPostWithConstantInBodyResponse{RawResponse: resp}
+	result := AutoRestValidationTestClientPostWithConstantInBodyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
 		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
@@ -163,7 +163,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 
 // validationOfBodyHandleResponse handles the ValidationOfBody response.
 func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *http.Response) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
-	result := AutoRestValidationTestClientValidationOfBodyResponse{RawResponse: resp}
+	result := AutoRestValidationTestClientValidationOfBodyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
 		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
@@ -216,7 +216,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 
 // validationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
 func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *http.Response) (AutoRestValidationTestClientValidationOfMethodParametersResponse, error) {
-	result := AutoRestValidationTestClientValidationOfMethodParametersResponse{RawResponse: resp}
+	result := AutoRestValidationTestClientValidationOfMethodParametersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
 		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}

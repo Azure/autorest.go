@@ -91,7 +91,7 @@ func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Response) (AvailableServiceAliasesClientListResponse, error) {
-	result := AvailableServiceAliasesClientListResponse{RawResponse: resp}
+	result := AvailableServiceAliasesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableServiceAliasesResult); err != nil {
 		return AvailableServiceAliasesClientListResponse{}, err
 	}
@@ -144,7 +144,7 @@ func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ct
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *AvailableServiceAliasesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailableServiceAliasesClientListByResourceGroupResponse, error) {
-	result := AvailableServiceAliasesClientListByResourceGroupResponse{RawResponse: resp}
+	result := AvailableServiceAliasesClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableServiceAliasesResult); err != nil {
 		return AvailableServiceAliasesClientListByResourceGroupResponse{}, err
 	}

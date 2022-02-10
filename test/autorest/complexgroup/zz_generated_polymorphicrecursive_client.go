@@ -66,7 +66,7 @@ func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Cont
 
 // getValidHandleResponse handles the GetValid response.
 func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Response) (PolymorphicrecursiveClientGetValidResponse, error) {
-	result := PolymorphicrecursiveClientGetValidResponse{RawResponse: resp}
+	result := PolymorphicrecursiveClientGetValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphicrecursiveClientGetValidResponse{}, err
 	}
@@ -96,7 +96,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphicrecursiveClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return PolymorphicrecursiveClientPutValidResponse{RawResponse: resp}, nil
+	return PolymorphicrecursiveClientPutValidResponse{}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.

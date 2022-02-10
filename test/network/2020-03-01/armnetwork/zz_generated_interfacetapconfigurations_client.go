@@ -63,9 +63,7 @@ func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.
 	if err != nil {
 		return InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfaceTapConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context,
 	if err != nil {
 		return InterfaceTapConfigurationsClientDeletePollerResponse{}, err
 	}
-	result := InterfaceTapConfigurationsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := InterfaceTapConfigurationsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfaceTapConfigurationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return InterfaceTapConfigurationsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *InterfaceTapConfigurationsClient) getCreateRequest(ctx context.Con
 
 // getHandleResponse handles the Get response.
 func (client *InterfaceTapConfigurationsClient) getHandleResponse(resp *http.Response) (InterfaceTapConfigurationsClientGetResponse, error) {
-	result := InterfaceTapConfigurationsClientGetResponse{RawResponse: resp}
+	result := InterfaceTapConfigurationsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceTapConfiguration); err != nil {
 		return InterfaceTapConfigurationsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *InterfaceTapConfigurationsClient) listCreateRequest(ctx context.Co
 
 // listHandleResponse handles the List response.
 func (client *InterfaceTapConfigurationsClient) listHandleResponse(resp *http.Response) (InterfaceTapConfigurationsClientListResponse, error) {
-	result := InterfaceTapConfigurationsClientListResponse{RawResponse: resp}
+	result := InterfaceTapConfigurationsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceTapConfigurationListResult); err != nil {
 		return InterfaceTapConfigurationsClientListResponse{}, err
 	}

@@ -65,7 +65,7 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 
 // getHandleResponse handles the Get response.
 func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTypeClientGetResponse, error) {
-	result := ObjectTypeClientGetResponse{RawResponse: resp}
+	result := ObjectTypeClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
@@ -88,7 +88,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject interface{}, 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ObjectTypeClientPutResponse{}, runtime.NewResponseError(resp)
 	}
-	return ObjectTypeClientPutResponse{RawResponse: resp}, nil
+	return ObjectTypeClientPutResponse{}, nil
 }
 
 // putCreateRequest creates the Put request.

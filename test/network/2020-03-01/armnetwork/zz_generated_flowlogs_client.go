@@ -63,9 +63,7 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	if err != nil {
 		return FlowLogsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := FlowLogsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := FlowLogsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("FlowLogsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return FlowLogsClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return FlowLogsClientDeletePollerResponse{}, err
 	}
-	result := FlowLogsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := FlowLogsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("FlowLogsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return FlowLogsClientDeletePollerResponse{}, err
@@ -247,7 +243,7 @@ func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGrou
 
 // getHandleResponse handles the Get response.
 func (client *FlowLogsClient) getHandleResponse(resp *http.Response) (FlowLogsClientGetResponse, error) {
-	result := FlowLogsClientGetResponse{RawResponse: resp}
+	result := FlowLogsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlowLog); err != nil {
 		return FlowLogsClientGetResponse{}, err
 	}
@@ -299,7 +295,7 @@ func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGro
 
 // listHandleResponse handles the List response.
 func (client *FlowLogsClient) listHandleResponse(resp *http.Response) (FlowLogsClientListResponse, error) {
-	result := FlowLogsClientListResponse{RawResponse: resp}
+	result := FlowLogsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlowLogListResult); err != nil {
 		return FlowLogsClientListResponse{}, err
 	}

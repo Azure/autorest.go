@@ -66,7 +66,7 @@ func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context,
 
 // getValidHandleResponse handles the GetValid response.
 func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response) (ReadonlypropertyClientGetValidResponse, error) {
-	result := ReadonlypropertyClientGetValidResponse{RawResponse: resp}
+	result := ReadonlypropertyClientGetValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReadonlyObj); err != nil {
 		return ReadonlypropertyClientGetValidResponse{}, err
 	}
@@ -89,7 +89,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ReadonlypropertyClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ReadonlypropertyClientPutValidResponse{RawResponse: resp}, nil
+	return ReadonlypropertyClientPutValidResponse{}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.

@@ -8,92 +8,67 @@
 
 package azspark
 
-import "net/http"
-
 // batchClientCancelSparkBatchJobResponse contains the response from method batchClient.CancelSparkBatchJob.
 type batchClientCancelSparkBatchJobResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // batchClientCreateSparkBatchJobResponse contains the response from method batchClient.CreateSparkBatchJob.
 type batchClientCreateSparkBatchJobResponse struct {
 	BatchJob
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // batchClientGetSparkBatchJobResponse contains the response from method batchClient.GetSparkBatchJob.
 type batchClientGetSparkBatchJobResponse struct {
 	BatchJob
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // batchClientGetSparkBatchJobsResponse contains the response from method batchClient.GetSparkBatchJobs.
 type batchClientGetSparkBatchJobsResponse struct {
 	BatchJobCollection
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientCancelSparkSessionResponse contains the response from method sessionClient.CancelSparkSession.
 type sessionClientCancelSparkSessionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // sessionClientCancelSparkStatementResponse contains the response from method sessionClient.CancelSparkStatement.
 type sessionClientCancelSparkStatementResponse struct {
 	StatementCancellationResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientCreateSparkSessionResponse contains the response from method sessionClient.CreateSparkSession.
 type sessionClientCreateSparkSessionResponse struct {
 	Session
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientCreateSparkStatementResponse contains the response from method sessionClient.CreateSparkStatement.
 type sessionClientCreateSparkStatementResponse struct {
 	Statement
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientGetSparkSessionResponse contains the response from method sessionClient.GetSparkSession.
 type sessionClientGetSparkSessionResponse struct {
 	Session
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientGetSparkSessionsResponse contains the response from method sessionClient.GetSparkSessions.
 type sessionClientGetSparkSessionsResponse struct {
 	SessionCollection
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientGetSparkStatementResponse contains the response from method sessionClient.GetSparkStatement.
 type sessionClientGetSparkStatementResponse struct {
 	Statement
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientGetSparkStatementsResponse contains the response from method sessionClient.GetSparkStatements.
 type sessionClientGetSparkStatementsResponse struct {
 	StatementCollection
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sessionClientResetSparkSessionTimeoutResponse contains the response from method sessionClient.ResetSparkSessionTimeout.
 type sessionClientResetSparkSessionTimeoutResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

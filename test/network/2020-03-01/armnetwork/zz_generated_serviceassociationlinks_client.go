@@ -104,7 +104,7 @@ func (client *ServiceAssociationLinksClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client *ServiceAssociationLinksClient) listHandleResponse(resp *http.Response) (ServiceAssociationLinksClientListResponse, error) {
-	result := ServiceAssociationLinksClientListResponse{RawResponse: resp}
+	result := ServiceAssociationLinksClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceAssociationLinksListResult); err != nil {
 		return ServiceAssociationLinksClientListResponse{}, err
 	}

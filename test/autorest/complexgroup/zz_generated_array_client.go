@@ -65,7 +65,7 @@ func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *A
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayClientGetEmptyResponse, error) {
-	result := ArrayClientGetEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
@@ -103,7 +103,7 @@ func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, opti
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
 func (client *ArrayClient) getNotProvidedHandleResponse(resp *http.Response) (ArrayClientGetNotProvidedResponse, error) {
-	result := ArrayClientGetNotProvidedResponse{RawResponse: resp}
+	result := ArrayClientGetNotProvidedResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
 		return ArrayClientGetNotProvidedResponse{}, err
 	}
@@ -141,7 +141,7 @@ func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *A
 
 // getValidHandleResponse handles the GetValid response.
 func (client *ArrayClient) getValidHandleResponse(resp *http.Response) (ArrayClientGetValidResponse, error) {
-	result := ArrayClientGetValidResponse{RawResponse: resp}
+	result := ArrayClientGetValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
 		return ArrayClientGetValidResponse{}, err
 	}
@@ -164,7 +164,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutEmptyResponse{RawResponse: resp}, nil
+	return ArrayClientPutEmptyResponse{}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
@@ -195,7 +195,7 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutValidResponse{}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.

@@ -78,7 +78,7 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 
 // createHandleResponse handles the Create response.
 func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (RoleAssignmentsClientCreateResponse, error) {
-	result := RoleAssignmentsClientCreateResponse{RawResponse: resp}
+	result := RoleAssignmentsClientCreateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
 		return RoleAssignmentsClientCreateResponse{}, err
 	}
@@ -129,7 +129,7 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 
 // deleteHandleResponse handles the Delete response.
 func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (RoleAssignmentsClientDeleteResponse, error) {
-	result := RoleAssignmentsClientDeleteResponse{RawResponse: resp}
+	result := RoleAssignmentsClientDeleteResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
 		return RoleAssignmentsClientDeleteResponse{}, err
 	}
@@ -180,7 +180,7 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 
 // getHandleResponse handles the Get response.
 func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (RoleAssignmentsClientGetResponse, error) {
-	result := RoleAssignmentsClientGetResponse{RawResponse: resp}
+	result := RoleAssignmentsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
 		return RoleAssignmentsClientGetResponse{}, err
 	}
@@ -227,7 +227,7 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 
 // listForScopeHandleResponse handles the ListForScope response.
 func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *http.Response) (RoleAssignmentsClientListForScopeResponse, error) {
-	result := RoleAssignmentsClientListForScopeResponse{RawResponse: resp}
+	result := RoleAssignmentsClientListForScopeResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignmentListResult); err != nil {
 		return RoleAssignmentsClientListForScopeResponse{}, err
 	}

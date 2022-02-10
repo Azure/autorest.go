@@ -63,9 +63,7 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := DedicatedHostsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := DedicatedHostsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return DedicatedHostsClientDeletePollerResponse{}, err
 	}
-	result := DedicatedHostsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := DedicatedHostsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DedicatedHostsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return DedicatedHostsClientDeletePollerResponse{}, err
@@ -250,7 +246,7 @@ func (client *DedicatedHostsClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (DedicatedHostsClientGetResponse, error) {
-	result := DedicatedHostsClientGetResponse{RawResponse: resp}
+	result := DedicatedHostsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHost); err != nil {
 		return DedicatedHostsClientGetResponse{}, err
 	}
@@ -304,7 +300,7 @@ func (client *DedicatedHostsClient) listByHostGroupCreateRequest(ctx context.Con
 
 // listByHostGroupHandleResponse handles the ListByHostGroup response.
 func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Response) (DedicatedHostsClientListByHostGroupResponse, error) {
-	result := DedicatedHostsClientListByHostGroupResponse{RawResponse: resp}
+	result := DedicatedHostsClientListByHostGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostListResult); err != nil {
 		return DedicatedHostsClientListByHostGroupResponse{}, err
 	}
@@ -324,9 +320,7 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return DedicatedHostsClientUpdatePollerResponse{}, err
 	}
-	result := DedicatedHostsClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := DedicatedHostsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DedicatedHostsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return DedicatedHostsClientUpdatePollerResponse{}, err

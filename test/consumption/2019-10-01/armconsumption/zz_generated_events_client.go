@@ -83,7 +83,7 @@ func (client *EventsClient) listCreateRequest(ctx context.Context, startDate str
 
 // listHandleResponse handles the List response.
 func (client *EventsClient) listHandleResponse(resp *http.Response) (EventsClientListResponse, error) {
-	result := EventsClientListResponse{RawResponse: resp}
+	result := EventsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Events); err != nil {
 		return EventsClientListResponse{}, err
 	}

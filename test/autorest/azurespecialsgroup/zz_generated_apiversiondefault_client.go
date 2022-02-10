@@ -50,7 +50,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx conte
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{RawResponse: resp}, nil
+	return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, nil
 }
 
 // getMethodGlobalNotProvidedValidCreateRequest creates the GetMethodGlobalNotProvidedValid request.
@@ -83,7 +83,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context,
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionDefaultClientGetMethodGlobalValidResponse{RawResponse: resp}, nil
+	return APIVersionDefaultClientGetMethodGlobalValidResponse{}, nil
 }
 
 // getMethodGlobalValidCreateRequest creates the GetMethodGlobalValid request.
@@ -116,7 +116,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, o
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionDefaultClientGetPathGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionDefaultClientGetPathGlobalValidResponse{RawResponse: resp}, nil
+	return APIVersionDefaultClientGetPathGlobalValidResponse{}, nil
 }
 
 // getPathGlobalValidCreateRequest creates the GetPathGlobalValid request.
@@ -149,7 +149,7 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionDefaultClientGetSwaggerGlobalValidResponse{RawResponse: resp}, nil
+	return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, nil
 }
 
 // getSwaggerGlobalValidCreateRequest creates the GetSwaggerGlobalValid request.

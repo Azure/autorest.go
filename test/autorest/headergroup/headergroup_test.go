@@ -6,6 +6,7 @@ package headergroup
 import (
 	"context"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -26,8 +27,8 @@ func TestHeaderCustomRequestID(t *testing.T) {
 	if err != nil {
 		t.Fatalf("CustomRequestID: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -37,16 +38,16 @@ func TestHeaderParamBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamBool(context.Background(), "false", false, nil)
 	if err != nil {
 		t.Fatalf("ParamBool: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -56,8 +57,8 @@ func TestHeaderParamByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamByte: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -71,8 +72,8 @@ func TestHeaderParamDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDate: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -86,8 +87,8 @@ func TestHeaderParamDatetime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetime: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -101,8 +102,8 @@ func TestHeaderParamDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -112,16 +113,16 @@ func TestHeaderParamDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamDouble(context.Background(), "negative", -3.0, nil)
 	if err != nil {
 		t.Fatalf("ParamDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -131,8 +132,8 @@ func TestHeaderParamDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamDuration: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -143,16 +144,16 @@ func TestHeaderParamEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamEnum(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -162,8 +163,8 @@ func TestHeaderParamEnum(t *testing.T) {
 // 	if err != nil {
 // 		t.Fatalf("ParamExistingKey: %v", err)
 // 	}
-// 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-//		t.Fatalf("unexpected status code %d", s)
+// 	if !reflect.ValueOf(result).IsZero() {
+//		t.Fatal("expected zero-value result")
 //	}
 // }
 
@@ -173,16 +174,16 @@ func TestHeaderParamFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamFloat(context.Background(), "negative", -3.0, nil)
 	if err != nil {
 		t.Fatalf("ParamFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -192,16 +193,16 @@ func TestHeaderParamInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamInteger(context.Background(), "negative", -2, nil)
 	if err != nil {
 		t.Fatalf("ParamInteger: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -211,16 +212,16 @@ func TestHeaderParamLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamLong(context.Background(), "negative", -2, nil)
 	if err != nil {
 		t.Fatalf("ParamLong: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -230,8 +231,8 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamProtectedKey: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -242,16 +243,16 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	result, err = client.ParamString(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 
 	val = ""
@@ -259,8 +260,8 @@ func TestHeaderParamString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -270,9 +271,6 @@ func TestHeaderResponseBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	val := true
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
@@ -280,9 +278,6 @@ func TestHeaderResponseBool(t *testing.T) {
 	result, err = client.ResponseBool(context.Background(), "false", nil)
 	if err != nil {
 		t.Fatalf("ResponseBool: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	val = false
 	if r := cmp.Diff(result.Value, &val); r != "" {
@@ -296,9 +291,6 @@ func TestHeaderResponseByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseByte: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	val := []byte("啊齄丂狛狜隣郎隣兀﨩")
 	if r := cmp.Diff(result.Value, val); r != "" {
 		t.Fatal(r)
@@ -311,9 +303,6 @@ func TestHeaderResponseDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDate: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	val, err := time.Parse("2006-01-02", "2010-01-01")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
@@ -324,9 +313,6 @@ func TestHeaderResponseDate(t *testing.T) {
 	result, err = client.ResponseDate(context.Background(), "min", nil)
 	if err != nil {
 		t.Fatalf("ResponseDate: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	val, err = time.Parse("2006-01-02", "0001-01-01")
 	if err != nil {
@@ -343,9 +329,6 @@ func TestHeaderResponseDatetime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDatetime: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	val, err := time.Parse(time.RFC3339, "2010-01-01T12:34:56Z")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
@@ -356,9 +339,6 @@ func TestHeaderResponseDatetime(t *testing.T) {
 	result, err = client.ResponseDatetime(context.Background(), "min", nil)
 	if err != nil {
 		t.Fatalf("ResponseDatetime: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	val, err = time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	if err != nil {
@@ -375,9 +355,6 @@ func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	val, err := time.Parse(time.RFC1123, "Wed, 01 Jan 2010 12:34:56 GMT")
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
@@ -388,9 +365,6 @@ func TestHeaderResponseDatetimeRFC1123(t *testing.T) {
 	result, err = client.ResponseDatetimeRFC1123(context.Background(), "min", nil)
 	if err != nil {
 		t.Fatalf("ResponseDatetimeRFC1123: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	val, err = time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	if err != nil {
@@ -407,16 +381,16 @@ func TestHeaderResponseDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != 7e120 {
+		t.Fatalf("unexpected value %f", *result.Value)
 	}
 
 	result, err = client.ResponseDouble(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != -3 {
+		t.Fatalf("unexpected value %f", *result.Value)
 	}
 }
 
@@ -437,9 +411,6 @@ func TestHeaderResponseEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	val := GreyscaleColors("GREY")
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
@@ -448,8 +419,8 @@ func TestHeaderResponseEnum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseEnum: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -459,8 +430,8 @@ func TestHeaderResponseExistingKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseExistingKey: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.UserAgent != "overwrite" {
+		t.Fatalf("unexpected value %s", *result.UserAgent)
 	}
 }
 
@@ -470,16 +441,16 @@ func TestHeaderResponseFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != 0.07 {
+		t.Fatalf("unexpected value %f", *result.Value)
 	}
 
 	result, err = client.ResponseFloat(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != -3 {
+		t.Fatalf("unexpected value %f", *result.Value)
 	}
 }
 
@@ -489,16 +460,16 @@ func TestHeaderResponseInteger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != 1 {
+		t.Fatalf("unexpected value %d", *result.Value)
 	}
 
 	result, err = client.ResponseInteger(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseInteger: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != -2 {
+		t.Fatalf("unexpected value %d", *result.Value)
 	}
 }
 
@@ -508,16 +479,16 @@ func TestHeaderResponseLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != 105 {
+		t.Fatalf("unexpected value %d", *result.Value)
 	}
 
 	result, err = client.ResponseLong(context.Background(), "negative", nil)
 	if err != nil {
 		t.Fatalf("ResponseLong: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != -2 {
+		t.Fatalf("unexpected value %d", *result.Value)
 	}
 }
 
@@ -527,8 +498,8 @@ func TestHeaderResponseProtectedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseProtectedKey: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.ContentType != "text/html; charset=utf-8" {
+		t.Fatalf("unexpected value %s", *result.ContentType)
 	}
 }
 
@@ -538,23 +509,23 @@ func TestHeaderResponseString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != "The quick brown fox jumps over the lazy dog" {
+		t.Fatalf("unexpected value %s", *result.Value)
 	}
 
 	result, err = client.ResponseString(context.Background(), "null", nil)
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != "null" {
+		t.Fatalf("unexpected value %s", *result.Value)
 	}
 
 	result, err = client.ResponseString(context.Background(), "empty", nil)
 	if err != nil {
 		t.Fatalf("ResponseString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if result.Value != nil {
+		t.Fatal("expected nil value")
 	}
 }

@@ -62,9 +62,7 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return AzureFirewallsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := AzureFirewallsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := AzureFirewallsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return AzureFirewallsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return AzureFirewallsClientDeletePollerResponse{}, err
 	}
-	result := AzureFirewallsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := AzureFirewallsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return AzureFirewallsClientDeletePollerResponse{}, err
@@ -233,7 +229,7 @@ func (client *AzureFirewallsClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client *AzureFirewallsClient) getHandleResponse(resp *http.Response) (AzureFirewallsClientGetResponse, error) {
-	result := AzureFirewallsClientGetResponse{RawResponse: resp}
+	result := AzureFirewallsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewall); err != nil {
 		return AzureFirewallsClientGetResponse{}, err
 	}
@@ -280,7 +276,7 @@ func (client *AzureFirewallsClient) listCreateRequest(ctx context.Context, resou
 
 // listHandleResponse handles the List response.
 func (client *AzureFirewallsClient) listHandleResponse(resp *http.Response) (AzureFirewallsClientListResponse, error) {
-	result := AzureFirewallsClientListResponse{RawResponse: resp}
+	result := AzureFirewallsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallListResult); err != nil {
 		return AzureFirewallsClientListResponse{}, err
 	}
@@ -322,7 +318,7 @@ func (client *AzureFirewallsClient) listAllCreateRequest(ctx context.Context, op
 
 // listAllHandleResponse handles the ListAll response.
 func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallsClientListAllResponse, error) {
-	result := AzureFirewallsClientListAllResponse{RawResponse: resp}
+	result := AzureFirewallsClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallListResult); err != nil {
 		return AzureFirewallsClientListAllResponse{}, err
 	}
@@ -341,9 +337,7 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 	if err != nil {
 		return AzureFirewallsClientUpdateTagsPollerResponse{}, err
 	}
-	result := AzureFirewallsClientUpdateTagsPollerResponse{
-		RawResponse: resp,
-	}
+	result := AzureFirewallsClientUpdateTagsPollerResponse{}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.UpdateTags", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return AzureFirewallsClientUpdateTagsPollerResponse{}, err

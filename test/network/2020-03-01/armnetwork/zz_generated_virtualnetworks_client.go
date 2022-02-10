@@ -101,7 +101,7 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityCreateRequest(ctx
 
 // checkIPAddressAvailabilityHandleResponse handles the CheckIPAddressAvailability response.
 func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(resp *http.Response) (VirtualNetworksClientCheckIPAddressAvailabilityResponse, error) {
-	result := VirtualNetworksClientCheckIPAddressAvailabilityResponse{RawResponse: resp}
+	result := VirtualNetworksClientCheckIPAddressAvailabilityResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAddressAvailabilityResult); err != nil {
 		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, err
 	}
@@ -120,9 +120,7 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 	if err != nil {
 		return VirtualNetworksClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworksClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworksClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworksClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworksClientCreateOrUpdatePollerResponse{}, err
@@ -187,9 +185,7 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 	if err != nil {
 		return VirtualNetworksClientDeletePollerResponse{}, err
 	}
-	result := VirtualNetworksClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworksClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworksClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworksClientDeletePollerResponse{}, err
@@ -294,7 +290,7 @@ func (client *VirtualNetworksClient) getCreateRequest(ctx context.Context, resou
 
 // getHandleResponse handles the Get response.
 func (client *VirtualNetworksClient) getHandleResponse(resp *http.Response) (VirtualNetworksClientGetResponse, error) {
-	result := VirtualNetworksClientGetResponse{RawResponse: resp}
+	result := VirtualNetworksClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetwork); err != nil {
 		return VirtualNetworksClientGetResponse{}, err
 	}
@@ -341,7 +337,7 @@ func (client *VirtualNetworksClient) listCreateRequest(ctx context.Context, reso
 
 // listHandleResponse handles the List response.
 func (client *VirtualNetworksClient) listHandleResponse(resp *http.Response) (VirtualNetworksClientListResponse, error) {
-	result := VirtualNetworksClientListResponse{RawResponse: resp}
+	result := VirtualNetworksClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListResult); err != nil {
 		return VirtualNetworksClientListResponse{}, err
 	}
@@ -383,7 +379,7 @@ func (client *VirtualNetworksClient) listAllCreateRequest(ctx context.Context, o
 
 // listAllHandleResponse handles the ListAll response.
 func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) (VirtualNetworksClientListAllResponse, error) {
-	result := VirtualNetworksClientListAllResponse{RawResponse: resp}
+	result := VirtualNetworksClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListResult); err != nil {
 		return VirtualNetworksClientListAllResponse{}, err
 	}
@@ -436,7 +432,7 @@ func (client *VirtualNetworksClient) listUsageCreateRequest(ctx context.Context,
 
 // listUsageHandleResponse handles the ListUsage response.
 func (client *VirtualNetworksClient) listUsageHandleResponse(resp *http.Response) (VirtualNetworksClientListUsageResponse, error) {
-	result := VirtualNetworksClientListUsageResponse{RawResponse: resp}
+	result := VirtualNetworksClientListUsageResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListUsageResult); err != nil {
 		return VirtualNetworksClientListUsageResponse{}, err
 	}
@@ -493,7 +489,7 @@ func (client *VirtualNetworksClient) updateTagsCreateRequest(ctx context.Context
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualNetworksClient) updateTagsHandleResponse(resp *http.Response) (VirtualNetworksClientUpdateTagsResponse, error) {
-	result := VirtualNetworksClientUpdateTagsResponse{RawResponse: resp}
+	result := VirtualNetworksClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetwork); err != nil {
 		return VirtualNetworksClientUpdateTagsResponse{}, err
 	}

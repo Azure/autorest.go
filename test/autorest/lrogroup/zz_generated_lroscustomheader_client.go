@@ -46,9 +46,7 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	if err != nil {
 		return LROsCustomHeaderClientPost202Retry200PollerResponse{}, err
 	}
-	result := LROsCustomHeaderClientPost202Retry200PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROsCustomHeaderClientPost202Retry200PollerResponse{}
 	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Post202Retry200", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPost202Retry200PollerResponse{}, err
@@ -103,9 +101,7 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	if err != nil {
 		return LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}, err
 	}
-	result := LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}, err
@@ -160,9 +156,7 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	if err != nil {
 		return LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	result := LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}
 	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}, err
@@ -217,9 +211,7 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	if err != nil {
 		return LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}, err
 	}
-	result := LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}, err

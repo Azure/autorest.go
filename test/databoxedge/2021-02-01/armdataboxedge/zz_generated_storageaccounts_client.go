@@ -62,9 +62,7 @@ func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, de
 	if err != nil {
 		return StorageAccountsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := StorageAccountsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := StorageAccountsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return StorageAccountsClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName
 	if err != nil {
 		return StorageAccountsClientDeletePollerResponse{}, err
 	}
-	result := StorageAccountsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := StorageAccountsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return StorageAccountsClientDeletePollerResponse{}, err
@@ -247,7 +243,7 @@ func (client *StorageAccountsClient) getCreateRequest(ctx context.Context, devic
 
 // getHandleResponse handles the Get response.
 func (client *StorageAccountsClient) getHandleResponse(resp *http.Response) (StorageAccountsClientGetResponse, error) {
-	result := StorageAccountsClientGetResponse{RawResponse: resp}
+	result := StorageAccountsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccount); err != nil {
 		return StorageAccountsClientGetResponse{}, err
 	}
@@ -300,7 +296,7 @@ func (client *StorageAccountsClient) listByDataBoxEdgeDeviceCreateRequest(ctx co
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *StorageAccountsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountsClientListByDataBoxEdgeDeviceResponse, error) {
-	result := StorageAccountsClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := StorageAccountsClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountList); err != nil {
 		return StorageAccountsClientListByDataBoxEdgeDeviceResponse{}, err
 	}

@@ -99,7 +99,7 @@ func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Cont
 
 // getHandleResponse handles the Get response.
 func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Response) (VirtualMachineRunCommandsClientGetResponse, error) {
-	result := VirtualMachineRunCommandsClientGetResponse{RawResponse: resp}
+	result := VirtualMachineRunCommandsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RunCommandDocument); err != nil {
 		return VirtualMachineRunCommandsClientGetResponse{}, err
 	}
@@ -147,7 +147,7 @@ func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Con
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *http.Response) (VirtualMachineRunCommandsClientListResponse, error) {
-	result := VirtualMachineRunCommandsClientListResponse{RawResponse: resp}
+	result := VirtualMachineRunCommandsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RunCommandListResult); err != nil {
 		return VirtualMachineRunCommandsClientListResponse{}, err
 	}

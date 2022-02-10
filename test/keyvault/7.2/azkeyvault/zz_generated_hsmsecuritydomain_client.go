@@ -44,9 +44,7 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 	if err != nil {
 		return HSMSecurityDomainClientDownloadPollerResponse{}, err
 	}
-	result := HSMSecurityDomainClientDownloadPollerResponse{
-		RawResponse: resp,
-	}
+	result := HSMSecurityDomainClientDownloadPollerResponse{}
 	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Download", resp, client.pl)
 	if err != nil {
 		return HSMSecurityDomainClientDownloadPollerResponse{}, err
@@ -126,7 +124,7 @@ func (client *HSMSecurityDomainClient) downloadPendingCreateRequest(ctx context.
 
 // downloadPendingHandleResponse handles the DownloadPending response.
 func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *http.Response) (HSMSecurityDomainClientDownloadPendingResponse, error) {
-	result := HSMSecurityDomainClientDownloadPendingResponse{RawResponse: resp}
+	result := HSMSecurityDomainClientDownloadPendingResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityDomainOperationStatus); err != nil {
 		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
@@ -171,7 +169,7 @@ func (client *HSMSecurityDomainClient) transferKeyCreateRequest(ctx context.Cont
 
 // transferKeyHandleResponse handles the TransferKey response.
 func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *http.Response) (HSMSecurityDomainClientTransferKeyResponse, error) {
-	result := HSMSecurityDomainClientTransferKeyResponse{RawResponse: resp}
+	result := HSMSecurityDomainClientTransferKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TransferKey); err != nil {
 		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
@@ -189,9 +187,7 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 	if err != nil {
 		return HSMSecurityDomainClientUploadPollerResponse{}, err
 	}
-	result := HSMSecurityDomainClientUploadPollerResponse{
-		RawResponse: resp,
-	}
+	result := HSMSecurityDomainClientUploadPollerResponse{}
 	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Upload", resp, client.pl)
 	if err != nil {
 		return HSMSecurityDomainClientUploadPollerResponse{}, err
@@ -267,7 +263,7 @@ func (client *HSMSecurityDomainClient) uploadPendingCreateRequest(ctx context.Co
 
 // uploadPendingHandleResponse handles the UploadPending response.
 func (client *HSMSecurityDomainClient) uploadPendingHandleResponse(resp *http.Response) (HSMSecurityDomainClientUploadPendingResponse, error) {
-	result := HSMSecurityDomainClientUploadPendingResponse{RawResponse: resp}
+	result := HSMSecurityDomainClientUploadPendingResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityDomainOperationStatus); err != nil {
 		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}

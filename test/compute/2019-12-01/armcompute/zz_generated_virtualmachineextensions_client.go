@@ -63,9 +63,7 @@ func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
 	}
-	result := VirtualMachineExtensionsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineExtensionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
@@ -251,7 +247,7 @@ func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Conte
 
 // getHandleResponse handles the Get response.
 func (client *VirtualMachineExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionsClientGetResponse, error) {
-	result := VirtualMachineExtensionsClientGetResponse{RawResponse: resp}
+	result := VirtualMachineExtensionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtension); err != nil {
 		return VirtualMachineExtensionsClientGetResponse{}, err
 	}
@@ -310,7 +306,7 @@ func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachineExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineExtensionsClientListResponse, error) {
-	result := VirtualMachineExtensionsClientListResponse{RawResponse: resp}
+	result := VirtualMachineExtensionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionsListResult); err != nil {
 		return VirtualMachineExtensionsClientListResponse{}, err
 	}
@@ -330,9 +326,7 @@ func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineExtensionsClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineExtensionsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err

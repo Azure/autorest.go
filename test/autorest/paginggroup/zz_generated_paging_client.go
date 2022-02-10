@@ -69,7 +69,7 @@ func (client *PagingClient) firstResponseEmptyCreateRequest(ctx context.Context,
 
 // firstResponseEmptyHandleResponse handles the FirstResponseEmpty response.
 func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response) (PagingClientFirstResponseEmptyResponse, error) {
-	result := PagingClientFirstResponseEmptyResponse{RawResponse: resp}
+	result := PagingClientFirstResponseEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValue); err != nil {
 		return PagingClientFirstResponseEmptyResponse{}, err
 	}
@@ -113,7 +113,7 @@ func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, o
 
 // getMultiplePagesHandleResponse handles the GetMultiplePages response.
 func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesResponse, error) {
-	result := PagingClientGetMultiplePagesResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesResponse{}, err
 	}
@@ -149,7 +149,7 @@ func (client *PagingClient) getMultiplePagesFailureCreateRequest(ctx context.Con
 
 // getMultiplePagesFailureHandleResponse handles the GetMultiplePagesFailure response.
 func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFailureResponse, error) {
-	result := PagingClientGetMultiplePagesFailureResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesFailureResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesFailureResponse{}, err
 	}
@@ -185,7 +185,7 @@ func (client *PagingClient) getMultiplePagesFailureURICreateRequest(ctx context.
 
 // getMultiplePagesFailureURIHandleResponse handles the GetMultiplePagesFailureURI response.
 func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFailureURIResponse, error) {
-	result := PagingClientGetMultiplePagesFailureURIResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesFailureURIResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesFailureURIResponse{}, err
 	}
@@ -230,7 +230,7 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx co
 
 // getMultiplePagesFragmentNextLinkHandleResponse handles the GetMultiplePagesFragmentNextLink response.
 func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFragmentNextLinkResponse, error) {
-	result := PagingClientGetMultiplePagesFragmentNextLinkResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesFragmentNextLinkResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
 		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, err
 	}
@@ -274,7 +274,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRe
 
 // getMultiplePagesFragmentWithGroupingNextLinkHandleResponse handles the GetMultiplePagesFragmentWithGroupingNextLink response.
 func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse, error) {
-	result := PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
 		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, err
 	}
@@ -290,9 +290,7 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 	if err != nil {
 		return PagingClientGetMultiplePagesLROPollerResponse{}, err
 	}
-	result := PagingClientGetMultiplePagesLROPollerResponse{
-		RawResponse: resp,
-	}
+	result := PagingClientGetMultiplePagesLROPollerResponse{}
 	pt, err := armruntime.NewPoller("PagingClient.GetMultiplePagesLRO", "", resp, client.pl)
 	if err != nil {
 		return PagingClientGetMultiplePagesLROPollerResponse{}, err
@@ -343,7 +341,7 @@ func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context
 
 // getMultiplePagesLROHandleResponse handles the GetMultiplePagesLRO response.
 func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesLROResponse, error) {
-	result := PagingClientGetMultiplePagesLROResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesLROResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesLROResponse{}, err
 	}
@@ -380,7 +378,7 @@ func (client *PagingClient) getMultiplePagesRetryFirstCreateRequest(ctx context.
 
 // getMultiplePagesRetryFirstHandleResponse handles the GetMultiplePagesRetryFirst response.
 func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesRetryFirstResponse, error) {
-	result := PagingClientGetMultiplePagesRetryFirstResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesRetryFirstResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesRetryFirstResponse{}, err
 	}
@@ -417,7 +415,7 @@ func (client *PagingClient) getMultiplePagesRetrySecondCreateRequest(ctx context
 
 // getMultiplePagesRetrySecondHandleResponse handles the GetMultiplePagesRetrySecond response.
 func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesRetrySecondResponse, error) {
-	result := PagingClientGetMultiplePagesRetrySecondResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesRetrySecondResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesRetrySecondResponse{}, err
 	}
@@ -463,7 +461,7 @@ func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.
 
 // getMultiplePagesWithOffsetHandleResponse handles the GetMultiplePagesWithOffset response.
 func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesWithOffsetResponse, error) {
-	result := PagingClientGetMultiplePagesWithOffsetResponse{RawResponse: resp}
+	result := PagingClientGetMultiplePagesWithOffsetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetMultiplePagesWithOffsetResponse{}, err
 	}
@@ -499,7 +497,7 @@ func (client *PagingClient) getNoItemNamePagesCreateRequest(ctx context.Context,
 
 // getNoItemNamePagesHandleResponse handles the GetNoItemNamePages response.
 func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response) (PagingClientGetNoItemNamePagesResponse, error) {
-	result := PagingClientGetNoItemNamePagesResponse{RawResponse: resp}
+	result := PagingClientGetNoItemNamePagesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValue); err != nil {
 		return PagingClientGetNoItemNamePagesResponse{}, err
 	}
@@ -532,7 +530,7 @@ func (client *PagingClient) getNullNextLinkNamePagesCreateRequest(ctx context.Co
 
 // getNullNextLinkNamePagesHandleResponse handles the GetNullNextLinkNamePages response.
 func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Response) (PagingClientGetNullNextLinkNamePagesResponse, error) {
-	result := PagingClientGetNullNextLinkNamePagesResponse{RawResponse: resp}
+	result := PagingClientGetNullNextLinkNamePagesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetNullNextLinkNamePagesResponse{}, err
 	}
@@ -577,7 +575,7 @@ func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Conte
 
 // getODataMultiplePagesHandleResponse handles the GetODataMultiplePages response.
 func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Response) (PagingClientGetODataMultiplePagesResponse, error) {
-	result := PagingClientGetODataMultiplePagesResponse{RawResponse: resp}
+	result := PagingClientGetODataMultiplePagesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
 		return PagingClientGetODataMultiplePagesResponse{}, err
 	}
@@ -614,7 +612,7 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameCreateReq
 
 // getPagingModelWithItemNameWithXMSClientNameHandleResponse handles the GetPagingModelWithItemNameWithXMSClientName response.
 func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp *http.Response) (PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse, error) {
-	result := PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{RawResponse: resp}
+	result := PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValueWithXMSClientName); err != nil {
 		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, err
 	}
@@ -649,7 +647,7 @@ func (client *PagingClient) getSinglePagesCreateRequest(ctx context.Context, opt
 
 // getSinglePagesHandleResponse handles the GetSinglePages response.
 func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (PagingClientGetSinglePagesResponse, error) {
-	result := PagingClientGetSinglePagesResponse{RawResponse: resp}
+	result := PagingClientGetSinglePagesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetSinglePagesResponse{}, err
 	}
@@ -685,7 +683,7 @@ func (client *PagingClient) getSinglePagesFailureCreateRequest(ctx context.Conte
 
 // getSinglePagesFailureHandleResponse handles the GetSinglePagesFailure response.
 func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Response) (PagingClientGetSinglePagesFailureResponse, error) {
-	result := PagingClientGetSinglePagesFailureResponse{RawResponse: resp}
+	result := PagingClientGetSinglePagesFailureResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetSinglePagesFailureResponse{}, err
 	}
@@ -727,7 +725,7 @@ func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context,
 
 // getWithQueryParamsHandleResponse handles the GetWithQueryParams response.
 func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response) (PagingClientGetWithQueryParamsResponse, error) {
-	result := PagingClientGetWithQueryParamsResponse{RawResponse: resp}
+	result := PagingClientGetWithQueryParamsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientGetWithQueryParamsResponse{}, err
 	}
@@ -755,7 +753,7 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 
 // nextFragmentHandleResponse handles the NextFragment response.
 func (client *PagingClient) nextFragmentHandleResponse(resp *http.Response) (PagingClientNextFragmentResponse, error) {
-	result := PagingClientNextFragmentResponse{RawResponse: resp}
+	result := PagingClientNextFragmentResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
 		return PagingClientNextFragmentResponse{}, err
 	}
@@ -783,7 +781,7 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 
 // nextFragmentWithGroupingHandleResponse handles the NextFragmentWithGrouping response.
 func (client *PagingClient) nextFragmentWithGroupingHandleResponse(resp *http.Response) (PagingClientNextFragmentWithGroupingResponse, error) {
-	result := PagingClientNextFragmentWithGroupingResponse{RawResponse: resp}
+	result := PagingClientNextFragmentWithGroupingResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
 		return PagingClientNextFragmentWithGroupingResponse{}, err
 	}
@@ -806,7 +804,7 @@ func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx contex
 
 // nextOperationWithQueryParamsHandleResponse handles the NextOperationWithQueryParams response.
 func (client *PagingClient) nextOperationWithQueryParamsHandleResponse(resp *http.Response) (PagingClientNextOperationWithQueryParamsResponse, error) {
-	result := PagingClientNextOperationWithQueryParamsResponse{RawResponse: resp}
+	result := PagingClientNextOperationWithQueryParamsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
 		return PagingClientNextOperationWithQueryParamsResponse{}, err
 	}

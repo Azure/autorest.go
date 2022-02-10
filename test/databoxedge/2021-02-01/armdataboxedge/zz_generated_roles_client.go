@@ -62,9 +62,7 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 	if err != nil {
 		return RolesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RolesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := RolesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RolesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return RolesClientCreateOrUpdatePollerResponse{}, err
@@ -133,9 +131,7 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 	if err != nil {
 		return RolesClientDeletePollerResponse{}, err
 	}
-	result := RolesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := RolesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RolesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return RolesClientDeletePollerResponse{}, err
@@ -246,7 +242,7 @@ func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName stri
 
 // getHandleResponse handles the Get response.
 func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesClientGetResponse, error) {
-	result := RolesClientGetResponse{RawResponse: resp}
+	result := RolesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return RolesClientGetResponse{}, err
 	}
@@ -299,7 +295,7 @@ func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *RolesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (RolesClientListByDataBoxEdgeDeviceResponse, error) {
-	result := RolesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := RolesClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleList); err != nil {
 		return RolesClientListByDataBoxEdgeDeviceResponse{}, err
 	}

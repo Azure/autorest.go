@@ -65,7 +65,7 @@ func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, opti
 
 // getBigDecimalHandleResponse handles the GetBigDecimal response.
 func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalResponse, error) {
-	result := NumberClientGetBigDecimalResponse{RawResponse: resp}
+	result := NumberClientGetBigDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigDecimalResponse{}, err
 	}
@@ -104,7 +104,7 @@ func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx contex
 
 // getBigDecimalNegativeDecimalHandleResponse handles the GetBigDecimalNegativeDecimal response.
 func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
-	result := NumberClientGetBigDecimalNegativeDecimalResponse{RawResponse: resp}
+	result := NumberClientGetBigDecimalNegativeDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
@@ -143,7 +143,7 @@ func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx contex
 
 // getBigDecimalPositiveDecimalHandleResponse handles the GetBigDecimalPositiveDecimal response.
 func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
-	result := NumberClientGetBigDecimalPositiveDecimalResponse{RawResponse: resp}
+	result := NumberClientGetBigDecimalPositiveDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
@@ -181,7 +181,7 @@ func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, optio
 
 // getBigDoubleHandleResponse handles the GetBigDouble response.
 func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (NumberClientGetBigDoubleResponse, error) {
-	result := NumberClientGetBigDoubleResponse{RawResponse: resp}
+	result := NumberClientGetBigDoubleResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigDoubleResponse{}, err
 	}
@@ -220,7 +220,7 @@ func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context
 
 // getBigDoubleNegativeDecimalHandleResponse handles the GetBigDoubleNegativeDecimal response.
 func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
-	result := NumberClientGetBigDoubleNegativeDecimalResponse{RawResponse: resp}
+	result := NumberClientGetBigDoubleNegativeDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
@@ -259,7 +259,7 @@ func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context
 
 // getBigDoublePositiveDecimalHandleResponse handles the GetBigDoublePositiveDecimal response.
 func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
-	result := NumberClientGetBigDoublePositiveDecimalResponse{RawResponse: resp}
+	result := NumberClientGetBigDoublePositiveDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
@@ -297,7 +297,7 @@ func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, option
 
 // getBigFloatHandleResponse handles the GetBigFloat response.
 func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (NumberClientGetBigFloatResponse, error) {
-	result := NumberClientGetBigFloatResponse{RawResponse: resp}
+	result := NumberClientGetBigFloatResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetBigFloatResponse{}, err
 	}
@@ -336,7 +336,7 @@ func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, 
 
 // getInvalidDecimalHandleResponse handles the GetInvalidDecimal response.
 func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response) (NumberClientGetInvalidDecimalResponse, error) {
-	result := NumberClientGetInvalidDecimalResponse{RawResponse: resp}
+	result := NumberClientGetInvalidDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetInvalidDecimalResponse{}, err
 	}
@@ -374,7 +374,7 @@ func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, o
 
 // getInvalidDoubleHandleResponse handles the GetInvalidDouble response.
 func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) (NumberClientGetInvalidDoubleResponse, error) {
-	result := NumberClientGetInvalidDoubleResponse{RawResponse: resp}
+	result := NumberClientGetInvalidDoubleResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetInvalidDoubleResponse{}, err
 	}
@@ -412,7 +412,7 @@ func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, op
 
 // getInvalidFloatHandleResponse handles the GetInvalidFloat response.
 func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (NumberClientGetInvalidFloatResponse, error) {
-	result := NumberClientGetInvalidFloatResponse{RawResponse: resp}
+	result := NumberClientGetInvalidFloatResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetInvalidFloatResponse{}, err
 	}
@@ -450,7 +450,7 @@ func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *N
 
 // getNullHandleResponse handles the GetNull response.
 func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberClientGetNullResponse, error) {
-	result := NumberClientGetNullResponse{RawResponse: resp}
+	result := NumberClientGetNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetNullResponse{}, err
 	}
@@ -488,7 +488,7 @@ func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, op
 
 // getSmallDecimalHandleResponse handles the GetSmallDecimal response.
 func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (NumberClientGetSmallDecimalResponse, error) {
-	result := NumberClientGetSmallDecimalResponse{RawResponse: resp}
+	result := NumberClientGetSmallDecimalResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetSmallDecimalResponse{}, err
 	}
@@ -526,7 +526,7 @@ func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, opt
 
 // getSmallDoubleHandleResponse handles the GetSmallDouble response.
 func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (NumberClientGetSmallDoubleResponse, error) {
-	result := NumberClientGetSmallDoubleResponse{RawResponse: resp}
+	result := NumberClientGetSmallDoubleResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetSmallDoubleResponse{}, err
 	}
@@ -564,7 +564,7 @@ func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, opti
 
 // getSmallFloatHandleResponse handles the GetSmallFloat response.
 func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (NumberClientGetSmallFloatResponse, error) {
-	result := NumberClientGetSmallFloatResponse{RawResponse: resp}
+	result := NumberClientGetSmallFloatResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return NumberClientGetSmallFloatResponse{}, err
 	}
@@ -587,7 +587,7 @@ func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float6
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigDecimalResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDecimalResponse{}, nil
 }
 
 // putBigDecimalCreateRequest creates the PutBigDecimal request.
@@ -617,7 +617,7 @@ func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigDecimalNegativeDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDecimalNegativeDecimalResponse{}, nil
 }
 
 // putBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
@@ -647,7 +647,7 @@ func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigDecimalPositiveDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDecimalPositiveDecimalResponse{}, nil
 }
 
 // putBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
@@ -677,7 +677,7 @@ func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigDoubleResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigDoubleResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDoubleResponse{}, nil
 }
 
 // putBigDoubleCreateRequest creates the PutBigDouble request.
@@ -707,7 +707,7 @@ func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigDoubleNegativeDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDoubleNegativeDecimalResponse{}, nil
 }
 
 // putBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
@@ -737,7 +737,7 @@ func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigDoublePositiveDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDoublePositiveDecimalResponse{}, nil
 }
 
 // putBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
@@ -767,7 +767,7 @@ func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32,
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutBigFloatResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutBigFloatResponse{RawResponse: resp}, nil
+	return NumberClientPutBigFloatResponse{}, nil
 }
 
 // putBigFloatCreateRequest creates the PutBigFloat request.
@@ -797,7 +797,7 @@ func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody floa
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutSmallDecimalResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutSmallDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutSmallDecimalResponse{}, nil
 }
 
 // putSmallDecimalCreateRequest creates the PutSmallDecimal request.
@@ -827,7 +827,7 @@ func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutSmallDoubleResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutSmallDoubleResponse{RawResponse: resp}, nil
+	return NumberClientPutSmallDoubleResponse{}, nil
 }
 
 // putSmallDoubleCreateRequest creates the PutSmallDouble request.
@@ -857,7 +857,7 @@ func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float3
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return NumberClientPutSmallFloatResponse{}, runtime.NewResponseError(resp)
 	}
-	return NumberClientPutSmallFloatResponse{RawResponse: resp}, nil
+	return NumberClientPutSmallFloatResponse{}, nil
 }
 
 // putSmallFloatCreateRequest creates the PutSmallFloat request.

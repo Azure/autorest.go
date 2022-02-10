@@ -50,7 +50,7 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *H
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientDelete400Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientDelete400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientDelete400Response{}, nil
 }
 
 // delete400CreateRequest creates the Delete400 request.
@@ -80,7 +80,7 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientDelete407Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientDelete407Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientDelete407Response{}, nil
 }
 
 // delete407CreateRequest creates the Delete407 request.
@@ -110,7 +110,7 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientDelete417Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientDelete417Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientDelete417Response{}, nil
 }
 
 // delete417CreateRequest creates the Delete417 request.
@@ -140,7 +140,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientGet400Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientGet400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet400Response{}, nil
 }
 
 // get400CreateRequest creates the Get400 request.
@@ -170,7 +170,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientGet402Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientGet402Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet402Response{}, nil
 }
 
 // get402CreateRequest creates the Get402 request.
@@ -200,7 +200,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientGet403Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientGet403Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet403Response{}, nil
 }
 
 // get403CreateRequest creates the Get403 request.
@@ -230,7 +230,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientGet411Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientGet411Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet411Response{}, nil
 }
 
 // get411CreateRequest creates the Get411 request.
@@ -260,7 +260,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientGet412Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientGet412Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet412Response{}, nil
 }
 
 // get412CreateRequest creates the Get412 request.
@@ -290,7 +290,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientGet416Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientGet416Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet416Response{}, nil
 }
 
 // get416CreateRequest creates the Get416 request.
@@ -316,7 +316,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead400Response{}, err
 	}
-	result := HTTPClientFailureClientHead400Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead400Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -346,7 +346,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead401Response{}, err
 	}
-	result := HTTPClientFailureClientHead401Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead401Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -376,7 +376,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead410Response{}, err
 	}
-	result := HTTPClientFailureClientHead410Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead410Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -406,7 +406,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead429Response{}, err
 	}
-	result := HTTPClientFailureClientHead429Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead429Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -440,7 +440,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientOptions400Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientOptions400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientOptions400Response{}, nil
 }
 
 // options400CreateRequest creates the Options400 request.
@@ -470,7 +470,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientOptions403Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientOptions403Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientOptions403Response{}, nil
 }
 
 // options403CreateRequest creates the Options403 request.
@@ -500,7 +500,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientOptions412Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientOptions412Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientOptions412Response{}, nil
 }
 
 // options412CreateRequest creates the Options412 request.
@@ -530,7 +530,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPatch400Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPatch400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPatch400Response{}, nil
 }
 
 // patch400CreateRequest creates the Patch400 request.
@@ -560,7 +560,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPatch405Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPatch405Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPatch405Response{}, nil
 }
 
 // patch405CreateRequest creates the Patch405 request.
@@ -590,7 +590,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPatch414Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPatch414Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPatch414Response{}, nil
 }
 
 // patch414CreateRequest creates the Patch414 request.
@@ -620,7 +620,7 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPost400Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPost400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPost400Response{}, nil
 }
 
 // post400CreateRequest creates the Post400 request.
@@ -650,7 +650,7 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPost406Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPost406Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPost406Response{}, nil
 }
 
 // post406CreateRequest creates the Post406 request.
@@ -680,7 +680,7 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPost415Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPost415Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPost415Response{}, nil
 }
 
 // post415CreateRequest creates the Post415 request.
@@ -710,7 +710,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPut400Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPut400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut400Response{}, nil
 }
 
 // put400CreateRequest creates the Put400 request.
@@ -740,7 +740,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPut404Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPut404Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut404Response{}, nil
 }
 
 // put404CreateRequest creates the Put404 request.
@@ -770,7 +770,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPut409Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPut409Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut409Response{}, nil
 }
 
 // put409CreateRequest creates the Put409 request.
@@ -800,7 +800,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPClientFailureClientPut413Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPClientFailureClientPut413Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut413Response{}, nil
 }
 
 // put413CreateRequest creates the Put413 request.
