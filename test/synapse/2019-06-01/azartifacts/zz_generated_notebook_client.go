@@ -40,20 +40,16 @@ func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 // notebook - Note book resource definition.
 // options - notebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the notebookClient.BeginCreateOrUpdateNotebook
 // method.
-func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *notebookClientBeginCreateOrUpdateNotebookOptions) (notebookClientCreateOrUpdateNotebookPollerResponse, error) {
+func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *notebookClientBeginCreateOrUpdateNotebookOptions) (*notebookClientCreateOrUpdateNotebookPoller, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
-		return notebookClientCreateOrUpdateNotebookPollerResponse{}, err
+		return nil, err
 	}
-	result := notebookClientCreateOrUpdateNotebookPollerResponse{}
 	pt, err := runtime.NewPoller("notebookClient.CreateOrUpdateNotebook", resp, client.pl)
 	if err != nil {
-		return notebookClientCreateOrUpdateNotebookPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &notebookClientCreateOrUpdateNotebookPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &notebookClientCreateOrUpdateNotebookPoller{pt: pt}, nil
 }
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
@@ -99,20 +95,16 @@ func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Co
 // notebookName - The notebook name.
 // options - notebookClientBeginDeleteNotebookOptions contains the optional parameters for the notebookClient.BeginDeleteNotebook
 // method.
-func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *notebookClientBeginDeleteNotebookOptions) (notebookClientDeleteNotebookPollerResponse, error) {
+func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *notebookClientBeginDeleteNotebookOptions) (*notebookClientDeleteNotebookPoller, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
-		return notebookClientDeleteNotebookPollerResponse{}, err
+		return nil, err
 	}
-	result := notebookClientDeleteNotebookPollerResponse{}
 	pt, err := runtime.NewPoller("notebookClient.DeleteNotebook", resp, client.pl)
 	if err != nil {
-		return notebookClientDeleteNotebookPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &notebookClientDeleteNotebookPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &notebookClientDeleteNotebookPoller{pt: pt}, nil
 }
 
 // DeleteNotebook - Deletes a Note book.
@@ -283,20 +275,16 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.R
 // request - proposed new name.
 // options - notebookClientBeginRenameNotebookOptions contains the optional parameters for the notebookClient.BeginRenameNotebook
 // method.
-func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *notebookClientBeginRenameNotebookOptions) (notebookClientRenameNotebookPollerResponse, error) {
+func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *notebookClientBeginRenameNotebookOptions) (*notebookClientRenameNotebookPoller, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {
-		return notebookClientRenameNotebookPollerResponse{}, err
+		return nil, err
 	}
-	result := notebookClientRenameNotebookPollerResponse{}
 	pt, err := runtime.NewPoller("notebookClient.RenameNotebook", resp, client.pl)
 	if err != nil {
-		return notebookClientRenameNotebookPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &notebookClientRenameNotebookPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &notebookClientRenameNotebookPoller{pt: pt}, nil
 }
 
 // RenameNotebook - Renames a notebook.

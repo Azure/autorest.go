@@ -57,20 +57,16 @@ func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCre
 // parameters - Parameters supplied to the create or update Firewall Policy operation.
 // options - FirewallPoliciesClientBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPoliciesClient.BeginCreateOrUpdate
 // method.
-func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (FirewallPoliciesClientCreateOrUpdatePollerResponse, error) {
+func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (*FirewallPoliciesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
-		return FirewallPoliciesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := FirewallPoliciesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("FirewallPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return FirewallPoliciesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &FirewallPoliciesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &FirewallPoliciesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Firewall Policy.
@@ -122,20 +118,16 @@ func (client *FirewallPoliciesClient) createOrUpdateCreateRequest(ctx context.Co
 // firewallPolicyName - The name of the Firewall Policy.
 // options - FirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the FirewallPoliciesClient.BeginDelete
 // method.
-func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (FirewallPoliciesClientDeletePollerResponse, error) {
+func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (*FirewallPoliciesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
-		return FirewallPoliciesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := FirewallPoliciesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("FirewallPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return FirewallPoliciesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &FirewallPoliciesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &FirewallPoliciesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Firewall Policy.

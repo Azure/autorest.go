@@ -58,20 +58,16 @@ func NewVirtualHubRouteTableV2SClient(subscriptionID string, credential azcore.T
 // virtualHubRouteTableV2Parameters - Parameters supplied to create or update VirtualHubRouteTableV2.
 // options - VirtualHubRouteTableV2SClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubRouteTableV2SClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2, options *VirtualHubRouteTableV2SClientBeginCreateOrUpdateOptions) (VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2, options *VirtualHubRouteTableV2SClientBeginCreateOrUpdateOptions) (*VirtualHubRouteTableV2SClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeTableName, virtualHubRouteTableV2Parameters, options)
 	if err != nil {
-		return VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubRouteTableV2SClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualHubRouteTableV2SClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualHubRouteTableV2SClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates the existing VirtualHubRouteTableV2.
@@ -128,20 +124,16 @@ func (client *VirtualHubRouteTableV2SClient) createOrUpdateCreateRequest(ctx con
 // routeTableName - The name of the VirtualHubRouteTableV2.
 // options - VirtualHubRouteTableV2SClientBeginDeleteOptions contains the optional parameters for the VirtualHubRouteTableV2SClient.BeginDelete
 // method.
-func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SClientBeginDeleteOptions) (VirtualHubRouteTableV2SClientDeletePollerResponse, error) {
+func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SClientBeginDeleteOptions) (*VirtualHubRouteTableV2SClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
-		return VirtualHubRouteTableV2SClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualHubRouteTableV2SClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubRouteTableV2SClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualHubRouteTableV2SClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualHubRouteTableV2SClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualHubRouteTableV2SClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a VirtualHubRouteTableV2.

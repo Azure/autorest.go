@@ -57,20 +57,16 @@ func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredentia
 // parameters - Parameters supplied to the create or update network interface operation.
 // options - InterfacesClientBeginCreateOrUpdateOptions contains the optional parameters for the InterfacesClient.BeginCreateOrUpdate
 // method.
-func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (InterfacesClientCreateOrUpdatePollerResponse, error) {
+func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*InterfacesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
-		return InterfacesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := InterfacesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return InterfacesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InterfacesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InterfacesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a network interface.
@@ -121,20 +117,16 @@ func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context,
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginDeleteOptions contains the optional parameters for the InterfacesClient.BeginDelete method.
-func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (InterfacesClientDeletePollerResponse, error) {
+func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*InterfacesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return InterfacesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := InterfacesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfacesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return InterfacesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InterfacesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InterfacesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified network interface.
@@ -244,20 +236,16 @@ func (client *InterfacesClient) getHandleResponse(resp *http.Response) (Interfac
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginGetEffectiveRouteTableOptions contains the optional parameters for the InterfacesClient.BeginGetEffectiveRouteTable
 // method.
-func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (InterfacesClientGetEffectiveRouteTablePollerResponse, error) {
+func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*InterfacesClientGetEffectiveRouteTablePoller, error) {
 	resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return InterfacesClientGetEffectiveRouteTablePollerResponse{}, err
+		return nil, err
 	}
-	result := InterfacesClientGetEffectiveRouteTablePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfacesClient.GetEffectiveRouteTable", "location", resp, client.pl)
 	if err != nil {
-		return InterfacesClientGetEffectiveRouteTablePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InterfacesClientGetEffectiveRouteTablePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InterfacesClientGetEffectiveRouteTablePoller{pt: pt}, nil
 }
 
 // GetEffectiveRouteTable - Gets all route tables applied to a network interface.
@@ -542,20 +530,16 @@ func (client *InterfacesClient) listAllHandleResponse(resp *http.Response) (Inte
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the InterfacesClient.BeginListEffectiveNetworkSecurityGroups
 // method.
-func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse, error) {
+func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*InterfacesClientListEffectiveNetworkSecurityGroupsPoller, error) {
 	resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
-		return InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse{}, err
+		return nil, err
 	}
-	result := InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse{}
 	pt, err := armruntime.NewPoller("InterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.pl)
 	if err != nil {
-		return InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InterfacesClientListEffectiveNetworkSecurityGroupsPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InterfacesClientListEffectiveNetworkSecurityGroupsPoller{pt: pt}, nil
 }
 
 // ListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.

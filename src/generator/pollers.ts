@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
+import { CodeModel, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, discriminatorFinalResponse, getFinalResponseEnvelopeName, getResultFieldName, sortAscending } from './helpers';
+import { contentPreamble, discriminatorFinalResponse, getResponseEnvelopeName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pollers.go
@@ -18,9 +18,15 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
   let text = await contentPreamble(session);
   // add standard imports
   const imports = new ImportManager();
+  const isARM = session.model.language.go!.openApiType === 'arm';
   imports.add('context');
   imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-  imports.add('net/http');
+  imports.add('time');
+  if (isARM) {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
+  } else {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+  }
   const pollers = <Array<PollerInfo>>session.model.language.go!.pollerTypes;
   pollers.sort((a: PollerInfo, b: PollerInfo) => { return sortAscending(a.name, b.name) });
   let bodyText = '';
@@ -36,60 +42,127 @@ export async function generatePollers(session: Session<CodeModel>): Promise<stri
     // poller methods
     bodyText += '// Done returns true if the LRO has reached a terminal state.\n';
     bodyText += `func (p *${poller.name}) Done() bool {\n\treturn p.pt.Done()\n}\n\n`;
-    bodyText += '// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.\n';
-    bodyText += `// If the LRO has completed successfully, the poller's state is updated and the HTTP\n`;
+    bodyText += '// Poll fetches the latest state of the LRO.\n';
+    bodyText += `// If the LRO has completed successfully, the poller's state is updated and the\n`;
     bodyText += '// response is returned.\n';
     bodyText += `// If the LRO has completed with failure or was cancelled, the poller's state is\n`;
     bodyText += '// updated and the error is returned.\n';
     bodyText += `// If the LRO has not reached a terminal state, the poller's state is updated and\n`;
-    bodyText += '// the latest HTTP response is returned.\n';
+    bodyText += '// a zero-value response is returned.\n';
     bodyText += `// If Poll fails, the poller's state is unmodified and the error is returned.\n`;
     bodyText += '// Calling Poll on an LRO that has reached a terminal state will return the final\n';
-    bodyText += '// HTTP response or error.\n';
-    bodyText += `func (p *${poller.name}) Poll(ctx context.Context) (*http.Response, error) {\n\treturn p.pt.Poll(ctx)\n}\n\n`;
-    bodyText += finalResp(poller);
+    bodyText += '// response or error.\n';
+    bodyText += emitPoll(poller);
+    bodyText += '// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.\n';
+    bodyText += '// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.\n'
+    if (session.model.language.go!.azureARM) {
+      bodyText += '// A good starting value is 30 seconds. Note that some resources might benefit from a different value.\n';
+    }
+    bodyText += emitPollUntilDone(poller);
     bodyText += '// ResumeToken returns a value representing the poller that can be used to resume\n';
     bodyText += '// the LRO at a later time. ResumeTokens are unique per service operation.\n';
+    bodyText += '// Returns an error if the poller is in a terminal state.\n'
     bodyText += `func (p *${poller.name}) ResumeToken() (string, error) {\n\treturn p.pt.ResumeToken()\n}\n\n`;
+    bodyText += `// Resume rehydrates a ${poller.name} from the provided client and resume token.\n`;
+    bodyText += `// Returns an error if the token is isn't applicable to this poller type.\n`;
+    bodyText += emitResume(poller, isARM);
   }
   text += imports.text();
   text += bodyText;
   return text;
 }
 
+function emitPoll(poller: PollerInfo): string {
+  let pollerText = `func (p *${poller.name}) Poll(ctx context.Context) (${prefixedResponseType(poller, '*')}, error) {\n`;
+  pollerText += `\tresult := ${prefixedResponseType(poller, '&')}{}\n`;
+  pollerText += '\tif _, err := p.pt.Poll(ctx); err != nil {\n';
+  let zeroValue = 'result';
+  if (poller.op.language.go!.pageableType) {
+    zeroValue = 'nil';
+  }
+  pollerText += `\t\treturn ${zeroValue}, err\n\t}\n`;
+  pollerText += `\tif !p.Done() {\n\t\treturn ${zeroValue}, nil\n\t\}\n`;
+  pollerText += `\t_, err := p.pt.FinalResponse(ctx, ${getResponseField(poller)})\n`;
+  if (poller.op.language.go!.pageableType) {
+    pollerText += '\tif err != nil {\n\treturn nil, err\n\t}\n';
+    pollerText += '\tresult.client = p.client\n';
+  }
+  pollerText += '\treturn result, err\n';
+  pollerText += '}\n\n';
+  return pollerText;
+}
+
+function emitPollUntilDone(poller: PollerInfo): string {
+  let pollUntilDone = `func (p *${poller.name}) PollUntilDone(ctx context.Context, freq time.Duration) (${prefixedResponseType(poller, '*')}, error) {\n`;
+  pollUntilDone += `\tresult := ${prefixedResponseType(poller, '&')}{`;
+  if (poller.op.language.go!.pageableType) {
+    pollUntilDone += 'client: p.client';
+  }
+  pollUntilDone += '}\n';
+  pollUntilDone += `\t_, err := p.pt.PollUntilDone(ctx, freq, ${getResponseField(poller)})\n`;
+  if (poller.op.language.go!.pageableType) {
+    pollUntilDone += '\tif err != nil {\n\treturn nil, err\n\t}\n';
+  }
+  pollUntilDone += '\treturn result, err\n';
+  pollUntilDone += '}\n\n';
+  return pollUntilDone;
+}
+
+function emitResume(poller: PollerInfo, isARM: boolean): string {
+  const clientName = poller.op.language.go!.clientName;
+  const apiMethod = poller.op.language.go!.name;
+  let resume = `func (p *${poller.name}) Resume(ctx context.Context, client *${clientName}, token string) (${prefixedResponseType(poller, '*')}, error) {\n`;
+  resume += '\tvar err error\n';
+  resume += '\tif p.pt, err = ';
+  if (isARM) {
+    resume += `armruntime.`;
+  } else {
+    resume += `runtime.`;
+  }
+  resume += `NewPollerFromResumeToken("${clientName}.${apiMethod}", token, client.pl); err != nil {\n`;
+  let zeroResp = `${getResponseType(poller)}{}`;
+  if (poller.op.language.go!.pageableType) {
+    zeroResp = 'nil';
+  }
+  resume += `\t\treturn ${zeroResp}, err\n\t}\n`;
+  if (poller.op.language.go!.pageableType) {
+    resume += '\tp.client = client\n';
+  }
+  resume += '\treturn p.Poll(ctx)\n';
+  resume += '}\n\n';
+  return resume;
+}
+
 function getResponseType(poller: PollerInfo): string {
   // check for pager must come first
   if (poller.op.language.go!.pageableType) {
-    return `*${(<PagerInfo>poller.op.language.go!.pageableType).name}`;
+    return (<PagerInfo>poller.op.language.go!.pageableType).name;
   }
-  return getFinalResponseEnvelopeName(poller.op);
+  return getResponseEnvelopeName(poller.op);
 }
 
-// generates the FinalResponse method
-function finalResp(poller: PollerInfo): string {
-  const respType = getResponseType(poller);
-  let text = '\t// FinalResponse performs a final GET to the service and returns the final response\n';
-  text += '\t// for the polling operation. If there is an error performing the final GET then an error is returned.\n';
-  text += `\t// If the final GET succeeded then the final ${respType} will be returned.\n`;
-  text += `func (p *${poller.name}) FinalResponse(ctx context.Context) (${respType}, error) {\n`;
-  if (poller.op.language.go!.pageableType) {
-    // pager-pollers have a slightly different impl
-    text += `\trespType := &${(<PagerInfo>poller.op.language.go!.pageableType).name}{client: p.client}\n`;
-    text += `\tif _, err := p.pt.FinalResponse(ctx, &respType.current.${getResultFieldName(poller.op)}); err != nil {\n\t\treturn nil, err\n\t}\n`;
-    text += '\treturn respType, nil\n';
-  } else {
-    const finalRespEnv = <ObjectSchema>poller.op.language.go!.finalResponseEnv;
-    const resultProp = <Property>finalRespEnv.language.go!.resultProp;
-    text += `\trespType := ${finalRespEnv.language.go!.name}{}\n`;
-    if (resultProp) {
-      text += `\t_, err := p.pt.FinalResponse(ctx, &respType${discriminatorFinalResponse(finalRespEnv)})\n`;
-    } else {
-      // the operation doesn't return a model
-      text += `\t_, err := p.pt.FinalResponse(ctx, nil)\n`;
+function getResponseField(poller: PollerInfo): string {
+  const pagedResponse = poller.op.language.go!.pageableType;
+  const finalRespEnv = poller.op.language.go!.responseEnv;
+  const resultProp = <Property>finalRespEnv.language.go!.resultProp;
+  if (resultProp) {
+    let current = '';
+    if (pagedResponse) {
+      current = '.current';
     }
-    text += `\tif err != nil {\n\t\treturn ${finalRespEnv.language.go!.name}{}, err\n\t}\n`;
-    text += '\treturn respType, nil\n';
+    return `&result${current}${discriminatorFinalResponse(finalRespEnv)}`;
+  } else {
+    // the operation doesn't return a model
+    return 'nil';
   }
-  text += '}\n\n';
-  return text;
+}
+
+// returned the response type with the specified prefix if it's a pager
+function prefixedResponseType(poller: PollerInfo, prefix: string): string {
+  const pagedResponse = poller.op.language.go!.pageableType;
+  const respType = getResponseType(poller);
+  if (!pagedResponse) {
+    return respType;
+  }
+  return prefix + respType;
 }

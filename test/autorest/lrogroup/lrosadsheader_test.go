@@ -21,12 +21,11 @@ func newLrosaDsClient() *LROSADsClient {
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDelete202NonRetry400(context.Background(), nil)
+	poller, err := op.BeginDelete202NonRetry400(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -41,9 +40,8 @@ func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDelete204Succeeded(context.Background(), nil)
+	poller, err := op.BeginDelete204Succeeded(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -51,18 +49,17 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	if rt != "" {
 		t.Fatal("expected an empty resume token")
 	}
-	_, err = resp.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetry400(context.Background(), nil)
+	poller, err := op.BeginDeleteAsyncRelativeRetry400(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -77,24 +74,22 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
+	poller, err := op.BeginDeleteAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetryNoStatus(context.Background(), nil)
+	poller, err := op.BeginDeleteAsyncRelativeRetryNoStatus(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -117,12 +112,11 @@ func TestLROSADSBeginPost202NoLocation(t *testing.T) {
 
 func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPost202NonRetry400(context.Background(), nil)
+	poller, err := op.BeginPost202NonRetry400(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -137,12 +131,11 @@ func TestLROSADSBeginPost202RetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPostAsyncRelativeRetry400(context.Background(), nil)
+	poller, err := op.BeginPostAsyncRelativeRetry400(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -157,24 +150,22 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPostAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
+	poller, err := op.BeginPostAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPostAsyncRelativeRetryNoPayload(context.Background(), nil)
+	poller, err := op.BeginPostAsyncRelativeRetryNoPayload(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -197,12 +188,11 @@ func TestLROSADSBeginPut200InvalidJSON(t *testing.T) {
 
 func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutAsyncRelativeRetry400(context.Background(), nil)
+	poller, err := op.BeginPutAsyncRelativeRetry400(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
@@ -217,72 +207,66 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
+	poller, err := op.BeginPutAsyncRelativeRetryInvalidJSONPolling(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutAsyncRelativeRetryNoStatus(context.Background(), nil)
+	poller, err := op.BeginPutAsyncRelativeRetryNoStatus(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutAsyncRelativeRetryNoStatusPayload(context.Background(), nil)
+	poller, err := op.BeginPutAsyncRelativeRetryNoStatusPayload(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutError201NoProvisioningStatePayload(context.Background(), nil)
+	poller, err := op.BeginPutError201NoProvisioningStatePayload(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutNonRetry201Creating400(context.Background(), nil)
+	poller, err := op.BeginPutNonRetry201Creating400(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 	op := newLrosaDsClient()
-	resp, err := op.BeginPutNonRetry201Creating400InvalidJSON(context.Background(), nil)
+	poller, err := op.BeginPutNonRetry201Creating400InvalidJSON(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if err = resp.Resume(context.Background(), op, rt); err == nil {
+	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 }

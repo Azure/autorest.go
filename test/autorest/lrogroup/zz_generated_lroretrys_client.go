@@ -40,20 +40,16 @@ func NewLRORetrysClient(options *azcore.ClientOptions) *LRORetrysClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
 // method.
-func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (LRORetrysClientDelete202Retry200PollerResponse, error) {
+func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*LRORetrysClientDelete202Retry200Poller, error) {
 	resp, err := client.delete202Retry200(ctx, options)
 	if err != nil {
-		return LRORetrysClientDelete202Retry200PollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientDelete202Retry200PollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.Delete202Retry200", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientDelete202Retry200PollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientDelete202Retry200Poller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientDelete202Retry200Poller{pt: pt}, nil
 }
 
 // Delete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
@@ -90,20 +86,16 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded
 // method.
-func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse, error) {
+func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller, error) {
 	resp, err := client.deleteAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller{pt: pt}, nil
 }
 
 // DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request.
@@ -142,20 +134,16 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the
 // LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded method.
-func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse, error) {
+func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller, error) {
 	resp, err := client.deleteProvisioning202Accepted200Succeeded(ctx, options)
 	if err != nil {
-		return LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller{pt: pt}, nil
 }
 
 // DeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the initial
@@ -194,20 +182,16 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPost202Retry200Options contains the optional parameters for the LRORetrysClient.BeginPost202Retry200
 // method.
-func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (LRORetrysClientPost202Retry200PollerResponse, error) {
+func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (*LRORetrysClientPost202Retry200Poller, error) {
 	resp, err := client.post202Retry200(ctx, options)
 	if err != nil {
-		return LRORetrysClientPost202Retry200PollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientPost202Retry200PollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.Post202Retry200", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientPost202Retry200PollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientPost202Retry200Poller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientPost202Retry200Poller{pt: pt}, nil
 }
 
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
@@ -248,20 +232,16 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded
 // method.
-func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse, error) {
+func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (*LRORetrysClientPostAsyncRelativeRetrySucceededPoller, error) {
 	resp, err := client.postAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientPostAsyncRelativeRetrySucceededPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientPostAsyncRelativeRetrySucceededPoller{pt: pt}, nil
 }
 
 // PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request,
@@ -303,20 +283,16 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
 // method.
-func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (LRORetrysClientPut201CreatingSucceeded200PollerResponse, error) {
+func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*LRORetrysClientPut201CreatingSucceeded200Poller, error) {
 	resp, err := client.put201CreatingSucceeded200(ctx, options)
 	if err != nil {
-		return LRORetrysClientPut201CreatingSucceeded200PollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientPut201CreatingSucceeded200PollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientPut201CreatingSucceeded200PollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientPut201CreatingSucceeded200Poller{pt: pt}, nil
 }
 
 // Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an
@@ -358,20 +334,16 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
 // method.
-func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse, error) {
+func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*LRORetrysClientPutAsyncRelativeRetrySucceededPoller, error) {
 	resp, err := client.putAsyncRelativeRetrySucceeded(ctx, options)
 	if err != nil {
-		return LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}, err
+		return nil, err
 	}
-	result := LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
-		return LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LRORetrysClientPutAsyncRelativeRetrySucceededPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LRORetrysClientPutAsyncRelativeRetrySucceededPoller{pt: pt}, nil
 }
 
 // PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with

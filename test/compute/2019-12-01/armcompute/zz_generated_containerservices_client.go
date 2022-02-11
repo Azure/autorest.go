@@ -58,20 +58,16 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 // parameters - Parameters supplied to the Create or Update a Container Service operation.
 // options - ContainerServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
 // method.
-func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (ContainerServicesClientCreateOrUpdatePollerResponse, error) {
+func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*ContainerServicesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
-		return ContainerServicesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ContainerServicesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return ContainerServicesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ContainerServicesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ContainerServicesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and
@@ -127,20 +123,16 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
 // method.
-func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (ContainerServicesClientDeletePollerResponse, error) {
+func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*ContainerServicesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
-		return ContainerServicesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ContainerServicesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ContainerServicesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return ContainerServicesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ContainerServicesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ContainerServicesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not

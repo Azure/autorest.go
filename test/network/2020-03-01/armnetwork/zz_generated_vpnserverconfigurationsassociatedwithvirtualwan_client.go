@@ -56,20 +56,16 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 // options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
 // VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse, error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*VPNServerConfigurationsAssociatedWithVirtualWanClientListPoller, error) {
 	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
+		return nil, err
 	}
-	result := VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl)
 	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNServerConfigurationsAssociatedWithVirtualWanClientListPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNServerConfigurationsAssociatedWithVirtualWanClientListPoller{pt: pt}, nil
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.

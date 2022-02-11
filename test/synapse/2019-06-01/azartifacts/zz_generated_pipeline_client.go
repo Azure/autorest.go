@@ -41,20 +41,16 @@ func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
 // pipeline - Pipeline resource definition.
 // options - pipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
 // method.
-func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (pipelineClientCreateOrUpdatePipelinePollerResponse, error) {
+func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (*pipelineClientCreateOrUpdatePipelinePoller, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 	if err != nil {
-		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
+		return nil, err
 	}
-	result := pipelineClientCreateOrUpdatePipelinePollerResponse{}
 	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.pl)
 	if err != nil {
-		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &pipelineClientCreateOrUpdatePipelinePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &pipelineClientCreateOrUpdatePipelinePoller{pt: pt}, nil
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
@@ -159,20 +155,16 @@ func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Respons
 // pipelineName - The pipeline name.
 // options - pipelineClientBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline
 // method.
-func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (pipelineClientDeletePipelinePollerResponse, error) {
+func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (*pipelineClientDeletePipelinePoller, error) {
 	resp, err := client.deletePipeline(ctx, pipelineName, options)
 	if err != nil {
-		return pipelineClientDeletePipelinePollerResponse{}, err
+		return nil, err
 	}
-	result := pipelineClientDeletePipelinePollerResponse{}
 	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.pl)
 	if err != nil {
-		return pipelineClientDeletePipelinePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &pipelineClientDeletePipelinePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &pipelineClientDeletePipelinePoller{pt: pt}, nil
 }
 
 // DeletePipeline - Deletes a pipeline.
@@ -304,20 +296,16 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.R
 // request - proposed new name.
 // options - pipelineClientBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline
 // method.
-func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (pipelineClientRenamePipelinePollerResponse, error) {
+func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (*pipelineClientRenamePipelinePoller, error) {
 	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 	if err != nil {
-		return pipelineClientRenamePipelinePollerResponse{}, err
+		return nil, err
 	}
-	result := pipelineClientRenamePipelinePollerResponse{}
 	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.pl)
 	if err != nil {
-		return pipelineClientRenamePipelinePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &pipelineClientRenamePipelinePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &pipelineClientRenamePipelinePoller{pt: pt}, nil
 }
 
 // RenamePipeline - Renames a pipeline.

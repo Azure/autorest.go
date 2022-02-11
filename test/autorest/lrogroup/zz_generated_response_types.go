@@ -8,84 +8,9 @@
 
 package lrogroup
 
-import (
-	"context"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"time"
-)
-
-// LRORetrysClientDelete202Retry200PollerResponse contains the response from method LRORetrysClient.Delete202Retry200.
-type LRORetrysClientDelete202Retry200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientDelete202Retry200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientDelete202Retry200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientDelete202Retry200Response, error) {
-	respType := LRORetrysClientDelete202Retry200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientDelete202Retry200PollerResponse from the provided client and resume token.
-func (l *LRORetrysClientDelete202Retry200PollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Delete202Retry200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientDelete202Retry200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LRORetrysClientDelete202Retry200Response contains the response from method LRORetrysClient.Delete202Retry200.
 type LRORetrysClientDelete202Retry200Response struct {
 	// placeholder for future response values
-}
-
-// LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrysClient.DeleteAsyncRelativeRetrySucceeded.
-type LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse, error) {
-	respType := LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse from the provided client and resume
-// token.
-func (l *LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse contains the response from method LRORetrysClient.DeleteAsyncRelativeRetrySucceeded.
@@ -93,78 +18,9 @@ type LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse struct {
 	// placeholder for future response values
 }
 
-// LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse contains the response from method LRORetrysClient.DeleteProvisioning202Accepted200Succeeded.
-type LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse, error) {
-	respType := LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse from the provided client and
-// resume token.
-func (l *LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse contains the response from method LRORetrysClient.DeleteProvisioning202Accepted200Succeeded.
 type LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse struct {
 	Product
-}
-
-// LRORetrysClientPost202Retry200PollerResponse contains the response from method LRORetrysClient.Post202Retry200.
-type LRORetrysClientPost202Retry200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientPost202Retry200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientPost202Retry200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientPost202Retry200Response, error) {
-	respType := LRORetrysClientPost202Retry200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientPost202Retry200PollerResponse from the provided client and resume token.
-func (l *LRORetrysClientPost202Retry200PollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Post202Retry200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientPost202Retry200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LRORetrysClientPost202Retry200Response contains the response from method LRORetrysClient.Post202Retry200.
@@ -172,77 +28,9 @@ type LRORetrysClientPost202Retry200Response struct {
 	// placeholder for future response values
 }
 
-// LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrysClient.PostAsyncRelativeRetrySucceeded.
-type LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientPostAsyncRelativeRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientPostAsyncRelativeRetrySucceededResponse, error) {
-	respType := LRORetrysClientPostAsyncRelativeRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.PostAsyncRelativeRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientPostAsyncRelativeRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LRORetrysClientPostAsyncRelativeRetrySucceededResponse contains the response from method LRORetrysClient.PostAsyncRelativeRetrySucceeded.
 type LRORetrysClientPostAsyncRelativeRetrySucceededResponse struct {
 	// placeholder for future response values
-}
-
-// LRORetrysClientPut201CreatingSucceeded200PollerResponse contains the response from method LRORetrysClient.Put201CreatingSucceeded200.
-type LRORetrysClientPut201CreatingSucceeded200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientPut201CreatingSucceeded200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientPut201CreatingSucceeded200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientPut201CreatingSucceeded200Response, error) {
-	respType := LRORetrysClientPut201CreatingSucceeded200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientPut201CreatingSucceeded200PollerResponse from the provided client and resume token.
-func (l *LRORetrysClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Put201CreatingSucceeded200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LRORetrysClientPut201CreatingSucceeded200Response contains the response from method LRORetrysClient.Put201CreatingSucceeded200.
@@ -250,77 +38,9 @@ type LRORetrysClientPut201CreatingSucceeded200Response struct {
 	Product
 }
 
-// LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse contains the response from method LRORetrysClient.PutAsyncRelativeRetrySucceeded.
-type LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LRORetrysClientPutAsyncRelativeRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LRORetrysClientPutAsyncRelativeRetrySucceededResponse, error) {
-	respType := LRORetrysClientPutAsyncRelativeRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.PutAsyncRelativeRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LRORetrysClientPutAsyncRelativeRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LRORetrysClientPutAsyncRelativeRetrySucceededResponse contains the response from method LRORetrysClient.PutAsyncRelativeRetrySucceeded.
 type LRORetrysClientPutAsyncRelativeRetrySucceededResponse struct {
 	Product
-}
-
-// LROSADsClientDelete202NonRetry400PollerResponse contains the response from method LROSADsClient.Delete202NonRetry400.
-type LROSADsClientDelete202NonRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDelete202NonRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDelete202NonRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDelete202NonRetry400Response, error) {
-	respType := LROSADsClientDelete202NonRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDelete202NonRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientDelete202NonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete202NonRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDelete202NonRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientDelete202NonRetry400Response contains the response from method LROSADsClient.Delete202NonRetry400.
@@ -328,77 +48,9 @@ type LROSADsClientDelete202NonRetry400Response struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientDelete202RetryInvalidHeaderPollerResponse contains the response from method LROSADsClient.Delete202RetryInvalidHeader.
-type LROSADsClientDelete202RetryInvalidHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDelete202RetryInvalidHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDelete202RetryInvalidHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDelete202RetryInvalidHeaderResponse, error) {
-	respType := LROSADsClientDelete202RetryInvalidHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDelete202RetryInvalidHeaderPollerResponse from the provided client and resume token.
-func (l *LROSADsClientDelete202RetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete202RetryInvalidHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDelete202RetryInvalidHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientDelete202RetryInvalidHeaderResponse contains the response from method LROSADsClient.Delete202RetryInvalidHeader.
 type LROSADsClientDelete202RetryInvalidHeaderResponse struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientDelete204SucceededPollerResponse contains the response from method LROSADsClient.Delete204Succeeded.
-type LROSADsClientDelete204SucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDelete204SucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDelete204SucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDelete204SucceededResponse, error) {
-	respType := LROSADsClientDelete204SucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDelete204SucceededPollerResponse from the provided client and resume token.
-func (l *LROSADsClientDelete204SucceededPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete204Succeeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDelete204SucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientDelete204SucceededResponse contains the response from method LROSADsClient.Delete204Succeeded.
@@ -406,78 +58,9 @@ type LROSADsClientDelete204SucceededResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientDeleteAsyncRelativeRetry400PollerResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetry400.
-type LROSADsClientDeleteAsyncRelativeRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDeleteAsyncRelativeRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDeleteAsyncRelativeRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDeleteAsyncRelativeRetry400Response, error) {
-	respType := LROSADsClientDeleteAsyncRelativeRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientDeleteAsyncRelativeRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDeleteAsyncRelativeRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientDeleteAsyncRelativeRetry400Response contains the response from method LROSADsClient.DeleteAsyncRelativeRetry400.
 type LROSADsClientDeleteAsyncRelativeRetry400Response struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader.
-type LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
-	respType := LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader.
@@ -485,78 +68,9 @@ type LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling.
-type LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	respType := LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and
-// resume token.
-func (l *LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling.
 type LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetryNoStatus.
-type LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDeleteAsyncRelativeRetryNoStatusPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse, error) {
-	respType := LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse from the provided client and resume token.
-func (l *LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDeleteAsyncRelativeRetryNoStatusPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse contains the response from method LROSADsClient.DeleteAsyncRelativeRetryNoStatus.
@@ -564,77 +78,9 @@ type LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientDeleteNonRetry400PollerResponse contains the response from method LROSADsClient.DeleteNonRetry400.
-type LROSADsClientDeleteNonRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientDeleteNonRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientDeleteNonRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientDeleteNonRetry400Response, error) {
-	respType := LROSADsClientDeleteNonRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientDeleteNonRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientDeleteNonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteNonRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientDeleteNonRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientDeleteNonRetry400Response contains the response from method LROSADsClient.DeleteNonRetry400.
 type LROSADsClientDeleteNonRetry400Response struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientPost202NoLocationPollerResponse contains the response from method LROSADsClient.Post202NoLocation.
-type LROSADsClientPost202NoLocationPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPost202NoLocationPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPost202NoLocationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPost202NoLocationResponse, error) {
-	respType := LROSADsClientPost202NoLocationResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPost202NoLocationPollerResponse from the provided client and resume token.
-func (l *LROSADsClientPost202NoLocationPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202NoLocation", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPost202NoLocationPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPost202NoLocationResponse contains the response from method LROSADsClient.Post202NoLocation.
@@ -642,77 +88,9 @@ type LROSADsClientPost202NoLocationResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientPost202NonRetry400PollerResponse contains the response from method LROSADsClient.Post202NonRetry400.
-type LROSADsClientPost202NonRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPost202NonRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPost202NonRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPost202NonRetry400Response, error) {
-	respType := LROSADsClientPost202NonRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPost202NonRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientPost202NonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202NonRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPost202NonRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPost202NonRetry400Response contains the response from method LROSADsClient.Post202NonRetry400.
 type LROSADsClientPost202NonRetry400Response struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientPost202RetryInvalidHeaderPollerResponse contains the response from method LROSADsClient.Post202RetryInvalidHeader.
-type LROSADsClientPost202RetryInvalidHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPost202RetryInvalidHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPost202RetryInvalidHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPost202RetryInvalidHeaderResponse, error) {
-	respType := LROSADsClientPost202RetryInvalidHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPost202RetryInvalidHeaderPollerResponse from the provided client and resume token.
-func (l *LROSADsClientPost202RetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202RetryInvalidHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPost202RetryInvalidHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPost202RetryInvalidHeaderResponse contains the response from method LROSADsClient.Post202RetryInvalidHeader.
@@ -720,78 +98,9 @@ type LROSADsClientPost202RetryInvalidHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientPostAsyncRelativeRetry400PollerResponse contains the response from method LROSADsClient.PostAsyncRelativeRetry400.
-type LROSADsClientPostAsyncRelativeRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPostAsyncRelativeRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPostAsyncRelativeRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPostAsyncRelativeRetry400Response, error) {
-	respType := LROSADsClientPostAsyncRelativeRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPostAsyncRelativeRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientPostAsyncRelativeRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPostAsyncRelativeRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPostAsyncRelativeRetry400Response contains the response from method LROSADsClient.PostAsyncRelativeRetry400.
 type LROSADsClientPostAsyncRelativeRetry400Response struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADsClient.PostAsyncRelativeRetryInvalidHeader.
-type LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPostAsyncRelativeRetryInvalidHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse, error) {
-	respType := LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPostAsyncRelativeRetryInvalidHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADsClient.PostAsyncRelativeRetryInvalidHeader.
@@ -799,78 +108,9 @@ type LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling.
-type LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	respType := LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling.
 type LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse contains the response from method LROSADsClient.PostAsyncRelativeRetryNoPayload.
-type LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPostAsyncRelativeRetryNoPayloadPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPostAsyncRelativeRetryNoPayloadResponse, error) {
-	respType := LROSADsClientPostAsyncRelativeRetryNoPayloadResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse from the provided client and resume token.
-func (l *LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryNoPayload", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPostAsyncRelativeRetryNoPayloadPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPostAsyncRelativeRetryNoPayloadResponse contains the response from method LROSADsClient.PostAsyncRelativeRetryNoPayload.
@@ -878,77 +118,9 @@ type LROSADsClientPostAsyncRelativeRetryNoPayloadResponse struct {
 	// placeholder for future response values
 }
 
-// LROSADsClientPostNonRetry400PollerResponse contains the response from method LROSADsClient.PostNonRetry400.
-type LROSADsClientPostNonRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPostNonRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPostNonRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPostNonRetry400Response, error) {
-	respType := LROSADsClientPostNonRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPostNonRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientPostNonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostNonRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPostNonRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPostNonRetry400Response contains the response from method LROSADsClient.PostNonRetry400.
 type LROSADsClientPostNonRetry400Response struct {
 	// placeholder for future response values
-}
-
-// LROSADsClientPut200InvalidJSONPollerResponse contains the response from method LROSADsClient.Put200InvalidJSON.
-type LROSADsClientPut200InvalidJSONPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPut200InvalidJSONPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPut200InvalidJSONPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPut200InvalidJSONResponse, error) {
-	respType := LROSADsClientPut200InvalidJSONResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPut200InvalidJSONPollerResponse from the provided client and resume token.
-func (l *LROSADsClientPut200InvalidJSONPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Put200InvalidJSON", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPut200InvalidJSONPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPut200InvalidJSONResponse contains the response from method LROSADsClient.Put200InvalidJSON.
@@ -956,77 +128,9 @@ type LROSADsClientPut200InvalidJSONResponse struct {
 	Product
 }
 
-// LROSADsClientPutAsyncRelativeRetry400PollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetry400.
-type LROSADsClientPutAsyncRelativeRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutAsyncRelativeRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutAsyncRelativeRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutAsyncRelativeRetry400Response, error) {
-	respType := LROSADsClientPutAsyncRelativeRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutAsyncRelativeRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientPutAsyncRelativeRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutAsyncRelativeRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPutAsyncRelativeRetry400Response contains the response from method LROSADsClient.PutAsyncRelativeRetry400.
 type LROSADsClientPutAsyncRelativeRetry400Response struct {
 	Product
-}
-
-// LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidHeader.
-type LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutAsyncRelativeRetryInvalidHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse, error) {
-	respType := LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse from the provided client and resume token.
-func (l *LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutAsyncRelativeRetryInvalidHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidHeader.
@@ -1034,79 +138,9 @@ type LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse struct {
 	Product
 }
 
-// LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling.
-type LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse, error) {
-	respType := LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling.
 type LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse struct {
 	Product
-}
-
-// LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatusPayload.
-type LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse, error) {
-	respType := LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatusPayload.
@@ -1114,78 +148,9 @@ type LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse struct {
 	Product
 }
 
-// LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatus.
-type LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutAsyncRelativeRetryNoStatusPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutAsyncRelativeRetryNoStatusResponse, error) {
-	respType := LROSADsClientPutAsyncRelativeRetryNoStatusResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse from the provided client and resume token.
-func (l *LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatus", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutAsyncRelativeRetryNoStatusPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPutAsyncRelativeRetryNoStatusResponse contains the response from method LROSADsClient.PutAsyncRelativeRetryNoStatus.
 type LROSADsClientPutAsyncRelativeRetryNoStatusResponse struct {
 	Product
-}
-
-// LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse contains the response from method LROSADsClient.PutError201NoProvisioningStatePayload.
-type LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutError201NoProvisioningStatePayloadPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutError201NoProvisioningStatePayloadResponse, error) {
-	respType := LROSADsClientPutError201NoProvisioningStatePayloadResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutError201NoProvisioningStatePayload", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutError201NoProvisioningStatePayloadPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPutError201NoProvisioningStatePayloadResponse contains the response from method LROSADsClient.PutError201NoProvisioningStatePayload.
@@ -1193,78 +158,9 @@ type LROSADsClientPutError201NoProvisioningStatePayloadResponse struct {
 	Product
 }
 
-// LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse contains the response from method LROSADsClient.PutNonRetry201Creating400InvalidJSON.
-type LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutNonRetry201Creating400InvalidJSONPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutNonRetry201Creating400InvalidJSONResponse, error) {
-	respType := LROSADsClientPutNonRetry201Creating400InvalidJSONResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse from the provided client and resume
-// token.
-func (l *LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400InvalidJSON", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutNonRetry201Creating400InvalidJSONPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPutNonRetry201Creating400InvalidJSONResponse contains the response from method LROSADsClient.PutNonRetry201Creating400InvalidJSON.
 type LROSADsClientPutNonRetry201Creating400InvalidJSONResponse struct {
 	Product
-}
-
-// LROSADsClientPutNonRetry201Creating400PollerResponse contains the response from method LROSADsClient.PutNonRetry201Creating400.
-type LROSADsClientPutNonRetry201Creating400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutNonRetry201Creating400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutNonRetry201Creating400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutNonRetry201Creating400Response, error) {
-	respType := LROSADsClientPutNonRetry201Creating400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutNonRetry201Creating400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientPutNonRetry201Creating400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutNonRetry201Creating400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROSADsClientPutNonRetry201Creating400Response contains the response from method LROSADsClient.PutNonRetry201Creating400.
@@ -1272,77 +168,9 @@ type LROSADsClientPutNonRetry201Creating400Response struct {
 	Product
 }
 
-// LROSADsClientPutNonRetry400PollerResponse contains the response from method LROSADsClient.PutNonRetry400.
-type LROSADsClientPutNonRetry400PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROSADsClientPutNonRetry400Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROSADsClientPutNonRetry400PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROSADsClientPutNonRetry400Response, error) {
-	respType := LROSADsClientPutNonRetry400Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROSADsClientPutNonRetry400PollerResponse from the provided client and resume token.
-func (l *LROSADsClientPutNonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry400", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROSADsClientPutNonRetry400Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROSADsClientPutNonRetry400Response contains the response from method LROSADsClient.PutNonRetry400.
 type LROSADsClientPutNonRetry400Response struct {
 	Product
-}
-
-// LROsClientDelete202NoRetry204PollerResponse contains the response from method LROsClient.Delete202NoRetry204.
-type LROsClientDelete202NoRetry204PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDelete202NoRetry204Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDelete202NoRetry204PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDelete202NoRetry204Response, error) {
-	respType := LROsClientDelete202NoRetry204Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDelete202NoRetry204PollerResponse from the provided client and resume token.
-func (l *LROsClientDelete202NoRetry204PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete202NoRetry204", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDelete202NoRetry204Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientDelete202NoRetry204Response contains the response from method LROsClient.Delete202NoRetry204.
@@ -1350,77 +178,9 @@ type LROsClientDelete202NoRetry204Response struct {
 	Product
 }
 
-// LROsClientDelete202Retry200PollerResponse contains the response from method LROsClient.Delete202Retry200.
-type LROsClientDelete202Retry200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDelete202Retry200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDelete202Retry200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDelete202Retry200Response, error) {
-	respType := LROsClientDelete202Retry200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDelete202Retry200PollerResponse from the provided client and resume token.
-func (l *LROsClientDelete202Retry200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete202Retry200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDelete202Retry200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientDelete202Retry200Response contains the response from method LROsClient.Delete202Retry200.
 type LROsClientDelete202Retry200Response struct {
 	Product
-}
-
-// LROsClientDelete204SucceededPollerResponse contains the response from method LROsClient.Delete204Succeeded.
-type LROsClientDelete204SucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDelete204SucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDelete204SucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDelete204SucceededResponse, error) {
-	respType := LROsClientDelete204SucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDelete204SucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientDelete204SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete204Succeeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDelete204SucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientDelete204SucceededResponse contains the response from method LROsClient.Delete204Succeeded.
@@ -1428,77 +188,9 @@ type LROsClientDelete204SucceededResponse struct {
 	// placeholder for future response values
 }
 
-// LROsClientDeleteAsyncNoHeaderInRetryPollerResponse contains the response from method LROsClient.DeleteAsyncNoHeaderInRetry.
-type LROsClientDeleteAsyncNoHeaderInRetryPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteAsyncNoHeaderInRetryPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteAsyncNoHeaderInRetryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteAsyncNoHeaderInRetryResponse, error) {
-	respType := LROsClientDeleteAsyncNoHeaderInRetryResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteAsyncNoHeaderInRetryPollerResponse from the provided client and resume token.
-func (l *LROsClientDeleteAsyncNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncNoHeaderInRetry", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteAsyncNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientDeleteAsyncNoHeaderInRetryResponse contains the response from method LROsClient.DeleteAsyncNoHeaderInRetry.
 type LROsClientDeleteAsyncNoHeaderInRetryResponse struct {
 	// placeholder for future response values
-}
-
-// LROsClientDeleteAsyncNoRetrySucceededPollerResponse contains the response from method LROsClient.DeleteAsyncNoRetrySucceeded.
-type LROsClientDeleteAsyncNoRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteAsyncNoRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteAsyncNoRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteAsyncNoRetrySucceededResponse, error) {
-	respType := LROsClientDeleteAsyncNoRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteAsyncNoRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientDeleteAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncNoRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientDeleteAsyncNoRetrySucceededResponse contains the response from method LROsClient.DeleteAsyncNoRetrySucceeded.
@@ -1506,77 +198,9 @@ type LROsClientDeleteAsyncNoRetrySucceededResponse struct {
 	// placeholder for future response values
 }
 
-// LROsClientDeleteAsyncRetryFailedPollerResponse contains the response from method LROsClient.DeleteAsyncRetryFailed.
-type LROsClientDeleteAsyncRetryFailedPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteAsyncRetryFailedPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteAsyncRetryFailedPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteAsyncRetryFailedResponse, error) {
-	respType := LROsClientDeleteAsyncRetryFailedResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteAsyncRetryFailedPollerResponse from the provided client and resume token.
-func (l *LROsClientDeleteAsyncRetryFailedPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetryFailed", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientDeleteAsyncRetryFailedResponse contains the response from method LROsClient.DeleteAsyncRetryFailed.
 type LROsClientDeleteAsyncRetryFailedResponse struct {
 	// placeholder for future response values
-}
-
-// LROsClientDeleteAsyncRetrySucceededPollerResponse contains the response from method LROsClient.DeleteAsyncRetrySucceeded.
-type LROsClientDeleteAsyncRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteAsyncRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteAsyncRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteAsyncRetrySucceededResponse, error) {
-	respType := LROsClientDeleteAsyncRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteAsyncRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientDeleteAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientDeleteAsyncRetrySucceededResponse contains the response from method LROsClient.DeleteAsyncRetrySucceeded.
@@ -1584,77 +208,9 @@ type LROsClientDeleteAsyncRetrySucceededResponse struct {
 	// placeholder for future response values
 }
 
-// LROsClientDeleteAsyncRetrycanceledPollerResponse contains the response from method LROsClient.DeleteAsyncRetrycanceled.
-type LROsClientDeleteAsyncRetrycanceledPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteAsyncRetrycanceledPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteAsyncRetrycanceledPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteAsyncRetrycanceledResponse, error) {
-	respType := LROsClientDeleteAsyncRetrycanceledResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteAsyncRetrycanceledPollerResponse from the provided client and resume token.
-func (l *LROsClientDeleteAsyncRetrycanceledPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetrycanceled", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteAsyncRetrycanceledPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientDeleteAsyncRetrycanceledResponse contains the response from method LROsClient.DeleteAsyncRetrycanceled.
 type LROsClientDeleteAsyncRetrycanceledResponse struct {
 	// placeholder for future response values
-}
-
-// LROsClientDeleteNoHeaderInRetryPollerResponse contains the response from method LROsClient.DeleteNoHeaderInRetry.
-type LROsClientDeleteNoHeaderInRetryPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteNoHeaderInRetryPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteNoHeaderInRetryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteNoHeaderInRetryResponse, error) {
-	respType := LROsClientDeleteNoHeaderInRetryResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteNoHeaderInRetryPollerResponse from the provided client and resume token.
-func (l *LROsClientDeleteNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteNoHeaderInRetry", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientDeleteNoHeaderInRetryResponse contains the response from method LROsClient.DeleteNoHeaderInRetry.
@@ -1662,79 +218,9 @@ type LROsClientDeleteNoHeaderInRetryResponse struct {
 	// placeholder for future response values
 }
 
-// LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse contains the response from method LROsClient.DeleteProvisioning202Accepted200Succeeded.
-type LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteProvisioning202Accepted200SucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteProvisioning202Accepted200SucceededResponse, error) {
-	respType := LROsClientDeleteProvisioning202Accepted200SucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse from the provided client and resume
-// token.
-func (l *LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteProvisioning202Accepted200SucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientDeleteProvisioning202Accepted200SucceededResponse contains the response from method LROsClient.DeleteProvisioning202Accepted200Succeeded.
 type LROsClientDeleteProvisioning202Accepted200SucceededResponse struct {
 	Product
-}
-
-// LROsClientDeleteProvisioning202DeletingFailed200PollerResponse contains the response from method LROsClient.DeleteProvisioning202DeletingFailed200.
-type LROsClientDeleteProvisioning202DeletingFailed200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteProvisioning202DeletingFailed200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteProvisioning202DeletingFailed200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteProvisioning202DeletingFailed200Response, error) {
-	respType := LROsClientDeleteProvisioning202DeletingFailed200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteProvisioning202DeletingFailed200PollerResponse from the provided client and resume
-// token.
-func (l *LROsClientDeleteProvisioning202DeletingFailed200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202DeletingFailed200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteProvisioning202DeletingFailed200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientDeleteProvisioning202DeletingFailed200Response contains the response from method LROsClient.DeleteProvisioning202DeletingFailed200.
@@ -1742,78 +228,9 @@ type LROsClientDeleteProvisioning202DeletingFailed200Response struct {
 	Product
 }
 
-// LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse contains the response from method LROsClient.DeleteProvisioning202Deletingcanceled200.
-type LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientDeleteProvisioning202Deletingcanceled200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientDeleteProvisioning202Deletingcanceled200Response, error) {
-	respType := LROsClientDeleteProvisioning202Deletingcanceled200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse from the provided client and resume
-// token.
-func (l *LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202Deletingcanceled200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientDeleteProvisioning202Deletingcanceled200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientDeleteProvisioning202Deletingcanceled200Response contains the response from method LROsClient.DeleteProvisioning202Deletingcanceled200.
 type LROsClientDeleteProvisioning202Deletingcanceled200Response struct {
 	Product
-}
-
-// LROsClientPatch200SucceededIgnoreHeadersPollerResponse contains the response from method LROsClient.Patch200SucceededIgnoreHeaders.
-type LROsClientPatch200SucceededIgnoreHeadersPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPatch200SucceededIgnoreHeadersPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPatch200SucceededIgnoreHeadersPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPatch200SucceededIgnoreHeadersResponse, error) {
-	respType := LROsClientPatch200SucceededIgnoreHeadersResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPatch200SucceededIgnoreHeadersPollerResponse from the provided client and resume token.
-func (l *LROsClientPatch200SucceededIgnoreHeadersPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch200SucceededIgnoreHeaders", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPatch200SucceededIgnoreHeadersPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPatch200SucceededIgnoreHeadersResponse contains the response from method LROsClient.Patch200SucceededIgnoreHeaders.
@@ -1821,156 +238,9 @@ type LROsClientPatch200SucceededIgnoreHeadersResponse struct {
 	Product
 }
 
-// LROsClientPatch201RetryWithAsyncHeaderPollerResponse contains the response from method LROsClient.Patch201RetryWithAsyncHeader.
-type LROsClientPatch201RetryWithAsyncHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPatch201RetryWithAsyncHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPatch201RetryWithAsyncHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPatch201RetryWithAsyncHeaderResponse, error) {
-	respType := LROsClientPatch201RetryWithAsyncHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPatch201RetryWithAsyncHeaderPollerResponse from the provided client and resume token.
-func (l *LROsClientPatch201RetryWithAsyncHeaderPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch201RetryWithAsyncHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPatch201RetryWithAsyncHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
-// LROsClientPatch201RetryWithAsyncHeaderResponse contains the response from method LROsClient.Patch201RetryWithAsyncHeader.
-type LROsClientPatch201RetryWithAsyncHeaderResponse struct {
-	Product
-}
-
-// LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse contains the response from method LROsClient.Patch202RetryWithAsyncAndLocationHeader.
-type LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse, error) {
-	respType := LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse from the provided client and resume
-// token.
-func (l *LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch202RetryWithAsyncAndLocationHeader", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
-// LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse contains the response from method LROsClient.Patch202RetryWithAsyncAndLocationHeader.
-type LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse struct {
-	Product
-}
-
-// LROsClientPost200WithPayloadPollerResponse contains the response from method LROsClient.Post200WithPayload.
-type LROsClientPost200WithPayloadPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPost200WithPayloadPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPost200WithPayloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPost200WithPayloadResponse, error) {
-	respType := LROsClientPost200WithPayloadResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SKU)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPost200WithPayloadPollerResponse from the provided client and resume token.
-func (l *LROsClientPost200WithPayloadPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post200WithPayload", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPost200WithPayloadPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPost200WithPayloadResponse contains the response from method LROsClient.Post200WithPayload.
 type LROsClientPost200WithPayloadResponse struct {
 	SKU
-}
-
-// LROsClientPost202ListPollerResponse contains the response from method LROsClient.Post202List.
-type LROsClientPost202ListPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPost202ListPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPost202ListPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPost202ListResponse, error) {
-	respType := LROsClientPost202ListResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ProductArray)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPost202ListPollerResponse from the provided client and resume token.
-func (l *LROsClientPost202ListPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202List", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPost202ListPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPost202ListResponse contains the response from method LROsClient.Post202List.
@@ -1979,77 +249,9 @@ type LROsClientPost202ListResponse struct {
 	ProductArray []*Product
 }
 
-// LROsClientPost202NoRetry204PollerResponse contains the response from method LROsClient.Post202NoRetry204.
-type LROsClientPost202NoRetry204PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPost202NoRetry204Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPost202NoRetry204PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPost202NoRetry204Response, error) {
-	respType := LROsClientPost202NoRetry204Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPost202NoRetry204PollerResponse from the provided client and resume token.
-func (l *LROsClientPost202NoRetry204PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202NoRetry204", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPost202NoRetry204Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPost202NoRetry204Response contains the response from method LROsClient.Post202NoRetry204.
 type LROsClientPost202NoRetry204Response struct {
 	Product
-}
-
-// LROsClientPost202Retry200PollerResponse contains the response from method LROsClient.Post202Retry200.
-type LROsClientPost202Retry200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPost202Retry200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPost202Retry200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPost202Retry200Response, error) {
-	respType := LROsClientPost202Retry200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPost202Retry200PollerResponse from the provided client and resume token.
-func (l *LROsClientPost202Retry200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202Retry200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPost202Retry200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPost202Retry200Response contains the response from method LROsClient.Post202Retry200.
@@ -2057,77 +259,9 @@ type LROsClientPost202Retry200Response struct {
 	// placeholder for future response values
 }
 
-// LROsClientPostAsyncNoRetrySucceededPollerResponse contains the response from method LROsClient.PostAsyncNoRetrySucceeded.
-type LROsClientPostAsyncNoRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostAsyncNoRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostAsyncNoRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostAsyncNoRetrySucceededResponse, error) {
-	respType := LROsClientPostAsyncNoRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostAsyncNoRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientPostAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncNoRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPostAsyncNoRetrySucceededResponse contains the response from method LROsClient.PostAsyncNoRetrySucceeded.
 type LROsClientPostAsyncNoRetrySucceededResponse struct {
 	Product
-}
-
-// LROsClientPostAsyncRetryFailedPollerResponse contains the response from method LROsClient.PostAsyncRetryFailed.
-type LROsClientPostAsyncRetryFailedPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostAsyncRetryFailedPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostAsyncRetryFailedPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostAsyncRetryFailedResponse, error) {
-	respType := LROsClientPostAsyncRetryFailedResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostAsyncRetryFailedPollerResponse from the provided client and resume token.
-func (l *LROsClientPostAsyncRetryFailedPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetryFailed", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPostAsyncRetryFailedResponse contains the response from method LROsClient.PostAsyncRetryFailed.
@@ -2135,77 +269,9 @@ type LROsClientPostAsyncRetryFailedResponse struct {
 	// placeholder for future response values
 }
 
-// LROsClientPostAsyncRetrySucceededPollerResponse contains the response from method LROsClient.PostAsyncRetrySucceeded.
-type LROsClientPostAsyncRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostAsyncRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostAsyncRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostAsyncRetrySucceededResponse, error) {
-	respType := LROsClientPostAsyncRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostAsyncRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientPostAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPostAsyncRetrySucceededResponse contains the response from method LROsClient.PostAsyncRetrySucceeded.
 type LROsClientPostAsyncRetrySucceededResponse struct {
 	Product
-}
-
-// LROsClientPostAsyncRetrycanceledPollerResponse contains the response from method LROsClient.PostAsyncRetrycanceled.
-type LROsClientPostAsyncRetrycanceledPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostAsyncRetrycanceledPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostAsyncRetrycanceledPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostAsyncRetrycanceledResponse, error) {
-	respType := LROsClientPostAsyncRetrycanceledResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostAsyncRetrycanceledPollerResponse from the provided client and resume token.
-func (l *LROsClientPostAsyncRetrycanceledPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetrycanceled", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostAsyncRetrycanceledPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPostAsyncRetrycanceledResponse contains the response from method LROsClient.PostAsyncRetrycanceled.
@@ -2213,78 +279,9 @@ type LROsClientPostAsyncRetrycanceledResponse struct {
 	// placeholder for future response values
 }
 
-// LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault.
-type LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
-	respType := LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse from the provided client and resume
-// token.
-func (l *LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault.
 type LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse struct {
 	Product
-}
-
-// LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGet.
-type LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostDoubleHeadersFinalAzureHeaderGetPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
-	respType := LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse from the provided client and resume token.
-func (l *LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostDoubleHeadersFinalAzureHeaderGetPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse contains the response from method LROsClient.PostDoubleHeadersFinalAzureHeaderGet.
@@ -2292,77 +289,9 @@ type LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse struct {
 	Product
 }
 
-// LROsClientPostDoubleHeadersFinalLocationGetPollerResponse contains the response from method LROsClient.PostDoubleHeadersFinalLocationGet.
-type LROsClientPostDoubleHeadersFinalLocationGetPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPostDoubleHeadersFinalLocationGetPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPostDoubleHeadersFinalLocationGetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPostDoubleHeadersFinalLocationGetResponse, error) {
-	respType := LROsClientPostDoubleHeadersFinalLocationGetResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPostDoubleHeadersFinalLocationGetPollerResponse from the provided client and resume token.
-func (l *LROsClientPostDoubleHeadersFinalLocationGetPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalLocationGet", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPostDoubleHeadersFinalLocationGetPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPostDoubleHeadersFinalLocationGetResponse contains the response from method LROsClient.PostDoubleHeadersFinalLocationGet.
 type LROsClientPostDoubleHeadersFinalLocationGetResponse struct {
 	Product
-}
-
-// LROsClientPut200Acceptedcanceled200PollerResponse contains the response from method LROsClient.Put200Acceptedcanceled200.
-type LROsClientPut200Acceptedcanceled200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut200Acceptedcanceled200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut200Acceptedcanceled200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut200Acceptedcanceled200Response, error) {
-	respType := LROsClientPut200Acceptedcanceled200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut200Acceptedcanceled200PollerResponse from the provided client and resume token.
-func (l *LROsClientPut200Acceptedcanceled200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200Acceptedcanceled200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut200Acceptedcanceled200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPut200Acceptedcanceled200Response contains the response from method LROsClient.Put200Acceptedcanceled200.
@@ -2370,77 +299,9 @@ type LROsClientPut200Acceptedcanceled200Response struct {
 	Product
 }
 
-// LROsClientPut200SucceededNoStatePollerResponse contains the response from method LROsClient.Put200SucceededNoState.
-type LROsClientPut200SucceededNoStatePollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut200SucceededNoStatePoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut200SucceededNoStatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut200SucceededNoStateResponse, error) {
-	respType := LROsClientPut200SucceededNoStateResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut200SucceededNoStatePollerResponse from the provided client and resume token.
-func (l *LROsClientPut200SucceededNoStatePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200SucceededNoState", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut200SucceededNoStatePoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPut200SucceededNoStateResponse contains the response from method LROsClient.Put200SucceededNoState.
 type LROsClientPut200SucceededNoStateResponse struct {
 	Product
-}
-
-// LROsClientPut200SucceededPollerResponse contains the response from method LROsClient.Put200Succeeded.
-type LROsClientPut200SucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut200SucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut200SucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut200SucceededResponse, error) {
-	respType := LROsClientPut200SucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut200SucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientPut200SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200Succeeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut200SucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPut200SucceededResponse contains the response from method LROsClient.Put200Succeeded.
@@ -2448,77 +309,9 @@ type LROsClientPut200SucceededResponse struct {
 	Product
 }
 
-// LROsClientPut200UpdatingSucceeded204PollerResponse contains the response from method LROsClient.Put200UpdatingSucceeded204.
-type LROsClientPut200UpdatingSucceeded204PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut200UpdatingSucceeded204Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut200UpdatingSucceeded204PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut200UpdatingSucceeded204Response, error) {
-	respType := LROsClientPut200UpdatingSucceeded204Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut200UpdatingSucceeded204PollerResponse from the provided client and resume token.
-func (l *LROsClientPut200UpdatingSucceeded204PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200UpdatingSucceeded204", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut200UpdatingSucceeded204Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPut200UpdatingSucceeded204Response contains the response from method LROsClient.Put200UpdatingSucceeded204.
 type LROsClientPut200UpdatingSucceeded204Response struct {
 	Product
-}
-
-// LROsClientPut201CreatingFailed200PollerResponse contains the response from method LROsClient.Put201CreatingFailed200.
-type LROsClientPut201CreatingFailed200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut201CreatingFailed200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut201CreatingFailed200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut201CreatingFailed200Response, error) {
-	respType := LROsClientPut201CreatingFailed200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut201CreatingFailed200PollerResponse from the provided client and resume token.
-func (l *LROsClientPut201CreatingFailed200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201CreatingFailed200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut201CreatingFailed200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPut201CreatingFailed200Response contains the response from method LROsClient.Put201CreatingFailed200.
@@ -2526,77 +319,9 @@ type LROsClientPut201CreatingFailed200Response struct {
 	Product
 }
 
-// LROsClientPut201CreatingSucceeded200PollerResponse contains the response from method LROsClient.Put201CreatingSucceeded200.
-type LROsClientPut201CreatingSucceeded200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut201CreatingSucceeded200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut201CreatingSucceeded200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut201CreatingSucceeded200Response, error) {
-	respType := LROsClientPut201CreatingSucceeded200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut201CreatingSucceeded200PollerResponse from the provided client and resume token.
-func (l *LROsClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201CreatingSucceeded200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPut201CreatingSucceeded200Response contains the response from method LROsClient.Put201CreatingSucceeded200.
 type LROsClientPut201CreatingSucceeded200Response struct {
 	Product
-}
-
-// LROsClientPut201SucceededPollerResponse contains the response from method LROsClient.Put201Succeeded.
-type LROsClientPut201SucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut201SucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut201SucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut201SucceededResponse, error) {
-	respType := LROsClientPut201SucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut201SucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientPut201SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201Succeeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut201SucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPut201SucceededResponse contains the response from method LROsClient.Put201Succeeded.
@@ -2604,77 +329,9 @@ type LROsClientPut201SucceededResponse struct {
 	Product
 }
 
-// LROsClientPut202Retry200PollerResponse contains the response from method LROsClient.Put202Retry200.
-type LROsClientPut202Retry200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPut202Retry200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPut202Retry200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPut202Retry200Response, error) {
-	respType := LROsClientPut202Retry200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPut202Retry200PollerResponse from the provided client and resume token.
-func (l *LROsClientPut202Retry200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put202Retry200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPut202Retry200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPut202Retry200Response contains the response from method LROsClient.Put202Retry200.
 type LROsClientPut202Retry200Response struct {
 	Product
-}
-
-// LROsClientPutAsyncNoHeaderInRetryPollerResponse contains the response from method LROsClient.PutAsyncNoHeaderInRetry.
-type LROsClientPutAsyncNoHeaderInRetryPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncNoHeaderInRetryPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncNoHeaderInRetryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncNoHeaderInRetryResponse, error) {
-	respType := LROsClientPutAsyncNoHeaderInRetryResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncNoHeaderInRetryPollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoHeaderInRetry", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPutAsyncNoHeaderInRetryResponse contains the response from method LROsClient.PutAsyncNoHeaderInRetry.
@@ -2682,77 +339,9 @@ type LROsClientPutAsyncNoHeaderInRetryResponse struct {
 	Product
 }
 
-// LROsClientPutAsyncNoRetrySucceededPollerResponse contains the response from method LROsClient.PutAsyncNoRetrySucceeded.
-type LROsClientPutAsyncNoRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncNoRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncNoRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncNoRetrySucceededResponse, error) {
-	respType := LROsClientPutAsyncNoRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncNoRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncNoRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPutAsyncNoRetrySucceededResponse contains the response from method LROsClient.PutAsyncNoRetrySucceeded.
 type LROsClientPutAsyncNoRetrySucceededResponse struct {
 	Product
-}
-
-// LROsClientPutAsyncNoRetrycanceledPollerResponse contains the response from method LROsClient.PutAsyncNoRetrycanceled.
-type LROsClientPutAsyncNoRetrycanceledPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncNoRetrycanceledPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncNoRetrycanceledPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncNoRetrycanceledResponse, error) {
-	respType := LROsClientPutAsyncNoRetrycanceledResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncNoRetrycanceledPollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncNoRetrycanceledPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoRetrycanceled", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncNoRetrycanceledPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPutAsyncNoRetrycanceledResponse contains the response from method LROsClient.PutAsyncNoRetrycanceled.
@@ -2760,77 +349,9 @@ type LROsClientPutAsyncNoRetrycanceledResponse struct {
 	Product
 }
 
-// LROsClientPutAsyncNonResourcePollerResponse contains the response from method LROsClient.PutAsyncNonResource.
-type LROsClientPutAsyncNonResourcePollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncNonResourcePoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncNonResourcePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncNonResourceResponse, error) {
-	respType := LROsClientPutAsyncNonResourceResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SKU)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncNonResourcePollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncNonResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNonResource", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncNonResourcePoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPutAsyncNonResourceResponse contains the response from method LROsClient.PutAsyncNonResource.
 type LROsClientPutAsyncNonResourceResponse struct {
 	SKU
-}
-
-// LROsClientPutAsyncRetryFailedPollerResponse contains the response from method LROsClient.PutAsyncRetryFailed.
-type LROsClientPutAsyncRetryFailedPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncRetryFailedPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncRetryFailedPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncRetryFailedResponse, error) {
-	respType := LROsClientPutAsyncRetryFailedResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncRetryFailedPollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncRetryFailedPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncRetryFailed", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncRetryFailedPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPutAsyncRetryFailedResponse contains the response from method LROsClient.PutAsyncRetryFailed.
@@ -2838,77 +359,9 @@ type LROsClientPutAsyncRetryFailedResponse struct {
 	Product
 }
 
-// LROsClientPutAsyncRetrySucceededPollerResponse contains the response from method LROsClient.PutAsyncRetrySucceeded.
-type LROsClientPutAsyncRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncRetrySucceededResponse, error) {
-	respType := LROsClientPutAsyncRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPutAsyncRetrySucceededResponse contains the response from method LROsClient.PutAsyncRetrySucceeded.
 type LROsClientPutAsyncRetrySucceededResponse struct {
 	Product
-}
-
-// LROsClientPutAsyncSubResourcePollerResponse contains the response from method LROsClient.PutAsyncSubResource.
-type LROsClientPutAsyncSubResourcePollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutAsyncSubResourcePoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutAsyncSubResourcePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutAsyncSubResourceResponse, error) {
-	respType := LROsClientPutAsyncSubResourceResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SubProduct)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutAsyncSubResourcePollerResponse from the provided client and resume token.
-func (l *LROsClientPutAsyncSubResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncSubResource", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutAsyncSubResourcePoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPutAsyncSubResourceResponse contains the response from method LROsClient.PutAsyncSubResource.
@@ -2916,77 +369,9 @@ type LROsClientPutAsyncSubResourceResponse struct {
 	SubProduct
 }
 
-// LROsClientPutNoHeaderInRetryPollerResponse contains the response from method LROsClient.PutNoHeaderInRetry.
-type LROsClientPutNoHeaderInRetryPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutNoHeaderInRetryPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutNoHeaderInRetryPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutNoHeaderInRetryResponse, error) {
-	respType := LROsClientPutNoHeaderInRetryResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutNoHeaderInRetryPollerResponse from the provided client and resume token.
-func (l *LROsClientPutNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutNoHeaderInRetry", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutNoHeaderInRetryPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPutNoHeaderInRetryResponse contains the response from method LROsClient.PutNoHeaderInRetry.
 type LROsClientPutNoHeaderInRetryResponse struct {
 	Product
-}
-
-// LROsClientPutNonResourcePollerResponse contains the response from method LROsClient.PutNonResource.
-type LROsClientPutNonResourcePollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutNonResourcePoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutNonResourcePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutNonResourceResponse, error) {
-	respType := LROsClientPutNonResourceResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SKU)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutNonResourcePollerResponse from the provided client and resume token.
-func (l *LROsClientPutNonResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutNonResource", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutNonResourcePoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsClientPutNonResourceResponse contains the response from method LROsClient.PutNonResource.
@@ -2994,77 +379,9 @@ type LROsClientPutNonResourceResponse struct {
 	SKU
 }
 
-// LROsClientPutSubResourcePollerResponse contains the response from method LROsClient.PutSubResource.
-type LROsClientPutSubResourcePollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsClientPutSubResourcePoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsClientPutSubResourcePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPutSubResourceResponse, error) {
-	respType := LROsClientPutSubResourceResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SubProduct)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsClientPutSubResourcePollerResponse from the provided client and resume token.
-func (l *LROsClientPutSubResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutSubResource", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsClientPutSubResourcePoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsClientPutSubResourceResponse contains the response from method LROsClient.PutSubResource.
 type LROsClientPutSubResourceResponse struct {
 	SubProduct
-}
-
-// LROsCustomHeaderClientPost202Retry200PollerResponse contains the response from method LROsCustomHeaderClient.Post202Retry200.
-type LROsCustomHeaderClientPost202Retry200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsCustomHeaderClientPost202Retry200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsCustomHeaderClientPost202Retry200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderClientPost202Retry200Response, error) {
-	respType := LROsCustomHeaderClientPost202Retry200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsCustomHeaderClientPost202Retry200PollerResponse from the provided client and resume token.
-func (l *LROsCustomHeaderClientPost202Retry200PollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsCustomHeaderClientPost202Retry200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsCustomHeaderClientPost202Retry200Response contains the response from method LROsCustomHeaderClient.Post202Retry200.
@@ -3072,117 +389,14 @@ type LROsCustomHeaderClientPost202Retry200Response struct {
 	// placeholder for future response values
 }
 
-// LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse contains the response from method LROsCustomHeaderClient.PostAsyncRetrySucceeded.
-type LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsCustomHeaderClientPostAsyncRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderClientPostAsyncRetrySucceededResponse, error) {
-	respType := LROsCustomHeaderClientPostAsyncRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsCustomHeaderClientPostAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsCustomHeaderClientPostAsyncRetrySucceededResponse contains the response from method LROsCustomHeaderClient.PostAsyncRetrySucceeded.
 type LROsCustomHeaderClientPostAsyncRetrySucceededResponse struct {
 	// placeholder for future response values
 }
 
-// LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse contains the response from method LROsCustomHeaderClient.Put201CreatingSucceeded200.
-type LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsCustomHeaderClientPut201CreatingSucceeded200Poller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderClientPut201CreatingSucceeded200Response, error) {
-	respType := LROsCustomHeaderClientPut201CreatingSucceeded200Response{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse from the provided client and resume
-// token.
-func (l *LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsCustomHeaderClientPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // LROsCustomHeaderClientPut201CreatingSucceeded200Response contains the response from method LROsCustomHeaderClient.Put201CreatingSucceeded200.
 type LROsCustomHeaderClientPut201CreatingSucceeded200Response struct {
 	Product
-}
-
-// LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse contains the response from method LROsCustomHeaderClient.PutAsyncRetrySucceeded.
-type LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *LROsCustomHeaderClientPutAsyncRetrySucceededPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsCustomHeaderClientPutAsyncRetrySucceededResponse, error) {
-	respType := LROsCustomHeaderClientPutAsyncRetrySucceededResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse from the provided client and resume token.
-func (l *LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &LROsCustomHeaderClientPutAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // LROsCustomHeaderClientPutAsyncRetrySucceededResponse contains the response from method LROsCustomHeaderClient.PutAsyncRetrySucceeded.

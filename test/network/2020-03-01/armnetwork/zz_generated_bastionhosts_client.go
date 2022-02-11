@@ -57,20 +57,16 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 // parameters - Parameters supplied to the create or update Bastion Host operation.
 // options - BastionHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the BastionHostsClient.BeginCreateOrUpdate
 // method.
-func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (BastionHostsClientCreateOrUpdatePollerResponse, error) {
+func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (*BastionHostsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
-		return BastionHostsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := BastionHostsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("BastionHostsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return BastionHostsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &BastionHostsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &BastionHostsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
@@ -122,20 +118,16 @@ func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Contex
 // bastionHostName - The name of the Bastion Host.
 // options - BastionHostsClientBeginDeleteOptions contains the optional parameters for the BastionHostsClient.BeginDelete
 // method.
-func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (BastionHostsClientDeletePollerResponse, error) {
+func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (*BastionHostsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
-		return BastionHostsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := BastionHostsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("BastionHostsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return BastionHostsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &BastionHostsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &BastionHostsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Bastion Host.

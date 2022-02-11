@@ -58,20 +58,16 @@ func NewFlowLogsClient(subscriptionID string, credential azcore.TokenCredential,
 // parameters - Parameters that define the create or update flow log resource.
 // options - FlowLogsClientBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
 // method.
-func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (FlowLogsClientCreateOrUpdatePollerResponse, error) {
+func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (*FlowLogsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
-		return FlowLogsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := FlowLogsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("FlowLogsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return FlowLogsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &FlowLogsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &FlowLogsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a flow log for the specified network security group.
@@ -127,20 +123,16 @@ func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, r
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log resource.
 // options - FlowLogsClientBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
-func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (FlowLogsClientDeletePollerResponse, error) {
+func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (*FlowLogsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return FlowLogsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := FlowLogsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("FlowLogsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return FlowLogsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &FlowLogsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &FlowLogsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified flow log resource.

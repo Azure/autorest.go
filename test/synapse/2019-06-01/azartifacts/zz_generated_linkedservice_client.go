@@ -40,20 +40,16 @@ func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedService
 // linkedService - Linked service resource definition.
 // options - linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
 // method.
-func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (linkedServiceClientCreateOrUpdateLinkedServicePollerResponse, error) {
+func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*linkedServiceClientCreateOrUpdateLinkedServicePoller, error) {
 	resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
-		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
+		return nil, err
 	}
-	result := linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}
 	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl)
 	if err != nil {
-		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &linkedServiceClientCreateOrUpdateLinkedServicePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &linkedServiceClientCreateOrUpdateLinkedServicePoller{pt: pt}, nil
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
@@ -99,20 +95,16 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 // linkedServiceName - The linked service name.
 // options - linkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
 // method.
-func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (linkedServiceClientDeleteLinkedServicePollerResponse, error) {
+func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (*linkedServiceClientDeleteLinkedServicePoller, error) {
 	resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 	if err != nil {
-		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
+		return nil, err
 	}
-	result := linkedServiceClientDeleteLinkedServicePollerResponse{}
 	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.pl)
 	if err != nil {
-		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &linkedServiceClientDeleteLinkedServicePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &linkedServiceClientDeleteLinkedServicePoller{pt: pt}, nil
 }
 
 // DeleteLinkedService - Deletes a linked service.
@@ -245,20 +237,16 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 // request - proposed new name.
 // options - linkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
 // method.
-func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (linkedServiceClientRenameLinkedServicePollerResponse, error) {
+func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (*linkedServiceClientRenameLinkedServicePoller, error) {
 	resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 	if err != nil {
-		return linkedServiceClientRenameLinkedServicePollerResponse{}, err
+		return nil, err
 	}
-	result := linkedServiceClientRenameLinkedServicePollerResponse{}
 	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.pl)
 	if err != nil {
-		return linkedServiceClientRenameLinkedServicePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &linkedServiceClientRenameLinkedServicePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &linkedServiceClientRenameLinkedServicePoller{pt: pt}, nil
 }
 
 // RenameLinkedService - Renames a linked service.

@@ -57,20 +57,16 @@ func NewSecurityGroupsClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters supplied to the create or update network security group operation.
 // options - SecurityGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (SecurityGroupsClientCreateOrUpdatePollerResponse, error) {
+func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (*SecurityGroupsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
-		return SecurityGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := SecurityGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return SecurityGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SecurityGroupsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SecurityGroupsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
@@ -122,20 +118,16 @@ func (client *SecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Cont
 // networkSecurityGroupName - The name of the network security group.
 // options - SecurityGroupsClientBeginDeleteOptions contains the optional parameters for the SecurityGroupsClient.BeginDelete
 // method.
-func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (SecurityGroupsClientDeletePollerResponse, error) {
+func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (*SecurityGroupsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
-		return SecurityGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := SecurityGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return SecurityGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SecurityGroupsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SecurityGroupsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified network security group.

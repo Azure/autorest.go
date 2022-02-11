@@ -59,20 +59,16 @@ func NewSnapshotsClient(subscriptionID string, credential azcore.TokenCredential
 // snapshot - Snapshot object supplied in the body of the Put disk operation.
 // options - SnapshotsClientBeginCreateOrUpdateOptions contains the optional parameters for the SnapshotsClient.BeginCreateOrUpdate
 // method.
-func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsClientBeginCreateOrUpdateOptions) (SnapshotsClientCreateOrUpdatePollerResponse, error) {
+func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsClientBeginCreateOrUpdateOptions) (*SnapshotsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
-		return SnapshotsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := SnapshotsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return SnapshotsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SnapshotsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SnapshotsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a snapshot.
@@ -125,20 +121,16 @@ func (client *SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, 
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
 // characters.
 // options - SnapshotsClientBeginDeleteOptions contains the optional parameters for the SnapshotsClient.BeginDelete method.
-func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginDeleteOptions) (SnapshotsClientDeletePollerResponse, error) {
+func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginDeleteOptions) (*SnapshotsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
-		return SnapshotsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := SnapshotsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return SnapshotsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SnapshotsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SnapshotsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a snapshot.
@@ -249,20 +241,16 @@ func (client *SnapshotsClient) getHandleResponse(resp *http.Response) (Snapshots
 // grantAccessData - Access data object supplied in the body of the get snapshot access operation.
 // options - SnapshotsClientBeginGrantAccessOptions contains the optional parameters for the SnapshotsClient.BeginGrantAccess
 // method.
-func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsClientBeginGrantAccessOptions) (SnapshotsClientGrantAccessPollerResponse, error) {
+func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsClientBeginGrantAccessOptions) (*SnapshotsClientGrantAccessPoller, error) {
 	resp, err := client.grantAccess(ctx, resourceGroupName, snapshotName, grantAccessData, options)
 	if err != nil {
-		return SnapshotsClientGrantAccessPollerResponse{}, err
+		return nil, err
 	}
-	result := SnapshotsClientGrantAccessPollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.GrantAccess", "location", resp, client.pl)
 	if err != nil {
-		return SnapshotsClientGrantAccessPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SnapshotsClientGrantAccessPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SnapshotsClientGrantAccessPoller{pt: pt}, nil
 }
 
 // GrantAccess - Grants access to a snapshot.
@@ -406,20 +394,16 @@ func (client *SnapshotsClient) listByResourceGroupHandleResponse(resp *http.Resp
 // characters.
 // options - SnapshotsClientBeginRevokeAccessOptions contains the optional parameters for the SnapshotsClient.BeginRevokeAccess
 // method.
-func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginRevokeAccessOptions) (SnapshotsClientRevokeAccessPollerResponse, error) {
+func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginRevokeAccessOptions) (*SnapshotsClientRevokeAccessPoller, error) {
 	resp, err := client.revokeAccess(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
-		return SnapshotsClientRevokeAccessPollerResponse{}, err
+		return nil, err
 	}
-	result := SnapshotsClientRevokeAccessPollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.RevokeAccess", "location", resp, client.pl)
 	if err != nil {
-		return SnapshotsClientRevokeAccessPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SnapshotsClientRevokeAccessPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SnapshotsClientRevokeAccessPoller{pt: pt}, nil
 }
 
 // RevokeAccess - Revokes access to a snapshot.
@@ -472,20 +456,16 @@ func (client *SnapshotsClient) revokeAccessCreateRequest(ctx context.Context, re
 // characters.
 // snapshot - Snapshot object supplied in the body of the Patch snapshot operation.
 // options - SnapshotsClientBeginUpdateOptions contains the optional parameters for the SnapshotsClient.BeginUpdate method.
-func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsClientBeginUpdateOptions) (SnapshotsClientUpdatePollerResponse, error) {
+func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsClientBeginUpdateOptions) (*SnapshotsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
-		return SnapshotsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := SnapshotsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SnapshotsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return SnapshotsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SnapshotsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SnapshotsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Updates (patches) a snapshot.

@@ -57,20 +57,16 @@ func NewExpressRouteGatewaysClient(subscriptionID string, credential azcore.Toke
 // putExpressRouteGatewayParameters - Parameters required in an ExpressRoute gateway PUT operation.
 // options - ExpressRouteGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysClientBeginCreateOrUpdateOptions) (ExpressRouteGatewaysClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysClientBeginCreateOrUpdateOptions) (*ExpressRouteGatewaysClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, options)
 	if err != nil {
-		return ExpressRouteGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteGatewaysClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a ExpressRoute gateway in a specified resource group.
@@ -123,20 +119,16 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateCreateRequest(ctx contex
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // options - ExpressRouteGatewaysClientBeginDeleteOptions contains the optional parameters for the ExpressRouteGatewaysClient.BeginDelete
 // method.
-func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysClientBeginDeleteOptions) (ExpressRouteGatewaysClientDeletePollerResponse, error) {
+func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysClientBeginDeleteOptions) (*ExpressRouteGatewaysClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
-		return ExpressRouteGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteGatewaysClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted

@@ -112,20 +112,16 @@ func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (
 // securitySettings - The security settings.
 // options - DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
 // method.
-func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (DevicesClientCreateOrUpdateSecuritySettingsPollerResponse, error) {
+func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*DevicesClientCreateOrUpdateSecuritySettingsPoller, error) {
 	resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
 	if err != nil {
-		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
+		return nil, err
 	}
-	result := DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl)
 	if err != nil {
-		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DevicesClientCreateOrUpdateSecuritySettingsPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DevicesClientCreateOrUpdateSecuritySettingsPoller{pt: pt}, nil
 }
 
 // CreateOrUpdateSecuritySettings - Updates the security settings on a Data Box Edge/Data Box Gateway device.
@@ -176,20 +172,16 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
-func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (DevicesClientDeletePollerResponse, error) {
+func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*DevicesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := DevicesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return DevicesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DevicesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DevicesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the Data Box Edge/Data Box Gateway device.
@@ -241,20 +233,16 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
 // method.
-func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (DevicesClientDownloadUpdatesPollerResponse, error) {
+func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*DevicesClientDownloadUpdatesPoller, error) {
 	resp, err := client.downloadUpdates(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientDownloadUpdatesPollerResponse{}, err
+		return nil, err
 	}
-	result := DevicesClientDownloadUpdatesPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.pl)
 	if err != nil {
-		return DevicesClientDownloadUpdatesPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DevicesClientDownloadUpdatesPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DevicesClientDownloadUpdatesPoller{pt: pt}, nil
 }
 
 // DownloadUpdates - Downloads the updates on a Data Box Edge/Data Box Gateway device.
@@ -586,20 +574,16 @@ func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response)
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
 // method.
-func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (DevicesClientInstallUpdatesPollerResponse, error) {
+func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*DevicesClientInstallUpdatesPoller, error) {
 	resp, err := client.installUpdates(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientInstallUpdatesPollerResponse{}, err
+		return nil, err
 	}
-	result := DevicesClientInstallUpdatesPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.pl)
 	if err != nil {
-		return DevicesClientInstallUpdatesPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DevicesClientInstallUpdatesPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DevicesClientInstallUpdatesPoller{pt: pt}, nil
 }
 
 // InstallUpdates - Installs the updates on the Data Box Edge/Data Box Gateway device.
@@ -748,20 +732,16 @@ func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Respons
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
 // method.
-func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (DevicesClientScanForUpdatesPollerResponse, error) {
+func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*DevicesClientScanForUpdatesPoller, error) {
 	resp, err := client.scanForUpdates(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DevicesClientScanForUpdatesPollerResponse{}, err
+		return nil, err
 	}
-	result := DevicesClientScanForUpdatesPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.pl)
 	if err != nil {
-		return DevicesClientScanForUpdatesPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DevicesClientScanForUpdatesPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DevicesClientScanForUpdatesPoller{pt: pt}, nil
 }
 
 // ScanForUpdates - Scans for updates on a Data Box Edge/Data Box Gateway device.

@@ -58,20 +58,16 @@ func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.Toke
 // parameters - Parameters supplied to the create or update private dns zone group operation.
 // options - PrivateDNSZoneGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsClientBeginCreateOrUpdateOptions) (PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsClientBeginCreateOrUpdateOptions) (*PrivateDNSZoneGroupsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
-		return PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateDNSZoneGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateDNSZoneGroupsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateDNSZoneGroupsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
@@ -128,20 +124,16 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateCreateRequest(ctx contex
 // privateDNSZoneGroupName - The name of the private dns zone group.
 // options - PrivateDNSZoneGroupsClientBeginDeleteOptions contains the optional parameters for the PrivateDNSZoneGroupsClient.BeginDelete
 // method.
-func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsClientBeginDeleteOptions) (PrivateDNSZoneGroupsClientDeletePollerResponse, error) {
+func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsClientBeginDeleteOptions) (*PrivateDNSZoneGroupsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
-		return PrivateDNSZoneGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateDNSZoneGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateDNSZoneGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return PrivateDNSZoneGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateDNSZoneGroupsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateDNSZoneGroupsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified private dns zone group.

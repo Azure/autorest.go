@@ -166,10 +166,6 @@ export class StructDef {
 }
 
 export function generateStruct(imports: ImportManager, lang: Language, props?: Property[]): StructDef {
-  if (lang.isLRO) {
-    imports.add('time');
-    imports.add('context');
-  }
   const st = new StructDef(lang, props);
   for (const prop of values(props)) {
     imports.addImportForSchemaType(prop.schema);

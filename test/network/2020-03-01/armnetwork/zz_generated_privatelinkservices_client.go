@@ -56,20 +56,16 @@ func NewPrivateLinkServicesClient(subscriptionID string, credential azcore.Token
 // parameters - The request body of CheckPrivateLinkService API call.
 // options - PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions contains the optional parameters for the
 // PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility method.
-func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions) (PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse, error) {
+func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions) (*PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPoller, error) {
 	resp, err := client.checkPrivateLinkServiceVisibility(ctx, location, parameters, options)
 	if err != nil {
-		return PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", "location", resp, client.pl)
 	if err != nil {
-		return PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPoller{pt: pt}, nil
 }
 
 // CheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
@@ -119,20 +115,16 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityCreate
 // parameters - The request body of CheckPrivateLinkService API call.
 // options - PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions contains the optional parameters
 // for the PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup method.
-func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse, error) {
+func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPoller, error) {
 	resp, err := client.checkPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
-		return PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", "location", resp, client.pl)
 	if err != nil {
-		return PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPoller{pt: pt}, nil
 }
 
 // CheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in
@@ -186,20 +178,16 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 // parameters - Parameters supplied to the create or update private link service operation.
 // options - PrivateLinkServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateLinkServicesClient.BeginCreateOrUpdate
 // method.
-func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesClientBeginCreateOrUpdateOptions) (PrivateLinkServicesClientCreateOrUpdatePollerResponse, error) {
+func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesClientBeginCreateOrUpdateOptions) (*PrivateLinkServicesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
-		return PrivateLinkServicesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateLinkServicesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateLinkServicesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return PrivateLinkServicesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateLinkServicesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateLinkServicesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an private link service in the specified resource group.
@@ -251,20 +239,16 @@ func (client *PrivateLinkServicesClient) createOrUpdateCreateRequest(ctx context
 // serviceName - The name of the private link service.
 // options - PrivateLinkServicesClientBeginDeleteOptions contains the optional parameters for the PrivateLinkServicesClient.BeginDelete
 // method.
-func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientBeginDeleteOptions) (PrivateLinkServicesClientDeletePollerResponse, error) {
+func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientBeginDeleteOptions) (*PrivateLinkServicesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
-		return PrivateLinkServicesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateLinkServicesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateLinkServicesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return PrivateLinkServicesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateLinkServicesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateLinkServicesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified private link service.
@@ -317,20 +301,16 @@ func (client *PrivateLinkServicesClient) deleteCreateRequest(ctx context.Context
 // peConnectionName - The name of the private end point connection.
 // options - PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions contains the optional parameters for the
 // PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection method.
-func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions) (PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse, error) {
+func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions) (*PrivateLinkServicesClientDeletePrivateEndpointConnectionPoller, error) {
 	resp, err := client.deletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
-		return PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateLinkServicesClient.DeletePrivateEndpointConnection", "location", resp, client.pl)
 	if err != nil {
-		return PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateLinkServicesClientDeletePrivateEndpointConnectionPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateLinkServicesClientDeletePrivateEndpointConnectionPoller{pt: pt}, nil
 }
 
 // DeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.

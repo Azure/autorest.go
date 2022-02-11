@@ -40,20 +40,16 @@ func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
 // dataFlow - Data flow resource definition.
 // options - dataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the dataFlowClient.BeginCreateOrUpdateDataFlow
 // method.
-func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *dataFlowClientBeginCreateOrUpdateDataFlowOptions) (dataFlowClientCreateOrUpdateDataFlowPollerResponse, error) {
+func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *dataFlowClientBeginCreateOrUpdateDataFlowOptions) (*dataFlowClientCreateOrUpdateDataFlowPoller, error) {
 	resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
-		return dataFlowClientCreateOrUpdateDataFlowPollerResponse{}, err
+		return nil, err
 	}
-	result := dataFlowClientCreateOrUpdateDataFlowPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.pl)
 	if err != nil {
-		return dataFlowClientCreateOrUpdateDataFlowPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &dataFlowClientCreateOrUpdateDataFlowPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &dataFlowClientCreateOrUpdateDataFlowPoller{pt: pt}, nil
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
@@ -99,20 +95,16 @@ func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 // dataFlowName - The data flow name.
 // options - dataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the dataFlowClient.BeginDeleteDataFlow
 // method.
-func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientBeginDeleteDataFlowOptions) (dataFlowClientDeleteDataFlowPollerResponse, error) {
+func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientBeginDeleteDataFlowOptions) (*dataFlowClientDeleteDataFlowPoller, error) {
 	resp, err := client.deleteDataFlow(ctx, dataFlowName, options)
 	if err != nil {
-		return dataFlowClientDeleteDataFlowPollerResponse{}, err
+		return nil, err
 	}
-	result := dataFlowClientDeleteDataFlowPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowClient.DeleteDataFlow", resp, client.pl)
 	if err != nil {
-		return dataFlowClientDeleteDataFlowPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &dataFlowClientDeleteDataFlowPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &dataFlowClientDeleteDataFlowPoller{pt: pt}, nil
 }
 
 // DeleteDataFlow - Deletes a data flow.
@@ -244,20 +236,16 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.R
 // request - proposed new name.
 // options - dataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the dataFlowClient.BeginRenameDataFlow
 // method.
-func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *dataFlowClientBeginRenameDataFlowOptions) (dataFlowClientRenameDataFlowPollerResponse, error) {
+func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *dataFlowClientBeginRenameDataFlowOptions) (*dataFlowClientRenameDataFlowPoller, error) {
 	resp, err := client.renameDataFlow(ctx, dataFlowName, request, options)
 	if err != nil {
-		return dataFlowClientRenameDataFlowPollerResponse{}, err
+		return nil, err
 	}
-	result := dataFlowClientRenameDataFlowPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowClient.RenameDataFlow", resp, client.pl)
 	if err != nil {
-		return dataFlowClientRenameDataFlowPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &dataFlowClientRenameDataFlowPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &dataFlowClientRenameDataFlowPoller{pt: pt}, nil
 }
 
 // RenameDataFlow - Renames a dataflow.

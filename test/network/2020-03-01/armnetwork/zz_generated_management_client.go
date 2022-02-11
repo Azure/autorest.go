@@ -110,20 +110,16 @@ func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *htt
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
 // options - ManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginDeleteBastionShareableLink
 // method.
-func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (ManagementClientDeleteBastionShareableLinkPollerResponse, error) {
+func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*ManagementClientDeleteBastionShareableLinkPoller, error) {
 	resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
-		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
+		return nil, err
 	}
-	result := ManagementClientDeleteBastionShareableLinkPollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl)
 	if err != nil {
-		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ManagementClientDeleteBastionShareableLinkPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ManagementClientDeleteBastionShareableLinkPoller{pt: pt}, nil
 }
 
 // DeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
@@ -231,20 +227,16 @@ func (client *ManagementClient) disconnectActiveSessionsHandleResponse(resp *htt
 // vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
 // options - ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
 // for the ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
-func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse, error) {
+func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller, error) {
 	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
-		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
+		return nil, err
 	}
-	result := ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl)
 	if err != nil {
-		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{pt: pt}, nil
 }
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and
@@ -297,21 +289,16 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 // bastionHostName - The name of the Bastion Host.
 // options - ManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
 // method.
-func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (ManagementClientGetActiveSessionsPollerResponse, error) {
+func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*ManagementClientGetActiveSessionsPoller, error) {
 	resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
-		return ManagementClientGetActiveSessionsPollerResponse{}, err
+		return nil, err
 	}
-	result := ManagementClientGetActiveSessionsPollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl)
 	if err != nil {
-		return ManagementClientGetActiveSessionsPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ManagementClientGetActiveSessionsPoller{
-		pt:     pt,
-		client: client,
-	}
-	return result, nil
+	return &ManagementClientGetActiveSessionsPoller{pt: pt}, nil
 }
 
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
@@ -427,21 +414,16 @@ func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
 // options - ManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginPutBastionShareableLink
 // method.
-func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (ManagementClientPutBastionShareableLinkPollerResponse, error) {
+func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*ManagementClientPutBastionShareableLinkPoller, error) {
 	resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
-		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
+		return nil, err
 	}
-	result := ManagementClientPutBastionShareableLinkPollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl)
 	if err != nil {
-		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ManagementClientPutBastionShareableLinkPoller{
-		pt:     pt,
-		client: client,
-	}
-	return result, nil
+	return &ManagementClientPutBastionShareableLinkPoller{pt: pt}, nil
 }
 
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.

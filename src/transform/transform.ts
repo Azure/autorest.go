@@ -585,7 +585,7 @@ function processOperationResponses(session: Session<CodeModel>) {
         if (session.model.language.go!.pollerTypes === undefined) {
           session.model.language.go!.pollerTypes = new Array<PollerInfo>();
         }
-        createLROResponseEnvelope(session.model, group, op);
+        createPoller(session.model, group, op);
       } else {
         createResponseEnvelope(session.model, group, op);
       }
@@ -864,28 +864,21 @@ function recursiveTypeName(schema: Schema): string {
   }
 }
 
-// creates the LRO response envelope for the specified operation/response
-function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
+// creates the LRO poller for the specified operation/response
+function createPoller(codeModel: CodeModel, group: OperationGroup, op: Operation) {
   if (op.language.go!.paging && op.language.go!.paging.member) {
     // implementing support for this is very complicated, and since
     // no services at present use this pattern avoid it for now
     throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
   }
-  // LROs have two response envelopes.
-  // the outer is the response envelope returned by the Begin* and Resume* methods, it depends on the poller.
-  // the inner is the response envelope returned by the PollUntilDone and FinalResponse methods, the poller depends on it.
-  // so we create them in the following order: inner, poller, outer
+  // LROs have two response.
+  // the initial response is the poller returned by the Begin* method.
+  // the final response is the response envelope returned by the Poll and PollUntilDone methods, the poller depends on it.
+  // so we create them in the following order: final, poller
 
-  // contains all the response envelopes
-  const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
-  // create the "inner" response envelope
+  // create the final response envelope
   createResponseEnvelope(codeModel, group, op);
   // now create the poller
-  if (op.language.go!.paging && op.language.go!.paging.member) {
-    // implementing support for this is very complicated, and since
-    // no services at present use this pattern avoid it for now
-    throw new Error(`${op.language.go!.name}: unsupported pager-poller that uses next page operation`);
-  }
   if (codeModel.language.go!.pollerTypes === undefined) {
     codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
   }
@@ -897,22 +890,6 @@ function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, 
   };
   pollers.push(poller);
   op.language.go!.pollerType = poller;
-
-  // finally create the outer response envelope
-  const outerRespEnvName = `${group.language.go!.clientName}${op.language.go!.name}PollerResponse`;
-  const outerRespEnv = newObject(outerRespEnvName, `${outerRespEnvName} contains the response from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
-  outerRespEnv.language.go!.responseType = true;
-  outerRespEnv.language.go!.isLRO = true;
-  outerRespEnv.language.go!.pollerInfo = poller;
-  outerRespEnv.properties = new Array<Property>();
-  // create Poller
-  const pollerType = newObject(pollerName, 'poller');
-  const pollerProp = newProperty('Poller', 'Poller contains an initialized poller.', pollerType);
-  outerRespEnv.properties.push(pollerProp);
-  responseEnvelopes.push(outerRespEnv);
-  // move the inner response envelope created earlier
-  op.language.go!.finalResponseEnv = op.language.go!.responseEnv;
-  op.language.go!.responseEnv = outerRespEnv;
 }
 
 function getRootDiscriminator(obj: ObjectSchema): ObjectSchema {

@@ -57,20 +57,16 @@ func NewBandwidthSchedulesClient(subscriptionID string, credential azcore.TokenC
 // parameters - The bandwidth schedule to be added or updated.
 // options - BandwidthSchedulesClientBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
 // method.
-func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (BandwidthSchedulesClientCreateOrUpdatePollerResponse, error) {
+func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*BandwidthSchedulesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, parameters, options)
 	if err != nil {
-		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := BandwidthSchedulesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &BandwidthSchedulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &BandwidthSchedulesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a bandwidth schedule.
@@ -127,20 +123,16 @@ func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.
 // resourceGroupName - The resource group name.
 // options - BandwidthSchedulesClientBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
 // method.
-func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (BandwidthSchedulesClientDeletePollerResponse, error) {
+func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*BandwidthSchedulesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return BandwidthSchedulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := BandwidthSchedulesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return BandwidthSchedulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &BandwidthSchedulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &BandwidthSchedulesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified bandwidth schedule.

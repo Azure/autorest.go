@@ -57,20 +57,16 @@ func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCreden
 // parameters - Parameters supplied to the create or update virtual network operation.
 // options - IPAllocationsClientBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocationsClient.BeginCreateOrUpdate
 // method.
-func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsClientBeginCreateOrUpdateOptions) (IPAllocationsClientCreateOrUpdatePollerResponse, error) {
+func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsClientBeginCreateOrUpdateOptions) (*IPAllocationsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
-		return IPAllocationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := IPAllocationsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("IPAllocationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return IPAllocationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &IPAllocationsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &IPAllocationsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
@@ -122,20 +118,16 @@ func (client *IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Conte
 // ipAllocationName - The name of the IpAllocation.
 // options - IPAllocationsClientBeginDeleteOptions contains the optional parameters for the IPAllocationsClient.BeginDelete
 // method.
-func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsClientBeginDeleteOptions) (IPAllocationsClientDeletePollerResponse, error) {
+func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsClientBeginDeleteOptions) (*IPAllocationsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
-		return IPAllocationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := IPAllocationsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("IPAllocationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return IPAllocationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &IPAllocationsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &IPAllocationsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified IpAllocation.

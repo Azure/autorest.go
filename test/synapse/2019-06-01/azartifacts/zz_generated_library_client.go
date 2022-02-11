@@ -83,20 +83,16 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 // If the operation fails it returns an *azcore.ResponseError type.
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginCreateOptions contains the optional parameters for the libraryClient.BeginCreate method.
-func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (libraryClientCreatePollerResponse, error) {
+func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (*libraryClientCreatePoller, error) {
 	resp, err := client.create(ctx, libraryName, options)
 	if err != nil {
-		return libraryClientCreatePollerResponse{}, err
+		return nil, err
 	}
-	result := libraryClientCreatePollerResponse{}
 	pt, err := runtime.NewPoller("libraryClient.Create", resp, client.pl)
 	if err != nil {
-		return libraryClientCreatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &libraryClientCreatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &libraryClientCreatePoller{pt: pt}, nil
 }
 
 // Create - Creates a library with the library name.
@@ -138,20 +134,16 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 // If the operation fails it returns an *azcore.ResponseError type.
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginDeleteOptions contains the optional parameters for the libraryClient.BeginDelete method.
-func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (libraryClientDeletePollerResponse, error) {
+func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (*libraryClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, libraryName, options)
 	if err != nil {
-		return libraryClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := libraryClientDeletePollerResponse{}
 	pt, err := runtime.NewPoller("libraryClient.Delete", resp, client.pl)
 	if err != nil {
-		return libraryClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &libraryClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &libraryClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Delete Library
@@ -193,20 +185,16 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 // If the operation fails it returns an *azcore.ResponseError type.
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginFlushOptions contains the optional parameters for the libraryClient.BeginFlush method.
-func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (libraryClientFlushPollerResponse, error) {
+func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (*libraryClientFlushPoller, error) {
 	resp, err := client.flush(ctx, libraryName, options)
 	if err != nil {
-		return libraryClientFlushPollerResponse{}, err
+		return nil, err
 	}
-	result := libraryClientFlushPollerResponse{}
 	pt, err := runtime.NewPoller("libraryClient.Flush", resp, client.pl)
 	if err != nil {
-		return libraryClientFlushPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &libraryClientFlushPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &libraryClientFlushPoller{pt: pt}, nil
 }
 
 // Flush - Flush Library

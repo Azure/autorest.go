@@ -58,20 +58,16 @@ func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credent
 // peeringParameters - Parameters supplied to the create or update ExpressRouteCrossConnection peering operation.
 // options - ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the
 // ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate method.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions) (*ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
@@ -128,20 +124,16 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 // peeringName - The name of the peering.
 // options - ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.BeginDelete
 // method.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions) (ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse, error) {
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions) (*ExpressRouteCrossConnectionPeeringsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCrossConnectionPeeringsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCrossConnectionPeeringsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified peering from the ExpressRouteCrossConnection.

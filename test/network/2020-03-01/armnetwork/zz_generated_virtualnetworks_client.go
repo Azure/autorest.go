@@ -115,20 +115,16 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(re
 // parameters - Parameters supplied to the create or update virtual network operation.
 // options - VirtualNetworksClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworksClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (VirtualNetworksClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*VirtualNetworksClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
-		return VirtualNetworksClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualNetworksClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworksClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualNetworksClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualNetworksClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualNetworksClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a virtual network in the specified resource group.
@@ -180,20 +176,16 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientBeginDeleteOptions contains the optional parameters for the VirtualNetworksClient.BeginDelete
 // method.
-func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (VirtualNetworksClientDeletePollerResponse, error) {
+func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*VirtualNetworksClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
-		return VirtualNetworksClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualNetworksClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworksClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualNetworksClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualNetworksClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualNetworksClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified virtual network.

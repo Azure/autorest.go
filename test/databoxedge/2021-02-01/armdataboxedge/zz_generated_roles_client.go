@@ -57,20 +57,16 @@ func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, op
 // role - The role properties.
 // options - RolesClientBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate
 // method.
-func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (RolesClientCreateOrUpdatePollerResponse, error) {
+func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*RolesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, role, options)
 	if err != nil {
-		return RolesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := RolesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RolesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return RolesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &RolesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &RolesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a role.
@@ -126,20 +122,16 @@ func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, devi
 // name - The role name.
 // resourceGroupName - The resource group name.
 // options - RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
-func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (RolesClientDeletePollerResponse, error) {
+func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*RolesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return RolesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := RolesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RolesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return RolesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &RolesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &RolesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the role on the device.

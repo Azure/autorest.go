@@ -57,20 +57,16 @@ func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // parameters - Parameters supplied to the create or update nat gateway operation.
 // options - NatGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the NatGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (NatGatewaysClientCreateOrUpdatePollerResponse, error) {
+func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (*NatGatewaysClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
-		return NatGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := NatGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("NatGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return NatGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &NatGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &NatGatewaysClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a nat gateway.
@@ -121,20 +117,16 @@ func (client *NatGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The name of the resource group.
 // natGatewayName - The name of the nat gateway.
 // options - NatGatewaysClientBeginDeleteOptions contains the optional parameters for the NatGatewaysClient.BeginDelete method.
-func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (NatGatewaysClientDeletePollerResponse, error) {
+func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (*NatGatewaysClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
-		return NatGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := NatGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("NatGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return NatGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &NatGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &NatGatewaysClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified nat gateway.

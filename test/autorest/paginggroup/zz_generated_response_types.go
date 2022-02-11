@@ -8,17 +8,6 @@
 
 package paginggroup
 
-import (
-	"context"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
-	"time"
-)
-
-// PagingClientDuplicateParamsResponse contains the response from method PagingClient.DuplicateParams.
-type PagingClientDuplicateParamsResponse struct {
-	ProductResult
-}
-
 // PagingClientFirstResponseEmptyResponse contains the response from method PagingClient.FirstResponseEmpty.
 type PagingClientFirstResponseEmptyResponse struct {
 	ProductResultValue
@@ -42,42 +31,6 @@ type PagingClientGetMultiplePagesFragmentNextLinkResponse struct {
 // PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method PagingClient.GetMultiplePagesFragmentWithGroupingNextLink.
 type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse struct {
 	ODataProductResult
-}
-
-// PagingClientGetMultiplePagesLROPollerResponse contains the response from method PagingClient.GetMultiplePagesLRO.
-type PagingClientGetMultiplePagesLROPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *PagingClientGetMultiplePagesLROPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l PagingClientGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingClientGetMultiplePagesLROPager, error) {
-	respType := &PagingClientGetMultiplePagesLROPager{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.ProductResult)
-	if err != nil {
-		return respType, err
-	}
-	respType.client = l.Poller.client
-	return respType, nil
-}
-
-// Resume rehydrates a PagingClientGetMultiplePagesLROPollerResponse from the provided client and resume token.
-func (l *PagingClientGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, client *PagingClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &PagingClientGetMultiplePagesLROPoller{
-		pt:     pt,
-		client: client,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // PagingClientGetMultiplePagesLROResponse contains the response from method PagingClient.GetMultiplePagesLRO.

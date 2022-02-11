@@ -59,20 +59,16 @@ func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCrede
 // vpnConnectionParameters - Parameters supplied to create or Update a VPN Connection.
 // options - VPNConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnectionsClient.BeginCreateOrUpdate
 // method.
-func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (VPNConnectionsClientCreateOrUpdatePollerResponse, error) {
+func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (*VPNConnectionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 	if err != nil {
-		return VPNConnectionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VPNConnectionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNConnectionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNConnectionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
@@ -129,20 +125,16 @@ func (client *VPNConnectionsClient) createOrUpdateCreateRequest(ctx context.Cont
 // connectionName - The name of the connection.
 // options - VPNConnectionsClientBeginDeleteOptions contains the optional parameters for the VPNConnectionsClient.BeginDelete
 // method.
-func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (VPNConnectionsClientDeletePollerResponse, error) {
+func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (*VPNConnectionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
-		return VPNConnectionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNConnectionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNConnectionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VPNConnectionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNConnectionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNConnectionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a vpn connection.

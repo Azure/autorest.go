@@ -57,20 +57,16 @@ func NewVPNSitesClient(subscriptionID string, credential azcore.TokenCredential,
 // vpnSiteParameters - Parameters supplied to create or update VpnSite.
 // options - VPNSitesClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNSitesClient.BeginCreateOrUpdate
 // method.
-func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VPNSite, options *VPNSitesClientBeginCreateOrUpdateOptions) (VPNSitesClientCreateOrUpdatePollerResponse, error) {
+func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VPNSite, options *VPNSitesClientBeginCreateOrUpdateOptions) (*VPNSitesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters, options)
 	if err != nil {
-		return VPNSitesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNSitesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNSitesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VPNSitesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNSitesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNSitesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a VpnSite resource if it doesn't exist else updates the existing VpnSite.
@@ -121,20 +117,16 @@ func (client *VPNSitesClient) createOrUpdateCreateRequest(ctx context.Context, r
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite being deleted.
 // options - VPNSitesClientBeginDeleteOptions contains the optional parameters for the VPNSitesClient.BeginDelete method.
-func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesClientBeginDeleteOptions) (VPNSitesClientDeletePollerResponse, error) {
+func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesClientBeginDeleteOptions) (*VPNSitesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnSiteName, options)
 	if err != nil {
-		return VPNSitesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNSitesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNSitesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VPNSitesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNSitesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNSitesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a VpnSite.

@@ -24,16 +24,15 @@ func newLRORetrysClient() *LRORetrysClient {
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginDelete202Retry200(context.Background(), nil)
+	poller, err := op.BeginDelete202Retry200(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientDelete202Retry200PollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientDelete202Retry200Poller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	result, err := resp.PollUntilDone(context.Background(), time.Second)
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
@@ -42,31 +41,29 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 
 func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginDeleteAsyncRelativeRetrySucceeded(context.Background(), nil)
+	poller, err := op.BeginDeleteAsyncRelativeRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
 
 func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
+	poller, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -81,46 +78,43 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 
 func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginPost202Retry200(context.Background(), nil)
+	poller, err := op.BeginPost202Retry200(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientPost202Retry200PollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientPost202Retry200Poller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
 
 func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginPostAsyncRelativeRetrySucceeded(context.Background(), nil)
+	poller, err := op.BeginPostAsyncRelativeRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientPostAsyncRelativeRetrySucceededPoller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	_, err = resp.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
 
 func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
+	poller, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientPut201CreatingSucceeded200PollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientPut201CreatingSucceeded200Poller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -135,16 +129,15 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 
 func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	op := newLRORetrysClient()
-	resp, err := op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), nil)
+	poller, err := op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}
-	if err = resp.Resume(context.Background(), op, rt); err != nil {
+	poller = &LRORetrysClientPutAsyncRelativeRetrySucceededPoller{}
+	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.StringPtr("100"),

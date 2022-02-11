@@ -57,20 +57,16 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 // parameters - Parameters supplied to the create or update private endpoint operation.
 // options - PrivateEndpointsClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
 // method.
-func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (PrivateEndpointsClientCreateOrUpdatePollerResponse, error) {
+func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*PrivateEndpointsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
-		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateEndpointsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateEndpointsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateEndpointsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
@@ -122,20 +118,16 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 // privateEndpointName - The name of the private endpoint.
 // options - PrivateEndpointsClientBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
 // method.
-func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (PrivateEndpointsClientDeletePollerResponse, error) {
+func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*PrivateEndpointsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
-		return PrivateEndpointsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := PrivateEndpointsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateEndpointsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return PrivateEndpointsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PrivateEndpointsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PrivateEndpointsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified private endpoint.

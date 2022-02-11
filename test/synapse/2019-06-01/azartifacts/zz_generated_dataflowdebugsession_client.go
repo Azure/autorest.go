@@ -79,20 +79,16 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.R
 // request - Data flow debug session definition
 // options - dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 // method.
-func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse, error) {
+func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller, error) {
 	resp, err := client.createDataFlowDebugSession(ctx, request, options)
 	if err != nil {
-		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
+		return nil, err
 	}
-	result := dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl)
 	if err != nil {
-		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller{pt: pt}, nil
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
@@ -165,20 +161,16 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 // request - Data flow debug command definition.
 // options - dataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginExecuteCommand
 // method.
-func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *dataFlowDebugSessionClientBeginExecuteCommandOptions) (dataFlowDebugSessionClientExecuteCommandPollerResponse, error) {
+func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *dataFlowDebugSessionClientBeginExecuteCommandOptions) (*dataFlowDebugSessionClientExecuteCommandPoller, error) {
 	resp, err := client.executeCommand(ctx, request, options)
 	if err != nil {
-		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
+		return nil, err
 	}
-	result := dataFlowDebugSessionClientExecuteCommandPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl)
 	if err != nil {
-		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &dataFlowDebugSessionClientExecuteCommandPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &dataFlowDebugSessionClientExecuteCommandPoller{pt: pt}, nil
 }
 
 // ExecuteCommand - Execute a data flow debug command.

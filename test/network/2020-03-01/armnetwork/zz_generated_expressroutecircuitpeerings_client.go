@@ -58,20 +58,16 @@ func NewExpressRouteCircuitPeeringsClient(subscriptionID string, credential azco
 // peeringParameters - Parameters supplied to the create or update express route circuit peering operation.
 // options - ExpressRouteCircuitPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsClientBeginCreateOrUpdateOptions) (ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsClientBeginCreateOrUpdateOptions) (*ExpressRouteCircuitPeeringsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, peeringParameters, options)
 	if err != nil {
-		return ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitPeeringsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitPeeringsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified express route circuits.
@@ -128,20 +124,16 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateCreateRequest(ctx
 // peeringName - The name of the peering.
 // options - ExpressRouteCircuitPeeringsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.BeginDelete
 // method.
-func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsClientBeginDeleteOptions) (ExpressRouteCircuitPeeringsClientDeletePollerResponse, error) {
+func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsClientBeginDeleteOptions) (*ExpressRouteCircuitPeeringsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
-		return ExpressRouteCircuitPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitPeeringsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitPeeringsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified peering from the specified express route circuit.

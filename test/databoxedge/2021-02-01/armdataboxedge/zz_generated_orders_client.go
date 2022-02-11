@@ -56,20 +56,16 @@ func NewOrdersClient(subscriptionID string, credential azcore.TokenCredential, o
 // order - The order to be created or updated.
 // options - OrdersClientBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate
 // method.
-func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (OrdersClientCreateOrUpdatePollerResponse, error) {
+func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*OrdersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, resourceGroupName, order, options)
 	if err != nil {
-		return OrdersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := OrdersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return OrdersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &OrdersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &OrdersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an order.
@@ -120,20 +116,16 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
-func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (OrdersClientDeletePollerResponse, error) {
+func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*OrdersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return OrdersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := OrdersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return OrdersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &OrdersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &OrdersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the order related to the device.

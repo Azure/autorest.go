@@ -57,20 +57,16 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 // parameters - Parameters supplied to the create or update operation.
 // options - DdosProtectionPlansClientBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlansClient.BeginCreateOrUpdate
 // method.
-func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (DdosProtectionPlansClientCreateOrUpdatePollerResponse, error) {
+func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*DdosProtectionPlansClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return DdosProtectionPlansClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := DdosProtectionPlansClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return DdosProtectionPlansClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DdosProtectionPlansClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DdosProtectionPlansClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
@@ -122,20 +118,16 @@ func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // options - DdosProtectionPlansClientBeginDeleteOptions contains the optional parameters for the DdosProtectionPlansClient.BeginDelete
 // method.
-func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (DdosProtectionPlansClientDeletePollerResponse, error) {
+func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*DdosProtectionPlansClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return DdosProtectionPlansClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := DdosProtectionPlansClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DdosProtectionPlansClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return DdosProtectionPlansClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DdosProtectionPlansClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DdosProtectionPlansClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified DDoS protection plan.

@@ -57,20 +57,16 @@ func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters supplied to the create or update Azure Firewall operation.
 // options - AzureFirewallsClientBeginCreateOrUpdateOptions contains the optional parameters for the AzureFirewallsClient.BeginCreateOrUpdate
 // method.
-func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (AzureFirewallsClientCreateOrUpdatePollerResponse, error) {
+func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (*AzureFirewallsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
-		return AzureFirewallsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := AzureFirewallsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return AzureFirewallsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &AzureFirewallsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &AzureFirewallsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Azure Firewall.
@@ -122,20 +118,16 @@ func (client *AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Cont
 // azureFirewallName - The name of the Azure Firewall.
 // options - AzureFirewallsClientBeginDeleteOptions contains the optional parameters for the AzureFirewallsClient.BeginDelete
 // method.
-func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (AzureFirewallsClientDeletePollerResponse, error) {
+func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (*AzureFirewallsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
-		return AzureFirewallsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := AzureFirewallsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return AzureFirewallsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &AzureFirewallsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &AzureFirewallsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Azure Firewall.
@@ -332,20 +324,16 @@ func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (
 // parameters - Parameters supplied to update azure firewall tags.
 // options - AzureFirewallsClientBeginUpdateTagsOptions contains the optional parameters for the AzureFirewallsClient.BeginUpdateTags
 // method.
-func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (AzureFirewallsClientUpdateTagsPollerResponse, error) {
+func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (*AzureFirewallsClientUpdateTagsPoller, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
-		return AzureFirewallsClientUpdateTagsPollerResponse{}, err
+		return nil, err
 	}
-	result := AzureFirewallsClientUpdateTagsPollerResponse{}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.UpdateTags", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return AzureFirewallsClientUpdateTagsPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &AzureFirewallsClientUpdateTagsPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &AzureFirewallsClientUpdateTagsPoller{pt: pt}, nil
 }
 
 // UpdateTags - Updates tags of an Azure Firewall resource.

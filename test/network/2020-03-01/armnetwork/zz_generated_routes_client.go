@@ -58,20 +58,16 @@ func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, o
 // routeParameters - Parameters supplied to the create or update route operation.
 // options - RoutesClientBeginCreateOrUpdateOptions contains the optional parameters for the RoutesClient.BeginCreateOrUpdate
 // method.
-func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (RoutesClientCreateOrUpdatePollerResponse, error) {
+func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (*RoutesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
-		return RoutesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := RoutesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RoutesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return RoutesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &RoutesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &RoutesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a route in the specified route table.
@@ -127,20 +123,16 @@ func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, res
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
 // options - RoutesClientBeginDeleteOptions contains the optional parameters for the RoutesClient.BeginDelete method.
-func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (RoutesClientDeletePollerResponse, error) {
+func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (*RoutesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
-		return RoutesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := RoutesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RoutesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return RoutesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &RoutesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &RoutesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified route from a route table.

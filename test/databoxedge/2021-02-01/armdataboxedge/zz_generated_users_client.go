@@ -58,20 +58,16 @@ func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, op
 // userParam - The user details.
 // options - UsersClientBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate
 // method.
-func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (UsersClientCreateOrUpdatePollerResponse, error) {
+func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (*UsersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
-		return UsersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := UsersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return UsersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &UsersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &UsersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
@@ -127,20 +123,16 @@ func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, devi
 // name - The user name.
 // resourceGroupName - The resource group name.
 // options - UsersClientBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
-func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (UsersClientDeletePollerResponse, error) {
+func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (*UsersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return UsersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := UsersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return UsersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &UsersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &UsersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the user on a databox edge/gateway device.

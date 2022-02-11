@@ -58,20 +58,16 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 // gallery - Parameters supplied to the create or update Shared Image Gallery operation.
 // options - GalleriesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleriesClient.BeginCreateOrUpdate
 // method.
-func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (GalleriesClientCreateOrUpdatePollerResponse, error) {
+func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*GalleriesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
-		return GalleriesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleriesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleriesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return GalleriesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleriesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleriesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a Shared Image Gallery.
@@ -122,20 +118,16 @@ func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, 
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery to be deleted.
 // options - GalleriesClientBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
-func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (GalleriesClientDeletePollerResponse, error) {
+func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*GalleriesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
-		return GalleriesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleriesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleriesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return GalleriesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleriesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleriesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Delete a Shared Image Gallery.
@@ -333,20 +325,16 @@ func (client *GalleriesClient) listByResourceGroupHandleResponse(resp *http.Resp
 // allowed in the middle. The maximum length is 80 characters.
 // gallery - Parameters supplied to the update Shared Image Gallery operation.
 // options - GalleriesClientBeginUpdateOptions contains the optional parameters for the GalleriesClient.BeginUpdate method.
-func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (GalleriesClientUpdatePollerResponse, error) {
+func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*GalleriesClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
-		return GalleriesClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleriesClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleriesClient.Update", "", resp, client.pl)
 	if err != nil {
-		return GalleriesClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleriesClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleriesClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Update a Shared Image Gallery.

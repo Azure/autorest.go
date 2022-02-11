@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isLROOperation, PagerInfo } from '../common/helpers';
-import { contentPreamble, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending, getFinalResponseEnvelopeName } from './helpers';
+import { contentPreamble, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
@@ -32,7 +32,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
   for (const pager of values(pagers)) {
     let respEnv = getResponseEnvelopeName(pager.op);
     if (isLROOperation(pager.op)) {
-      respEnv = getFinalResponseEnvelopeName(pager.op);
+      respEnv = getResponseEnvelopeName(pager.op);
     }
     // create pager type
     text += `// ${pager.name} provides operations for iterating over paged responses.\n`;

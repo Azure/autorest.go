@@ -57,20 +57,16 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 // parameters - Parameters supplied to the create or update load balancer operation.
 // options - LoadBalancersClientBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancersClient.BeginCreateOrUpdate
 // method.
-func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (LoadBalancersClientCreateOrUpdatePollerResponse, error) {
+func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (*LoadBalancersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {
-		return LoadBalancersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := LoadBalancersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("LoadBalancersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return LoadBalancersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LoadBalancersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LoadBalancersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a load balancer.
@@ -122,20 +118,16 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancersClientBeginDeleteOptions contains the optional parameters for the LoadBalancersClient.BeginDelete
 // method.
-func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (LoadBalancersClientDeletePollerResponse, error) {
+func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (*LoadBalancersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
-		return LoadBalancersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := LoadBalancersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("LoadBalancersClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return LoadBalancersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LoadBalancersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LoadBalancersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified load balancer.

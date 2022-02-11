@@ -39,20 +39,16 @@ func NewHSMSecurityDomainClient(pl runtime.Pipeline) *HSMSecurityDomainClient {
 // maximum 10) containing a public key in JWK format.
 // options - HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
 // method.
-func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (HSMSecurityDomainClientDownloadPollerResponse, error) {
+func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*HSMSecurityDomainClientDownloadPoller, error) {
 	resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
 	if err != nil {
-		return HSMSecurityDomainClientDownloadPollerResponse{}, err
+		return nil, err
 	}
-	result := HSMSecurityDomainClientDownloadPollerResponse{}
 	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Download", resp, client.pl)
 	if err != nil {
-		return HSMSecurityDomainClientDownloadPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &HSMSecurityDomainClientDownloadPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &HSMSecurityDomainClientDownloadPoller{pt: pt}, nil
 }
 
 // Download - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
@@ -182,20 +178,16 @@ func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *http.Resp
 // securityDomain - The Security Domain to be restored.
 // options - HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
 // method.
-func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (HSMSecurityDomainClientUploadPollerResponse, error) {
+func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*HSMSecurityDomainClientUploadPoller, error) {
 	resp, err := client.upload(ctx, vaultBaseURL, securityDomain, options)
 	if err != nil {
-		return HSMSecurityDomainClientUploadPollerResponse{}, err
+		return nil, err
 	}
-	result := HSMSecurityDomainClientUploadPollerResponse{}
 	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Upload", resp, client.pl)
 	if err != nil {
-		return HSMSecurityDomainClientUploadPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &HSMSecurityDomainClientUploadPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &HSMSecurityDomainClientUploadPoller{pt: pt}, nil
 }
 
 // Upload - Restore the provided Security Domain.

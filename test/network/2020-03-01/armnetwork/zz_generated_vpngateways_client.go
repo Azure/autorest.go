@@ -57,20 +57,16 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // vpnGatewayParameters - Parameters supplied to create or Update a virtual wan vpn gateway.
 // options - VPNGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (VPNGatewaysClientCreateOrUpdatePollerResponse, error) {
+func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (*VPNGatewaysClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
-		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNGatewaysClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
@@ -121,20 +117,16 @@ func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientBeginDeleteOptions contains the optional parameters for the VPNGatewaysClient.BeginDelete method.
-func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (VPNGatewaysClientDeletePollerResponse, error) {
+func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (*VPNGatewaysClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VPNGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNGatewaysClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a virtual wan vpn gateway.
@@ -330,20 +322,16 @@ func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Re
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientBeginResetOptions contains the optional parameters for the VPNGatewaysClient.BeginReset method.
-func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (VPNGatewaysClientResetPollerResponse, error) {
+func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (*VPNGatewaysClientResetPoller, error) {
 	resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewaysClientResetPollerResponse{}, err
+		return nil, err
 	}
-	result := VPNGatewaysClientResetPollerResponse{}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.Reset", "location", resp, client.pl)
 	if err != nil {
-		return VPNGatewaysClientResetPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNGatewaysClientResetPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNGatewaysClientResetPoller{pt: pt}, nil
 }
 
 // Reset - Resets the primary of the vpn gateway in the specified resource group.

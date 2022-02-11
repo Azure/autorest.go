@@ -57,20 +57,16 @@ func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore
 // storageAccountCredential - The storage account credential.
 // options - StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
 // method.
-func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (StorageAccountCredentialsClientCreateOrUpdatePollerResponse, error) {
+func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*StorageAccountCredentialsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
 	if err != nil {
-		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &StorageAccountCredentialsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &StorageAccountCredentialsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the storage account credential.
@@ -127,20 +123,16 @@ func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx c
 // resourceGroupName - The resource group name.
 // options - StorageAccountCredentialsClientBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
 // method.
-func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (StorageAccountCredentialsClientDeletePollerResponse, error) {
+func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*StorageAccountCredentialsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return StorageAccountCredentialsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := StorageAccountCredentialsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return StorageAccountCredentialsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &StorageAccountCredentialsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &StorageAccountCredentialsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the storage account credential.

@@ -58,20 +58,16 @@ func NewVirtualMachineExtensionsClient(subscriptionID string, credential azcore.
 // extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
 // options - VirtualMachineExtensionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsClientBeginCreateOrUpdateOptions) (VirtualMachineExtensionsClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsClientBeginCreateOrUpdateOptions) (*VirtualMachineExtensionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
-		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineExtensionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineExtensionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - The operation to create or update the extension.
@@ -128,20 +124,16 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateCreateRequest(ctx co
 // vmExtensionName - The name of the virtual machine extension.
 // options - VirtualMachineExtensionsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginDelete
 // method.
-func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientBeginDeleteOptions) (VirtualMachineExtensionsClientDeletePollerResponse, error) {
+func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientBeginDeleteOptions) (*VirtualMachineExtensionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
-		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineExtensionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineExtensionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineExtensionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - The operation to delete the extension.
@@ -321,20 +313,16 @@ func (client *VirtualMachineExtensionsClient) listHandleResponse(resp *http.Resp
 // extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
 // options - VirtualMachineExtensionsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginUpdate
 // method.
-func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsClientBeginUpdateOptions) (VirtualMachineExtensionsClientUpdatePollerResponse, error) {
+func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsClientBeginUpdateOptions) (*VirtualMachineExtensionsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
-		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineExtensionsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineExtensionsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineExtensionsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - The operation to update the extension.

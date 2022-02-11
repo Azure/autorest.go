@@ -57,20 +57,16 @@ func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 // parameters - Parameters supplied to the create or update public IP prefix operation.
 // options - PublicIPPrefixesClientBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPPrefixesClient.BeginCreateOrUpdate
 // method.
-func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesClientBeginCreateOrUpdateOptions) (PublicIPPrefixesClientCreateOrUpdatePollerResponse, error) {
+func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesClientBeginCreateOrUpdateOptions) (*PublicIPPrefixesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
-		return PublicIPPrefixesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := PublicIPPrefixesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PublicIPPrefixesClient.CreateOrUpdate", "location", resp, client.pl)
 	if err != nil {
-		return PublicIPPrefixesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PublicIPPrefixesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PublicIPPrefixesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
@@ -122,20 +118,16 @@ func (client *PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Co
 // publicIPPrefixName - The name of the PublicIpPrefix.
 // options - PublicIPPrefixesClientBeginDeleteOptions contains the optional parameters for the PublicIPPrefixesClient.BeginDelete
 // method.
-func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesClientBeginDeleteOptions) (PublicIPPrefixesClientDeletePollerResponse, error) {
+func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesClientBeginDeleteOptions) (*PublicIPPrefixesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
-		return PublicIPPrefixesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := PublicIPPrefixesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PublicIPPrefixesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return PublicIPPrefixesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PublicIPPrefixesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PublicIPPrefixesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified public IP prefix.

@@ -58,20 +58,16 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 // inboundNatRuleParameters - Parameters supplied to the create or update inbound nat rule operation.
 // options - InboundNatRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRulesClient.BeginCreateOrUpdate
 // method.
-func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (InboundNatRulesClientCreateOrUpdatePollerResponse, error) {
+func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (*InboundNatRulesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
-		return InboundNatRulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := InboundNatRulesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("InboundNatRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return InboundNatRulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InboundNatRulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InboundNatRulesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a load balancer inbound nat rule.
@@ -128,20 +124,16 @@ func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Con
 // inboundNatRuleName - The name of the inbound nat rule.
 // options - InboundNatRulesClientBeginDeleteOptions contains the optional parameters for the InboundNatRulesClient.BeginDelete
 // method.
-func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (InboundNatRulesClientDeletePollerResponse, error) {
+func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (*InboundNatRulesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
-		return InboundNatRulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := InboundNatRulesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("InboundNatRulesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return InboundNatRulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InboundNatRulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InboundNatRulesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified load balancer inbound nat rule.

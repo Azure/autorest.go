@@ -873,20 +873,16 @@ func (client *Client) encryptHandleResponse(resp *http.Response) (ClientEncryptR
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
-func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (ClientFullBackupPollerResponse, error) {
+func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (*ClientFullBackupPoller, error) {
 	resp, err := client.fullBackup(ctx, vaultBaseURL, options)
 	if err != nil {
-		return ClientFullBackupPollerResponse{}, err
+		return nil, err
 	}
-	result := ClientFullBackupPollerResponse{}
 	pt, err := runtime.NewPoller("Client.FullBackup", resp, client.pl)
 	if err != nil {
-		return ClientFullBackupPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ClientFullBackupPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ClientFullBackupPoller{pt: pt}, nil
 }
 
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
@@ -980,20 +976,16 @@ func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (Clien
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation
 // method.
-func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (ClientFullRestoreOperationPollerResponse, error) {
+func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (*ClientFullRestoreOperationPoller, error) {
 	resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
 	if err != nil {
-		return ClientFullRestoreOperationPollerResponse{}, err
+		return nil, err
 	}
-	result := ClientFullRestoreOperationPollerResponse{}
 	pt, err := runtime.NewPoller("Client.FullRestoreOperation", resp, client.pl)
 	if err != nil {
-		return ClientFullRestoreOperationPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ClientFullRestoreOperationPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ClientFullRestoreOperationPoller{pt: pt}, nil
 }
 
 // FullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
@@ -3315,20 +3307,16 @@ func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (
 // keyName - The name of the key to be restored from the user supplied backup
 // options - ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
 // method.
-func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (ClientSelectiveKeyRestoreOperationPollerResponse, error) {
+func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*ClientSelectiveKeyRestoreOperationPoller, error) {
 	resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
-		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
+		return nil, err
 	}
-	result := ClientSelectiveKeyRestoreOperationPollerResponse{}
 	pt, err := runtime.NewPoller("Client.SelectiveKeyRestoreOperation", resp, client.pl)
 	if err != nil {
-		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ClientSelectiveKeyRestoreOperationPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ClientSelectiveKeyRestoreOperationPoller{pt: pt}, nil
 }
 
 // SelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously

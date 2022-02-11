@@ -39,47 +39,6 @@ func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
 	return client
 }
 
-// DuplicateParams - Define filter as a query param for all calls. However, the returned next link will also include the filter
-// as part of it. Make sure you don't end up duplicating the filter param in the url sent.
-// If the operation fails it returns an *azcore.ResponseError type.
-// options - PagingClientDuplicateParamsOptions contains the optional parameters for the PagingClient.DuplicateParams method.
-func (client *PagingClient) DuplicateParams(options *PagingClientDuplicateParamsOptions) *PagingClientDuplicateParamsPager {
-	return &PagingClientDuplicateParamsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.duplicateParamsCreateRequest(ctx, options)
-		},
-		advancer: func(ctx context.Context, resp PagingClientDuplicateParamsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
-		},
-	}
-}
-
-// duplicateParamsCreateRequest creates the DuplicateParams request.
-func (client *PagingClient) duplicateParamsCreateRequest(ctx context.Context, options *PagingClientDuplicateParamsOptions) (*policy.Request, error) {
-	urlPath := "/paging/multiple/duplicateParams/1"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	if options != nil && options.Filter != nil {
-		reqQP.Set("$filter", *options.Filter)
-	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
-	return req, nil
-}
-
-// duplicateParamsHandleResponse handles the DuplicateParams response.
-func (client *PagingClient) duplicateParamsHandleResponse(resp *http.Response) (PagingClientDuplicateParamsResponse, error) {
-	result := PagingClientDuplicateParamsResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingClientDuplicateParamsResponse{}, err
-	}
-	return result, nil
-}
-
 // FirstResponseEmpty - A paging operation whose first response's items list is empty, but still returns a next link. Second
 // (and final) call, will give you an items list of 1.
 // If the operation fails it returns an *azcore.ResponseError type.
@@ -326,21 +285,16 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
-func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (PagingClientGetMultiplePagesLROPollerResponse, error) {
+func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*PagingClientGetMultiplePagesLROPoller, error) {
 	resp, err := client.getMultiplePagesLRO(ctx, options)
 	if err != nil {
-		return PagingClientGetMultiplePagesLROPollerResponse{}, err
+		return nil, err
 	}
-	result := PagingClientGetMultiplePagesLROPollerResponse{}
 	pt, err := armruntime.NewPoller("PagingClient.GetMultiplePagesLRO", "", resp, client.pl)
 	if err != nil {
-		return PagingClientGetMultiplePagesLROPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PagingClientGetMultiplePagesLROPoller{
-		pt:     pt,
-		client: client,
-	}
-	return result, nil
+	return &PagingClientGetMultiplePagesLROPoller{pt: pt}, nil
 }
 
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages

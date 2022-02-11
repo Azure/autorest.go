@@ -57,20 +57,16 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 // request - Parameters supplied to download vpn-sites configuration.
 // options - VPNSitesConfigurationClientBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
 // method.
-func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (VPNSitesConfigurationClientDownloadPollerResponse, error) {
+func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*VPNSitesConfigurationClientDownloadPoller, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
-		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
+		return nil, err
 	}
-	result := VPNSitesConfigurationClientDownloadPollerResponse{}
 	pt, err := armruntime.NewPoller("VPNSitesConfigurationClient.Download", "location", resp, client.pl)
 	if err != nil {
-		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNSitesConfigurationClientDownloadPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNSitesConfigurationClientDownloadPoller{pt: pt}, nil
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.

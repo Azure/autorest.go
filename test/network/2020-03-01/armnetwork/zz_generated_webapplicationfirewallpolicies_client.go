@@ -113,20 +113,16 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse
 // policyName - The name of the policy.
 // options - WebApplicationFirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.BeginDelete
 // method.
-func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesClientBeginDeleteOptions) (WebApplicationFirewallPoliciesClientDeletePollerResponse, error) {
+func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesClientBeginDeleteOptions) (*WebApplicationFirewallPoliciesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, policyName, options)
 	if err != nil {
-		return WebApplicationFirewallPoliciesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := WebApplicationFirewallPoliciesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("WebApplicationFirewallPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return WebApplicationFirewallPoliciesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WebApplicationFirewallPoliciesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WebApplicationFirewallPoliciesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes Policy.

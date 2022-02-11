@@ -57,20 +57,16 @@ func NewDdosCustomPoliciesClient(subscriptionID string, credential azcore.TokenC
 // parameters - Parameters supplied to the create or update operation.
 // options - DdosCustomPoliciesClientBeginCreateOrUpdateOptions contains the optional parameters for the DdosCustomPoliciesClient.BeginCreateOrUpdate
 // method.
-func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesClientBeginCreateOrUpdateOptions) (DdosCustomPoliciesClientCreateOrUpdatePollerResponse, error) {
+func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesClientBeginCreateOrUpdateOptions) (*DdosCustomPoliciesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
-		return DdosCustomPoliciesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := DdosCustomPoliciesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DdosCustomPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return DdosCustomPoliciesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DdosCustomPoliciesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DdosCustomPoliciesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a DDoS custom policy.
@@ -122,20 +118,16 @@ func (client *DdosCustomPoliciesClient) createOrUpdateCreateRequest(ctx context.
 // ddosCustomPolicyName - The name of the DDoS custom policy.
 // options - DdosCustomPoliciesClientBeginDeleteOptions contains the optional parameters for the DdosCustomPoliciesClient.BeginDelete
 // method.
-func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesClientBeginDeleteOptions) (DdosCustomPoliciesClientDeletePollerResponse, error) {
+func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesClientBeginDeleteOptions) (*DdosCustomPoliciesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
-		return DdosCustomPoliciesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := DdosCustomPoliciesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DdosCustomPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return DdosCustomPoliciesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DdosCustomPoliciesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DdosCustomPoliciesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified DDoS custom policy.

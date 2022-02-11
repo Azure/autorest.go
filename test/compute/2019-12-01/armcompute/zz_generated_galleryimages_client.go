@@ -60,20 +60,16 @@ func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCreden
 // galleryImage - Parameters supplied to the create or update gallery image operation.
 // options - GalleryImagesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginCreateOrUpdate
 // method.
-func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesClientBeginCreateOrUpdateOptions) (GalleryImagesClientCreateOrUpdatePollerResponse, error) {
+func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesClientBeginCreateOrUpdateOptions) (*GalleryImagesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {
-		return GalleryImagesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleryImagesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryImagesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return GalleryImagesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleryImagesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleryImagesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a gallery Image Definition.
@@ -130,20 +126,16 @@ func (client *GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Conte
 // galleryImageName - The name of the gallery Image Definition to be deleted.
 // options - GalleryImagesClientBeginDeleteOptions contains the optional parameters for the GalleryImagesClient.BeginDelete
 // method.
-func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesClientBeginDeleteOptions) (GalleryImagesClientDeletePollerResponse, error) {
+func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesClientBeginDeleteOptions) (*GalleryImagesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
-		return GalleryImagesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleryImagesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryImagesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return GalleryImagesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleryImagesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleryImagesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Delete a gallery image.
@@ -315,20 +307,16 @@ func (client *GalleryImagesClient) listByGalleryHandleResponse(resp *http.Respon
 // galleryImage - Parameters supplied to the update gallery image operation.
 // options - GalleryImagesClientBeginUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginUpdate
 // method.
-func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesClientBeginUpdateOptions) (GalleryImagesClientUpdatePollerResponse, error) {
+func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesClientBeginUpdateOptions) (*GalleryImagesClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {
-		return GalleryImagesClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleryImagesClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryImagesClient.Update", "", resp, client.pl)
 	if err != nil {
-		return GalleryImagesClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleryImagesClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleryImagesClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Update a gallery Image Definition.

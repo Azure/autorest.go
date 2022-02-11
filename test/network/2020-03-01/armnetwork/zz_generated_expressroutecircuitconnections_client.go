@@ -60,20 +60,16 @@ func NewExpressRouteCircuitConnectionsClient(subscriptionID string, credential a
 // operation.
 // options - ExpressRouteCircuitConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitConnectionsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsClientBeginCreateOrUpdateOptions) (ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsClientBeginCreateOrUpdateOptions) (*ExpressRouteCircuitConnectionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, options)
 	if err != nil {
-		return ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitConnectionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitConnectionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
@@ -135,20 +131,16 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateCreateRequest(
 // connectionName - The name of the express route circuit connection.
 // options - ExpressRouteCircuitConnectionsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitConnectionsClient.BeginDelete
 // method.
-func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsClientBeginDeleteOptions) (ExpressRouteCircuitConnectionsClientDeletePollerResponse, error) {
+func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsClientBeginDeleteOptions) (*ExpressRouteCircuitConnectionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
-		return ExpressRouteCircuitConnectionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitConnectionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitConnectionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitConnectionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitConnectionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitConnectionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.

@@ -7,9 +7,9 @@ import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, PollerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, emitPoller, formatParameterTypeName, formatStatusCodes, formatValue, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -486,11 +486,13 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
 function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): string {
   let returnType = `${getResponseEnvelopeName(op)}{}`;
   if (isLROOperation(op)) {
-    if (apiType === 'op') {
+    if (apiType === 'api') {
+      returnType = `${(<PollerInfo>op.language.go!.pollerType).name}{}`;
+    } else if (apiType === 'op') {
       // the operation returns an *http.Response
       returnType = 'nil';
     } else if (apiType === 'handler' && isPageableOperation(op)) {
-      returnType = `${getFinalResponseEnvelopeName(op)}{}`;
+      returnType = `${getResponseEnvelopeName(op)}{}`;
     }
   }
   return returnType
@@ -1070,7 +1072,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   if (!isMultiRespOperation(op)) {
     let respEnvName = getResponseEnvelopeName(op);
     if (isLROOperation(op)) {
-      respEnvName = getFinalResponseEnvelopeName(op);
+      respEnvName = getResponseEnvelopeName(op);
     }
     text += `\tresult := ${respEnvName}{`;
     if (isBinaryResponseOperation(op)) {
@@ -1223,11 +1225,14 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
   let returnType = getResponseEnvelopeName(op);
   if (isLROOperation(op)) {
     switch (apiType) {
+      case 'api':
+        returnType = '*' + (<PollerInfo>op.language.go!.pollerType).name;
+        break;
       case 'handler':
         // we only have a handler for operations that return a schema
         if (isPageableOperation(op)) {
           // we need to consult the final response type name
-          returnType = getFinalResponseEnvelopeName(op);
+          returnType = getResponseEnvelopeName(op);
         } else {
           throw new Error(`handler being generated for non-pageable LRO ${op.language.go!.name} which is unexpected`);
         }
@@ -1259,7 +1264,6 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   if (hasDescription(op.language.go!)) {
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
   }
-  const zeroResp = getZeroReturnValue(op, 'api');
   const methodParams = getMethodParameters(op);
   for (const param of values(methodParams)) {
     if (param.language.go!.description) {
@@ -1271,9 +1275,8 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   opName = info.protocolNaming.internalMethod;
   text += `\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
   text += `\tif err != nil {\n`;
-  text += `\t\treturn ${zeroResp}, err\n`;
+  text += `\t\treturn nil, err\n`;
   text += `\t}\n`;
-  text += `\tresult := ${getResponseEnvelopeName(op)}{}\n`;
   if (isARM) {
     // LRO operation might have a special configuration set in x-ms-long-running-operation-options
     // which indicates a specific url to perform the final Get operation on
@@ -1287,10 +1290,9 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     text += `\tpt, err := runtime.NewPoller("${clientName}.${op.language.go!.name}",resp, client.pl)\n`;
   }
   text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
+  text += `\t\treturn nil, err\n`;
   text += '\t}\n';
-  text += `\tresult.Poller = ${emitPoller(op)}`;
-  text += `\treturn result, nil\n`;
+  text += `\treturn &${(<PollerInfo>op.language.go!.pollerType).name}{pt: pt}, nil\n`;
   // closing braces
   text += '}\n\n';
   return text;

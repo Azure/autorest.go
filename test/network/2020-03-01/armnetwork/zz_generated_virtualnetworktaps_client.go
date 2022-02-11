@@ -57,20 +57,16 @@ func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenC
 // parameters - Parameters supplied to the create or update virtual network tap operation.
 // options - VirtualNetworkTapsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTapsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (VirtualNetworkTapsClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (*VirtualNetworkTapsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, tapName, parameters, options)
 	if err != nil {
-		return VirtualNetworkTapsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualNetworkTapsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkTapsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualNetworkTapsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualNetworkTapsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualNetworkTapsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a Virtual Network Tap.
@@ -122,20 +118,16 @@ func (client *VirtualNetworkTapsClient) createOrUpdateCreateRequest(ctx context.
 // tapName - The name of the virtual network tap.
 // options - VirtualNetworkTapsClientBeginDeleteOptions contains the optional parameters for the VirtualNetworkTapsClient.BeginDelete
 // method.
-func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (VirtualNetworkTapsClientDeletePollerResponse, error) {
+func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (*VirtualNetworkTapsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
 	if err != nil {
-		return VirtualNetworkTapsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualNetworkTapsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkTapsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualNetworkTapsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualNetworkTapsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualNetworkTapsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified virtual network tap.

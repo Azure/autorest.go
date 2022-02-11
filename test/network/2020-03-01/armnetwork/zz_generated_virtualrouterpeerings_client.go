@@ -58,20 +58,16 @@ func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.Tok
 // parameters - Parameters supplied to the create or update Virtual Router Peering operation.
 // options - VirtualRouterPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeeringsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsClientBeginCreateOrUpdateOptions) (VirtualRouterPeeringsClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsClientBeginCreateOrUpdateOptions) (*VirtualRouterPeeringsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
-		return VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualRouterPeeringsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualRouterPeeringsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
@@ -128,20 +124,16 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateCreateRequest(ctx conte
 // peeringName - The name of the peering.
 // options - VirtualRouterPeeringsClientBeginDeleteOptions contains the optional parameters for the VirtualRouterPeeringsClient.BeginDelete
 // method.
-func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsClientBeginDeleteOptions) (VirtualRouterPeeringsClientDeletePollerResponse, error) {
+func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsClientBeginDeleteOptions) (*VirtualRouterPeeringsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
-		return VirtualRouterPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualRouterPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualRouterPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualRouterPeeringsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualRouterPeeringsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified peering from a Virtual Router.

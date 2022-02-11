@@ -58,20 +58,16 @@ func NewExpressRouteConnectionsClient(subscriptionID string, credential azcore.T
 // putExpressRouteConnectionParameters - Parameters required in an ExpressRouteConnection PUT operation.
 // options - ExpressRouteConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnectionsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsClientBeginCreateOrUpdateOptions) (ExpressRouteConnectionsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsClientBeginCreateOrUpdateOptions) (*ExpressRouteConnectionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
 	if err != nil {
-		return ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteConnectionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteConnectionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
@@ -128,20 +124,16 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateCreateRequest(ctx con
 // connectionName - The name of the connection subresource.
 // options - ExpressRouteConnectionsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteConnectionsClient.BeginDelete
 // method.
-func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsClientBeginDeleteOptions) (ExpressRouteConnectionsClientDeletePollerResponse, error) {
+func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsClientBeginDeleteOptions) (*ExpressRouteConnectionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {
-		return ExpressRouteConnectionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteConnectionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteConnectionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteConnectionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteConnectionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteConnectionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a connection to a ExpressRoute circuit.

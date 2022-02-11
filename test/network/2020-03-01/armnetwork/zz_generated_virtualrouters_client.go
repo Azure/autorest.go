@@ -57,20 +57,16 @@ func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters supplied to the create or update Virtual Router.
 // options - VirtualRoutersClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRoutersClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (VirtualRoutersClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*VirtualRoutersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters, options)
 	if err != nil {
-		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualRoutersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualRoutersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualRoutersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router.
@@ -122,20 +118,16 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRoutersClientBeginDeleteOptions contains the optional parameters for the VirtualRoutersClient.BeginDelete
 // method.
-func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (VirtualRoutersClientDeletePollerResponse, error) {
+func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*VirtualRoutersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
-		return VirtualRoutersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualRoutersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualRoutersClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualRoutersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualRoutersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualRoutersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Virtual Router.

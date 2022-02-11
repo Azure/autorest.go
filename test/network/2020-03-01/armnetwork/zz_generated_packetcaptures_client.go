@@ -58,20 +58,16 @@ func NewPacketCapturesClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters that define the create packet capture operation.
 // options - PacketCapturesClientBeginCreateOptions contains the optional parameters for the PacketCapturesClient.BeginCreate
 // method.
-func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (PacketCapturesClientCreatePollerResponse, error) {
+func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (*PacketCapturesClientCreatePoller, error) {
 	resp, err := client.create(ctx, resourceGroupName, networkWatcherName, packetCaptureName, parameters, options)
 	if err != nil {
-		return PacketCapturesClientCreatePollerResponse{}, err
+		return nil, err
 	}
-	result := PacketCapturesClientCreatePollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Create", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return PacketCapturesClientCreatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PacketCapturesClientCreatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PacketCapturesClientCreatePoller{pt: pt}, nil
 }
 
 // Create - Create and start a packet capture on the specified VM.
@@ -128,20 +124,16 @@ func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, res
 // packetCaptureName - The name of the packet capture session.
 // options - PacketCapturesClientBeginDeleteOptions contains the optional parameters for the PacketCapturesClient.BeginDelete
 // method.
-func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (PacketCapturesClientDeletePollerResponse, error) {
+func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (*PacketCapturesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := PacketCapturesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return PacketCapturesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PacketCapturesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PacketCapturesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified packet capture session.
@@ -258,20 +250,16 @@ func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (Pack
 // packetCaptureName - The name given to the packet capture session.
 // options - PacketCapturesClientBeginGetStatusOptions contains the optional parameters for the PacketCapturesClient.BeginGetStatus
 // method.
-func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (PacketCapturesClientGetStatusPollerResponse, error) {
+func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (*PacketCapturesClientGetStatusPoller, error) {
 	resp, err := client.getStatus(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesClientGetStatusPollerResponse{}, err
+		return nil, err
 	}
-	result := PacketCapturesClientGetStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.GetStatus", "location", resp, client.pl)
 	if err != nil {
-		return PacketCapturesClientGetStatusPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PacketCapturesClientGetStatusPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PacketCapturesClientGetStatusPoller{pt: pt}, nil
 }
 
 // GetStatus - Query the status of a running packet capture session.
@@ -377,20 +365,16 @@ func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (Pac
 // packetCaptureName - The name of the packet capture session.
 // options - PacketCapturesClientBeginStopOptions contains the optional parameters for the PacketCapturesClient.BeginStop
 // method.
-func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (PacketCapturesClientStopPollerResponse, error) {
+func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (*PacketCapturesClientStopPoller, error) {
 	resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesClientStopPollerResponse{}, err
+		return nil, err
 	}
-	result := PacketCapturesClientStopPollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Stop", "location", resp, client.pl)
 	if err != nil {
-		return PacketCapturesClientStopPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PacketCapturesClientStopPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PacketCapturesClientStopPoller{pt: pt}, nil
 }
 
 // Stop - Stops a specified packet capture session.

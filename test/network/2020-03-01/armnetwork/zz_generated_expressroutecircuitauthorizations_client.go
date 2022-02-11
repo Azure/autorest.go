@@ -58,20 +58,16 @@ func NewExpressRouteCircuitAuthorizationsClient(subscriptionID string, credentia
 // authorizationParameters - Parameters supplied to the create or update express route circuit authorization operation.
 // options - ExpressRouteCircuitAuthorizationsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsClientBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsClientBeginCreateOrUpdateOptions) (*ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
@@ -128,20 +124,16 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateCreateReque
 // authorizationName - The name of the authorization.
 // options - ExpressRouteCircuitAuthorizationsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.BeginDelete
 // method.
-func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsClientBeginDeleteOptions) (ExpressRouteCircuitAuthorizationsClientDeletePollerResponse, error) {
+func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsClientBeginDeleteOptions) (*ExpressRouteCircuitAuthorizationsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitAuthorizationsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitAuthorizationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitAuthorizationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitAuthorizationsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitAuthorizationsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified authorization from the specified express route circuit.

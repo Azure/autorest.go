@@ -58,20 +58,16 @@ func NewVirtualNetworkPeeringsClient(subscriptionID string, credential azcore.To
 // virtualNetworkPeeringParameters - Parameters supplied to the create or update virtual network peering operation.
 // options - VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeeringsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions) (VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions) (*VirtualNetworkPeeringsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, options)
 	if err != nil {
-		return VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualNetworkPeeringsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualNetworkPeeringsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified virtual network.
@@ -128,20 +124,16 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateCreateRequest(ctx cont
 // virtualNetworkPeeringName - The name of the virtual network peering.
 // options - VirtualNetworkPeeringsClientBeginDeleteOptions contains the optional parameters for the VirtualNetworkPeeringsClient.BeginDelete
 // method.
-func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsClientBeginDeleteOptions) (VirtualNetworkPeeringsClientDeletePollerResponse, error) {
+func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsClientBeginDeleteOptions) (*VirtualNetworkPeeringsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
-		return VirtualNetworkPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualNetworkPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualNetworkPeeringsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualNetworkPeeringsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualNetworkPeeringsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified virtual network peering.

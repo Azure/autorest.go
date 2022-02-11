@@ -57,20 +57,16 @@ func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential,
 // parameters - Parameters supplied to the create or update IpGroups operation.
 // options - IPGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the IPGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (IPGroupsClientCreateOrUpdatePollerResponse, error) {
+func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*IPGroupsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
-		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := IPGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &IPGroupsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &IPGroupsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
@@ -121,20 +117,16 @@ func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, r
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // options - IPGroupsClientBeginDeleteOptions contains the optional parameters for the IPGroupsClient.BeginDelete method.
-func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (IPGroupsClientDeletePollerResponse, error) {
+func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*IPGroupsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
-		return IPGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := IPGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("IPGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return IPGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &IPGroupsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &IPGroupsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified ipGroups.

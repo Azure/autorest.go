@@ -57,20 +57,16 @@ func NewVPNServerConfigurationsClient(subscriptionID string, credential azcore.T
 // vpnServerConfigurationParameters - Parameters supplied to create or update VpnServerConfiguration.
 // options - VPNServerConfigurationsClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNServerConfigurationsClient.BeginCreateOrUpdate
 // method.
-func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VPNServerConfiguration, options *VPNServerConfigurationsClientBeginCreateOrUpdateOptions) (VPNServerConfigurationsClientCreateOrUpdatePollerResponse, error) {
+func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VPNServerConfiguration, options *VPNServerConfigurationsClientBeginCreateOrUpdateOptions) (*VPNServerConfigurationsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, options)
 	if err != nil {
-		return VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNServerConfigurationsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNServerConfigurationsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
@@ -122,20 +118,16 @@ func (client *VPNServerConfigurationsClient) createOrUpdateCreateRequest(ctx con
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being deleted.
 // options - VPNServerConfigurationsClientBeginDeleteOptions contains the optional parameters for the VPNServerConfigurationsClient.BeginDelete
 // method.
-func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *VPNServerConfigurationsClientBeginDeleteOptions) (VPNServerConfigurationsClientDeletePollerResponse, error) {
+func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *VPNServerConfigurationsClientBeginDeleteOptions) (*VPNServerConfigurationsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnServerConfigurationName, options)
 	if err != nil {
-		return VPNServerConfigurationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VPNServerConfigurationsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VPNServerConfigurationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VPNServerConfigurationsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VPNServerConfigurationsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a VpnServerConfiguration.

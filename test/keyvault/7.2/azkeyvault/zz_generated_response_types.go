@@ -8,12 +8,6 @@
 
 package azkeyvault
 
-import (
-	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"time"
-)
-
 // ClientBackupCertificateResponse contains the response from method Client.BackupCertificate.
 type ClientBackupCertificateResponse struct {
 	BackupCertificateResult
@@ -94,40 +88,6 @@ type ClientEncryptResponse struct {
 	KeyOperationResult
 }
 
-// ClientFullBackupPollerResponse contains the response from method Client.FullBackup.
-type ClientFullBackupPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *ClientFullBackupPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l ClientFullBackupPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ClientFullBackupResponse, error) {
-	respType := ClientFullBackupResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.FullBackupOperation)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a ClientFullBackupPollerResponse from the provided client and resume token.
-func (l *ClientFullBackupPollerResponse) Resume(ctx context.Context, client *Client, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("Client.FullBackup", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &ClientFullBackupPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // ClientFullBackupResponse contains the response from method Client.FullBackup.
 type ClientFullBackupResponse struct {
 	FullBackupOperation
@@ -136,40 +96,6 @@ type ClientFullBackupResponse struct {
 // ClientFullBackupStatusResponse contains the response from method Client.FullBackupStatus.
 type ClientFullBackupStatusResponse struct {
 	FullBackupOperation
-}
-
-// ClientFullRestoreOperationPollerResponse contains the response from method Client.FullRestoreOperation.
-type ClientFullRestoreOperationPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *ClientFullRestoreOperationPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l ClientFullRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ClientFullRestoreOperationResponse, error) {
-	respType := ClientFullRestoreOperationResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RestoreOperation)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a ClientFullRestoreOperationPollerResponse from the provided client and resume token.
-func (l *ClientFullRestoreOperationPollerResponse) Resume(ctx context.Context, client *Client, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("Client.FullRestoreOperation", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &ClientFullRestoreOperationPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // ClientFullRestoreOperationResponse contains the response from method Client.FullRestoreOperation.
@@ -407,40 +333,6 @@ type ClientRestoreStorageAccountResponse struct {
 	StorageBundle
 }
 
-// ClientSelectiveKeyRestoreOperationPollerResponse contains the response from method Client.SelectiveKeyRestoreOperation.
-type ClientSelectiveKeyRestoreOperationPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *ClientSelectiveKeyRestoreOperationPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l ClientSelectiveKeyRestoreOperationPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (ClientSelectiveKeyRestoreOperationResponse, error) {
-	respType := ClientSelectiveKeyRestoreOperationResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SelectiveKeyRestoreOperation)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a ClientSelectiveKeyRestoreOperationPollerResponse from the provided client and resume token.
-func (l *ClientSelectiveKeyRestoreOperationPollerResponse) Resume(ctx context.Context, client *Client, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("Client.SelectiveKeyRestoreOperation", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &ClientSelectiveKeyRestoreOperationPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // ClientSelectiveKeyRestoreOperationResponse contains the response from method Client.SelectiveKeyRestoreOperation.
 type ClientSelectiveKeyRestoreOperationResponse struct {
 	SelectiveKeyRestoreOperation
@@ -536,40 +428,6 @@ type HSMSecurityDomainClientDownloadPendingResponse struct {
 	SecurityDomainOperationStatus
 }
 
-// HSMSecurityDomainClientDownloadPollerResponse contains the response from method HSMSecurityDomainClient.Download.
-type HSMSecurityDomainClientDownloadPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *HSMSecurityDomainClientDownloadPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l HSMSecurityDomainClientDownloadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainClientDownloadResponse, error) {
-	respType := HSMSecurityDomainClientDownloadResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainObject)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a HSMSecurityDomainClientDownloadPollerResponse from the provided client and resume token.
-func (l *HSMSecurityDomainClientDownloadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &HSMSecurityDomainClientDownloadPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
-}
-
 // HSMSecurityDomainClientDownloadResponse contains the response from method HSMSecurityDomainClient.Download.
 type HSMSecurityDomainClientDownloadResponse struct {
 	SecurityDomainObject
@@ -583,40 +441,6 @@ type HSMSecurityDomainClientTransferKeyResponse struct {
 // HSMSecurityDomainClientUploadPendingResponse contains the response from method HSMSecurityDomainClient.UploadPending.
 type HSMSecurityDomainClientUploadPendingResponse struct {
 	SecurityDomainOperationStatus
-}
-
-// HSMSecurityDomainClientUploadPollerResponse contains the response from method HSMSecurityDomainClient.Upload.
-type HSMSecurityDomainClientUploadPollerResponse struct {
-	// Poller contains an initialized poller.
-	Poller *HSMSecurityDomainClientUploadPoller
-}
-
-// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
-// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l HSMSecurityDomainClientUploadPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (HSMSecurityDomainClientUploadResponse, error) {
-	respType := HSMSecurityDomainClientUploadResponse{}
-	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityDomainOperationStatus)
-	if err != nil {
-		return respType, err
-	}
-	return respType, nil
-}
-
-// Resume rehydrates a HSMSecurityDomainClientUploadPollerResponse from the provided client and resume token.
-func (l *HSMSecurityDomainClientUploadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.pl)
-	if err != nil {
-		return err
-	}
-	poller := &HSMSecurityDomainClientUploadPoller{
-		pt: pt,
-	}
-	_, err = poller.Poll(ctx)
-	if err != nil {
-		return err
-	}
-	l.Poller = poller
-	return nil
 }
 
 // HSMSecurityDomainClientUploadResponse contains the response from method HSMSecurityDomainClient.Upload.

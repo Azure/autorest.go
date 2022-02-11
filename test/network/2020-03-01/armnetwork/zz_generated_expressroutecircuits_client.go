@@ -57,20 +57,16 @@ func NewExpressRouteCircuitsClient(subscriptionID string, credential azcore.Toke
 // parameters - Parameters supplied to the create or update express route circuit operation.
 // options - ExpressRouteCircuitsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsClientBeginCreateOrUpdateOptions) (ExpressRouteCircuitsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsClientBeginCreateOrUpdateOptions) (*ExpressRouteCircuitsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
-		return ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an express route circuit.
@@ -122,20 +118,16 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateCreateRequest(ctx contex
 // circuitName - The name of the express route circuit.
 // options - ExpressRouteCircuitsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitsClient.BeginDelete
 // method.
-func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsClientBeginDeleteOptions) (ExpressRouteCircuitsClientDeletePollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsClientBeginDeleteOptions) (*ExpressRouteCircuitsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
-		return ExpressRouteCircuitsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified express route circuit.
@@ -453,20 +445,16 @@ func (client *ExpressRouteCircuitsClient) listAllHandleResponse(resp *http.Respo
 // devicePath - The path of the device.
 // options - ExpressRouteCircuitsClientBeginListArpTableOptions contains the optional parameters for the ExpressRouteCircuitsClient.BeginListArpTable
 // method.
-func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListArpTableOptions) (ExpressRouteCircuitsClientListArpTablePollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListArpTableOptions) (*ExpressRouteCircuitsClientListArpTablePoller, error) {
 	resp, err := client.listArpTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
-		return ExpressRouteCircuitsClientListArpTablePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitsClientListArpTablePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitsClientListArpTablePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitsClientListArpTablePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitsClientListArpTablePoller{pt: pt}, nil
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
@@ -529,20 +517,16 @@ func (client *ExpressRouteCircuitsClient) listArpTableCreateRequest(ctx context.
 // devicePath - The path of the device.
 // options - ExpressRouteCircuitsClientBeginListRoutesTableOptions contains the optional parameters for the ExpressRouteCircuitsClient.BeginListRoutesTable
 // method.
-func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableOptions) (ExpressRouteCircuitsClientListRoutesTablePollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableOptions) (*ExpressRouteCircuitsClientListRoutesTablePoller, error) {
 	resp, err := client.listRoutesTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
-		return ExpressRouteCircuitsClientListRoutesTablePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitsClientListRoutesTablePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitsClientListRoutesTablePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitsClientListRoutesTablePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitsClientListRoutesTablePoller{pt: pt}, nil
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
@@ -605,20 +589,16 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableCreateRequest(ctx conte
 // devicePath - The path of the device.
 // options - ExpressRouteCircuitsClientBeginListRoutesTableSummaryOptions contains the optional parameters for the ExpressRouteCircuitsClient.BeginListRoutesTableSummary
 // method.
-func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableSummaryOptions) (ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse, error) {
+func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableSummaryOptions) (*ExpressRouteCircuitsClientListRoutesTableSummaryPoller, error) {
 	resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
-		return ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRouteCircuitsClientListRoutesTableSummaryPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRouteCircuitsClientListRoutesTableSummaryPoller{pt: pt}, nil
 }
 
 // ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in

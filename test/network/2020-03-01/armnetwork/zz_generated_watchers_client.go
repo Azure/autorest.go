@@ -58,20 +58,16 @@ func NewWatchersClient(subscriptionID string, credential azcore.TokenCredential,
 // parameters - Parameters that determine how the connectivity check will be performed.
 // options - WatchersClientBeginCheckConnectivityOptions contains the optional parameters for the WatchersClient.BeginCheckConnectivity
 // method.
-func (client *WatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *WatchersClientBeginCheckConnectivityOptions) (WatchersClientCheckConnectivityPollerResponse, error) {
+func (client *WatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *WatchersClientBeginCheckConnectivityOptions) (*WatchersClientCheckConnectivityPoller, error) {
 	resp, err := client.checkConnectivity(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientCheckConnectivityPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientCheckConnectivityPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.CheckConnectivity", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientCheckConnectivityPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientCheckConnectivityPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientCheckConnectivityPoller{pt: pt}, nil
 }
 
 // CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given
@@ -179,20 +175,16 @@ func (client *WatchersClient) createOrUpdateHandleResponse(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // options - WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
-func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *WatchersClientBeginDeleteOptions) (WatchersClientDeletePollerResponse, error) {
+func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *WatchersClientBeginDeleteOptions) (*WatchersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
-		return WatchersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified network watcher resource.
@@ -301,20 +293,16 @@ func (client *WatchersClient) getHandleResponse(resp *http.Response) (WatchersCl
 // parameters - Parameters that determine Azure reachability report configuration.
 // options - WatchersClientBeginGetAzureReachabilityReportOptions contains the optional parameters for the WatchersClient.BeginGetAzureReachabilityReport
 // method.
-func (client *WatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *WatchersClientBeginGetAzureReachabilityReportOptions) (WatchersClientGetAzureReachabilityReportPollerResponse, error) {
+func (client *WatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *WatchersClientBeginGetAzureReachabilityReportOptions) (*WatchersClientGetAzureReachabilityReportPoller, error) {
 	resp, err := client.getAzureReachabilityReport(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetAzureReachabilityReportPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetAzureReachabilityReportPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetAzureReachabilityReport", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetAzureReachabilityReportPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetAzureReachabilityReportPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetAzureReachabilityReportPoller{pt: pt}, nil
 }
 
 // GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the
@@ -368,20 +356,16 @@ func (client *WatchersClient) getAzureReachabilityReportCreateRequest(ctx contex
 // parameters - Parameters that define a resource to query flow log and traffic analytics (optional) status.
 // options - WatchersClientBeginGetFlowLogStatusOptions contains the optional parameters for the WatchersClient.BeginGetFlowLogStatus
 // method.
-func (client *WatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *WatchersClientBeginGetFlowLogStatusOptions) (WatchersClientGetFlowLogStatusPollerResponse, error) {
+func (client *WatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *WatchersClientBeginGetFlowLogStatusOptions) (*WatchersClientGetFlowLogStatusPoller, error) {
 	resp, err := client.getFlowLogStatus(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetFlowLogStatusPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetFlowLogStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetFlowLogStatus", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetFlowLogStatusPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetFlowLogStatusPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetFlowLogStatusPoller{pt: pt}, nil
 }
 
 // GetFlowLogStatus - Queries status of flow log and traffic analytics (optional) on a specified resource.
@@ -438,20 +422,16 @@ func (client *WatchersClient) getFlowLogStatusCreateRequest(ctx context.Context,
 // parameters - Parameters to get network configuration diagnostic.
 // options - WatchersClientBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the WatchersClient.BeginGetNetworkConfigurationDiagnostic
 // method.
-func (client *WatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *WatchersClientBeginGetNetworkConfigurationDiagnosticOptions) (WatchersClientGetNetworkConfigurationDiagnosticPollerResponse, error) {
+func (client *WatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *WatchersClientBeginGetNetworkConfigurationDiagnosticOptions) (*WatchersClientGetNetworkConfigurationDiagnosticPoller, error) {
 	resp, err := client.getNetworkConfigurationDiagnostic(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetNetworkConfigurationDiagnostic", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetNetworkConfigurationDiagnosticPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetNetworkConfigurationDiagnosticPoller{pt: pt}, nil
 }
 
 // GetNetworkConfigurationDiagnostic - Gets Network Configuration Diagnostic data to help customers understand and debug network
@@ -508,20 +488,16 @@ func (client *WatchersClient) getNetworkConfigurationDiagnosticCreateRequest(ctx
 // parameters - Parameters that define the source and destination endpoint.
 // options - WatchersClientBeginGetNextHopOptions contains the optional parameters for the WatchersClient.BeginGetNextHop
 // method.
-func (client *WatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *WatchersClientBeginGetNextHopOptions) (WatchersClientGetNextHopPollerResponse, error) {
+func (client *WatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *WatchersClientBeginGetNextHopOptions) (*WatchersClientGetNextHopPoller, error) {
 	resp, err := client.getNextHop(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetNextHopPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetNextHopPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetNextHop", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetNextHopPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetNextHopPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetNextHopPoller{pt: pt}, nil
 }
 
 // GetNextHop - Gets the next hop from the specified VM.
@@ -630,20 +606,16 @@ func (client *WatchersClient) getTopologyHandleResponse(resp *http.Response) (Wa
 // parameters - Parameters that define the resource to troubleshoot.
 // options - WatchersClientBeginGetTroubleshootingOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshooting
 // method.
-func (client *WatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingOptions) (WatchersClientGetTroubleshootingPollerResponse, error) {
+func (client *WatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingOptions) (*WatchersClientGetTroubleshootingPoller, error) {
 	resp, err := client.getTroubleshooting(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetTroubleshootingPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetTroubleshootingPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetTroubleshooting", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetTroubleshootingPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetTroubleshootingPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetTroubleshootingPoller{pt: pt}, nil
 }
 
 // GetTroubleshooting - Initiate troubleshooting on a specified resource.
@@ -696,20 +668,16 @@ func (client *WatchersClient) getTroubleshootingCreateRequest(ctx context.Contex
 // parameters - Parameters that define the resource to query the troubleshooting result.
 // options - WatchersClientBeginGetTroubleshootingResultOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshootingResult
 // method.
-func (client *WatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingResultOptions) (WatchersClientGetTroubleshootingResultPollerResponse, error) {
+func (client *WatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingResultOptions) (*WatchersClientGetTroubleshootingResultPoller, error) {
 	resp, err := client.getTroubleshootingResult(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetTroubleshootingResultPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetTroubleshootingResultPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetTroubleshootingResult", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetTroubleshootingResultPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetTroubleshootingResultPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetTroubleshootingResultPoller{pt: pt}, nil
 }
 
 // GetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
@@ -762,20 +730,16 @@ func (client *WatchersClient) getTroubleshootingResultCreateRequest(ctx context.
 // parameters - Parameters that define the VM to check security groups for.
 // options - WatchersClientBeginGetVMSecurityRulesOptions contains the optional parameters for the WatchersClient.BeginGetVMSecurityRules
 // method.
-func (client *WatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *WatchersClientBeginGetVMSecurityRulesOptions) (WatchersClientGetVMSecurityRulesPollerResponse, error) {
+func (client *WatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *WatchersClientBeginGetVMSecurityRulesOptions) (*WatchersClientGetVMSecurityRulesPoller, error) {
 	resp, err := client.getVMSecurityRules(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientGetVMSecurityRulesPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientGetVMSecurityRulesPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetVMSecurityRules", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientGetVMSecurityRulesPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientGetVMSecurityRulesPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientGetVMSecurityRulesPoller{pt: pt}, nil
 }
 
 // GetVMSecurityRules - Gets the configured and effective security group rules on the specified VM.
@@ -912,20 +876,16 @@ func (client *WatchersClient) listAllHandleResponse(resp *http.Response) (Watche
 // parameters - Parameters that scope the list of available providers.
 // options - WatchersClientBeginListAvailableProvidersOptions contains the optional parameters for the WatchersClient.BeginListAvailableProviders
 // method.
-func (client *WatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *WatchersClientBeginListAvailableProvidersOptions) (WatchersClientListAvailableProvidersPollerResponse, error) {
+func (client *WatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *WatchersClientBeginListAvailableProvidersOptions) (*WatchersClientListAvailableProvidersPoller, error) {
 	resp, err := client.listAvailableProviders(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientListAvailableProvidersPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientListAvailableProvidersPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.ListAvailableProviders", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientListAvailableProvidersPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientListAvailableProvidersPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientListAvailableProvidersPoller{pt: pt}, nil
 }
 
 // ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available
@@ -979,20 +939,16 @@ func (client *WatchersClient) listAvailableProvidersCreateRequest(ctx context.Co
 // parameters - Parameters that define the configuration of flow log.
 // options - WatchersClientBeginSetFlowLogConfigurationOptions contains the optional parameters for the WatchersClient.BeginSetFlowLogConfiguration
 // method.
-func (client *WatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *WatchersClientBeginSetFlowLogConfigurationOptions) (WatchersClientSetFlowLogConfigurationPollerResponse, error) {
+func (client *WatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *WatchersClientBeginSetFlowLogConfigurationOptions) (*WatchersClientSetFlowLogConfigurationPoller, error) {
 	resp, err := client.setFlowLogConfiguration(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientSetFlowLogConfigurationPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientSetFlowLogConfigurationPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.SetFlowLogConfiguration", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientSetFlowLogConfigurationPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientSetFlowLogConfigurationPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientSetFlowLogConfigurationPoller{pt: pt}, nil
 }
 
 // SetFlowLogConfiguration - Configures flow log and traffic analytics (optional) on a specified resource.
@@ -1101,20 +1057,16 @@ func (client *WatchersClient) updateTagsHandleResponse(resp *http.Response) (Wat
 // parameters - Parameters that define the IP flow to be verified.
 // options - WatchersClientBeginVerifyIPFlowOptions contains the optional parameters for the WatchersClient.BeginVerifyIPFlow
 // method.
-func (client *WatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *WatchersClientBeginVerifyIPFlowOptions) (WatchersClientVerifyIPFlowPollerResponse, error) {
+func (client *WatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *WatchersClientBeginVerifyIPFlowOptions) (*WatchersClientVerifyIPFlowPoller, error) {
 	resp, err := client.verifyIPFlow(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
-		return WatchersClientVerifyIPFlowPollerResponse{}, err
+		return nil, err
 	}
-	result := WatchersClientVerifyIPFlowPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.VerifyIPFlow", "location", resp, client.pl)
 	if err != nil {
-		return WatchersClientVerifyIPFlowPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &WatchersClientVerifyIPFlowPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &WatchersClientVerifyIPFlowPoller{pt: pt}, nil
 }
 
 // VerifyIPFlow - Verify IP flow from the specified VM to a location given the currently configured NSG rules.

@@ -57,20 +57,16 @@ func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCr
 // parameters - Parameters supplied to the create or update Network Virtual Appliance.
 // options - VirtualAppliancesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (VirtualAppliancesClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*VirtualAppliancesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
-		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualAppliancesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualAppliancesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualAppliancesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
@@ -122,20 +118,16 @@ func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.C
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
 // method.
-func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (VirtualAppliancesClientDeletePollerResponse, error) {
+func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*VirtualAppliancesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
-		return VirtualAppliancesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualAppliancesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualAppliancesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualAppliancesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualAppliancesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualAppliancesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Network Virtual Appliance.

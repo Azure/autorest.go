@@ -57,20 +57,16 @@ func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, o
 // share - The share properties.
 // options - SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate
 // method.
-func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (SharesClientCreateOrUpdatePollerResponse, error) {
+func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*SharesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
-		return SharesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := SharesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SharesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return SharesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SharesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SharesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a new share or updates an existing share on the device.
@@ -126,20 +122,16 @@ func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, dev
 // name - The share name.
 // resourceGroupName - The resource group name.
 // options - SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
-func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (SharesClientDeletePollerResponse, error) {
+func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*SharesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return SharesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := SharesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SharesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return SharesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SharesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SharesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the share on the Data Box Edge/Data Box Gateway device.
@@ -308,20 +300,16 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Res
 // name - The share name.
 // resourceGroupName - The resource group name.
 // options - SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
-func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (SharesClientRefreshPollerResponse, error) {
+func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*SharesClientRefreshPoller, error) {
 	resp, err := client.refresh(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return SharesClientRefreshPollerResponse{}, err
+		return nil, err
 	}
-	result := SharesClientRefreshPollerResponse{}
 	pt, err := armruntime.NewPoller("SharesClient.Refresh", "", resp, client.pl)
 	if err != nil {
-		return SharesClientRefreshPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SharesClientRefreshPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SharesClientRefreshPoller{pt: pt}, nil
 }
 
 // Refresh - Refreshes the share metadata with the data from the cloud.

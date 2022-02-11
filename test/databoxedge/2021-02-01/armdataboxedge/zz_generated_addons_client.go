@@ -58,20 +58,16 @@ func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, o
 // addon - The addon properties.
 // options - AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate
 // method.
-func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (AddonsClientCreateOrUpdatePollerResponse, error) {
+func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*AddonsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
-		return AddonsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := AddonsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("AddonsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return AddonsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &AddonsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &AddonsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a addon.
@@ -132,20 +128,16 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 // addonName - The addon name.
 // resourceGroupName - The resource group name.
 // options - AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
-func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (AddonsClientDeletePollerResponse, error) {
+func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*AddonsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
-		return AddonsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := AddonsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("AddonsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return AddonsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &AddonsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &AddonsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the addon on the device.

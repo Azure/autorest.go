@@ -56,20 +56,16 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 // triggerSupportPackageRequest - The trigger support package request object
 // options - SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
 // method.
-func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (SupportPackagesClientTriggerSupportPackagePollerResponse, error) {
+func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*SupportPackagesClientTriggerSupportPackagePoller, error) {
 	resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
-		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
+		return nil, err
 	}
-	result := SupportPackagesClientTriggerSupportPackagePollerResponse{}
 	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl)
 	if err != nil {
-		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SupportPackagesClientTriggerSupportPackagePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SupportPackagesClientTriggerSupportPackagePoller{pt: pt}, nil
 }
 
 // TriggerSupportPackage - Triggers support package on the device

@@ -58,20 +58,16 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters supplied to the Create Dedicated Host.
 // options - DedicatedHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginCreateOrUpdate
 // method.
-func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (DedicatedHostsClientCreateOrUpdatePollerResponse, error) {
+func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (*DedicatedHostsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
-		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := DedicatedHostsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DedicatedHostsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DedicatedHostsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a dedicated host .
@@ -128,20 +124,16 @@ func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Cont
 // hostName - The name of the dedicated host.
 // options - DedicatedHostsClientBeginDeleteOptions contains the optional parameters for the DedicatedHostsClient.BeginDelete
 // method.
-func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (DedicatedHostsClientDeletePollerResponse, error) {
+func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (*DedicatedHostsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
-		return DedicatedHostsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := DedicatedHostsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DedicatedHostsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return DedicatedHostsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DedicatedHostsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DedicatedHostsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Delete a dedicated host.
@@ -315,20 +307,16 @@ func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Res
 // parameters - Parameters supplied to the Update Dedicated Host operation.
 // options - DedicatedHostsClientBeginUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginUpdate
 // method.
-func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (DedicatedHostsClientUpdatePollerResponse, error) {
+func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (*DedicatedHostsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
-		return DedicatedHostsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := DedicatedHostsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DedicatedHostsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return DedicatedHostsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DedicatedHostsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DedicatedHostsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Update an dedicated host .

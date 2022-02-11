@@ -58,20 +58,16 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 // securityRuleParameters - Parameters supplied to the create or update network security rule operation.
 // options - SecurityRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRulesClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (SecurityRulesClientCreateOrUpdatePollerResponse, error) {
+func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (*SecurityRulesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
-		return SecurityRulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := SecurityRulesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return SecurityRulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SecurityRulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SecurityRulesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
@@ -128,20 +124,16 @@ func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Conte
 // securityRuleName - The name of the security rule.
 // options - SecurityRulesClientBeginDeleteOptions contains the optional parameters for the SecurityRulesClient.BeginDelete
 // method.
-func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (SecurityRulesClientDeletePollerResponse, error) {
+func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (*SecurityRulesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
-		return SecurityRulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := SecurityRulesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityRulesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return SecurityRulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SecurityRulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SecurityRulesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified network security rule.

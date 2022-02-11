@@ -58,20 +58,16 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 // parameters - Parameters that define the operation to create a connection monitor.
 // options - ConnectionMonitorsClientBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitorsClient.BeginCreateOrUpdate
 // method.
-func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (ConnectionMonitorsClientCreateOrUpdatePollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*ConnectionMonitorsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
-		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ConnectionMonitorsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ConnectionMonitorsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ConnectionMonitorsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a connection monitor.
@@ -128,20 +124,16 @@ func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.
 // connectionMonitorName - The name of the connection monitor.
 // options - ConnectionMonitorsClientBeginDeleteOptions contains the optional parameters for the ConnectionMonitorsClient.BeginDelete
 // method.
-func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (ConnectionMonitorsClientDeletePollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*ConnectionMonitorsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ConnectionMonitorsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ConnectionMonitorsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ConnectionMonitorsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ConnectionMonitorsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified connection monitor.
@@ -307,20 +299,16 @@ func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) 
 // connectionMonitorName - The name given to the connection monitor.
 // options - ConnectionMonitorsClientBeginQueryOptions contains the optional parameters for the ConnectionMonitorsClient.BeginQuery
 // method.
-func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (ConnectionMonitorsClientQueryPollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*ConnectionMonitorsClientQueryPoller, error) {
 	resp, err := client.query(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsClientQueryPollerResponse{}, err
+		return nil, err
 	}
-	result := ConnectionMonitorsClientQueryPollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Query", "location", resp, client.pl)
 	if err != nil {
-		return ConnectionMonitorsClientQueryPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ConnectionMonitorsClientQueryPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ConnectionMonitorsClientQueryPoller{pt: pt}, nil
 }
 
 // Query - Query a snapshot of the most recent connection states.
@@ -377,20 +365,16 @@ func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, 
 // connectionMonitorName - The name of the connection monitor.
 // options - ConnectionMonitorsClientBeginStartOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStart
 // method.
-func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (ConnectionMonitorsClientStartPollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*ConnectionMonitorsClientStartPoller, error) {
 	resp, err := client.start(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsClientStartPollerResponse{}, err
+		return nil, err
 	}
-	result := ConnectionMonitorsClientStartPollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Start", "location", resp, client.pl)
 	if err != nil {
-		return ConnectionMonitorsClientStartPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ConnectionMonitorsClientStartPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ConnectionMonitorsClientStartPoller{pt: pt}, nil
 }
 
 // Start - Starts the specified connection monitor.
@@ -447,20 +431,16 @@ func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, 
 // connectionMonitorName - The name of the connection monitor.
 // options - ConnectionMonitorsClientBeginStopOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStop
 // method.
-func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (ConnectionMonitorsClientStopPollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*ConnectionMonitorsClientStopPoller, error) {
 	resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsClientStopPollerResponse{}, err
+		return nil, err
 	}
-	result := ConnectionMonitorsClientStopPollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Stop", "location", resp, client.pl)
 	if err != nil {
-		return ConnectionMonitorsClientStopPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ConnectionMonitorsClientStopPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ConnectionMonitorsClientStopPoller{pt: pt}, nil
 }
 
 // Stop - Stops the specified connection monitor.

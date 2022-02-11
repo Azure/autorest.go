@@ -40,20 +40,16 @@ func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
 // trigger - Trigger resource definition.
 // options - triggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the triggerClient.BeginCreateOrUpdateTrigger
 // method.
-func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *triggerClientBeginCreateOrUpdateTriggerOptions) (triggerClientCreateOrUpdateTriggerPollerResponse, error) {
+func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *triggerClientBeginCreateOrUpdateTriggerOptions) (*triggerClientCreateOrUpdateTriggerPoller, error) {
 	resp, err := client.createOrUpdateTrigger(ctx, triggerName, trigger, options)
 	if err != nil {
-		return triggerClientCreateOrUpdateTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result := triggerClientCreateOrUpdateTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.CreateOrUpdateTrigger", resp, client.pl)
 	if err != nil {
-		return triggerClientCreateOrUpdateTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &triggerClientCreateOrUpdateTriggerPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &triggerClientCreateOrUpdateTriggerPoller{pt: pt}, nil
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
@@ -99,20 +95,16 @@ func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 // triggerName - The trigger name.
 // options - triggerClientBeginDeleteTriggerOptions contains the optional parameters for the triggerClient.BeginDeleteTrigger
 // method.
-func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *triggerClientBeginDeleteTriggerOptions) (triggerClientDeleteTriggerPollerResponse, error) {
+func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName string, options *triggerClientBeginDeleteTriggerOptions) (*triggerClientDeleteTriggerPoller, error) {
 	resp, err := client.deleteTrigger(ctx, triggerName, options)
 	if err != nil {
-		return triggerClientDeleteTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result := triggerClientDeleteTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.DeleteTrigger", resp, client.pl)
 	if err != nil {
-		return triggerClientDeleteTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &triggerClientDeleteTriggerPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &triggerClientDeleteTriggerPoller{pt: pt}, nil
 }
 
 // DeleteTrigger - Deletes a trigger.
@@ -290,20 +282,16 @@ func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Res
 // triggerName - The trigger name.
 // options - triggerClientBeginStartTriggerOptions contains the optional parameters for the triggerClient.BeginStartTrigger
 // method.
-func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStartTriggerOptions) (triggerClientStartTriggerPollerResponse, error) {
+func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStartTriggerOptions) (*triggerClientStartTriggerPoller, error) {
 	resp, err := client.startTrigger(ctx, triggerName, options)
 	if err != nil {
-		return triggerClientStartTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result := triggerClientStartTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.StartTrigger", resp, client.pl)
 	if err != nil {
-		return triggerClientStartTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &triggerClientStartTriggerPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &triggerClientStartTriggerPoller{pt: pt}, nil
 }
 
 // StartTrigger - Starts a trigger.
@@ -346,20 +334,16 @@ func (client *triggerClient) startTriggerCreateRequest(ctx context.Context, trig
 // triggerName - The trigger name.
 // options - triggerClientBeginStopTriggerOptions contains the optional parameters for the triggerClient.BeginStopTrigger
 // method.
-func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStopTriggerOptions) (triggerClientStopTriggerPollerResponse, error) {
+func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStopTriggerOptions) (*triggerClientStopTriggerPoller, error) {
 	resp, err := client.stopTrigger(ctx, triggerName, options)
 	if err != nil {
-		return triggerClientStopTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result := triggerClientStopTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.StopTrigger", resp, client.pl)
 	if err != nil {
-		return triggerClientStopTriggerPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &triggerClientStopTriggerPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &triggerClientStopTriggerPoller{pt: pt}, nil
 }
 
 // StopTrigger - Stops a trigger.
@@ -402,20 +386,16 @@ func (client *triggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 // triggerName - The trigger name.
 // options - triggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the triggerClient.BeginSubscribeTriggerToEvents
 // method.
-func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *triggerClientBeginSubscribeTriggerToEventsOptions) (triggerClientSubscribeTriggerToEventsPollerResponse, error) {
+func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *triggerClientBeginSubscribeTriggerToEventsOptions) (*triggerClientSubscribeTriggerToEventsPoller, error) {
 	resp, err := client.subscribeTriggerToEvents(ctx, triggerName, options)
 	if err != nil {
-		return triggerClientSubscribeTriggerToEventsPollerResponse{}, err
+		return nil, err
 	}
-	result := triggerClientSubscribeTriggerToEventsPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.SubscribeTriggerToEvents", resp, client.pl)
 	if err != nil {
-		return triggerClientSubscribeTriggerToEventsPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &triggerClientSubscribeTriggerToEventsPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &triggerClientSubscribeTriggerToEventsPoller{pt: pt}, nil
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
@@ -458,20 +438,16 @@ func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 // triggerName - The trigger name.
 // options - triggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the triggerClient.BeginUnsubscribeTriggerFromEvents
 // method.
-func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *triggerClientBeginUnsubscribeTriggerFromEventsOptions) (triggerClientUnsubscribeTriggerFromEventsPollerResponse, error) {
+func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *triggerClientBeginUnsubscribeTriggerFromEventsOptions) (*triggerClientUnsubscribeTriggerFromEventsPoller, error) {
 	resp, err := client.unsubscribeTriggerFromEvents(ctx, triggerName, options)
 	if err != nil {
-		return triggerClientUnsubscribeTriggerFromEventsPollerResponse{}, err
+		return nil, err
 	}
-	result := triggerClientUnsubscribeTriggerFromEventsPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.pl)
 	if err != nil {
-		return triggerClientUnsubscribeTriggerFromEventsPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &triggerClientUnsubscribeTriggerFromEventsPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &triggerClientUnsubscribeTriggerFromEventsPoller{pt: pt}, nil
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.

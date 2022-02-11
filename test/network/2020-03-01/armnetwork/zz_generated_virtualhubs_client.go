@@ -57,20 +57,16 @@ func NewVirtualHubsClient(subscriptionID string, credential azcore.TokenCredenti
 // virtualHubParameters - Parameters supplied to create or update VirtualHub.
 // options - VirtualHubsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (VirtualHubsClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (*VirtualHubsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
-		return VirtualHubsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualHubsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualHubsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualHubsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualHubsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
@@ -121,20 +117,16 @@ func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // options - VirtualHubsClientBeginDeleteOptions contains the optional parameters for the VirtualHubsClient.BeginDelete method.
-func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (VirtualHubsClientDeletePollerResponse, error) {
+func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (*VirtualHubsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
-		return VirtualHubsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualHubsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualHubsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualHubsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualHubsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a VirtualHub.

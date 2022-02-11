@@ -58,20 +58,16 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 // containerParam - The container properties.
 // options - ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
 // method.
-func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (ContainersClientCreateOrUpdatePollerResponse, error) {
+func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*ContainersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
-		return ContainersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ContainersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ContainersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return ContainersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ContainersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ContainersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a new container or updates an existing container on the device.
@@ -132,20 +128,16 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
-func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (ContainersClientDeletePollerResponse, error) {
+func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*ContainersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return ContainersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ContainersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ContainersClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return ContainersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ContainersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ContainersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the container on the Data Box Edge/Data Box Gateway device.
@@ -329,20 +321,16 @@ func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Re
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
-func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (ContainersClientRefreshPollerResponse, error) {
+func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*ContainersClientRefreshPoller, error) {
 	resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return ContainersClientRefreshPollerResponse{}, err
+		return nil, err
 	}
-	result := ContainersClientRefreshPollerResponse{}
 	pt, err := armruntime.NewPoller("ContainersClient.Refresh", "", resp, client.pl)
 	if err != nil {
-		return ContainersClientRefreshPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ContainersClientRefreshPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ContainersClientRefreshPoller{pt: pt}, nil
 }
 
 // Refresh - Refreshes the container metadata with the data from the cloud.

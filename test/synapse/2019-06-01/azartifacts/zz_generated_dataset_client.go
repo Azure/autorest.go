@@ -40,20 +40,16 @@ func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
 // dataset - Dataset resource definition.
 // options - datasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the datasetClient.BeginCreateOrUpdateDataset
 // method.
-func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (datasetClientCreateOrUpdateDatasetPollerResponse, error) {
+func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (*datasetClientCreateOrUpdateDatasetPoller, error) {
 	resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
 	if err != nil {
-		return datasetClientCreateOrUpdateDatasetPollerResponse{}, err
+		return nil, err
 	}
-	result := datasetClientCreateOrUpdateDatasetPollerResponse{}
 	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.pl)
 	if err != nil {
-		return datasetClientCreateOrUpdateDatasetPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &datasetClientCreateOrUpdateDatasetPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &datasetClientCreateOrUpdateDatasetPoller{pt: pt}, nil
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
@@ -99,20 +95,16 @@ func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 // datasetName - The dataset name.
 // options - datasetClientBeginDeleteDatasetOptions contains the optional parameters for the datasetClient.BeginDeleteDataset
 // method.
-func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (datasetClientDeleteDatasetPollerResponse, error) {
+func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (*datasetClientDeleteDatasetPoller, error) {
 	resp, err := client.deleteDataset(ctx, datasetName, options)
 	if err != nil {
-		return datasetClientDeleteDatasetPollerResponse{}, err
+		return nil, err
 	}
-	result := datasetClientDeleteDatasetPollerResponse{}
 	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.pl)
 	if err != nil {
-		return datasetClientDeleteDatasetPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &datasetClientDeleteDatasetPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &datasetClientDeleteDatasetPoller{pt: pt}, nil
 }
 
 // DeleteDataset - Deletes a dataset.
@@ -244,20 +236,16 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Res
 // request - proposed new name.
 // options - datasetClientBeginRenameDatasetOptions contains the optional parameters for the datasetClient.BeginRenameDataset
 // method.
-func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (datasetClientRenameDatasetPollerResponse, error) {
+func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (*datasetClientRenameDatasetPoller, error) {
 	resp, err := client.renameDataset(ctx, datasetName, request, options)
 	if err != nil {
-		return datasetClientRenameDatasetPollerResponse{}, err
+		return nil, err
 	}
-	result := datasetClientRenameDatasetPollerResponse{}
 	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.pl)
 	if err != nil {
-		return datasetClientRenameDatasetPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &datasetClientRenameDatasetPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &datasetClientRenameDatasetPoller{pt: pt}, nil
 }
 
 // RenameDataset - Renames a dataset.

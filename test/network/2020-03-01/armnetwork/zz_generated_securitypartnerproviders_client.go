@@ -57,20 +57,16 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 // parameters - Parameters supplied to the create or update Security Partner Provider operation.
 // options - SecurityPartnerProvidersClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (SecurityPartnerProvidersClientCreateOrUpdatePollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*SecurityPartnerProvidersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
-		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SecurityPartnerProvidersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SecurityPartnerProvidersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
@@ -122,20 +118,16 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx co
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // options - SecurityPartnerProvidersClientBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
 // method.
-func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (SecurityPartnerProvidersClientDeletePollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*SecurityPartnerProvidersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
-		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := SecurityPartnerProvidersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &SecurityPartnerProvidersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &SecurityPartnerProvidersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified Security Partner Provider.

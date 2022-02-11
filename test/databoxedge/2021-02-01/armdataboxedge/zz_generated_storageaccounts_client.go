@@ -57,20 +57,16 @@ func NewStorageAccountsClient(subscriptionID string, credential azcore.TokenCred
 // storageAccount - The StorageAccount properties.
 // options - StorageAccountsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
 // method.
-func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (StorageAccountsClientCreateOrUpdatePollerResponse, error) {
+func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsClientBeginCreateOrUpdateOptions) (*StorageAccountsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
 	if err != nil {
-		return StorageAccountsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := StorageAccountsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return StorageAccountsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &StorageAccountsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &StorageAccountsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a new StorageAccount or updates an existing StorageAccount on the device.
@@ -127,20 +123,16 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 // resourceGroupName - The resource group name.
 // options - StorageAccountsClientBeginDeleteOptions contains the optional parameters for the StorageAccountsClient.BeginDelete
 // method.
-func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (StorageAccountsClientDeletePollerResponse, error) {
+func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsClientBeginDeleteOptions) (*StorageAccountsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
-		return StorageAccountsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := StorageAccountsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return StorageAccountsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &StorageAccountsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &StorageAccountsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the StorageAccount on the Data Box Edge/Data Box Gateway device.

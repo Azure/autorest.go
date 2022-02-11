@@ -59,20 +59,16 @@ func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenC
 // diskEncryptionSet - disk encryption set object supplied in the body of the Put disk encryption set operation.
 // options - DiskEncryptionSetsClientBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginCreateOrUpdate
 // method.
-func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (DiskEncryptionSetsClientCreateOrUpdatePollerResponse, error) {
+func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (*DiskEncryptionSetsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
-		return DiskEncryptionSetsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := DiskEncryptionSetsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DiskEncryptionSetsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return DiskEncryptionSetsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DiskEncryptionSetsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DiskEncryptionSetsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a disk encryption set
@@ -126,20 +122,16 @@ func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.
 // name length is 80 characters.
 // options - DiskEncryptionSetsClientBeginDeleteOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginDelete
 // method.
-func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (DiskEncryptionSetsClientDeletePollerResponse, error) {
+func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (*DiskEncryptionSetsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
-		return DiskEncryptionSetsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := DiskEncryptionSetsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DiskEncryptionSetsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return DiskEncryptionSetsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DiskEncryptionSetsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DiskEncryptionSetsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a disk encryption set.
@@ -341,20 +333,16 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *
 // diskEncryptionSet - disk encryption set object supplied in the body of the Patch disk encryption set operation.
 // options - DiskEncryptionSetsClientBeginUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginUpdate
 // method.
-func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (DiskEncryptionSetsClientUpdatePollerResponse, error) {
+func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (*DiskEncryptionSetsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
-		return DiskEncryptionSetsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := DiskEncryptionSetsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("DiskEncryptionSetsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return DiskEncryptionSetsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &DiskEncryptionSetsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &DiskEncryptionSetsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Updates (patches) a disk encryption set.

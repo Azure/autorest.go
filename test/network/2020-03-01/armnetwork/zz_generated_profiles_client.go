@@ -111,20 +111,16 @@ func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the NetworkProfile.
 // options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
-func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (ProfilesClientDeletePollerResponse, error) {
+func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*ProfilesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
-		return ProfilesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ProfilesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ProfilesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ProfilesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ProfilesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ProfilesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified network profile.

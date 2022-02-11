@@ -58,20 +58,16 @@ func NewFirewallPolicyRuleGroupsClient(subscriptionID string, credential azcore.
 // parameters - Parameters supplied to the create or update FirewallPolicyRuleGroup operation.
 // options - FirewallPolicyRuleGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsClientBeginCreateOrUpdateOptions) (FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsClientBeginCreateOrUpdateOptions) (*FirewallPolicyRuleGroupsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters, options)
 	if err != nil {
-		return FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &FirewallPolicyRuleGroupsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &FirewallPolicyRuleGroupsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
@@ -128,20 +124,16 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateCreateRequest(ctx co
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
 // options - FirewallPolicyRuleGroupsClientBeginDeleteOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.BeginDelete
 // method.
-func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsClientBeginDeleteOptions) (FirewallPolicyRuleGroupsClientDeletePollerResponse, error) {
+func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsClientBeginDeleteOptions) (*FirewallPolicyRuleGroupsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
-		return FirewallPolicyRuleGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := FirewallPolicyRuleGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return FirewallPolicyRuleGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &FirewallPolicyRuleGroupsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &FirewallPolicyRuleGroupsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified FirewallPolicyRuleGroup.

@@ -149,17 +149,17 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 // GetMultiplePagesLro - A long-running paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesLro(t *testing.T) {
 	client := newPagingClient()
-	resp, err := client.BeginGetMultiplePagesLRO(context.Background(), nil)
+	poller, err := client.BeginGetMultiplePagesLRO(context.Background(), nil)
 	require.NoError(t, err)
-	poller := resp.Poller
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	resp = PagingClientGetMultiplePagesLROPollerResponse{}
-	if err = resp.Resume(context.Background(), client, rt); err != nil {
+	poller = &PagingClientGetMultiplePagesLROPoller{}
+	pager, err := poller.Resume(context.Background(), client, rt)
+	require.NoError(t, err)
+	pager, err = poller.PollUntilDone(context.Background(), time.Second)
+	if err != nil {
 		t.Fatal(err)
 	}
-	pager, err := resp.PollUntilDone(context.Background(), time.Second)
-	require.NoError(t, err)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())

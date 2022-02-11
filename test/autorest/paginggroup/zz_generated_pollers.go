@@ -11,7 +11,8 @@ package paginggroup
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"net/http"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
+	"time"
 )
 
 // PagingClientGetMultiplePagesLROPoller provides polling facilities until the operation reaches a terminal state.
@@ -25,33 +26,57 @@ func (p *PagingClientGetMultiplePagesLROPoller) Done() bool {
 	return p.pt.Done()
 }
 
-// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// Poll fetches the latest state of the LRO.
+// If the LRO has completed successfully, the poller's state is updated and the
 // response is returned.
 // If the LRO has completed with failure or was cancelled, the poller's state is
 // updated and the error is returned.
 // If the LRO has not reached a terminal state, the poller's state is updated and
-// the latest HTTP response is returned.
+// a zero-value response is returned.
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
-// HTTP response or error.
-func (p *PagingClientGetMultiplePagesLROPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx)
-}
-
-// FinalResponse performs a final GET to the service and returns the final response
-// for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final *PagingClientGetMultiplePagesLROPager will be returned.
-func (p *PagingClientGetMultiplePagesLROPoller) FinalResponse(ctx context.Context) (*PagingClientGetMultiplePagesLROPager, error) {
-	respType := &PagingClientGetMultiplePagesLROPager{client: p.client}
-	if _, err := p.pt.FinalResponse(ctx, &respType.current.ProductResult); err != nil {
+// response or error.
+func (p *PagingClientGetMultiplePagesLROPoller) Poll(ctx context.Context) (*PagingClientGetMultiplePagesLROPager, error) {
+	result := &PagingClientGetMultiplePagesLROPager{}
+	if _, err := p.pt.Poll(ctx); err != nil {
 		return nil, err
 	}
-	return respType, nil
+	if !p.Done() {
+		return nil, nil
+	}
+	_, err := p.pt.FinalResponse(ctx, &result.current.ProductResult)
+	if err != nil {
+		return nil, err
+	}
+	result.client = p.client
+	return result, err
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
+func (p *PagingClientGetMultiplePagesLROPoller) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingClientGetMultiplePagesLROPager, error) {
+	result := &PagingClientGetMultiplePagesLROPager{client: p.client}
+	_, err := p.pt.PollUntilDone(ctx, freq, &result.current.ProductResult)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
 }
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
+// Returns an error if the poller is in a terminal state.
 func (p *PagingClientGetMultiplePagesLROPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
+}
+
+// Resume rehydrates a PagingClientGetMultiplePagesLROPoller from the provided client and resume token.
+// Returns an error if the token is isn't applicable to this poller type.
+func (p *PagingClientGetMultiplePagesLROPoller) Resume(ctx context.Context, client *PagingClient, token string) (*PagingClientGetMultiplePagesLROPager, error) {
+	var err error
+	if p.pt, err = armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.pl); err != nil {
+		return nil, err
+	}
+	p.client = client
+	return p.Poll(ctx)
 }

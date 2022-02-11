@@ -57,20 +57,16 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 // parameters - Parameters supplied to the create or update local network gateway operation.
 // options - LocalNetworkGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (LocalNetworkGatewaysClientCreateOrUpdatePollerResponse, error) {
+func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (*LocalNetworkGatewaysClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
-		return LocalNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := LocalNetworkGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("LocalNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return LocalNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LocalNetworkGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LocalNetworkGatewaysClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
@@ -122,20 +118,16 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateCreateRequest(ctx contex
 // localNetworkGatewayName - The name of the local network gateway.
 // options - LocalNetworkGatewaysClientBeginDeleteOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginDelete
 // method.
-func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (LocalNetworkGatewaysClientDeletePollerResponse, error) {
+func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (*LocalNetworkGatewaysClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
-		return LocalNetworkGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := LocalNetworkGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("LocalNetworkGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return LocalNetworkGatewaysClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &LocalNetworkGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &LocalNetworkGatewaysClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified local network gateway.

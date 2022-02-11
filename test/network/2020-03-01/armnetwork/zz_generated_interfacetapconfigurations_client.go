@@ -58,20 +58,16 @@ func NewInterfaceTapConfigurationsClient(subscriptionID string, credential azcor
 // tapConfigurationParameters - Parameters supplied to the create or update tap configuration operation.
 // options - InterfaceTapConfigurationsClientBeginCreateOrUpdateOptions contains the optional parameters for the InterfaceTapConfigurationsClient.BeginCreateOrUpdate
 // method.
-func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *InterfaceTapConfigurationsClientBeginCreateOrUpdateOptions) (InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse, error) {
+func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *InterfaceTapConfigurationsClientBeginCreateOrUpdateOptions) (*InterfaceTapConfigurationsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
-		return InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfaceTapConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InterfaceTapConfigurationsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InterfaceTapConfigurationsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
@@ -128,20 +124,16 @@ func (client *InterfaceTapConfigurationsClient) createOrUpdateCreateRequest(ctx 
 // tapConfigurationName - The name of the tap configuration.
 // options - InterfaceTapConfigurationsClientBeginDeleteOptions contains the optional parameters for the InterfaceTapConfigurationsClient.BeginDelete
 // method.
-func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *InterfaceTapConfigurationsClientBeginDeleteOptions) (InterfaceTapConfigurationsClientDeletePollerResponse, error) {
+func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *InterfaceTapConfigurationsClientBeginDeleteOptions) (*InterfaceTapConfigurationsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
-		return InterfaceTapConfigurationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := InterfaceTapConfigurationsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("InterfaceTapConfigurationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return InterfaceTapConfigurationsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &InterfaceTapConfigurationsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &InterfaceTapConfigurationsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.

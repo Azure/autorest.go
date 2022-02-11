@@ -57,20 +57,16 @@ func NewImagesClient(subscriptionID string, credential azcore.TokenCredential, o
 // parameters - Parameters supplied to the Create Image operation.
 // options - ImagesClientBeginCreateOrUpdateOptions contains the optional parameters for the ImagesClient.BeginCreateOrUpdate
 // method.
-func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesClientBeginCreateOrUpdateOptions) (ImagesClientCreateOrUpdatePollerResponse, error) {
+func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesClientBeginCreateOrUpdateOptions) (*ImagesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
-		return ImagesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ImagesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ImagesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return ImagesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ImagesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ImagesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update an image.
@@ -121,20 +117,16 @@ func (client *ImagesClient) createOrUpdateCreateRequest(ctx context.Context, res
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // options - ImagesClientBeginDeleteOptions contains the optional parameters for the ImagesClient.BeginDelete method.
-func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesClientBeginDeleteOptions) (ImagesClientDeletePollerResponse, error) {
+func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesClientBeginDeleteOptions) (*ImagesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, imageName, options)
 	if err != nil {
-		return ImagesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ImagesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ImagesClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return ImagesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ImagesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ImagesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes an Image.
@@ -334,20 +326,16 @@ func (client *ImagesClient) listByResourceGroupHandleResponse(resp *http.Respons
 // imageName - The name of the image.
 // parameters - Parameters supplied to the Update Image operation.
 // options - ImagesClientBeginUpdateOptions contains the optional parameters for the ImagesClient.BeginUpdate method.
-func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesClientBeginUpdateOptions) (ImagesClientUpdatePollerResponse, error) {
+func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesClientBeginUpdateOptions) (*ImagesClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
-		return ImagesClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ImagesClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ImagesClient.Update", "", resp, client.pl)
 	if err != nil {
-		return ImagesClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ImagesClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ImagesClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Update an image.

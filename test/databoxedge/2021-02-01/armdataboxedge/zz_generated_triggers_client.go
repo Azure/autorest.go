@@ -57,20 +57,16 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 // trigger - The trigger.
 // options - TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
 // method.
-func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (TriggersClientCreateOrUpdatePollerResponse, error) {
+func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*TriggersClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
-		return TriggersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := TriggersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("TriggersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return TriggersClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &TriggersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &TriggersClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a trigger.
@@ -126,20 +122,16 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 // name - The trigger name.
 // resourceGroupName - The resource group name.
 // options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
-func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (TriggersClientDeletePollerResponse, error) {
+func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*TriggersClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return TriggersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := TriggersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("TriggersClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return TriggersClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &TriggersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &TriggersClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the trigger on the gateway device.

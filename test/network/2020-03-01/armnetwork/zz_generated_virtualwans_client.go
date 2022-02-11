@@ -57,20 +57,16 @@ func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredenti
 // wanParameters - Parameters supplied to create or update VirtualWAN.
 // options - VirtualWansClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWansClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (VirtualWansClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (*VirtualWansClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
-		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualWansClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualWansClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualWansClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
@@ -121,20 +117,16 @@ func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being deleted.
 // options - VirtualWansClientBeginDeleteOptions contains the optional parameters for the VirtualWansClient.BeginDelete method.
-func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (VirtualWansClientDeletePollerResponse, error) {
+func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (*VirtualWansClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return VirtualWansClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualWansClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualWansClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return VirtualWansClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualWansClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualWansClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a VirtualWAN.

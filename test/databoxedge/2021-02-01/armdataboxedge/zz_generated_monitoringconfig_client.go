@@ -57,20 +57,16 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 // monitoringMetricConfiguration - The metric configuration.
 // options - MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
 // method.
-func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (MonitoringConfigClientCreateOrUpdatePollerResponse, error) {
+func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*MonitoringConfigClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
-		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := MonitoringConfigClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &MonitoringConfigClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &MonitoringConfigClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
@@ -127,20 +123,16 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 // resourceGroupName - The resource group name.
 // options - MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
 // method.
-func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (MonitoringConfigClientDeletePollerResponse, error) {
+func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*MonitoringConfigClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
-		return MonitoringConfigClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := MonitoringConfigClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return MonitoringConfigClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &MonitoringConfigClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &MonitoringConfigClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - deletes a new metric configuration for a role.

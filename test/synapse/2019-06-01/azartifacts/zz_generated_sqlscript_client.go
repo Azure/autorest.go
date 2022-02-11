@@ -40,20 +40,16 @@ func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
 // sqlScript - Sql Script resource definition.
 // options - sqlScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginCreateOrUpdateSQLScript
 // method.
-func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *sqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (sqlScriptClientCreateOrUpdateSQLScriptPollerResponse, error) {
+func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *sqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (*sqlScriptClientCreateOrUpdateSQLScriptPoller, error) {
 	resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
-		return sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}, err
+		return nil, err
 	}
-	result := sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}
 	pt, err := runtime.NewPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.pl)
 	if err != nil {
-		return sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &sqlScriptClientCreateOrUpdateSQLScriptPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &sqlScriptClientCreateOrUpdateSQLScriptPoller{pt: pt}, nil
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
@@ -99,20 +95,16 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 // sqlScriptName - The sql script name.
 // options - sqlScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginDeleteSQLScript
 // method.
-func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *sqlScriptClientBeginDeleteSQLScriptOptions) (sqlScriptClientDeleteSQLScriptPollerResponse, error) {
+func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *sqlScriptClientBeginDeleteSQLScriptOptions) (*sqlScriptClientDeleteSQLScriptPoller, error) {
 	resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
 	if err != nil {
-		return sqlScriptClientDeleteSQLScriptPollerResponse{}, err
+		return nil, err
 	}
-	result := sqlScriptClientDeleteSQLScriptPollerResponse{}
 	pt, err := runtime.NewPoller("sqlScriptClient.DeleteSQLScript", resp, client.pl)
 	if err != nil {
-		return sqlScriptClientDeleteSQLScriptPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &sqlScriptClientDeleteSQLScriptPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &sqlScriptClientDeleteSQLScriptPoller{pt: pt}, nil
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
@@ -244,20 +236,16 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http
 // request - proposed new name.
 // options - sqlScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginRenameSQLScript
 // method.
-func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *sqlScriptClientBeginRenameSQLScriptOptions) (sqlScriptClientRenameSQLScriptPollerResponse, error) {
+func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *sqlScriptClientBeginRenameSQLScriptOptions) (*sqlScriptClientRenameSQLScriptPoller, error) {
 	resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
 	if err != nil {
-		return sqlScriptClientRenameSQLScriptPollerResponse{}, err
+		return nil, err
 	}
-	result := sqlScriptClientRenameSQLScriptPollerResponse{}
 	pt, err := runtime.NewPoller("sqlScriptClient.RenameSQLScript", resp, client.pl)
 	if err != nil {
-		return sqlScriptClientRenameSQLScriptPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &sqlScriptClientRenameSQLScriptPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &sqlScriptClientRenameSQLScriptPoller{pt: pt}, nil
 }
 
 // RenameSQLScript - Renames a sqlScript.

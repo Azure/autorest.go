@@ -57,20 +57,16 @@ func NewExpressRoutePortsClient(subscriptionID string, credential azcore.TokenCr
 // parameters - Parameters supplied to the create ExpressRoutePort operation.
 // options - ExpressRoutePortsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRoutePortsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsClientBeginCreateOrUpdateOptions) (ExpressRoutePortsClientCreateOrUpdatePollerResponse, error) {
+func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsClientBeginCreateOrUpdateOptions) (*ExpressRoutePortsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {
-		return ExpressRoutePortsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRoutePortsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ExpressRoutePortsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRoutePortsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRoutePortsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
@@ -122,20 +118,16 @@ func (client *ExpressRoutePortsClient) createOrUpdateCreateRequest(ctx context.C
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // options - ExpressRoutePortsClientBeginDeleteOptions contains the optional parameters for the ExpressRoutePortsClient.BeginDelete
 // method.
-func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsClientBeginDeleteOptions) (ExpressRoutePortsClientDeletePollerResponse, error) {
+func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsClientBeginDeleteOptions) (*ExpressRoutePortsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
-		return ExpressRoutePortsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ExpressRoutePortsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ExpressRoutePortsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ExpressRoutePortsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ExpressRoutePortsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified ExpressRoutePort resource.

@@ -60,20 +60,16 @@ func NewVirtualMachineScaleSetVMsClient(subscriptionID string, credential azcore
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginDeallocate
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeallocateOptions) (VirtualMachineScaleSetVMsClientDeallocatePollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeallocateOptions) (*VirtualMachineScaleSetVMsClientDeallocatePoller, error) {
 	resp, err := client.deallocate(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientDeallocatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientDeallocatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Deallocate", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientDeallocatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientDeallocatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientDeallocatePoller{pt: pt}, nil
 }
 
 // Deallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the
@@ -131,20 +127,16 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateCreateRequest(ctx conte
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginDelete
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeleteOptions) (VirtualMachineScaleSetVMsClientDeletePollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeleteOptions) (*VirtualMachineScaleSetVMsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes a virtual machine from a VM scale set.
@@ -388,20 +380,16 @@ func (client *VirtualMachineScaleSetVMsClient) listHandleResponse(resp *http.Res
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginPerformMaintenance
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPerformMaintenanceOptions) (VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPerformMaintenanceOptions) (*VirtualMachineScaleSetVMsClientPerformMaintenancePoller, error) {
 	resp, err := client.performMaintenance(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.PerformMaintenance", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientPerformMaintenancePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientPerformMaintenancePoller{pt: pt}, nil
 }
 
 // PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it
@@ -460,20 +448,16 @@ func (client *VirtualMachineScaleSetVMsClient) performMaintenanceCreateRequest(c
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginPowerOff
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPowerOffOptions) (VirtualMachineScaleSetVMsClientPowerOffPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPowerOffOptions) (*VirtualMachineScaleSetVMsClientPowerOffPoller, error) {
 	resp, err := client.powerOff(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientPowerOffPollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientPowerOffPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.PowerOff", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientPowerOffPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientPowerOffPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientPowerOffPoller{pt: pt}, nil
 }
 
 // PowerOff - Power off (stop) a virtual machine in a VM scale set. Note that resources are still attached and you are getting
@@ -535,20 +519,16 @@ func (client *VirtualMachineScaleSetVMsClient) powerOffCreateRequest(ctx context
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginRedeploy
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRedeployOptions) (VirtualMachineScaleSetVMsClientRedeployPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRedeployOptions) (*VirtualMachineScaleSetVMsClientRedeployPoller, error) {
 	resp, err := client.redeploy(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientRedeployPollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientRedeployPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Redeploy", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientRedeployPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientRedeployPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientRedeployPoller{pt: pt}, nil
 }
 
 // Redeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back
@@ -605,20 +585,16 @@ func (client *VirtualMachineScaleSetVMsClient) redeployCreateRequest(ctx context
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginReimage
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageOptions) (VirtualMachineScaleSetVMsClientReimagePollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageOptions) (*VirtualMachineScaleSetVMsClientReimagePoller, error) {
 	resp, err := client.reimage(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientReimagePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientReimagePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Reimage", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientReimagePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientReimagePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientReimagePoller{pt: pt}, nil
 }
 
 // Reimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
@@ -678,20 +654,16 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginReimageAll
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageAllOptions) (VirtualMachineScaleSetVMsClientReimageAllPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageAllOptions) (*VirtualMachineScaleSetVMsClientReimageAllPoller, error) {
 	resp, err := client.reimageAll(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientReimageAllPollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientReimageAllPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.ReimageAll", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientReimageAllPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientReimageAllPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientReimageAllPoller{pt: pt}, nil
 }
 
 // ReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation
@@ -748,20 +720,16 @@ func (client *VirtualMachineScaleSetVMsClient) reimageAllCreateRequest(ctx conte
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginRestart
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRestartOptions) (VirtualMachineScaleSetVMsClientRestartPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRestartOptions) (*VirtualMachineScaleSetVMsClientRestartPoller, error) {
 	resp, err := client.restart(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientRestartPollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientRestartPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Restart", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientRestartPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientRestartPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientRestartPoller{pt: pt}, nil
 }
 
 // Restart - Restarts a virtual machine in a VM scale set.
@@ -818,20 +786,16 @@ func (client *VirtualMachineScaleSetVMsClient) restartCreateRequest(ctx context.
 // parameters - Parameters supplied to the Run command operation.
 // options - VirtualMachineScaleSetVMsClientBeginRunCommandOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginRunCommand
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters RunCommandInput, options *VirtualMachineScaleSetVMsClientBeginRunCommandOptions) (VirtualMachineScaleSetVMsClientRunCommandPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters RunCommandInput, options *VirtualMachineScaleSetVMsClientBeginRunCommandOptions) (*VirtualMachineScaleSetVMsClientRunCommandPoller, error) {
 	resp, err := client.runCommand(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientRunCommandPollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientRunCommandPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.RunCommand", "location", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientRunCommandPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientRunCommandPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientRunCommandPoller{pt: pt}, nil
 }
 
 // RunCommand - Run command on a virtual machine in a VM scale set.
@@ -940,20 +904,16 @@ func (client *VirtualMachineScaleSetVMsClient) simulateEvictionCreateRequest(ctx
 // instanceID - The instance ID of the virtual machine.
 // options - VirtualMachineScaleSetVMsClientBeginStartOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginStart
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginStartOptions) (VirtualMachineScaleSetVMsClientStartPollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginStartOptions) (*VirtualMachineScaleSetVMsClientStartPoller, error) {
 	resp, err := client.start(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientStartPollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientStartPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Start", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientStartPollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientStartPoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientStartPoller{pt: pt}, nil
 }
 
 // Start - Starts a virtual machine in a VM scale set.
@@ -1010,20 +970,16 @@ func (client *VirtualMachineScaleSetVMsClient) startCreateRequest(ctx context.Co
 // parameters - Parameters supplied to the Update Virtual Machine Scale Sets VM operation.
 // options - VirtualMachineScaleSetVMsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginUpdate
 // method.
-func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMsClientBeginUpdateOptions) (VirtualMachineScaleSetVMsClientUpdatePollerResponse, error) {
+func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMsClientBeginUpdateOptions) (*VirtualMachineScaleSetVMsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetVMsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetVMsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetVMsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetVMsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Updates a virtual machine of a VM scale set.

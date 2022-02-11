@@ -5,10 +5,10 @@
 
 import { Session } from '@autorest/extension-base';
 import { comment } from '@azure-tools/codegen';
-import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
+import { CodeModel, ObjectSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { commentLength, PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, discriminatorFinalResponse, emitPoller, getFinalResponseEnvelopeName, sortAscending } from './helpers';
+import { commentLength } from '../common/helpers';
+import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
 
@@ -23,10 +23,6 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   const structs = new Array<StructDef>();
   for (const respEnv of values(responseEnvelopes)) {
     const respType = generateStruct(imports, respEnv.language.go!, respEnv.properties);
-    if (respEnv.language.go!.isLRO) {
-      generatePollUntilDoneForResponse(respType, <boolean>session.model.language.go!.azureARM);
-      generateResumeForResponse(respType, session.model.language.go!.openApiType === 'arm', imports);
-    }
     generateUnmarshallerForResponeEnvelope(respType);
     structs.push(respType);
   }
@@ -80,81 +76,4 @@ function generateUnmarshallerForResponeEnvelope(structDef: StructDef) {
   unmarshaller += '\treturn nil\n';
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
-}
-
-function generatePollUntilDoneForResponse(structDef: StructDef, isAzureARM: boolean) {
-  const pagedResponse = (<PollerInfo>structDef.Language.pollerInfo).op.language.go!.pageableType;
-  const respType = getResponseType(<PollerInfo>structDef.Language.pollerInfo);
-  let pollUntilDone = `func (l ${structDef.Language.name}) PollUntilDone(ctx context.Context, freq time.Duration) (`;
-  if (pagedResponse) {
-    pollUntilDone += '*';
-  }
-  pollUntilDone += `${respType}, error) {\n`;
-  pollUntilDone += `\trespType := `;
-  if (pagedResponse) {
-    pollUntilDone += '&';
-  }
-  pollUntilDone += `${respType}{}\n`;
-  const finalRespEnv = <ObjectSchema>structDef.Language.pollerInfo.op.language.go!.finalResponseEnv;
-  const resultProp = <Property>finalRespEnv.language.go!.resultProp;
-  if (resultProp) {
-    let current = '';
-    if (pagedResponse) {
-      current = '.current';
-    }
-    pollUntilDone += `\t_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}${discriminatorFinalResponse(finalRespEnv)})\n`;
-  } else {
-    // the operation doesn't return a model
-    pollUntilDone += `\t_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;
-  }
-  pollUntilDone += '\tif err != nil {\n';
-  pollUntilDone += '\t\treturn respType, err\n';
-  pollUntilDone += '\t}\n';
-  if (pagedResponse) {
-    pollUntilDone += '\trespType.client = l.Poller.client\n';
-  }
-  pollUntilDone += '\treturn respType, nil\n';
-  pollUntilDone += '}\n\n';
-  let desc = 'PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.\nfreq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.';
-  if (isAzureARM) {
-    desc += '\nA good starting value is 30 seconds. Note that some resources might benefit from a different value.';
-  }
-  structDef.Methods.push({
-    name: 'PollUntilDone',
-    desc: desc,
-    text: pollUntilDone });
-}
-
-function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports: ImportManager) {
-  const pollerInfo = <PollerInfo>structDef.Language.pollerInfo;
-  const clientName = pollerInfo.op.language.go!.clientName;
-  const apiMethod = pollerInfo.op.language.go!.name;
-  let resume = `func (l *${structDef.Language.name}) Resume(ctx context.Context, client *${clientName}, token string) error {\n`;
-  if (isARM) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
-    resume += `\tpt, err := armruntime.NewPollerFromResumeToken("${clientName}.${apiMethod}", token, client.pl)\n`;
-  } else {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    resume += `\tpt, err := runtime.NewPollerFromResumeToken("${clientName}.${apiMethod}",token, client.pl)\n`;
-  }
-  resume += '\tif err != nil {\n';
-  resume += `\t\treturn err\n`;
-  resume += '\t}\n';
-  resume += `\tpoller := ${emitPoller(pollerInfo.op)}`;
-  resume += '\t_, err = poller.Poll(ctx)\n';
-  resume += '\tif err != nil {\n';
-  resume += `\t\treturn err\n`;
-  resume += '\t}\n';
-  resume += `\tl.Poller = poller\n`;
-  resume += `\treturn nil\n`;
-  resume += '}\n\n';
-  structDef.Methods.push({ name: 'Resume', desc: `Resume rehydrates a ${structDef.Language.name} from the provided client and resume token.`, text: resume });
-}
-
-function getResponseType(poller: PollerInfo): string {
-  // check for pager must come first
-  if (poller.op.language.go!.pageableType) {
-    return (<PagerInfo>poller.op.language.go!.pageableType).name;
-  }
-  return getFinalResponseEnvelopeName(poller.op);
 }

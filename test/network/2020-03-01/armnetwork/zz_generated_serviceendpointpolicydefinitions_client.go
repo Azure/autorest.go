@@ -58,20 +58,16 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 // serviceEndpointPolicyDefinitions - Parameters supplied to the create or update service endpoint policy operation.
 // options - ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate
 // method.
-func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
 	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
@@ -128,20 +124,16 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 // serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
 // options - ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginDelete
 // method.
-func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (ServiceEndpointPolicyDefinitionsClientDeletePollerResponse, error) {
+func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*ServiceEndpointPolicyDefinitionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ServiceEndpointPolicyDefinitionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ServiceEndpointPolicyDefinitionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified ServiceEndpoint policy definitions.

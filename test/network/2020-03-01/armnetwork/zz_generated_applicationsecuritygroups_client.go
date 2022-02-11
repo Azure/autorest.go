@@ -57,20 +57,16 @@ func NewApplicationSecurityGroupsClient(subscriptionID string, credential azcore
 // parameters - Parameters supplied to the create or update ApplicationSecurityGroup operation.
 // options - ApplicationSecurityGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationSecurityGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsClientBeginCreateOrUpdateOptions) (ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse, error) {
+func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsClientBeginCreateOrUpdateOptions) (*ApplicationSecurityGroupsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
-		return ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationSecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ApplicationSecurityGroupsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ApplicationSecurityGroupsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates an application security group.
@@ -122,20 +118,16 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateCreateRequest(ctx c
 // applicationSecurityGroupName - The name of the application security group.
 // options - ApplicationSecurityGroupsClientBeginDeleteOptions contains the optional parameters for the ApplicationSecurityGroupsClient.BeginDelete
 // method.
-func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsClientBeginDeleteOptions) (ApplicationSecurityGroupsClientDeletePollerResponse, error) {
+func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsClientBeginDeleteOptions) (*ApplicationSecurityGroupsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
-		return ApplicationSecurityGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := ApplicationSecurityGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationSecurityGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return ApplicationSecurityGroupsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &ApplicationSecurityGroupsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &ApplicationSecurityGroupsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified application security group.

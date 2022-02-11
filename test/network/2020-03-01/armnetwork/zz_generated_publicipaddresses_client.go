@@ -57,20 +57,16 @@ func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCr
 // parameters - Parameters supplied to the create or update public IP address operation.
 // options - PublicIPAddressesClientBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPAddressesClient.BeginCreateOrUpdate
 // method.
-func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (PublicIPAddressesClientCreateOrUpdatePollerResponse, error) {
+func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*PublicIPAddressesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {
-		return PublicIPAddressesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := PublicIPAddressesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PublicIPAddressesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return PublicIPAddressesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PublicIPAddressesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PublicIPAddressesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP address.
@@ -122,20 +118,16 @@ func (client *PublicIPAddressesClient) createOrUpdateCreateRequest(ctx context.C
 // publicIPAddressName - The name of the subnet.
 // options - PublicIPAddressesClientBeginDeleteOptions contains the optional parameters for the PublicIPAddressesClient.BeginDelete
 // method.
-func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (PublicIPAddressesClientDeletePollerResponse, error) {
+func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*PublicIPAddressesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
-		return PublicIPAddressesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := PublicIPAddressesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PublicIPAddressesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return PublicIPAddressesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &PublicIPAddressesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &PublicIPAddressesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified public IP address.

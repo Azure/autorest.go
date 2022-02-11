@@ -6,6 +6,7 @@ package lrogroup
 import (
 	"context"
 	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -32,76 +33,66 @@ func ctxWithHTTPHeader() context.Context {
 // BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After' headers, Polls return a 200 with a response body after success
 func TestBeginPost202Retry200(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
-	env, err := op.BeginPost202Retry200(ctxWithHTTPHeader(), nil)
+	poller, err := op.BeginPost202Retry200(ctxWithHTTPHeader(), nil)
 	require.NoError(t, err)
-	tk, err := env.Poller.ResumeToken()
+	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
-	env = LROsCustomHeaderClientPost202Retry200PollerResponse{}
-	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
-		t.Fatal(err)
-	}
-	for {
-		_, err = env.Poller.Poll(ctxWithHTTPHeader())
+	poller = &LROsCustomHeaderClientPost202Retry200Poller{}
+	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
+	require.NoError(t, err)
+	for !poller.Done() {
+		pr, err = poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if env.Poller.Done() {
-			break
-		}
 	}
-	_, err = env.Poller.FinalResponse(context.Background())
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
+	if !reflect.ValueOf(pr).IsZero() {
+		t.Fatal("expected zero-value final response")
 	}
 }
 
 // BeginPostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request, service returns a 202 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
-	env, err := op.BeginPostAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
+	poller, err := op.BeginPostAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
 	require.NoError(t, err)
-	tk, err := env.Poller.ResumeToken()
+	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
-	env = LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}
-	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
-		t.Fatal(err)
-	}
-	for {
-		_, err = env.Poller.Poll(ctxWithHTTPHeader())
+	poller = &LROsCustomHeaderClientPostAsyncRetrySucceededPoller{}
+	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
+	require.NoError(t, err)
+	for !poller.Done() {
+		pr, err = poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if env.Poller.Done() {
-			break
-		}
 	}
-	_, err = env.Poller.FinalResponse(context.Background())
+	pr, err = poller.Poll(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
+	}
+	if !reflect.ValueOf(pr).IsZero() {
+		t.Fatal("expected zero-value final response")
 	}
 }
 
 // BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
-	env, err := op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), nil)
+	poller, err := op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), nil)
 	require.NoError(t, err)
-	tk, err := env.Poller.ResumeToken()
+	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
-	env = LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}
-	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
-		t.Fatal(err)
-	}
-	for {
-		_, err = env.Poller.Poll(ctxWithHTTPHeader())
+	poller = &LROsCustomHeaderClientPut201CreatingSucceeded200Poller{}
+	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
+	require.NoError(t, err)
+	for !poller.Done() {
+		pr, err = poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if env.Poller.Done() {
-			break
-		}
 	}
-	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
+	pr, err = poller.Poll(ctxWithHTTPHeader())
 	require.NoError(t, err)
 	if r := cmp.Diff(pr.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -117,25 +108,19 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 // BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
-	env, err := op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
+	poller, err := op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
 	require.NoError(t, err)
-	tk, err := env.Poller.ResumeToken()
+	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
-	env = LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}
-	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
-		t.Fatal(err)
-	}
-	for {
-		_, err = env.Poller.Poll(ctxWithHTTPHeader())
+	poller = &LROsCustomHeaderClientPutAsyncRetrySucceededPoller{}
+	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
+	require.NoError(t, err)
+	for !poller.Done() {
+		pr, err = poller.Poll(ctxWithHTTPHeader())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if env.Poller.Done() {
-			break
-		}
 	}
-	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
-	require.NoError(t, err)
 	if r := cmp.Diff(pr.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),

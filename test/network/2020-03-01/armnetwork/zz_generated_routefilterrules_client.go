@@ -58,20 +58,16 @@ func NewRouteFilterRulesClient(subscriptionID string, credential azcore.TokenCre
 // routeFilterRuleParameters - Parameters supplied to the create or update route filter rule operation.
 // options - RouteFilterRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilterRulesClient.BeginCreateOrUpdate
 // method.
-func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesClientBeginCreateOrUpdateOptions) (RouteFilterRulesClientCreateOrUpdatePollerResponse, error) {
+func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesClientBeginCreateOrUpdateOptions) (*RouteFilterRulesClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, options)
 	if err != nil {
-		return RouteFilterRulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := RouteFilterRulesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteFilterRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
-		return RouteFilterRulesClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &RouteFilterRulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &RouteFilterRulesClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Creates or updates a route in the specified route filter.
@@ -128,20 +124,16 @@ func (client *RouteFilterRulesClient) createOrUpdateCreateRequest(ctx context.Co
 // ruleName - The name of the rule.
 // options - RouteFilterRulesClientBeginDeleteOptions contains the optional parameters for the RouteFilterRulesClient.BeginDelete
 // method.
-func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientBeginDeleteOptions) (RouteFilterRulesClientDeletePollerResponse, error) {
+func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesClientBeginDeleteOptions) (*RouteFilterRulesClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
-		return RouteFilterRulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := RouteFilterRulesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteFilterRulesClient.Delete", "location", resp, client.pl)
 	if err != nil {
-		return RouteFilterRulesClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &RouteFilterRulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &RouteFilterRulesClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Deletes the specified rule from a route filter.

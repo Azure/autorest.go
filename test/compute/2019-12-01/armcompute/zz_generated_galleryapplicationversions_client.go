@@ -61,20 +61,16 @@ func NewGalleryApplicationVersionsClient(subscriptionID string, credential azcor
 // galleryApplicationVersion - Parameters supplied to the create or update gallery Application Version operation.
 // options - GalleryApplicationVersionsClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginCreateOrUpdate
 // method.
-func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsClientBeginCreateOrUpdateOptions) (GalleryApplicationVersionsClientCreateOrUpdatePollerResponse, error) {
+func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsClientBeginCreateOrUpdateOptions) (*GalleryApplicationVersionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
-		return GalleryApplicationVersionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleryApplicationVersionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return GalleryApplicationVersionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleryApplicationVersionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleryApplicationVersionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - Create or update a gallery Application Version.
@@ -136,20 +132,16 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateCreateRequest(ctx 
 // galleryApplicationVersionName - The name of the gallery Application Version to be deleted.
 // options - GalleryApplicationVersionsClientBeginDeleteOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginDelete
 // method.
-func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsClientBeginDeleteOptions) (GalleryApplicationVersionsClientDeletePollerResponse, error) {
+func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsClientBeginDeleteOptions) (*GalleryApplicationVersionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
-		return GalleryApplicationVersionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleryApplicationVersionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return GalleryApplicationVersionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleryApplicationVersionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleryApplicationVersionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - Delete a gallery Application Version.
@@ -342,20 +334,16 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationHandleRe
 // galleryApplicationVersion - Parameters supplied to the update gallery Application Version operation.
 // options - GalleryApplicationVersionsClientBeginUpdateOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginUpdate
 // method.
-func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsClientBeginUpdateOptions) (GalleryApplicationVersionsClientUpdatePollerResponse, error) {
+func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsClientBeginUpdateOptions) (*GalleryApplicationVersionsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
-		return GalleryApplicationVersionsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := GalleryApplicationVersionsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return GalleryApplicationVersionsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &GalleryApplicationVersionsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &GalleryApplicationVersionsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - Update a gallery Application Version.

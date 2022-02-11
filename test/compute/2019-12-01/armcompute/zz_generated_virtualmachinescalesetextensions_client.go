@@ -58,20 +58,16 @@ func NewVirtualMachineScaleSetExtensionsClient(subscriptionID string, credential
 // extensionParameters - Parameters supplied to the Create VM scale set Extension operation.
 // options - VirtualMachineScaleSetExtensionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsClientBeginCreateOrUpdateOptions) (VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse, error) {
+func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsClientBeginCreateOrUpdateOptions) (*VirtualMachineScaleSetExtensionsClientCreateOrUpdatePoller, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
-		return VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetExtensionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetExtensionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetExtensionsClientCreateOrUpdatePoller{pt: pt}, nil
 }
 
 // CreateOrUpdate - The operation to create or update an extension.
@@ -128,20 +124,16 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateCreateReques
 // vmssExtensionName - The name of the VM scale set extension.
 // options - VirtualMachineScaleSetExtensionsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.BeginDelete
 // method.
-func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsClientBeginDeleteOptions) (VirtualMachineScaleSetExtensionsClientDeletePollerResponse, error) {
+func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsClientBeginDeleteOptions) (*VirtualMachineScaleSetExtensionsClientDeletePoller, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
 	if err != nil {
-		return VirtualMachineScaleSetExtensionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetExtensionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetExtensionsClient.Delete", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetExtensionsClientDeletePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetExtensionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetExtensionsClientDeletePoller{pt: pt}, nil
 }
 
 // Delete - The operation to delete the extension.
@@ -315,20 +307,16 @@ func (client *VirtualMachineScaleSetExtensionsClient) listHandleResponse(resp *h
 // extensionParameters - Parameters supplied to the Update VM scale set Extension operation.
 // options - VirtualMachineScaleSetExtensionsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.BeginUpdate
 // method.
-func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtensionUpdate, options *VirtualMachineScaleSetExtensionsClientBeginUpdateOptions) (VirtualMachineScaleSetExtensionsClientUpdatePollerResponse, error) {
+func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtensionUpdate, options *VirtualMachineScaleSetExtensionsClientBeginUpdateOptions) (*VirtualMachineScaleSetExtensionsClientUpdatePoller, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
-		return VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result := VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetExtensionsClient.Update", "", resp, client.pl)
 	if err != nil {
-		return VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{}, err
+		return nil, err
 	}
-	result.Poller = &VirtualMachineScaleSetExtensionsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
+	return &VirtualMachineScaleSetExtensionsClientUpdatePoller{pt: pt}, nil
 }
 
 // Update - The operation to update an extension.
