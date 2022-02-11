@@ -62,7 +62,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetEmptyResponse{RawResponse: resp}, nil
+	return PathsClientGetEmptyResponse{}, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.

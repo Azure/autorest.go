@@ -126,7 +126,7 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, resource
 
 // createHandleResponse handles the Create response.
 func (client *directoryClient) createHandleResponse(resp *http.Response) (directoryClientCreateResponse, error) {
-	result := directoryClientCreateResponse{RawResponse: resp}
+	result := directoryClientCreateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -226,7 +226,7 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 
 // deleteHandleResponse handles the Delete response.
 func (client *directoryClient) deleteHandleResponse(resp *http.Response) (directoryClientDeleteResponse, error) {
-	result := directoryClientDeleteResponse{RawResponse: resp}
+	result := directoryClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
 	}
@@ -310,7 +310,7 @@ func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context
 
 // getAccessControlHandleResponse handles the GetAccessControl response.
 func (client *directoryClient) getAccessControlHandleResponse(resp *http.Response) (directoryClientGetAccessControlResponse, error) {
-	result := directoryClientGetAccessControlResponse{RawResponse: resp}
+	result := directoryClientGetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -462,7 +462,7 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 
 // renameHandleResponse handles the Rename response.
 func (client *directoryClient) renameHandleResponse(resp *http.Response) (directoryClientRenameResponse, error) {
-	result := directoryClientRenameResponse{RawResponse: resp}
+	result := directoryClientRenameResponse{}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
 	}
@@ -572,7 +572,7 @@ func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context
 
 // setAccessControlHandleResponse handles the SetAccessControl response.
 func (client *directoryClient) setAccessControlHandleResponse(resp *http.Response) (directoryClientSetAccessControlResponse, error) {
-	result := directoryClientSetAccessControlResponse{RawResponse: resp}
+	result := directoryClientSetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {

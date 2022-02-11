@@ -98,7 +98,7 @@ func (client *PriceSheetClient) getCreateRequest(ctx context.Context, options *P
 
 // getHandleResponse handles the Get response.
 func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceSheetClientGetResponse, error) {
-	result := PriceSheetClientGetResponse{RawResponse: resp}
+	result := PriceSheetClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PriceSheetResult); err != nil {
 		return PriceSheetClientGetResponse{}, err
 	}
@@ -159,7 +159,7 @@ func (client *PriceSheetClient) getByBillingPeriodCreateRequest(ctx context.Cont
 
 // getByBillingPeriodHandleResponse handles the GetByBillingPeriod response.
 func (client *PriceSheetClient) getByBillingPeriodHandleResponse(resp *http.Response) (PriceSheetClientGetByBillingPeriodResponse, error) {
-	result := PriceSheetClientGetByBillingPeriodResponse{RawResponse: resp}
+	result := PriceSheetClientGetByBillingPeriodResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PriceSheetResult); err != nil {
 		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}

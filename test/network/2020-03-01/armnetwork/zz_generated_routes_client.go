@@ -63,9 +63,7 @@ func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return RoutesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RoutesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := RoutesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RoutesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return RoutesClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return RoutesClientDeletePollerResponse{}, err
 	}
-	result := RoutesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := RoutesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RoutesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return RoutesClientDeletePollerResponse{}, err
@@ -247,7 +243,7 @@ func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupN
 
 // getHandleResponse handles the Get response.
 func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesClientGetResponse, error) {
-	result := RoutesClientGetResponse{RawResponse: resp}
+	result := RoutesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Route); err != nil {
 		return RoutesClientGetResponse{}, err
 	}
@@ -299,7 +295,7 @@ func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroup
 
 // listHandleResponse handles the List response.
 func (client *RoutesClient) listHandleResponse(resp *http.Response) (RoutesClientListResponse, error) {
-	result := RoutesClientListResponse{RawResponse: resp}
+	result := RoutesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteListResult); err != nil {
 		return RoutesClientListResponse{}, err
 	}

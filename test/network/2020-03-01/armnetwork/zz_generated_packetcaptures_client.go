@@ -63,9 +63,7 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 	if err != nil {
 		return PacketCapturesClientCreatePollerResponse{}, err
 	}
-	result := PacketCapturesClientCreatePollerResponse{
-		RawResponse: resp,
-	}
+	result := PacketCapturesClientCreatePollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Create", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return PacketCapturesClientCreatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return PacketCapturesClientDeletePollerResponse{}, err
 	}
-	result := PacketCapturesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := PacketCapturesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return PacketCapturesClientDeletePollerResponse{}, err
@@ -248,7 +244,7 @@ func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (PacketCapturesClientGetResponse, error) {
-	result := PacketCapturesClientGetResponse{RawResponse: resp}
+	result := PacketCapturesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PacketCaptureResult); err != nil {
 		return PacketCapturesClientGetResponse{}, err
 	}
@@ -267,9 +263,7 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 	if err != nil {
 		return PacketCapturesClientGetStatusPollerResponse{}, err
 	}
-	result := PacketCapturesClientGetStatusPollerResponse{
-		RawResponse: resp,
-	}
+	result := PacketCapturesClientGetStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.GetStatus", "location", resp, client.pl)
 	if err != nil {
 		return PacketCapturesClientGetStatusPollerResponse{}, err
@@ -369,7 +363,7 @@ func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resou
 
 // listHandleResponse handles the List response.
 func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (PacketCapturesClientListResponse, error) {
-	result := PacketCapturesClientListResponse{RawResponse: resp}
+	result := PacketCapturesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PacketCaptureListResult); err != nil {
 		return PacketCapturesClientListResponse{}, err
 	}
@@ -388,9 +382,7 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 	if err != nil {
 		return PacketCapturesClientStopPollerResponse{}, err
 	}
-	result := PacketCapturesClientStopPollerResponse{
-		RawResponse: resp,
-	}
+	result := PacketCapturesClientStopPollerResponse{}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Stop", "location", resp, client.pl)
 	if err != nil {
 		return PacketCapturesClientStopPollerResponse{}, err

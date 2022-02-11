@@ -86,7 +86,7 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 
 // listHandleResponse handles the List response.
 func (client *BgpServiceCommunitiesClient) listHandleResponse(resp *http.Response) (BgpServiceCommunitiesClientListResponse, error) {
-	result := BgpServiceCommunitiesClientListResponse{RawResponse: resp}
+	result := BgpServiceCommunitiesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BgpServiceCommunityListResult); err != nil {
 		return BgpServiceCommunitiesClientListResponse{}, err
 	}

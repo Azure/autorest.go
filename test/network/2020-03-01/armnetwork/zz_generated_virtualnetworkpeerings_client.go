@@ -63,9 +63,7 @@ func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return VirtualNetworkPeeringsClientDeletePollerResponse{}, err
 	}
-	result := VirtualNetworkPeeringsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkPeeringsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *VirtualNetworkPeeringsClient) getCreateRequest(ctx context.Context
 
 // getHandleResponse handles the Get response.
 func (client *VirtualNetworkPeeringsClient) getHandleResponse(resp *http.Response) (VirtualNetworkPeeringsClientGetResponse, error) {
-	result := VirtualNetworkPeeringsClientGetResponse{RawResponse: resp}
+	result := VirtualNetworkPeeringsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkPeering); err != nil {
 		return VirtualNetworkPeeringsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *VirtualNetworkPeeringsClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client *VirtualNetworkPeeringsClient) listHandleResponse(resp *http.Response) (VirtualNetworkPeeringsClientListResponse, error) {
-	result := VirtualNetworkPeeringsClientListResponse{RawResponse: resp}
+	result := VirtualNetworkPeeringsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkPeeringListResult); err != nil {
 		return VirtualNetworkPeeringsClientListResponse{}, err
 	}

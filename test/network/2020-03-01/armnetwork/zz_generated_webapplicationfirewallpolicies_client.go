@@ -100,7 +100,7 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateCreateRequest(
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientCreateOrUpdateResponse, error) {
-	result := WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{RawResponse: resp}
+	result := WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicy); err != nil {
 		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, err
 	}
@@ -118,9 +118,7 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 	if err != nil {
 		return WebApplicationFirewallPoliciesClientDeletePollerResponse{}, err
 	}
-	result := WebApplicationFirewallPoliciesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := WebApplicationFirewallPoliciesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("WebApplicationFirewallPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return WebApplicationFirewallPoliciesClientDeletePollerResponse{}, err
@@ -223,7 +221,7 @@ func (client *WebApplicationFirewallPoliciesClient) getCreateRequest(ctx context
 
 // getHandleResponse handles the Get response.
 func (client *WebApplicationFirewallPoliciesClient) getHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientGetResponse, error) {
-	result := WebApplicationFirewallPoliciesClientGetResponse{RawResponse: resp}
+	result := WebApplicationFirewallPoliciesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicy); err != nil {
 		return WebApplicationFirewallPoliciesClientGetResponse{}, err
 	}
@@ -271,7 +269,7 @@ func (client *WebApplicationFirewallPoliciesClient) listCreateRequest(ctx contex
 
 // listHandleResponse handles the List response.
 func (client *WebApplicationFirewallPoliciesClient) listHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientListResponse, error) {
-	result := WebApplicationFirewallPoliciesClientListResponse{RawResponse: resp}
+	result := WebApplicationFirewallPoliciesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicyListResult); err != nil {
 		return WebApplicationFirewallPoliciesClientListResponse{}, err
 	}
@@ -314,7 +312,7 @@ func (client *WebApplicationFirewallPoliciesClient) listAllCreateRequest(ctx con
 
 // listAllHandleResponse handles the ListAll response.
 func (client *WebApplicationFirewallPoliciesClient) listAllHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientListAllResponse, error) {
-	result := WebApplicationFirewallPoliciesClientListAllResponse{RawResponse: resp}
+	result := WebApplicationFirewallPoliciesClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicyListResult); err != nil {
 		return WebApplicationFirewallPoliciesClientListAllResponse{}, err
 	}

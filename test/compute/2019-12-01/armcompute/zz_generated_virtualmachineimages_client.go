@@ -115,7 +115,7 @@ func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, 
 
 // getHandleResponse handles the Get response.
 func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineImagesClientGetResponse, error) {
-	result := VirtualMachineImagesClientGetResponse{RawResponse: resp}
+	result := VirtualMachineImagesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImage); err != nil {
 		return VirtualMachineImagesClientGetResponse{}, err
 	}
@@ -190,7 +190,7 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response) (VirtualMachineImagesClientListResponse, error) {
-	result := VirtualMachineImagesClientListResponse{RawResponse: resp}
+	result := VirtualMachineImagesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesClientListResponse{}, err
 	}
@@ -246,7 +246,7 @@ func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Co
 
 // listOffersHandleResponse handles the ListOffers response.
 func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Response) (VirtualMachineImagesClientListOffersResponse, error) {
-	result := VirtualMachineImagesClientListOffersResponse{RawResponse: resp}
+	result := VirtualMachineImagesClientListOffersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesClientListOffersResponse{}, err
 	}
@@ -297,7 +297,7 @@ func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx contex
 
 // listPublishersHandleResponse handles the ListPublishers response.
 func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *http.Response) (VirtualMachineImagesClientListPublishersResponse, error) {
-	result := VirtualMachineImagesClientListPublishersResponse{RawResponse: resp}
+	result := VirtualMachineImagesClientListPublishersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesClientListPublishersResponse{}, err
 	}
@@ -358,7 +358,7 @@ func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Cont
 
 // listSKUsHandleResponse handles the ListSKUs response.
 func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineImagesClientListSKUsResponse, error) {
-	result := VirtualMachineImagesClientListSKUsResponse{RawResponse: resp}
+	result := VirtualMachineImagesClientListSKUsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
 		return VirtualMachineImagesClientListSKUsResponse{}, err
 	}

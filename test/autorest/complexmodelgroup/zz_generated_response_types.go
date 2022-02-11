@@ -8,25 +8,17 @@
 
 package complexmodelgroup
 
-import "net/http"
-
 // ComplexModelClientCreateResponse contains the response from method ComplexModelClient.Create.
 type ComplexModelClientCreateResponse struct {
 	CatalogDictionary
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ComplexModelClientListResponse contains the response from method ComplexModelClient.List.
 type ComplexModelClientListResponse struct {
 	CatalogArray
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // ComplexModelClientUpdateResponse contains the response from method ComplexModelClient.Update.
 type ComplexModelClientUpdateResponse struct {
 	CatalogArray
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

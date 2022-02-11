@@ -50,7 +50,7 @@ func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ODataClientGetWithFilterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ODataClientGetWithFilterResponse{RawResponse: resp}, nil
+	return ODataClientGetWithFilterResponse{}, nil
 }
 
 // getWithFilterCreateRequest creates the GetWithFilter request.

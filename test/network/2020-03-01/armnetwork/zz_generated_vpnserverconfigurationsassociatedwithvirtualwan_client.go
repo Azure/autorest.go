@@ -61,9 +61,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	if err != nil {
 		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
 	}
-	result := VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl)
 	if err != nil {
 		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err

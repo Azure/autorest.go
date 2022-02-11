@@ -104,7 +104,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context
 
 // getHandleResponse handles the Get response.
 func (client *LoadBalancerLoadBalancingRulesClient) getHandleResponse(resp *http.Response) (LoadBalancerLoadBalancingRulesClientGetResponse, error) {
-	result := LoadBalancerLoadBalancingRulesClientGetResponse{RawResponse: resp}
+	result := LoadBalancerLoadBalancingRulesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancingRule); err != nil {
 		return LoadBalancerLoadBalancingRulesClientGetResponse{}, err
 	}
@@ -157,7 +157,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx contex
 
 // listHandleResponse handles the List response.
 func (client *LoadBalancerLoadBalancingRulesClient) listHandleResponse(resp *http.Response) (LoadBalancerLoadBalancingRulesClientListResponse, error) {
-	result := LoadBalancerLoadBalancingRulesClientListResponse{RawResponse: resp}
+	result := LoadBalancerLoadBalancingRulesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerLoadBalancingRuleListResult); err != nil {
 		return LoadBalancerLoadBalancingRulesClientListResponse{}, err
 	}

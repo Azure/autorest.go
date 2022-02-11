@@ -45,9 +45,7 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 	if err != nil {
 		return dataFlowClientCreateOrUpdateDataFlowPollerResponse{}, err
 	}
-	result := dataFlowClientCreateOrUpdateDataFlowPollerResponse{
-		RawResponse: resp,
-	}
+	result := dataFlowClientCreateOrUpdateDataFlowPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.pl)
 	if err != nil {
 		return dataFlowClientCreateOrUpdateDataFlowPollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 	if err != nil {
 		return dataFlowClientDeleteDataFlowPollerResponse{}, err
 	}
-	result := dataFlowClientDeleteDataFlowPollerResponse{
-		RawResponse: resp,
-	}
+	result := dataFlowClientDeleteDataFlowPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowClient.DeleteDataFlow", resp, client.pl)
 	if err != nil {
 		return dataFlowClientDeleteDataFlowPollerResponse{}, err
@@ -196,7 +192,7 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 
 // getDataFlowHandleResponse handles the GetDataFlow response.
 func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (dataFlowClientGetDataFlowResponse, error) {
-	result := dataFlowClientGetDataFlowResponse{RawResponse: resp}
+	result := dataFlowClientGetDataFlowResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowResource); err != nil {
 		return dataFlowClientGetDataFlowResponse{}, err
 	}
@@ -235,7 +231,7 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.C
 
 // getDataFlowsByWorkspaceHandleResponse handles the GetDataFlowsByWorkspace response.
 func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.Response) (dataFlowClientGetDataFlowsByWorkspaceResponse, error) {
-	result := dataFlowClientGetDataFlowsByWorkspaceResponse{RawResponse: resp}
+	result := dataFlowClientGetDataFlowsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowListResponse); err != nil {
 		return dataFlowClientGetDataFlowsByWorkspaceResponse{}, err
 	}
@@ -253,9 +249,7 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 	if err != nil {
 		return dataFlowClientRenameDataFlowPollerResponse{}, err
 	}
-	result := dataFlowClientRenameDataFlowPollerResponse{
-		RawResponse: resp,
-	}
+	result := dataFlowClientRenameDataFlowPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowClient.RenameDataFlow", resp, client.pl)
 	if err != nil {
 		return dataFlowClientRenameDataFlowPollerResponse{}, err

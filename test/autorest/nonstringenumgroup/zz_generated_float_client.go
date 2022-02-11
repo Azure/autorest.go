@@ -65,7 +65,7 @@ func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatC
 
 // getHandleResponse handles the Get response.
 func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGetResponse, error) {
-	result := FloatClientGetResponse{RawResponse: resp}
+	result := FloatClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return FloatClientGetResponse{}, err
 	}
@@ -106,7 +106,7 @@ func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatC
 
 // putHandleResponse handles the Put response.
 func (client *FloatClient) putHandleResponse(resp *http.Response) (FloatClientPutResponse, error) {
-	result := FloatClientPutResponse{RawResponse: resp}
+	result := FloatClientPutResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return FloatClientPutResponse{}, err
 	}

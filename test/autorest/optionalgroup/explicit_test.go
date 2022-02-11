@@ -5,7 +5,6 @@ package optionalgroup
 
 import (
 	"context"
-	"net/http"
 	"reflect"
 	"testing"
 )
@@ -20,8 +19,8 @@ func TestExplicitPostOptionalArrayHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayHeader: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -31,8 +30,8 @@ func TestExplicitPostOptionalArrayParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayParameter: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -42,8 +41,8 @@ func TestExplicitPostOptionalArrayProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalArrayProperty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -53,8 +52,8 @@ func TestExplicitPostOptionalClassParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalClassParameter: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -64,8 +63,8 @@ func TestExplicitPostOptionalClassProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalClassProperty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -75,8 +74,8 @@ func TestExplicitPostOptionalIntegerHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerHeader: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -86,8 +85,8 @@ func TestExplicitPostOptionalIntegerParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerParameter: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -97,8 +96,8 @@ func TestExplicitPostOptionalIntegerProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalIntegerProperty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -108,8 +107,8 @@ func TestExplicitPostOptionalStringHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringHeader: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -119,8 +118,8 @@ func TestExplicitPostOptionalStringParameter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringParameter: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -130,8 +129,8 @@ func TestExplicitPostOptionalStringProperty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PostOptionalStringProperty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 

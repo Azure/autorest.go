@@ -52,7 +52,7 @@ func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, une
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetMethodPathValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetMethodPathValidResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetMethodPathValidResponse{}, nil
 }
 
 // getMethodPathValidCreateRequest creates the GetMethodPathValid request.
@@ -83,7 +83,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetMethodQueryNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetMethodQueryNullResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetMethodQueryNullResponse{}, nil
 }
 
 // getMethodQueryNullCreateRequest creates the GetMethodQueryNull request.
@@ -119,7 +119,7 @@ func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetMethodQueryValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetMethodQueryValidResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetMethodQueryValidResponse{}, nil
 }
 
 // getMethodQueryValidCreateRequest creates the GetMethodQueryValid request.
@@ -153,7 +153,7 @@ func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 s
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetPathQueryValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetPathQueryValidResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetPathQueryValidResponse{}, nil
 }
 
 // getPathQueryValidCreateRequest creates the GetPathQueryValid request.
@@ -187,7 +187,7 @@ func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencoded
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetPathValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetPathValidResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetPathValidResponse{}, nil
 }
 
 // getPathValidCreateRequest creates the GetPathValid request.
@@ -218,7 +218,7 @@ func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetSwaggerPathValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetSwaggerPathValidResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetSwaggerPathValidResponse{}, nil
 }
 
 // getSwaggerPathValidCreateRequest creates the GetSwaggerPathValid request.
@@ -249,7 +249,7 @@ func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, o
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SkipURLEncodingClientGetSwaggerQueryValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SkipURLEncodingClientGetSwaggerQueryValidResponse{RawResponse: resp}, nil
+	return SkipURLEncodingClientGetSwaggerQueryValidResponse{}, nil
 }
 
 // getSwaggerQueryValidCreateRequest creates the GetSwaggerQueryValid request.

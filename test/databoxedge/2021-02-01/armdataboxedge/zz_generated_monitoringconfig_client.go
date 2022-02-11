@@ -62,9 +62,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 	if err != nil {
 		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := MonitoringConfigClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := MonitoringConfigClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 	if err != nil {
 		return MonitoringConfigClientDeletePollerResponse{}, err
 	}
-	result := MonitoringConfigClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := MonitoringConfigClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return MonitoringConfigClientDeletePollerResponse{}, err
@@ -247,7 +243,7 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 
 // getHandleResponse handles the Get response.
 func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (MonitoringConfigClientGetResponse, error) {
-	result := MonitoringConfigClientGetResponse{RawResponse: resp}
+	result := MonitoringConfigClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfiguration); err != nil {
 		return MonitoringConfigClientGetResponse{}, err
 	}
@@ -304,7 +300,7 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 
 // listHandleResponse handles the List response.
 func (client *MonitoringConfigClient) listHandleResponse(resp *http.Response) (MonitoringConfigClientListResponse, error) {
-	result := MonitoringConfigClientListResponse{RawResponse: resp}
+	result := MonitoringConfigClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfigurationList); err != nil {
 		return MonitoringConfigClientListResponse{}, err
 	}

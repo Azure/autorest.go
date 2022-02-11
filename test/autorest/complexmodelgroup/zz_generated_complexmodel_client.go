@@ -82,7 +82,7 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 
 // createHandleResponse handles the Create response.
 func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (ComplexModelClientCreateResponse, error) {
-	result := ComplexModelClientCreateResponse{RawResponse: resp}
+	result := ComplexModelClientCreateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatalogDictionary); err != nil {
 		return ComplexModelClientCreateResponse{}, err
 	}
@@ -131,7 +131,7 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 
 // listHandleResponse handles the List response.
 func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (ComplexModelClientListResponse, error) {
-	result := ComplexModelClientListResponse{RawResponse: resp}
+	result := ComplexModelClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatalogArray); err != nil {
 		return ComplexModelClientListResponse{}, err
 	}
@@ -183,7 +183,7 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 
 // updateHandleResponse handles the Update response.
 func (client *ComplexModelClient) updateHandleResponse(resp *http.Response) (ComplexModelClientUpdateResponse, error) {
-	result := ComplexModelClientUpdateResponse{RawResponse: resp}
+	result := ComplexModelClientUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatalogArray); err != nil {
 		return ComplexModelClientUpdateResponse{}, err
 	}

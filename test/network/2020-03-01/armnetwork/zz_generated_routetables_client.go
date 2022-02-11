@@ -62,9 +62,7 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return RouteTablesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteTablesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := RouteTablesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteTablesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return RouteTablesClientCreateOrUpdatePollerResponse{}, err
@@ -128,9 +126,7 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return RouteTablesClientDeletePollerResponse{}, err
 	}
-	result := RouteTablesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := RouteTablesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteTablesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return RouteTablesClientDeletePollerResponse{}, err
@@ -235,7 +231,7 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 
 // getHandleResponse handles the Get response.
 func (client *RouteTablesClient) getHandleResponse(resp *http.Response) (RouteTablesClientGetResponse, error) {
-	result := RouteTablesClientGetResponse{RawResponse: resp}
+	result := RouteTablesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
 		return RouteTablesClientGetResponse{}, err
 	}
@@ -282,7 +278,7 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 
 // listHandleResponse handles the List response.
 func (client *RouteTablesClient) listHandleResponse(resp *http.Response) (RouteTablesClientListResponse, error) {
-	result := RouteTablesClientListResponse{RawResponse: resp}
+	result := RouteTablesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
 		return RouteTablesClientListResponse{}, err
 	}
@@ -324,7 +320,7 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, optio
 
 // listAllHandleResponse handles the ListAll response.
 func (client *RouteTablesClient) listAllHandleResponse(resp *http.Response) (RouteTablesClientListAllResponse, error) {
-	result := RouteTablesClientListAllResponse{RawResponse: resp}
+	result := RouteTablesClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
 		return RouteTablesClientListAllResponse{}, err
 	}
@@ -380,7 +376,7 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *RouteTablesClient) updateTagsHandleResponse(resp *http.Response) (RouteTablesClientUpdateTagsResponse, error) {
-	result := RouteTablesClientUpdateTagsResponse{RawResponse: resp}
+	result := RouteTablesClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
 		return RouteTablesClientUpdateTagsResponse{}, err
 	}

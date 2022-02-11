@@ -66,7 +66,7 @@ func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, optio
 
 // getArrayEmptyHandleResponse handles the GetArrayEmpty response.
 func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (ArrayClientGetArrayEmptyResponse, error) {
-	result := ArrayClientGetArrayEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetArrayEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayClientGetArrayEmptyResponse{}, err
 	}
@@ -104,7 +104,7 @@ func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, o
 
 // getArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
 func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetArrayItemEmptyResponse, error) {
-	result := ArrayClientGetArrayItemEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetArrayItemEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
@@ -142,7 +142,7 @@ func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, op
 
 // getArrayItemNullHandleResponse handles the GetArrayItemNull response.
 func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (ArrayClientGetArrayItemNullResponse, error) {
-	result := ArrayClientGetArrayItemNullResponse{RawResponse: resp}
+	result := ArrayClientGetArrayItemNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayClientGetArrayItemNullResponse{}, err
 	}
@@ -180,7 +180,7 @@ func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, option
 
 // getArrayNullHandleResponse handles the GetArrayNull response.
 func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (ArrayClientGetArrayNullResponse, error) {
-	result := ArrayClientGetArrayNullResponse{RawResponse: resp}
+	result := ArrayClientGetArrayNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayClientGetArrayNullResponse{}, err
 	}
@@ -218,7 +218,7 @@ func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, optio
 
 // getArrayValidHandleResponse handles the GetArrayValid response.
 func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (ArrayClientGetArrayValidResponse, error) {
-	result := ArrayClientGetArrayValidResponse{RawResponse: resp}
+	result := ArrayClientGetArrayValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
 		return ArrayClientGetArrayValidResponse{}, err
 	}
@@ -257,7 +257,7 @@ func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, option
 
 // getBase64URLHandleResponse handles the GetBase64URL response.
 func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (ArrayClientGetBase64URLResponse, error) {
-	result := ArrayClientGetBase64URLResponse{RawResponse: resp}
+	result := ArrayClientGetBase64URLResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
 		return ArrayClientGetBase64URLResponse{}, err
 	}
@@ -296,7 +296,7 @@ func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Contex
 
 // getBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
 func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetBooleanInvalidNullResponse, error) {
-	result := ArrayClientGetBooleanInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetBooleanInvalidNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
@@ -335,7 +335,7 @@ func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Cont
 
 // getBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
 func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetBooleanInvalidStringResponse, error) {
-	result := ArrayClientGetBooleanInvalidStringResponse{RawResponse: resp}
+	result := ArrayClientGetBooleanInvalidStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
@@ -373,7 +373,7 @@ func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, opti
 
 // getBooleanTfftHandleResponse handles the GetBooleanTfft response.
 func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (ArrayClientGetBooleanTfftResponse, error) {
-	result := ArrayClientGetBooleanTfftResponse{RawResponse: resp}
+	result := ArrayClientGetBooleanTfftResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
 		return ArrayClientGetBooleanTfftResponse{}, err
 	}
@@ -412,7 +412,7 @@ func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, 
 
 // getByteInvalidNullHandleResponse handles the GetByteInvalidNull response.
 func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetByteInvalidNullResponse, error) {
-	result := ArrayClientGetByteInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetByteInvalidNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
 		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
@@ -450,7 +450,7 @@ func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, option
 
 // getByteValidHandleResponse handles the GetByteValid response.
 func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (ArrayClientGetByteValidResponse, error) {
-	result := ArrayClientGetByteValidResponse{RawResponse: resp}
+	result := ArrayClientGetByteValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
 		return ArrayClientGetByteValidResponse{}, err
 	}
@@ -488,7 +488,7 @@ func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, opt
 
 // getComplexEmptyHandleResponse handles the GetComplexEmpty response.
 func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (ArrayClientGetComplexEmptyResponse, error) {
-	result := ArrayClientGetComplexEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetComplexEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayClientGetComplexEmptyResponse{}, err
 	}
@@ -528,7 +528,7 @@ func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context,
 
 // getComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
 func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetComplexItemEmptyResponse, error) {
-	result := ArrayClientGetComplexItemEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetComplexItemEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
@@ -568,7 +568,7 @@ func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, 
 
 // getComplexItemNullHandleResponse handles the GetComplexItemNull response.
 func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response) (ArrayClientGetComplexItemNullResponse, error) {
-	result := ArrayClientGetComplexItemNullResponse{RawResponse: resp}
+	result := ArrayClientGetComplexItemNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayClientGetComplexItemNullResponse{}, err
 	}
@@ -606,7 +606,7 @@ func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, opti
 
 // getComplexNullHandleResponse handles the GetComplexNull response.
 func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (ArrayClientGetComplexNullResponse, error) {
-	result := ArrayClientGetComplexNullResponse{RawResponse: resp}
+	result := ArrayClientGetComplexNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayClientGetComplexNullResponse{}, err
 	}
@@ -645,7 +645,7 @@ func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, opt
 
 // getComplexValidHandleResponse handles the GetComplexValid response.
 func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (ArrayClientGetComplexValidResponse, error) {
-	result := ArrayClientGetComplexValidResponse{RawResponse: resp}
+	result := ArrayClientGetComplexValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
 		return ArrayClientGetComplexValidResponse{}, err
 	}
@@ -684,7 +684,7 @@ func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context,
 
 // getDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
 func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetDateInvalidCharsResponse, error) {
-	result := ArrayClientGetDateInvalidCharsResponse{RawResponse: resp}
+	result := ArrayClientGetDateInvalidCharsResponse{}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateInvalidCharsResponse{}, err
@@ -729,7 +729,7 @@ func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, 
 
 // getDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
 func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDateInvalidNullResponse, error) {
-	result := ArrayClientGetDateInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetDateInvalidNullResponse{}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateInvalidNullResponse{}, err
@@ -774,7 +774,7 @@ func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Cont
 
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
 func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
-	result := ArrayClientGetDateTimeInvalidCharsResponse{RawResponse: resp}
+	result := ArrayClientGetDateTimeInvalidCharsResponse{}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
@@ -819,7 +819,7 @@ func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Conte
 
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
 func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDateTimeInvalidNullResponse, error) {
-	result := ArrayClientGetDateTimeInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetDateTimeInvalidNullResponse{}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
@@ -865,7 +865,7 @@ func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
 func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
-	result := ArrayClientGetDateTimeRFC1123ValidResponse{RawResponse: resp}
+	result := ArrayClientGetDateTimeRFC1123ValidResponse{}
 	var aux []*timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
@@ -909,7 +909,7 @@ func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, op
 
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
 func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (ArrayClientGetDateTimeValidResponse, error) {
-	result := ArrayClientGetDateTimeValidResponse{RawResponse: resp}
+	result := ArrayClientGetDateTimeValidResponse{}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateTimeValidResponse{}, err
@@ -953,7 +953,7 @@ func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, option
 
 // getDateValidHandleResponse handles the GetDateValid response.
 func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (ArrayClientGetDateValidResponse, error) {
-	result := ArrayClientGetDateValidResponse{RawResponse: resp}
+	result := ArrayClientGetDateValidResponse{}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
 		return ArrayClientGetDateValidResponse{}, err
@@ -998,7 +998,7 @@ func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, 
 
 // getDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
 func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response) (ArrayClientGetDictionaryEmptyResponse, error) {
-	result := ArrayClientGetDictionaryEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetDictionaryEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
@@ -1038,7 +1038,7 @@ func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Conte
 
 // getDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
 func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetDictionaryItemEmptyResponse, error) {
-	result := ArrayClientGetDictionaryItemEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetDictionaryItemEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
@@ -1078,7 +1078,7 @@ func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Contex
 
 // getDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
 func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Response) (ArrayClientGetDictionaryItemNullResponse, error) {
-	result := ArrayClientGetDictionaryItemNullResponse{RawResponse: resp}
+	result := ArrayClientGetDictionaryItemNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
@@ -1116,7 +1116,7 @@ func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, o
 
 // getDictionaryNullHandleResponse handles the GetDictionaryNull response.
 func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) (ArrayClientGetDictionaryNullResponse, error) {
-	result := ArrayClientGetDictionaryNullResponse{RawResponse: resp}
+	result := ArrayClientGetDictionaryNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayClientGetDictionaryNullResponse{}, err
 	}
@@ -1156,7 +1156,7 @@ func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, 
 
 // getDictionaryValidHandleResponse handles the GetDictionaryValid response.
 func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response) (ArrayClientGetDictionaryValidResponse, error) {
-	result := ArrayClientGetDictionaryValidResponse{RawResponse: resp}
+	result := ArrayClientGetDictionaryValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
 		return ArrayClientGetDictionaryValidResponse{}, err
 	}
@@ -1195,7 +1195,7 @@ func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context
 
 // getDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
 func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDoubleInvalidNullResponse, error) {
-	result := ArrayClientGetDoubleInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetDoubleInvalidNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
@@ -1234,7 +1234,7 @@ func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Conte
 
 // getDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
 func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetDoubleInvalidStringResponse, error) {
-	result := ArrayClientGetDoubleInvalidStringResponse{RawResponse: resp}
+	result := ArrayClientGetDoubleInvalidStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
@@ -1272,7 +1272,7 @@ func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, opti
 
 // getDoubleValidHandleResponse handles the GetDoubleValid response.
 func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (ArrayClientGetDoubleValidResponse, error) {
-	result := ArrayClientGetDoubleValidResponse{RawResponse: resp}
+	result := ArrayClientGetDoubleValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
 		return ArrayClientGetDoubleValidResponse{}, err
 	}
@@ -1310,7 +1310,7 @@ func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, op
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
 func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (ArrayClientGetDurationValidResponse, error) {
-	result := ArrayClientGetDurationValidResponse{RawResponse: resp}
+	result := ArrayClientGetDurationValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayClientGetDurationValidResponse{}, err
 	}
@@ -1348,7 +1348,7 @@ func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *A
 
 // getEmptyHandleResponse handles the GetEmpty response.
 func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayClientGetEmptyResponse, error) {
-	result := ArrayClientGetEmptyResponse{RawResponse: resp}
+	result := ArrayClientGetEmptyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayClientGetEmptyResponse{}, err
 	}
@@ -1386,7 +1386,7 @@ func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, option
 
 // getEnumValidHandleResponse handles the GetEnumValid response.
 func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (ArrayClientGetEnumValidResponse, error) {
-	result := ArrayClientGetEnumValidResponse{RawResponse: resp}
+	result := ArrayClientGetEnumValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FooEnumArray); err != nil {
 		return ArrayClientGetEnumValidResponse{}, err
 	}
@@ -1425,7 +1425,7 @@ func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context,
 
 // getFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
 func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetFloatInvalidNullResponse, error) {
-	result := ArrayClientGetFloatInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetFloatInvalidNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
@@ -1464,7 +1464,7 @@ func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Contex
 
 // getFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
 func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetFloatInvalidStringResponse, error) {
-	result := ArrayClientGetFloatInvalidStringResponse{RawResponse: resp}
+	result := ArrayClientGetFloatInvalidStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
@@ -1502,7 +1502,7 @@ func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, optio
 
 // getFloatValidHandleResponse handles the GetFloatValid response.
 func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (ArrayClientGetFloatValidResponse, error) {
-	result := ArrayClientGetFloatValidResponse{RawResponse: resp}
+	result := ArrayClientGetFloatValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
 		return ArrayClientGetFloatValidResponse{}, err
 	}
@@ -1540,7 +1540,7 @@ func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, o
 
 // getIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
 func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetIntInvalidNullResponse, error) {
-	result := ArrayClientGetIntInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetIntInvalidNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
@@ -1579,7 +1579,7 @@ func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context,
 
 // getIntInvalidStringHandleResponse handles the GetIntInvalidString response.
 func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetIntInvalidStringResponse, error) {
-	result := ArrayClientGetIntInvalidStringResponse{RawResponse: resp}
+	result := ArrayClientGetIntInvalidStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
@@ -1617,7 +1617,7 @@ func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, opt
 
 // getIntegerValidHandleResponse handles the GetIntegerValid response.
 func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (ArrayClientGetIntegerValidResponse, error) {
-	result := ArrayClientGetIntegerValidResponse{RawResponse: resp}
+	result := ArrayClientGetIntegerValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayClientGetIntegerValidResponse{}, err
 	}
@@ -1655,7 +1655,7 @@ func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options 
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayClientGetInvalidResponse, error) {
-	result := ArrayClientGetInvalidResponse{RawResponse: resp}
+	result := ArrayClientGetInvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayClientGetInvalidResponse{}, err
 	}
@@ -1694,7 +1694,7 @@ func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, 
 
 // getLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
 func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetLongInvalidNullResponse, error) {
-	result := ArrayClientGetLongInvalidNullResponse{RawResponse: resp}
+	result := ArrayClientGetLongInvalidNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
@@ -1733,7 +1733,7 @@ func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context
 
 // getLongInvalidStringHandleResponse handles the GetLongInvalidString response.
 func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetLongInvalidStringResponse, error) {
-	result := ArrayClientGetLongInvalidStringResponse{RawResponse: resp}
+	result := ArrayClientGetLongInvalidStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
@@ -1771,7 +1771,7 @@ func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, option
 
 // getLongValidHandleResponse handles the GetLongValid response.
 func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (ArrayClientGetLongValidResponse, error) {
-	result := ArrayClientGetLongValidResponse{RawResponse: resp}
+	result := ArrayClientGetLongValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
 		return ArrayClientGetLongValidResponse{}, err
 	}
@@ -1809,7 +1809,7 @@ func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *Ar
 
 // getNullHandleResponse handles the GetNull response.
 func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayClientGetNullResponse, error) {
-	result := ArrayClientGetNullResponse{RawResponse: resp}
+	result := ArrayClientGetNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
 		return ArrayClientGetNullResponse{}, err
 	}
@@ -1848,7 +1848,7 @@ func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, 
 
 // getStringEnumValidHandleResponse handles the GetStringEnumValid response.
 func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response) (ArrayClientGetStringEnumValidResponse, error) {
-	result := ArrayClientGetStringEnumValidResponse{RawResponse: resp}
+	result := ArrayClientGetStringEnumValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Enum0Array); err != nil {
 		return ArrayClientGetStringEnumValidResponse{}, err
 	}
@@ -1886,7 +1886,7 @@ func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, opti
 
 // getStringValidHandleResponse handles the GetStringValid response.
 func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (ArrayClientGetStringValidResponse, error) {
-	result := ArrayClientGetStringValidResponse{RawResponse: resp}
+	result := ArrayClientGetStringValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayClientGetStringValidResponse{}, err
 	}
@@ -1925,7 +1925,7 @@ func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context
 
 // getStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
 func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Response) (ArrayClientGetStringWithInvalidResponse, error) {
-	result := ArrayClientGetStringWithInvalidResponse{RawResponse: resp}
+	result := ArrayClientGetStringWithInvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
@@ -1963,7 +1963,7 @@ func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, o
 
 // getStringWithNullHandleResponse handles the GetStringWithNull response.
 func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) (ArrayClientGetStringWithNullResponse, error) {
-	result := ArrayClientGetStringWithNullResponse{RawResponse: resp}
+	result := ArrayClientGetStringWithNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayClientGetStringWithNullResponse{}, err
 	}
@@ -2002,7 +2002,7 @@ func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context,
 
 // getUUIDInvalidCharsHandleResponse handles the GetUUIDInvalidChars response.
 func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetUUIDInvalidCharsResponse, error) {
-	result := ArrayClientGetUUIDInvalidCharsResponse{RawResponse: resp}
+	result := ArrayClientGetUUIDInvalidCharsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
@@ -2040,7 +2040,7 @@ func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, option
 
 // getUUIDValidHandleResponse handles the GetUUIDValid response.
 func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (ArrayClientGetUUIDValidResponse, error) {
-	result := ArrayClientGetUUIDValidResponse{RawResponse: resp}
+	result := ArrayClientGetUUIDValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ArrayClientGetUUIDValidResponse{}, err
 	}
@@ -2062,7 +2062,7 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*str
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutArrayValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutArrayValidResponse{}, nil
 }
 
 // putArrayValidCreateRequest creates the PutArrayValid request.
@@ -2091,7 +2091,7 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutBooleanTfftResponse{RawResponse: resp}, nil
+	return ArrayClientPutBooleanTfftResponse{}, nil
 }
 
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
@@ -2121,7 +2121,7 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte,
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutByteValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutByteValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutByteValidResponse{}, nil
 }
 
 // putByteValidCreateRequest creates the PutByteValid request.
@@ -2151,7 +2151,7 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Pro
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutComplexValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutComplexValidResponse{}, nil
 }
 
 // putComplexValidCreateRequest creates the PutComplexValid request.
@@ -2182,7 +2182,7 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDateTimeRFC1123ValidResponse{}, nil
 }
 
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
@@ -2215,7 +2215,7 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*ti
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutDateTimeValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDateTimeValidResponse{}, nil
 }
 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
@@ -2244,7 +2244,7 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.T
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutDateValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutDateValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDateValidResponse{}, nil
 }
 
 // putDateValidCreateRequest creates the PutDateValid request.
@@ -2279,7 +2279,7 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutDictionaryValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDictionaryValidResponse{}, nil
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
@@ -2308,7 +2308,7 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*floa
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutDoubleValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDoubleValidResponse{}, nil
 }
 
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
@@ -2337,7 +2337,7 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*st
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutDurationValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDurationValidResponse{}, nil
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
@@ -2366,7 +2366,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutEmptyResponse{RawResponse: resp}, nil
+	return ArrayClientPutEmptyResponse{}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
@@ -2395,7 +2395,7 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnu
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutEnumValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutEnumValidResponse{}, nil
 }
 
 // putEnumValidCreateRequest creates the PutEnumValid request.
@@ -2424,7 +2424,7 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutFloatValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutFloatValidResponse{}, nil
 }
 
 // putFloatValidCreateRequest creates the PutFloatValid request.
@@ -2453,7 +2453,7 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutIntegerValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutIntegerValidResponse{}, nil
 }
 
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
@@ -2482,7 +2482,7 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64,
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutLongValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutLongValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutLongValidResponse{}, nil
 }
 
 // putLongValidCreateRequest creates the PutLongValid request.
@@ -2512,7 +2512,7 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutStringEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutStringEnumValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutStringEnumValidResponse{}, nil
 }
 
 // putStringEnumValidCreateRequest creates the PutStringEnumValid request.
@@ -2541,7 +2541,7 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*stri
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutStringValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutStringValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutStringValidResponse{}, nil
 }
 
 // putStringValidCreateRequest creates the PutStringValid request.
@@ -2570,7 +2570,7 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ArrayClientPutUUIDValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return ArrayClientPutUUIDValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutUUIDValidResponse{}, nil
 }
 
 // putUUIDValidCreateRequest creates the PutUUIDValid request.

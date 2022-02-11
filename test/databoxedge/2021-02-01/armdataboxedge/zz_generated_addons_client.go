@@ -63,9 +63,7 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	if err != nil {
 		return AddonsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := AddonsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := AddonsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("AddonsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return AddonsClientCreateOrUpdatePollerResponse{}, err
@@ -139,9 +137,7 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 	if err != nil {
 		return AddonsClientDeletePollerResponse{}, err
 	}
-	result := AddonsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := AddonsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("AddonsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return AddonsClientDeletePollerResponse{}, err
@@ -261,7 +257,7 @@ func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName str
 
 // getHandleResponse handles the Get response.
 func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsClientGetResponse, error) {
-	result := AddonsClientGetResponse{RawResponse: resp}
+	result := AddonsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return AddonsClientGetResponse{}, err
 	}
@@ -318,7 +314,7 @@ func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceN
 
 // listByRoleHandleResponse handles the ListByRole response.
 func (client *AddonsClient) listByRoleHandleResponse(resp *http.Response) (AddonsClientListByRoleResponse, error) {
-	result := AddonsClientListByRoleResponse{RawResponse: resp}
+	result := AddonsClientListByRoleResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AddonList); err != nil {
 		return AddonsClientListByRoleResponse{}, err
 	}

@@ -67,7 +67,7 @@ func (client *dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.C
 
 // addDataFlowHandleResponse handles the AddDataFlow response.
 func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.Response) (dataFlowDebugSessionClientAddDataFlowResponse, error) {
-	result := dataFlowDebugSessionClientAddDataFlowResponse{RawResponse: resp}
+	result := dataFlowDebugSessionClientAddDataFlowResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AddDataFlowToDebugSessionResponse); err != nil {
 		return dataFlowDebugSessionClientAddDataFlowResponse{}, err
 	}
@@ -84,9 +84,7 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 	if err != nil {
 		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
 	}
-	result := dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{
-		RawResponse: resp,
-	}
+	result := dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl)
 	if err != nil {
 		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
@@ -145,7 +143,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, runtime.NewResponseError(resp)
 	}
-	return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{RawResponse: resp}, nil
+	return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, nil
 }
 
 // deleteDataFlowDebugSessionCreateRequest creates the DeleteDataFlowDebugSession request.
@@ -172,9 +170,7 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 	if err != nil {
 		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
 	}
-	result := dataFlowDebugSessionClientExecuteCommandPollerResponse{
-		RawResponse: resp,
-	}
+	result := dataFlowDebugSessionClientExecuteCommandPollerResponse{}
 	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl)
 	if err != nil {
 		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
@@ -248,7 +244,7 @@ func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceC
 
 // queryDataFlowDebugSessionsByWorkspaceHandleResponse handles the QueryDataFlowDebugSessionsByWorkspace response.
 func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp *http.Response) (dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse, error) {
-	result := dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{RawResponse: resp}
+	result := dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.QueryDataFlowDebugSessionsResponse); err != nil {
 		return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, err
 	}

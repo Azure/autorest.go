@@ -65,7 +65,7 @@ func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, opt
 
 // getNotExpandableHandleResponse handles the GetNotExpandable response.
 func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (EnumClientGetNotExpandableResponse, error) {
-	result := EnumClientGetNotExpandableResponse{RawResponse: resp}
+	result := EnumClientGetNotExpandableResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return EnumClientGetNotExpandableResponse{}, err
 	}
@@ -103,7 +103,7 @@ func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, option
 
 // getReferencedHandleResponse handles the GetReferenced response.
 func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (EnumClientGetReferencedResponse, error) {
-	result := EnumClientGetReferencedResponse{RawResponse: resp}
+	result := EnumClientGetReferencedResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return EnumClientGetReferencedResponse{}, err
 	}
@@ -142,7 +142,7 @@ func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context
 
 // getReferencedConstantHandleResponse handles the GetReferencedConstant response.
 func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Response) (EnumClientGetReferencedConstantResponse, error) {
-	result := EnumClientGetReferencedConstantResponse{RawResponse: resp}
+	result := EnumClientGetReferencedConstantResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RefColorConstant); err != nil {
 		return EnumClientGetReferencedConstantResponse{}, err
 	}
@@ -165,7 +165,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return EnumClientPutNotExpandableResponse{}, runtime.NewResponseError(resp)
 	}
-	return EnumClientPutNotExpandableResponse{RawResponse: resp}, nil
+	return EnumClientPutNotExpandableResponse{}, nil
 }
 
 // putNotExpandableCreateRequest creates the PutNotExpandable request.
@@ -195,7 +195,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return EnumClientPutReferencedResponse{}, runtime.NewResponseError(resp)
 	}
-	return EnumClientPutReferencedResponse{RawResponse: resp}, nil
+	return EnumClientPutReferencedResponse{}, nil
 }
 
 // putReferencedCreateRequest creates the PutReferenced request.
@@ -226,7 +226,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return EnumClientPutReferencedConstantResponse{}, runtime.NewResponseError(resp)
 	}
-	return EnumClientPutReferencedConstantResponse{RawResponse: resp}, nil
+	return EnumClientPutReferencedConstantResponse{}, nil
 }
 
 // putReferencedConstantCreateRequest creates the PutReferencedConstant request.

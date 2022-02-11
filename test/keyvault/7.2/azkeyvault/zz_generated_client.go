@@ -77,7 +77,7 @@ func (client *Client) backupCertificateCreateRequest(ctx context.Context, vaultB
 
 // backupCertificateHandleResponse handles the BackupCertificate response.
 func (client *Client) backupCertificateHandleResponse(resp *http.Response) (ClientBackupCertificateResponse, error) {
-	result := ClientBackupCertificateResponse{RawResponse: resp}
+	result := ClientBackupCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupCertificateResult); err != nil {
 		return ClientBackupCertificateResponse{}, err
 	}
@@ -135,7 +135,7 @@ func (client *Client) backupKeyCreateRequest(ctx context.Context, vaultBaseURL s
 
 // backupKeyHandleResponse handles the BackupKey response.
 func (client *Client) backupKeyHandleResponse(resp *http.Response) (ClientBackupKeyResponse, error) {
-	result := ClientBackupKeyResponse{RawResponse: resp}
+	result := ClientBackupKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupKeyResult); err != nil {
 		return ClientBackupKeyResponse{}, err
 	}
@@ -185,7 +185,7 @@ func (client *Client) backupSecretCreateRequest(ctx context.Context, vaultBaseUR
 
 // backupSecretHandleResponse handles the BackupSecret response.
 func (client *Client) backupSecretHandleResponse(resp *http.Response) (ClientBackupSecretResponse, error) {
-	result := ClientBackupSecretResponse{RawResponse: resp}
+	result := ClientBackupSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupSecretResult); err != nil {
 		return ClientBackupSecretResponse{}, err
 	}
@@ -235,7 +235,7 @@ func (client *Client) backupStorageAccountCreateRequest(ctx context.Context, vau
 
 // backupStorageAccountHandleResponse handles the BackupStorageAccount response.
 func (client *Client) backupStorageAccountHandleResponse(resp *http.Response) (ClientBackupStorageAccountResponse, error) {
-	result := ClientBackupStorageAccountResponse{RawResponse: resp}
+	result := ClientBackupStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupStorageResult); err != nil {
 		return ClientBackupStorageAccountResponse{}, err
 	}
@@ -286,7 +286,7 @@ func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultB
 
 // createCertificateHandleResponse handles the CreateCertificate response.
 func (client *Client) createCertificateHandleResponse(resp *http.Response) (ClientCreateCertificateResponse, error) {
-	result := ClientCreateCertificateResponse{RawResponse: resp}
+	result := ClientCreateCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return ClientCreateCertificateResponse{}, err
 	}
@@ -338,7 +338,7 @@ func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL s
 
 // createKeyHandleResponse handles the CreateKey response.
 func (client *Client) createKeyHandleResponse(resp *http.Response) (ClientCreateKeyResponse, error) {
-	result := ClientCreateKeyResponse{RawResponse: resp}
+	result := ClientCreateKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return ClientCreateKeyResponse{}, err
 	}
@@ -397,7 +397,7 @@ func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL str
 
 // decryptHandleResponse handles the Decrypt response.
 func (client *Client) decryptHandleResponse(resp *http.Response) (ClientDecryptResponse, error) {
-	result := ClientDecryptResponse{RawResponse: resp}
+	result := ClientDecryptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return ClientDecryptResponse{}, err
 	}
@@ -448,7 +448,7 @@ func (client *Client) deleteCertificateCreateRequest(ctx context.Context, vaultB
 
 // deleteCertificateHandleResponse handles the DeleteCertificate response.
 func (client *Client) deleteCertificateHandleResponse(resp *http.Response) (ClientDeleteCertificateResponse, error) {
-	result := ClientDeleteCertificateResponse{RawResponse: resp}
+	result := ClientDeleteCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
 		return ClientDeleteCertificateResponse{}, err
 	}
@@ -494,7 +494,7 @@ func (client *Client) deleteCertificateContactsCreateRequest(ctx context.Context
 
 // deleteCertificateContactsHandleResponse handles the DeleteCertificateContacts response.
 func (client *Client) deleteCertificateContactsHandleResponse(resp *http.Response) (ClientDeleteCertificateContactsResponse, error) {
-	result := ClientDeleteCertificateContactsResponse{RawResponse: resp}
+	result := ClientDeleteCertificateContactsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return ClientDeleteCertificateContactsResponse{}, err
 	}
@@ -545,7 +545,7 @@ func (client *Client) deleteCertificateIssuerCreateRequest(ctx context.Context, 
 
 // deleteCertificateIssuerHandleResponse handles the DeleteCertificateIssuer response.
 func (client *Client) deleteCertificateIssuerHandleResponse(resp *http.Response) (ClientDeleteCertificateIssuerResponse, error) {
-	result := ClientDeleteCertificateIssuerResponse{RawResponse: resp}
+	result := ClientDeleteCertificateIssuerResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return ClientDeleteCertificateIssuerResponse{}, err
 	}
@@ -596,7 +596,7 @@ func (client *Client) deleteCertificateOperationCreateRequest(ctx context.Contex
 
 // deleteCertificateOperationHandleResponse handles the DeleteCertificateOperation response.
 func (client *Client) deleteCertificateOperationHandleResponse(resp *http.Response) (ClientDeleteCertificateOperationResponse, error) {
-	result := ClientDeleteCertificateOperationResponse{RawResponse: resp}
+	result := ClientDeleteCertificateOperationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return ClientDeleteCertificateOperationResponse{}, err
 	}
@@ -647,7 +647,7 @@ func (client *Client) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL s
 
 // deleteKeyHandleResponse handles the DeleteKey response.
 func (client *Client) deleteKeyHandleResponse(resp *http.Response) (ClientDeleteKeyResponse, error) {
-	result := ClientDeleteKeyResponse{RawResponse: resp}
+	result := ClientDeleteKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
 		return ClientDeleteKeyResponse{}, err
 	}
@@ -702,7 +702,7 @@ func (client *Client) deleteSasDefinitionCreateRequest(ctx context.Context, vaul
 
 // deleteSasDefinitionHandleResponse handles the DeleteSasDefinition response.
 func (client *Client) deleteSasDefinitionHandleResponse(resp *http.Response) (ClientDeleteSasDefinitionResponse, error) {
-	result := ClientDeleteSasDefinitionResponse{RawResponse: resp}
+	result := ClientDeleteSasDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
 		return ClientDeleteSasDefinitionResponse{}, err
 	}
@@ -752,7 +752,7 @@ func (client *Client) deleteSecretCreateRequest(ctx context.Context, vaultBaseUR
 
 // deleteSecretHandleResponse handles the DeleteSecret response.
 func (client *Client) deleteSecretHandleResponse(resp *http.Response) (ClientDeleteSecretResponse, error) {
-	result := ClientDeleteSecretResponse{RawResponse: resp}
+	result := ClientDeleteSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
 		return ClientDeleteSecretResponse{}, err
 	}
@@ -801,7 +801,7 @@ func (client *Client) deleteStorageAccountCreateRequest(ctx context.Context, vau
 
 // deleteStorageAccountHandleResponse handles the DeleteStorageAccount response.
 func (client *Client) deleteStorageAccountHandleResponse(resp *http.Response) (ClientDeleteStorageAccountResponse, error) {
-	result := ClientDeleteStorageAccountResponse{RawResponse: resp}
+	result := ClientDeleteStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
 		return ClientDeleteStorageAccountResponse{}, err
 	}
@@ -862,7 +862,7 @@ func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL str
 
 // encryptHandleResponse handles the Encrypt response.
 func (client *Client) encryptHandleResponse(resp *http.Response) (ClientEncryptResponse, error) {
-	result := ClientEncryptResponse{RawResponse: resp}
+	result := ClientEncryptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return ClientEncryptResponse{}, err
 	}
@@ -878,9 +878,7 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return ClientFullBackupPollerResponse{}, err
 	}
-	result := ClientFullBackupPollerResponse{
-		RawResponse: resp,
-	}
+	result := ClientFullBackupPollerResponse{}
 	pt, err := runtime.NewPoller("Client.FullBackup", resp, client.pl)
 	if err != nil {
 		return ClientFullBackupPollerResponse{}, err
@@ -969,7 +967,7 @@ func (client *Client) fullBackupStatusCreateRequest(ctx context.Context, vaultBa
 
 // fullBackupStatusHandleResponse handles the FullBackupStatus response.
 func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (ClientFullBackupStatusResponse, error) {
-	result := ClientFullBackupStatusResponse{RawResponse: resp}
+	result := ClientFullBackupStatusResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FullBackupOperation); err != nil {
 		return ClientFullBackupStatusResponse{}, err
 	}
@@ -987,9 +985,7 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return ClientFullRestoreOperationPollerResponse{}, err
 	}
-	result := ClientFullRestoreOperationPollerResponse{
-		RawResponse: resp,
-	}
+	result := ClientFullRestoreOperationPollerResponse{}
 	pt, err := runtime.NewPoller("Client.FullRestoreOperation", resp, client.pl)
 	if err != nil {
 		return ClientFullRestoreOperationPollerResponse{}, err
@@ -1085,7 +1081,7 @@ func (client *Client) getCertificateCreateRequest(ctx context.Context, vaultBase
 
 // getCertificateHandleResponse handles the GetCertificate response.
 func (client *Client) getCertificateHandleResponse(resp *http.Response) (ClientGetCertificateResponse, error) {
-	result := ClientGetCertificateResponse{RawResponse: resp}
+	result := ClientGetCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return ClientGetCertificateResponse{}, err
 	}
@@ -1130,7 +1126,7 @@ func (client *Client) getCertificateContactsCreateRequest(ctx context.Context, v
 
 // getCertificateContactsHandleResponse handles the GetCertificateContacts response.
 func (client *Client) getCertificateContactsHandleResponse(resp *http.Response) (ClientGetCertificateContactsResponse, error) {
-	result := ClientGetCertificateContactsResponse{RawResponse: resp}
+	result := ClientGetCertificateContactsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return ClientGetCertificateContactsResponse{}, err
 	}
@@ -1180,7 +1176,7 @@ func (client *Client) getCertificateIssuerCreateRequest(ctx context.Context, vau
 
 // getCertificateIssuerHandleResponse handles the GetCertificateIssuer response.
 func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (ClientGetCertificateIssuerResponse, error) {
-	result := ClientGetCertificateIssuerResponse{RawResponse: resp}
+	result := ClientGetCertificateIssuerResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return ClientGetCertificateIssuerResponse{}, err
 	}
@@ -1225,7 +1221,7 @@ func (client *Client) getCertificateIssuersCreateRequest(ctx context.Context, va
 
 // getCertificateIssuersHandleResponse handles the GetCertificateIssuers response.
 func (client *Client) getCertificateIssuersHandleResponse(resp *http.Response) (ClientGetCertificateIssuersResponse, error) {
-	result := ClientGetCertificateIssuersResponse{RawResponse: resp}
+	result := ClientGetCertificateIssuersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateIssuerListResult); err != nil {
 		return ClientGetCertificateIssuersResponse{}, err
 	}
@@ -1276,7 +1272,7 @@ func (client *Client) getCertificateOperationCreateRequest(ctx context.Context, 
 
 // getCertificateOperationHandleResponse handles the GetCertificateOperation response.
 func (client *Client) getCertificateOperationHandleResponse(resp *http.Response) (ClientGetCertificateOperationResponse, error) {
-	result := ClientGetCertificateOperationResponse{RawResponse: resp}
+	result := ClientGetCertificateOperationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return ClientGetCertificateOperationResponse{}, err
 	}
@@ -1326,7 +1322,7 @@ func (client *Client) getCertificatePolicyCreateRequest(ctx context.Context, vau
 
 // getCertificatePolicyHandleResponse handles the GetCertificatePolicy response.
 func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (ClientGetCertificatePolicyResponse, error) {
-	result := ClientGetCertificatePolicyResponse{RawResponse: resp}
+	result := ClientGetCertificatePolicyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
 		return ClientGetCertificatePolicyResponse{}, err
 	}
@@ -1376,7 +1372,7 @@ func (client *Client) getCertificateVersionsCreateRequest(ctx context.Context, v
 
 // getCertificateVersionsHandleResponse handles the GetCertificateVersions response.
 func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) (ClientGetCertificateVersionsResponse, error) {
-	result := ClientGetCertificateVersionsResponse{RawResponse: resp}
+	result := ClientGetCertificateVersionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
 		return ClientGetCertificateVersionsResponse{}, err
 	}
@@ -1424,7 +1420,7 @@ func (client *Client) getCertificatesCreateRequest(ctx context.Context, vaultBas
 
 // getCertificatesHandleResponse handles the GetCertificates response.
 func (client *Client) getCertificatesHandleResponse(resp *http.Response) (ClientGetCertificatesResponse, error) {
-	result := ClientGetCertificatesResponse{RawResponse: resp}
+	result := ClientGetCertificatesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
 		return ClientGetCertificatesResponse{}, err
 	}
@@ -1475,7 +1471,7 @@ func (client *Client) getDeletedCertificateCreateRequest(ctx context.Context, va
 
 // getDeletedCertificateHandleResponse handles the GetDeletedCertificate response.
 func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (ClientGetDeletedCertificateResponse, error) {
-	result := ClientGetDeletedCertificateResponse{RawResponse: resp}
+	result := ClientGetDeletedCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
 		return ClientGetDeletedCertificateResponse{}, err
 	}
@@ -1525,7 +1521,7 @@ func (client *Client) getDeletedCertificatesCreateRequest(ctx context.Context, v
 
 // getDeletedCertificatesHandleResponse handles the GetDeletedCertificates response.
 func (client *Client) getDeletedCertificatesHandleResponse(resp *http.Response) (ClientGetDeletedCertificatesResponse, error) {
-	result := ClientGetDeletedCertificatesResponse{RawResponse: resp}
+	result := ClientGetDeletedCertificatesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateListResult); err != nil {
 		return ClientGetDeletedCertificatesResponse{}, err
 	}
@@ -1576,7 +1572,7 @@ func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseU
 
 // getDeletedKeyHandleResponse handles the GetDeletedKey response.
 func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGetDeletedKeyResponse, error) {
-	result := ClientGetDeletedKeyResponse{RawResponse: resp}
+	result := ClientGetDeletedKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
 		return ClientGetDeletedKeyResponse{}, err
 	}
@@ -1624,7 +1620,7 @@ func (client *Client) getDeletedKeysCreateRequest(ctx context.Context, vaultBase
 
 // getDeletedKeysHandleResponse handles the GetDeletedKeys response.
 func (client *Client) getDeletedKeysHandleResponse(resp *http.Response) (ClientGetDeletedKeysResponse, error) {
-	result := ClientGetDeletedKeysResponse{RawResponse: resp}
+	result := ClientGetDeletedKeysResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyListResult); err != nil {
 		return ClientGetDeletedKeysResponse{}, err
 	}
@@ -1680,7 +1676,7 @@ func (client *Client) getDeletedSasDefinitionCreateRequest(ctx context.Context, 
 
 // getDeletedSasDefinitionHandleResponse handles the GetDeletedSasDefinition response.
 func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response) (ClientGetDeletedSasDefinitionResponse, error) {
-	result := ClientGetDeletedSasDefinitionResponse{RawResponse: resp}
+	result := ClientGetDeletedSasDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
 		return ClientGetDeletedSasDefinitionResponse{}, err
 	}
@@ -1731,7 +1727,7 @@ func (client *Client) getDeletedSasDefinitionsCreateRequest(ctx context.Context,
 
 // getDeletedSasDefinitionsHandleResponse handles the GetDeletedSasDefinitions response.
 func (client *Client) getDeletedSasDefinitionsHandleResponse(resp *http.Response) (ClientGetDeletedSasDefinitionsResponse, error) {
-	result := ClientGetDeletedSasDefinitionsResponse{RawResponse: resp}
+	result := ClientGetDeletedSasDefinitionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionListResult); err != nil {
 		return ClientGetDeletedSasDefinitionsResponse{}, err
 	}
@@ -1781,7 +1777,7 @@ func (client *Client) getDeletedSecretCreateRequest(ctx context.Context, vaultBa
 
 // getDeletedSecretHandleResponse handles the GetDeletedSecret response.
 func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (ClientGetDeletedSecretResponse, error) {
-	result := ClientGetDeletedSecretResponse{RawResponse: resp}
+	result := ClientGetDeletedSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
 		return ClientGetDeletedSecretResponse{}, err
 	}
@@ -1826,7 +1822,7 @@ func (client *Client) getDeletedSecretsCreateRequest(ctx context.Context, vaultB
 
 // getDeletedSecretsHandleResponse handles the GetDeletedSecrets response.
 func (client *Client) getDeletedSecretsHandleResponse(resp *http.Response) (ClientGetDeletedSecretsResponse, error) {
-	result := ClientGetDeletedSecretsResponse{RawResponse: resp}
+	result := ClientGetDeletedSecretsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretListResult); err != nil {
 		return ClientGetDeletedSecretsResponse{}, err
 	}
@@ -1877,7 +1873,7 @@ func (client *Client) getDeletedStorageAccountCreateRequest(ctx context.Context,
 
 // getDeletedStorageAccountHandleResponse handles the GetDeletedStorageAccount response.
 func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response) (ClientGetDeletedStorageAccountResponse, error) {
-	result := ClientGetDeletedStorageAccountResponse{RawResponse: resp}
+	result := ClientGetDeletedStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
 		return ClientGetDeletedStorageAccountResponse{}, err
 	}
@@ -1923,7 +1919,7 @@ func (client *Client) getDeletedStorageAccountsCreateRequest(ctx context.Context
 
 // getDeletedStorageAccountsHandleResponse handles the GetDeletedStorageAccounts response.
 func (client *Client) getDeletedStorageAccountsHandleResponse(resp *http.Response) (ClientGetDeletedStorageAccountsResponse, error) {
-	result := ClientGetDeletedStorageAccountsResponse{RawResponse: resp}
+	result := ClientGetDeletedStorageAccountsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageListResult); err != nil {
 		return ClientGetDeletedStorageAccountsResponse{}, err
 	}
@@ -1979,7 +1975,7 @@ func (client *Client) getKeyCreateRequest(ctx context.Context, vaultBaseURL stri
 
 // getKeyHandleResponse handles the GetKey response.
 func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyResponse, error) {
-	result := ClientGetKeyResponse{RawResponse: resp}
+	result := ClientGetKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return ClientGetKeyResponse{}, err
 	}
@@ -2029,7 +2025,7 @@ func (client *Client) getKeyVersionsCreateRequest(ctx context.Context, vaultBase
 
 // getKeyVersionsHandleResponse handles the GetKeyVersions response.
 func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientGetKeyVersionsResponse, error) {
-	result := ClientGetKeyVersionsResponse{RawResponse: resp}
+	result := ClientGetKeyVersionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
 		return ClientGetKeyVersionsResponse{}, err
 	}
@@ -2076,7 +2072,7 @@ func (client *Client) getKeysCreateRequest(ctx context.Context, vaultBaseURL str
 
 // getKeysHandleResponse handles the GetKeys response.
 func (client *Client) getKeysHandleResponse(resp *http.Response) (ClientGetKeysResponse, error) {
-	result := ClientGetKeysResponse{RawResponse: resp}
+	result := ClientGetKeysResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
 		return ClientGetKeysResponse{}, err
 	}
@@ -2131,7 +2127,7 @@ func (client *Client) getSasDefinitionCreateRequest(ctx context.Context, vaultBa
 
 // getSasDefinitionHandleResponse handles the GetSasDefinition response.
 func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (ClientGetSasDefinitionResponse, error) {
-	result := ClientGetSasDefinitionResponse{RawResponse: resp}
+	result := ClientGetSasDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return ClientGetSasDefinitionResponse{}, err
 	}
@@ -2181,7 +2177,7 @@ func (client *Client) getSasDefinitionsCreateRequest(ctx context.Context, vaultB
 
 // getSasDefinitionsHandleResponse handles the GetSasDefinitions response.
 func (client *Client) getSasDefinitionsHandleResponse(resp *http.Response) (ClientGetSasDefinitionsResponse, error) {
-	result := ClientGetSasDefinitionsResponse{RawResponse: resp}
+	result := ClientGetSasDefinitionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionListResult); err != nil {
 		return ClientGetSasDefinitionsResponse{}, err
 	}
@@ -2237,7 +2233,7 @@ func (client *Client) getSecretCreateRequest(ctx context.Context, vaultBaseURL s
 
 // getSecretHandleResponse handles the GetSecret response.
 func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSecretResponse, error) {
-	result := ClientGetSecretResponse{RawResponse: resp}
+	result := ClientGetSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return ClientGetSecretResponse{}, err
 	}
@@ -2287,7 +2283,7 @@ func (client *Client) getSecretVersionsCreateRequest(ctx context.Context, vaultB
 
 // getSecretVersionsHandleResponse handles the GetSecretVersions response.
 func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (ClientGetSecretVersionsResponse, error) {
-	result := ClientGetSecretVersionsResponse{RawResponse: resp}
+	result := ClientGetSecretVersionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
 		return ClientGetSecretVersionsResponse{}, err
 	}
@@ -2333,7 +2329,7 @@ func (client *Client) getSecretsCreateRequest(ctx context.Context, vaultBaseURL 
 
 // getSecretsHandleResponse handles the GetSecrets response.
 func (client *Client) getSecretsHandleResponse(resp *http.Response) (ClientGetSecretsResponse, error) {
-	result := ClientGetSecretsResponse{RawResponse: resp}
+	result := ClientGetSecretsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
 		return ClientGetSecretsResponse{}, err
 	}
@@ -2382,7 +2378,7 @@ func (client *Client) getStorageAccountCreateRequest(ctx context.Context, vaultB
 
 // getStorageAccountHandleResponse handles the GetStorageAccount response.
 func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (ClientGetStorageAccountResponse, error) {
-	result := ClientGetStorageAccountResponse{RawResponse: resp}
+	result := ClientGetStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return ClientGetStorageAccountResponse{}, err
 	}
@@ -2427,7 +2423,7 @@ func (client *Client) getStorageAccountsCreateRequest(ctx context.Context, vault
 
 // getStorageAccountsHandleResponse handles the GetStorageAccounts response.
 func (client *Client) getStorageAccountsHandleResponse(resp *http.Response) (ClientGetStorageAccountsResponse, error) {
-	result := ClientGetStorageAccountsResponse{RawResponse: resp}
+	result := ClientGetStorageAccountsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageListResult); err != nil {
 		return ClientGetStorageAccountsResponse{}, err
 	}
@@ -2479,7 +2475,7 @@ func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultB
 
 // importCertificateHandleResponse handles the ImportCertificate response.
 func (client *Client) importCertificateHandleResponse(resp *http.Response) (ClientImportCertificateResponse, error) {
-	result := ClientImportCertificateResponse{RawResponse: resp}
+	result := ClientImportCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return ClientImportCertificateResponse{}, err
 	}
@@ -2531,7 +2527,7 @@ func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL s
 
 // importKeyHandleResponse handles the ImportKey response.
 func (client *Client) importKeyHandleResponse(resp *http.Response) (ClientImportKeyResponse, error) {
-	result := ClientImportKeyResponse{RawResponse: resp}
+	result := ClientImportKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return ClientImportKeyResponse{}, err
 	}
@@ -2583,7 +2579,7 @@ func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBa
 
 // mergeCertificateHandleResponse handles the MergeCertificate response.
 func (client *Client) mergeCertificateHandleResponse(resp *http.Response) (ClientMergeCertificateResponse, error) {
-	result := ClientMergeCertificateResponse{RawResponse: resp}
+	result := ClientMergeCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return ClientMergeCertificateResponse{}, err
 	}
@@ -2610,7 +2606,7 @@ func (client *Client) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL 
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return ClientPurgeDeletedCertificateResponse{}, runtime.NewResponseError(resp)
 	}
-	return ClientPurgeDeletedCertificateResponse{RawResponse: resp}, nil
+	return ClientPurgeDeletedCertificateResponse{}, nil
 }
 
 // purgeDeletedCertificateCreateRequest creates the PurgeDeletedCertificate request.
@@ -2652,7 +2648,7 @@ func (client *Client) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, 
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return ClientPurgeDeletedKeyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ClientPurgeDeletedKeyResponse{RawResponse: resp}, nil
+	return ClientPurgeDeletedKeyResponse{}, nil
 }
 
 // purgeDeletedKeyCreateRequest creates the PurgeDeletedKey request.
@@ -2694,7 +2690,7 @@ func (client *Client) PurgeDeletedSecret(ctx context.Context, vaultBaseURL strin
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return ClientPurgeDeletedSecretResponse{}, runtime.NewResponseError(resp)
 	}
-	return ClientPurgeDeletedSecretResponse{RawResponse: resp}, nil
+	return ClientPurgeDeletedSecretResponse{}, nil
 }
 
 // purgeDeletedSecretCreateRequest creates the PurgeDeletedSecret request.
@@ -2737,7 +2733,7 @@ func (client *Client) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseU
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return ClientPurgeDeletedStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
-	return ClientPurgeDeletedStorageAccountResponse{RawResponse: resp}, nil
+	return ClientPurgeDeletedStorageAccountResponse{}, nil
 }
 
 // purgeDeletedStorageAccountCreateRequest creates the PurgeDeletedStorageAccount request.
@@ -2805,7 +2801,7 @@ func (client *Client) recoverDeletedCertificateCreateRequest(ctx context.Context
 
 // recoverDeletedCertificateHandleResponse handles the RecoverDeletedCertificate response.
 func (client *Client) recoverDeletedCertificateHandleResponse(resp *http.Response) (ClientRecoverDeletedCertificateResponse, error) {
-	result := ClientRecoverDeletedCertificateResponse{RawResponse: resp}
+	result := ClientRecoverDeletedCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return ClientRecoverDeletedCertificateResponse{}, err
 	}
@@ -2857,7 +2853,7 @@ func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, vaultB
 
 // recoverDeletedKeyHandleResponse handles the RecoverDeletedKey response.
 func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (ClientRecoverDeletedKeyResponse, error) {
-	result := ClientRecoverDeletedKeyResponse{RawResponse: resp}
+	result := ClientRecoverDeletedKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return ClientRecoverDeletedKeyResponse{}, err
 	}
@@ -2913,7 +2909,7 @@ func (client *Client) recoverDeletedSasDefinitionCreateRequest(ctx context.Conte
 
 // recoverDeletedSasDefinitionHandleResponse handles the RecoverDeletedSasDefinition response.
 func (client *Client) recoverDeletedSasDefinitionHandleResponse(resp *http.Response) (ClientRecoverDeletedSasDefinitionResponse, error) {
-	result := ClientRecoverDeletedSasDefinitionResponse{RawResponse: resp}
+	result := ClientRecoverDeletedSasDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return ClientRecoverDeletedSasDefinitionResponse{}, err
 	}
@@ -2963,7 +2959,7 @@ func (client *Client) recoverDeletedSecretCreateRequest(ctx context.Context, vau
 
 // recoverDeletedSecretHandleResponse handles the RecoverDeletedSecret response.
 func (client *Client) recoverDeletedSecretHandleResponse(resp *http.Response) (ClientRecoverDeletedSecretResponse, error) {
-	result := ClientRecoverDeletedSecretResponse{RawResponse: resp}
+	result := ClientRecoverDeletedSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return ClientRecoverDeletedSecretResponse{}, err
 	}
@@ -3014,7 +3010,7 @@ func (client *Client) recoverDeletedStorageAccountCreateRequest(ctx context.Cont
 
 // recoverDeletedStorageAccountHandleResponse handles the RecoverDeletedStorageAccount response.
 func (client *Client) recoverDeletedStorageAccountHandleResponse(resp *http.Response) (ClientRecoverDeletedStorageAccountResponse, error) {
-	result := ClientRecoverDeletedStorageAccountResponse{RawResponse: resp}
+	result := ClientRecoverDeletedStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return ClientRecoverDeletedStorageAccountResponse{}, err
 	}
@@ -3066,7 +3062,7 @@ func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Conte
 
 // regenerateStorageAccountKeyHandleResponse handles the RegenerateStorageAccountKey response.
 func (client *Client) regenerateStorageAccountKeyHandleResponse(resp *http.Response) (ClientRegenerateStorageAccountKeyResponse, error) {
-	result := ClientRegenerateStorageAccountKeyResponse{RawResponse: resp}
+	result := ClientRegenerateStorageAccountKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return ClientRegenerateStorageAccountKeyResponse{}, err
 	}
@@ -3112,7 +3108,7 @@ func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vault
 
 // restoreCertificateHandleResponse handles the RestoreCertificate response.
 func (client *Client) restoreCertificateHandleResponse(resp *http.Response) (ClientRestoreCertificateResponse, error) {
-	result := ClientRestoreCertificateResponse{RawResponse: resp}
+	result := ClientRestoreCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return ClientRestoreCertificateResponse{}, err
 	}
@@ -3165,7 +3161,7 @@ func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL 
 
 // restoreKeyHandleResponse handles the RestoreKey response.
 func (client *Client) restoreKeyHandleResponse(resp *http.Response) (ClientRestoreKeyResponse, error) {
-	result := ClientRestoreKeyResponse{RawResponse: resp}
+	result := ClientRestoreKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return ClientRestoreKeyResponse{}, err
 	}
@@ -3211,7 +3207,7 @@ func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseU
 
 // restoreSecretHandleResponse handles the RestoreSecret response.
 func (client *Client) restoreSecretHandleResponse(resp *http.Response) (ClientRestoreSecretResponse, error) {
-	result := ClientRestoreSecretResponse{RawResponse: resp}
+	result := ClientRestoreSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return ClientRestoreSecretResponse{}, err
 	}
@@ -3260,7 +3256,7 @@ func (client *Client) restoreStatusCreateRequest(ctx context.Context, vaultBaseU
 
 // restoreStatusHandleResponse handles the RestoreStatus response.
 func (client *Client) restoreStatusHandleResponse(resp *http.Response) (ClientRestoreStatusResponse, error) {
-	result := ClientRestoreStatusResponse{RawResponse: resp}
+	result := ClientRestoreStatusResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RestoreOperation); err != nil {
 		return ClientRestoreStatusResponse{}, err
 	}
@@ -3305,7 +3301,7 @@ func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, va
 
 // restoreStorageAccountHandleResponse handles the RestoreStorageAccount response.
 func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (ClientRestoreStorageAccountResponse, error) {
-	result := ClientRestoreStorageAccountResponse{RawResponse: resp}
+	result := ClientRestoreStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return ClientRestoreStorageAccountResponse{}, err
 	}
@@ -3324,9 +3320,7 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 	if err != nil {
 		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
-	result := ClientSelectiveKeyRestoreOperationPollerResponse{
-		RawResponse: resp,
-	}
+	result := ClientSelectiveKeyRestoreOperationPollerResponse{}
 	pt, err := runtime.NewPoller("Client.SelectiveKeyRestoreOperation", resp, client.pl)
 	if err != nil {
 		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
@@ -3417,7 +3411,7 @@ func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, v
 
 // setCertificateContactsHandleResponse handles the SetCertificateContacts response.
 func (client *Client) setCertificateContactsHandleResponse(resp *http.Response) (ClientSetCertificateContactsResponse, error) {
-	result := ClientSetCertificateContactsResponse{RawResponse: resp}
+	result := ClientSetCertificateContactsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return ClientSetCertificateContactsResponse{}, err
 	}
@@ -3468,7 +3462,7 @@ func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vau
 
 // setCertificateIssuerHandleResponse handles the SetCertificateIssuer response.
 func (client *Client) setCertificateIssuerHandleResponse(resp *http.Response) (ClientSetCertificateIssuerResponse, error) {
-	result := ClientSetCertificateIssuerResponse{RawResponse: resp}
+	result := ClientSetCertificateIssuerResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return ClientSetCertificateIssuerResponse{}, err
 	}
@@ -3524,7 +3518,7 @@ func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBa
 
 // setSasDefinitionHandleResponse handles the SetSasDefinition response.
 func (client *Client) setSasDefinitionHandleResponse(resp *http.Response) (ClientSetSasDefinitionResponse, error) {
-	result := ClientSetSasDefinitionResponse{RawResponse: resp}
+	result := ClientSetSasDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return ClientSetSasDefinitionResponse{}, err
 	}
@@ -3575,7 +3569,7 @@ func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL s
 
 // setSecretHandleResponse handles the SetSecret response.
 func (client *Client) setSecretHandleResponse(resp *http.Response) (ClientSetSecretResponse, error) {
-	result := ClientSetSecretResponse{RawResponse: resp}
+	result := ClientSetSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return ClientSetSecretResponse{}, err
 	}
@@ -3625,7 +3619,7 @@ func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultB
 
 // setStorageAccountHandleResponse handles the SetStorageAccount response.
 func (client *Client) setStorageAccountHandleResponse(resp *http.Response) (ClientSetStorageAccountResponse, error) {
-	result := ClientSetStorageAccountResponse{RawResponse: resp}
+	result := ClientSetStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return ClientSetStorageAccountResponse{}, err
 	}
@@ -3681,7 +3675,7 @@ func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string
 
 // signHandleResponse handles the Sign response.
 func (client *Client) signHandleResponse(resp *http.Response) (ClientSignResponse, error) {
-	result := ClientSignResponse{RawResponse: resp}
+	result := ClientSignResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return ClientSignResponse{}, err
 	}
@@ -3739,7 +3733,7 @@ func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL s
 
 // unwrapKeyHandleResponse handles the UnwrapKey response.
 func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (ClientUnwrapKeyResponse, error) {
-	result := ClientUnwrapKeyResponse{RawResponse: resp}
+	result := ClientUnwrapKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return ClientUnwrapKeyResponse{}, err
 	}
@@ -3796,7 +3790,7 @@ func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultB
 
 // updateCertificateHandleResponse handles the UpdateCertificate response.
 func (client *Client) updateCertificateHandleResponse(resp *http.Response) (ClientUpdateCertificateResponse, error) {
-	result := ClientUpdateCertificateResponse{RawResponse: resp}
+	result := ClientUpdateCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return ClientUpdateCertificateResponse{}, err
 	}
@@ -3848,7 +3842,7 @@ func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, 
 
 // updateCertificateIssuerHandleResponse handles the UpdateCertificateIssuer response.
 func (client *Client) updateCertificateIssuerHandleResponse(resp *http.Response) (ClientUpdateCertificateIssuerResponse, error) {
-	result := ClientUpdateCertificateIssuerResponse{RawResponse: resp}
+	result := ClientUpdateCertificateIssuerResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return ClientUpdateCertificateIssuerResponse{}, err
 	}
@@ -3900,7 +3894,7 @@ func (client *Client) updateCertificateOperationCreateRequest(ctx context.Contex
 
 // updateCertificateOperationHandleResponse handles the UpdateCertificateOperation response.
 func (client *Client) updateCertificateOperationHandleResponse(resp *http.Response) (ClientUpdateCertificateOperationResponse, error) {
-	result := ClientUpdateCertificateOperationResponse{RawResponse: resp}
+	result := ClientUpdateCertificateOperationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return ClientUpdateCertificateOperationResponse{}, err
 	}
@@ -3952,7 +3946,7 @@ func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, 
 
 // updateCertificatePolicyHandleResponse handles the UpdateCertificatePolicy response.
 func (client *Client) updateCertificatePolicyHandleResponse(resp *http.Response) (ClientUpdateCertificatePolicyResponse, error) {
-	result := ClientUpdateCertificatePolicyResponse{RawResponse: resp}
+	result := ClientUpdateCertificatePolicyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
 		return ClientUpdateCertificatePolicyResponse{}, err
 	}
@@ -4008,7 +4002,7 @@ func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL s
 
 // updateKeyHandleResponse handles the UpdateKey response.
 func (client *Client) updateKeyHandleResponse(resp *http.Response) (ClientUpdateKeyResponse, error) {
-	result := ClientUpdateKeyResponse{RawResponse: resp}
+	result := ClientUpdateKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return ClientUpdateKeyResponse{}, err
 	}
@@ -4064,7 +4058,7 @@ func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaul
 
 // updateSasDefinitionHandleResponse handles the UpdateSasDefinition response.
 func (client *Client) updateSasDefinitionHandleResponse(resp *http.Response) (ClientUpdateSasDefinitionResponse, error) {
-	result := ClientUpdateSasDefinitionResponse{RawResponse: resp}
+	result := ClientUpdateSasDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return ClientUpdateSasDefinitionResponse{}, err
 	}
@@ -4121,7 +4115,7 @@ func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseUR
 
 // updateSecretHandleResponse handles the UpdateSecret response.
 func (client *Client) updateSecretHandleResponse(resp *http.Response) (ClientUpdateSecretResponse, error) {
-	result := ClientUpdateSecretResponse{RawResponse: resp}
+	result := ClientUpdateSecretResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return ClientUpdateSecretResponse{}, err
 	}
@@ -4172,7 +4166,7 @@ func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vau
 
 // updateStorageAccountHandleResponse handles the UpdateStorageAccount response.
 func (client *Client) updateStorageAccountHandleResponse(resp *http.Response) (ClientUpdateStorageAccountResponse, error) {
-	result := ClientUpdateStorageAccountResponse{RawResponse: resp}
+	result := ClientUpdateStorageAccountResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return ClientUpdateStorageAccountResponse{}, err
 	}
@@ -4231,7 +4225,7 @@ func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL stri
 
 // verifyHandleResponse handles the Verify response.
 func (client *Client) verifyHandleResponse(resp *http.Response) (ClientVerifyResponse, error) {
-	result := ClientVerifyResponse{RawResponse: resp}
+	result := ClientVerifyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyVerifyResult); err != nil {
 		return ClientVerifyResponse{}, err
 	}
@@ -4291,7 +4285,7 @@ func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL str
 
 // wrapKeyHandleResponse handles the WrapKey response.
 func (client *Client) wrapKeyHandleResponse(resp *http.Response) (ClientWrapKeyResponse, error) {
-	result := ClientWrapKeyResponse{RawResponse: resp}
+	result := ClientWrapKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return ClientWrapKeyResponse{}, err
 	}

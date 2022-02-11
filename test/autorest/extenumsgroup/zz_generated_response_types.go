@@ -8,18 +8,12 @@
 
 package extenumsgroup
 
-import "net/http"
-
 // PetClientAddPetResponse contains the response from method PetClient.AddPet.
 type PetClientAddPetResponse struct {
 	Pet
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetClientGetByPetIDResponse contains the response from method PetClient.GetByPetID.
 type PetClientGetByPetIDResponse struct {
 	Pet
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

@@ -5,7 +5,7 @@ package optionalgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -19,8 +19,8 @@ func TestImplicitGetOptionalGlobalQuery(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetOptionalGlobalQuery: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -31,8 +31,8 @@ func TestImplicitGetRequiredGlobalPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetRequiredGlobalPath: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -43,8 +43,8 @@ func TestImplicitGetRequiredGlobalQuery(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetRequiredGlobalQuery: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -55,8 +55,8 @@ func TestImplicitGetRequiredPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetRequiredPath: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -66,8 +66,8 @@ func TestImplicitPutOptionalBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutOptionalBody: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -77,8 +77,8 @@ func TestImplicitPutOptionalHeader(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutOptionalHeader: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -88,7 +88,7 @@ func TestImplicitPutOptionalQuery(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutOptionalQuery: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

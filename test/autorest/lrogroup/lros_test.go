@@ -66,12 +66,9 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -90,12 +87,9 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -110,12 +104,9 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -134,12 +125,9 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -158,12 +146,9 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -212,12 +197,9 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -266,12 +248,9 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -290,12 +269,9 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -350,9 +326,6 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
@@ -380,9 +353,6 @@ func TestLROBeginPost202List(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.ProductArray, []*Product{
 		{
 			ID:   to.StringPtr("100"),
@@ -408,12 +378,9 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -432,12 +399,9 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := res.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -459,9 +423,6 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -523,9 +484,6 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -586,9 +544,6 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID: to.StringPtr("100"),
 	}); r != "" {
@@ -614,9 +569,6 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -644,9 +596,6 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -693,9 +642,6 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -721,9 +667,6 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -752,9 +695,6 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -808,9 +748,6 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -841,9 +778,6 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -870,9 +804,6 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -903,9 +834,6 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -967,9 +895,6 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
@@ -1027,9 +952,6 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -1059,9 +981,6 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
 		ID: to.StringPtr("100"),
@@ -1093,9 +1012,6 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID: to.StringPtr("100"),
 		Properties: &ProductProperties{
@@ -1126,9 +1042,6 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
@@ -1156,9 +1069,6 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
 		ID: to.StringPtr("100"),

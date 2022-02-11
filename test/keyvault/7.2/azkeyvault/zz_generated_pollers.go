@@ -43,11 +43,10 @@ func (p *ClientFullBackupPoller) Poll(ctx context.Context) (*http.Response, erro
 // If the final GET succeeded then the final ClientFullBackupResponse will be returned.
 func (p *ClientFullBackupPoller) FinalResponse(ctx context.Context) (ClientFullBackupResponse, error) {
 	respType := ClientFullBackupResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.FullBackupOperation)
+	_, err := p.pt.FinalResponse(ctx, &respType.FullBackupOperation)
 	if err != nil {
 		return ClientFullBackupResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -86,11 +85,10 @@ func (p *ClientFullRestoreOperationPoller) Poll(ctx context.Context) (*http.Resp
 // If the final GET succeeded then the final ClientFullRestoreOperationResponse will be returned.
 func (p *ClientFullRestoreOperationPoller) FinalResponse(ctx context.Context) (ClientFullRestoreOperationResponse, error) {
 	respType := ClientFullRestoreOperationResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.RestoreOperation)
+	_, err := p.pt.FinalResponse(ctx, &respType.RestoreOperation)
 	if err != nil {
 		return ClientFullRestoreOperationResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -129,11 +127,10 @@ func (p *ClientSelectiveKeyRestoreOperationPoller) Poll(ctx context.Context) (*h
 // If the final GET succeeded then the final ClientSelectiveKeyRestoreOperationResponse will be returned.
 func (p *ClientSelectiveKeyRestoreOperationPoller) FinalResponse(ctx context.Context) (ClientSelectiveKeyRestoreOperationResponse, error) {
 	respType := ClientSelectiveKeyRestoreOperationResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SelectiveKeyRestoreOperation)
+	_, err := p.pt.FinalResponse(ctx, &respType.SelectiveKeyRestoreOperation)
 	if err != nil {
 		return ClientSelectiveKeyRestoreOperationResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -172,11 +169,10 @@ func (p *HSMSecurityDomainClientDownloadPoller) Poll(ctx context.Context) (*http
 // If the final GET succeeded then the final HSMSecurityDomainClientDownloadResponse will be returned.
 func (p *HSMSecurityDomainClientDownloadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainClientDownloadResponse, error) {
 	respType := HSMSecurityDomainClientDownloadResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainObject)
+	_, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainObject)
 	if err != nil {
 		return HSMSecurityDomainClientDownloadResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -215,11 +211,10 @@ func (p *HSMSecurityDomainClientUploadPoller) Poll(ctx context.Context) (*http.R
 // If the final GET succeeded then the final HSMSecurityDomainClientUploadResponse will be returned.
 func (p *HSMSecurityDomainClientUploadPoller) FinalResponse(ctx context.Context) (HSMSecurityDomainClientUploadResponse, error) {
 	respType := HSMSecurityDomainClientUploadResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainOperationStatus)
+	_, err := p.pt.FinalResponse(ctx, &respType.SecurityDomainOperationStatus)
 	if err != nil {
 		return HSMSecurityDomainClientUploadResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 

@@ -5,7 +5,7 @@ package complexgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -366,8 +366,8 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -409,8 +409,40 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	expectedSalmon := &Salmon{
+		Length: to.Float32Ptr(1),
+		Siblings: []FishClassification{
+			&Shark{
+				Fishtype: to.StringPtr("shark"),
+				Length:   to.Float32Ptr(20),
+				Species:  to.StringPtr("predator"),
+				Age:      to.Int32Ptr(6),
+				Birthday: &sharkBday,
+			},
+			&Sawshark{
+				Fishtype: to.StringPtr("sawshark"),
+				Length:   to.Float32Ptr(10),
+				Species:  to.StringPtr("dangerous"),
+				Age:      to.Int32Ptr(105),
+				Birthday: &sawBday,
+				Picture:  []byte{255, 255, 255, 255, 254},
+			},
+			&Goblinshark{
+				Fishtype: to.StringPtr("goblin"),
+				Length:   to.Float32Ptr(30),
+				Species:  to.StringPtr("scary"),
+				Age:      to.Int32Ptr(1),
+				Birthday: &goblinBday,
+				Color:    GoblinSharkColor("pinkish-gray").ToPtr(),
+				Jawsize:  to.Int32Ptr(5),
+			},
+		},
+		Species:  to.StringPtr("king"),
+		Iswild:   to.BoolPtr(true),
+		Location: to.StringPtr("alaska"),
+	}
+	if r := cmp.Diff(expectedSalmon, result.SalmonClassification); r != "" {
+		t.Fatal(r)
 	}
 }
 
@@ -420,7 +452,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 	goblinBday := time.Date(2015, time.August, 8, 0, 0, 0, 0, time.UTC)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
-	resp, err := client.PutValid(context.Background(), &Salmon{
+	result, err := client.PutValid(context.Background(), &Salmon{
 		Length: to.Float32Ptr(1),
 		Siblings: []FishClassification{
 			&Shark{
@@ -452,8 +484,8 @@ func TestPolymorphismPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 

@@ -98,7 +98,7 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (DevicesClientCreateOrUpdateResponse, error) {
-	result := DevicesClientCreateOrUpdateResponse{RawResponse: resp}
+	result := DevicesClientCreateOrUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
 		return DevicesClientCreateOrUpdateResponse{}, err
 	}
@@ -117,9 +117,7 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 	if err != nil {
 		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
 	}
-	result := DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{
-		RawResponse: resp,
-	}
+	result := DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
@@ -183,9 +181,7 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 	if err != nil {
 		return DevicesClientDeletePollerResponse{}, err
 	}
-	result := DevicesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := DevicesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientDeletePollerResponse{}, err
@@ -250,9 +246,7 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 	if err != nil {
 		return DevicesClientDownloadUpdatesPollerResponse{}, err
 	}
-	result := DevicesClientDownloadUpdatesPollerResponse{
-		RawResponse: resp,
-	}
+	result := DevicesClientDownloadUpdatesPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientDownloadUpdatesPollerResponse{}, err
@@ -355,7 +349,7 @@ func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Contex
 
 // generateCertificateHandleResponse handles the GenerateCertificate response.
 func (client *DevicesClient) generateCertificateHandleResponse(resp *http.Response) (DevicesClientGenerateCertificateResponse, error) {
-	result := DevicesClientGenerateCertificateResponse{RawResponse: resp}
+	result := DevicesClientGenerateCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GenerateCertResponse); err != nil {
 		return DevicesClientGenerateCertificateResponse{}, err
 	}
@@ -410,7 +404,7 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 
 // getHandleResponse handles the Get response.
 func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesClientGetResponse, error) {
-	result := DevicesClientGetResponse{RawResponse: resp}
+	result := DevicesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
 		return DevicesClientGetResponse{}, err
 	}
@@ -466,7 +460,7 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 
 // getExtendedInformationHandleResponse handles the GetExtendedInformation response.
 func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Response) (DevicesClientGetExtendedInformationResponse, error) {
-	result := DevicesClientGetExtendedInformationResponse{RawResponse: resp}
+	result := DevicesClientGetExtendedInformationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceExtendedInfo); err != nil {
 		return DevicesClientGetExtendedInformationResponse{}, err
 	}
@@ -522,7 +516,7 @@ func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context
 
 // getNetworkSettingsHandleResponse handles the GetNetworkSettings response.
 func (client *DevicesClient) getNetworkSettingsHandleResponse(resp *http.Response) (DevicesClientGetNetworkSettingsResponse, error) {
-	result := DevicesClientGetNetworkSettingsResponse{RawResponse: resp}
+	result := DevicesClientGetNetworkSettingsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSettings); err != nil {
 		return DevicesClientGetNetworkSettingsResponse{}, err
 	}
@@ -579,7 +573,7 @@ func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, 
 
 // getUpdateSummaryHandleResponse handles the GetUpdateSummary response.
 func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response) (DevicesClientGetUpdateSummaryResponse, error) {
-	result := DevicesClientGetUpdateSummaryResponse{RawResponse: resp}
+	result := DevicesClientGetUpdateSummaryResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UpdateSummary); err != nil {
 		return DevicesClientGetUpdateSummaryResponse{}, err
 	}
@@ -597,9 +591,7 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 	if err != nil {
 		return DevicesClientInstallUpdatesPollerResponse{}, err
 	}
-	result := DevicesClientInstallUpdatesPollerResponse{
-		RawResponse: resp,
-	}
+	result := DevicesClientInstallUpdatesPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientInstallUpdatesPollerResponse{}, err
@@ -697,7 +689,7 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Response) (DevicesClientListByResourceGroupResponse, error) {
-	result := DevicesClientListByResourceGroupResponse{RawResponse: resp}
+	result := DevicesClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceList); err != nil {
 		return DevicesClientListByResourceGroupResponse{}, err
 	}
@@ -743,7 +735,7 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Response) (DevicesClientListBySubscriptionResponse, error) {
-	result := DevicesClientListBySubscriptionResponse{RawResponse: resp}
+	result := DevicesClientListBySubscriptionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceList); err != nil {
 		return DevicesClientListBySubscriptionResponse{}, err
 	}
@@ -761,9 +753,7 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 	if err != nil {
 		return DevicesClientScanForUpdatesPollerResponse{}, err
 	}
-	result := DevicesClientScanForUpdatesPollerResponse{
-		RawResponse: resp,
-	}
+	result := DevicesClientScanForUpdatesPollerResponse{}
 	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientScanForUpdatesPollerResponse{}, err
@@ -866,7 +856,7 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 
 // updateHandleResponse handles the Update response.
 func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesClientUpdateResponse, error) {
-	result := DevicesClientUpdateResponse{RawResponse: resp}
+	result := DevicesClientUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
 		return DevicesClientUpdateResponse{}, err
 	}
@@ -923,7 +913,7 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 
 // updateExtendedInformationHandleResponse handles the UpdateExtendedInformation response.
 func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.Response) (DevicesClientUpdateExtendedInformationResponse, error) {
-	result := DevicesClientUpdateExtendedInformationResponse{RawResponse: resp}
+	result := DevicesClientUpdateExtendedInformationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceExtendedInfo); err != nil {
 		return DevicesClientUpdateExtendedInformationResponse{}, err
 	}
@@ -980,7 +970,7 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 
 // uploadCertificateHandleResponse handles the UploadCertificate response.
 func (client *DevicesClient) uploadCertificateHandleResponse(resp *http.Response) (DevicesClientUploadCertificateResponse, error) {
-	result := DevicesClientUploadCertificateResponse{RawResponse: resp}
+	result := DevicesClientUploadCertificateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UploadCertificateResponse); err != nil {
 		return DevicesClientUploadCertificateResponse{}, err
 	}

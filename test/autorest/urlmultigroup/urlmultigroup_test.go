@@ -5,8 +5,8 @@ package urlmultigroup
 
 import (
 	"context"
-	"net/http"
 	"net/url"
+	"reflect"
 	"testing"
 )
 
@@ -22,8 +22,8 @@ func TestURLMultiArrayStringMultiEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ArrayStringMultiEmpty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -35,8 +35,8 @@ func TestURLMultiArrayStringMultiNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ArrayStringMultiNull: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -53,7 +53,7 @@ func TestURLMultiArrayStringMultiValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ArrayStringMultiValid: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

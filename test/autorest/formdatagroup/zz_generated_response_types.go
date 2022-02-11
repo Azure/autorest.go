@@ -8,22 +8,22 @@
 
 package formdatagroup
 
-import "net/http"
+import "io"
 
 // FormdataClientUploadFileResponse contains the response from method FormdataClient.UploadFile.
 type FormdataClientUploadFileResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // FormdataClientUploadFileViaBodyResponse contains the response from method FormdataClient.UploadFileViaBody.
 type FormdataClientUploadFileViaBodyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // FormdataClientUploadFilesResponse contains the response from method FormdataClient.UploadFiles.
 type FormdataClientUploadFilesResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }

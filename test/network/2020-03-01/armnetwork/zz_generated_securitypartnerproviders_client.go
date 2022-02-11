@@ -62,9 +62,7 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
 	}
-	result := SecurityPartnerProvidersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := SecurityPartnerProvidersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
@@ -234,7 +230,7 @@ func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Conte
 
 // getHandleResponse handles the Get response.
 func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientGetResponse, error) {
-	result := SecurityPartnerProvidersClientGetResponse{RawResponse: resp}
+	result := SecurityPartnerProvidersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
 		return SecurityPartnerProvidersClientGetResponse{}, err
 	}
@@ -277,7 +273,7 @@ func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListResponse, error) {
-	result := SecurityPartnerProvidersClientListResponse{RawResponse: resp}
+	result := SecurityPartnerProvidersClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
 		return SecurityPartnerProvidersClientListResponse{}, err
 	}
@@ -325,7 +321,7 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(c
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListByResourceGroupResponse, error) {
-	result := SecurityPartnerProvidersClientListByResourceGroupResponse{RawResponse: resp}
+	result := SecurityPartnerProvidersClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
 		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
 	}
@@ -382,7 +378,7 @@ func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx contex
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientUpdateTagsResponse, error) {
-	result := SecurityPartnerProvidersClientUpdateTagsResponse{RawResponse: resp}
+	result := SecurityPartnerProvidersClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
 		return SecurityPartnerProvidersClientUpdateTagsResponse{}, err
 	}

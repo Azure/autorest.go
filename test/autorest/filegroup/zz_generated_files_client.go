@@ -49,7 +49,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClien
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FilesClientGetEmptyFileResponse{}, runtime.NewResponseError(resp)
 	}
-	return FilesClientGetEmptyFileResponse{RawResponse: resp}, nil
+	return FilesClientGetEmptyFileResponse{Body: resp.Body}, nil
 }
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
@@ -79,7 +79,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetF
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FilesClientGetFileResponse{}, runtime.NewResponseError(resp)
 	}
-	return FilesClientGetFileResponse{RawResponse: resp}, nil
+	return FilesClientGetFileResponse{Body: resp.Body}, nil
 }
 
 // getFileCreateRequest creates the GetFile request.
@@ -109,7 +109,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClien
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FilesClientGetFileLargeResponse{}, runtime.NewResponseError(resp)
 	}
-	return FilesClientGetFileLargeResponse{RawResponse: resp}, nil
+	return FilesClientGetFileLargeResponse{Body: resp.Body}, nil
 }
 
 // getFileLargeCreateRequest creates the GetFileLarge request.

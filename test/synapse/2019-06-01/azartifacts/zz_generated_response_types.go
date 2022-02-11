@@ -11,42 +11,33 @@ package azartifacts
 import (
 	"context"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"net/http"
 	"time"
 )
 
 // bigDataPoolsClientGetResponse contains the response from method bigDataPoolsClient.Get.
 type bigDataPoolsClientGetResponse struct {
 	BigDataPoolResourceInfo
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // bigDataPoolsClientListResponse contains the response from method bigDataPoolsClient.List.
 type bigDataPoolsClientListResponse struct {
 	BigDataPoolResourceInfoListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowClientCreateOrUpdateDataFlowPollerResponse contains the response from method dataFlowClient.CreateOrUpdateDataFlow.
 type dataFlowClientCreateOrUpdateDataFlowPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *dataFlowClientCreateOrUpdateDataFlowPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l dataFlowClientCreateOrUpdateDataFlowPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (dataFlowClientCreateOrUpdateDataFlowResponse, error) {
 	respType := dataFlowClientCreateOrUpdateDataFlowResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DataFlowResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DataFlowResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -59,40 +50,33 @@ func (l *dataFlowClientCreateOrUpdateDataFlowPollerResponse) Resume(ctx context.
 	poller := &dataFlowClientCreateOrUpdateDataFlowPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // dataFlowClientCreateOrUpdateDataFlowResponse contains the response from method dataFlowClient.CreateOrUpdateDataFlow.
 type dataFlowClientCreateOrUpdateDataFlowResponse struct {
 	DataFlowResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowClientDeleteDataFlowPollerResponse contains the response from method dataFlowClient.DeleteDataFlow.
 type dataFlowClientDeleteDataFlowPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *dataFlowClientDeleteDataFlowPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l dataFlowClientDeleteDataFlowPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (dataFlowClientDeleteDataFlowResponse, error) {
 	respType := dataFlowClientDeleteDataFlowResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -105,53 +89,43 @@ func (l *dataFlowClientDeleteDataFlowPollerResponse) Resume(ctx context.Context,
 	poller := &dataFlowClientDeleteDataFlowPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // dataFlowClientDeleteDataFlowResponse contains the response from method dataFlowClient.DeleteDataFlow.
 type dataFlowClientDeleteDataFlowResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // dataFlowClientGetDataFlowResponse contains the response from method dataFlowClient.GetDataFlow.
 type dataFlowClientGetDataFlowResponse struct {
 	DataFlowResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowClientGetDataFlowsByWorkspaceResponse contains the response from method dataFlowClient.GetDataFlowsByWorkspace.
 type dataFlowClientGetDataFlowsByWorkspaceResponse struct {
 	DataFlowListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowClientRenameDataFlowPollerResponse contains the response from method dataFlowClient.RenameDataFlow.
 type dataFlowClientRenameDataFlowPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *dataFlowClientRenameDataFlowPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l dataFlowClientRenameDataFlowPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (dataFlowClientRenameDataFlowResponse, error) {
 	respType := dataFlowClientRenameDataFlowResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -164,46 +138,38 @@ func (l *dataFlowClientRenameDataFlowPollerResponse) Resume(ctx context.Context,
 	poller := &dataFlowClientRenameDataFlowPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // dataFlowClientRenameDataFlowResponse contains the response from method dataFlowClient.RenameDataFlow.
 type dataFlowClientRenameDataFlowResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // dataFlowDebugSessionClientAddDataFlowResponse contains the response from method dataFlowDebugSessionClient.AddDataFlow.
 type dataFlowDebugSessionClientAddDataFlowResponse struct {
 	AddDataFlowToDebugSessionResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse contains the response from method dataFlowDebugSessionClient.CreateDataFlowDebugSession.
 type dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse, error) {
 	respType := dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.CreateDataFlowDebugSessionResponse)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.CreateDataFlowDebugSessionResponse)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -217,46 +183,38 @@ func (l *dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse) Res
 	poller := &dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse contains the response from method dataFlowDebugSessionClient.CreateDataFlowDebugSession.
 type dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse struct {
 	CreateDataFlowDebugSessionResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse contains the response from method dataFlowDebugSessionClient.DeleteDataFlowDebugSession.
 type dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // dataFlowDebugSessionClientExecuteCommandPollerResponse contains the response from method dataFlowDebugSessionClient.ExecuteCommand.
 type dataFlowDebugSessionClientExecuteCommandPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *dataFlowDebugSessionClientExecuteCommandPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l dataFlowDebugSessionClientExecuteCommandPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (dataFlowDebugSessionClientExecuteCommandResponse, error) {
 	respType := dataFlowDebugSessionClientExecuteCommandResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DataFlowDebugCommandResponse)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DataFlowDebugCommandResponse)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -269,47 +227,38 @@ func (l *dataFlowDebugSessionClientExecuteCommandPollerResponse) Resume(ctx cont
 	poller := &dataFlowDebugSessionClientExecuteCommandPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // dataFlowDebugSessionClientExecuteCommandResponse contains the response from method dataFlowDebugSessionClient.ExecuteCommand.
 type dataFlowDebugSessionClientExecuteCommandResponse struct {
 	DataFlowDebugCommandResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse contains the response from method dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace.
 type dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse struct {
 	QueryDataFlowDebugSessionsResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // datasetClientCreateOrUpdateDatasetPollerResponse contains the response from method datasetClient.CreateOrUpdateDataset.
 type datasetClientCreateOrUpdateDatasetPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *datasetClientCreateOrUpdateDatasetPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l datasetClientCreateOrUpdateDatasetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (datasetClientCreateOrUpdateDatasetResponse, error) {
 	respType := datasetClientCreateOrUpdateDatasetResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DatasetResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.DatasetResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -322,40 +271,33 @@ func (l *datasetClientCreateOrUpdateDatasetPollerResponse) Resume(ctx context.Co
 	poller := &datasetClientCreateOrUpdateDatasetPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // datasetClientCreateOrUpdateDatasetResponse contains the response from method datasetClient.CreateOrUpdateDataset.
 type datasetClientCreateOrUpdateDatasetResponse struct {
 	DatasetResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // datasetClientDeleteDatasetPollerResponse contains the response from method datasetClient.DeleteDataset.
 type datasetClientDeleteDatasetPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *datasetClientDeleteDatasetPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l datasetClientDeleteDatasetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (datasetClientDeleteDatasetResponse, error) {
 	respType := datasetClientDeleteDatasetResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -368,53 +310,43 @@ func (l *datasetClientDeleteDatasetPollerResponse) Resume(ctx context.Context, c
 	poller := &datasetClientDeleteDatasetPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // datasetClientDeleteDatasetResponse contains the response from method datasetClient.DeleteDataset.
 type datasetClientDeleteDatasetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // datasetClientGetDatasetResponse contains the response from method datasetClient.GetDataset.
 type datasetClientGetDatasetResponse struct {
 	DatasetResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // datasetClientGetDatasetsByWorkspaceResponse contains the response from method datasetClient.GetDatasetsByWorkspace.
 type datasetClientGetDatasetsByWorkspaceResponse struct {
 	DatasetListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // datasetClientRenameDatasetPollerResponse contains the response from method datasetClient.RenameDataset.
 type datasetClientRenameDatasetPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *datasetClientRenameDatasetPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l datasetClientRenameDatasetPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (datasetClientRenameDatasetResponse, error) {
 	respType := datasetClientRenameDatasetResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -427,59 +359,48 @@ func (l *datasetClientRenameDatasetPollerResponse) Resume(ctx context.Context, c
 	poller := &datasetClientRenameDatasetPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // datasetClientRenameDatasetResponse contains the response from method datasetClient.RenameDataset.
 type datasetClientRenameDatasetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // integrationRuntimesClientGetResponse contains the response from method integrationRuntimesClient.Get.
 type integrationRuntimesClientGetResponse struct {
 	IntegrationRuntimeResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // integrationRuntimesClientListResponse contains the response from method integrationRuntimesClient.List.
 type integrationRuntimesClientListResponse struct {
 	IntegrationRuntimeListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // libraryClientAppendResponse contains the response from method libraryClient.Append.
 type libraryClientAppendResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // libraryClientCreatePollerResponse contains the response from method libraryClient.Create.
 type libraryClientCreatePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *libraryClientCreatePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l libraryClientCreatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (libraryClientCreateResponse, error) {
 	respType := libraryClientCreateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LibraryResourceInfo)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LibraryResourceInfo)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -492,40 +413,33 @@ func (l *libraryClientCreatePollerResponse) Resume(ctx context.Context, client *
 	poller := &libraryClientCreatePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // libraryClientCreateResponse contains the response from method libraryClient.Create.
 type libraryClientCreateResponse struct {
 	LibraryResourceInfo
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // libraryClientDeletePollerResponse contains the response from method libraryClient.Delete.
 type libraryClientDeletePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *libraryClientDeletePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l libraryClientDeletePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (libraryClientDeleteResponse, error) {
 	respType := libraryClientDeleteResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LibraryResourceInfo)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LibraryResourceInfo)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -538,40 +452,33 @@ func (l *libraryClientDeletePollerResponse) Resume(ctx context.Context, client *
 	poller := &libraryClientDeletePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // libraryClientDeleteResponse contains the response from method libraryClient.Delete.
 type libraryClientDeleteResponse struct {
 	LibraryResourceInfo
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // libraryClientFlushPollerResponse contains the response from method libraryClient.Flush.
 type libraryClientFlushPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *libraryClientFlushPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l libraryClientFlushPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (libraryClientFlushResponse, error) {
 	respType := libraryClientFlushResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LibraryResourceInfo)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LibraryResourceInfo)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -584,27 +491,21 @@ func (l *libraryClientFlushPollerResponse) Resume(ctx context.Context, client *l
 	poller := &libraryClientFlushPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // libraryClientFlushResponse contains the response from method libraryClient.Flush.
 type libraryClientFlushResponse struct {
 	LibraryResourceInfo
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // libraryClientGetOperationResultResponse contains the response from method libraryClient.GetOperationResult.
 type libraryClientGetOperationResultResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// // Possible types are LibraryResource, OperationResult
 	Value interface{}
 }
@@ -612,35 +513,27 @@ type libraryClientGetOperationResultResponse struct {
 // libraryClientGetResponse contains the response from method libraryClient.Get.
 type libraryClientGetResponse struct {
 	LibraryResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // libraryClientListResponse contains the response from method libraryClient.List.
 type libraryClientListResponse struct {
 	LibraryListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // linkedServiceClientCreateOrUpdateLinkedServicePollerResponse contains the response from method linkedServiceClient.CreateOrUpdateLinkedService.
 type linkedServiceClientCreateOrUpdateLinkedServicePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *linkedServiceClientCreateOrUpdateLinkedServicePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l linkedServiceClientCreateOrUpdateLinkedServicePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (linkedServiceClientCreateOrUpdateLinkedServiceResponse, error) {
 	respType := linkedServiceClientCreateOrUpdateLinkedServiceResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LinkedServiceResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.LinkedServiceResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -653,40 +546,33 @@ func (l *linkedServiceClientCreateOrUpdateLinkedServicePollerResponse) Resume(ct
 	poller := &linkedServiceClientCreateOrUpdateLinkedServicePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // linkedServiceClientCreateOrUpdateLinkedServiceResponse contains the response from method linkedServiceClient.CreateOrUpdateLinkedService.
 type linkedServiceClientCreateOrUpdateLinkedServiceResponse struct {
 	LinkedServiceResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // linkedServiceClientDeleteLinkedServicePollerResponse contains the response from method linkedServiceClient.DeleteLinkedService.
 type linkedServiceClientDeleteLinkedServicePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *linkedServiceClientDeleteLinkedServicePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l linkedServiceClientDeleteLinkedServicePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (linkedServiceClientDeleteLinkedServiceResponse, error) {
 	respType := linkedServiceClientDeleteLinkedServiceResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -699,53 +585,43 @@ func (l *linkedServiceClientDeleteLinkedServicePollerResponse) Resume(ctx contex
 	poller := &linkedServiceClientDeleteLinkedServicePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // linkedServiceClientDeleteLinkedServiceResponse contains the response from method linkedServiceClient.DeleteLinkedService.
 type linkedServiceClientDeleteLinkedServiceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // linkedServiceClientGetLinkedServiceResponse contains the response from method linkedServiceClient.GetLinkedService.
 type linkedServiceClientGetLinkedServiceResponse struct {
 	LinkedServiceResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // linkedServiceClientGetLinkedServicesByWorkspaceResponse contains the response from method linkedServiceClient.GetLinkedServicesByWorkspace.
 type linkedServiceClientGetLinkedServicesByWorkspaceResponse struct {
 	LinkedServiceListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // linkedServiceClientRenameLinkedServicePollerResponse contains the response from method linkedServiceClient.RenameLinkedService.
 type linkedServiceClientRenameLinkedServicePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *linkedServiceClientRenameLinkedServicePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l linkedServiceClientRenameLinkedServicePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (linkedServiceClientRenameLinkedServiceResponse, error) {
 	respType := linkedServiceClientRenameLinkedServiceResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -758,39 +634,33 @@ func (l *linkedServiceClientRenameLinkedServicePollerResponse) Resume(ctx contex
 	poller := &linkedServiceClientRenameLinkedServicePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // linkedServiceClientRenameLinkedServiceResponse contains the response from method linkedServiceClient.RenameLinkedService.
 type linkedServiceClientRenameLinkedServiceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // notebookClientCreateOrUpdateNotebookPollerResponse contains the response from method notebookClient.CreateOrUpdateNotebook.
 type notebookClientCreateOrUpdateNotebookPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *notebookClientCreateOrUpdateNotebookPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l notebookClientCreateOrUpdateNotebookPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (notebookClientCreateOrUpdateNotebookResponse, error) {
 	respType := notebookClientCreateOrUpdateNotebookResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NotebookResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NotebookResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -803,40 +673,33 @@ func (l *notebookClientCreateOrUpdateNotebookPollerResponse) Resume(ctx context.
 	poller := &notebookClientCreateOrUpdateNotebookPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // notebookClientCreateOrUpdateNotebookResponse contains the response from method notebookClient.CreateOrUpdateNotebook.
 type notebookClientCreateOrUpdateNotebookResponse struct {
 	NotebookResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // notebookClientDeleteNotebookPollerResponse contains the response from method notebookClient.DeleteNotebook.
 type notebookClientDeleteNotebookPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *notebookClientDeleteNotebookPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l notebookClientDeleteNotebookPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (notebookClientDeleteNotebookResponse, error) {
 	respType := notebookClientDeleteNotebookResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -849,60 +712,48 @@ func (l *notebookClientDeleteNotebookPollerResponse) Resume(ctx context.Context,
 	poller := &notebookClientDeleteNotebookPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // notebookClientDeleteNotebookResponse contains the response from method notebookClient.DeleteNotebook.
 type notebookClientDeleteNotebookResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // notebookClientGetNotebookResponse contains the response from method notebookClient.GetNotebook.
 type notebookClientGetNotebookResponse struct {
 	NotebookResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // notebookClientGetNotebookSummaryByWorkSpaceResponse contains the response from method notebookClient.GetNotebookSummaryByWorkSpace.
 type notebookClientGetNotebookSummaryByWorkSpaceResponse struct {
 	NotebookListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // notebookClientGetNotebooksByWorkspaceResponse contains the response from method notebookClient.GetNotebooksByWorkspace.
 type notebookClientGetNotebooksByWorkspaceResponse struct {
 	NotebookListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // notebookClientRenameNotebookPollerResponse contains the response from method notebookClient.RenameNotebook.
 type notebookClientRenameNotebookPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *notebookClientRenameNotebookPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l notebookClientRenameNotebookPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (notebookClientRenameNotebookResponse, error) {
 	respType := notebookClientRenameNotebookResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -915,39 +766,33 @@ func (l *notebookClientRenameNotebookPollerResponse) Resume(ctx context.Context,
 	poller := &notebookClientRenameNotebookPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // notebookClientRenameNotebookResponse contains the response from method notebookClient.RenameNotebook.
 type notebookClientRenameNotebookResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // pipelineClientCreateOrUpdatePipelinePollerResponse contains the response from method pipelineClient.CreateOrUpdatePipeline.
 type pipelineClientCreateOrUpdatePipelinePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *pipelineClientCreateOrUpdatePipelinePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l pipelineClientCreateOrUpdatePipelinePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (pipelineClientCreateOrUpdatePipelineResponse, error) {
 	respType := pipelineClientCreateOrUpdatePipelineResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PipelineResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.PipelineResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -960,47 +805,38 @@ func (l *pipelineClientCreateOrUpdatePipelinePollerResponse) Resume(ctx context.
 	poller := &pipelineClientCreateOrUpdatePipelinePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // pipelineClientCreateOrUpdatePipelineResponse contains the response from method pipelineClient.CreateOrUpdatePipeline.
 type pipelineClientCreateOrUpdatePipelineResponse struct {
 	PipelineResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // pipelineClientCreatePipelineRunResponse contains the response from method pipelineClient.CreatePipelineRun.
 type pipelineClientCreatePipelineRunResponse struct {
 	CreateRunResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // pipelineClientDeletePipelinePollerResponse contains the response from method pipelineClient.DeletePipeline.
 type pipelineClientDeletePipelinePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *pipelineClientDeletePipelinePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l pipelineClientDeletePipelinePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (pipelineClientDeletePipelineResponse, error) {
 	respType := pipelineClientDeletePipelineResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1013,53 +849,43 @@ func (l *pipelineClientDeletePipelinePollerResponse) Resume(ctx context.Context,
 	poller := &pipelineClientDeletePipelinePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // pipelineClientDeletePipelineResponse contains the response from method pipelineClient.DeletePipeline.
 type pipelineClientDeletePipelineResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // pipelineClientGetPipelineResponse contains the response from method pipelineClient.GetPipeline.
 type pipelineClientGetPipelineResponse struct {
 	PipelineResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // pipelineClientGetPipelinesByWorkspaceResponse contains the response from method pipelineClient.GetPipelinesByWorkspace.
 type pipelineClientGetPipelinesByWorkspaceResponse struct {
 	PipelineListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // pipelineClientRenamePipelinePollerResponse contains the response from method pipelineClient.RenamePipeline.
 type pipelineClientRenamePipelinePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *pipelineClientRenamePipelinePoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l pipelineClientRenamePipelinePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (pipelineClientRenamePipelineResponse, error) {
 	respType := pipelineClientRenamePipelineResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1072,66 +898,53 @@ func (l *pipelineClientRenamePipelinePollerResponse) Resume(ctx context.Context,
 	poller := &pipelineClientRenamePipelinePoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // pipelineClientRenamePipelineResponse contains the response from method pipelineClient.RenamePipeline.
 type pipelineClientRenamePipelineResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // pipelineRunClientCancelPipelineRunResponse contains the response from method pipelineRunClient.CancelPipelineRun.
 type pipelineRunClientCancelPipelineRunResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // pipelineRunClientGetPipelineRunResponse contains the response from method pipelineRunClient.GetPipelineRun.
 type pipelineRunClientGetPipelineRunResponse struct {
 	PipelineRun
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // pipelineRunClientQueryActivityRunsResponse contains the response from method pipelineRunClient.QueryActivityRuns.
 type pipelineRunClientQueryActivityRunsResponse struct {
 	ActivityRunsQueryResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // pipelineRunClientQueryPipelineRunsByWorkspaceResponse contains the response from method pipelineRunClient.QueryPipelineRunsByWorkspace.
 type pipelineRunClientQueryPipelineRunsByWorkspaceResponse struct {
 	PipelineRunsQueryResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
 type sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SparkJobDefinitionResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SparkJobDefinitionResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1145,40 +958,33 @@ func (l *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse)
 	poller := &sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
 type sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse struct {
 	SparkJobDefinitionResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.DebugSparkJobDefinition.
 type sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sparkJobDefinitionClientDebugSparkJobDefinitionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sparkJobDefinitionClientDebugSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientDebugSparkJobDefinitionResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SparkBatchJob)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SparkBatchJob)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1191,40 +997,33 @@ func (l *sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse) Resume(c
 	poller := &sparkJobDefinitionClientDebugSparkJobDefinitionPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sparkJobDefinitionClientDebugSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.DebugSparkJobDefinition.
 type sparkJobDefinitionClientDebugSparkJobDefinitionResponse struct {
 	SparkBatchJob
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.DeleteSparkJobDefinition.
 type sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sparkJobDefinitionClientDeleteSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientDeleteSparkJobDefinitionResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1238,39 +1037,33 @@ func (l *sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse) Resume(
 	poller := &sparkJobDefinitionClientDeleteSparkJobDefinitionPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sparkJobDefinitionClientDeleteSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.DeleteSparkJobDefinition.
 type sparkJobDefinitionClientDeleteSparkJobDefinitionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.ExecuteSparkJobDefinition.
 type sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sparkJobDefinitionClientExecuteSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientExecuteSparkJobDefinitionResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SparkBatchJob)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SparkBatchJob)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1284,54 +1077,43 @@ func (l *sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse) Resume
 	poller := &sparkJobDefinitionClientExecuteSparkJobDefinitionPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sparkJobDefinitionClientExecuteSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.ExecuteSparkJobDefinition.
 type sparkJobDefinitionClientExecuteSparkJobDefinitionResponse struct {
 	SparkBatchJob
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sparkJobDefinitionClientGetSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.GetSparkJobDefinition.
 type sparkJobDefinitionClientGetSparkJobDefinitionResponse struct {
 	SparkJobDefinitionResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse contains the response from method sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace.
 type sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse struct {
 	SparkJobDefinitionsListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse contains the response from method sparkJobDefinitionClient.RenameSparkJobDefinition.
 type sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sparkJobDefinitionClientRenameSparkJobDefinitionPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sparkJobDefinitionClientRenameSparkJobDefinitionResponse, error) {
 	respType := sparkJobDefinitionClientRenameSparkJobDefinitionResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1345,53 +1127,43 @@ func (l *sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse) Resume(
 	poller := &sparkJobDefinitionClientRenameSparkJobDefinitionPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sparkJobDefinitionClientRenameSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.RenameSparkJobDefinition.
 type sparkJobDefinitionClientRenameSparkJobDefinitionResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // sqlPoolsClientGetResponse contains the response from method sqlPoolsClient.Get.
 type sqlPoolsClientGetResponse struct {
 	SQLPool
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sqlPoolsClientListResponse contains the response from method sqlPoolsClient.List.
 type sqlPoolsClientListResponse struct {
 	SQLPoolInfoListResult
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sqlScriptClientCreateOrUpdateSQLScriptPollerResponse contains the response from method sqlScriptClient.CreateOrUpdateSQLScript.
 type sqlScriptClientCreateOrUpdateSQLScriptPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sqlScriptClientCreateOrUpdateSQLScriptPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sqlScriptClientCreateOrUpdateSQLScriptPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sqlScriptClientCreateOrUpdateSQLScriptResponse, error) {
 	respType := sqlScriptClientCreateOrUpdateSQLScriptResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SQLScriptResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SQLScriptResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1404,40 +1176,33 @@ func (l *sqlScriptClientCreateOrUpdateSQLScriptPollerResponse) Resume(ctx contex
 	poller := &sqlScriptClientCreateOrUpdateSQLScriptPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sqlScriptClientCreateOrUpdateSQLScriptResponse contains the response from method sqlScriptClient.CreateOrUpdateSQLScript.
 type sqlScriptClientCreateOrUpdateSQLScriptResponse struct {
 	SQLScriptResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sqlScriptClientDeleteSQLScriptPollerResponse contains the response from method sqlScriptClient.DeleteSQLScript.
 type sqlScriptClientDeleteSQLScriptPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sqlScriptClientDeleteSQLScriptPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sqlScriptClientDeleteSQLScriptPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sqlScriptClientDeleteSQLScriptResponse, error) {
 	respType := sqlScriptClientDeleteSQLScriptResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1450,53 +1215,43 @@ func (l *sqlScriptClientDeleteSQLScriptPollerResponse) Resume(ctx context.Contex
 	poller := &sqlScriptClientDeleteSQLScriptPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sqlScriptClientDeleteSQLScriptResponse contains the response from method sqlScriptClient.DeleteSQLScript.
 type sqlScriptClientDeleteSQLScriptResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // sqlScriptClientGetSQLScriptResponse contains the response from method sqlScriptClient.GetSQLScript.
 type sqlScriptClientGetSQLScriptResponse struct {
 	SQLScriptResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sqlScriptClientGetSQLScriptsByWorkspaceResponse contains the response from method sqlScriptClient.GetSQLScriptsByWorkspace.
 type sqlScriptClientGetSQLScriptsByWorkspaceResponse struct {
 	SQLScriptsListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // sqlScriptClientRenameSQLScriptPollerResponse contains the response from method sqlScriptClient.RenameSQLScript.
 type sqlScriptClientRenameSQLScriptPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *sqlScriptClientRenameSQLScriptPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l sqlScriptClientRenameSQLScriptPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (sqlScriptClientRenameSQLScriptResponse, error) {
 	respType := sqlScriptClientRenameSQLScriptResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1509,39 +1264,33 @@ func (l *sqlScriptClientRenameSQLScriptPollerResponse) Resume(ctx context.Contex
 	poller := &sqlScriptClientRenameSQLScriptPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // sqlScriptClientRenameSQLScriptResponse contains the response from method sqlScriptClient.RenameSQLScript.
 type sqlScriptClientRenameSQLScriptResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // triggerClientCreateOrUpdateTriggerPollerResponse contains the response from method triggerClient.CreateOrUpdateTrigger.
 type triggerClientCreateOrUpdateTriggerPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *triggerClientCreateOrUpdateTriggerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l triggerClientCreateOrUpdateTriggerPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (triggerClientCreateOrUpdateTriggerResponse, error) {
 	respType := triggerClientCreateOrUpdateTriggerResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerResource)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerResource)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1554,40 +1303,33 @@ func (l *triggerClientCreateOrUpdateTriggerPollerResponse) Resume(ctx context.Co
 	poller := &triggerClientCreateOrUpdateTriggerPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // triggerClientCreateOrUpdateTriggerResponse contains the response from method triggerClient.CreateOrUpdateTrigger.
 type triggerClientCreateOrUpdateTriggerResponse struct {
 	TriggerResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerClientDeleteTriggerPollerResponse contains the response from method triggerClient.DeleteTrigger.
 type triggerClientDeleteTriggerPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *triggerClientDeleteTriggerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l triggerClientDeleteTriggerPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (triggerClientDeleteTriggerResponse, error) {
 	respType := triggerClientDeleteTriggerResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1600,60 +1342,48 @@ func (l *triggerClientDeleteTriggerPollerResponse) Resume(ctx context.Context, c
 	poller := &triggerClientDeleteTriggerPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // triggerClientDeleteTriggerResponse contains the response from method triggerClient.DeleteTrigger.
 type triggerClientDeleteTriggerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // triggerClientGetEventSubscriptionStatusResponse contains the response from method triggerClient.GetEventSubscriptionStatus.
 type triggerClientGetEventSubscriptionStatusResponse struct {
 	TriggerSubscriptionOperationStatus
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerClientGetTriggerResponse contains the response from method triggerClient.GetTrigger.
 type triggerClientGetTriggerResponse struct {
 	TriggerResource
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerClientGetTriggersByWorkspaceResponse contains the response from method triggerClient.GetTriggersByWorkspace.
 type triggerClientGetTriggersByWorkspaceResponse struct {
 	TriggerListResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerClientStartTriggerPollerResponse contains the response from method triggerClient.StartTrigger.
 type triggerClientStartTriggerPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *triggerClientStartTriggerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l triggerClientStartTriggerPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (triggerClientStartTriggerResponse, error) {
 	respType := triggerClientStartTriggerResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1666,39 +1396,33 @@ func (l *triggerClientStartTriggerPollerResponse) Resume(ctx context.Context, cl
 	poller := &triggerClientStartTriggerPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // triggerClientStartTriggerResponse contains the response from method triggerClient.StartTrigger.
 type triggerClientStartTriggerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // triggerClientStopTriggerPollerResponse contains the response from method triggerClient.StopTrigger.
 type triggerClientStopTriggerPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *triggerClientStopTriggerPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l triggerClientStopTriggerPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (triggerClientStopTriggerResponse, error) {
 	respType := triggerClientStopTriggerResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1711,39 +1435,33 @@ func (l *triggerClientStopTriggerPollerResponse) Resume(ctx context.Context, cli
 	poller := &triggerClientStopTriggerPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // triggerClientStopTriggerResponse contains the response from method triggerClient.StopTrigger.
 type triggerClientStopTriggerResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // triggerClientSubscribeTriggerToEventsPollerResponse contains the response from method triggerClient.SubscribeTriggerToEvents.
 type triggerClientSubscribeTriggerToEventsPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *triggerClientSubscribeTriggerToEventsPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l triggerClientSubscribeTriggerToEventsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (triggerClientSubscribeTriggerToEventsResponse, error) {
 	respType := triggerClientSubscribeTriggerToEventsResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerSubscriptionOperationStatus)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerSubscriptionOperationStatus)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1756,40 +1474,33 @@ func (l *triggerClientSubscribeTriggerToEventsPollerResponse) Resume(ctx context
 	poller := &triggerClientSubscribeTriggerToEventsPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // triggerClientSubscribeTriggerToEventsResponse contains the response from method triggerClient.SubscribeTriggerToEvents.
 type triggerClientSubscribeTriggerToEventsResponse struct {
 	TriggerSubscriptionOperationStatus
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerClientUnsubscribeTriggerFromEventsPollerResponse contains the response from method triggerClient.UnsubscribeTriggerFromEvents.
 type triggerClientUnsubscribeTriggerFromEventsPollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *triggerClientUnsubscribeTriggerFromEventsPoller
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l triggerClientUnsubscribeTriggerFromEventsPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (triggerClientUnsubscribeTriggerFromEventsResponse, error) {
 	respType := triggerClientUnsubscribeTriggerFromEventsResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerSubscriptionOperationStatus)
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerSubscriptionOperationStatus)
 	if err != nil {
 		return respType, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1802,51 +1513,40 @@ func (l *triggerClientUnsubscribeTriggerFromEventsPollerResponse) Resume(ctx con
 	poller := &triggerClientUnsubscribeTriggerFromEventsPoller{
 		pt: pt,
 	}
-	resp, err := poller.Poll(ctx)
+	_, err = poller.Poll(ctx)
 	if err != nil {
 		return err
 	}
 	l.Poller = poller
-	l.RawResponse = resp
 	return nil
 }
 
 // triggerClientUnsubscribeTriggerFromEventsResponse contains the response from method triggerClient.UnsubscribeTriggerFromEvents.
 type triggerClientUnsubscribeTriggerFromEventsResponse struct {
 	TriggerSubscriptionOperationStatus
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerRunClientCancelTriggerInstanceResponse contains the response from method triggerRunClient.CancelTriggerInstance.
 type triggerRunClientCancelTriggerInstanceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // triggerRunClientQueryTriggerRunsByWorkspaceResponse contains the response from method triggerRunClient.QueryTriggerRunsByWorkspace.
 type triggerRunClientQueryTriggerRunsByWorkspaceResponse struct {
 	TriggerRunsQueryResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // triggerRunClientRerunTriggerInstanceResponse contains the response from method triggerRunClient.RerunTriggerInstance.
 type triggerRunClientRerunTriggerInstanceResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // workspaceClientGetResponse contains the response from method workspaceClient.Get.
 type workspaceClientGetResponse struct {
 	Workspace
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // workspaceGitRepoManagementClientGetGitHubAccessTokenResponse contains the response from method workspaceGitRepoManagementClient.GetGitHubAccessToken.
 type workspaceGitRepoManagementClientGetGitHubAccessTokenResponse struct {
 	GitHubAccessTokenResponse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

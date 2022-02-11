@@ -102,7 +102,7 @@ func (client *AlertsClient) getCreateRequest(ctx context.Context, deviceName str
 
 // getHandleResponse handles the Get response.
 func (client *AlertsClient) getHandleResponse(resp *http.Response) (AlertsClientGetResponse, error) {
-	result := AlertsClientGetResponse{RawResponse: resp}
+	result := AlertsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Alert); err != nil {
 		return AlertsClientGetResponse{}, err
 	}
@@ -155,7 +155,7 @@ func (client *AlertsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *AlertsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (AlertsClientListByDataBoxEdgeDeviceResponse, error) {
-	result := AlertsClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := AlertsClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AlertList); err != nil {
 		return AlertsClientListByDataBoxEdgeDeviceResponse{}, err
 	}

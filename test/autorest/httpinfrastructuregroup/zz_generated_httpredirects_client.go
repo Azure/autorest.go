@@ -49,7 +49,7 @@ func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPR
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientDelete307Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientDelete307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientDelete307Response{}, nil
 }
 
 // delete307CreateRequest creates the Delete307 request.
@@ -94,7 +94,7 @@ func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, opti
 
 // get300HandleResponse handles the Get300 response.
 func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HTTPRedirectsClientGet300Response, error) {
-	result := HTTPRedirectsClientGet300Response{RawResponse: resp}
+	result := HTTPRedirectsClientGet300Response{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -119,7 +119,7 @@ func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedi
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientGet301Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientGet301Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientGet301Response{}, nil
 }
 
 // get301CreateRequest creates the Get301 request.
@@ -148,7 +148,7 @@ func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedi
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientGet302Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientGet302Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientGet302Response{}, nil
 }
 
 // get302CreateRequest creates the Get302 request.
@@ -177,7 +177,7 @@ func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedi
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientGet307Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientGet307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientGet307Response{}, nil
 }
 
 // get307CreateRequest creates the Get307 request.
@@ -218,7 +218,7 @@ func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, opt
 
 // head300HandleResponse handles the Head300 response.
 func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (HTTPRedirectsClientHead300Response, error) {
-	result := HTTPRedirectsClientHead300Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead300Response{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -239,7 +239,7 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead301Response{}, err
 	}
-	result := HTTPRedirectsClientHead301Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead301Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -268,7 +268,7 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead302Response{}, err
 	}
-	result := HTTPRedirectsClientHead302Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead302Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -297,7 +297,7 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead307Response{}, err
 	}
-	result := HTTPRedirectsClientHead307Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead307Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -331,7 +331,7 @@ func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientOptions307Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientOptions307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientOptions307Response{}, nil
 }
 
 // options307CreateRequest creates the Options307 request.
@@ -377,7 +377,7 @@ func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, op
 
 // patch302HandleResponse handles the Patch302 response.
 func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (HTTPRedirectsClientPatch302Response, error) {
-	result := HTTPRedirectsClientPatch302Response{RawResponse: resp}
+	result := HTTPRedirectsClientPatch302Response{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -399,7 +399,7 @@ func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRe
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientPatch307Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientPatch307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientPatch307Response{}, nil
 }
 
 // patch307CreateRequest creates the Patch307 request.
@@ -445,7 +445,7 @@ func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opt
 
 // post303HandleResponse handles the Post303 response.
 func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (HTTPRedirectsClientPost303Response, error) {
-	result := HTTPRedirectsClientPost303Response{RawResponse: resp}
+	result := HTTPRedirectsClientPost303Response{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -467,7 +467,7 @@ func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRed
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientPost307Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientPost307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientPost307Response{}, nil
 }
 
 // post307CreateRequest creates the Post307 request.
@@ -513,7 +513,7 @@ func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, opti
 
 // put301HandleResponse handles the Put301 response.
 func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HTTPRedirectsClientPut301Response, error) {
-	result := HTTPRedirectsClientPut301Response{RawResponse: resp}
+	result := HTTPRedirectsClientPut301Response{}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -535,7 +535,7 @@ func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedi
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRedirectsClientPut307Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRedirectsClientPut307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientPut307Response{}, nil
 }
 
 // put307CreateRequest creates the Put307 request.

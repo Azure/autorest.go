@@ -61,9 +61,7 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	if err != nil {
 		return OrdersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := OrdersClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := OrdersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return OrdersClientCreateOrUpdatePollerResponse{}, err
@@ -127,9 +125,7 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 	if err != nil {
 		return OrdersClientDeletePollerResponse{}, err
 	}
-	result := OrdersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := OrdersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return OrdersClientDeletePollerResponse{}, err
@@ -231,7 +227,7 @@ func (client *OrdersClient) getCreateRequest(ctx context.Context, deviceName str
 
 // getHandleResponse handles the Get response.
 func (client *OrdersClient) getHandleResponse(resp *http.Response) (OrdersClientGetResponse, error) {
-	result := OrdersClientGetResponse{RawResponse: resp}
+	result := OrdersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Order); err != nil {
 		return OrdersClientGetResponse{}, err
 	}
@@ -284,7 +280,7 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *OrdersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (OrdersClientListByDataBoxEdgeDeviceResponse, error) {
-	result := OrdersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := OrdersClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OrderList); err != nil {
 		return OrdersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
@@ -339,7 +335,7 @@ func (client *OrdersClient) listDCAccessCodeCreateRequest(ctx context.Context, d
 
 // listDCAccessCodeHandleResponse handles the ListDCAccessCode response.
 func (client *OrdersClient) listDCAccessCodeHandleResponse(resp *http.Response) (OrdersClientListDCAccessCodeResponse, error) {
-	result := OrdersClientListDCAccessCodeResponse{RawResponse: resp}
+	result := OrdersClientListDCAccessCodeResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DCAccessCode); err != nil {
 		return OrdersClientListDCAccessCodeResponse{}, err
 	}

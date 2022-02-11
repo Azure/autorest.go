@@ -96,7 +96,7 @@ func (client *ManagementClient) checkDNSNameAvailabilityCreateRequest(ctx contex
 
 // checkDNSNameAvailabilityHandleResponse handles the CheckDNSNameAvailability response.
 func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *http.Response) (ManagementClientCheckDNSNameAvailabilityResponse, error) {
-	result := ManagementClientCheckDNSNameAvailabilityResponse{RawResponse: resp}
+	result := ManagementClientCheckDNSNameAvailabilityResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DNSNameAvailabilityResult); err != nil {
 		return ManagementClientCheckDNSNameAvailabilityResponse{}, err
 	}
@@ -115,9 +115,7 @@ func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Cont
 	if err != nil {
 		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
 	}
-	result := ManagementClientDeleteBastionShareableLinkPollerResponse{
-		RawResponse: resp,
-	}
+	result := ManagementClientDeleteBastionShareableLinkPollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
@@ -218,7 +216,7 @@ func (client *ManagementClient) disconnectActiveSessionsCreateRequest(ctx contex
 
 // disconnectActiveSessionsHandleResponse handles the DisconnectActiveSessions response.
 func (client *ManagementClient) disconnectActiveSessionsHandleResponse(resp *http.Response) (ManagementClientDisconnectActiveSessionsResponse, error) {
-	result := ManagementClientDisconnectActiveSessionsResponse{RawResponse: resp}
+	result := ManagementClientDisconnectActiveSessionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionSessionDeleteResult); err != nil {
 		return ManagementClientDisconnectActiveSessionsResponse{}, err
 	}
@@ -238,9 +236,7 @@ func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpn
 	if err != nil {
 		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
 	}
-	result := ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{
-		RawResponse: resp,
-	}
+	result := ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
@@ -306,9 +302,7 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 	if err != nil {
 		return ManagementClientGetActiveSessionsPollerResponse{}, err
 	}
-	result := ManagementClientGetActiveSessionsPollerResponse{
-		RawResponse: resp,
-	}
+	result := ManagementClientGetActiveSessionsPollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientGetActiveSessionsPollerResponse{}, err
@@ -365,7 +359,7 @@ func (client *ManagementClient) getActiveSessionsCreateRequest(ctx context.Conte
 
 // getActiveSessionsHandleResponse handles the GetActiveSessions response.
 func (client *ManagementClient) getActiveSessionsHandleResponse(resp *http.Response) (ManagementClientGetActiveSessionsResponse, error) {
-	result := ManagementClientGetActiveSessionsResponse{RawResponse: resp}
+	result := ManagementClientGetActiveSessionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionActiveSessionListResult); err != nil {
 		return ManagementClientGetActiveSessionsResponse{}, err
 	}
@@ -419,7 +413,7 @@ func (client *ManagementClient) getBastionShareableLinkCreateRequest(ctx context
 
 // getBastionShareableLinkHandleResponse handles the GetBastionShareableLink response.
 func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http.Response) (ManagementClientGetBastionShareableLinkResponse, error) {
-	result := ManagementClientGetBastionShareableLinkResponse{RawResponse: resp}
+	result := ManagementClientGetBastionShareableLinkResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionShareableLinkListResult); err != nil {
 		return ManagementClientGetBastionShareableLinkResponse{}, err
 	}
@@ -438,9 +432,7 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 	if err != nil {
 		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
 	}
-	result := ManagementClientPutBastionShareableLinkPollerResponse{
-		RawResponse: resp,
-	}
+	result := ManagementClientPutBastionShareableLinkPollerResponse{}
 	pt, err := armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
@@ -497,7 +489,7 @@ func (client *ManagementClient) putBastionShareableLinkCreateRequest(ctx context
 
 // putBastionShareableLinkHandleResponse handles the PutBastionShareableLink response.
 func (client *ManagementClient) putBastionShareableLinkHandleResponse(resp *http.Response) (ManagementClientPutBastionShareableLinkResponse, error) {
-	result := ManagementClientPutBastionShareableLinkResponse{RawResponse: resp}
+	result := ManagementClientPutBastionShareableLinkResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionShareableLinkListResult); err != nil {
 		return ManagementClientPutBastionShareableLinkResponse{}, err
 	}
@@ -553,7 +545,7 @@ func (client *ManagementClient) supportedSecurityProvidersCreateRequest(ctx cont
 
 // supportedSecurityProvidersHandleResponse handles the SupportedSecurityProviders response.
 func (client *ManagementClient) supportedSecurityProvidersHandleResponse(resp *http.Response) (ManagementClientSupportedSecurityProvidersResponse, error) {
-	result := ManagementClientSupportedSecurityProvidersResponse{RawResponse: resp}
+	result := ManagementClientSupportedSecurityProvidersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWanSecurityProviders); err != nil {
 		return ManagementClientSupportedSecurityProvidersResponse{}, err
 	}

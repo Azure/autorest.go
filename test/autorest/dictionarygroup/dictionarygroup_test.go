@@ -5,7 +5,6 @@ package dictionarygroup
 
 import (
 	"context"
-	"net/http"
 	"reflect"
 	"testing"
 	"time"
@@ -793,8 +792,8 @@ func TestPutArrayValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -810,8 +809,8 @@ func TestPutBooleanTfft(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -826,8 +825,8 @@ func TestPutByteValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -842,8 +841,8 @@ func TestPutComplexValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -861,8 +860,8 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -880,8 +879,8 @@ func TestPutDateTimeValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -899,8 +898,8 @@ func TestPutDateValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -927,8 +926,8 @@ func TestPutDictionaryValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -943,8 +942,8 @@ func TestPutDoubleValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -958,8 +957,8 @@ func TestPutDurationValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -970,8 +969,8 @@ func TestPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -986,8 +985,8 @@ func TestPutFloatValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -1003,8 +1002,8 @@ func TestPutIntegerValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -1020,8 +1019,8 @@ func TestPutLongValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -1036,7 +1035,7 @@ func TestPutStringValid(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(resp).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

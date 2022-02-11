@@ -8,46 +8,32 @@
 
 package additionalpropsgroup
 
-import "net/http"
-
 // PetsClientCreateAPInPropertiesResponse contains the response from method PetsClient.CreateAPInProperties.
 type PetsClientCreateAPInPropertiesResponse struct {
 	PetAPInProperties
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetsClientCreateAPInPropertiesWithAPStringResponse contains the response from method PetsClient.CreateAPInPropertiesWithAPString.
 type PetsClientCreateAPInPropertiesWithAPStringResponse struct {
 	PetAPInPropertiesWithAPString
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetsClientCreateAPObjectResponse contains the response from method PetsClient.CreateAPObject.
 type PetsClientCreateAPObjectResponse struct {
 	PetAPObject
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetsClientCreateAPStringResponse contains the response from method PetsClient.CreateAPString.
 type PetsClientCreateAPStringResponse struct {
 	PetAPString
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetsClientCreateAPTrueResponse contains the response from method PetsClient.CreateAPTrue.
 type PetsClientCreateAPTrueResponse struct {
 	PetAPTrue
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetsClientCreateCatAPTrueResponse contains the response from method PetsClient.CreateCatAPTrue.
 type PetsClientCreateCatAPTrueResponse struct {
 	CatAPTrue
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }

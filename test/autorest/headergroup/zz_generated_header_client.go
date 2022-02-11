@@ -52,7 +52,7 @@ func (client *HeaderClient) CustomRequestID(ctx context.Context, options *Header
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientCustomRequestIDResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientCustomRequestIDResponse{RawResponse: resp}, nil
+	return HeaderClientCustomRequestIDResponse{}, nil
 }
 
 // customRequestIDCreateRequest creates the CustomRequestID request.
@@ -83,7 +83,7 @@ func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, valu
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamBoolResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamBoolResponse{RawResponse: resp}, nil
+	return HeaderClientParamBoolResponse{}, nil
 }
 
 // paramBoolCreateRequest creates the ParamBool request.
@@ -116,7 +116,7 @@ func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, valu
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamByteResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamByteResponse{RawResponse: resp}, nil
+	return HeaderClientParamByteResponse{}, nil
 }
 
 // paramByteCreateRequest creates the ParamByte request.
@@ -150,7 +150,7 @@ func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, valu
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamDateResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamDateResponse{RawResponse: resp}, nil
+	return HeaderClientParamDateResponse{}, nil
 }
 
 // paramDateCreateRequest creates the ParamDate request.
@@ -184,7 +184,7 @@ func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamDatetimeResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamDatetimeResponse{RawResponse: resp}, nil
+	return HeaderClientParamDatetimeResponse{}, nil
 }
 
 // paramDatetimeCreateRequest creates the ParamDatetime request.
@@ -218,7 +218,7 @@ func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario s
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamDatetimeRFC1123Response{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamDatetimeRFC1123Response{RawResponse: resp}, nil
+	return HeaderClientParamDatetimeRFC1123Response{}, nil
 }
 
 // paramDatetimeRFC1123CreateRequest creates the ParamDatetimeRFC1123 request.
@@ -254,7 +254,7 @@ func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, va
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamDoubleResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamDoubleResponse{RawResponse: resp}, nil
+	return HeaderClientParamDoubleResponse{}, nil
 }
 
 // paramDoubleCreateRequest creates the ParamDouble request.
@@ -287,7 +287,7 @@ func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamDurationResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamDurationResponse{RawResponse: resp}, nil
+	return HeaderClientParamDurationResponse{}, nil
 }
 
 // paramDurationCreateRequest creates the ParamDuration request.
@@ -320,7 +320,7 @@ func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, opti
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamEnumResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamEnumResponse{RawResponse: resp}, nil
+	return HeaderClientParamEnumResponse{}, nil
 }
 
 // paramEnumCreateRequest creates the ParamEnum request.
@@ -354,7 +354,7 @@ func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent stri
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamExistingKeyResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamExistingKeyResponse{RawResponse: resp}, nil
+	return HeaderClientParamExistingKeyResponse{}, nil
 }
 
 // paramExistingKeyCreateRequest creates the ParamExistingKey request.
@@ -387,7 +387,7 @@ func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, val
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamFloatResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamFloatResponse{RawResponse: resp}, nil
+	return HeaderClientParamFloatResponse{}, nil
 }
 
 // paramFloatCreateRequest creates the ParamFloat request.
@@ -421,7 +421,7 @@ func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, v
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamIntegerResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamIntegerResponse{RawResponse: resp}, nil
+	return HeaderClientParamIntegerResponse{}, nil
 }
 
 // paramIntegerCreateRequest creates the ParamInteger request.
@@ -455,7 +455,7 @@ func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, valu
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamLongResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamLongResponse{RawResponse: resp}, nil
+	return HeaderClientParamLongResponse{}, nil
 }
 
 // paramLongCreateRequest creates the ParamLong request.
@@ -488,7 +488,7 @@ func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType s
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamProtectedKeyResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamProtectedKeyResponse{RawResponse: resp}, nil
+	return HeaderClientParamProtectedKeyResponse{}, nil
 }
 
 // paramProtectedKeyCreateRequest creates the ParamProtectedKey request.
@@ -520,7 +520,7 @@ func (client *HeaderClient) ParamString(ctx context.Context, scenario string, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HeaderClientParamStringResponse{}, runtime.NewResponseError(resp)
 	}
-	return HeaderClientParamStringResponse{RawResponse: resp}, nil
+	return HeaderClientParamStringResponse{}, nil
 }
 
 // paramStringCreateRequest creates the ParamString request.
@@ -571,7 +571,7 @@ func (client *HeaderClient) responseBoolCreateRequest(ctx context.Context, scena
 
 // responseBoolHandleResponse handles the ResponseBool response.
 func (client *HeaderClient) responseBoolHandleResponse(resp *http.Response) (HeaderClientResponseBoolResponse, error) {
-	result := HeaderClientResponseBoolResponse{RawResponse: resp}
+	result := HeaderClientResponseBoolResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseBool(val)
 		if err != nil {
@@ -615,7 +615,7 @@ func (client *HeaderClient) responseByteCreateRequest(ctx context.Context, scena
 
 // responseByteHandleResponse handles the ResponseByte response.
 func (client *HeaderClient) responseByteHandleResponse(resp *http.Response) (HeaderClientResponseByteResponse, error) {
-	result := HeaderClientResponseByteResponse{RawResponse: resp}
+	result := HeaderClientResponseByteResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
@@ -659,7 +659,7 @@ func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scena
 
 // responseDateHandleResponse handles the ResponseDate response.
 func (client *HeaderClient) responseDateHandleResponse(resp *http.Response) (HeaderClientResponseDateResponse, error) {
-	result := HeaderClientResponseDateResponse{RawResponse: resp}
+	result := HeaderClientResponseDateResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse("2006-01-02", val)
 		if err != nil {
@@ -703,7 +703,7 @@ func (client *HeaderClient) responseDatetimeCreateRequest(ctx context.Context, s
 
 // responseDatetimeHandleResponse handles the ResponseDatetime response.
 func (client *HeaderClient) responseDatetimeHandleResponse(resp *http.Response) (HeaderClientResponseDatetimeResponse, error) {
-	result := HeaderClientResponseDatetimeResponse{RawResponse: resp}
+	result := HeaderClientResponseDatetimeResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC3339Nano, val)
 		if err != nil {
@@ -749,7 +749,7 @@ func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Con
 
 // responseDatetimeRFC1123HandleResponse handles the ResponseDatetimeRFC1123 response.
 func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *http.Response) (HeaderClientResponseDatetimeRFC1123Response, error) {
-	result := HeaderClientResponseDatetimeRFC1123Response{RawResponse: resp}
+	result := HeaderClientResponseDatetimeRFC1123Response{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -793,7 +793,7 @@ func (client *HeaderClient) responseDoubleCreateRequest(ctx context.Context, sce
 
 // responseDoubleHandleResponse handles the ResponseDouble response.
 func (client *HeaderClient) responseDoubleHandleResponse(resp *http.Response) (HeaderClientResponseDoubleResponse, error) {
-	result := HeaderClientResponseDoubleResponse{RawResponse: resp}
+	result := HeaderClientResponseDoubleResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseFloat(val, 64)
 		if err != nil {
@@ -837,7 +837,7 @@ func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, s
 
 // responseDurationHandleResponse handles the ResponseDuration response.
 func (client *HeaderClient) responseDurationHandleResponse(resp *http.Response) (HeaderClientResponseDurationResponse, error) {
-	result := HeaderClientResponseDurationResponse{RawResponse: resp}
+	result := HeaderClientResponseDurationResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
 	}
@@ -877,7 +877,7 @@ func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scena
 
 // responseEnumHandleResponse handles the ResponseEnum response.
 func (client *HeaderClient) responseEnumHandleResponse(resp *http.Response) (HeaderClientResponseEnumResponse, error) {
-	result := HeaderClientResponseEnumResponse{RawResponse: resp}
+	result := HeaderClientResponseEnumResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = (*GreyscaleColors)(&val)
 	}
@@ -916,7 +916,7 @@ func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context
 
 // responseExistingKeyHandleResponse handles the ResponseExistingKey response.
 func (client *HeaderClient) responseExistingKeyHandleResponse(resp *http.Response) (HeaderClientResponseExistingKeyResponse, error) {
-	result := HeaderClientResponseExistingKeyResponse{RawResponse: resp}
+	result := HeaderClientResponseExistingKeyResponse{}
 	if val := resp.Header.Get("User-Agent"); val != "" {
 		result.UserAgent = &val
 	}
@@ -956,7 +956,7 @@ func (client *HeaderClient) responseFloatCreateRequest(ctx context.Context, scen
 
 // responseFloatHandleResponse handles the ResponseFloat response.
 func (client *HeaderClient) responseFloatHandleResponse(resp *http.Response) (HeaderClientResponseFloatResponse, error) {
-	result := HeaderClientResponseFloatResponse{RawResponse: resp}
+	result := HeaderClientResponseFloatResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseFloat(val, 32)
 		value := float32(value32)
@@ -1001,7 +1001,7 @@ func (client *HeaderClient) responseIntegerCreateRequest(ctx context.Context, sc
 
 // responseIntegerHandleResponse handles the ResponseInteger response.
 func (client *HeaderClient) responseIntegerHandleResponse(resp *http.Response) (HeaderClientResponseIntegerResponse, error) {
-	result := HeaderClientResponseIntegerResponse{RawResponse: resp}
+	result := HeaderClientResponseIntegerResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value32, err := strconv.ParseInt(val, 10, 32)
 		value := int32(value32)
@@ -1046,7 +1046,7 @@ func (client *HeaderClient) responseLongCreateRequest(ctx context.Context, scena
 
 // responseLongHandleResponse handles the ResponseLong response.
 func (client *HeaderClient) responseLongHandleResponse(resp *http.Response) (HeaderClientResponseLongResponse, error) {
-	result := HeaderClientResponseLongResponse{RawResponse: resp}
+	result := HeaderClientResponseLongResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		value, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
@@ -1089,7 +1089,7 @@ func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Contex
 
 // responseProtectedKeyHandleResponse handles the ResponseProtectedKey response.
 func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *http.Response) (HeaderClientResponseProtectedKeyResponse, error) {
-	result := HeaderClientResponseProtectedKeyResponse{RawResponse: resp}
+	result := HeaderClientResponseProtectedKeyResponse{}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
@@ -1129,7 +1129,7 @@ func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, sce
 
 // responseStringHandleResponse handles the ResponseString response.
 func (client *HeaderClient) responseStringHandleResponse(resp *http.Response) (HeaderClientResponseStringResponse, error) {
-	result := HeaderClientResponseStringResponse{RawResponse: resp}
+	result := HeaderClientResponseStringResponse{}
 	if val := resp.Header.Get("value"); val != "" {
 		result.Value = &val
 	}

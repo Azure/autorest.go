@@ -5,7 +5,6 @@ package booleangroup
 
 import (
 	"context"
-	"net/http"
 	"reflect"
 	"testing"
 
@@ -23,9 +22,6 @@ func TestGetTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetTrue: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, to.BoolPtr(true)); r != "" {
 		t.Fatal(r)
 	}
@@ -37,9 +33,6 @@ func TestGetFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetFalse: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, to.BoolPtr(false)); r != "" {
 		t.Fatal(r)
 	}
@@ -50,9 +43,6 @@ func TestGetNull(t *testing.T) {
 	result, err := client.GetNull(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(result.Value, (*bool)(nil)); r != "" {
 		t.Fatal(r)
@@ -77,8 +67,8 @@ func TestPutTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutTrue: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -88,7 +78,7 @@ func TestPutFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFalse: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

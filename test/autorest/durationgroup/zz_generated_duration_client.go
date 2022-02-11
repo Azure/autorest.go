@@ -65,7 +65,7 @@ func (client *DurationClient) getInvalidCreateRequest(ctx context.Context, optio
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *DurationClient) getInvalidHandleResponse(resp *http.Response) (DurationClientGetInvalidResponse, error) {
-	result := DurationClientGetInvalidResponse{RawResponse: resp}
+	result := DurationClientGetInvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return DurationClientGetInvalidResponse{}, err
 	}
@@ -103,7 +103,7 @@ func (client *DurationClient) getNullCreateRequest(ctx context.Context, options 
 
 // getNullHandleResponse handles the GetNull response.
 func (client *DurationClient) getNullHandleResponse(resp *http.Response) (DurationClientGetNullResponse, error) {
-	result := DurationClientGetNullResponse{RawResponse: resp}
+	result := DurationClientGetNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return DurationClientGetNullResponse{}, err
 	}
@@ -142,7 +142,7 @@ func (client *DurationClient) getPositiveDurationCreateRequest(ctx context.Conte
 
 // getPositiveDurationHandleResponse handles the GetPositiveDuration response.
 func (client *DurationClient) getPositiveDurationHandleResponse(resp *http.Response) (DurationClientGetPositiveDurationResponse, error) {
-	result := DurationClientGetPositiveDurationResponse{RawResponse: resp}
+	result := DurationClientGetPositiveDurationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return DurationClientGetPositiveDurationResponse{}, err
 	}
@@ -166,7 +166,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return DurationClientPutPositiveDurationResponse{}, runtime.NewResponseError(resp)
 	}
-	return DurationClientPutPositiveDurationResponse{RawResponse: resp}, nil
+	return DurationClientPutPositiveDurationResponse{}, nil
 }
 
 // putPositiveDurationCreateRequest creates the PutPositiveDuration request.

@@ -8,31 +8,20 @@
 
 package headgroup
 
-import "net/http"
-
 // HTTPSuccessClientHead200Response contains the response from method HTTPSuccessClient.Head200.
 type HTTPSuccessClientHead200Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientHead204Response contains the response from method HTTPSuccessClient.Head204.
 type HTTPSuccessClientHead204Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }
 
 // HTTPSuccessClientHead404Response contains the response from method HTTPSuccessClient.Head404.
 type HTTPSuccessClientHead404Response struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Success indicates if the operation succeeded or failed.
 	Success bool
 }

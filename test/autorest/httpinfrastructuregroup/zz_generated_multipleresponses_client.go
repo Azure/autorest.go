@@ -67,7 +67,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidCr
 
 // get200Model201ModelDefaultError200ValidHandleResponse handles the Get200Model201ModelDefaultError200Valid response.
 func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse, error) {
-	result := MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -120,7 +120,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidCr
 
 // get200Model201ModelDefaultError201ValidHandleResponse handles the Get200Model201ModelDefaultError201Valid response.
 func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse, error) {
-	result := MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -172,7 +172,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidCr
 
 // get200Model201ModelDefaultError400ValidHandleResponse handles the Get200Model201ModelDefaultError400Valid response.
 func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse, error) {
-	result := MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -224,7 +224,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 
 // get200Model204NoModelDefaultError200ValidHandleResponse handles the Get200Model204NoModelDefaultError200Valid response.
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, error) {
-	result := MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
@@ -263,7 +263,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 
 // get200Model204NoModelDefaultError201InvalidHandleResponse handles the Get200Model204NoModelDefaultError201Invalid response.
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201InvalidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, error) {
-	result := MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
@@ -302,7 +302,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneC
 
 // get200Model204NoModelDefaultError202NoneHandleResponse handles the Get200Model204NoModelDefaultError202None response.
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, error) {
-	result := MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
@@ -341,7 +341,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 
 // get200Model204NoModelDefaultError204ValidHandleResponse handles the Get200Model204NoModelDefaultError204Valid response.
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, error) {
-	result := MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
@@ -381,7 +381,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 
 // get200Model204NoModelDefaultError400ValidHandleResponse handles the Get200Model204NoModelDefaultError400Valid response.
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, error) {
-	result := MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
@@ -420,7 +420,7 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidCreateRequest(ctx c
 
 // get200ModelA200InvalidHandleResponse handles the Get200ModelA200Invalid response.
 func (client *MultipleResponsesClient) get200ModelA200InvalidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA200InvalidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA200InvalidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA200InvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
@@ -460,7 +460,7 @@ func (client *MultipleResponsesClient) get200ModelA200NoneCreateRequest(ctx cont
 
 // get200ModelA200NoneHandleResponse handles the Get200ModelA200None response.
 func (client *MultipleResponsesClient) get200ModelA200NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA200NoneResponse, error) {
-	result := MultipleResponsesClientGet200ModelA200NoneResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA200NoneResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
@@ -499,7 +499,7 @@ func (client *MultipleResponsesClient) get200ModelA200ValidCreateRequest(ctx con
 
 // get200ModelA200ValidHandleResponse handles the Get200ModelA200Valid response.
 func (client *MultipleResponsesClient) get200ModelA200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA200ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA200ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA200ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
@@ -538,7 +538,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse handles the Get200ModelA201ModelC404ModelDDefaultError200Valid response.
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -596,7 +596,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse handles the Get200ModelA201ModelC404ModelDDefaultError201Valid response.
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -655,7 +655,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse handles the Get200ModelA201ModelC404ModelDDefaultError400Valid response.
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -713,7 +713,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse handles the Get200ModelA201ModelC404ModelDDefaultError404Valid response.
 func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val MyException
@@ -771,7 +771,7 @@ func (client *MultipleResponsesClient) get200ModelA202ValidCreateRequest(ctx con
 
 // get200ModelA202ValidHandleResponse handles the Get200ModelA202Valid response.
 func (client *MultipleResponsesClient) get200ModelA202ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA202ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA202ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA202ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
@@ -810,7 +810,7 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidCreateRequest(ctx c
 
 // get200ModelA400InvalidHandleResponse handles the Get200ModelA400Invalid response.
 func (client *MultipleResponsesClient) get200ModelA400InvalidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA400InvalidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA400InvalidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA400InvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
@@ -849,7 +849,7 @@ func (client *MultipleResponsesClient) get200ModelA400NoneCreateRequest(ctx cont
 
 // get200ModelA400NoneHandleResponse handles the Get200ModelA400None response.
 func (client *MultipleResponsesClient) get200ModelA400NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA400NoneResponse, error) {
-	result := MultipleResponsesClientGet200ModelA400NoneResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA400NoneResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
@@ -888,7 +888,7 @@ func (client *MultipleResponsesClient) get200ModelA400ValidCreateRequest(ctx con
 
 // get200ModelA400ValidHandleResponse handles the Get200ModelA400Valid response.
 func (client *MultipleResponsesClient) get200ModelA400ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA400ValidResponse, error) {
-	result := MultipleResponsesClientGet200ModelA400ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGet200ModelA400ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
@@ -911,7 +911,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx 
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultError202NoneCreateRequest creates the Get202None204NoneDefaultError202None request.
@@ -941,7 +941,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx 
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultError204NoneCreateRequest creates the Get202None204NoneDefaultError204None request.
@@ -971,7 +971,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, nil
 }
 
 // get202None204NoneDefaultError400ValidCreateRequest creates the Get202None204NoneDefaultError400Valid request.
@@ -1001,7 +1001,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ct
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, nil
 }
 
 // get202None204NoneDefaultNone202InvalidCreateRequest creates the Get202None204NoneDefaultNone202Invalid request.
@@ -1030,7 +1030,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx c
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultNone204NoneCreateRequest creates the Get202None204NoneDefaultNone204None request.
@@ -1059,7 +1059,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ct
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, nil
 }
 
 // get202None204NoneDefaultNone400InvalidCreateRequest creates the Get202None204NoneDefaultNone400Invalid request.
@@ -1088,7 +1088,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx c
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
 		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, nil
 }
 
 // get202None204NoneDefaultNone400NoneCreateRequest creates the Get202None204NoneDefaultNone400None request.
@@ -1133,7 +1133,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneCreateRequest(ctx 
 
 // getDefaultModelA200NoneHandleResponse handles the GetDefaultModelA200None response.
 func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGetDefaultModelA200NoneResponse, error) {
-	result := MultipleResponsesClientGetDefaultModelA200NoneResponse{RawResponse: resp}
+	result := MultipleResponsesClientGetDefaultModelA200NoneResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
@@ -1172,7 +1172,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidCreateRequest(ctx
 
 // getDefaultModelA200ValidHandleResponse handles the GetDefaultModelA200Valid response.
 func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGetDefaultModelA200ValidResponse, error) {
-	result := MultipleResponsesClientGetDefaultModelA200ValidResponse{RawResponse: resp}
+	result := MultipleResponsesClientGetDefaultModelA200ValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
 		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
@@ -1195,7 +1195,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Conte
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGetDefaultModelA400NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, nil
 }
 
 // getDefaultModelA400NoneCreateRequest creates the GetDefaultModelA400None request.
@@ -1225,7 +1225,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGetDefaultModelA400ValidResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, nil
 }
 
 // getDefaultModelA400ValidCreateRequest creates the GetDefaultModelA400Valid request.
@@ -1255,7 +1255,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGetDefaultNone200InvalidResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, nil
 }
 
 // getDefaultNone200InvalidCreateRequest creates the GetDefaultNone200Invalid request.
@@ -1284,7 +1284,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGetDefaultNone200NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGetDefaultNone200NoneResponse{}, nil
 }
 
 // getDefaultNone200NoneCreateRequest creates the GetDefaultNone200None request.
@@ -1313,7 +1313,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGetDefaultNone400InvalidResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, nil
 }
 
 // getDefaultNone400InvalidCreateRequest creates the GetDefaultNone400Invalid request.
@@ -1342,7 +1342,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, runtime.NewResponseError(resp)
 	}
-	return MultipleResponsesClientGetDefaultNone400NoneResponse{RawResponse: resp}, nil
+	return MultipleResponsesClientGetDefaultNone400NoneResponse{}, nil
 }
 
 // getDefaultNone400NoneCreateRequest creates the GetDefaultNone400None request.

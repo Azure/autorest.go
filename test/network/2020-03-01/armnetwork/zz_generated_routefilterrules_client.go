@@ -63,9 +63,7 @@ func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, r
 	if err != nil {
 		return RouteFilterRulesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteFilterRulesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := RouteFilterRulesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteFilterRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return RouteFilterRulesClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceG
 	if err != nil {
 		return RouteFilterRulesClientDeletePollerResponse{}, err
 	}
-	result := RouteFilterRulesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := RouteFilterRulesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("RouteFilterRulesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return RouteFilterRulesClientDeletePollerResponse{}, err
@@ -248,7 +244,7 @@ func (client *RouteFilterRulesClient) getCreateRequest(ctx context.Context, reso
 
 // getHandleResponse handles the Get response.
 func (client *RouteFilterRulesClient) getHandleResponse(resp *http.Response) (RouteFilterRulesClientGetResponse, error) {
-	result := RouteFilterRulesClientGetResponse{RawResponse: resp}
+	result := RouteFilterRulesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterRule); err != nil {
 		return RouteFilterRulesClientGetResponse{}, err
 	}
@@ -301,7 +297,7 @@ func (client *RouteFilterRulesClient) listByRouteFilterCreateRequest(ctx context
 
 // listByRouteFilterHandleResponse handles the ListByRouteFilter response.
 func (client *RouteFilterRulesClient) listByRouteFilterHandleResponse(resp *http.Response) (RouteFilterRulesClientListByRouteFilterResponse, error) {
-	result := RouteFilterRulesClientListByRouteFilterResponse{RawResponse: resp}
+	result := RouteFilterRulesClientListByRouteFilterResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterRuleListResult); err != nil {
 		return RouteFilterRulesClientListByRouteFilterResponse{}, err
 	}

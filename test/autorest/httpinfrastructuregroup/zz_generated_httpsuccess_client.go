@@ -49,7 +49,7 @@ func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuc
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessClientDelete200Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientDelete200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientDelete200Response{}, nil
 }
 
 // delete200CreateRequest creates the Delete200 request.
@@ -78,7 +78,7 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuc
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessClientDelete202Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientDelete202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientDelete202Response{}, nil
 }
 
 // delete202CreateRequest creates the Delete202 request.
@@ -107,7 +107,7 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuc
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessClientDelete204Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientDelete204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientDelete204Response{}, nil
 }
 
 // delete204CreateRequest creates the Delete204 request.
@@ -152,7 +152,7 @@ func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, option
 
 // get200HandleResponse handles the Get200 response.
 func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTPSuccessClientGet200Response, error) {
-	result := HTTPSuccessClientGet200Response{RawResponse: resp}
+	result := HTTPSuccessClientGet200Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return HTTPSuccessClientGet200Response{}, err
 	}
@@ -170,7 +170,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead200Response{}, err
 	}
-	result := HTTPSuccessClientHead200Response{RawResponse: resp}
+	result := HTTPSuccessClientHead200Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -199,7 +199,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead204Response{}, err
 	}
-	result := HTTPSuccessClientHead204Response{RawResponse: resp}
+	result := HTTPSuccessClientHead204Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -228,7 +228,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead404Response{}, err
 	}
-	result := HTTPSuccessClientHead404Response{RawResponse: resp}
+	result := HTTPSuccessClientHead404Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -277,7 +277,7 @@ func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, op
 
 // options200HandleResponse handles the Options200 response.
 func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (HTTPSuccessClientOptions200Response, error) {
-	result := HTTPSuccessClientOptions200Response{RawResponse: resp}
+	result := HTTPSuccessClientOptions200Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return HTTPSuccessClientOptions200Response{}, err
 	}
@@ -299,7 +299,7 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSucc
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessClientPatch200Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPatch200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPatch200Response{}, nil
 }
 
 // patch200CreateRequest creates the Patch200 request.
@@ -328,7 +328,7 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSucc
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessClientPatch202Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPatch202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPatch202Response{}, nil
 }
 
 // patch202CreateRequest creates the Patch202 request.
@@ -357,7 +357,7 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSucc
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessClientPatch204Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPatch204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPatch204Response{}, nil
 }
 
 // patch204CreateRequest creates the Patch204 request.
@@ -386,7 +386,7 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSucce
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessClientPost200Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPost200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost200Response{}, nil
 }
 
 // post200CreateRequest creates the Post200 request.
@@ -415,7 +415,7 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSucce
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return HTTPSuccessClientPost201Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPost201Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost201Response{}, nil
 }
 
 // post201CreateRequest creates the Post201 request.
@@ -444,7 +444,7 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSucce
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessClientPost202Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPost202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost202Response{}, nil
 }
 
 // post202CreateRequest creates the Post202 request.
@@ -473,7 +473,7 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSucce
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessClientPost204Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPost204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost204Response{}, nil
 }
 
 // post204CreateRequest creates the Post204 request.
@@ -502,7 +502,7 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSucces
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPSuccessClientPut200Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPut200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut200Response{}, nil
 }
 
 // put200CreateRequest creates the Put200 request.
@@ -531,7 +531,7 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSucces
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
 		return HTTPSuccessClientPut201Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPut201Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut201Response{}, nil
 }
 
 // put201CreateRequest creates the Put201 request.
@@ -560,7 +560,7 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSucces
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
 		return HTTPSuccessClientPut202Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPut202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut202Response{}, nil
 }
 
 // put202CreateRequest creates the Put202 request.
@@ -589,7 +589,7 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSucces
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return HTTPSuccessClientPut204Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPSuccessClientPut204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut204Response{}, nil
 }
 
 // put204CreateRequest creates the Put204 request.

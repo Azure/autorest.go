@@ -6,7 +6,6 @@ package mediatypesgroup
 import (
 	"bytes"
 	"context"
-	"net/http"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -26,8 +25,8 @@ func TestAnalyzeBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AnalyzeBody: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != "Nice job with PDF" {
+		t.Fatalf("unexpected result %s", *result.Value)
 	}
 }
 
@@ -40,8 +39,8 @@ func TestAnalyzeBodyWithJSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("AnalyzeBodyWithSourcePath: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != "Nice job with JSON" {
+		t.Fatalf("unexpected result %s", *result.Value)
 	}
 }
 
@@ -53,8 +52,8 @@ func TestContentTypeWithEncoding(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ContentTypeWithEncoding: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if *result.Value != "Nice job sending content type with encoding" {
+		t.Fatalf("unexpected result %s", *result.Value)
 	}
 }
 

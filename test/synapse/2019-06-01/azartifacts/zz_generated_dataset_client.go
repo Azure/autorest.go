@@ -45,9 +45,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 	if err != nil {
 		return datasetClientCreateOrUpdateDatasetPollerResponse{}, err
 	}
-	result := datasetClientCreateOrUpdateDatasetPollerResponse{
-		RawResponse: resp,
-	}
+	result := datasetClientCreateOrUpdateDatasetPollerResponse{}
 	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.pl)
 	if err != nil {
 		return datasetClientCreateOrUpdateDatasetPollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 	if err != nil {
 		return datasetClientDeleteDatasetPollerResponse{}, err
 	}
-	result := datasetClientDeleteDatasetPollerResponse{
-		RawResponse: resp,
-	}
+	result := datasetClientDeleteDatasetPollerResponse{}
 	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.pl)
 	if err != nil {
 		return datasetClientDeleteDatasetPollerResponse{}, err
@@ -196,7 +192,7 @@ func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datase
 
 // getDatasetHandleResponse handles the GetDataset response.
 func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (datasetClientGetDatasetResponse, error) {
-	result := datasetClientGetDatasetResponse{RawResponse: resp}
+	result := datasetClientGetDatasetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetResource); err != nil {
 		return datasetClientGetDatasetResponse{}, err
 	}
@@ -235,7 +231,7 @@ func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Con
 
 // getDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
 func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Response) (datasetClientGetDatasetsByWorkspaceResponse, error) {
-	result := datasetClientGetDatasetsByWorkspaceResponse{RawResponse: resp}
+	result := datasetClientGetDatasetsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetListResponse); err != nil {
 		return datasetClientGetDatasetsByWorkspaceResponse{}, err
 	}
@@ -253,9 +249,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 	if err != nil {
 		return datasetClientRenameDatasetPollerResponse{}, err
 	}
-	result := datasetClientRenameDatasetPollerResponse{
-		RawResponse: resp,
-	}
+	result := datasetClientRenameDatasetPollerResponse{}
 	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.pl)
 	if err != nil {
 		return datasetClientRenameDatasetPollerResponse{}, err

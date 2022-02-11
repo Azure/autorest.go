@@ -97,7 +97,7 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 
 // acquireLeaseHandleResponse handles the AcquireLease response.
 func (client *containerClient) acquireLeaseHandleResponse(resp *http.Response) (containerClientAcquireLeaseResponse, error) {
-	result := containerClientAcquireLeaseResponse{RawResponse: resp}
+	result := containerClientAcquireLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -184,7 +184,7 @@ func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, comp
 
 // breakLeaseHandleResponse handles the BreakLease response.
 func (client *containerClient) breakLeaseHandleResponse(resp *http.Response) (containerClientBreakLeaseResponse, error) {
-	result := containerClientBreakLeaseResponse{RawResponse: resp}
+	result := containerClientBreakLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -279,7 +279,7 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, com
 
 // changeLeaseHandleResponse handles the ChangeLease response.
 func (client *containerClient) changeLeaseHandleResponse(resp *http.Response) (containerClientChangeLeaseResponse, error) {
-	result := containerClientChangeLeaseResponse{RawResponse: resp}
+	result := containerClientChangeLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -369,7 +369,7 @@ func (client *containerClient) createCreateRequest(ctx context.Context, restype 
 
 // createHandleResponse handles the Create response.
 func (client *containerClient) createHandleResponse(resp *http.Response) (containerClientCreateResponse, error) {
-	result := containerClientCreateResponse{RawResponse: resp}
+	result := containerClientCreateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -452,7 +452,7 @@ func (client *containerClient) deleteCreateRequest(ctx context.Context, restype 
 
 // deleteHandleResponse handles the Delete response.
 func (client *containerClient) deleteHandleResponse(resp *http.Response) (containerClientDeleteResponse, error) {
-	result := containerClientDeleteResponse{RawResponse: resp}
+	result := containerClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -519,7 +519,7 @@ func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context,
 
 // getAccessPolicyHandleResponse handles the GetAccessPolicy response.
 func (client *containerClient) getAccessPolicyHandleResponse(resp *http.Response) (containerClientGetAccessPolicyResponse, error) {
-	result := containerClientGetAccessPolicyResponse{RawResponse: resp}
+	result := containerClientGetAccessPolicyResponse{}
 	if val := resp.Header.Get("x-ms-blob-public-access"); val != "" {
 		result.BlobPublicAccess = (*PublicAccessType)(&val)
 	}
@@ -591,7 +591,7 @@ func (client *containerClient) getAccountInfoCreateRequest(ctx context.Context, 
 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *containerClient) getAccountInfoHandleResponse(resp *http.Response) (containerClientGetAccountInfoResponse, error) {
-	result := containerClientGetAccountInfoResponse{RawResponse: resp}
+	result := containerClientGetAccountInfoResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -663,7 +663,7 @@ func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, r
 
 // getPropertiesHandleResponse handles the GetProperties response.
 func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) (containerClientGetPropertiesResponse, error) {
-	result := containerClientGetPropertiesResponse{RawResponse: resp}
+	result := containerClientGetPropertiesResponse{}
 	for hh := range resp.Header {
 		if len(hh) > len("x-ms-meta-") && strings.EqualFold(hh[:len("x-ms-meta-")], "x-ms-meta-") {
 			if result.Metadata == nil {
@@ -795,7 +795,7 @@ func (client *containerClient) listBlobFlatSegmentCreateRequest(ctx context.Cont
 
 // listBlobFlatSegmentHandleResponse handles the ListBlobFlatSegment response.
 func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Response) (containerClientListBlobFlatSegmentResponse, error) {
-	result := containerClientListBlobFlatSegmentResponse{RawResponse: resp}
+	result := containerClientListBlobFlatSegmentResponse{}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
@@ -876,7 +876,7 @@ func (client *containerClient) listBlobHierarchySegmentCreateRequest(ctx context
 
 // listBlobHierarchySegmentHandleResponse handles the ListBlobHierarchySegment response.
 func (client *containerClient) listBlobHierarchySegmentHandleResponse(resp *http.Response) (containerClientListBlobHierarchySegmentResponse, error) {
-	result := containerClientListBlobHierarchySegmentResponse{RawResponse: resp}
+	result := containerClientListBlobHierarchySegmentResponse{}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}
@@ -955,7 +955,7 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, co
 
 // releaseLeaseHandleResponse handles the ReleaseLease response.
 func (client *containerClient) releaseLeaseHandleResponse(resp *http.Response) (containerClientReleaseLeaseResponse, error) {
-	result := containerClientReleaseLeaseResponse{RawResponse: resp}
+	result := containerClientReleaseLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -1031,7 +1031,7 @@ func (client *containerClient) renameCreateRequest(ctx context.Context, restype 
 
 // renameHandleResponse handles the Rename response.
 func (client *containerClient) renameHandleResponse(resp *http.Response) (containerClientRenameResponse, error) {
-	result := containerClientRenameResponse{RawResponse: resp}
+	result := containerClientRenameResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -1104,7 +1104,7 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, comp
 
 // renewLeaseHandleResponse handles the RenewLease response.
 func (client *containerClient) renewLeaseHandleResponse(resp *http.Response) (containerClientRenewLeaseResponse, error) {
-	result := containerClientRenewLeaseResponse{RawResponse: resp}
+	result := containerClientRenewLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -1184,7 +1184,7 @@ func (client *containerClient) restoreCreateRequest(ctx context.Context, restype
 
 // restoreHandleResponse handles the Restore response.
 func (client *containerClient) restoreHandleResponse(resp *http.Response) (containerClientRestoreResponse, error) {
-	result := containerClientRestoreResponse{RawResponse: resp}
+	result := containerClientRestoreResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -1268,7 +1268,7 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 
 // setAccessPolicyHandleResponse handles the SetAccessPolicy response.
 func (client *containerClient) setAccessPolicyHandleResponse(resp *http.Response) (containerClientSetAccessPolicyResponse, error) {
-	result := containerClientSetAccessPolicyResponse{RawResponse: resp}
+	result := containerClientSetAccessPolicyResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -1353,7 +1353,7 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, res
 
 // setMetadataHandleResponse handles the SetMetadata response.
 func (client *containerClient) setMetadataHandleResponse(resp *http.Response) (containerClientSetMetadataResponse, error) {
-	result := containerClientSetMetadataResponse{RawResponse: resp}
+	result := containerClientSetMetadataResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -1431,7 +1431,7 @@ func (client *containerClient) submitBatchCreateRequest(ctx context.Context, res
 
 // submitBatchHandleResponse handles the SubmitBatch response.
 func (client *containerClient) submitBatchHandleResponse(resp *http.Response) (containerClientSubmitBatchResponse, error) {
-	result := containerClientSubmitBatchResponse{RawResponse: resp}
+	result := containerClientSubmitBatchResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}

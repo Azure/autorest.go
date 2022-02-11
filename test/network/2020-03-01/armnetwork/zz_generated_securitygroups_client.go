@@ -62,9 +62,7 @@ func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return SecurityGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityGroupsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := SecurityGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return SecurityGroupsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return SecurityGroupsClientDeletePollerResponse{}, err
 	}
-	result := SecurityGroupsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := SecurityGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SecurityGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return SecurityGroupsClientDeletePollerResponse{}, err
@@ -236,7 +232,7 @@ func (client *SecurityGroupsClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client *SecurityGroupsClient) getHandleResponse(resp *http.Response) (SecurityGroupsClientGetResponse, error) {
-	result := SecurityGroupsClientGetResponse{RawResponse: resp}
+	result := SecurityGroupsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
 		return SecurityGroupsClientGetResponse{}, err
 	}
@@ -283,7 +279,7 @@ func (client *SecurityGroupsClient) listCreateRequest(ctx context.Context, resou
 
 // listHandleResponse handles the List response.
 func (client *SecurityGroupsClient) listHandleResponse(resp *http.Response) (SecurityGroupsClientListResponse, error) {
-	result := SecurityGroupsClientListResponse{RawResponse: resp}
+	result := SecurityGroupsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
 		return SecurityGroupsClientListResponse{}, err
 	}
@@ -325,7 +321,7 @@ func (client *SecurityGroupsClient) listAllCreateRequest(ctx context.Context, op
 
 // listAllHandleResponse handles the ListAll response.
 func (client *SecurityGroupsClient) listAllHandleResponse(resp *http.Response) (SecurityGroupsClientListAllResponse, error) {
-	result := SecurityGroupsClientListAllResponse{RawResponse: resp}
+	result := SecurityGroupsClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
 		return SecurityGroupsClientListAllResponse{}, err
 	}
@@ -382,7 +378,7 @@ func (client *SecurityGroupsClient) updateTagsCreateRequest(ctx context.Context,
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *SecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (SecurityGroupsClientUpdateTagsResponse, error) {
-	result := SecurityGroupsClientUpdateTagsResponse{RawResponse: resp}
+	result := SecurityGroupsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
 		return SecurityGroupsClientUpdateTagsResponse{}, err
 	}

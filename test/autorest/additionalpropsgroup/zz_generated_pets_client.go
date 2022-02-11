@@ -66,7 +66,7 @@ func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context,
 
 // createAPInPropertiesHandleResponse handles the CreateAPInProperties response.
 func (client *PetsClient) createAPInPropertiesHandleResponse(resp *http.Response) (PetsClientCreateAPInPropertiesResponse, error) {
-	result := PetsClientCreateAPInPropertiesResponse{RawResponse: resp}
+	result := PetsClientCreateAPInPropertiesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPInProperties); err != nil {
 		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
@@ -105,7 +105,7 @@ func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx cont
 
 // createAPInPropertiesWithAPStringHandleResponse handles the CreateAPInPropertiesWithAPString response.
 func (client *PetsClient) createAPInPropertiesWithAPStringHandleResponse(resp *http.Response) (PetsClientCreateAPInPropertiesWithAPStringResponse, error) {
-	result := PetsClientCreateAPInPropertiesWithAPStringResponse{RawResponse: resp}
+	result := PetsClientCreateAPInPropertiesWithAPStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPInPropertiesWithAPString); err != nil {
 		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
@@ -143,7 +143,7 @@ func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, creat
 
 // createAPObjectHandleResponse handles the CreateAPObject response.
 func (client *PetsClient) createAPObjectHandleResponse(resp *http.Response) (PetsClientCreateAPObjectResponse, error) {
-	result := PetsClientCreateAPObjectResponse{RawResponse: resp}
+	result := PetsClientCreateAPObjectResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPObject); err != nil {
 		return PetsClientCreateAPObjectResponse{}, err
 	}
@@ -181,7 +181,7 @@ func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, creat
 
 // createAPStringHandleResponse handles the CreateAPString response.
 func (client *PetsClient) createAPStringHandleResponse(resp *http.Response) (PetsClientCreateAPStringResponse, error) {
-	result := PetsClientCreateAPStringResponse{RawResponse: resp}
+	result := PetsClientCreateAPStringResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPString); err != nil {
 		return PetsClientCreateAPStringResponse{}, err
 	}
@@ -219,7 +219,7 @@ func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createP
 
 // createAPTrueHandleResponse handles the CreateAPTrue response.
 func (client *PetsClient) createAPTrueHandleResponse(resp *http.Response) (PetsClientCreateAPTrueResponse, error) {
-	result := PetsClientCreateAPTrueResponse{RawResponse: resp}
+	result := PetsClientCreateAPTrueResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPTrue); err != nil {
 		return PetsClientCreateAPTrueResponse{}, err
 	}
@@ -257,7 +257,7 @@ func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, crea
 
 // createCatAPTrueHandleResponse handles the CreateCatAPTrue response.
 func (client *PetsClient) createCatAPTrueHandleResponse(resp *http.Response) (PetsClientCreateCatAPTrueResponse, error) {
-	result := PetsClientCreateCatAPTrueResponse{RawResponse: resp}
+	result := PetsClientCreateCatAPTrueResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatAPTrue); err != nil {
 		return PetsClientCreateCatAPTrueResponse{}, err
 	}

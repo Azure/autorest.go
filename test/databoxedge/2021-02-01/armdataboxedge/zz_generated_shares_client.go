@@ -62,9 +62,7 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	if err != nil {
 		return SharesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SharesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := SharesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SharesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return SharesClientCreateOrUpdatePollerResponse{}, err
@@ -133,9 +131,7 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 	if err != nil {
 		return SharesClientDeletePollerResponse{}, err
 	}
-	result := SharesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := SharesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SharesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return SharesClientDeletePollerResponse{}, err
@@ -246,7 +242,7 @@ func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName str
 
 // getHandleResponse handles the Get response.
 func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesClientGetResponse, error) {
-	result := SharesClientGetResponse{RawResponse: resp}
+	result := SharesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Share); err != nil {
 		return SharesClientGetResponse{}, err
 	}
@@ -299,7 +295,7 @@ func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (SharesClientListByDataBoxEdgeDeviceResponse, error) {
-	result := SharesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := SharesClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ShareList); err != nil {
 		return SharesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
@@ -317,9 +313,7 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 	if err != nil {
 		return SharesClientRefreshPollerResponse{}, err
 	}
-	result := SharesClientRefreshPollerResponse{
-		RawResponse: resp,
-	}
+	result := SharesClientRefreshPollerResponse{}
 	pt, err := armruntime.NewPoller("SharesClient.Refresh", "", resp, client.pl)
 	if err != nil {
 		return SharesClientRefreshPollerResponse{}, err

@@ -49,7 +49,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return XMSClientRequestIDClientGetResponse{}, runtime.NewResponseError(resp)
 	}
-	return XMSClientRequestIDClientGetResponse{RawResponse: resp}, nil
+	return XMSClientRequestIDClientGetResponse{}, nil
 }
 
 // getCreateRequest creates the Get request.
@@ -79,7 +79,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return XMSClientRequestIDClientParamGetResponse{}, runtime.NewResponseError(resp)
 	}
-	return XMSClientRequestIDClientParamGetResponse{RawResponse: resp}, nil
+	return XMSClientRequestIDClientParamGetResponse{}, nil
 }
 
 // paramGetCreateRequest creates the ParamGet request.

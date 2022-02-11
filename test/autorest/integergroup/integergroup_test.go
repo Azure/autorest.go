@@ -6,7 +6,6 @@ package integergroup
 import (
 	"context"
 	"math"
-	"net/http"
 	"reflect"
 	"testing"
 	"time"
@@ -46,9 +45,6 @@ func TestIntGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, (*int32)(nil)); r != "" {
 		t.Fatal(r)
 	}
@@ -59,9 +55,6 @@ func TestIntGetNullUnixTime(t *testing.T) {
 	result, err := client.GetNullUnixTime(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("GetNullUnixTime: %v", err)
-	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if result.Value != nil {
 		t.Fatal("expected nil value")
@@ -119,9 +112,6 @@ func TestIntGetUnixTime(t *testing.T) {
 		t.Fatalf("GetUnixTime: %v", err)
 	}
 	t1 := time.Unix(1460505600, 0)
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &t1); r != "" {
 		t.Fatal(r)
 	}
@@ -133,8 +123,8 @@ func TestIntPutMax32(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMax32: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -144,8 +134,8 @@ func TestIntPutMax64(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMax64: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -155,8 +145,8 @@ func TestIntPutMin32(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMin32: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -166,8 +156,8 @@ func TestIntPutMin64(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutMin64: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -178,7 +168,7 @@ func TestIntPutUnixTimeDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutUnixTimeDate: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

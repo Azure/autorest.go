@@ -63,9 +63,7 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 	if err != nil {
 		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ConnectionMonitorsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ConnectionMonitorsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 	if err != nil {
 		return ConnectionMonitorsClientDeletePollerResponse{}, err
 	}
-	result := ConnectionMonitorsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ConnectionMonitorsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientDeletePollerResponse{}, err
@@ -248,7 +244,7 @@ func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, re
 
 // getHandleResponse handles the Get response.
 func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (ConnectionMonitorsClientGetResponse, error) {
-	result := ConnectionMonitorsClientGetResponse{RawResponse: resp}
+	result := ConnectionMonitorsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
 		return ConnectionMonitorsClientGetResponse{}, err
 	}
@@ -297,7 +293,7 @@ func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, r
 
 // listHandleResponse handles the List response.
 func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) (ConnectionMonitorsClientListResponse, error) {
-	result := ConnectionMonitorsClientListResponse{RawResponse: resp}
+	result := ConnectionMonitorsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorListResult); err != nil {
 		return ConnectionMonitorsClientListResponse{}, err
 	}
@@ -316,9 +312,7 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 	if err != nil {
 		return ConnectionMonitorsClientQueryPollerResponse{}, err
 	}
-	result := ConnectionMonitorsClientQueryPollerResponse{
-		RawResponse: resp,
-	}
+	result := ConnectionMonitorsClientQueryPollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Query", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientQueryPollerResponse{}, err
@@ -388,9 +382,7 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 	if err != nil {
 		return ConnectionMonitorsClientStartPollerResponse{}, err
 	}
-	result := ConnectionMonitorsClientStartPollerResponse{
-		RawResponse: resp,
-	}
+	result := ConnectionMonitorsClientStartPollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Start", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientStartPollerResponse{}, err
@@ -460,9 +452,7 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 	if err != nil {
 		return ConnectionMonitorsClientStopPollerResponse{}, err
 	}
-	result := ConnectionMonitorsClientStopPollerResponse{
-		RawResponse: resp,
-	}
+	result := ConnectionMonitorsClientStopPollerResponse{}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Stop", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientStopPollerResponse{}, err
@@ -575,7 +565,7 @@ func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Cont
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *ConnectionMonitorsClient) updateTagsHandleResponse(resp *http.Response) (ConnectionMonitorsClientUpdateTagsResponse, error) {
-	result := ConnectionMonitorsClientUpdateTagsResponse{RawResponse: resp}
+	result := ConnectionMonitorsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
 		return ConnectionMonitorsClientUpdateTagsResponse{}, err
 	}

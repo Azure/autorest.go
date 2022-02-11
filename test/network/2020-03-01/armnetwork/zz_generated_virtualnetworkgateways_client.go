@@ -62,9 +62,7 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 	if err != nil {
 		return VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 	if err != nil {
 		return VirtualNetworkGatewaysClientDeletePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientDeletePollerResponse{}, err
@@ -198,9 +194,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 	if err != nil {
 		return VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
@@ -268,9 +262,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.
 	if err != nil {
 		return VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GenerateVPNProfile", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{}, err
@@ -338,9 +330,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 	if err != nil {
 		return VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.Generatevpnclientpackage", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{}, err
@@ -444,7 +434,7 @@ func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context
 
 // getHandleResponse handles the Get response.
 func (client *VirtualNetworkGatewaysClient) getHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientGetResponse, error) {
-	result := VirtualNetworkGatewaysClientGetResponse{RawResponse: resp}
+	result := VirtualNetworkGatewaysClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGateway); err != nil {
 		return VirtualNetworkGatewaysClientGetResponse{}, err
 	}
@@ -464,9 +454,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{}, err
@@ -533,9 +521,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetBgpPeerStatus", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{}, err
@@ -604,9 +590,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetLearnedRoutes", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{}, err
@@ -673,9 +657,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx con
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{}, err
@@ -742,9 +724,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{}, err
@@ -812,9 +792,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{}, err
@@ -911,7 +889,7 @@ func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Contex
 
 // listHandleResponse handles the List response.
 func (client *VirtualNetworkGatewaysClient) listHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientListResponse, error) {
-	result := VirtualNetworkGatewaysClientListResponse{RawResponse: resp}
+	result := VirtualNetworkGatewaysClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayListResult); err != nil {
 		return VirtualNetworkGatewaysClientListResponse{}, err
 	}
@@ -964,7 +942,7 @@ func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx con
 
 // listConnectionsHandleResponse handles the ListConnections response.
 func (client *VirtualNetworkGatewaysClient) listConnectionsHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientListConnectionsResponse, error) {
-	result := VirtualNetworkGatewaysClientListConnectionsResponse{RawResponse: resp}
+	result := VirtualNetworkGatewaysClientListConnectionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayListConnectionsResult); err != nil {
 		return VirtualNetworkGatewaysClientListConnectionsResponse{}, err
 	}
@@ -982,9 +960,7 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 	if err != nil {
 		return VirtualNetworkGatewaysClientResetPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientResetPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientResetPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.Reset", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientResetPollerResponse{}, err
@@ -1053,9 +1029,7 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx con
 	if err != nil {
 		return VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{}, err
@@ -1123,9 +1097,7 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx
 	if err != nil {
 		return VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{}, err
@@ -1191,9 +1163,7 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 	if err != nil {
 		return VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.StartPacketCapture", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{}, err
@@ -1262,9 +1232,7 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 	if err != nil {
 		return VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.StopPacketCapture", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{}, err
@@ -1367,7 +1335,7 @@ func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx
 
 // supportedVPNDevicesHandleResponse handles the SupportedVPNDevices response.
 func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientSupportedVPNDevicesResponse, error) {
-	result := VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{RawResponse: resp}
+	result := VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{}, err
 	}
@@ -1386,9 +1354,7 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 	if err != nil {
 		return VirtualNetworkGatewaysClientUpdateTagsPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysClientUpdateTagsPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewaysClientUpdateTagsPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.UpdateTags", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewaysClientUpdateTagsPollerResponse{}, err
@@ -1493,7 +1459,7 @@ func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRe
 
 // vpnDeviceConfigurationScriptHandleResponse handles the VPNDeviceConfigurationScript response.
 func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse, error) {
-	result := VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{RawResponse: resp}
+	result := VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{}, err
 	}

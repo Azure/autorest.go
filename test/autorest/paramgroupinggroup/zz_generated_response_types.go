@@ -8,34 +8,27 @@
 
 package paramgroupinggroup
 
-import "net/http"
-
 // ParameterGroupingClientPostMultiParamGroupsResponse contains the response from method ParameterGroupingClient.PostMultiParamGroups.
 type ParameterGroupingClientPostMultiParamGroupsResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ParameterGroupingClientPostOptionalResponse contains the response from method ParameterGroupingClient.PostOptional.
 type ParameterGroupingClientPostOptionalResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ParameterGroupingClientPostRequiredResponse contains the response from method ParameterGroupingClient.PostRequired.
 type ParameterGroupingClientPostRequiredResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ParameterGroupingClientPostReservedWordsResponse contains the response from method ParameterGroupingClient.PostReservedWords.
 type ParameterGroupingClientPostReservedWordsResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // ParameterGroupingClientPostSharedParameterGroupObjectResponse contains the response from method ParameterGroupingClient.PostSharedParameterGroupObject.
 type ParameterGroupingClientPostSharedParameterGroupObjectResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

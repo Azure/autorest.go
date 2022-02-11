@@ -63,9 +63,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 	if err != nil {
 		return FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	if err != nil {
 		return FirewallPolicyRuleGroupsClientDeletePollerResponse{}, err
 	}
-	result := FirewallPolicyRuleGroupsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := FirewallPolicyRuleGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return FirewallPolicyRuleGroupsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *FirewallPolicyRuleGroupsClient) getCreateRequest(ctx context.Conte
 
 // getHandleResponse handles the Get response.
 func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *http.Response) (FirewallPolicyRuleGroupsClientGetResponse, error) {
-	result := FirewallPolicyRuleGroupsClientGetResponse{RawResponse: resp}
+	result := FirewallPolicyRuleGroupsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyRuleGroup); err != nil {
 		return FirewallPolicyRuleGroupsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *FirewallPolicyRuleGroupsClient) listCreateRequest(ctx context.Cont
 
 // listHandleResponse handles the List response.
 func (client *FirewallPolicyRuleGroupsClient) listHandleResponse(resp *http.Response) (FirewallPolicyRuleGroupsClientListResponse, error) {
-	result := FirewallPolicyRuleGroupsClientListResponse{RawResponse: resp}
+	result := FirewallPolicyRuleGroupsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyRuleGroupListResult); err != nil {
 		return FirewallPolicyRuleGroupsClientListResponse{}, err
 	}

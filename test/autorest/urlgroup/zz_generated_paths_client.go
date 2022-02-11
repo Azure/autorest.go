@@ -55,7 +55,7 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientArrayCSVInPathResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientArrayCSVInPathResponse{RawResponse: resp}, nil
+	return PathsClientArrayCSVInPathResponse{}, nil
 }
 
 // arrayCSVInPathCreateRequest creates the ArrayCSVInPath request.
@@ -86,7 +86,7 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientBase64URLResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientBase64URLResponse{RawResponse: resp}, nil
+	return PathsClientBase64URLResponse{}, nil
 }
 
 // base64URLCreateRequest creates the Base64URL request.
@@ -116,7 +116,7 @@ func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientBy
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientByteEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientByteEmptyResponse{RawResponse: resp}, nil
+	return PathsClientByteEmptyResponse{}, nil
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
@@ -147,7 +147,7 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, o
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientByteMultiByteResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientByteMultiByteResponse{RawResponse: resp}, nil
+	return PathsClientByteMultiByteResponse{}, nil
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
@@ -178,7 +178,7 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, option
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
 		return PathsClientByteNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientByteNullResponse{RawResponse: resp}, nil
+	return PathsClientByteNullResponse{}, nil
 }
 
 // byteNullCreateRequest creates the ByteNull request.
@@ -209,7 +209,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
 		return PathsClientDateNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientDateNullResponse{RawResponse: resp}, nil
+	return PathsClientDateNullResponse{}, nil
 }
 
 // dateNullCreateRequest creates the DateNull request.
@@ -240,7 +240,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
 		return PathsClientDateTimeNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientDateTimeNullResponse{RawResponse: resp}, nil
+	return PathsClientDateTimeNullResponse{}, nil
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
@@ -270,7 +270,7 @@ func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientDateTimeValidResponse{RawResponse: resp}, nil
+	return PathsClientDateTimeValidResponse{}, nil
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
@@ -300,7 +300,7 @@ func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDa
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientDateValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientDateValidResponse{RawResponse: resp}, nil
+	return PathsClientDateValidResponse{}, nil
 }
 
 // dateValidCreateRequest creates the DateValid request.
@@ -331,7 +331,7 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *P
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientDoubleDecimalNegativeResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientDoubleDecimalNegativeResponse{RawResponse: resp}, nil
+	return PathsClientDoubleDecimalNegativeResponse{}, nil
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
@@ -362,7 +362,7 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *P
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientDoubleDecimalPositiveResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientDoubleDecimalPositiveResponse{RawResponse: resp}, nil
+	return PathsClientDoubleDecimalPositiveResponse{}, nil
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
@@ -393,7 +393,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
 		return PathsClientEnumNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientEnumNullResponse{RawResponse: resp}, nil
+	return PathsClientEnumNullResponse{}, nil
 }
 
 // enumNullCreateRequest creates the EnumNull request.
@@ -427,7 +427,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientEnumValidResponse{RawResponse: resp}, nil
+	return PathsClientEnumValidResponse{}, nil
 }
 
 // enumValidCreateRequest creates the EnumValid request.
@@ -461,7 +461,7 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientFloatScientificNegativeResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientFloatScientificNegativeResponse{RawResponse: resp}, nil
+	return PathsClientFloatScientificNegativeResponse{}, nil
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
@@ -492,7 +492,7 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientFloatScientificPositiveResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientFloatScientificPositiveResponse{RawResponse: resp}, nil
+	return PathsClientFloatScientificPositiveResponse{}, nil
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
@@ -522,7 +522,7 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsCl
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetBooleanFalseResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetBooleanFalseResponse{RawResponse: resp}, nil
+	return PathsClientGetBooleanFalseResponse{}, nil
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
@@ -552,7 +552,7 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetBooleanTrueResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetBooleanTrueResponse{RawResponse: resp}, nil
+	return PathsClientGetBooleanTrueResponse{}, nil
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
@@ -583,7 +583,7 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetIntNegativeOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
+	return PathsClientGetIntNegativeOneMillionResponse{}, nil
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
@@ -613,7 +613,7 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsC
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetIntOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetIntOneMillionResponse{RawResponse: resp}, nil
+	return PathsClientGetIntOneMillionResponse{}, nil
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
@@ -644,7 +644,7 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *P
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetNegativeTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetNegativeTenBillionResponse{RawResponse: resp}, nil
+	return PathsClientGetNegativeTenBillionResponse{}, nil
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
@@ -674,7 +674,7 @@ func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientGetTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientGetTenBillionResponse{RawResponse: resp}, nil
+	return PathsClientGetTenBillionResponse{}, nil
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
@@ -704,7 +704,7 @@ func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClient
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientStringEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientStringEmptyResponse{RawResponse: resp}, nil
+	return PathsClientStringEmptyResponse{}, nil
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
@@ -735,7 +735,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
 		return PathsClientStringNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientStringNullResponse{RawResponse: resp}, nil
+	return PathsClientStringNullResponse{}, nil
 }
 
 // stringNullCreateRequest creates the StringNull request.
@@ -768,7 +768,7 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsC
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientStringURLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientStringURLEncodedResponse{RawResponse: resp}, nil
+	return PathsClientStringURLEncodedResponse{}, nil
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
@@ -799,7 +799,7 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientStringURLNonEncodedResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientStringURLNonEncodedResponse{RawResponse: resp}, nil
+	return PathsClientStringURLNonEncodedResponse{}, nil
 }
 
 // stringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
@@ -829,7 +829,7 @@ func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClie
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientStringUnicodeResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientStringUnicodeResponse{RawResponse: resp}, nil
+	return PathsClientStringUnicodeResponse{}, nil
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.
@@ -860,7 +860,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PathsClientUnixTimeURLResponse{}, runtime.NewResponseError(resp)
 	}
-	return PathsClientUnixTimeURLResponse{RawResponse: resp}, nil
+	return PathsClientUnixTimeURLResponse{}, nil
 }
 
 // unixTimeURLCreateRequest creates the UnixTimeURL request.

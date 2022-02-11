@@ -65,7 +65,7 @@ func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *Bo
 
 // getFalseHandleResponse handles the GetFalse response.
 func (client *BoolClient) getFalseHandleResponse(resp *http.Response) (BoolClientGetFalseResponse, error) {
-	result := BoolClientGetFalseResponse{RawResponse: resp}
+	result := BoolClientGetFalseResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return BoolClientGetFalseResponse{}, err
 	}
@@ -103,7 +103,7 @@ func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *
 
 // getInvalidHandleResponse handles the GetInvalid response.
 func (client *BoolClient) getInvalidHandleResponse(resp *http.Response) (BoolClientGetInvalidResponse, error) {
-	result := BoolClientGetInvalidResponse{RawResponse: resp}
+	result := BoolClientGetInvalidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return BoolClientGetInvalidResponse{}, err
 	}
@@ -141,7 +141,7 @@ func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *Boo
 
 // getNullHandleResponse handles the GetNull response.
 func (client *BoolClient) getNullHandleResponse(resp *http.Response) (BoolClientGetNullResponse, error) {
-	result := BoolClientGetNullResponse{RawResponse: resp}
+	result := BoolClientGetNullResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return BoolClientGetNullResponse{}, err
 	}
@@ -179,7 +179,7 @@ func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *Boo
 
 // getTrueHandleResponse handles the GetTrue response.
 func (client *BoolClient) getTrueHandleResponse(resp *http.Response) (BoolClientGetTrueResponse, error) {
-	result := BoolClientGetTrueResponse{RawResponse: resp}
+	result := BoolClientGetTrueResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return BoolClientGetTrueResponse{}, err
 	}
@@ -201,7 +201,7 @@ func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFa
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BoolClientPutFalseResponse{}, runtime.NewResponseError(resp)
 	}
-	return BoolClientPutFalseResponse{RawResponse: resp}, nil
+	return BoolClientPutFalseResponse{}, nil
 }
 
 // putFalseCreateRequest creates the PutFalse request.
@@ -230,7 +230,7 @@ func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTru
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return BoolClientPutTrueResponse{}, runtime.NewResponseError(resp)
 	}
-	return BoolClientPutTrueResponse{RawResponse: resp}, nil
+	return BoolClientPutTrueResponse{}, nil
 }
 
 // putTrueCreateRequest creates the PutTrue request.

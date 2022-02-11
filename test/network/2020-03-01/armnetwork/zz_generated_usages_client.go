@@ -90,7 +90,7 @@ func (client *UsagesClient) listCreateRequest(ctx context.Context, location stri
 
 // listHandleResponse handles the List response.
 func (client *UsagesClient) listHandleResponse(resp *http.Response) (UsagesClientListResponse, error) {
-	result := UsagesClientListResponse{RawResponse: resp}
+	result := UsagesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UsagesListResult); err != nil {
 		return UsagesClientListResponse{}, err
 	}

@@ -63,9 +63,7 @@ func (client *WatchersClient) BeginCheckConnectivity(ctx context.Context, resour
 	if err != nil {
 		return WatchersClientCheckConnectivityPollerResponse{}, err
 	}
-	result := WatchersClientCheckConnectivityPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientCheckConnectivityPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.CheckConnectivity", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientCheckConnectivityPollerResponse{}, err
@@ -169,7 +167,7 @@ func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, r
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *WatchersClient) createOrUpdateHandleResponse(resp *http.Response) (WatchersClientCreateOrUpdateResponse, error) {
-	result := WatchersClientCreateOrUpdateResponse{RawResponse: resp}
+	result := WatchersClientCreateOrUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
 		return WatchersClientCreateOrUpdateResponse{}, err
 	}
@@ -186,9 +184,7 @@ func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName
 	if err != nil {
 		return WatchersClientDeletePollerResponse{}, err
 	}
-	result := WatchersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientDeletePollerResponse{}, err
@@ -290,7 +286,7 @@ func (client *WatchersClient) getCreateRequest(ctx context.Context, resourceGrou
 
 // getHandleResponse handles the Get response.
 func (client *WatchersClient) getHandleResponse(resp *http.Response) (WatchersClientGetResponse, error) {
-	result := WatchersClientGetResponse{RawResponse: resp}
+	result := WatchersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
 		return WatchersClientGetResponse{}, err
 	}
@@ -310,9 +306,7 @@ func (client *WatchersClient) BeginGetAzureReachabilityReport(ctx context.Contex
 	if err != nil {
 		return WatchersClientGetAzureReachabilityReportPollerResponse{}, err
 	}
-	result := WatchersClientGetAzureReachabilityReportPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetAzureReachabilityReportPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetAzureReachabilityReport", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetAzureReachabilityReportPollerResponse{}, err
@@ -379,9 +373,7 @@ func (client *WatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourc
 	if err != nil {
 		return WatchersClientGetFlowLogStatusPollerResponse{}, err
 	}
-	result := WatchersClientGetFlowLogStatusPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetFlowLogStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetFlowLogStatus", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetFlowLogStatusPollerResponse{}, err
@@ -451,9 +443,7 @@ func (client *WatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context
 	if err != nil {
 		return WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{}, err
 	}
-	result := WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetNetworkConfigurationDiagnostic", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetNetworkConfigurationDiagnosticPollerResponse{}, err
@@ -523,9 +513,7 @@ func (client *WatchersClient) BeginGetNextHop(ctx context.Context, resourceGroup
 	if err != nil {
 		return WatchersClientGetNextHopPollerResponse{}, err
 	}
-	result := WatchersClientGetNextHopPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetNextHopPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetNextHop", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetNextHopPollerResponse{}, err
@@ -628,7 +616,7 @@ func (client *WatchersClient) getTopologyCreateRequest(ctx context.Context, reso
 
 // getTopologyHandleResponse handles the GetTopology response.
 func (client *WatchersClient) getTopologyHandleResponse(resp *http.Response) (WatchersClientGetTopologyResponse, error) {
-	result := WatchersClientGetTopologyResponse{RawResponse: resp}
+	result := WatchersClientGetTopologyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Topology); err != nil {
 		return WatchersClientGetTopologyResponse{}, err
 	}
@@ -647,9 +635,7 @@ func (client *WatchersClient) BeginGetTroubleshooting(ctx context.Context, resou
 	if err != nil {
 		return WatchersClientGetTroubleshootingPollerResponse{}, err
 	}
-	result := WatchersClientGetTroubleshootingPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetTroubleshootingPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetTroubleshooting", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetTroubleshootingPollerResponse{}, err
@@ -715,9 +701,7 @@ func (client *WatchersClient) BeginGetTroubleshootingResult(ctx context.Context,
 	if err != nil {
 		return WatchersClientGetTroubleshootingResultPollerResponse{}, err
 	}
-	result := WatchersClientGetTroubleshootingResultPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetTroubleshootingResultPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetTroubleshootingResult", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetTroubleshootingResultPollerResponse{}, err
@@ -783,9 +767,7 @@ func (client *WatchersClient) BeginGetVMSecurityRules(ctx context.Context, resou
 	if err != nil {
 		return WatchersClientGetVMSecurityRulesPollerResponse{}, err
 	}
-	result := WatchersClientGetVMSecurityRulesPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientGetVMSecurityRulesPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.GetVMSecurityRules", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientGetVMSecurityRulesPollerResponse{}, err
@@ -876,7 +858,7 @@ func (client *WatchersClient) listCreateRequest(ctx context.Context, resourceGro
 
 // listHandleResponse handles the List response.
 func (client *WatchersClient) listHandleResponse(resp *http.Response) (WatchersClientListResponse, error) {
-	result := WatchersClientListResponse{RawResponse: resp}
+	result := WatchersClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WatcherListResult); err != nil {
 		return WatchersClientListResponse{}, err
 	}
@@ -915,7 +897,7 @@ func (client *WatchersClient) listAllCreateRequest(ctx context.Context, options 
 
 // listAllHandleResponse handles the ListAll response.
 func (client *WatchersClient) listAllHandleResponse(resp *http.Response) (WatchersClientListAllResponse, error) {
-	result := WatchersClientListAllResponse{RawResponse: resp}
+	result := WatchersClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WatcherListResult); err != nil {
 		return WatchersClientListAllResponse{}, err
 	}
@@ -935,9 +917,7 @@ func (client *WatchersClient) BeginListAvailableProviders(ctx context.Context, r
 	if err != nil {
 		return WatchersClientListAvailableProvidersPollerResponse{}, err
 	}
-	result := WatchersClientListAvailableProvidersPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientListAvailableProvidersPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.ListAvailableProviders", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientListAvailableProvidersPollerResponse{}, err
@@ -1004,9 +984,7 @@ func (client *WatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, 
 	if err != nil {
 		return WatchersClientSetFlowLogConfigurationPollerResponse{}, err
 	}
-	result := WatchersClientSetFlowLogConfigurationPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientSetFlowLogConfigurationPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.SetFlowLogConfiguration", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientSetFlowLogConfigurationPollerResponse{}, err
@@ -1109,7 +1087,7 @@ func (client *WatchersClient) updateTagsCreateRequest(ctx context.Context, resou
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *WatchersClient) updateTagsHandleResponse(resp *http.Response) (WatchersClientUpdateTagsResponse, error) {
-	result := WatchersClientUpdateTagsResponse{RawResponse: resp}
+	result := WatchersClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
 		return WatchersClientUpdateTagsResponse{}, err
 	}
@@ -1128,9 +1106,7 @@ func (client *WatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGro
 	if err != nil {
 		return WatchersClientVerifyIPFlowPollerResponse{}, err
 	}
-	result := WatchersClientVerifyIPFlowPollerResponse{
-		RawResponse: resp,
-	}
+	result := WatchersClientVerifyIPFlowPollerResponse{}
 	pt, err := armruntime.NewPoller("WatchersClient.VerifyIPFlow", "location", resp, client.pl)
 	if err != nil {
 		return WatchersClientVerifyIPFlowPollerResponse{}, err

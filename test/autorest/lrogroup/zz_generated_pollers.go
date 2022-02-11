@@ -43,11 +43,10 @@ func (p *LRORetrysClientDelete202Retry200Poller) Poll(ctx context.Context) (*htt
 // If the final GET succeeded then the final LRORetrysClientDelete202Retry200Response will be returned.
 func (p *LRORetrysClientDelete202Retry200Poller) FinalResponse(ctx context.Context) (LRORetrysClientDelete202Retry200Response, error) {
 	respType := LRORetrysClientDelete202Retry200Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LRORetrysClientDelete202Retry200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -86,11 +85,10 @@ func (p *LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller) Poll(ctx contex
 // If the final GET succeeded then the final LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse will be returned.
 func (p *LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller) FinalResponse(ctx context.Context) (LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse, error) {
 	respType := LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -129,11 +127,10 @@ func (p *LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller) Poll(ct
 // If the final GET succeeded then the final LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse will be returned.
 func (p *LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller) FinalResponse(ctx context.Context) (LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse, error) {
 	respType := LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -172,11 +169,10 @@ func (p *LRORetrysClientPost202Retry200Poller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final LRORetrysClientPost202Retry200Response will be returned.
 func (p *LRORetrysClientPost202Retry200Poller) FinalResponse(ctx context.Context) (LRORetrysClientPost202Retry200Response, error) {
 	respType := LRORetrysClientPost202Retry200Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LRORetrysClientPost202Retry200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -215,11 +211,10 @@ func (p *LRORetrysClientPostAsyncRelativeRetrySucceededPoller) Poll(ctx context.
 // If the final GET succeeded then the final LRORetrysClientPostAsyncRelativeRetrySucceededResponse will be returned.
 func (p *LRORetrysClientPostAsyncRelativeRetrySucceededPoller) FinalResponse(ctx context.Context) (LRORetrysClientPostAsyncRelativeRetrySucceededResponse, error) {
 	respType := LRORetrysClientPostAsyncRelativeRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LRORetrysClientPostAsyncRelativeRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -258,11 +253,10 @@ func (p *LRORetrysClientPut201CreatingSucceeded200Poller) Poll(ctx context.Conte
 // If the final GET succeeded then the final LRORetrysClientPut201CreatingSucceeded200Response will be returned.
 func (p *LRORetrysClientPut201CreatingSucceeded200Poller) FinalResponse(ctx context.Context) (LRORetrysClientPut201CreatingSucceeded200Response, error) {
 	respType := LRORetrysClientPut201CreatingSucceeded200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LRORetrysClientPut201CreatingSucceeded200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -301,11 +295,10 @@ func (p *LRORetrysClientPutAsyncRelativeRetrySucceededPoller) Poll(ctx context.C
 // If the final GET succeeded then the final LRORetrysClientPutAsyncRelativeRetrySucceededResponse will be returned.
 func (p *LRORetrysClientPutAsyncRelativeRetrySucceededPoller) FinalResponse(ctx context.Context) (LRORetrysClientPutAsyncRelativeRetrySucceededResponse, error) {
 	respType := LRORetrysClientPutAsyncRelativeRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LRORetrysClientPutAsyncRelativeRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -344,11 +337,10 @@ func (p *LROSADsClientDelete202NonRetry400Poller) Poll(ctx context.Context) (*ht
 // If the final GET succeeded then the final LROSADsClientDelete202NonRetry400Response will be returned.
 func (p *LROSADsClientDelete202NonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientDelete202NonRetry400Response, error) {
 	respType := LROSADsClientDelete202NonRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDelete202NonRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -387,11 +379,10 @@ func (p *LROSADsClientDelete202RetryInvalidHeaderPoller) Poll(ctx context.Contex
 // If the final GET succeeded then the final LROSADsClientDelete202RetryInvalidHeaderResponse will be returned.
 func (p *LROSADsClientDelete202RetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsClientDelete202RetryInvalidHeaderResponse, error) {
 	respType := LROSADsClientDelete202RetryInvalidHeaderResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDelete202RetryInvalidHeaderResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -430,11 +421,10 @@ func (p *LROSADsClientDelete204SucceededPoller) Poll(ctx context.Context) (*http
 // If the final GET succeeded then the final LROSADsClientDelete204SucceededResponse will be returned.
 func (p *LROSADsClientDelete204SucceededPoller) FinalResponse(ctx context.Context) (LROSADsClientDelete204SucceededResponse, error) {
 	respType := LROSADsClientDelete204SucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDelete204SucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -473,11 +463,10 @@ func (p *LROSADsClientDeleteAsyncRelativeRetry400Poller) Poll(ctx context.Contex
 // If the final GET succeeded then the final LROSADsClientDeleteAsyncRelativeRetry400Response will be returned.
 func (p *LROSADsClientDeleteAsyncRelativeRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientDeleteAsyncRelativeRetry400Response, error) {
 	respType := LROSADsClientDeleteAsyncRelativeRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -516,11 +505,10 @@ func (p *LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx cont
 // If the final GET succeeded then the final LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse will be returned.
 func (p *LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse, error) {
 	respType := LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -559,11 +547,10 @@ func (p *LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx
 // If the final GET succeeded then the final LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse will be returned.
 func (p *LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPoller) FinalResponse(ctx context.Context) (LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	respType := LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -602,11 +589,10 @@ func (p *LROSADsClientDeleteAsyncRelativeRetryNoStatusPoller) Poll(ctx context.C
 // If the final GET succeeded then the final LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse will be returned.
 func (p *LROSADsClientDeleteAsyncRelativeRetryNoStatusPoller) FinalResponse(ctx context.Context) (LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse, error) {
 	respType := LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -645,11 +631,10 @@ func (p *LROSADsClientDeleteNonRetry400Poller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final LROSADsClientDeleteNonRetry400Response will be returned.
 func (p *LROSADsClientDeleteNonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientDeleteNonRetry400Response, error) {
 	respType := LROSADsClientDeleteNonRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientDeleteNonRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -688,11 +673,10 @@ func (p *LROSADsClientPost202NoLocationPoller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final LROSADsClientPost202NoLocationResponse will be returned.
 func (p *LROSADsClientPost202NoLocationPoller) FinalResponse(ctx context.Context) (LROSADsClientPost202NoLocationResponse, error) {
 	respType := LROSADsClientPost202NoLocationResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPost202NoLocationResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -731,11 +715,10 @@ func (p *LROSADsClientPost202NonRetry400Poller) Poll(ctx context.Context) (*http
 // If the final GET succeeded then the final LROSADsClientPost202NonRetry400Response will be returned.
 func (p *LROSADsClientPost202NonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientPost202NonRetry400Response, error) {
 	respType := LROSADsClientPost202NonRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPost202NonRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -774,11 +757,10 @@ func (p *LROSADsClientPost202RetryInvalidHeaderPoller) Poll(ctx context.Context)
 // If the final GET succeeded then the final LROSADsClientPost202RetryInvalidHeaderResponse will be returned.
 func (p *LROSADsClientPost202RetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsClientPost202RetryInvalidHeaderResponse, error) {
 	respType := LROSADsClientPost202RetryInvalidHeaderResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPost202RetryInvalidHeaderResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -817,11 +799,10 @@ func (p *LROSADsClientPostAsyncRelativeRetry400Poller) Poll(ctx context.Context)
 // If the final GET succeeded then the final LROSADsClientPostAsyncRelativeRetry400Response will be returned.
 func (p *LROSADsClientPostAsyncRelativeRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientPostAsyncRelativeRetry400Response, error) {
 	respType := LROSADsClientPostAsyncRelativeRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -860,11 +841,10 @@ func (p *LROSADsClientPostAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx contex
 // If the final GET succeeded then the final LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse will be returned.
 func (p *LROSADsClientPostAsyncRelativeRetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse, error) {
 	respType := LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -903,11 +883,10 @@ func (p *LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx c
 // If the final GET succeeded then the final LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse will be returned.
 func (p *LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPoller) FinalResponse(ctx context.Context) (LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	respType := LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -946,11 +925,10 @@ func (p *LROSADsClientPostAsyncRelativeRetryNoPayloadPoller) Poll(ctx context.Co
 // If the final GET succeeded then the final LROSADsClientPostAsyncRelativeRetryNoPayloadResponse will be returned.
 func (p *LROSADsClientPostAsyncRelativeRetryNoPayloadPoller) FinalResponse(ctx context.Context) (LROSADsClientPostAsyncRelativeRetryNoPayloadResponse, error) {
 	respType := LROSADsClientPostAsyncRelativeRetryNoPayloadResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryNoPayloadResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -989,11 +967,10 @@ func (p *LROSADsClientPostNonRetry400Poller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final LROSADsClientPostNonRetry400Response will be returned.
 func (p *LROSADsClientPostNonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientPostNonRetry400Response, error) {
 	respType := LROSADsClientPostNonRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROSADsClientPostNonRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1032,11 +1009,10 @@ func (p *LROSADsClientPut200InvalidJSONPoller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final LROSADsClientPut200InvalidJSONResponse will be returned.
 func (p *LROSADsClientPut200InvalidJSONPoller) FinalResponse(ctx context.Context) (LROSADsClientPut200InvalidJSONResponse, error) {
 	respType := LROSADsClientPut200InvalidJSONResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPut200InvalidJSONResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1075,11 +1051,10 @@ func (p *LROSADsClientPutAsyncRelativeRetry400Poller) Poll(ctx context.Context) 
 // If the final GET succeeded then the final LROSADsClientPutAsyncRelativeRetry400Response will be returned.
 func (p *LROSADsClientPutAsyncRelativeRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientPutAsyncRelativeRetry400Response, error) {
 	respType := LROSADsClientPutAsyncRelativeRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1118,11 +1093,10 @@ func (p *LROSADsClientPutAsyncRelativeRetryInvalidHeaderPoller) Poll(ctx context
 // If the final GET succeeded then the final LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse will be returned.
 func (p *LROSADsClientPutAsyncRelativeRetryInvalidHeaderPoller) FinalResponse(ctx context.Context) (LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse, error) {
 	respType := LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1161,11 +1135,10 @@ func (p *LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPoller) Poll(ctx co
 // If the final GET succeeded then the final LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse will be returned.
 func (p *LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPoller) FinalResponse(ctx context.Context) (LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse, error) {
 	respType := LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1204,11 +1177,10 @@ func (p *LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPoller) Poll(ctx conte
 // If the final GET succeeded then the final LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse will be returned.
 func (p *LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPoller) FinalResponse(ctx context.Context) (LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse, error) {
 	respType := LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1247,11 +1219,10 @@ func (p *LROSADsClientPutAsyncRelativeRetryNoStatusPoller) Poll(ctx context.Cont
 // If the final GET succeeded then the final LROSADsClientPutAsyncRelativeRetryNoStatusResponse will be returned.
 func (p *LROSADsClientPutAsyncRelativeRetryNoStatusPoller) FinalResponse(ctx context.Context) (LROSADsClientPutAsyncRelativeRetryNoStatusResponse, error) {
 	respType := LROSADsClientPutAsyncRelativeRetryNoStatusResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryNoStatusResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1290,11 +1261,10 @@ func (p *LROSADsClientPutError201NoProvisioningStatePayloadPoller) Poll(ctx cont
 // If the final GET succeeded then the final LROSADsClientPutError201NoProvisioningStatePayloadResponse will be returned.
 func (p *LROSADsClientPutError201NoProvisioningStatePayloadPoller) FinalResponse(ctx context.Context) (LROSADsClientPutError201NoProvisioningStatePayloadResponse, error) {
 	respType := LROSADsClientPutError201NoProvisioningStatePayloadResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutError201NoProvisioningStatePayloadResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1333,11 +1303,10 @@ func (p *LROSADsClientPutNonRetry201Creating400InvalidJSONPoller) Poll(ctx conte
 // If the final GET succeeded then the final LROSADsClientPutNonRetry201Creating400InvalidJSONResponse will be returned.
 func (p *LROSADsClientPutNonRetry201Creating400InvalidJSONPoller) FinalResponse(ctx context.Context) (LROSADsClientPutNonRetry201Creating400InvalidJSONResponse, error) {
 	respType := LROSADsClientPutNonRetry201Creating400InvalidJSONResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutNonRetry201Creating400InvalidJSONResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1376,11 +1345,10 @@ func (p *LROSADsClientPutNonRetry201Creating400Poller) Poll(ctx context.Context)
 // If the final GET succeeded then the final LROSADsClientPutNonRetry201Creating400Response will be returned.
 func (p *LROSADsClientPutNonRetry201Creating400Poller) FinalResponse(ctx context.Context) (LROSADsClientPutNonRetry201Creating400Response, error) {
 	respType := LROSADsClientPutNonRetry201Creating400Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutNonRetry201Creating400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1419,11 +1387,10 @@ func (p *LROSADsClientPutNonRetry400Poller) Poll(ctx context.Context) (*http.Res
 // If the final GET succeeded then the final LROSADsClientPutNonRetry400Response will be returned.
 func (p *LROSADsClientPutNonRetry400Poller) FinalResponse(ctx context.Context) (LROSADsClientPutNonRetry400Response, error) {
 	respType := LROSADsClientPutNonRetry400Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROSADsClientPutNonRetry400Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1462,11 +1429,10 @@ func (p *LROsClientDelete202NoRetry204Poller) Poll(ctx context.Context) (*http.R
 // If the final GET succeeded then the final LROsClientDelete202NoRetry204Response will be returned.
 func (p *LROsClientDelete202NoRetry204Poller) FinalResponse(ctx context.Context) (LROsClientDelete202NoRetry204Response, error) {
 	respType := LROsClientDelete202NoRetry204Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientDelete202NoRetry204Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1505,11 +1471,10 @@ func (p *LROsClientDelete202Retry200Poller) Poll(ctx context.Context) (*http.Res
 // If the final GET succeeded then the final LROsClientDelete202Retry200Response will be returned.
 func (p *LROsClientDelete202Retry200Poller) FinalResponse(ctx context.Context) (LROsClientDelete202Retry200Response, error) {
 	respType := LROsClientDelete202Retry200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientDelete202Retry200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1548,11 +1513,10 @@ func (p *LROsClientDelete204SucceededPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final LROsClientDelete204SucceededResponse will be returned.
 func (p *LROsClientDelete204SucceededPoller) FinalResponse(ctx context.Context) (LROsClientDelete204SucceededResponse, error) {
 	respType := LROsClientDelete204SucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDelete204SucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1591,11 +1555,10 @@ func (p *LROsClientDeleteAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (
 // If the final GET succeeded then the final LROsClientDeleteAsyncNoHeaderInRetryResponse will be returned.
 func (p *LROsClientDeleteAsyncNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsClientDeleteAsyncNoHeaderInRetryResponse, error) {
 	respType := LROsClientDeleteAsyncNoHeaderInRetryResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDeleteAsyncNoHeaderInRetryResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1634,11 +1597,10 @@ func (p *LROsClientDeleteAsyncNoRetrySucceededPoller) Poll(ctx context.Context) 
 // If the final GET succeeded then the final LROsClientDeleteAsyncNoRetrySucceededResponse will be returned.
 func (p *LROsClientDeleteAsyncNoRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsClientDeleteAsyncNoRetrySucceededResponse, error) {
 	respType := LROsClientDeleteAsyncNoRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDeleteAsyncNoRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1677,11 +1639,10 @@ func (p *LROsClientDeleteAsyncRetryFailedPoller) Poll(ctx context.Context) (*htt
 // If the final GET succeeded then the final LROsClientDeleteAsyncRetryFailedResponse will be returned.
 func (p *LROsClientDeleteAsyncRetryFailedPoller) FinalResponse(ctx context.Context) (LROsClientDeleteAsyncRetryFailedResponse, error) {
 	respType := LROsClientDeleteAsyncRetryFailedResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDeleteAsyncRetryFailedResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1720,11 +1681,10 @@ func (p *LROsClientDeleteAsyncRetrySucceededPoller) Poll(ctx context.Context) (*
 // If the final GET succeeded then the final LROsClientDeleteAsyncRetrySucceededResponse will be returned.
 func (p *LROsClientDeleteAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsClientDeleteAsyncRetrySucceededResponse, error) {
 	respType := LROsClientDeleteAsyncRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDeleteAsyncRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1763,11 +1723,10 @@ func (p *LROsClientDeleteAsyncRetrycanceledPoller) Poll(ctx context.Context) (*h
 // If the final GET succeeded then the final LROsClientDeleteAsyncRetrycanceledResponse will be returned.
 func (p *LROsClientDeleteAsyncRetrycanceledPoller) FinalResponse(ctx context.Context) (LROsClientDeleteAsyncRetrycanceledResponse, error) {
 	respType := LROsClientDeleteAsyncRetrycanceledResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDeleteAsyncRetrycanceledResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1806,11 +1765,10 @@ func (p *LROsClientDeleteNoHeaderInRetryPoller) Poll(ctx context.Context) (*http
 // If the final GET succeeded then the final LROsClientDeleteNoHeaderInRetryResponse will be returned.
 func (p *LROsClientDeleteNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsClientDeleteNoHeaderInRetryResponse, error) {
 	respType := LROsClientDeleteNoHeaderInRetryResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientDeleteNoHeaderInRetryResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1849,11 +1807,10 @@ func (p *LROsClientDeleteProvisioning202Accepted200SucceededPoller) Poll(ctx con
 // If the final GET succeeded then the final LROsClientDeleteProvisioning202Accepted200SucceededResponse will be returned.
 func (p *LROsClientDeleteProvisioning202Accepted200SucceededPoller) FinalResponse(ctx context.Context) (LROsClientDeleteProvisioning202Accepted200SucceededResponse, error) {
 	respType := LROsClientDeleteProvisioning202Accepted200SucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientDeleteProvisioning202Accepted200SucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1892,11 +1849,10 @@ func (p *LROsClientDeleteProvisioning202DeletingFailed200Poller) Poll(ctx contex
 // If the final GET succeeded then the final LROsClientDeleteProvisioning202DeletingFailed200Response will be returned.
 func (p *LROsClientDeleteProvisioning202DeletingFailed200Poller) FinalResponse(ctx context.Context) (LROsClientDeleteProvisioning202DeletingFailed200Response, error) {
 	respType := LROsClientDeleteProvisioning202DeletingFailed200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientDeleteProvisioning202DeletingFailed200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1935,11 +1891,10 @@ func (p *LROsClientDeleteProvisioning202Deletingcanceled200Poller) Poll(ctx cont
 // If the final GET succeeded then the final LROsClientDeleteProvisioning202Deletingcanceled200Response will be returned.
 func (p *LROsClientDeleteProvisioning202Deletingcanceled200Poller) FinalResponse(ctx context.Context) (LROsClientDeleteProvisioning202Deletingcanceled200Response, error) {
 	respType := LROsClientDeleteProvisioning202Deletingcanceled200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientDeleteProvisioning202Deletingcanceled200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -1978,11 +1933,10 @@ func (p *LROsClientPatch200SucceededIgnoreHeadersPoller) Poll(ctx context.Contex
 // If the final GET succeeded then the final LROsClientPatch200SucceededIgnoreHeadersResponse will be returned.
 func (p *LROsClientPatch200SucceededIgnoreHeadersPoller) FinalResponse(ctx context.Context) (LROsClientPatch200SucceededIgnoreHeadersResponse, error) {
 	respType := LROsClientPatch200SucceededIgnoreHeadersResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPatch200SucceededIgnoreHeadersResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2021,11 +1975,10 @@ func (p *LROsClientPost200WithPayloadPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final LROsClientPost200WithPayloadResponse will be returned.
 func (p *LROsClientPost200WithPayloadPoller) FinalResponse(ctx context.Context) (LROsClientPost200WithPayloadResponse, error) {
 	respType := LROsClientPost200WithPayloadResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SKU)
+	_, err := p.pt.FinalResponse(ctx, &respType.SKU)
 	if err != nil {
 		return LROsClientPost200WithPayloadResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2064,11 +2017,10 @@ func (p *LROsClientPost202ListPoller) Poll(ctx context.Context) (*http.Response,
 // If the final GET succeeded then the final LROsClientPost202ListResponse will be returned.
 func (p *LROsClientPost202ListPoller) FinalResponse(ctx context.Context) (LROsClientPost202ListResponse, error) {
 	respType := LROsClientPost202ListResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.ProductArray)
+	_, err := p.pt.FinalResponse(ctx, &respType.ProductArray)
 	if err != nil {
 		return LROsClientPost202ListResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2107,11 +2059,10 @@ func (p *LROsClientPost202NoRetry204Poller) Poll(ctx context.Context) (*http.Res
 // If the final GET succeeded then the final LROsClientPost202NoRetry204Response will be returned.
 func (p *LROsClientPost202NoRetry204Poller) FinalResponse(ctx context.Context) (LROsClientPost202NoRetry204Response, error) {
 	respType := LROsClientPost202NoRetry204Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPost202NoRetry204Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2150,11 +2101,10 @@ func (p *LROsClientPost202Retry200Poller) Poll(ctx context.Context) (*http.Respo
 // If the final GET succeeded then the final LROsClientPost202Retry200Response will be returned.
 func (p *LROsClientPost202Retry200Poller) FinalResponse(ctx context.Context) (LROsClientPost202Retry200Response, error) {
 	respType := LROsClientPost202Retry200Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientPost202Retry200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2193,11 +2143,10 @@ func (p *LROsClientPostAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*
 // If the final GET succeeded then the final LROsClientPostAsyncNoRetrySucceededResponse will be returned.
 func (p *LROsClientPostAsyncNoRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsClientPostAsyncNoRetrySucceededResponse, error) {
 	respType := LROsClientPostAsyncNoRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPostAsyncNoRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2236,11 +2185,10 @@ func (p *LROsClientPostAsyncRetryFailedPoller) Poll(ctx context.Context) (*http.
 // If the final GET succeeded then the final LROsClientPostAsyncRetryFailedResponse will be returned.
 func (p *LROsClientPostAsyncRetryFailedPoller) FinalResponse(ctx context.Context) (LROsClientPostAsyncRetryFailedResponse, error) {
 	respType := LROsClientPostAsyncRetryFailedResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientPostAsyncRetryFailedResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2279,11 +2227,10 @@ func (p *LROsClientPostAsyncRetrySucceededPoller) Poll(ctx context.Context) (*ht
 // If the final GET succeeded then the final LROsClientPostAsyncRetrySucceededResponse will be returned.
 func (p *LROsClientPostAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsClientPostAsyncRetrySucceededResponse, error) {
 	respType := LROsClientPostAsyncRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPostAsyncRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2322,11 +2269,10 @@ func (p *LROsClientPostAsyncRetrycanceledPoller) Poll(ctx context.Context) (*htt
 // If the final GET succeeded then the final LROsClientPostAsyncRetrycanceledResponse will be returned.
 func (p *LROsClientPostAsyncRetrycanceledPoller) FinalResponse(ctx context.Context) (LROsClientPostAsyncRetrycanceledResponse, error) {
 	respType := LROsClientPostAsyncRetrycanceledResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsClientPostAsyncRetrycanceledResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2365,11 +2311,10 @@ func (p *LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) Poll(ctx c
 // If the final GET succeeded then the final LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse will be returned.
 func (p *LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPoller) FinalResponse(ctx context.Context) (LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse, error) {
 	respType := LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2408,11 +2353,10 @@ func (p *LROsClientPostDoubleHeadersFinalAzureHeaderGetPoller) Poll(ctx context.
 // If the final GET succeeded then the final LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse will be returned.
 func (p *LROsClientPostDoubleHeadersFinalAzureHeaderGetPoller) FinalResponse(ctx context.Context) (LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse, error) {
 	respType := LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2451,11 +2395,10 @@ func (p *LROsClientPostDoubleHeadersFinalLocationGetPoller) Poll(ctx context.Con
 // If the final GET succeeded then the final LROsClientPostDoubleHeadersFinalLocationGetResponse will be returned.
 func (p *LROsClientPostDoubleHeadersFinalLocationGetPoller) FinalResponse(ctx context.Context) (LROsClientPostDoubleHeadersFinalLocationGetResponse, error) {
 	respType := LROsClientPostDoubleHeadersFinalLocationGetResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPostDoubleHeadersFinalLocationGetResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2494,11 +2437,10 @@ func (p *LROsClientPut200Acceptedcanceled200Poller) Poll(ctx context.Context) (*
 // If the final GET succeeded then the final LROsClientPut200Acceptedcanceled200Response will be returned.
 func (p *LROsClientPut200Acceptedcanceled200Poller) FinalResponse(ctx context.Context) (LROsClientPut200Acceptedcanceled200Response, error) {
 	respType := LROsClientPut200Acceptedcanceled200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut200Acceptedcanceled200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2537,11 +2479,10 @@ func (p *LROsClientPut200SucceededNoStatePoller) Poll(ctx context.Context) (*htt
 // If the final GET succeeded then the final LROsClientPut200SucceededNoStateResponse will be returned.
 func (p *LROsClientPut200SucceededNoStatePoller) FinalResponse(ctx context.Context) (LROsClientPut200SucceededNoStateResponse, error) {
 	respType := LROsClientPut200SucceededNoStateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut200SucceededNoStateResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2580,11 +2521,10 @@ func (p *LROsClientPut200SucceededPoller) Poll(ctx context.Context) (*http.Respo
 // If the final GET succeeded then the final LROsClientPut200SucceededResponse will be returned.
 func (p *LROsClientPut200SucceededPoller) FinalResponse(ctx context.Context) (LROsClientPut200SucceededResponse, error) {
 	respType := LROsClientPut200SucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut200SucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2623,11 +2563,10 @@ func (p *LROsClientPut200UpdatingSucceeded204Poller) Poll(ctx context.Context) (
 // If the final GET succeeded then the final LROsClientPut200UpdatingSucceeded204Response will be returned.
 func (p *LROsClientPut200UpdatingSucceeded204Poller) FinalResponse(ctx context.Context) (LROsClientPut200UpdatingSucceeded204Response, error) {
 	respType := LROsClientPut200UpdatingSucceeded204Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut200UpdatingSucceeded204Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2666,11 +2605,10 @@ func (p *LROsClientPut201CreatingFailed200Poller) Poll(ctx context.Context) (*ht
 // If the final GET succeeded then the final LROsClientPut201CreatingFailed200Response will be returned.
 func (p *LROsClientPut201CreatingFailed200Poller) FinalResponse(ctx context.Context) (LROsClientPut201CreatingFailed200Response, error) {
 	respType := LROsClientPut201CreatingFailed200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut201CreatingFailed200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2709,11 +2647,10 @@ func (p *LROsClientPut201CreatingSucceeded200Poller) Poll(ctx context.Context) (
 // If the final GET succeeded then the final LROsClientPut201CreatingSucceeded200Response will be returned.
 func (p *LROsClientPut201CreatingSucceeded200Poller) FinalResponse(ctx context.Context) (LROsClientPut201CreatingSucceeded200Response, error) {
 	respType := LROsClientPut201CreatingSucceeded200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut201CreatingSucceeded200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2752,11 +2689,10 @@ func (p *LROsClientPut201SucceededPoller) Poll(ctx context.Context) (*http.Respo
 // If the final GET succeeded then the final LROsClientPut201SucceededResponse will be returned.
 func (p *LROsClientPut201SucceededPoller) FinalResponse(ctx context.Context) (LROsClientPut201SucceededResponse, error) {
 	respType := LROsClientPut201SucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut201SucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2795,11 +2731,10 @@ func (p *LROsClientPut202Retry200Poller) Poll(ctx context.Context) (*http.Respon
 // If the final GET succeeded then the final LROsClientPut202Retry200Response will be returned.
 func (p *LROsClientPut202Retry200Poller) FinalResponse(ctx context.Context) (LROsClientPut202Retry200Response, error) {
 	respType := LROsClientPut202Retry200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPut202Retry200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2838,11 +2773,10 @@ func (p *LROsClientPutAsyncNoHeaderInRetryPoller) Poll(ctx context.Context) (*ht
 // If the final GET succeeded then the final LROsClientPutAsyncNoHeaderInRetryResponse will be returned.
 func (p *LROsClientPutAsyncNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncNoHeaderInRetryResponse, error) {
 	respType := LROsClientPutAsyncNoHeaderInRetryResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPutAsyncNoHeaderInRetryResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2881,11 +2815,10 @@ func (p *LROsClientPutAsyncNoRetrySucceededPoller) Poll(ctx context.Context) (*h
 // If the final GET succeeded then the final LROsClientPutAsyncNoRetrySucceededResponse will be returned.
 func (p *LROsClientPutAsyncNoRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncNoRetrySucceededResponse, error) {
 	respType := LROsClientPutAsyncNoRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPutAsyncNoRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2924,11 +2857,10 @@ func (p *LROsClientPutAsyncNoRetrycanceledPoller) Poll(ctx context.Context) (*ht
 // If the final GET succeeded then the final LROsClientPutAsyncNoRetrycanceledResponse will be returned.
 func (p *LROsClientPutAsyncNoRetrycanceledPoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncNoRetrycanceledResponse, error) {
 	respType := LROsClientPutAsyncNoRetrycanceledResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPutAsyncNoRetrycanceledResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -2967,11 +2899,10 @@ func (p *LROsClientPutAsyncNonResourcePoller) Poll(ctx context.Context) (*http.R
 // If the final GET succeeded then the final LROsClientPutAsyncNonResourceResponse will be returned.
 func (p *LROsClientPutAsyncNonResourcePoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncNonResourceResponse, error) {
 	respType := LROsClientPutAsyncNonResourceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SKU)
+	_, err := p.pt.FinalResponse(ctx, &respType.SKU)
 	if err != nil {
 		return LROsClientPutAsyncNonResourceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3010,11 +2941,10 @@ func (p *LROsClientPutAsyncRetryFailedPoller) Poll(ctx context.Context) (*http.R
 // If the final GET succeeded then the final LROsClientPutAsyncRetryFailedResponse will be returned.
 func (p *LROsClientPutAsyncRetryFailedPoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncRetryFailedResponse, error) {
 	respType := LROsClientPutAsyncRetryFailedResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPutAsyncRetryFailedResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3053,11 +2983,10 @@ func (p *LROsClientPutAsyncRetrySucceededPoller) Poll(ctx context.Context) (*htt
 // If the final GET succeeded then the final LROsClientPutAsyncRetrySucceededResponse will be returned.
 func (p *LROsClientPutAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncRetrySucceededResponse, error) {
 	respType := LROsClientPutAsyncRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPutAsyncRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3096,11 +3025,10 @@ func (p *LROsClientPutAsyncSubResourcePoller) Poll(ctx context.Context) (*http.R
 // If the final GET succeeded then the final LROsClientPutAsyncSubResourceResponse will be returned.
 func (p *LROsClientPutAsyncSubResourcePoller) FinalResponse(ctx context.Context) (LROsClientPutAsyncSubResourceResponse, error) {
 	respType := LROsClientPutAsyncSubResourceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SubProduct)
+	_, err := p.pt.FinalResponse(ctx, &respType.SubProduct)
 	if err != nil {
 		return LROsClientPutAsyncSubResourceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3139,11 +3067,10 @@ func (p *LROsClientPutNoHeaderInRetryPoller) Poll(ctx context.Context) (*http.Re
 // If the final GET succeeded then the final LROsClientPutNoHeaderInRetryResponse will be returned.
 func (p *LROsClientPutNoHeaderInRetryPoller) FinalResponse(ctx context.Context) (LROsClientPutNoHeaderInRetryResponse, error) {
 	respType := LROsClientPutNoHeaderInRetryResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsClientPutNoHeaderInRetryResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3182,11 +3109,10 @@ func (p *LROsClientPutNonResourcePoller) Poll(ctx context.Context) (*http.Respon
 // If the final GET succeeded then the final LROsClientPutNonResourceResponse will be returned.
 func (p *LROsClientPutNonResourcePoller) FinalResponse(ctx context.Context) (LROsClientPutNonResourceResponse, error) {
 	respType := LROsClientPutNonResourceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SKU)
+	_, err := p.pt.FinalResponse(ctx, &respType.SKU)
 	if err != nil {
 		return LROsClientPutNonResourceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3225,11 +3151,10 @@ func (p *LROsClientPutSubResourcePoller) Poll(ctx context.Context) (*http.Respon
 // If the final GET succeeded then the final LROsClientPutSubResourceResponse will be returned.
 func (p *LROsClientPutSubResourcePoller) FinalResponse(ctx context.Context) (LROsClientPutSubResourceResponse, error) {
 	respType := LROsClientPutSubResourceResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SubProduct)
+	_, err := p.pt.FinalResponse(ctx, &respType.SubProduct)
 	if err != nil {
 		return LROsClientPutSubResourceResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3268,11 +3193,10 @@ func (p *LROsCustomHeaderClientPost202Retry200Poller) Poll(ctx context.Context) 
 // If the final GET succeeded then the final LROsCustomHeaderClientPost202Retry200Response will be returned.
 func (p *LROsCustomHeaderClientPost202Retry200Poller) FinalResponse(ctx context.Context) (LROsCustomHeaderClientPost202Retry200Response, error) {
 	respType := LROsCustomHeaderClientPost202Retry200Response{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsCustomHeaderClientPost202Retry200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3311,11 +3235,10 @@ func (p *LROsCustomHeaderClientPostAsyncRetrySucceededPoller) Poll(ctx context.C
 // If the final GET succeeded then the final LROsCustomHeaderClientPostAsyncRetrySucceededResponse will be returned.
 func (p *LROsCustomHeaderClientPostAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsCustomHeaderClientPostAsyncRetrySucceededResponse, error) {
 	respType := LROsCustomHeaderClientPostAsyncRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
+	_, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
 		return LROsCustomHeaderClientPostAsyncRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3354,11 +3277,10 @@ func (p *LROsCustomHeaderClientPut201CreatingSucceeded200Poller) Poll(ctx contex
 // If the final GET succeeded then the final LROsCustomHeaderClientPut201CreatingSucceeded200Response will be returned.
 func (p *LROsCustomHeaderClientPut201CreatingSucceeded200Poller) FinalResponse(ctx context.Context) (LROsCustomHeaderClientPut201CreatingSucceeded200Response, error) {
 	respType := LROsCustomHeaderClientPut201CreatingSucceeded200Response{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsCustomHeaderClientPut201CreatingSucceeded200Response{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 
@@ -3397,11 +3319,10 @@ func (p *LROsCustomHeaderClientPutAsyncRetrySucceededPoller) Poll(ctx context.Co
 // If the final GET succeeded then the final LROsCustomHeaderClientPutAsyncRetrySucceededResponse will be returned.
 func (p *LROsCustomHeaderClientPutAsyncRetrySucceededPoller) FinalResponse(ctx context.Context) (LROsCustomHeaderClientPutAsyncRetrySucceededResponse, error) {
 	respType := LROsCustomHeaderClientPutAsyncRetrySucceededResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.Product)
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
 	if err != nil {
 		return LROsCustomHeaderClientPutAsyncRetrySucceededResponse{}, err
 	}
-	respType.RawResponse = resp
 	return respType, nil
 }
 

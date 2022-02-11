@@ -65,9 +65,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientDeallocatePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientDeallocatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientDeallocatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Deallocate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientDeallocatePollerResponse{}, err
@@ -138,9 +136,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientDeletePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientDeletePollerResponse{}, err
@@ -254,7 +250,7 @@ func (client *VirtualMachineScaleSetVMsClient) getCreateRequest(ctx context.Cont
 
 // getHandleResponse handles the Get response.
 func (client *VirtualMachineScaleSetVMsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMsClientGetResponse, error) {
-	result := VirtualMachineScaleSetVMsClientGetResponse{RawResponse: resp}
+	result := VirtualMachineScaleSetVMsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetVM); err != nil {
 		return VirtualMachineScaleSetVMsClientGetResponse{}, err
 	}
@@ -315,7 +311,7 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewCreateRequest(ctx 
 
 // getInstanceViewHandleResponse handles the GetInstanceView response.
 func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMsClientGetInstanceViewResponse, error) {
-	result := VirtualMachineScaleSetVMsClientGetInstanceViewResponse{RawResponse: resp}
+	result := VirtualMachineScaleSetVMsClientGetInstanceViewResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetVMInstanceView); err != nil {
 		return VirtualMachineScaleSetVMsClientGetInstanceViewResponse{}, err
 	}
@@ -377,7 +373,7 @@ func (client *VirtualMachineScaleSetVMsClient) listCreateRequest(ctx context.Con
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachineScaleSetVMsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMsClientListResponse, error) {
-	result := VirtualMachineScaleSetVMsClientListResponse{RawResponse: resp}
+	result := VirtualMachineScaleSetVMsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetVMListResult); err != nil {
 		return VirtualMachineScaleSetVMsClientListResponse{}, err
 	}
@@ -397,9 +393,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.PerformMaintenance", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse{}, err
@@ -471,9 +465,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientPowerOffPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientPowerOffPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientPowerOffPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.PowerOff", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientPowerOffPollerResponse{}, err
@@ -548,9 +540,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientRedeployPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientRedeployPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientRedeployPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Redeploy", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientRedeployPollerResponse{}, err
@@ -620,9 +610,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientReimagePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientReimagePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientReimagePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Reimage", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientReimagePollerResponse{}, err
@@ -695,9 +683,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientReimageAllPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientReimageAllPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientReimageAllPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.ReimageAll", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientReimageAllPollerResponse{}, err
@@ -767,9 +753,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context,
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientRestartPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientRestartPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientRestartPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Restart", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientRestartPollerResponse{}, err
@@ -839,9 +823,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Conte
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientRunCommandPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientRunCommandPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientRunCommandPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.RunCommand", "location", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientRunCommandPollerResponse{}, err
@@ -919,7 +901,7 @@ func (client *VirtualMachineScaleSetVMsClient) SimulateEviction(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
 		return VirtualMachineScaleSetVMsClientSimulateEvictionResponse{}, runtime.NewResponseError(resp)
 	}
-	return VirtualMachineScaleSetVMsClientSimulateEvictionResponse{RawResponse: resp}, nil
+	return VirtualMachineScaleSetVMsClientSimulateEvictionResponse{}, nil
 }
 
 // simulateEvictionCreateRequest creates the SimulateEviction request.
@@ -963,9 +945,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, r
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientStartPollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientStartPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientStartPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Start", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientStartPollerResponse{}, err
@@ -1035,9 +1015,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, 
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetVMsClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetVMsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMsClientUpdatePollerResponse{}, err

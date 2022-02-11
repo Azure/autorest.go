@@ -53,7 +53,7 @@ func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, optio
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalArrayHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalArrayHeaderResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalArrayHeaderResponse{}, nil
 }
 
 // postOptionalArrayHeaderCreateRequest creates the PostOptionalArrayHeader request.
@@ -86,7 +86,7 @@ func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalArrayParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalArrayParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalArrayParameterResponse{}, nil
 }
 
 // postOptionalArrayParameterCreateRequest creates the PostOptionalArrayParameter request.
@@ -119,7 +119,7 @@ func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalArrayPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalArrayPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalArrayPropertyResponse{}, nil
 }
 
 // postOptionalArrayPropertyCreateRequest creates the PostOptionalArrayProperty request.
@@ -152,7 +152,7 @@ func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalClassParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalClassParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalClassParameterResponse{}, nil
 }
 
 // postOptionalClassParameterCreateRequest creates the PostOptionalClassParameter request.
@@ -185,7 +185,7 @@ func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalClassPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalClassPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalClassPropertyResponse{}, nil
 }
 
 // postOptionalClassPropertyCreateRequest creates the PostOptionalClassProperty request.
@@ -218,7 +218,7 @@ func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalIntegerHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalIntegerHeaderResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalIntegerHeaderResponse{}, nil
 }
 
 // postOptionalIntegerHeaderCreateRequest creates the PostOptionalIntegerHeader request.
@@ -251,7 +251,7 @@ func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalIntegerParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalIntegerParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalIntegerParameterResponse{}, nil
 }
 
 // postOptionalIntegerParameterCreateRequest creates the PostOptionalIntegerParameter request.
@@ -284,7 +284,7 @@ func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, o
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalIntegerPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalIntegerPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalIntegerPropertyResponse{}, nil
 }
 
 // postOptionalIntegerPropertyCreateRequest creates the PostOptionalIntegerProperty request.
@@ -317,7 +317,7 @@ func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, opti
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalStringHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalStringHeaderResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalStringHeaderResponse{}, nil
 }
 
 // postOptionalStringHeaderCreateRequest creates the PostOptionalStringHeader request.
@@ -350,7 +350,7 @@ func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, o
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalStringParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalStringParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalStringParameterResponse{}, nil
 }
 
 // postOptionalStringParameterCreateRequest creates the PostOptionalStringParameter request.
@@ -383,7 +383,7 @@ func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostOptionalStringPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalStringPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostOptionalStringPropertyResponse{}, nil
 }
 
 // postOptionalStringPropertyCreateRequest creates the PostOptionalStringProperty request.
@@ -417,7 +417,7 @@ func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, heade
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredArrayHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredArrayHeaderResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredArrayHeaderResponse{}, nil
 }
 
 // postRequiredArrayHeaderCreateRequest creates the PostRequiredArrayHeader request.
@@ -449,7 +449,7 @@ func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bo
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredArrayParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredArrayParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredArrayParameterResponse{}, nil
 }
 
 // postRequiredArrayParameterCreateRequest creates the PostRequiredArrayParameter request.
@@ -480,7 +480,7 @@ func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bod
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredArrayPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredArrayPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredArrayPropertyResponse{}, nil
 }
 
 // postRequiredArrayPropertyCreateRequest creates the PostRequiredArrayProperty request.
@@ -511,7 +511,7 @@ func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bo
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredClassParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredClassParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredClassParameterResponse{}, nil
 }
 
 // postRequiredClassParameterCreateRequest creates the PostRequiredClassParameter request.
@@ -542,7 +542,7 @@ func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bod
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredClassPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredClassPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredClassPropertyResponse{}, nil
 }
 
 // postRequiredClassPropertyCreateRequest creates the PostRequiredClassProperty request.
@@ -573,7 +573,7 @@ func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, hea
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredIntegerHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredIntegerHeaderResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredIntegerHeaderResponse{}, nil
 }
 
 // postRequiredIntegerHeaderCreateRequest creates the PostRequiredIntegerHeader request.
@@ -605,7 +605,7 @@ func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredIntegerParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredIntegerParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredIntegerParameterResponse{}, nil
 }
 
 // postRequiredIntegerParameterCreateRequest creates the PostRequiredIntegerParameter request.
@@ -636,7 +636,7 @@ func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, b
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredIntegerPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredIntegerPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredIntegerPropertyResponse{}, nil
 }
 
 // postRequiredIntegerPropertyCreateRequest creates the PostRequiredIntegerProperty request.
@@ -667,7 +667,7 @@ func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, head
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredStringHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredStringHeaderResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredStringHeaderResponse{}, nil
 }
 
 // postRequiredStringHeaderCreateRequest creates the PostRequiredStringHeader request.
@@ -699,7 +699,7 @@ func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, b
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredStringParameterResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredStringParameterResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredStringParameterResponse{}, nil
 }
 
 // postRequiredStringParameterCreateRequest creates the PostRequiredStringParameter request.
@@ -730,7 +730,7 @@ func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bo
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPostRequiredStringPropertyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredStringPropertyResponse{RawResponse: resp}, nil
+	return ExplicitClientPostRequiredStringPropertyResponse{}, nil
 }
 
 // postRequiredStringPropertyCreateRequest creates the PostRequiredStringProperty request.
@@ -760,7 +760,7 @@ func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, options
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPutOptionalBinaryBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPutOptionalBinaryBodyResponse{RawResponse: resp}, nil
+	return ExplicitClientPutOptionalBinaryBodyResponse{}, nil
 }
 
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
@@ -793,7 +793,7 @@ func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyPar
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ExplicitClientPutRequiredBinaryBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPutRequiredBinaryBodyResponse{RawResponse: resp}, nil
+	return ExplicitClientPutRequiredBinaryBodyResponse{}, nil
 }
 
 // putRequiredBinaryBodyCreateRequest creates the PutRequiredBinaryBody request.

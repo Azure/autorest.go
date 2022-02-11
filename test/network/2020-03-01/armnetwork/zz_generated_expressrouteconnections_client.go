@@ -63,9 +63,7 @@ func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return ExpressRouteConnectionsClientDeletePollerResponse{}, err
 	}
-	result := ExpressRouteConnectionsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteConnectionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteConnectionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteConnectionsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *ExpressRouteConnectionsClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRouteConnectionsClient) getHandleResponse(resp *http.Response) (ExpressRouteConnectionsClientGetResponse, error) {
-	result := ExpressRouteConnectionsClientGetResponse{RawResponse: resp}
+	result := ExpressRouteConnectionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteConnection); err != nil {
 		return ExpressRouteConnectionsClientGetResponse{}, err
 	}
@@ -305,7 +301,7 @@ func (client *ExpressRouteConnectionsClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client *ExpressRouteConnectionsClient) listHandleResponse(resp *http.Response) (ExpressRouteConnectionsClientListResponse, error) {
-	result := ExpressRouteConnectionsClientListResponse{RawResponse: resp}
+	result := ExpressRouteConnectionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteConnectionList); err != nil {
 		return ExpressRouteConnectionsClientListResponse{}, err
 	}

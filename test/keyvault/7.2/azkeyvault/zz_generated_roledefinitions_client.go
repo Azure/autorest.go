@@ -79,7 +79,7 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (RoleDefinitionsClientCreateOrUpdateResponse, error) {
-	result := RoleDefinitionsClientCreateOrUpdateResponse{RawResponse: resp}
+	result := RoleDefinitionsClientCreateOrUpdateResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
 		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
 	}
@@ -130,7 +130,7 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 
 // deleteHandleResponse handles the Delete response.
 func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (RoleDefinitionsClientDeleteResponse, error) {
-	result := RoleDefinitionsClientDeleteResponse{RawResponse: resp}
+	result := RoleDefinitionsClientDeleteResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
 		return RoleDefinitionsClientDeleteResponse{}, err
 	}
@@ -181,7 +181,7 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 
 // getHandleResponse handles the Get response.
 func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (RoleDefinitionsClientGetResponse, error) {
-	result := RoleDefinitionsClientGetResponse{RawResponse: resp}
+	result := RoleDefinitionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
 		return RoleDefinitionsClientGetResponse{}, err
 	}
@@ -227,7 +227,7 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 
 // listHandleResponse handles the List response.
 func (client *RoleDefinitionsClient) listHandleResponse(resp *http.Response) (RoleDefinitionsClientListResponse, error) {
-	result := RoleDefinitionsClientListResponse{RawResponse: resp}
+	result := RoleDefinitionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinitionListResult); err != nil {
 		return RoleDefinitionsClientListResponse{}, err
 	}

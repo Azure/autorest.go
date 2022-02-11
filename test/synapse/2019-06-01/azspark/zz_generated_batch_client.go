@@ -61,7 +61,7 @@ func (client *batchClient) CancelSparkBatchJob(ctx context.Context, batchID int3
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return batchClientCancelSparkBatchJobResponse{}, runtime.NewResponseError(resp)
 	}
-	return batchClientCancelSparkBatchJobResponse{RawResponse: resp}, nil
+	return batchClientCancelSparkBatchJobResponse{}, nil
 }
 
 // cancelSparkBatchJobCreateRequest creates the CancelSparkBatchJob request.
@@ -113,7 +113,7 @@ func (client *batchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 
 // createSparkBatchJobHandleResponse handles the CreateSparkBatchJob response.
 func (client *batchClient) createSparkBatchJobHandleResponse(resp *http.Response) (batchClientCreateSparkBatchJobResponse, error) {
-	result := batchClientCreateSparkBatchJobResponse{RawResponse: resp}
+	result := batchClientCreateSparkBatchJobResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
 		return batchClientCreateSparkBatchJobResponse{}, err
 	}
@@ -158,7 +158,7 @@ func (client *batchClient) getSparkBatchJobCreateRequest(ctx context.Context, ba
 
 // getSparkBatchJobHandleResponse handles the GetSparkBatchJob response.
 func (client *batchClient) getSparkBatchJobHandleResponse(resp *http.Response) (batchClientGetSparkBatchJobResponse, error) {
-	result := batchClientGetSparkBatchJobResponse{RawResponse: resp}
+	result := batchClientGetSparkBatchJobResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
 		return batchClientGetSparkBatchJobResponse{}, err
 	}
@@ -207,7 +207,7 @@ func (client *batchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 
 // getSparkBatchJobsHandleResponse handles the GetSparkBatchJobs response.
 func (client *batchClient) getSparkBatchJobsHandleResponse(resp *http.Response) (batchClientGetSparkBatchJobsResponse, error) {
-	result := batchClientGetSparkBatchJobsResponse{RawResponse: resp}
+	result := batchClientGetSparkBatchJobsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJobCollection); err != nil {
 		return batchClientGetSparkBatchJobsResponse{}, err
 	}

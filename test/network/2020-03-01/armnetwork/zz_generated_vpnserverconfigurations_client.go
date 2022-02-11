@@ -62,9 +62,7 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VPNServerConfigurationsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return VPNServerConfigurationsClientDeletePollerResponse{}, err
 	}
-	result := VPNServerConfigurationsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNServerConfigurationsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VPNServerConfigurationsClientDeletePollerResponse{}, err
@@ -234,7 +230,7 @@ func (client *VPNServerConfigurationsClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client *VPNServerConfigurationsClient) getHandleResponse(resp *http.Response) (VPNServerConfigurationsClientGetResponse, error) {
-	result := VPNServerConfigurationsClientGetResponse{RawResponse: resp}
+	result := VPNServerConfigurationsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNServerConfiguration); err != nil {
 		return VPNServerConfigurationsClientGetResponse{}, err
 	}
@@ -277,7 +273,7 @@ func (client *VPNServerConfigurationsClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client *VPNServerConfigurationsClient) listHandleResponse(resp *http.Response) (VPNServerConfigurationsClientListResponse, error) {
-	result := VPNServerConfigurationsClientListResponse{RawResponse: resp}
+	result := VPNServerConfigurationsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNServerConfigurationsResult); err != nil {
 		return VPNServerConfigurationsClientListResponse{}, err
 	}
@@ -325,7 +321,7 @@ func (client *VPNServerConfigurationsClient) listByResourceGroupCreateRequest(ct
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *VPNServerConfigurationsClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNServerConfigurationsClientListByResourceGroupResponse, error) {
-	result := VPNServerConfigurationsClientListByResourceGroupResponse{RawResponse: resp}
+	result := VPNServerConfigurationsClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNServerConfigurationsResult); err != nil {
 		return VPNServerConfigurationsClientListByResourceGroupResponse{}, err
 	}
@@ -382,7 +378,7 @@ func (client *VPNServerConfigurationsClient) updateTagsCreateRequest(ctx context
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *VPNServerConfigurationsClient) updateTagsHandleResponse(resp *http.Response) (VPNServerConfigurationsClientUpdateTagsResponse, error) {
-	result := VPNServerConfigurationsClientUpdateTagsResponse{RawResponse: resp}
+	result := VPNServerConfigurationsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNServerConfiguration); err != nil {
 		return VPNServerConfigurationsClientUpdateTagsResponse{}, err
 	}

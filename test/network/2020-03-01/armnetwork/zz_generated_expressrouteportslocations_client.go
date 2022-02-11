@@ -95,7 +95,7 @@ func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Con
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsClientGetResponse, error) {
-	result := ExpressRoutePortsLocationsClientGetResponse{RawResponse: resp}
+	result := ExpressRoutePortsLocationsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortsLocation); err != nil {
 		return ExpressRoutePortsLocationsClientGetResponse{}, err
 	}
@@ -139,7 +139,7 @@ func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Co
 
 // listHandleResponse handles the List response.
 func (client *ExpressRoutePortsLocationsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsClientListResponse, error) {
-	result := ExpressRoutePortsLocationsClientListResponse{RawResponse: resp}
+	result := ExpressRoutePortsLocationsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortsLocationListResult); err != nil {
 		return ExpressRoutePortsLocationsClientListResponse{}, err
 	}

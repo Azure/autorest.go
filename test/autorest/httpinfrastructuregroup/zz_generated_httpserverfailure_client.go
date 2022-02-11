@@ -50,7 +50,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPServerFailureClientDelete505Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPServerFailureClientDelete505Response{RawResponse: resp}, nil
+	return HTTPServerFailureClientDelete505Response{}, nil
 }
 
 // delete505CreateRequest creates the Delete505 request.
@@ -80,7 +80,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPServerFailureClientGet501Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPServerFailureClientGet501Response{RawResponse: resp}, nil
+	return HTTPServerFailureClientGet501Response{}, nil
 }
 
 // get501CreateRequest creates the Get501 request.
@@ -106,7 +106,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailureClientHead501Response{}, err
 	}
-	result := HTTPServerFailureClientHead501Response{RawResponse: resp}
+	result := HTTPServerFailureClientHead501Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -140,7 +140,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
 		return HTTPServerFailureClientPost505Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPServerFailureClientPost505Response{RawResponse: resp}, nil
+	return HTTPServerFailureClientPost505Response{}, nil
 }
 
 // post505CreateRequest creates the Post505 request.

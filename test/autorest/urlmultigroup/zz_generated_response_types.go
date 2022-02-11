@@ -8,22 +8,17 @@
 
 package urlmultigroup
 
-import "net/http"
-
 // QueriesClientArrayStringMultiEmptyResponse contains the response from method QueriesClient.ArrayStringMultiEmpty.
 type QueriesClientArrayStringMultiEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // QueriesClientArrayStringMultiNullResponse contains the response from method QueriesClient.ArrayStringMultiNull.
 type QueriesClientArrayStringMultiNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // QueriesClientArrayStringMultiValidResponse contains the response from method QueriesClient.ArrayStringMultiValid.
 type QueriesClientArrayStringMultiValidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

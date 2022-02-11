@@ -52,7 +52,7 @@ func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.Rea
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FormdataClientUploadFileResponse{}, runtime.NewResponseError(resp)
 	}
-	return FormdataClientUploadFileResponse{RawResponse: resp}, nil
+	return FormdataClientUploadFileResponse{Body: resp.Body}, nil
 }
 
 // uploadFileCreateRequest creates the UploadFile request.
@@ -90,7 +90,7 @@ func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FormdataClientUploadFileViaBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return FormdataClientUploadFileViaBodyResponse{RawResponse: resp}, nil
+	return FormdataClientUploadFileViaBodyResponse{Body: resp.Body}, nil
 }
 
 // uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
@@ -121,7 +121,7 @@ func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return FormdataClientUploadFilesResponse{}, runtime.NewResponseError(resp)
 	}
-	return FormdataClientUploadFilesResponse{RawResponse: resp}, nil
+	return FormdataClientUploadFilesResponse{Body: resp.Body}, nil
 }
 
 // uploadFilesCreateRequest creates the UploadFiles request.

@@ -60,6 +60,9 @@ export class StructDef {
     if (this.Properties === undefined && this.Parameters?.length === 0) {
       // this is an optional params placeholder struct
       text += '\t// placeholder for future optional parameters\n';
+    } else if (this.Properties === undefined && this.Parameters === undefined) {
+      // this is an empty response envelope
+      text += '\t// placeholder for future response values\n';
     }
     // group fields by required/optional/read-only in that order
     this.Properties?.sort((lhs: Property, rhs: Property): number => {
@@ -104,9 +107,9 @@ export class StructDef {
       }
       let tag = ` \`${this.Language.marshallingFormat}:"${serialization}"${readOnly}\``;
       // if this is a response type then omit the tag IFF the marshalling format is
-      // JSON, it's a header or is the RawResponse field.  XML marshalling needs a tag.
+      // JSON, or it's a header.  XML marshalling needs a tag.
       // also omit the tag for additionalProperties
-      if ((this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml' || prop.language.go!.name === 'RawResponse')) || prop.language.go!.isAdditionalProperties) {
+      if ((this.Language.responseType === true && (this.Language.marshallingFormat !== 'xml')) || prop.language.go!.isAdditionalProperties) {
         tag = '';
       }
       let pointer = '*';

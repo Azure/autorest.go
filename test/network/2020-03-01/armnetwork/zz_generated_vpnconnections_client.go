@@ -64,9 +64,7 @@ func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, res
 	if err != nil {
 		return VPNConnectionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VPNConnectionsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VPNConnectionsClientCreateOrUpdatePollerResponse{}, err
@@ -136,9 +134,7 @@ func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGro
 	if err != nil {
 		return VPNConnectionsClientDeletePollerResponse{}, err
 	}
-	result := VPNConnectionsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNConnectionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNConnectionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VPNConnectionsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *VPNConnectionsClient) getCreateRequest(ctx context.Context, resour
 
 // getHandleResponse handles the Get response.
 func (client *VPNConnectionsClient) getHandleResponse(resp *http.Response) (VPNConnectionsClientGetResponse, error) {
-	result := VPNConnectionsClientGetResponse{RawResponse: resp}
+	result := VPNConnectionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNConnection); err != nil {
 		return VPNConnectionsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *VPNConnectionsClient) listByVPNGatewayCreateRequest(ctx context.Co
 
 // listByVPNGatewayHandleResponse handles the ListByVPNGateway response.
 func (client *VPNConnectionsClient) listByVPNGatewayHandleResponse(resp *http.Response) (VPNConnectionsClientListByVPNGatewayResponse, error) {
-	result := VPNConnectionsClientListByVPNGatewayResponse{RawResponse: resp}
+	result := VPNConnectionsClientListByVPNGatewayResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNConnectionsResult); err != nil {
 		return VPNConnectionsClientListByVPNGatewayResponse{}, err
 	}

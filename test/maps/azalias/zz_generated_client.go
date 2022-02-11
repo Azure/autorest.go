@@ -117,7 +117,7 @@ func (client *client) createCreateRequest(ctx context.Context, options *clientCr
 
 // createHandleResponse handles the Create response.
 func (client *client) createHandleResponse(resp *http.Response) (clientCreateResponse, error) {
-	result := clientCreateResponse{RawResponse: resp}
+	result := clientCreateResponse{}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
 	}
@@ -158,7 +158,7 @@ func (client *client) getScriptCreateRequest(ctx context.Context, props GeoJSONO
 
 // getScriptHandleResponse handles the GetScript response.
 func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScriptResponse, error) {
-	result := clientGetScriptResponse{RawResponse: resp}
+	result := clientGetScriptResponse{}
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return clientGetScriptResponse{}, err
@@ -221,7 +221,7 @@ func (client *client) listCreateRequest(ctx context.Context, options *clientList
 
 // listHandleResponse handles the List response.
 func (client *client) listHandleResponse(resp *http.Response) (clientListResponse, error) {
-	result := clientListResponse{RawResponse: resp}
+	result := clientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
 		return clientListResponse{}, err
 	}
@@ -259,7 +259,7 @@ func (client *client) policyAssignmentCreateRequest(ctx context.Context, props S
 
 // policyAssignmentHandleResponse handles the PolicyAssignment response.
 func (client *client) policyAssignmentHandleResponse(resp *http.Response) (clientPolicyAssignmentResponse, error) {
-	result := clientPolicyAssignmentResponse{RawResponse: resp}
+	result := clientPolicyAssignmentResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PolicyAssignmentProperties); err != nil {
 		return clientPolicyAssignmentResponse{}, err
 	}

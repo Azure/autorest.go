@@ -99,7 +99,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 
 // getDiagnosticProactiveLogCollectionSettingsHandleResponse handles the GetDiagnosticProactiveLogCollectionSettings response.
 func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
-	result := DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{RawResponse: resp}
+	result := DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiagnosticProactiveLogCollectionSettings); err != nil {
 		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
 	}
@@ -156,7 +156,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreate
 
 // getDiagnosticRemoteSupportSettingsHandleResponse handles the GetDiagnosticRemoteSupportSettings response.
 func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse, error) {
-	result := DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{RawResponse: resp}
+	result := DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiagnosticRemoteSupportSettings); err != nil {
 		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, err
 	}
@@ -176,9 +176,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 	if err != nil {
 		return DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
 	}
-	result := DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{
-		RawResponse: resp,
-	}
+	result := DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}
 	pt, err := armruntime.NewPoller("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", "", resp, client.pl)
 	if err != nil {
 		return DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
@@ -246,9 +244,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 	if err != nil {
 		return DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
 	}
-	result := DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{
-		RawResponse: resp,
-	}
+	result := DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}
 	pt, err := armruntime.NewPoller("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", "", resp, client.pl)
 	if err != nil {
 		return DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err

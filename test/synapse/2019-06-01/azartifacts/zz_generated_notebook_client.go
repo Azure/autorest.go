@@ -45,9 +45,7 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 	if err != nil {
 		return notebookClientCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	result := notebookClientCreateOrUpdateNotebookPollerResponse{
-		RawResponse: resp,
-	}
+	result := notebookClientCreateOrUpdateNotebookPollerResponse{}
 	pt, err := runtime.NewPoller("notebookClient.CreateOrUpdateNotebook", resp, client.pl)
 	if err != nil {
 		return notebookClientCreateOrUpdateNotebookPollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 	if err != nil {
 		return notebookClientDeleteNotebookPollerResponse{}, err
 	}
-	result := notebookClientDeleteNotebookPollerResponse{
-		RawResponse: resp,
-	}
+	result := notebookClientDeleteNotebookPollerResponse{}
 	pt, err := runtime.NewPoller("notebookClient.DeleteNotebook", resp, client.pl)
 	if err != nil {
 		return notebookClientDeleteNotebookPollerResponse{}, err
@@ -196,7 +192,7 @@ func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, note
 
 // getNotebookHandleResponse handles the GetNotebook response.
 func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (notebookClientGetNotebookResponse, error) {
-	result := notebookClientGetNotebookResponse{RawResponse: resp}
+	result := notebookClientGetNotebookResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookResource); err != nil {
 		return notebookClientGetNotebookResponse{}, err
 	}
@@ -235,7 +231,7 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx con
 
 // getNotebookSummaryByWorkSpaceHandleResponse handles the GetNotebookSummaryByWorkSpace response.
 func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *http.Response) (notebookClientGetNotebookSummaryByWorkSpaceResponse, error) {
-	result := notebookClientGetNotebookSummaryByWorkSpaceResponse{RawResponse: resp}
+	result := notebookClientGetNotebookSummaryByWorkSpaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookListResponse); err != nil {
 		return notebookClientGetNotebookSummaryByWorkSpaceResponse{}, err
 	}
@@ -274,7 +270,7 @@ func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.C
 
 // getNotebooksByWorkspaceHandleResponse handles the GetNotebooksByWorkspace response.
 func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.Response) (notebookClientGetNotebooksByWorkspaceResponse, error) {
-	result := notebookClientGetNotebooksByWorkspaceResponse{RawResponse: resp}
+	result := notebookClientGetNotebooksByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookListResponse); err != nil {
 		return notebookClientGetNotebooksByWorkspaceResponse{}, err
 	}
@@ -292,9 +288,7 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 	if err != nil {
 		return notebookClientRenameNotebookPollerResponse{}, err
 	}
-	result := notebookClientRenameNotebookPollerResponse{
-		RawResponse: resp,
-	}
+	result := notebookClientRenameNotebookPollerResponse{}
 	pt, err := runtime.NewPoller("notebookClient.RenameNotebook", resp, client.pl)
 	if err != nil {
 		return notebookClientRenameNotebookPollerResponse{}, err

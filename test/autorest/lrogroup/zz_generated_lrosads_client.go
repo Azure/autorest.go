@@ -44,9 +44,7 @@ func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 	if err != nil {
 		return LROSADsClientDelete202NonRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientDelete202NonRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDelete202NonRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Delete202NonRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDelete202NonRetry400PollerResponse{}, err
@@ -95,9 +93,7 @@ func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 	if err != nil {
 		return LROSADsClientDelete202RetryInvalidHeaderPollerResponse{}, err
 	}
-	result := LROSADsClientDelete202RetryInvalidHeaderPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDelete202RetryInvalidHeaderPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Delete202RetryInvalidHeader", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDelete202RetryInvalidHeaderPollerResponse{}, err
@@ -146,9 +142,7 @@ func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, option
 	if err != nil {
 		return LROSADsClientDelete204SucceededPollerResponse{}, err
 	}
-	result := LROSADsClientDelete204SucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDelete204SucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Delete204Succeeded", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDelete204SucceededPollerResponse{}, err
@@ -197,9 +191,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientDeleteAsyncRelativeRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDeleteAsyncRelativeRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetry400PollerResponse{}, err
@@ -249,9 +241,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
@@ -301,9 +291,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
@@ -353,9 +341,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	result := LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
@@ -404,9 +390,7 @@ func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options
 	if err != nil {
 		return LROSADsClientDeleteNonRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientDeleteNonRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientDeleteNonRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.DeleteNonRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientDeleteNonRetry400PollerResponse{}, err
@@ -454,9 +438,7 @@ func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options
 	if err != nil {
 		return LROSADsClientPost202NoLocationPollerResponse{}, err
 	}
-	result := LROSADsClientPost202NoLocationPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPost202NoLocationPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Post202NoLocation", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPost202NoLocationPollerResponse{}, err
@@ -507,9 +489,7 @@ func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, option
 	if err != nil {
 		return LROSADsClientPost202NonRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientPost202NonRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPost202NonRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Post202NonRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPost202NonRetry400PollerResponse{}, err
@@ -561,9 +541,7 @@ func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 	if err != nil {
 		return LROSADsClientPost202RetryInvalidHeaderPollerResponse{}, err
 	}
-	result := LROSADsClientPost202RetryInvalidHeaderPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPost202RetryInvalidHeaderPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Post202RetryInvalidHeader", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPost202RetryInvalidHeaderPollerResponse{}, err
@@ -616,9 +594,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientPostAsyncRelativeRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPostAsyncRelativeRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetry400PollerResponse{}, err
@@ -672,9 +648,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
@@ -730,9 +704,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
@@ -787,9 +759,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
 	}
-	result := LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryNoPayload", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
@@ -842,9 +812,7 @@ func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *
 	if err != nil {
 		return LROSADsClientPostNonRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientPostNonRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPostNonRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PostNonRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPostNonRetry400PollerResponse{}, err
@@ -896,9 +864,7 @@ func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options
 	if err != nil {
 		return LROSADsClientPut200InvalidJSONPollerResponse{}, err
 	}
-	result := LROSADsClientPut200InvalidJSONPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPut200InvalidJSONPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.Put200InvalidJSON", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPut200InvalidJSONPollerResponse{}, err
@@ -951,9 +917,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientPutAsyncRelativeRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutAsyncRelativeRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetry400PollerResponse{}, err
@@ -1006,9 +970,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
-	result := LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
@@ -1063,9 +1025,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
-	result := LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
@@ -1120,9 +1080,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
-	result := LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryNoStatus", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse{}, err
@@ -1177,9 +1135,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
 	}
-	result := LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
@@ -1233,9 +1189,7 @@ func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 	if err != nil {
 		return LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse{}, err
 	}
-	result := LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutError201NoProvisioningStatePayload", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse{}, err
@@ -1288,9 +1242,7 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 	if err != nil {
 		return LROSADsClientPutNonRetry201Creating400PollerResponse{}, err
 	}
-	result := LROSADsClientPutNonRetry201Creating400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutNonRetry201Creating400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry201Creating400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutNonRetry201Creating400PollerResponse{}, err
@@ -1343,9 +1295,7 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 	if err != nil {
 		return LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
 	}
-	result := LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry201Creating400InvalidJSON", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
@@ -1397,9 +1347,7 @@ func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *L
 	if err != nil {
 		return LROSADsClientPutNonRetry400PollerResponse{}, err
 	}
-	result := LROSADsClientPutNonRetry400PollerResponse{
-		RawResponse: resp,
-	}
+	result := LROSADsClientPutNonRetry400PollerResponse{}
 	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry400", "", resp, client.pl)
 	if err != nil {
 		return LROSADsClientPutNonRetry400PollerResponse{}, err

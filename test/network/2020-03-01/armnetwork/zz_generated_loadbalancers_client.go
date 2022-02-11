@@ -62,9 +62,7 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return LoadBalancersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := LoadBalancersClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := LoadBalancersClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("LoadBalancersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return LoadBalancersClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return LoadBalancersClientDeletePollerResponse{}, err
 	}
-	result := LoadBalancersClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := LoadBalancersClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("LoadBalancersClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return LoadBalancersClientDeletePollerResponse{}, err
@@ -236,7 +232,7 @@ func (client *LoadBalancersClient) getCreateRequest(ctx context.Context, resourc
 
 // getHandleResponse handles the Get response.
 func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadBalancersClientGetResponse, error) {
-	result := LoadBalancersClientGetResponse{RawResponse: resp}
+	result := LoadBalancersClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancer); err != nil {
 		return LoadBalancersClientGetResponse{}, err
 	}
@@ -283,7 +279,7 @@ func (client *LoadBalancersClient) listCreateRequest(ctx context.Context, resour
 
 // listHandleResponse handles the List response.
 func (client *LoadBalancersClient) listHandleResponse(resp *http.Response) (LoadBalancersClientListResponse, error) {
-	result := LoadBalancersClientListResponse{RawResponse: resp}
+	result := LoadBalancersClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerListResult); err != nil {
 		return LoadBalancersClientListResponse{}, err
 	}
@@ -325,7 +321,7 @@ func (client *LoadBalancersClient) listAllCreateRequest(ctx context.Context, opt
 
 // listAllHandleResponse handles the ListAll response.
 func (client *LoadBalancersClient) listAllHandleResponse(resp *http.Response) (LoadBalancersClientListAllResponse, error) {
-	result := LoadBalancersClientListAllResponse{RawResponse: resp}
+	result := LoadBalancersClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerListResult); err != nil {
 		return LoadBalancersClientListAllResponse{}, err
 	}
@@ -382,7 +378,7 @@ func (client *LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, 
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *LoadBalancersClient) updateTagsHandleResponse(resp *http.Response) (LoadBalancersClientUpdateTagsResponse, error) {
-	result := LoadBalancersClientUpdateTagsResponse{RawResponse: resp}
+	result := LoadBalancersClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancer); err != nil {
 		return LoadBalancersClientUpdateTagsResponse{}, err
 	}

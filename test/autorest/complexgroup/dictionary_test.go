@@ -5,7 +5,7 @@ package complexgroup
 
 import (
 	"context"
-	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -67,8 +67,8 @@ func TestDictionaryPutEmpty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutEmpty: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -79,7 +79,7 @@ func TestDictionaryPutValid(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutValid: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

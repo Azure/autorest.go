@@ -62,9 +62,7 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 	if err != nil {
 		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := StorageAccountCredentialsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 	if err != nil {
 		return StorageAccountCredentialsClientDeletePollerResponse{}, err
 	}
-	result := StorageAccountCredentialsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := StorageAccountCredentialsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return StorageAccountCredentialsClientDeletePollerResponse{}, err
@@ -248,7 +244,7 @@ func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Cont
 
 // getHandleResponse handles the Get response.
 func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Response) (StorageAccountCredentialsClientGetResponse, error) {
-	result := StorageAccountCredentialsClientGetResponse{RawResponse: resp}
+	result := StorageAccountCredentialsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredential); err != nil {
 		return StorageAccountCredentialsClientGetResponse{}, err
 	}
@@ -301,7 +297,7 @@ func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequ
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
 func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse, error) {
-	result := StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+	result := StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredentialList); err != nil {
 		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
 	}

@@ -45,9 +45,7 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 	if err != nil {
 		return sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
 	}
-	result := sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse{
-		RawResponse: resp,
-	}
+	result := sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse{}
 	pt, err := runtime.NewPoller("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 	if err != nil {
 		return sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse{}, err
 	}
-	result := sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse{
-		RawResponse: resp,
-	}
+	result := sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse{}
 	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DebugSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse{}, err
@@ -160,9 +156,7 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 	if err != nil {
 		return sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse{}, err
 	}
-	result := sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse{
-		RawResponse: resp,
-	}
+	result := sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse{}
 	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DeleteSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse{}, err
@@ -218,9 +212,7 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 	if err != nil {
 		return sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse{}, err
 	}
-	result := sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse{
-		RawResponse: resp,
-	}
+	result := sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse{}
 	pt, err := runtime.NewPoller("sparkJobDefinitionClient.ExecuteSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse{}, err
@@ -309,7 +301,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionCreateRequest(ctx c
 
 // getSparkJobDefinitionHandleResponse handles the GetSparkJobDefinition response.
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp *http.Response) (sparkJobDefinitionClientGetSparkJobDefinitionResponse, error) {
-	result := sparkJobDefinitionClientGetSparkJobDefinitionResponse{RawResponse: resp}
+	result := sparkJobDefinitionClientGetSparkJobDefinitionResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkJobDefinitionResource); err != nil {
 		return sparkJobDefinitionClientGetSparkJobDefinitionResponse{}, err
 	}
@@ -348,7 +340,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateR
 
 // getSparkJobDefinitionsByWorkspaceHandleResponse handles the GetSparkJobDefinitionsByWorkspace response.
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleResponse(resp *http.Response) (sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse, error) {
-	result := sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse{RawResponse: resp}
+	result := sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkJobDefinitionsListResponse); err != nil {
 		return sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse{}, err
 	}
@@ -366,9 +358,7 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 	if err != nil {
 		return sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse{}, err
 	}
-	result := sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse{
-		RawResponse: resp,
-	}
+	result := sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse{}
 	pt, err := runtime.NewPoller("sparkJobDefinitionClient.RenameSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse{}, err

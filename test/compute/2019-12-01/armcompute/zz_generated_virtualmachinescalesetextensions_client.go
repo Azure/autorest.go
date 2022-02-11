@@ -63,9 +63,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetExtensionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Co
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsClientDeletePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetExtensionsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetExtensionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetExtensionsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsClientDeletePollerResponse{}, err
@@ -251,7 +247,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) getCreateRequest(ctx conte
 
 // getHandleResponse handles the Get response.
 func (client *VirtualMachineScaleSetExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetExtensionsClientGetResponse, error) {
-	result := VirtualMachineScaleSetExtensionsClientGetResponse{RawResponse: resp}
+	result := VirtualMachineScaleSetExtensionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetExtension); err != nil {
 		return VirtualMachineScaleSetExtensionsClientGetResponse{}, err
 	}
@@ -304,7 +300,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) listCreateRequest(ctx cont
 
 // listHandleResponse handles the List response.
 func (client *VirtualMachineScaleSetExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetExtensionsClientListResponse, error) {
-	result := VirtualMachineScaleSetExtensionsClientListResponse{RawResponse: resp}
+	result := VirtualMachineScaleSetExtensionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetExtensionListResult); err != nil {
 		return VirtualMachineScaleSetExtensionsClientListResponse{}, err
 	}
@@ -324,9 +320,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Co
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualMachineScaleSetExtensionsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetExtensionsClientUpdatePollerResponse{}, err

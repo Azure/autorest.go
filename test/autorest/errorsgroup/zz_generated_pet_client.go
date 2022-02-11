@@ -73,7 +73,7 @@ func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatActio
 
 // doSomethingHandleResponse handles the DoSomething response.
 func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClientDoSomethingResponse, error) {
-	result := PetClientDoSomethingResponse{RawResponse: resp}
+	result := PetClientDoSomethingResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAction); err != nil {
 		return PetClientDoSomethingResponse{}, err
 	}
@@ -116,7 +116,7 @@ func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID stri
 
 // getPetByIDHandleResponse handles the GetPetByID response.
 func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClientGetPetByIDResponse, error) {
-	result := PetClientGetPetByIDResponse{RawResponse: resp}
+	result := PetClientGetPetByIDResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
 		return PetClientGetPetByIDResponse{}, err
 	}
@@ -139,7 +139,7 @@ func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientH
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PetClientHasModelsParamResponse{}, runtime.NewResponseError(resp)
 	}
-	return PetClientHasModelsParamResponse{RawResponse: resp}, nil
+	return PetClientHasModelsParamResponse{}, nil
 }
 
 // hasModelsParamCreateRequest creates the HasModelsParam request.

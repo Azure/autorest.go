@@ -62,9 +62,7 @@ func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Con
 	if err != nil {
 		return ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ServiceEndpointPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, re
 	if err != nil {
 		return ServiceEndpointPoliciesClientDeletePollerResponse{}, err
 	}
-	result := ServiceEndpointPoliciesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ServiceEndpointPoliciesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ServiceEndpointPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ServiceEndpointPoliciesClientDeletePollerResponse{}, err
@@ -237,7 +233,7 @@ func (client *ServiceEndpointPoliciesClient) getCreateRequest(ctx context.Contex
 
 // getHandleResponse handles the Get response.
 func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientGetResponse, error) {
-	result := ServiceEndpointPoliciesClientGetResponse{RawResponse: resp}
+	result := ServiceEndpointPoliciesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicy); err != nil {
 		return ServiceEndpointPoliciesClientGetResponse{}, err
 	}
@@ -280,7 +276,7 @@ func (client *ServiceEndpointPoliciesClient) listCreateRequest(ctx context.Conte
 
 // listHandleResponse handles the List response.
 func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientListResponse, error) {
-	result := ServiceEndpointPoliciesClientListResponse{RawResponse: resp}
+	result := ServiceEndpointPoliciesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyListResult); err != nil {
 		return ServiceEndpointPoliciesClientListResponse{}, err
 	}
@@ -328,7 +324,7 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupCreateRequest(ct
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientListByResourceGroupResponse, error) {
-	result := ServiceEndpointPoliciesClientListByResourceGroupResponse{RawResponse: resp}
+	result := ServiceEndpointPoliciesClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyListResult); err != nil {
 		return ServiceEndpointPoliciesClientListByResourceGroupResponse{}, err
 	}
@@ -385,7 +381,7 @@ func (client *ServiceEndpointPoliciesClient) updateTagsCreateRequest(ctx context
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *ServiceEndpointPoliciesClient) updateTagsHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientUpdateTagsResponse, error) {
-	result := ServiceEndpointPoliciesClientUpdateTagsResponse{RawResponse: resp}
+	result := ServiceEndpointPoliciesClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicy); err != nil {
 		return ServiceEndpointPoliciesClientUpdateTagsResponse{}, err
 	}

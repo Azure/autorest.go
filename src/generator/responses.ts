@@ -30,7 +30,6 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
     generateUnmarshallerForResponeEnvelope(respType);
     structs.push(respType);
   }
-  imports.add('net/http');
   text += imports.text();
   structs.sort((a: StructDef, b: StructDef) => { return sortAscending(a.Language.name, b.Language.name) });
   for (const struct of values(structs)) {
@@ -103,19 +102,16 @@ function generatePollUntilDoneForResponse(structDef: StructDef, isAzureARM: bool
     if (pagedResponse) {
       current = '.current';
     }
-    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}${discriminatorFinalResponse(finalRespEnv)})\n`;
+    pollUntilDone += `\t_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}${discriminatorFinalResponse(finalRespEnv)})\n`;
   } else {
     // the operation doesn't return a model
-    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;
+    pollUntilDone += `\t_, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;
   }
   pollUntilDone += '\tif err != nil {\n';
   pollUntilDone += '\t\treturn respType, err\n';
   pollUntilDone += '\t}\n';
   if (pagedResponse) {
-    pollUntilDone += '\trespType.current.RawResponse = resp\n';
     pollUntilDone += '\trespType.client = l.Poller.client\n';
-  } else {
-    pollUntilDone += '\trespType.RawResponse = resp\n';
   }
   pollUntilDone += '\treturn respType, nil\n';
   pollUntilDone += '}\n\n';
@@ -145,12 +141,11 @@ function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports
   resume += `\t\treturn err\n`;
   resume += '\t}\n';
   resume += `\tpoller := ${emitPoller(pollerInfo.op)}`;
-  resume += '\tresp, err := poller.Poll(ctx)\n';
+  resume += '\t_, err = poller.Poll(ctx)\n';
   resume += '\tif err != nil {\n';
   resume += `\t\treturn err\n`;
   resume += '\t}\n';
   resume += `\tl.Poller = poller\n`;
-  resume += '\tl.RawResponse = resp\n';
   resume += `\treturn nil\n`;
   resume += '}\n\n';
   structDef.Methods.push({ name: 'Resume', desc: `Resume rehydrates a ${structDef.Language.name} from the provided client and resume token.`, text: resume });

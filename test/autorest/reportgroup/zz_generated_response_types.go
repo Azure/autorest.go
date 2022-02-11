@@ -8,22 +8,14 @@
 
 package reportgroup
 
-import "net/http"
-
 // AutoRestReportServiceClientGetOptionalReportResponse contains the response from method AutoRestReportServiceClient.GetOptionalReport.
 type AutoRestReportServiceClientGetOptionalReportResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Dictionary of <integer>
 	Value map[string]*int32
 }
 
 // AutoRestReportServiceClientGetReportResponse contains the response from method AutoRestReportServiceClient.GetReport.
 type AutoRestReportServiceClientGetReportResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

@@ -104,7 +104,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getCreateRequest(ctx c
 
 // getHandleResponse handles the Get response.
 func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleResponse(resp *http.Response) (LoadBalancerFrontendIPConfigurationsClientGetResponse, error) {
-	result := LoadBalancerFrontendIPConfigurationsClientGetResponse{RawResponse: resp}
+	result := LoadBalancerFrontendIPConfigurationsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FrontendIPConfiguration); err != nil {
 		return LoadBalancerFrontendIPConfigurationsClientGetResponse{}, err
 	}
@@ -157,7 +157,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) listCreateRequest(ctx 
 
 // listHandleResponse handles the List response.
 func (client *LoadBalancerFrontendIPConfigurationsClient) listHandleResponse(resp *http.Response) (LoadBalancerFrontendIPConfigurationsClientListResponse, error) {
-	result := LoadBalancerFrontendIPConfigurationsClientListResponse{RawResponse: resp}
+	result := LoadBalancerFrontendIPConfigurationsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerFrontendIPConfigurationListResult); err != nil {
 		return LoadBalancerFrontendIPConfigurationsClientListResponse{}, err
 	}

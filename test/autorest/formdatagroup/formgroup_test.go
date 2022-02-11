@@ -7,7 +7,6 @@ import (
 	"context"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"strings"
 	"testing"
 
@@ -25,10 +24,7 @@ func TestUploadFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.RawResponse.StatusCode != http.StatusOK {
-		t.Fatal("unexpected status code")
-	}
-	b, err := ioutil.ReadAll(resp.RawResponse.Body)
+	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,10 +40,7 @@ func TestUploadFileViaBody(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.RawResponse.StatusCode != http.StatusOK {
-		t.Fatal("unexpected status code")
-	}
-	b, err := ioutil.ReadAll(resp.RawResponse.Body)
+	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -68,8 +61,11 @@ func TestUploadFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if resp.RawResponse.StatusCode != http.StatusOK {
-		t.Fatal("unexpected status code")
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
 	}
-	// TODO: verify response body
+	if string(b) != "the data" {
+		t.Fatalf("unexpected result %s", string(b))
+	}
 }

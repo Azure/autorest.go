@@ -52,12 +52,9 @@ func TestBeginPost202Retry200(t *testing.T) {
 			break
 		}
 	}
-	resp, err := env.Poller.FinalResponse(context.Background())
+	_, err = env.Poller.FinalResponse(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
-	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -85,12 +82,9 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 			break
 		}
 	}
-	resp, err := env.Poller.FinalResponse(context.Background())
+	_, err = env.Poller.FinalResponse(context.Background())
 	if err != nil {
 		t.Fatalf("Unexpected error: %v", err)
-	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 
@@ -121,9 +115,6 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pr.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pr.Product, Product{
 		ID:   to.StringPtr("100"),
@@ -163,9 +154,6 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pr.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pr.Product, Product{
 		ID:   to.StringPtr("100"),

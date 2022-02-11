@@ -8,24 +8,17 @@
 
 package errorsgroup
 
-import "net/http"
-
 // PetClientDoSomethingResponse contains the response from method PetClient.DoSomething.
 type PetClientDoSomethingResponse struct {
 	PetAction
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetClientGetPetByIDResponse contains the response from method PetClient.GetPetByID.
 type PetClientGetPetByIDResponse struct {
 	Pet
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // PetClientHasModelsParamResponse contains the response from method PetClient.HasModelsParam.
 type PetClientHasModelsParamResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

@@ -62,9 +62,7 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 	if err != nil {
 		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
 	}
-	result := VPNSitesConfigurationClientDownloadPollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNSitesConfigurationClientDownloadPollerResponse{}
 	pt, err := armruntime.NewPoller("VPNSitesConfigurationClient.Download", "location", resp, client.pl)
 	if err != nil {
 		return VPNSitesConfigurationClientDownloadPollerResponse{}, err

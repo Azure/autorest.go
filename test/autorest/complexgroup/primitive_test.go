@@ -6,7 +6,7 @@ package complexgroup
 import (
 	"context"
 	"encoding/json"
-	"net/http"
+	"reflect"
 	"testing"
 	"time"
 
@@ -37,8 +37,8 @@ func TestPrimitivePutInt(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutInt: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -63,8 +63,8 @@ func TestPrimitivePutLong(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutLong: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -89,8 +89,8 @@ func TestPrimitivePutFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -115,8 +115,8 @@ func TestPrimitivePutDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -152,8 +152,8 @@ func TestPrimitivePutBool(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBool: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -182,8 +182,8 @@ func TestPrimitivePutByte(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutByte: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -209,8 +209,8 @@ func TestPrimitivePutString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutString: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -244,12 +244,12 @@ func TestPrimitivePutDate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unable to parse leap year date string: %v", err)
 	}
-	resp, err := client.PutDate(context.Background(), DateWrapper{Field: &a, Leap: &b}, nil)
+	result, err := client.PutDate(context.Background(), DateWrapper{Field: &a, Leap: &b}, nil)
 	if err != nil {
 		t.Fatalf("PutDate: %v", err)
 	}
-	if s := resp.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -272,8 +272,8 @@ func TestPrimitivePutDuration(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDuration: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -320,8 +320,8 @@ func TestPrimitivePutDateTime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDateTime: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -336,8 +336,8 @@ func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutDateTimeRFC1123: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 

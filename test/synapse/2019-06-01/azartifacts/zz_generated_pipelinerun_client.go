@@ -52,7 +52,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return pipelineRunClientCancelPipelineRunResponse{}, runtime.NewResponseError(resp)
 	}
-	return pipelineRunClientCancelPipelineRunResponse{RawResponse: resp}, nil
+	return pipelineRunClientCancelPipelineRunResponse{}, nil
 }
 
 // cancelPipelineRunCreateRequest creates the CancelPipelineRun request.
@@ -116,7 +116,7 @@ func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 
 // getPipelineRunHandleResponse handles the GetPipelineRun response.
 func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Response) (pipelineRunClientGetPipelineRunResponse, error) {
-	result := pipelineRunClientGetPipelineRunResponse{RawResponse: resp}
+	result := pipelineRunClientGetPipelineRunResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRun); err != nil {
 		return pipelineRunClientGetPipelineRunResponse{}, err
 	}
@@ -169,7 +169,7 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 
 // queryActivityRunsHandleResponse handles the QueryActivityRuns response.
 func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Response) (pipelineRunClientQueryActivityRunsResponse, error) {
-	result := pipelineRunClientQueryActivityRunsResponse{RawResponse: resp}
+	result := pipelineRunClientQueryActivityRunsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ActivityRunsQueryResponse); err != nil {
 		return pipelineRunClientQueryActivityRunsResponse{}, err
 	}
@@ -212,7 +212,7 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 
 // queryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.
 func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *http.Response) (pipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
-	result := pipelineRunClientQueryPipelineRunsByWorkspaceResponse{RawResponse: resp}
+	result := pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRunsQueryResponse); err != nil {
 		return pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err
 	}

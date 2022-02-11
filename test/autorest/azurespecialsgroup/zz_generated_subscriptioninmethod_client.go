@@ -55,7 +55,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInMethodClientPostMethodLocalNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInMethodClientPostMethodLocalNullResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostMethodLocalNullResponse{}, nil
 }
 
 // postMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
@@ -91,7 +91,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInMethodClientPostMethodLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInMethodClientPostMethodLocalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostMethodLocalValidResponse{}, nil
 }
 
 // postMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
@@ -127,7 +127,7 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInMethodClientPostPathLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInMethodClientPostPathLocalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostPathLocalValidResponse{}, nil
 }
 
 // postPathLocalValidCreateRequest creates the PostPathLocalValid request.
@@ -163,7 +163,7 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return SubscriptionInMethodClientPostSwaggerLocalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, nil
 }
 
 // postSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.

@@ -49,7 +49,7 @@ func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetry
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientDelete503Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientDelete503Response{RawResponse: resp}, nil
+	return HTTPRetryClientDelete503Response{}, nil
 }
 
 // delete503CreateRequest creates the Delete503 request.
@@ -78,7 +78,7 @@ func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientGet502Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientGet502Response{RawResponse: resp}, nil
+	return HTTPRetryClientGet502Response{}, nil
 }
 
 // get502CreateRequest creates the Get502 request.
@@ -103,7 +103,7 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryCl
 	if err != nil {
 		return HTTPRetryClientHead408Response{}, err
 	}
-	result := HTTPRetryClientHead408Response{RawResponse: resp}
+	result := HTTPRetryClientHead408Response{}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -152,7 +152,7 @@ func (client *HTTPRetryClient) options502CreateRequest(ctx context.Context, opti
 
 // options502HandleResponse handles the Options502 response.
 func (client *HTTPRetryClient) options502HandleResponse(resp *http.Response) (HTTPRetryClientOptions502Response, error) {
-	result := HTTPRetryClientOptions502Response{RawResponse: resp}
+	result := HTTPRetryClientOptions502Response{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
 		return HTTPRetryClientOptions502Response{}, err
 	}
@@ -174,7 +174,7 @@ func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryC
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientPatch500Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientPatch500Response{RawResponse: resp}, nil
+	return HTTPRetryClientPatch500Response{}, nil
 }
 
 // patch500CreateRequest creates the Patch500 request.
@@ -203,7 +203,7 @@ func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryC
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientPatch504Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientPatch504Response{RawResponse: resp}, nil
+	return HTTPRetryClientPatch504Response{}, nil
 }
 
 // patch504CreateRequest creates the Patch504 request.
@@ -232,7 +232,7 @@ func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryCl
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientPost503Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientPost503Response{RawResponse: resp}, nil
+	return HTTPRetryClientPost503Response{}, nil
 }
 
 // post503CreateRequest creates the Post503 request.
@@ -261,7 +261,7 @@ func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientPut500Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientPut500Response{RawResponse: resp}, nil
+	return HTTPRetryClientPut500Response{}, nil
 }
 
 // put500CreateRequest creates the Put500 request.
@@ -290,7 +290,7 @@ func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryCli
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return HTTPRetryClientPut504Response{}, runtime.NewResponseError(resp)
 	}
-	return HTTPRetryClientPut504Response{RawResponse: resp}, nil
+	return HTTPRetryClientPut504Response{}, nil
 }
 
 // put504CreateRequest creates the Put504 request.

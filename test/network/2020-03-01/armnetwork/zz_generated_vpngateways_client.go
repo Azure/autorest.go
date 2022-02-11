@@ -62,9 +62,7 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VPNGatewaysClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
@@ -128,9 +126,7 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return VPNGatewaysClientDeletePollerResponse{}, err
 	}
-	result := VPNGatewaysClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VPNGatewaysClientDeletePollerResponse{}, err
@@ -232,7 +228,7 @@ func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 
 // getHandleResponse handles the Get response.
 func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGatewaysClientGetResponse, error) {
-	result := VPNGatewaysClientGetResponse{RawResponse: resp}
+	result := VPNGatewaysClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
 		return VPNGatewaysClientGetResponse{}, err
 	}
@@ -274,7 +270,7 @@ func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options 
 
 // listHandleResponse handles the List response.
 func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGatewaysClientListResponse, error) {
-	result := VPNGatewaysClientListResponse{RawResponse: resp}
+	result := VPNGatewaysClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
 		return VPNGatewaysClientListResponse{}, err
 	}
@@ -322,7 +318,7 @@ func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Co
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNGatewaysClientListByResourceGroupResponse, error) {
-	result := VPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
+	result := VPNGatewaysClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
 		return VPNGatewaysClientListByResourceGroupResponse{}, err
 	}
@@ -339,9 +335,7 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 	if err != nil {
 		return VPNGatewaysClientResetPollerResponse{}, err
 	}
-	result := VPNGatewaysClientResetPollerResponse{
-		RawResponse: resp,
-	}
+	result := VPNGatewaysClientResetPollerResponse{}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.Reset", "location", resp, client.pl)
 	if err != nil {
 		return VPNGatewaysClientResetPollerResponse{}, err
@@ -444,7 +438,7 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (VPNGatewaysClientUpdateTagsResponse, error) {
-	result := VPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
+	result := VPNGatewaysClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
 		return VPNGatewaysClientUpdateTagsResponse{}, err
 	}

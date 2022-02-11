@@ -100,7 +100,7 @@ func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context
 
 // listHandleResponse handles the List response.
 func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Response) (ReservationsSummariesClientListResponse, error) {
-	result := ReservationsSummariesClientListResponse{RawResponse: resp}
+	result := ReservationsSummariesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
 		return ReservationsSummariesClientListResponse{}, err
 	}
@@ -149,7 +149,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(c
 
 // listByReservationOrderHandleResponse handles the ListByReservationOrder response.
 func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsSummariesClientListByReservationOrderResponse, error) {
-	result := ReservationsSummariesClientListByReservationOrderResponse{RawResponse: resp}
+	result := ReservationsSummariesClientListByReservationOrderResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
 		return ReservationsSummariesClientListByReservationOrderResponse{}, err
 	}
@@ -203,7 +203,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderAndReservationC
 
 // listByReservationOrderAndReservationHandleResponse handles the ListByReservationOrderAndReservation response.
 func (client *ReservationsSummariesClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsSummariesClientListByReservationOrderAndReservationResponse, error) {
-	result := ReservationsSummariesClientListByReservationOrderAndReservationResponse{RawResponse: resp}
+	result := ReservationsSummariesClientListByReservationOrderAndReservationResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
 		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, err
 	}

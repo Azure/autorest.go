@@ -5,7 +5,6 @@ package numbergroup
 
 import (
 	"context"
-	"net/http"
 	"reflect"
 	"testing"
 
@@ -23,9 +22,6 @@ func TestNumberGetBigDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimal: %v", err)
 	}
 	val := 2.5976931e+101
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -38,9 +34,6 @@ func TestNumberGetBigDecimalNegativeDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimalNegativeDecimal: %v", err)
 	}
 	val := -99999999.99
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -53,9 +46,6 @@ func TestNumberGetBigDecimalPositiveDecimal(t *testing.T) {
 		t.Fatalf("GetBigDecimalPositiveDecimal: %v", err)
 	}
 	val := 99999999.99
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -68,9 +58,6 @@ func TestNumberGetBigDouble(t *testing.T) {
 		t.Fatalf("GetBigDouble: %v", err)
 	}
 	val := 2.5976931e+101
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -83,9 +70,6 @@ func TestNumberGetBigDoubleNegativeDecimal(t *testing.T) {
 		t.Fatalf("GetBigDoubleNegativeDecimal: %v", err)
 	}
 	val := -99999999.99
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -98,9 +82,6 @@ func TestNumberGetBigDoublePositiveDecimal(t *testing.T) {
 		t.Fatalf("GetBigDoublePositiveDecimal: %v", err)
 	}
 	val := 99999999.99
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -113,9 +94,6 @@ func TestNumberGetBigFloat(t *testing.T) {
 		t.Fatalf("GetBigFloat: %v", err)
 	}
 	val := float32(3.402823e+20)
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -160,9 +138,6 @@ func TestNumberGetNull(t *testing.T) {
 	if err != nil {
 		t.Fatalf("GetNull: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, (*float32)(nil)); r != "" {
 		t.Fatal(r)
 	}
@@ -175,9 +150,6 @@ func TestNumberGetSmallDecimal(t *testing.T) {
 		t.Fatalf("GetSmallDecimal: %v", err)
 	}
 	val := 2.5976931e-101
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -190,9 +162,6 @@ func TestNumberGetSmallDouble(t *testing.T) {
 		t.Fatalf("GetSmallDouble: %v", err)
 	}
 	val := 2.5976931e-101
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -205,9 +174,6 @@ func TestNumberGetSmallFloat(t *testing.T) {
 		t.Fatalf("GetSmallFloat: %v", err)
 	}
 	val := 3.402823e-20
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
-	}
 	if r := cmp.Diff(result.Value, &val); r != "" {
 		t.Fatal(r)
 	}
@@ -219,8 +185,8 @@ func TestNumberPutBigDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimal: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -230,8 +196,8 @@ func TestNumberPutBigDecimalNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalNegativeDecimal: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -241,8 +207,8 @@ func TestNumberPutBigDecimalPositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDecimalPositiveDecimal: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -252,8 +218,8 @@ func TestNumberPutBigDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -263,8 +229,8 @@ func TestNumberPutBigDoubleNegativeDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDoubleNegativeDecimal: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -274,8 +240,8 @@ func TestNumberPutBigDoublePositiveDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigDeoublePositiveDecimal: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -285,8 +251,8 @@ func TestNumberPutBigFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutBigFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -296,8 +262,8 @@ func TestNumberPutSmallDecimal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDecimal: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -307,8 +273,8 @@ func TestNumberPutSmallDouble(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallDouble: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }
 
@@ -318,7 +284,7 @@ func TestNumberPutSmallFloat(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PutSmallFloat: %v", err)
 	}
-	if s := result.RawResponse.StatusCode; s != http.StatusOK {
-		t.Fatalf("unexpected status code %d", s)
+	if !reflect.ValueOf(result).IsZero() {
+		t.Fatal("expected zero-value result")
 	}
 }

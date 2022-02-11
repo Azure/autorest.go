@@ -8,13 +8,8 @@
 
 package azurereportgroup
 
-import "net/http"
-
 // AutoRestReportServiceForAzureClientGetReportResponse contains the response from method AutoRestReportServiceForAzureClient.GetReport.
 type AutoRestReportServiceForAzureClientGetReportResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

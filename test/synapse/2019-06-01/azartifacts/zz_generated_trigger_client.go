@@ -45,9 +45,7 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 	if err != nil {
 		return triggerClientCreateOrUpdateTriggerPollerResponse{}, err
 	}
-	result := triggerClientCreateOrUpdateTriggerPollerResponse{
-		RawResponse: resp,
-	}
+	result := triggerClientCreateOrUpdateTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.CreateOrUpdateTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientCreateOrUpdateTriggerPollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 	if err != nil {
 		return triggerClientDeleteTriggerPollerResponse{}, err
 	}
-	result := triggerClientDeleteTriggerPollerResponse{
-		RawResponse: resp,
-	}
+	result := triggerClientDeleteTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.DeleteTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientDeleteTriggerPollerResponse{}, err
@@ -194,7 +190,7 @@ func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 
 // getEventSubscriptionStatusHandleResponse handles the GetEventSubscriptionStatus response.
 func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *http.Response) (triggerClientGetEventSubscriptionStatusResponse, error) {
-	result := triggerClientGetEventSubscriptionStatusResponse{RawResponse: resp}
+	result := triggerClientGetEventSubscriptionStatusResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerSubscriptionOperationStatus); err != nil {
 		return triggerClientGetEventSubscriptionStatusResponse{}, err
 	}
@@ -243,7 +239,7 @@ func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 
 // getTriggerHandleResponse handles the GetTrigger response.
 func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (triggerClientGetTriggerResponse, error) {
-	result := triggerClientGetTriggerResponse{RawResponse: resp}
+	result := triggerClientGetTriggerResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerResource); err != nil {
 		return triggerClientGetTriggerResponse{}, err
 	}
@@ -282,7 +278,7 @@ func (client *triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Con
 
 // getTriggersByWorkspaceHandleResponse handles the GetTriggersByWorkspace response.
 func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Response) (triggerClientGetTriggersByWorkspaceResponse, error) {
-	result := triggerClientGetTriggersByWorkspaceResponse{RawResponse: resp}
+	result := triggerClientGetTriggersByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerListResponse); err != nil {
 		return triggerClientGetTriggersByWorkspaceResponse{}, err
 	}
@@ -299,9 +295,7 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 	if err != nil {
 		return triggerClientStartTriggerPollerResponse{}, err
 	}
-	result := triggerClientStartTriggerPollerResponse{
-		RawResponse: resp,
-	}
+	result := triggerClientStartTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.StartTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientStartTriggerPollerResponse{}, err
@@ -357,9 +351,7 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 	if err != nil {
 		return triggerClientStopTriggerPollerResponse{}, err
 	}
-	result := triggerClientStopTriggerPollerResponse{
-		RawResponse: resp,
-	}
+	result := triggerClientStopTriggerPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.StopTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientStopTriggerPollerResponse{}, err
@@ -415,9 +407,7 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 	if err != nil {
 		return triggerClientSubscribeTriggerToEventsPollerResponse{}, err
 	}
-	result := triggerClientSubscribeTriggerToEventsPollerResponse{
-		RawResponse: resp,
-	}
+	result := triggerClientSubscribeTriggerToEventsPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.SubscribeTriggerToEvents", resp, client.pl)
 	if err != nil {
 		return triggerClientSubscribeTriggerToEventsPollerResponse{}, err
@@ -473,9 +463,7 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 	if err != nil {
 		return triggerClientUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
-	result := triggerClientUnsubscribeTriggerFromEventsPollerResponse{
-		RawResponse: resp,
-	}
+	result := triggerClientUnsubscribeTriggerFromEventsPollerResponse{}
 	pt, err := runtime.NewPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.pl)
 	if err != nil {
 		return triggerClientUnsubscribeTriggerFromEventsPollerResponse{}, err

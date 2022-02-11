@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, elementByValueForParam, emitPoller, formatParameterTypeName, formatStatusCodes, formatValue, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
@@ -580,7 +580,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   text += `\t}\n`;
   // HAB with headers response is handled in protocol responder
   if (op.language.go!.headAsBoolean && !responseHasHeaders(op)) {
-    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp}\n`;
+    text += `\tresult := ${getResponseEnvelopeName(op)}{}\n`;
     text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
     text += '\t\tresult.Success = true\n';
     text += '\t}\n';
@@ -597,8 +597,10 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     } else if (needsResponseHandler(op)) {
       // also cheating here as at present the only param to the responder is an http.Response
       text += `\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
+    } else if (isBinaryResponseOperation(op)) {
+      text += `\treturn ${getResponseEnvelopeName(op)}{Body: resp.Body}, nil\n`;
     } else {
-      text += `\treturn ${getResponseEnvelopeName(op)}{RawResponse: resp}, nil\n`;
+      text += `\treturn ${getResponseEnvelopeName(op)}{}, nil\n`;
     }
   }
   text += '}\n\n';
@@ -1069,7 +1071,11 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     if (isLROOperation(op)) {
       respEnvName = getFinalResponseEnvelopeName(op);
     }
-    text += `\tresult := ${respEnvName}{RawResponse: resp}\n`;
+    text += `\tresult := ${respEnvName}{`;
+    if (isBinaryResponseOperation(op)) {
+      text += 'Body: resp.Body';
+    }
+    text += '}\n';
     // we know there's a result envelope at this point
     const respEnv = getResponseEnvelope(op);
     addHeaders(respEnv.properties);
@@ -1089,7 +1095,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     text += '\treturn result, nil\n';
   } else {
     imports.add('fmt');
-    text += `\tresult := ${getResponseEnvelopeName(op)}{RawResponse: resp}\n`;
+    text += `\tresult := ${getResponseEnvelopeName(op)}{}\n`;
     // unmarshal any header values
     const respEnv = getResponseEnvelope(op);
     addHeaders(respEnv.properties);
@@ -1266,9 +1272,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
-  text += `\tresult := ${getResponseEnvelopeName(op)}{\n`;
-  text += '\t\tRawResponse: resp,\n';
-  text += '\t}\n';
+  text += `\tresult := ${getResponseEnvelopeName(op)}{}\n`;
   if (isARM) {
     // LRO operation might have a special configuration set in x-ms-long-running-operation-options
     // which indicates a specific url to perform the final Get operation on

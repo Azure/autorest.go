@@ -62,9 +62,7 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return ExpressRouteCircuitsClientDeletePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientDeletePollerResponse{}, err
@@ -234,7 +230,7 @@ func (client *ExpressRouteCircuitsClient) getCreateRequest(ctx context.Context, 
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRouteCircuitsClient) getHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientGetResponse, error) {
-	result := ExpressRouteCircuitsClientGetResponse{RawResponse: resp}
+	result := ExpressRouteCircuitsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuit); err != nil {
 		return ExpressRouteCircuitsClientGetResponse{}, err
 	}
@@ -295,7 +291,7 @@ func (client *ExpressRouteCircuitsClient) getPeeringStatsCreateRequest(ctx conte
 
 // getPeeringStatsHandleResponse handles the GetPeeringStats response.
 func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientGetPeeringStatsResponse, error) {
-	result := ExpressRouteCircuitsClientGetPeeringStatsResponse{RawResponse: resp}
+	result := ExpressRouteCircuitsClientGetPeeringStatsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitStats); err != nil {
 		return ExpressRouteCircuitsClientGetPeeringStatsResponse{}, err
 	}
@@ -351,7 +347,7 @@ func (client *ExpressRouteCircuitsClient) getStatsCreateRequest(ctx context.Cont
 
 // getStatsHandleResponse handles the GetStats response.
 func (client *ExpressRouteCircuitsClient) getStatsHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientGetStatsResponse, error) {
-	result := ExpressRouteCircuitsClientGetStatsResponse{RawResponse: resp}
+	result := ExpressRouteCircuitsClientGetStatsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitStats); err != nil {
 		return ExpressRouteCircuitsClientGetStatsResponse{}, err
 	}
@@ -399,7 +395,7 @@ func (client *ExpressRouteCircuitsClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client *ExpressRouteCircuitsClient) listHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientListResponse, error) {
-	result := ExpressRouteCircuitsClientListResponse{RawResponse: resp}
+	result := ExpressRouteCircuitsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitListResult); err != nil {
 		return ExpressRouteCircuitsClientListResponse{}, err
 	}
@@ -442,7 +438,7 @@ func (client *ExpressRouteCircuitsClient) listAllCreateRequest(ctx context.Conte
 
 // listAllHandleResponse handles the ListAll response.
 func (client *ExpressRouteCircuitsClient) listAllHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientListAllResponse, error) {
-	result := ExpressRouteCircuitsClientListAllResponse{RawResponse: resp}
+	result := ExpressRouteCircuitsClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitListResult); err != nil {
 		return ExpressRouteCircuitsClientListAllResponse{}, err
 	}
@@ -462,9 +458,7 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 	if err != nil {
 		return ExpressRouteCircuitsClientListArpTablePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsClientListArpTablePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitsClientListArpTablePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientListArpTablePollerResponse{}, err
@@ -540,9 +534,7 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 	if err != nil {
 		return ExpressRouteCircuitsClientListRoutesTablePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsClientListRoutesTablePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitsClientListRoutesTablePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientListRoutesTablePollerResponse{}, err
@@ -618,9 +610,7 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	if err != nil {
 		return ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}, err
 	}
-	result := ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}, err
@@ -733,7 +723,7 @@ func (client *ExpressRouteCircuitsClient) updateTagsCreateRequest(ctx context.Co
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *ExpressRouteCircuitsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientUpdateTagsResponse, error) {
-	result := ExpressRouteCircuitsClientUpdateTagsResponse{RawResponse: resp}
+	result := ExpressRouteCircuitsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuit); err != nil {
 		return ExpressRouteCircuitsClientUpdateTagsResponse{}, err
 	}

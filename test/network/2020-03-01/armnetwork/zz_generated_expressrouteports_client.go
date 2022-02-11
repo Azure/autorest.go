@@ -62,9 +62,7 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return ExpressRoutePortsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRoutePortsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRoutePortsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRoutePortsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return ExpressRoutePortsClientDeletePollerResponse{}, err
 	}
-	result := ExpressRoutePortsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRoutePortsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRoutePortsClientDeletePollerResponse{}, err
@@ -233,7 +229,7 @@ func (client *ExpressRoutePortsClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRoutePortsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsClientGetResponse, error) {
-	result := ExpressRoutePortsClientGetResponse{RawResponse: resp}
+	result := ExpressRoutePortsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePort); err != nil {
 		return ExpressRoutePortsClientGetResponse{}, err
 	}
@@ -275,7 +271,7 @@ func (client *ExpressRoutePortsClient) listCreateRequest(ctx context.Context, op
 
 // listHandleResponse handles the List response.
 func (client *ExpressRoutePortsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsClientListResponse, error) {
-	result := ExpressRoutePortsClientListResponse{RawResponse: resp}
+	result := ExpressRoutePortsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortListResult); err != nil {
 		return ExpressRoutePortsClientListResponse{}, err
 	}
@@ -323,7 +319,7 @@ func (client *ExpressRoutePortsClient) listByResourceGroupCreateRequest(ctx cont
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ExpressRoutePortsClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRoutePortsClientListByResourceGroupResponse, error) {
-	result := ExpressRoutePortsClientListByResourceGroupResponse{RawResponse: resp}
+	result := ExpressRoutePortsClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortListResult); err != nil {
 		return ExpressRoutePortsClientListByResourceGroupResponse{}, err
 	}
@@ -380,7 +376,7 @@ func (client *ExpressRoutePortsClient) updateTagsCreateRequest(ctx context.Conte
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *ExpressRoutePortsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRoutePortsClientUpdateTagsResponse, error) {
-	result := ExpressRoutePortsClientUpdateTagsResponse{RawResponse: resp}
+	result := ExpressRoutePortsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePort); err != nil {
 		return ExpressRoutePortsClientUpdateTagsResponse{}, err
 	}

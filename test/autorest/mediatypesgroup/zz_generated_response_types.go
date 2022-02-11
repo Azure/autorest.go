@@ -8,72 +8,52 @@
 
 package mediatypesgroup
 
-import "net/http"
-
 // MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeader.
 type MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON.
 type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // MediaTypesClientAnalyzeBodyResponse contains the response from method MediaTypesClient.AnalyzeBody.
 type MediaTypesClientAnalyzeBodyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientAnalyzeBodyWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyWithJSON.
 type MediaTypesClientAnalyzeBodyWithJSONResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientBinaryBodyWithThreeContentTypesResponse contains the response from method MediaTypesClient.BinaryBodyWithThreeContentTypes.
 type MediaTypesClientBinaryBodyWithThreeContentTypesResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse contains the response from method MediaTypesClient.BinaryBodyWithThreeContentTypesWithText.
 type MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientBinaryBodyWithTwoContentTypesResponse contains the response from method MediaTypesClient.BinaryBodyWithTwoContentTypes.
 type MediaTypesClientBinaryBodyWithTwoContentTypesResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientContentTypeWithEncodingResponse contains the response from method MediaTypesClient.ContentTypeWithEncoding.
 type MediaTypesClientContentTypeWithEncodingResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientPutTextAndJSONBodyWithJSONResponse contains the response from method MediaTypesClient.PutTextAndJSONBodyWithJSON.
 type MediaTypesClientPutTextAndJSONBodyWithJSONResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MediaTypesClientPutTextAndJSONBodyWithTextResponse contains the response from method MediaTypesClient.PutTextAndJSONBodyWithText.
 type MediaTypesClientPutTextAndJSONBodyWithTextResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }

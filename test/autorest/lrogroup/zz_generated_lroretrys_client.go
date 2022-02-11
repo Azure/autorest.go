@@ -45,9 +45,7 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 	if err != nil {
 		return LRORetrysClientDelete202Retry200PollerResponse{}, err
 	}
-	result := LRORetrysClientDelete202Retry200PollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientDelete202Retry200PollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.Delete202Retry200", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientDelete202Retry200PollerResponse{}, err
@@ -97,9 +95,7 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 	if err != nil {
 		return LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
@@ -151,9 +147,7 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 	if err != nil {
 		return LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
-	result := LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
@@ -205,9 +199,7 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 	if err != nil {
 		return LRORetrysClientPost202Retry200PollerResponse{}, err
 	}
-	result := LRORetrysClientPost202Retry200PollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientPost202Retry200PollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.Post202Retry200", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPost202Retry200PollerResponse{}, err
@@ -261,9 +253,7 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 	if err != nil {
 		return LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}, err
@@ -318,9 +308,7 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 	if err != nil {
 		return LRORetrysClientPut201CreatingSucceeded200PollerResponse{}, err
 	}
-	result := LRORetrysClientPut201CreatingSucceeded200PollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientPut201CreatingSucceeded200PollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPut201CreatingSucceeded200PollerResponse{}, err
@@ -375,9 +363,7 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 	if err != nil {
 		return LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
-	result := LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{
-		RawResponse: resp,
-	}
+	result := LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}
 	pt, err := armruntime.NewPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}, err

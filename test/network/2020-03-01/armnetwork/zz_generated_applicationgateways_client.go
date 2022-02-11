@@ -61,9 +61,7 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 	if err != nil {
 		return ApplicationGatewaysClientBackendHealthPollerResponse{}, err
 	}
-	result := ApplicationGatewaysClientBackendHealthPollerResponse{
-		RawResponse: resp,
-	}
+	result := ApplicationGatewaysClientBackendHealthPollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.BackendHealth", "location", resp, client.pl)
 	if err != nil {
 		return ApplicationGatewaysClientBackendHealthPollerResponse{}, err
@@ -133,9 +131,7 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 	if err != nil {
 		return ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{}, err
 	}
-	result := ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{
-		RawResponse: resp,
-	}
+	result := ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.pl)
 	if err != nil {
 		return ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{}, err
@@ -205,9 +201,7 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 	if err != nil {
 		return ApplicationGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ApplicationGatewaysClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ApplicationGatewaysClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ApplicationGatewaysClientCreateOrUpdatePollerResponse{}, err
@@ -272,9 +266,7 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 	if err != nil {
 		return ApplicationGatewaysClientDeletePollerResponse{}, err
 	}
-	result := ApplicationGatewaysClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ApplicationGatewaysClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ApplicationGatewaysClientDeletePollerResponse{}, err
@@ -376,7 +368,7 @@ func (client *ApplicationGatewaysClient) getCreateRequest(ctx context.Context, r
 
 // getHandleResponse handles the Get response.
 func (client *ApplicationGatewaysClient) getHandleResponse(resp *http.Response) (ApplicationGatewaysClientGetResponse, error) {
-	result := ApplicationGatewaysClientGetResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGateway); err != nil {
 		return ApplicationGatewaysClientGetResponse{}, err
 	}
@@ -427,7 +419,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyCreateRequest(ctx
 
 // getSSLPredefinedPolicyHandleResponse handles the GetSSLPredefinedPolicy response.
 func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(resp *http.Response) (ApplicationGatewaysClientGetSSLPredefinedPolicyResponse, error) {
-	result := ApplicationGatewaysClientGetSSLPredefinedPolicyResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientGetSSLPredefinedPolicyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewaySSLPredefinedPolicy); err != nil {
 		return ApplicationGatewaysClientGetSSLPredefinedPolicyResponse{}, err
 	}
@@ -475,7 +467,7 @@ func (client *ApplicationGatewaysClient) listCreateRequest(ctx context.Context, 
 
 // listHandleResponse handles the List response.
 func (client *ApplicationGatewaysClient) listHandleResponse(resp *http.Response) (ApplicationGatewaysClientListResponse, error) {
-	result := ApplicationGatewaysClientListResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayListResult); err != nil {
 		return ApplicationGatewaysClientListResponse{}, err
 	}
@@ -518,7 +510,7 @@ func (client *ApplicationGatewaysClient) listAllCreateRequest(ctx context.Contex
 
 // listAllHandleResponse handles the ListAll response.
 func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAllResponse, error) {
-	result := ApplicationGatewaysClientListAllResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAllResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayListResult); err != nil {
 		return ApplicationGatewaysClientListAllResponse{}, err
 	}
@@ -564,7 +556,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersCreateReques
 
 // listAvailableRequestHeadersHandleResponse handles the ListAvailableRequestHeaders response.
 func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAvailableRequestHeadersResponse, error) {
-	result := ApplicationGatewaysClientListAvailableRequestHeadersResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAvailableRequestHeadersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ApplicationGatewaysClientListAvailableRequestHeadersResponse{}, err
 	}
@@ -610,7 +602,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersCreateReque
 
 // listAvailableResponseHeadersHandleResponse handles the ListAvailableResponseHeaders response.
 func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAvailableResponseHeadersResponse, error) {
-	result := ApplicationGatewaysClientListAvailableResponseHeadersResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAvailableResponseHeadersResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ApplicationGatewaysClientListAvailableResponseHeadersResponse{}, err
 	}
@@ -656,7 +648,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsCreateRequest(ct
 
 // listAvailableSSLOptionsHandleResponse handles the ListAvailableSSLOptions response.
 func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAvailableSSLOptionsResponse, error) {
-	result := ApplicationGatewaysClientListAvailableSSLOptionsResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAvailableSSLOptionsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayAvailableSSLOptions); err != nil {
 		return ApplicationGatewaysClientListAvailableSSLOptionsResponse{}, err
 	}
@@ -699,7 +691,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesCreat
 
 // listAvailableSSLPredefinedPoliciesHandleResponse handles the ListAvailableSSLPredefinedPolicies response.
 func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse, error) {
-	result := ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayAvailableSSLPredefinedPolicies); err != nil {
 		return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
 	}
@@ -745,7 +737,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesCreateReque
 
 // listAvailableServerVariablesHandleResponse handles the ListAvailableServerVariables response.
 func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAvailableServerVariablesResponse, error) {
-	result := ApplicationGatewaysClientListAvailableServerVariablesResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAvailableServerVariablesResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
 		return ApplicationGatewaysClientListAvailableServerVariablesResponse{}, err
 	}
@@ -791,7 +783,7 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsCreateRequest(c
 
 // listAvailableWafRuleSetsHandleResponse handles the ListAvailableWafRuleSets response.
 func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(resp *http.Response) (ApplicationGatewaysClientListAvailableWafRuleSetsResponse, error) {
-	result := ApplicationGatewaysClientListAvailableWafRuleSetsResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientListAvailableWafRuleSetsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGatewayAvailableWafRuleSetsResult); err != nil {
 		return ApplicationGatewaysClientListAvailableWafRuleSetsResponse{}, err
 	}
@@ -809,9 +801,7 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 	if err != nil {
 		return ApplicationGatewaysClientStartPollerResponse{}, err
 	}
-	result := ApplicationGatewaysClientStartPollerResponse{
-		RawResponse: resp,
-	}
+	result := ApplicationGatewaysClientStartPollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.Start", "location", resp, client.pl)
 	if err != nil {
 		return ApplicationGatewaysClientStartPollerResponse{}, err
@@ -876,9 +866,7 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 	if err != nil {
 		return ApplicationGatewaysClientStopPollerResponse{}, err
 	}
-	result := ApplicationGatewaysClientStopPollerResponse{
-		RawResponse: resp,
-	}
+	result := ApplicationGatewaysClientStopPollerResponse{}
 	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.Stop", "location", resp, client.pl)
 	if err != nil {
 		return ApplicationGatewaysClientStopPollerResponse{}, err
@@ -982,7 +970,7 @@ func (client *ApplicationGatewaysClient) updateTagsCreateRequest(ctx context.Con
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *ApplicationGatewaysClient) updateTagsHandleResponse(resp *http.Response) (ApplicationGatewaysClientUpdateTagsResponse, error) {
-	result := ApplicationGatewaysClientUpdateTagsResponse{RawResponse: resp}
+	result := ApplicationGatewaysClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationGateway); err != nil {
 		return ApplicationGatewaysClientUpdateTagsResponse{}, err
 	}

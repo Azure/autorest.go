@@ -63,9 +63,7 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 	if err != nil {
 		return PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateDNSZoneGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 	if err != nil {
 		return PrivateDNSZoneGroupsClientDeletePollerResponse{}, err
 	}
-	result := PrivateDNSZoneGroupsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := PrivateDNSZoneGroupsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("PrivateDNSZoneGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return PrivateDNSZoneGroupsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *PrivateDNSZoneGroupsClient) getCreateRequest(ctx context.Context, 
 
 // getHandleResponse handles the Get response.
 func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *http.Response) (PrivateDNSZoneGroupsClientGetResponse, error) {
-	result := PrivateDNSZoneGroupsClientGetResponse{RawResponse: resp}
+	result := PrivateDNSZoneGroupsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateDNSZoneGroup); err != nil {
 		return PrivateDNSZoneGroupsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *PrivateDNSZoneGroupsClient) listCreateRequest(ctx context.Context,
 
 // listHandleResponse handles the List response.
 func (client *PrivateDNSZoneGroupsClient) listHandleResponse(resp *http.Response) (PrivateDNSZoneGroupsClientListResponse, error) {
-	result := PrivateDNSZoneGroupsClientListResponse{RawResponse: resp}
+	result := PrivateDNSZoneGroupsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateDNSZoneGroupListResult); err != nil {
 		return PrivateDNSZoneGroupsClientListResponse{}, err
 	}

@@ -8,22 +8,22 @@
 
 package filegroup
 
-import "net/http"
+import "io"
 
 // FilesClientGetEmptyFileResponse contains the response from method FilesClient.GetEmptyFile.
 type FilesClientGetEmptyFileResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // FilesClientGetFileLargeResponse contains the response from method FilesClient.GetFileLarge.
 type FilesClientGetFileLargeResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }
 
 // FilesClientGetFileResponse contains the response from method FilesClient.GetFile.
 type FilesClientGetFileResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// Body contains the streaming response.
+	Body io.ReadCloser
 }

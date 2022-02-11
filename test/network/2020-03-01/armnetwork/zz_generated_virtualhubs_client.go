@@ -62,9 +62,7 @@ func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resour
 	if err != nil {
 		return VirtualHubsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualHubsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualHubsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualHubsClientCreateOrUpdatePollerResponse{}, err
@@ -128,9 +126,7 @@ func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupN
 	if err != nil {
 		return VirtualHubsClientDeletePollerResponse{}, err
 	}
-	result := VirtualHubsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualHubsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualHubsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualHubsClientDeletePollerResponse{}, err
@@ -232,7 +228,7 @@ func (client *VirtualHubsClient) getCreateRequest(ctx context.Context, resourceG
 
 // getHandleResponse handles the Get response.
 func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (VirtualHubsClientGetResponse, error) {
-	result := VirtualHubsClientGetResponse{RawResponse: resp}
+	result := VirtualHubsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHub); err != nil {
 		return VirtualHubsClientGetResponse{}, err
 	}
@@ -274,7 +270,7 @@ func (client *VirtualHubsClient) listCreateRequest(ctx context.Context, options 
 
 // listHandleResponse handles the List response.
 func (client *VirtualHubsClient) listHandleResponse(resp *http.Response) (VirtualHubsClientListResponse, error) {
-	result := VirtualHubsClientListResponse{RawResponse: resp}
+	result := VirtualHubsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubsResult); err != nil {
 		return VirtualHubsClientListResponse{}, err
 	}
@@ -322,7 +318,7 @@ func (client *VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Co
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *VirtualHubsClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualHubsClientListByResourceGroupResponse, error) {
-	result := VirtualHubsClientListByResourceGroupResponse{RawResponse: resp}
+	result := VirtualHubsClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubsResult); err != nil {
 		return VirtualHubsClientListByResourceGroupResponse{}, err
 	}
@@ -378,7 +374,7 @@ func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, re
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualHubsClient) updateTagsHandleResponse(resp *http.Response) (VirtualHubsClientUpdateTagsResponse, error) {
-	result := VirtualHubsClientUpdateTagsResponse{RawResponse: resp}
+	result := VirtualHubsClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHub); err != nil {
 		return VirtualHubsClientUpdateTagsResponse{}, err
 	}

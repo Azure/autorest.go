@@ -45,9 +45,7 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 	if err != nil {
 		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	result := linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{
-		RawResponse: resp,
-	}
+	result := linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}
 	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl)
 	if err != nil {
 		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
@@ -106,9 +104,7 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 	if err != nil {
 		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
 	}
-	result := linkedServiceClientDeleteLinkedServicePollerResponse{
-		RawResponse: resp,
-	}
+	result := linkedServiceClientDeleteLinkedServicePollerResponse{}
 	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.pl)
 	if err != nil {
 		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
@@ -197,7 +193,7 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
 func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServiceResponse, error) {
-	result := linkedServiceClientGetLinkedServiceResponse{RawResponse: resp}
+	result := linkedServiceClientGetLinkedServiceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
 		return linkedServiceClientGetLinkedServiceResponse{}, err
 	}
@@ -236,7 +232,7 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
-	result := linkedServiceClientGetLinkedServicesByWorkspaceResponse{RawResponse: resp}
+	result := linkedServiceClientGetLinkedServicesByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
 		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 	}
@@ -254,9 +250,7 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 	if err != nil {
 		return linkedServiceClientRenameLinkedServicePollerResponse{}, err
 	}
-	result := linkedServiceClientRenameLinkedServicePollerResponse{
-		RawResponse: resp,
-	}
+	result := linkedServiceClientRenameLinkedServicePollerResponse{}
 	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.pl)
 	if err != nil {
 		return linkedServiceClientRenameLinkedServicePollerResponse{}, err

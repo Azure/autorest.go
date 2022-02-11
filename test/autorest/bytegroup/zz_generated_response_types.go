@@ -8,46 +8,31 @@
 
 package bytegroup
 
-import "net/http"
-
 // ByteClientGetEmptyResponse contains the response from method ByteClient.GetEmpty.
 type ByteClientGetEmptyResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// The empty byte value ''
 	Value []byte
 }
 
 // ByteClientGetInvalidResponse contains the response from method ByteClient.GetInvalid.
 type ByteClientGetInvalidResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// The invalid byte value '::::SWAGGER::::'
 	Value []byte
 }
 
 // ByteClientGetNonASCIIResponse contains the response from method ByteClient.GetNonASCII.
 type ByteClientGetNonASCIIResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// Non-ascii base-64 encoded byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 	Value []byte
 }
 
 // ByteClientGetNullResponse contains the response from method ByteClient.GetNull.
 type ByteClientGetNullResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// The null byte value
 	Value []byte
 }
 
 // ByteClientPutNonASCIIResponse contains the response from method ByteClient.PutNonASCII.
 type ByteClientPutNonASCIIResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

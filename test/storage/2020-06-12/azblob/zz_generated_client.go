@@ -90,7 +90,7 @@ func (client *client) abortCopyFromURLCreateRequest(ctx context.Context, comp En
 
 // abortCopyFromURLHandleResponse handles the AbortCopyFromURL response.
 func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (clientAbortCopyFromURLResponse, error) {
-	result := clientAbortCopyFromURLResponse{RawResponse: resp}
+	result := clientAbortCopyFromURLResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -173,7 +173,7 @@ func (client *client) acquireLeaseCreateRequest(ctx context.Context, comp Enum16
 
 // acquireLeaseHandleResponse handles the AcquireLease response.
 func (client *client) acquireLeaseHandleResponse(resp *http.Response) (clientAcquireLeaseResponse, error) {
-	result := clientAcquireLeaseResponse{RawResponse: resp}
+	result := clientAcquireLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -266,7 +266,7 @@ func (client *client) breakLeaseCreateRequest(ctx context.Context, comp Enum16, 
 
 // breakLeaseHandleResponse handles the BreakLease response.
 func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreakLeaseResponse, error) {
-	result := clientBreakLeaseResponse{RawResponse: resp}
+	result := clientBreakLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -367,7 +367,7 @@ func (client *client) changeLeaseCreateRequest(ctx context.Context, comp Enum16,
 
 // changeLeaseHandleResponse handles the ChangeLease response.
 func (client *client) changeLeaseHandleResponse(resp *http.Response) (clientChangeLeaseResponse, error) {
-	result := clientChangeLeaseResponse{RawResponse: resp}
+	result := clientChangeLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -502,7 +502,7 @@ func (client *client) copyFromURLCreateRequest(ctx context.Context, xmsRequiresS
 
 // copyFromURLHandleResponse handles the CopyFromURL response.
 func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopyFromURLResponse, error) {
-	result := clientCopyFromURLResponse{RawResponse: resp}
+	result := clientCopyFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -635,7 +635,7 @@ func (client *client) createSnapshotCreateRequest(ctx context.Context, comp Enum
 
 // createSnapshotHandleResponse handles the CreateSnapshot response.
 func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientCreateSnapshotResponse, error) {
-	result := clientCreateSnapshotResponse{RawResponse: resp}
+	result := clientCreateSnapshotResponse{}
 	if val := resp.Header.Get("x-ms-snapshot"); val != "" {
 		result.Snapshot = &val
 	}
@@ -759,7 +759,7 @@ func (client *client) deleteCreateRequest(ctx context.Context, clientDeleteOptio
 
 // deleteHandleResponse handles the Delete response.
 func (client *client) deleteHandleResponse(resp *http.Response) (clientDeleteResponse, error) {
-	result := clientDeleteResponse{RawResponse: resp}
+	result := clientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -820,7 +820,7 @@ func (client *client) deleteImmutabilityPolicyCreateRequest(ctx context.Context,
 
 // deleteImmutabilityPolicyHandleResponse handles the DeleteImmutabilityPolicy response.
 func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response) (clientDeleteImmutabilityPolicyResponse, error) {
-	result := clientDeleteImmutabilityPolicyResponse{RawResponse: resp}
+	result := clientDeleteImmutabilityPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -926,7 +926,7 @@ func (client *client) downloadCreateRequest(ctx context.Context, clientDownloadO
 
 // downloadHandleResponse handles the Download response.
 func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloadResponse, error) {
-	result := clientDownloadResponse{RawResponse: resp}
+	result := clientDownloadResponse{Body: resp.Body}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -1195,7 +1195,7 @@ func (client *client) getAccessControlCreateRequest(ctx context.Context, action 
 
 // getAccessControlHandleResponse handles the GetAccessControl response.
 func (client *client) getAccessControlHandleResponse(resp *http.Response) (clientGetAccessControlResponse, error) {
-	result := clientGetAccessControlResponse{RawResponse: resp}
+	result := clientGetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -1269,7 +1269,7 @@ func (client *client) getAccountInfoCreateRequest(ctx context.Context, restype E
 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
 func (client *client) getAccountInfoHandleResponse(resp *http.Response) (clientGetAccountInfoResponse, error) {
-	result := clientGetAccountInfoResponse{RawResponse: resp}
+	result := clientGetAccountInfoResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -1371,7 +1371,7 @@ func (client *client) getPropertiesCreateRequest(ctx context.Context, clientGetP
 
 // getPropertiesHandleResponse handles the GetProperties response.
 func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGetPropertiesResponse, error) {
-	result := clientGetPropertiesResponse{RawResponse: resp}
+	result := clientGetPropertiesResponse{}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -1663,7 +1663,7 @@ func (client *client) getTagsCreateRequest(ctx context.Context, comp Enum42, cli
 
 // getTagsHandleResponse handles the GetTags response.
 func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsResponse, error) {
-	result := clientGetTagsResponse{RawResponse: resp}
+	result := clientGetTagsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -1763,7 +1763,7 @@ func (client *client) queryCreateRequest(ctx context.Context, comp Enum40, clien
 
 // queryHandleResponse handles the Query response.
 func (client *client) queryHandleResponse(resp *http.Response) (clientQueryResponse, error) {
-	result := clientQueryResponse{RawResponse: resp}
+	result := clientQueryResponse{Body: resp.Body}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -1971,7 +1971,7 @@ func (client *client) releaseLeaseCreateRequest(ctx context.Context, comp Enum16
 
 // releaseLeaseHandleResponse handles the ReleaseLease response.
 func (client *client) releaseLeaseHandleResponse(resp *http.Response) (clientReleaseLeaseResponse, error) {
-	result := clientReleaseLeaseResponse{RawResponse: resp}
+	result := clientReleaseLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -2110,7 +2110,7 @@ func (client *client) renameCreateRequest(ctx context.Context, renameSource stri
 
 // renameHandleResponse handles the Rename response.
 func (client *client) renameHandleResponse(resp *http.Response) (clientRenameResponse, error) {
-	result := clientRenameResponse{RawResponse: resp}
+	result := clientRenameResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -2206,7 +2206,7 @@ func (client *client) renewLeaseCreateRequest(ctx context.Context, comp Enum16, 
 
 // renewLeaseHandleResponse handles the RenewLease response.
 func (client *client) renewLeaseHandleResponse(resp *http.Response) (clientRenewLeaseResponse, error) {
-	result := clientRenewLeaseResponse{RawResponse: resp}
+	result := clientRenewLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -2309,7 +2309,7 @@ func (client *client) setAccessControlCreateRequest(ctx context.Context, action 
 
 // setAccessControlHandleResponse handles the SetAccessControl response.
 func (client *client) setAccessControlHandleResponse(resp *http.Response) (clientSetAccessControlResponse, error) {
-	result := clientSetAccessControlResponse{RawResponse: resp}
+	result := clientSetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
@@ -2381,7 +2381,7 @@ func (client *client) setExpiryCreateRequest(ctx context.Context, comp Enum24, e
 
 // setExpiryHandleResponse handles the SetExpiry response.
 func (client *client) setExpiryHandleResponse(resp *http.Response) (clientSetExpiryResponse, error) {
-	result := clientSetExpiryResponse{RawResponse: resp}
+	result := clientSetExpiryResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -2491,7 +2491,7 @@ func (client *client) setHTTPHeadersCreateRequest(ctx context.Context, comp Enum
 
 // setHTTPHeadersHandleResponse handles the SetHTTPHeaders response.
 func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (clientSetHTTPHeadersResponse, error) {
-	result := clientSetHTTPHeadersResponse{RawResponse: resp}
+	result := clientSetHTTPHeadersResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -2579,7 +2579,7 @@ func (client *client) setImmutabilityPolicyCreateRequest(ctx context.Context, co
 
 // setImmutabilityPolicyHandleResponse handles the SetImmutabilityPolicy response.
 func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (clientSetImmutabilityPolicyResponse, error) {
-	result := clientSetImmutabilityPolicyResponse{RawResponse: resp}
+	result := clientSetImmutabilityPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2651,7 +2651,7 @@ func (client *client) setLegalHoldCreateRequest(ctx context.Context, comp Enum27
 
 // setLegalHoldHandleResponse handles the SetLegalHold response.
 func (client *client) setLegalHoldHandleResponse(resp *http.Response) (clientSetLegalHoldResponse, error) {
-	result := clientSetLegalHoldResponse{RawResponse: resp}
+	result := clientSetLegalHoldResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2758,7 +2758,7 @@ func (client *client) setMetadataCreateRequest(ctx context.Context, comp Enum12,
 
 // setMetadataHandleResponse handles the SetMetadata response.
 func (client *client) setMetadataHandleResponse(resp *http.Response) (clientSetMetadataResponse, error) {
-	result := clientSetMetadataResponse{RawResponse: resp}
+	result := clientSetMetadataResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -2864,7 +2864,7 @@ func (client *client) setTagsCreateRequest(ctx context.Context, comp Enum42, cli
 
 // setTagsHandleResponse handles the SetTags response.
 func (client *client) setTagsHandleResponse(resp *http.Response) (clientSetTagsResponse, error) {
-	result := clientSetTagsResponse{RawResponse: resp}
+	result := clientSetTagsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2946,7 +2946,7 @@ func (client *client) setTierCreateRequest(ctx context.Context, comp Enum32, tie
 
 // setTierHandleResponse handles the SetTier response.
 func (client *client) setTierHandleResponse(resp *http.Response) (clientSetTierResponse, error) {
-	result := clientSetTierResponse{RawResponse: resp}
+	result := clientSetTierResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -3066,7 +3066,7 @@ func (client *client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 
 // startCopyFromURLHandleResponse handles the StartCopyFromURL response.
 func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (clientStartCopyFromURLResponse, error) {
-	result := clientStartCopyFromURLResponse{RawResponse: resp}
+	result := clientStartCopyFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
@@ -3145,7 +3145,7 @@ func (client *client) undeleteCreateRequest(ctx context.Context, comp Enum14, op
 
 // undeleteHandleResponse handles the Undelete response.
 func (client *client) undeleteHandleResponse(resp *http.Response) (clientUndeleteResponse, error) {
-	result := clientUndeleteResponse{RawResponse: resp}
+	result := clientUndeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}

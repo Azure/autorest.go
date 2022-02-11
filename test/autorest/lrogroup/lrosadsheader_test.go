@@ -5,7 +5,6 @@ package lrogroup
 
 import (
 	"context"
-	"net/http"
 	"testing"
 	"time"
 
@@ -57,12 +56,9 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	if rt != "" {
 		t.Fatal("expected an empty resume token")
 	}
-	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
+	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
-	}
-	if s := pollResp.RawResponse.StatusCode; s != http.StatusNoContent {
-		t.Fatalf("unexpected status code %d", s)
 	}
 }
 

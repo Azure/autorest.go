@@ -65,9 +65,7 @@ func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, reso
 	if err != nil {
 		return GalleryImagesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := GalleryImagesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := GalleryImagesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryImagesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return GalleryImagesClientCreateOrUpdatePollerResponse{}, err
@@ -137,9 +135,7 @@ func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGrou
 	if err != nil {
 		return GalleryImagesClientDeletePollerResponse{}, err
 	}
-	result := GalleryImagesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := GalleryImagesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryImagesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return GalleryImagesClientDeletePollerResponse{}, err
@@ -250,7 +246,7 @@ func (client *GalleryImagesClient) getCreateRequest(ctx context.Context, resourc
 
 // getHandleResponse handles the Get response.
 func (client *GalleryImagesClient) getHandleResponse(resp *http.Response) (GalleryImagesClientGetResponse, error) {
-	result := GalleryImagesClientGetResponse{RawResponse: resp}
+	result := GalleryImagesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryImage); err != nil {
 		return GalleryImagesClientGetResponse{}, err
 	}
@@ -303,7 +299,7 @@ func (client *GalleryImagesClient) listByGalleryCreateRequest(ctx context.Contex
 
 // listByGalleryHandleResponse handles the ListByGallery response.
 func (client *GalleryImagesClient) listByGalleryHandleResponse(resp *http.Response) (GalleryImagesClientListByGalleryResponse, error) {
-	result := GalleryImagesClientListByGalleryResponse{RawResponse: resp}
+	result := GalleryImagesClientListByGalleryResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryImageList); err != nil {
 		return GalleryImagesClientListByGalleryResponse{}, err
 	}
@@ -324,9 +320,7 @@ func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGrou
 	if err != nil {
 		return GalleryImagesClientUpdatePollerResponse{}, err
 	}
-	result := GalleryImagesClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := GalleryImagesClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("GalleryImagesClient.Update", "", resp, client.pl)
 	if err != nil {
 		return GalleryImagesClientUpdatePollerResponse{}, err

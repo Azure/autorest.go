@@ -62,9 +62,7 @@ func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, 
 	if err != nil {
 		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualAppliancesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualAppliancesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resource
 	if err != nil {
 		return VirtualAppliancesClientDeletePollerResponse{}, err
 	}
-	result := VirtualAppliancesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualAppliancesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualAppliancesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualAppliancesClientDeletePollerResponse{}, err
@@ -236,7 +232,7 @@ func (client *VirtualAppliancesClient) getCreateRequest(ctx context.Context, res
 
 // getHandleResponse handles the Get response.
 func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (VirtualAppliancesClientGetResponse, error) {
-	result := VirtualAppliancesClientGetResponse{RawResponse: resp}
+	result := VirtualAppliancesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualAppliance); err != nil {
 		return VirtualAppliancesClientGetResponse{}, err
 	}
@@ -278,7 +274,7 @@ func (client *VirtualAppliancesClient) listCreateRequest(ctx context.Context, op
 
 // listHandleResponse handles the List response.
 func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (VirtualAppliancesClientListResponse, error) {
-	result := VirtualAppliancesClientListResponse{RawResponse: resp}
+	result := VirtualAppliancesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualApplianceListResult); err != nil {
 		return VirtualAppliancesClientListResponse{}, err
 	}
@@ -326,7 +322,7 @@ func (client *VirtualAppliancesClient) listByResourceGroupCreateRequest(ctx cont
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *VirtualAppliancesClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualAppliancesClientListByResourceGroupResponse, error) {
-	result := VirtualAppliancesClientListByResourceGroupResponse{RawResponse: resp}
+	result := VirtualAppliancesClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualApplianceListResult); err != nil {
 		return VirtualAppliancesClientListByResourceGroupResponse{}, err
 	}
@@ -383,7 +379,7 @@ func (client *VirtualAppliancesClient) updateTagsCreateRequest(ctx context.Conte
 
 // updateTagsHandleResponse handles the UpdateTags response.
 func (client *VirtualAppliancesClient) updateTagsHandleResponse(resp *http.Response) (VirtualAppliancesClientUpdateTagsResponse, error) {
-	result := VirtualAppliancesClientUpdateTagsResponse{RawResponse: resp}
+	result := VirtualAppliancesClientUpdateTagsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualAppliance); err != nil {
 		return VirtualAppliancesClientUpdateTagsResponse{}, err
 	}

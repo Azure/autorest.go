@@ -8,74 +8,52 @@
 
 package migroup
 
-import "net/http"
-
 // MultipleInheritanceServiceClientGetCatResponse contains the response from method MultipleInheritanceServiceClient.GetCat.
 type MultipleInheritanceServiceClientGetCatResponse struct {
 	Cat
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // MultipleInheritanceServiceClientGetFelineResponse contains the response from method MultipleInheritanceServiceClient.GetFeline.
 type MultipleInheritanceServiceClientGetFelineResponse struct {
 	Feline
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // MultipleInheritanceServiceClientGetHorseResponse contains the response from method MultipleInheritanceServiceClient.GetHorse.
 type MultipleInheritanceServiceClientGetHorseResponse struct {
 	Horse
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // MultipleInheritanceServiceClientGetKittenResponse contains the response from method MultipleInheritanceServiceClient.GetKitten.
 type MultipleInheritanceServiceClientGetKittenResponse struct {
 	Kitten
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // MultipleInheritanceServiceClientGetPetResponse contains the response from method MultipleInheritanceServiceClient.GetPet.
 type MultipleInheritanceServiceClientGetPetResponse struct {
 	Pet
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 }
 
 // MultipleInheritanceServiceClientPutCatResponse contains the response from method MultipleInheritanceServiceClient.PutCat.
 type MultipleInheritanceServiceClientPutCatResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MultipleInheritanceServiceClientPutFelineResponse contains the response from method MultipleInheritanceServiceClient.PutFeline.
 type MultipleInheritanceServiceClientPutFelineResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MultipleInheritanceServiceClientPutHorseResponse contains the response from method MultipleInheritanceServiceClient.PutHorse.
 type MultipleInheritanceServiceClientPutHorseResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MultipleInheritanceServiceClientPutKittenResponse contains the response from method MultipleInheritanceServiceClient.PutKitten.
 type MultipleInheritanceServiceClientPutKittenResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }
 
 // MultipleInheritanceServiceClientPutPetResponse contains the response from method MultipleInheritanceServiceClient.PutPet.
 type MultipleInheritanceServiceClientPutPetResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-	Value       *string
+	Value *string
 }

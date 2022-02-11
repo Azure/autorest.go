@@ -50,7 +50,7 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringMultiEmptyResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringMultiEmptyResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringMultiEmptyResponse{}, nil
 }
 
 // arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
@@ -87,7 +87,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringMultiNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringMultiNullResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringMultiNullResponse{}, nil
 }
 
 // arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
@@ -125,7 +125,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return QueriesClientArrayStringMultiValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return QueriesClientArrayStringMultiValidResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringMultiValidResponse{}, nil
 }
 
 // arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.

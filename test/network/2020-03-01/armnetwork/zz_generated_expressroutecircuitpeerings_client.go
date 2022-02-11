@@ -63,9 +63,7 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context
 	if err != nil {
 		return ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse{}, err
@@ -135,9 +133,7 @@ func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context
 	if err != nil {
 		return ExpressRouteCircuitPeeringsClientDeletePollerResponse{}, err
 	}
-	result := ExpressRouteCircuitPeeringsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ExpressRouteCircuitPeeringsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ExpressRouteCircuitPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitPeeringsClientDeletePollerResponse{}, err
@@ -249,7 +245,7 @@ func (client *ExpressRouteCircuitPeeringsClient) getCreateRequest(ctx context.Co
 
 // getHandleResponse handles the Get response.
 func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *http.Response) (ExpressRouteCircuitPeeringsClientGetResponse, error) {
-	result := ExpressRouteCircuitPeeringsClientGetResponse{RawResponse: resp}
+	result := ExpressRouteCircuitPeeringsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitPeering); err != nil {
 		return ExpressRouteCircuitPeeringsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *ExpressRouteCircuitPeeringsClient) listCreateRequest(ctx context.C
 
 // listHandleResponse handles the List response.
 func (client *ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *http.Response) (ExpressRouteCircuitPeeringsClientListResponse, error) {
-	result := ExpressRouteCircuitPeeringsClientListResponse{RawResponse: resp}
+	result := ExpressRouteCircuitPeeringsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitPeeringListResult); err != nil {
 		return ExpressRouteCircuitPeeringsClientListResponse{}, err
 	}

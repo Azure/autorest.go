@@ -66,7 +66,7 @@ func (client *PolymorphismClient) getComplicatedCreateRequest(ctx context.Contex
 
 // getComplicatedHandleResponse handles the GetComplicated response.
 func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Response) (PolymorphismClientGetComplicatedResponse, error) {
-	result := PolymorphismClientGetComplicatedResponse{RawResponse: resp}
+	result := PolymorphismClientGetComplicatedResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismClientGetComplicatedResponse{}, err
 	}
@@ -107,7 +107,7 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx 
 
 // getComposedWithDiscriminatorHandleResponse handles the GetComposedWithDiscriminator response.
 func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(resp *http.Response) (PolymorphismClientGetComposedWithDiscriminatorResponse, error) {
-	result := PolymorphismClientGetComposedWithDiscriminatorResponse{RawResponse: resp}
+	result := PolymorphismClientGetComposedWithDiscriminatorResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DotFishMarket); err != nil {
 		return PolymorphismClientGetComposedWithDiscriminatorResponse{}, err
 	}
@@ -148,7 +148,7 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(c
 
 // getComposedWithoutDiscriminatorHandleResponse handles the GetComposedWithoutDiscriminator response.
 func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(resp *http.Response) (PolymorphismClientGetComposedWithoutDiscriminatorResponse, error) {
-	result := PolymorphismClientGetComposedWithoutDiscriminatorResponse{RawResponse: resp}
+	result := PolymorphismClientGetComposedWithoutDiscriminatorResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DotFishMarket); err != nil {
 		return PolymorphismClientGetComposedWithoutDiscriminatorResponse{}, err
 	}
@@ -187,7 +187,7 @@ func (client *PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context,
 
 // getDotSyntaxHandleResponse handles the GetDotSyntax response.
 func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response) (PolymorphismClientGetDotSyntaxResponse, error) {
-	result := PolymorphismClientGetDotSyntaxResponse{RawResponse: resp}
+	result := PolymorphismClientGetDotSyntaxResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismClientGetDotSyntaxResponse{}, err
 	}
@@ -225,7 +225,7 @@ func (client *PolymorphismClient) getValidCreateRequest(ctx context.Context, opt
 
 // getValidHandleResponse handles the GetValid response.
 func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (PolymorphismClientGetValidResponse, error) {
-	result := PolymorphismClientGetValidResponse{RawResponse: resp}
+	result := PolymorphismClientGetValidResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismClientGetValidResponse{}, err
 	}
@@ -248,7 +248,7 @@ func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBod
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismClientPutComplicatedResponse{}, runtime.NewResponseError(resp)
 	}
-	return PolymorphismClientPutComplicatedResponse{RawResponse: resp}, nil
+	return PolymorphismClientPutComplicatedResponse{}, nil
 }
 
 // putComplicatedCreateRequest creates the PutComplicated request.
@@ -294,7 +294,7 @@ func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx conte
 
 // putMissingDiscriminatorHandleResponse handles the PutMissingDiscriminator response.
 func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *http.Response) (PolymorphismClientPutMissingDiscriminatorResponse, error) {
-	result := PolymorphismClientPutMissingDiscriminatorResponse{RawResponse: resp}
+	result := PolymorphismClientPutMissingDiscriminatorResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
 		return PolymorphismClientPutMissingDiscriminatorResponse{}, err
 	}
@@ -322,7 +322,7 @@ func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody Fish
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return PolymorphismClientPutValidResponse{RawResponse: resp}, nil
+	return PolymorphismClientPutValidResponse{}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
@@ -358,7 +358,7 @@ func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, c
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return PolymorphismClientPutValidMissingRequiredResponse{}, runtime.NewResponseError(resp)
 	}
-	return PolymorphismClientPutValidMissingRequiredResponse{RawResponse: resp}, nil
+	return PolymorphismClientPutValidMissingRequiredResponse{}, nil
 }
 
 // putValidMissingRequiredCreateRequest creates the PutValidMissingRequired request.

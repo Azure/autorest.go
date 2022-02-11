@@ -50,7 +50,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalClientGetMethodLocalNullResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionLocalClientGetMethodLocalNullResponse{RawResponse: resp}, nil
+	return APIVersionLocalClientGetMethodLocalNullResponse{}, nil
 }
 
 // getMethodLocalNullCreateRequest creates the GetMethodLocalNull request.
@@ -85,7 +85,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalClientGetMethodLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionLocalClientGetMethodLocalValidResponse{RawResponse: resp}, nil
+	return APIVersionLocalClientGetMethodLocalValidResponse{}, nil
 }
 
 // getMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
@@ -118,7 +118,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalClientGetPathLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionLocalClientGetPathLocalValidResponse{RawResponse: resp}, nil
+	return APIVersionLocalClientGetPathLocalValidResponse{}, nil
 }
 
 // getPathLocalValidCreateRequest creates the GetPathLocalValid request.
@@ -151,7 +151,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
-	return APIVersionLocalClientGetSwaggerLocalValidResponse{RawResponse: resp}, nil
+	return APIVersionLocalClientGetSwaggerLocalValidResponse{}, nil
 }
 
 // getSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.

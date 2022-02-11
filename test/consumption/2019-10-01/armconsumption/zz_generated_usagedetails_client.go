@@ -109,7 +109,7 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 
 // listHandleResponse handles the List response.
 func (client *UsageDetailsClient) listHandleResponse(resp *http.Response) (UsageDetailsClientListResponse, error) {
-	result := UsageDetailsClientListResponse{RawResponse: resp}
+	result := UsageDetailsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UsageDetailsListResult); err != nil {
 		return UsageDetailsClientListResponse{}, err
 	}

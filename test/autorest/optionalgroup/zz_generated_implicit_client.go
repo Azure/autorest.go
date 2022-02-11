@@ -63,7 +63,7 @@ func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, option
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientGetOptionalGlobalQueryResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientGetOptionalGlobalQueryResponse{RawResponse: resp}, nil
+	return ImplicitClientGetOptionalGlobalQueryResponse{}, nil
 }
 
 // getOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
@@ -98,7 +98,7 @@ func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientGetRequiredGlobalPathResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientGetRequiredGlobalPathResponse{RawResponse: resp}, nil
+	return ImplicitClientGetRequiredGlobalPathResponse{}, nil
 }
 
 // getRequiredGlobalPathCreateRequest creates the GetRequiredGlobalPath request.
@@ -132,7 +132,7 @@ func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, option
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientGetRequiredGlobalQueryResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientGetRequiredGlobalQueryResponse{RawResponse: resp}, nil
+	return ImplicitClientGetRequiredGlobalQueryResponse{}, nil
 }
 
 // getRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
@@ -165,7 +165,7 @@ func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientGetRequiredPathResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientGetRequiredPathResponse{RawResponse: resp}, nil
+	return ImplicitClientGetRequiredPathResponse{}, nil
 }
 
 // getRequiredPathCreateRequest creates the GetRequiredPath request.
@@ -199,7 +199,7 @@ func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientPutOptionalBinaryBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientPutOptionalBinaryBodyResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalBinaryBodyResponse{}, nil
 }
 
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
@@ -232,7 +232,7 @@ func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *Impl
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientPutOptionalBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientPutOptionalBodyResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalBodyResponse{}, nil
 }
 
 // putOptionalBodyCreateRequest creates the PutOptionalBody request.
@@ -265,7 +265,7 @@ func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *Im
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientPutOptionalHeaderResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientPutOptionalHeaderResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalHeaderResponse{}, nil
 }
 
 // putOptionalHeaderCreateRequest creates the PutOptionalHeader request.
@@ -298,7 +298,7 @@ func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *Imp
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
 		return ImplicitClientPutOptionalQueryResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientPutOptionalQueryResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalQueryResponse{}, nil
 }
 
 // putOptionalQueryCreateRequest creates the PutOptionalQuery request.

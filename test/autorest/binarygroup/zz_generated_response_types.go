@@ -8,16 +8,12 @@
 
 package binarygroup
 
-import "net/http"
-
 // UploadClientBinaryResponse contains the response from method UploadClient.Binary.
 type UploadClientBinaryResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }
 
 // UploadClientFileResponse contains the response from method UploadClient.File.
 type UploadClientFileResponse struct {
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
+	// placeholder for future response values
 }

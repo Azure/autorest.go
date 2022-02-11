@@ -62,9 +62,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse{}, err
@@ -129,9 +127,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientDeletePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientDeletePollerResponse{}, err
@@ -234,7 +230,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getCreateRequest(ctx conte
 
 // getHandleResponse handles the Get response.
 func (client *VirtualNetworkGatewayConnectionsClient) getHandleResponse(resp *http.Response) (VirtualNetworkGatewayConnectionsClientGetResponse, error) {
-	result := VirtualNetworkGatewayConnectionsClientGetResponse{RawResponse: resp}
+	result := VirtualNetworkGatewayConnectionsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayConnection); err != nil {
 		return VirtualNetworkGatewayConnectionsClientGetResponse{}, err
 	}
@@ -291,7 +287,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyCreateRequest(
 
 // getSharedKeyHandleResponse handles the GetSharedKey response.
 func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleResponse(resp *http.Response) (VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse, error) {
-	result := VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse{RawResponse: resp}
+	result := VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionSharedKey); err != nil {
 		return VirtualNetworkGatewayConnectionsClientGetSharedKeyResponse{}, err
 	}
@@ -339,7 +335,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) listCreateRequest(ctx cont
 
 // listHandleResponse handles the List response.
 func (client *VirtualNetworkGatewayConnectionsClient) listHandleResponse(resp *http.Response) (VirtualNetworkGatewayConnectionsClientListResponse, error) {
-	result := VirtualNetworkGatewayConnectionsClientListResponse{RawResponse: resp}
+	result := VirtualNetworkGatewayConnectionsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayConnectionListResult); err != nil {
 		return VirtualNetworkGatewayConnectionsClientListResponse{}, err
 	}
@@ -361,9 +357,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse{}, err
@@ -434,9 +428,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.SetSharedKey", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse{}, err
@@ -503,9 +495,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse{}, err
@@ -574,9 +564,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse{}, err
@@ -642,9 +630,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse{
-		RawResponse: resp,
-	}
+	result := VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse{}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewayConnectionsClient.UpdateTags", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse{}, err

@@ -63,9 +63,7 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	if err != nil {
 		return SubnetsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SubnetsClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := SubnetsClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return SubnetsClientCreateOrUpdatePollerResponse{}, err
@@ -134,9 +132,7 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	if err != nil {
 		return SubnetsClientDeletePollerResponse{}, err
 	}
-	result := SubnetsClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := SubnetsClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("SubnetsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return SubnetsClientDeletePollerResponse{}, err
@@ -250,7 +246,7 @@ func (client *SubnetsClient) getCreateRequest(ctx context.Context, resourceGroup
 
 // getHandleResponse handles the Get response.
 func (client *SubnetsClient) getHandleResponse(resp *http.Response) (SubnetsClientGetResponse, error) {
-	result := SubnetsClientGetResponse{RawResponse: resp}
+	result := SubnetsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Subnet); err != nil {
 		return SubnetsClientGetResponse{}, err
 	}
@@ -302,7 +298,7 @@ func (client *SubnetsClient) listCreateRequest(ctx context.Context, resourceGrou
 
 // listHandleResponse handles the List response.
 func (client *SubnetsClient) listHandleResponse(resp *http.Response) (SubnetsClientListResponse, error) {
-	result := SubnetsClientListResponse{RawResponse: resp}
+	result := SubnetsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SubnetListResult); err != nil {
 		return SubnetsClientListResponse{}, err
 	}
@@ -322,9 +318,7 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	if err != nil {
 		return SubnetsClientPrepareNetworkPoliciesPollerResponse{}, err
 	}
-	result := SubnetsClientPrepareNetworkPoliciesPollerResponse{
-		RawResponse: resp,
-	}
+	result := SubnetsClientPrepareNetworkPoliciesPollerResponse{}
 	pt, err := armruntime.NewPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.pl)
 	if err != nil {
 		return SubnetsClientPrepareNetworkPoliciesPollerResponse{}, err
@@ -395,9 +389,7 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	if err != nil {
 		return SubnetsClientUnprepareNetworkPoliciesPollerResponse{}, err
 	}
-	result := SubnetsClientUnprepareNetworkPoliciesPollerResponse{
-		RawResponse: resp,
-	}
+	result := SubnetsClientUnprepareNetworkPoliciesPollerResponse{}
 	pt, err := armruntime.NewPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.pl)
 	if err != nil {
 		return SubnetsClientUnprepareNetworkPoliciesPollerResponse{}, err

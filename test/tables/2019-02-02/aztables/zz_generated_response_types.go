@@ -8,10 +8,7 @@
 
 package aztables
 
-import (
-	"net/http"
-	"time"
-)
+import "time"
 
 // ClientCreateResponse contains the response from method Client.Create.
 type ClientCreateResponse struct {
@@ -24,9 +21,6 @@ type ClientCreateResponse struct {
 
 	// PreferenceApplied contains the information returned from the Preference-Applied header response.
 	PreferenceApplied *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -43,9 +37,6 @@ type ClientDeleteEntityResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -61,9 +52,6 @@ type ClientDeleteResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -78,9 +66,6 @@ type ClientGetAccessPolicyResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
@@ -109,9 +94,6 @@ type ClientInsertEntityResponse struct {
 	// PreferenceApplied contains the information returned from the Preference-Applied header response.
 	PreferenceApplied *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -133,9 +115,6 @@ type ClientMergeEntityResponse struct {
 	// ETag contains the information returned from the ETag header response.
 	ETag *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -151,9 +130,6 @@ type ClientQueryEntitiesResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -178,9 +154,6 @@ type ClientQueryEntityWithPartitionAndRowKeyResponse struct {
 
 	// ETag contains the information returned from the ETag header response.
 	ETag *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -207,9 +180,6 @@ type ClientQueryResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -227,9 +197,6 @@ type ClientSetAccessPolicyResponse struct {
 
 	// Date contains the information returned from the Date header response.
 	Date *time.Time
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
@@ -249,9 +216,6 @@ type ClientUpdateEntityResponse struct {
 	// ETag contains the information returned from the ETag header response.
 	ETag *string
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string
 
@@ -264,9 +228,6 @@ type ServiceClientGetPropertiesResponse struct {
 	ServiceProperties
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
@@ -284,9 +245,6 @@ type ServiceClientGetStatisticsResponse struct {
 	// Date contains the information returned from the Date header response.
 	Date *time.Time `xml:"Date"`
 
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
-
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string `xml:"RequestID"`
 
@@ -298,9 +256,6 @@ type ServiceClientGetStatisticsResponse struct {
 type ServiceClientSetPropertiesResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
-
-	// RawResponse contains the underlying HTTP response.
-	RawResponse *http.Response
 
 	// RequestID contains the information returned from the x-ms-request-id header response.
 	RequestID *string

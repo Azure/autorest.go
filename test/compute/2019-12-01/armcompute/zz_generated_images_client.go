@@ -62,9 +62,7 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	if err != nil {
 		return ImagesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ImagesClientCreateOrUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ImagesClientCreateOrUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ImagesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return ImagesClientCreateOrUpdatePollerResponse{}, err
@@ -128,9 +126,7 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return ImagesClientDeletePollerResponse{}, err
 	}
-	result := ImagesClientDeletePollerResponse{
-		RawResponse: resp,
-	}
+	result := ImagesClientDeletePollerResponse{}
 	pt, err := armruntime.NewPoller("ImagesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return ImagesClientDeletePollerResponse{}, err
@@ -234,7 +230,7 @@ func (client *ImagesClient) getCreateRequest(ctx context.Context, resourceGroupN
 
 // getHandleResponse handles the Get response.
 func (client *ImagesClient) getHandleResponse(resp *http.Response) (ImagesClientGetResponse, error) {
-	result := ImagesClientGetResponse{RawResponse: resp}
+	result := ImagesClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Image); err != nil {
 		return ImagesClientGetResponse{}, err
 	}
@@ -277,7 +273,7 @@ func (client *ImagesClient) listCreateRequest(ctx context.Context, options *Imag
 
 // listHandleResponse handles the List response.
 func (client *ImagesClient) listHandleResponse(resp *http.Response) (ImagesClientListResponse, error) {
-	result := ImagesClientListResponse{RawResponse: resp}
+	result := ImagesClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ImageListResult); err != nil {
 		return ImagesClientListResponse{}, err
 	}
@@ -325,7 +321,7 @@ func (client *ImagesClient) listByResourceGroupCreateRequest(ctx context.Context
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *ImagesClient) listByResourceGroupHandleResponse(resp *http.Response) (ImagesClientListByResourceGroupResponse, error) {
-	result := ImagesClientListByResourceGroupResponse{RawResponse: resp}
+	result := ImagesClientListByResourceGroupResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ImageListResult); err != nil {
 		return ImagesClientListByResourceGroupResponse{}, err
 	}
@@ -343,9 +339,7 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 	if err != nil {
 		return ImagesClientUpdatePollerResponse{}, err
 	}
-	result := ImagesClientUpdatePollerResponse{
-		RawResponse: resp,
-	}
+	result := ImagesClientUpdatePollerResponse{}
 	pt, err := armruntime.NewPoller("ImagesClient.Update", "", resp, client.pl)
 	if err != nil {
 		return ImagesClientUpdatePollerResponse{}, err
