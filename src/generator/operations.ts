@@ -796,6 +796,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         }
         text += emitQueryParam(qp, setter);
       }
+      imports.add('strings');
       text += '\treq.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")\n';
     }
   }
