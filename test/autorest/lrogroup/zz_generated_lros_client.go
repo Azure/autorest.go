@@ -696,6 +696,111 @@ func (client *LROsClient) patch200SucceededIgnoreHeadersCreateRequest(ctx contex
 	return req, nil
 }
 
+// BeginPatch201RetryWithAsyncHeader - Long running patch request, service returns a 201 to the initial request with async
+// header.
+// If the operation fails it returns an *azcore.ResponseError type.
+// options - LROsClientBeginPatch201RetryWithAsyncHeaderOptions contains the optional parameters for the LROsClient.BeginPatch201RetryWithAsyncHeader
+// method.
+func (client *LROsClient) BeginPatch201RetryWithAsyncHeader(ctx context.Context, options *LROsClientBeginPatch201RetryWithAsyncHeaderOptions) (LROsClientPatch201RetryWithAsyncHeaderPollerResponse, error) {
+	resp, err := client.patch201RetryWithAsyncHeader(ctx, options)
+	if err != nil {
+		return LROsClientPatch201RetryWithAsyncHeaderPollerResponse{}, err
+	}
+	result := LROsClientPatch201RetryWithAsyncHeaderPollerResponse{}
+	pt, err := armruntime.NewPoller("LROsClient.Patch201RetryWithAsyncHeader", "azure-async-operation", resp, client.pl)
+	if err != nil {
+		return LROsClientPatch201RetryWithAsyncHeaderPollerResponse{}, err
+	}
+	result.Poller = &LROsClientPatch201RetryWithAsyncHeaderPoller{
+		pt: pt,
+	}
+	return result, nil
+}
+
+// Patch201RetryWithAsyncHeader - Long running patch request, service returns a 201 to the initial request with async header.
+// If the operation fails it returns an *azcore.ResponseError type.
+func (client *LROsClient) patch201RetryWithAsyncHeader(ctx context.Context, options *LROsClientBeginPatch201RetryWithAsyncHeaderOptions) (*http.Response, error) {
+	req, err := client.patch201RetryWithAsyncHeaderCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
+		return nil, runtime.NewResponseError(resp)
+	}
+	return resp, nil
+}
+
+// patch201RetryWithAsyncHeaderCreateRequest creates the Patch201RetryWithAsyncHeader request.
+func (client *LROsClient) patch201RetryWithAsyncHeaderCreateRequest(ctx context.Context, options *LROsClientBeginPatch201RetryWithAsyncHeaderOptions) (*policy.Request, error) {
+	urlPath := "/lro/patch/201/retry/onlyAsyncHeader"
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "application/json")
+	if options != nil && options.Product != nil {
+		return req, runtime.MarshalAsJSON(req, *options.Product)
+	}
+	return req, nil
+}
+
+// BeginPatch202RetryWithAsyncAndLocationHeader - Long running patch request, service returns a 202 to the initial request
+// with async and location header.
+// If the operation fails it returns an *azcore.ResponseError type.
+// options - LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions contains the optional parameters for the LROsClient.BeginPatch202RetryWithAsyncAndLocationHeader
+// method.
+func (client *LROsClient) BeginPatch202RetryWithAsyncAndLocationHeader(ctx context.Context, options *LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions) (LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse, error) {
+	resp, err := client.patch202RetryWithAsyncAndLocationHeader(ctx, options)
+	if err != nil {
+		return LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse{}, err
+	}
+	result := LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse{}
+	pt, err := armruntime.NewPoller("LROsClient.Patch202RetryWithAsyncAndLocationHeader", "", resp, client.pl)
+	if err != nil {
+		return LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse{}, err
+	}
+	result.Poller = &LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller{
+		pt: pt,
+	}
+	return result, nil
+}
+
+// Patch202RetryWithAsyncAndLocationHeader - Long running patch request, service returns a 202 to the initial request with
+// async and location header.
+// If the operation fails it returns an *azcore.ResponseError type.
+func (client *LROsClient) patch202RetryWithAsyncAndLocationHeader(ctx context.Context, options *LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions) (*http.Response, error) {
+	req, err := client.patch202RetryWithAsyncAndLocationHeaderCreateRequest(ctx, options)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
+		return nil, runtime.NewResponseError(resp)
+	}
+	return resp, nil
+}
+
+// patch202RetryWithAsyncAndLocationHeaderCreateRequest creates the Patch202RetryWithAsyncAndLocationHeader request.
+func (client *LROsClient) patch202RetryWithAsyncAndLocationHeaderCreateRequest(ctx context.Context, options *LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions) (*policy.Request, error) {
+	urlPath := "/lro/patch/202/retry/asyncAndLocationHeader"
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "application/json")
+	if options != nil && options.Product != nil {
+		return req, runtime.MarshalAsJSON(req, *options.Product)
+	}
+	return req, nil
+}
+
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header.
 // Poll returns a 200 with a response body after success.
 // If the operation fails it returns an *azcore.ResponseError type.
