@@ -17,6 +17,55 @@ import (
 	"reflect"
 )
 
+// PagingClientDuplicateParamsPager provides operations for iterating over paged responses.
+type PagingClientDuplicateParamsPager struct {
+	client    *PagingClient
+	current   PagingClientDuplicateParamsResponse
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientDuplicateParamsResponse) (*policy.Request, error)
+}
+
+// More returns true if there are more pages to retrieve.
+func (p *PagingClientDuplicateParamsPager) More() bool {
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.ProductResult.NextLink == nil || len(*p.current.ProductResult.NextLink) == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// NextPage advances the pager to the next page.
+func (p *PagingClientDuplicateParamsPager) NextPage(ctx context.Context) (PagingClientDuplicateParamsResponse, error) {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if !p.More() {
+			return PagingClientDuplicateParamsResponse{}, errors.New("no more pages")
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		return PagingClientDuplicateParamsResponse{}, err
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		return PagingClientDuplicateParamsResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+
+		return PagingClientDuplicateParamsResponse{}, runtime.NewResponseError(resp)
+	}
+	result, err := p.client.duplicateParamsHandleResponse(resp)
+	if err != nil {
+		return PagingClientDuplicateParamsResponse{}, err
+	}
+	p.current = result
+	return p.current, nil
+}
+
 // PagingClientFirstResponseEmptyPager provides operations for iterating over paged responses.
 type PagingClientFirstResponseEmptyPager struct {
 	client    *PagingClient

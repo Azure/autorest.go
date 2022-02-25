@@ -1946,6 +1946,90 @@ func (p *LROsClientPatch200SucceededIgnoreHeadersPoller) ResumeToken() (string, 
 	return p.pt.ResumeToken()
 }
 
+// LROsClientPatch201RetryWithAsyncHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROsClientPatch201RetryWithAsyncHeaderPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *LROsClientPatch201RetryWithAsyncHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *LROsClientPatch201RetryWithAsyncHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final LROsClientPatch201RetryWithAsyncHeaderResponse will be returned.
+func (p *LROsClientPatch201RetryWithAsyncHeaderPoller) FinalResponse(ctx context.Context) (LROsClientPatch201RetryWithAsyncHeaderResponse, error) {
+	respType := LROsClientPatch201RetryWithAsyncHeaderResponse{}
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsClientPatch201RetryWithAsyncHeaderResponse{}, err
+	}
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *LROsClientPatch201RetryWithAsyncHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+// LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller provides polling facilities until the operation reaches a terminal state.
+type LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse will be returned.
+func (p *LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller) FinalResponse(ctx context.Context) (LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse, error) {
+	respType := LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse{}
+	_, err := p.pt.FinalResponse(ctx, &respType.Product)
+	if err != nil {
+		return LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse{}, err
+	}
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
 // LROsClientPost200WithPayloadPoller provides polling facilities until the operation reaches a terminal state.
 type LROsClientPost200WithPayloadPoller struct {
 	pt *azcore.Poller

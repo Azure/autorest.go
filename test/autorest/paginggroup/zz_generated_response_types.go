@@ -14,6 +14,11 @@ import (
 	"time"
 )
 
+// PagingClientDuplicateParamsResponse contains the response from method PagingClient.DuplicateParams.
+type PagingClientDuplicateParamsResponse struct {
+	ProductResult
+}
+
 // PagingClientFirstResponseEmptyResponse contains the response from method PagingClient.FirstResponseEmpty.
 type PagingClientFirstResponseEmptyResponse struct {
 	ProductResultValue

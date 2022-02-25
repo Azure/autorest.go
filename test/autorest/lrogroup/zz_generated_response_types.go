@@ -1821,6 +1821,85 @@ type LROsClientPatch200SucceededIgnoreHeadersResponse struct {
 	Product
 }
 
+// LROsClientPatch201RetryWithAsyncHeaderPollerResponse contains the response from method LROsClient.Patch201RetryWithAsyncHeader.
+type LROsClientPatch201RetryWithAsyncHeaderPollerResponse struct {
+	// Poller contains an initialized poller.
+	Poller *LROsClientPatch201RetryWithAsyncHeaderPoller
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
+func (l LROsClientPatch201RetryWithAsyncHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPatch201RetryWithAsyncHeaderResponse, error) {
+	respType := LROsClientPatch201RetryWithAsyncHeaderResponse{}
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return respType, err
+	}
+	return respType, nil
+}
+
+// Resume rehydrates a LROsClientPatch201RetryWithAsyncHeaderPollerResponse from the provided client and resume token.
+func (l *LROsClientPatch201RetryWithAsyncHeaderPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch201RetryWithAsyncHeader", token, client.pl)
+	if err != nil {
+		return err
+	}
+	poller := &LROsClientPatch201RetryWithAsyncHeaderPoller{
+		pt: pt,
+	}
+	_, err = poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	return nil
+}
+
+// LROsClientPatch201RetryWithAsyncHeaderResponse contains the response from method LROsClient.Patch201RetryWithAsyncHeader.
+type LROsClientPatch201RetryWithAsyncHeaderResponse struct {
+	Product
+}
+
+// LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse contains the response from method LROsClient.Patch202RetryWithAsyncAndLocationHeader.
+type LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse struct {
+	// Poller contains an initialized poller.
+	Poller *LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller
+}
+
+// PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
+// freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
+func (l LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse, error) {
+	respType := LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse{}
+	_, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Product)
+	if err != nil {
+		return respType, err
+	}
+	return respType, nil
+}
+
+// Resume rehydrates a LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse from the provided client and resume
+// token.
+func (l *LROsClientPatch202RetryWithAsyncAndLocationHeaderPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch202RetryWithAsyncAndLocationHeader", token, client.pl)
+	if err != nil {
+		return err
+	}
+	poller := &LROsClientPatch202RetryWithAsyncAndLocationHeaderPoller{
+		pt: pt,
+	}
+	_, err = poller.Poll(ctx)
+	if err != nil {
+		return err
+	}
+	l.Poller = poller
+	return nil
+}
+
+// LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse contains the response from method LROsClient.Patch202RetryWithAsyncAndLocationHeader.
+type LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse struct {
+	Product
+}
+
 // LROsClientPost200WithPayloadPollerResponse contains the response from method LROsClient.Post200WithPayload.
 type LROsClientPost200WithPayloadPollerResponse struct {
 	// Poller contains an initialized poller.

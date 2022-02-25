@@ -36,6 +36,12 @@ type PagingClientBeginGetMultiplePagesLROOptions struct {
 	Timeout *int32
 }
 
+// PagingClientDuplicateParamsOptions contains the optional parameters for the PagingClient.DuplicateParams method.
+type PagingClientDuplicateParamsOptions struct {
+	// OData filter options. Pass in 'foo'
+	Filter *string
+}
+
 // PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty method.
 type PagingClientFirstResponseEmptyOptions struct {
 	// placeholder for future optional parameters
