@@ -238,6 +238,16 @@ type LROsClientPatch200SucceededIgnoreHeadersResponse struct {
 	Product
 }
 
+// LROsClientPatch201RetryWithAsyncHeaderResponse contains the response from method LROsClient.Patch201RetryWithAsyncHeader.
+type LROsClientPatch201RetryWithAsyncHeaderResponse struct {
+	Product
+}
+
+// LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse contains the response from method LROsClient.Patch202RetryWithAsyncAndLocationHeader.
+type LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse struct {
+	Product
+}
+
 // LROsClientPost200WithPayloadResponse contains the response from method LROsClient.Post200WithPayload.
 type LROsClientPost200WithPayloadResponse struct {
 	SKU

@@ -308,6 +308,20 @@ type LROsClientBeginPatch200SucceededIgnoreHeadersOptions struct {
 	Product *Product
 }
 
+// LROsClientBeginPatch201RetryWithAsyncHeaderOptions contains the optional parameters for the LROsClient.BeginPatch201RetryWithAsyncHeader
+// method.
+type LROsClientBeginPatch201RetryWithAsyncHeaderOptions struct {
+	// Product to patch
+	Product *Product
+}
+
+// LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions contains the optional parameters for the LROsClient.BeginPatch202RetryWithAsyncAndLocationHeader
+// method.
+type LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions struct {
+	// Product to patch
+	Product *Product
+}
+
 // LROsClientBeginPost200WithPayloadOptions contains the optional parameters for the LROsClient.BeginPost200WithPayload method.
 type LROsClientBeginPost200WithPayloadOptions struct {
 	// placeholder for future optional parameters
