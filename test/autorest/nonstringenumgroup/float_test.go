@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newFloatClient() *FloatClient {
@@ -18,9 +19,7 @@ func newFloatClient() *FloatClient {
 func TestFloatGet(t *testing.T) {
 	client := newFloatClient()
 	result, err := client.Get(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, FloatEnumFourHundredTwentyNine1.ToPtr()); r != "" {
 		t.Fatal(r)
 	}
@@ -32,9 +31,7 @@ func TestFloatPut(t *testing.T) {
 	result, err := client.Put(context.Background(), &FloatClientPutOptions{
 		Input: FloatEnumTwoHundred4.ToPtr(),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if *result.Value != "Nice job posting a float enum" {
 		t.Fatalf("unexpected value %s", *result.Value)
 	}

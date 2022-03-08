@@ -7,6 +7,8 @@ import (
 	"context"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newSkipURLEncodingClient() *SkipURLEncodingClient {
@@ -17,9 +19,7 @@ func newSkipURLEncodingClient() *SkipURLEncodingClient {
 func TestGetMethodPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetMethodPathValid(context.Background(), "path1/path2/path3", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -29,9 +29,7 @@ func TestGetMethodPathValid(t *testing.T) {
 func TestGetMethodQueryNull(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetMethodQueryNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -41,9 +39,7 @@ func TestGetMethodQueryNull(t *testing.T) {
 func TestGetMethodQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetMethodQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -53,9 +49,7 @@ func TestGetMethodQueryValid(t *testing.T) {
 func TestGetPathQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetPathQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -65,9 +59,7 @@ func TestGetPathQueryValid(t *testing.T) {
 func TestGetPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetPathValid(context.Background(), "path1/path2/path3", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -77,9 +69,7 @@ func TestGetPathValid(t *testing.T) {
 func TestGetSwaggerPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetSwaggerPathValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -89,9 +79,7 @@ func TestGetSwaggerPathValid(t *testing.T) {
 func TestGetSwaggerQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetSwaggerQueryValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

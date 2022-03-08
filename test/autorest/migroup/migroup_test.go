@@ -9,6 +9,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newMultipleInheritanceServiceClient() *MultipleInheritanceServiceClient {
@@ -19,9 +20,7 @@ func newMultipleInheritanceServiceClient() *MultipleInheritanceServiceClient {
 func TestGetCat(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetCat(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Cat, Cat{
 		Hisses:    to.BoolPtr(true),
 		Meows:     to.BoolPtr(true),
@@ -36,9 +35,7 @@ func TestGetCat(t *testing.T) {
 func TestGetFeline(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetFeline(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Feline, Feline{
 		Hisses: to.BoolPtr(true),
 		Meows:  to.BoolPtr(true),
@@ -51,9 +48,7 @@ func TestGetFeline(t *testing.T) {
 func TestGetHorse(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetHorse(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Horse, Horse{
 		Name:         to.StringPtr("Fred"),
 		IsAShowHorse: to.BoolPtr(true),
@@ -66,9 +61,7 @@ func TestGetHorse(t *testing.T) {
 func TestGetKitten(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetKitten(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Kitten, Kitten{
 		Hisses:      to.BoolPtr(true),
 		Meows:       to.BoolPtr(true),
@@ -84,9 +77,7 @@ func TestGetKitten(t *testing.T) {
 func TestGetPet(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.GetPet(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
 		Name: to.StringPtr("Peanut"),
 	}); r != "" {
@@ -103,9 +94,7 @@ func TestPutCat(t *testing.T) {
 		Name:      to.StringPtr("Boots"),
 		LikesMilk: to.BoolPtr(false),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.StringPtr("Cat was correct!")); r != "" {
 		t.Fatal(r)
 	}
@@ -118,9 +107,7 @@ func TestPutFeline(t *testing.T) {
 		Hisses: to.BoolPtr(true),
 		Meows:  to.BoolPtr(false),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.StringPtr("Feline was correct!")); r != "" {
 		t.Fatal(r)
 	}
@@ -133,9 +120,7 @@ func TestPutHorse(t *testing.T) {
 		Name:         to.StringPtr("General"),
 		IsAShowHorse: to.BoolPtr(false),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.StringPtr("Horse was correct!")); r != "" {
 		t.Fatal(r)
 	}
@@ -151,9 +136,7 @@ func TestPutKitten(t *testing.T) {
 		LikesMilk:   to.BoolPtr(false),
 		EatsMiceYet: to.BoolPtr(true),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.StringPtr("Kitten was correct!")); r != "" {
 		t.Fatal(r)
 	}
@@ -165,9 +148,7 @@ func TestPutPet(t *testing.T) {
 	result, err := client.PutPet(context.Background(), Pet{
 		Name: to.StringPtr("Butter"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.StringPtr("Pet was correct!")); r != "" {
 		t.Fatal(r)
 	}

@@ -6,6 +6,8 @@ package headgroup
 import (
 	"context"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newHTTPSuccessOperationsClient() *HTTPSuccessClient {
@@ -16,9 +18,7 @@ func newHTTPSuccessOperationsClient() *HTTPSuccessClient {
 func TestHead200(t *testing.T) {
 	client := newHTTPSuccessOperationsClient()
 	resp, err := client.Head200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !resp.Success {
 		t.Fatal("expected success")
 	}
@@ -28,9 +28,7 @@ func TestHead200(t *testing.T) {
 func TestHead204(t *testing.T) {
 	client := newHTTPSuccessOperationsClient()
 	resp, err := client.Head204(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !resp.Success {
 		t.Fatal("expected success")
 	}
@@ -40,9 +38,7 @@ func TestHead204(t *testing.T) {
 func TestHead404(t *testing.T) {
 	client := newHTTPSuccessOperationsClient()
 	resp, err := client.Head404(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if resp.Success {
 		t.Fatal("expected non-success")
 	}

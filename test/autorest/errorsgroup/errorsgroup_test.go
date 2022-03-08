@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPetClient() *PetClient {
@@ -25,9 +26,7 @@ func newPetClient() *PetClient {
 func TestDoSomethingSuccess(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "stay", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	// bug in test server, route returns wrong JSON model so PetAction is empty
 	if r := cmp.Diff(result.PetAction, PetAction{}); r != "" {
 		t.Fatal(r)
@@ -121,9 +120,7 @@ ERROR CODE UNAVAILABLE
 func TestGetPetByIDSuccess1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "tommy", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
 		AniType: to.StringPtr("Dog"),
 		Name:    to.StringPtr("Tommy Tomson"),
@@ -135,9 +132,7 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 func TestGetPetByIDSuccess2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "django", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -202,9 +197,7 @@ ERROR CODE UNAVAILABLE
 func TestGetPetByIDError3(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "ringo", nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
 		t.Fatalf("expected azcore.ResponseError: %v", err)
@@ -228,9 +221,7 @@ ERROR CODE UNAVAILABLE
 func TestGetPetByIDError4(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "alien123", nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
 		t.Fatalf("expected azcore.ResponseError: %v", err)

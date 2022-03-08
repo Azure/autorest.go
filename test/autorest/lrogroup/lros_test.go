@@ -16,6 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newLROSClient() *LROsClient {
@@ -37,14 +38,10 @@ func httpClientWithCookieJar() policy.Transporter {
 func TestLROResumeWrongPoller(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDelete202NoRetry204(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp2 := LROsClientDelete202Retry200PollerResponse{}
 	if err = resp2.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not find receive one")
@@ -54,115 +51,83 @@ func TestLROResumeWrongPoller(t *testing.T) {
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDelete202NoRetry204(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDelete202NoRetry204PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDelete202Retry200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDelete202Retry200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDelete202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDelete204Succeeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDelete204Succeeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	_, err = poller.ResumeToken()
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteAsyncNoHeaderInRetry(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteAsyncNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteAsyncNoRetrySucceeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteAsyncNoRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteAsyncRetryFailed(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteAsyncRetryFailedPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
@@ -185,35 +150,25 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteAsyncRetrySucceeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteAsyncRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteAsyncRetrycanceled(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteAsyncRetrycanceledPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
@@ -236,56 +191,40 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteNoHeaderInRetry(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteProvisioning202Accepted200Succeeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteProvisioning202DeletingFailed200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -294,14 +233,10 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginDeleteProvisioning202Deletingcanceled200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -310,22 +245,16 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 func TestLROBeginPost200WithPayload(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPost200WithPayload(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPost200WithPayloadPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
@@ -337,22 +266,16 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 func TestLROBeginPost202List(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPost202List(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPost202ListPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.ProductArray, []*Product{
 		{
 			ID:   to.StringPtr("100"),
@@ -366,64 +289,46 @@ func TestLROBeginPost202List(t *testing.T) {
 func TestLROBeginPost202NoRetry204(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPost202NoRetry204(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPost202NoRetry204PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginPost202Retry200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPost202Retry200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPost202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostAsyncNoRetrySucceeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostAsyncNoRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -438,14 +343,10 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostAsyncRetryFailed(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostAsyncRetryFailedPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
@@ -468,22 +369,16 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostAsyncRetrySucceeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostAsyncRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -498,14 +393,10 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostAsyncRetrycanceled(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostAsyncRetrycanceledPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
@@ -528,22 +419,16 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGet(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID: to.StringPtr("100"),
 	}); r != "" {
@@ -554,22 +439,16 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostDoubleHeadersFinalAzureHeaderGetDefault(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -581,22 +460,16 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPostDoubleHeadersFinalLocationGet(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPostDoubleHeadersFinalLocationGetPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -608,14 +481,10 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut200Acceptedcanceled200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -630,18 +499,14 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 func TestLROBeginPut200Succeeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut200Succeeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	_, err = poller.ResumeToken()
 	if err == nil {
 		t.Fatal("Expected an error but did not receive one")
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -656,18 +521,14 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut200SucceededNoState(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	_, err = poller.ResumeToken()
 	if err == nil {
 		t.Fatal("Expected an error but did not receive one")
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -680,22 +541,16 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut200UpdatingSucceeded204(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPut200UpdatingSucceeded204PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -710,14 +565,10 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut201CreatingFailed200(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if err = resp.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not receive one")
 	}
@@ -732,22 +583,16 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LROsClientBeginPut201CreatingSucceeded200Options{Product: &Product{}})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPut201CreatingSucceeded200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -762,22 +607,16 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 func TestLROBeginPut202Retry200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut202Retry200(context.Background(), &LROsClientBeginPut202Retry200Options{Product: &Product{}})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPut202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -789,22 +628,16 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LROsClientBeginPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -819,22 +652,16 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LROsClientBeginPutAsyncNoRetrySucceededOptions{Product: &Product{}})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncNoRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -849,14 +676,10 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncNoRetrycanceled(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncNoRetrycanceledPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
@@ -879,22 +702,16 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncNonResource(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncNonResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
@@ -906,14 +723,10 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncRetryFailed(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncRetryFailedPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
@@ -936,22 +749,16 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncRetrySucceeded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -966,22 +773,16 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPutAsyncSubResource(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutAsyncSubResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
 		ID: to.StringPtr("100"),
 		Properties: &SubProductProperties{
@@ -996,22 +797,16 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutNoHeaderInRetry(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
 		ID: to.StringPtr("100"),
 		Properties: &ProductProperties{
@@ -1026,22 +821,16 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutNonResource(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutNonResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SKU, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
@@ -1054,22 +843,16 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutSubResource(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = LROsClientPutSubResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
 		ID: to.StringPtr("100"),
 		Properties: &SubProductProperties{

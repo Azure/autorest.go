@@ -10,6 +10,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPetsClient() *PetsClient {
@@ -28,9 +29,7 @@ func TestCreateAPInProperties(t *testing.T) {
 			"footsize": to.Float32Ptr(11.5),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.PetAPInProperties, PetAPInProperties{
 		ID:     to.Int32Ptr(4),
 		Name:   to.StringPtr("Bunny"),
@@ -63,9 +62,7 @@ func TestCreateAPInPropertiesWithAPString(t *testing.T) {
 			"footsize": to.Float32Ptr(11.5),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.PetAPInPropertiesWithAPString, PetAPInPropertiesWithAPString{
 		ID:            to.Int32Ptr(5),
 		Name:          to.StringPtr("Funny"),
@@ -106,9 +103,7 @@ func TestCreateAPObject(t *testing.T) {
 			"picture": base64.StdEncoding.EncodeToString([]byte{255, 255, 255, 255, 254}),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.PetAPObject, PetAPObject{
 		ID:     to.Int32Ptr(2),
 		Name:   to.StringPtr("Hira"),
@@ -143,9 +138,7 @@ func TestCreateAPString(t *testing.T) {
 			"city":   to.StringPtr("Bombay"),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.PetAPString, PetAPString{
 		ID:     to.Int32Ptr(3),
 		Name:   to.StringPtr("Tommy"),
@@ -173,9 +166,7 @@ func TestCreateAPTrue(t *testing.T) {
 			},
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.PetAPTrue, PetAPTrue{
 		ID:     to.Int32Ptr(1),
 		Name:   to.StringPtr("Puppy"),
@@ -205,9 +196,7 @@ func TestCreateCatAPTrue(t *testing.T) {
 		},
 		Friendly: to.BoolPtr(true),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.CatAPTrue, CatAPTrue{
 		ID:     to.Int32Ptr(1),
 		Name:   to.StringPtr("Lisa"),

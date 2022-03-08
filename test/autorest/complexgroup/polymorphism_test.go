@@ -11,6 +11,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPolymorphismClient() *PolymorphismClient {
@@ -21,9 +22,7 @@ func newPolymorphismClient() *PolymorphismClient {
 func TestPolymorphismGetComplicated(t *testing.T) {
 	client := newPolymorphismClient()
 	result, err := client.GetComplicated(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	salmon, ok := result.SalmonClassification.(*SmartSalmon)
 	if !ok {
 		t.Fatal("fish wasn't a smart salmon")
@@ -154,9 +153,7 @@ func TestPolymorphismGetComplicated(t *testing.T) {
 func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 	client := newPolymorphismClient()
 	result, err := client.GetComposedWithDiscriminator(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DotFishMarket, DotFishMarket{
 		Fishes: []DotFishClassification{
 			&DotSalmon{
@@ -207,9 +204,7 @@ func TestPolymorphismGetComposedWithDiscriminator(t *testing.T) {
 func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 	client := newPolymorphismClient()
 	result, err := client.GetComposedWithoutDiscriminator(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DotFishMarket, DotFishMarket{
 		Fishes: []DotFishClassification{
 			&DotFish{
@@ -248,9 +243,7 @@ func TestPolymorphismGetComposedWithoutDiscriminator(t *testing.T) {
 func TestPolymorphismGetDotSyntax(t *testing.T) {
 	client := newPolymorphismClient()
 	result, err := client.GetDotSyntax(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DotFishClassification, &DotSalmon{
 		FishType: to.StringPtr("DotSalmon"),
 		Species:  to.StringPtr("king"),
@@ -265,9 +258,7 @@ func TestPolymorphismGetDotSyntax(t *testing.T) {
 func TestPolymorphismGetValid(t *testing.T) {
 	client := newPolymorphismClient()
 	result, err := client.GetValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	salmon, ok := result.FishClassification.(*Salmon)
 	if !ok {
 		t.Fatal("fish wasn't a salmon")
@@ -363,9 +354,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 			},
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -406,9 +395,7 @@ func TestPolymorphismPutMissingDiscriminator(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expectedSalmon := &Salmon{
 		Length: to.Float32Ptr(1),
 		Siblings: []FishClassification{
@@ -481,9 +468,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

@@ -8,6 +8,8 @@ import (
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newPathsClient() *PathsClient {
@@ -17,9 +19,7 @@ func newPathsClient() *PathsClient {
 func TestArrayCSVInPath(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.ArrayCSVInPath(context.Background(), []string{"ArrayPath1", "begin!*'();:@ &=+$,/?#[]end", "", ""}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -28,9 +28,7 @@ func TestArrayCSVInPath(t *testing.T) {
 func TestPathsBase64URL(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.Base64URL(context.Background(), []byte("lorem"), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -39,9 +37,7 @@ func TestPathsBase64URL(t *testing.T) {
 func TestPathsByteEmpty(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.ByteEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -50,9 +46,7 @@ func TestPathsByteEmpty(t *testing.T) {
 func TestPathsByteMultiByte(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.ByteMultiByte(context.Background(), []byte("啊齄丂狛狜隣郎隣兀﨩"), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -71,9 +65,7 @@ func TestPathsDateNull(t *testing.T) {
 	client := newPathsClient()
 	var time time.Time
 	result, err := client.DateNull(context.Background(), time, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -83,9 +75,7 @@ func TestPathsDateTimeNull(t *testing.T) {
 	client := newPathsClient()
 	var time time.Time
 	result, err := client.DateTimeNull(context.Background(), time, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -94,9 +84,7 @@ func TestPathsDateTimeNull(t *testing.T) {
 func TestPathsDateTimeValid(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.DateTimeValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -105,9 +93,7 @@ func TestPathsDateTimeValid(t *testing.T) {
 func TestPathsDateValid(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.DateValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -116,9 +102,7 @@ func TestPathsDateValid(t *testing.T) {
 func TestPathsDoubleDecimalNegative(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.DoubleDecimalNegative(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -127,9 +111,7 @@ func TestPathsDoubleDecimalNegative(t *testing.T) {
 func TestPathsDoubleDecimalPositive(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.DoubleDecimalPositive(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -148,9 +130,7 @@ func TestPathsEnumValid(t *testing.T) {
 	client := newPathsClient()
 	color := URIColorGreenColor
 	result, err := client.EnumValid(context.Background(), color, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -159,9 +139,7 @@ func TestPathsEnumValid(t *testing.T) {
 func TestPathsFloatScientificNegative(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.FloatScientificNegative(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -170,9 +148,7 @@ func TestPathsFloatScientificNegative(t *testing.T) {
 func TestPathsFloatScientificPositive(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.FloatScientificPositive(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -181,9 +157,7 @@ func TestPathsFloatScientificPositive(t *testing.T) {
 func TestPathsGetBooleanFalse(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.GetBooleanFalse(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -192,9 +166,7 @@ func TestPathsGetBooleanFalse(t *testing.T) {
 func TestPathsGetBooleanTrue(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.GetBooleanTrue(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -203,9 +175,7 @@ func TestPathsGetBooleanTrue(t *testing.T) {
 func TestPathsGetIntNegativeOneMillion(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.GetIntNegativeOneMillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -214,9 +184,7 @@ func TestPathsGetIntNegativeOneMillion(t *testing.T) {
 func TestPathsGetIntOneMillion(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.GetIntOneMillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -225,9 +193,7 @@ func TestPathsGetIntOneMillion(t *testing.T) {
 func TestPathsGetNegativeTenBillion(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.GetNegativeTenBillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -236,9 +202,7 @@ func TestPathsGetNegativeTenBillion(t *testing.T) {
 func TestPathsGetTenBillion(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.GetTenBillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -247,9 +211,7 @@ func TestPathsGetTenBillion(t *testing.T) {
 func TestPathsStringEmpty(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.StringEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -267,9 +229,7 @@ func TestPathsStringNull(t *testing.T) {
 func TestPathsStringURLEncoded(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.StringURLEncoded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -278,9 +238,7 @@ func TestPathsStringURLEncoded(t *testing.T) {
 func TestPathsStringURLNonEncoded(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.StringURLNonEncoded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -289,9 +247,7 @@ func TestPathsStringURLNonEncoded(t *testing.T) {
 func TestPathsStringUnicode(t *testing.T) {
 	client := newPathsClient()
 	result, err := client.StringUnicode(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -300,13 +256,9 @@ func TestPathsStringUnicode(t *testing.T) {
 func TestPathsUnixTimeURL(t *testing.T) {
 	client := newPathsClient()
 	d, err := time.Parse("2006-01-02", "2016-04-13")
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	result, err := client.UnixTimeURL(context.Background(), d, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

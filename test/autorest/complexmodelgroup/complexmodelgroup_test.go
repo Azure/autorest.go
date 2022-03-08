@@ -6,6 +6,8 @@ package complexmodelgroup
 import (
 	"context"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newComplexModelClient() *ComplexModelClient {
@@ -15,23 +17,17 @@ func newComplexModelClient() *ComplexModelClient {
 func TestCreate(t *testing.T) {
 	client := newComplexModelClient()
 	_, err := client.Create(context.Background(), "sub", "rg", CatalogDictionaryOfArray{}, nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 }
 
 func TestList(t *testing.T) {
 	client := newComplexModelClient()
 	_, err := client.List(context.Background(), "", nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 }
 
 func TestUpdate(t *testing.T) {
 	client := newComplexModelClient()
 	_, err := client.Update(context.Background(), "", "", CatalogArrayOfDictionary{}, nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 }

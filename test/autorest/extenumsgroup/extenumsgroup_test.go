@@ -9,6 +9,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPetClient() *PetClient {
@@ -22,9 +23,7 @@ func TestAddPet(t *testing.T) {
 			Name: to.StringPtr("Retriever"),
 		},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
 		Name: to.StringPtr("Retriever"),
 	}); r != "" {
@@ -35,9 +34,7 @@ func TestAddPet(t *testing.T) {
 func TestGetByPetIDExpected(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetByPetID(context.Background(), "tommy", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
 		DaysOfWeek: DaysOfWeekExtensibleEnumMonday.ToPtr(),
 		IntEnum:    IntEnumOne.ToPtr(),
@@ -50,9 +47,7 @@ func TestGetByPetIDExpected(t *testing.T) {
 func TestGetByPetIDUnexpected(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetByPetID(context.Background(), "casper", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
 		DaysOfWeek: (*DaysOfWeekExtensibleEnum)(to.StringPtr("Weekend")),
 		IntEnum:    IntEnumTwo.ToPtr(),
@@ -65,9 +60,7 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 func TestGetByPetIDAllowed(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetByPetID(context.Background(), "scooby", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
 		DaysOfWeek: DaysOfWeekExtensibleEnumThursday.ToPtr(),
 		IntEnum:    (*IntEnum)(to.StringPtr("2.1")),

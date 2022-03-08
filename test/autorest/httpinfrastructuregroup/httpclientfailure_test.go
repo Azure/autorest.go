@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/stretchr/testify/require"
 )
 
 func newHTTPClientFailureClient() *HTTPClientFailureClient {
@@ -122,9 +123,7 @@ func TestHTTPClientFailureGet416(t *testing.T) {
 func TestHTTPClientFailureHead400(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head400(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if result.Success {
 		t.Fatal("Expected a false result")
 	}
@@ -133,9 +132,7 @@ func TestHTTPClientFailureHead400(t *testing.T) {
 func TestHTTPClientFailureHead401(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head401(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if result.Success {
 		t.Fatal("Expected a false result")
 	}
@@ -144,9 +141,7 @@ func TestHTTPClientFailureHead401(t *testing.T) {
 func TestHTTPClientFailureHead410(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head410(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if result.Success {
 		t.Fatal("Expected a false result")
 	}
@@ -155,9 +150,7 @@ func TestHTTPClientFailureHead410(t *testing.T) {
 func TestHTTPClientFailureHead429(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head429(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if result.Success {
 		t.Fatal("Expected a false result")
 	}

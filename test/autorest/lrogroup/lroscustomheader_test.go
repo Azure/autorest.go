@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
@@ -32,13 +33,9 @@ func ctxWithHTTPHeader() context.Context {
 func TestBeginPost202Retry200(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
 	env, err := op.BeginPost202Retry200(ctxWithHTTPHeader(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	tk, err := env.Poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	env = LROsCustomHeaderClientPost202Retry200PollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
@@ -62,13 +59,9 @@ func TestBeginPost202Retry200(t *testing.T) {
 func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
 	env, err := op.BeginPostAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	tk, err := env.Poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	env = LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
@@ -92,13 +85,9 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
 	env, err := op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	tk, err := env.Poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	env = LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
@@ -113,9 +102,7 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 		}
 	}
 	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pr.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
@@ -131,13 +118,9 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
 	env, err := op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	tk, err := env.Poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	env = LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
@@ -152,9 +135,7 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 		}
 	}
 	pr, err := env.Poller.FinalResponse(ctxWithHTTPHeader())
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(pr.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),

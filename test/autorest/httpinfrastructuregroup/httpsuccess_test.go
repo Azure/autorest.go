@@ -7,6 +7,8 @@ import (
 	"context"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newHTTPSuccessClient() *HTTPSuccessClient {
@@ -82,9 +84,7 @@ func TestHTTPSuccessHead204(t *testing.T) {
 func TestHTTPSuccessHead404(t *testing.T) {
 	client := newHTTPSuccessClient()
 	result, err := client.Head404(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if result.Success {
 		t.Fatal("unexpected Success")
 	}

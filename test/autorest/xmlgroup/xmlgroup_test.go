@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func toTimePtr(layout string, value string) *time.Time {
@@ -34,9 +35,7 @@ func newXMLClient() *XMLClient {
 func TestGetACLs(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetACLs(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := []*SignedIdentifier{
 		{
 			ID: to.StringPtr("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI="),
@@ -55,9 +54,7 @@ func TestGetACLs(t *testing.T) {
 func TestGetBytes(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetBytes(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if string(result.Bytes) != "Hello world" {
 		t.Fatalf("unexpected bytes %s", string(result.Bytes))
 	}
@@ -66,9 +63,7 @@ func TestGetBytes(t *testing.T) {
 func TestGetComplexTypeRefNoMeta(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetComplexTypeRefNoMeta(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := RootWithRefAndNoMeta{
 		RefToModel: &ComplexTypeNoMeta{
 			ID: to.StringPtr("myid"),
@@ -83,9 +78,7 @@ func TestGetComplexTypeRefNoMeta(t *testing.T) {
 func TestGetComplexTypeRefWithMeta(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetComplexTypeRefWithMeta(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := RootWithRefAndMeta{
 		RefToModel: &ComplexTypeWithMeta{
 			ID: to.StringPtr("myid"),
@@ -100,9 +93,7 @@ func TestGetComplexTypeRefWithMeta(t *testing.T) {
 func TestGetEmptyChildElement(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetEmptyChildElement(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := Banana{
 		Name:       to.StringPtr("Unknown Banana"),
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
@@ -116,9 +107,7 @@ func TestGetEmptyChildElement(t *testing.T) {
 func TestGetEmptyList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetEmptyList(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := Slideshow{}
 	if r := cmp.Diff(result.Slideshow, expected); r != "" {
 		t.Fatal(r)
@@ -128,9 +117,7 @@ func TestGetEmptyList(t *testing.T) {
 func TestGetEmptyRootList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetEmptyRootList(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if result.Bananas != nil {
 		t.Fatal("expected nil slice")
 	}
@@ -139,9 +126,7 @@ func TestGetEmptyRootList(t *testing.T) {
 func TestGetEmptyWrappedLists(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetEmptyWrappedLists(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := AppleBarrel{}
 	if r := cmp.Diff(result.AppleBarrel, expected); r != "" {
 		t.Fatal(r)
@@ -151,9 +136,7 @@ func TestGetEmptyWrappedLists(t *testing.T) {
 func TestGetHeaders(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetHeaders(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.CustomHeader, to.StringPtr("custom-value")); r != "" {
 		t.Fatal(r)
 	}
@@ -162,9 +145,7 @@ func TestGetHeaders(t *testing.T) {
 func TestGetRootList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetRootList(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := []*Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -185,9 +166,7 @@ func TestGetRootList(t *testing.T) {
 func TestGetRootListSingleItem(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetRootListSingleItem(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := []*Banana{
 		{
 			Name:       to.StringPtr("Cavendish"),
@@ -203,9 +182,7 @@ func TestGetRootListSingleItem(t *testing.T) {
 func TestGetServiceProperties(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetServiceProperties(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := StorageServiceProperties{
 		HourMetrics: &Metrics{
 			Version:     to.StringPtr("1.0"),
@@ -244,9 +221,7 @@ func TestGetServiceProperties(t *testing.T) {
 func TestGetSimple(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetSimple(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := Slideshow{
 		Author: to.StringPtr("Yours Truly"),
 		Date:   to.StringPtr("Date of publication"),
@@ -271,9 +246,7 @@ func TestGetSimple(t *testing.T) {
 func TestGetWrappedLists(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.GetWrappedLists(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := AppleBarrel{
 		BadApples:  to.StringPtrArray("Red Delicious"),
 		GoodApples: to.StringPtrArray("Fuji", "Gala"),
@@ -287,9 +260,7 @@ func TestGetXMsText(t *testing.T) {
 	t.Skip("support NYI")
 	client := newXMLClient()
 	result, err := client.GetXMsText(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := ObjectWithXMsTextProperty{
 		Content:  to.StringPtr("I am text"),
 		Language: to.StringPtr("english"),
@@ -304,9 +275,7 @@ func TestJSONInput(t *testing.T) {
 	result, err := client.JSONInput(context.Background(), JSONInput{
 		ID: to.Int32Ptr(42),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -315,9 +284,7 @@ func TestJSONInput(t *testing.T) {
 func TestJSONOutput(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.JSONOutput(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := JSONOutput{
 		ID: to.Int32Ptr(42),
 	}
@@ -329,17 +296,11 @@ func TestJSONOutput(t *testing.T) {
 func TestListBlobs(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.ListBlobs(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	blob1LM, err := time.Parse(time.RFC1123, "Wed, 09 Sep 2009 09:20:02 GMT")
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	blob2LM, err := time.Parse(time.RFC1123, "Wed, 09 Sep 2009 09:20:03 GMT")
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := ListBlobsResponse{
 		Blobs: &Blobs{
 			Blob: []*Blob{
@@ -458,9 +419,7 @@ func TestListBlobs(t *testing.T) {
 func TestListContainers(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.ListContainers(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	expected := ListContainersResponse{
 		ServiceEndpoint: to.StringPtr("https://myaccount.blob.core.windows.net/"),
 		MaxResults:      to.Int32Ptr(3),
@@ -507,9 +466,7 @@ func TestPutACLs(t *testing.T) {
 			},
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -520,9 +477,7 @@ func TestPutBinary(t *testing.T) {
 	_, err := client.PutBinary(context.Background(), ModelWithByteProperty{
 		Bytes: []byte("Hello world"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 }
 
 func TestPutComplexTypeRefNoMeta(t *testing.T) {
@@ -533,9 +488,7 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 		},
 		Something: to.StringPtr("else"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -549,9 +502,7 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 		},
 		Something: to.StringPtr("else"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -564,9 +515,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 		Expiration: toTimePtr(time.RFC3339Nano, "2012-02-24T00:53:52.789Z"),
 		Flavor:     to.StringPtr(""),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -577,9 +526,7 @@ func TestPutEmptyList(t *testing.T) {
 	result, err := client.PutEmptyList(context.Background(), Slideshow{
 		Slides: []*Slide{},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -588,9 +535,7 @@ func TestPutEmptyList(t *testing.T) {
 func TestPutEmptyRootList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.PutEmptyRootList(context.Background(), []*Banana{}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -602,9 +547,7 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 		BadApples:  []*string{},
 		GoodApples: []*string{},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -624,9 +567,7 @@ func TestPutRootList(t *testing.T) {
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -641,9 +582,7 @@ func TestPutRootListSingleItem(t *testing.T) {
 			Expiration: toTimePtr(time.RFC3339Nano, "2018-02-28T00:40:00.123Z"),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -681,9 +620,7 @@ func TestPutServiceProperties(t *testing.T) {
 			},
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -707,9 +644,7 @@ func TestPutSimple(t *testing.T) {
 			},
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -721,9 +656,7 @@ func TestPutWrappedLists(t *testing.T) {
 		BadApples:  to.StringPtrArray("Red Delicious"),
 		GoodApples: to.StringPtrArray("Fuji", "Gala"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPagingClient() *PagingClient {
@@ -149,22 +150,16 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 func TestGetMultiplePagesLro(t *testing.T) {
 	client := newPagingClient()
 	resp, err := client.BeginGetMultiplePagesLRO(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	resp = PagingClientGetMultiplePagesLROPollerResponse{}
 	if err = resp.Resume(context.Background(), client, rt); err != nil {
 		t.Fatal(err)
 	}
 	pager, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
