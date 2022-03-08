@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
 func newXMSClientRequestIDClient() *XMSClientRequestIDClient {
@@ -19,7 +19,7 @@ func newXMSClientRequestIDClient() *XMSClientRequestIDClient {
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 func TestGet(t *testing.T) {
 	client := newXMSClientRequestIDClient()
-	result, err := client.Get(policy.WithHTTPHeader(context.Background(), http.Header{
+	result, err := client.Get(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), nil)
 	if err != nil {
