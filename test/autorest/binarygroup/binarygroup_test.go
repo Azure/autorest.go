@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
+	"github.com/stretchr/testify/require"
 )
 
 func newBinaryGroupClient() *UploadClient {
@@ -20,9 +21,7 @@ func newBinaryGroupClient() *UploadClient {
 func TestBinary(t *testing.T) {
 	client := newBinaryGroupClient()
 	resp, err := client.Binary(context.Background(), streaming.NopCloser(bytes.NewReader([]byte{0xff, 0xfe, 0xfd})), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -32,9 +31,7 @@ func TestFile(t *testing.T) {
 	client := newBinaryGroupClient()
 	jsonFile := strings.NewReader(`{ "more": "cowbell" }`)
 	resp, err := client.File(context.Background(), streaming.NopCloser(jsonFile), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

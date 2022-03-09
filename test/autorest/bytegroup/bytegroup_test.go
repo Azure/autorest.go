@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newByteClient() *ByteClient {
@@ -30,9 +31,7 @@ func TestGetInvalid(t *testing.T) {
 	client := newByteClient()
 	result, err := client.GetInvalid(context.Background(), nil)
 	// TODO: verify error response is clear and actionable
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}

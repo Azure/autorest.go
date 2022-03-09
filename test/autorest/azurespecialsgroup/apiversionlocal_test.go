@@ -7,6 +7,8 @@ import (
 	"context"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newAPIVersionLocalClient() *APIVersionLocalClient {
@@ -17,9 +19,7 @@ func newAPIVersionLocalClient() *APIVersionLocalClient {
 func TestGetMethodLocalNull(t *testing.T) {
 	client := newAPIVersionLocalClient()
 	result, err := client.GetMethodLocalNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -29,9 +29,7 @@ func TestGetMethodLocalNull(t *testing.T) {
 func TestGetMethodLocalValid(t *testing.T) {
 	client := newAPIVersionLocalClient()
 	result, err := client.GetMethodLocalValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -41,9 +39,7 @@ func TestGetMethodLocalValid(t *testing.T) {
 func TestGetPathLocalValid(t *testing.T) {
 	client := newAPIVersionLocalClient()
 	result, err := client.GetPathLocalValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -53,9 +49,7 @@ func TestGetPathLocalValid(t *testing.T) {
 func TestGetSwaggerLocalValid(t *testing.T) {
 	client := newAPIVersionLocalClient()
 	result, err := client.GetSwaggerLocalValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/stretchr/testify/require"
 )
 
 func newSubscriptionInMethodClient() *SubscriptionInMethodClient {
@@ -27,9 +28,7 @@ func TestPostMethodLocalValid(t *testing.T) {
 	result, err := client.PostMethodLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -41,9 +40,7 @@ func TestPostPathLocalValid(t *testing.T) {
 	result, err := client.PostPathLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -55,9 +52,7 @@ func TestPostSwaggerLocalValid(t *testing.T) {
 	result, err := client.PostSwaggerLocalValid(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), "1234-5678-9012-3456", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

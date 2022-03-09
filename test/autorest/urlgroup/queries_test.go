@@ -7,6 +7,8 @@ import (
 	"context"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newQueriesClient() *QueriesClient {
@@ -19,9 +21,7 @@ func TestArrayStringCSVEmpty(t *testing.T) {
 	result, err := client.ArrayStringCSVEmpty(context.Background(), &QueriesClientArrayStringCSVEmptyOptions{
 		ArrayQuery: []string{},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -31,9 +31,7 @@ func TestArrayStringCSVEmpty(t *testing.T) {
 func TestArrayStringCSVNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringCSVNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -45,9 +43,7 @@ func TestArrayStringCsvValid(t *testing.T) {
 	result, err := client.ArrayStringCSVValid(context.Background(), &QueriesClientArrayStringCSVValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -59,9 +55,7 @@ func TestArrayStringPipesValid(t *testing.T) {
 	result, err := client.ArrayStringPipesValid(context.Background(), &QueriesClientArrayStringPipesValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -73,9 +67,7 @@ func TestArrayStringSsvValid(t *testing.T) {
 	result, err := client.ArrayStringSsvValid(context.Background(), &QueriesClientArrayStringSsvValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -87,9 +79,7 @@ func TestArrayStringTsvValid(t *testing.T) {
 	result, err := client.ArrayStringTsvValid(context.Background(), &QueriesClientArrayStringTsvValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -99,9 +89,7 @@ func TestArrayStringTsvValid(t *testing.T) {
 func TestByteEmpty(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ByteEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -113,9 +101,7 @@ func TestByteMultiByte(t *testing.T) {
 	result, err := client.ByteMultiByte(context.Background(), &QueriesClientByteMultiByteOptions{
 		ByteQuery: []byte("啊齄丂狛狜隣郎隣兀﨩"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -125,9 +111,7 @@ func TestByteMultiByte(t *testing.T) {
 func TestByteNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ByteNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -137,9 +121,7 @@ func TestByteNull(t *testing.T) {
 func TestDateNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DateNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -149,9 +131,7 @@ func TestDateNull(t *testing.T) {
 func TestDateTimeNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DateTimeNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -161,9 +141,7 @@ func TestDateTimeNull(t *testing.T) {
 func TestDateTimeValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DateTimeValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -173,9 +151,7 @@ func TestDateTimeValid(t *testing.T) {
 func TestDateValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DateValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -185,9 +161,7 @@ func TestDateValid(t *testing.T) {
 func TestDoubleDecimalNegative(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DoubleDecimalNegative(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -197,9 +171,7 @@ func TestDoubleDecimalNegative(t *testing.T) {
 func TestDoubleDecimalPositive(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DoubleDecimalPositive(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -209,9 +181,7 @@ func TestDoubleDecimalPositive(t *testing.T) {
 func TestDoubleNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.DoubleNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -221,9 +191,7 @@ func TestDoubleNull(t *testing.T) {
 func TestEnumNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.EnumNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -235,9 +203,7 @@ func TestEnumValid(t *testing.T) {
 	result, err := client.EnumValid(context.Background(), &QueriesClientEnumValidOptions{
 		EnumQuery: URIColorGreenColor.ToPtr(),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -247,9 +213,7 @@ func TestEnumValid(t *testing.T) {
 func TestFloatNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.FloatNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -259,9 +223,7 @@ func TestFloatNull(t *testing.T) {
 func TestFloatScientificNegative(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.FloatScientificNegative(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -271,9 +233,7 @@ func TestFloatScientificNegative(t *testing.T) {
 func TestFloatScientificPositive(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.FloatScientificPositive(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -283,9 +243,7 @@ func TestFloatScientificPositive(t *testing.T) {
 func TestGetBooleanFalse(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetBooleanFalse(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -295,9 +253,7 @@ func TestGetBooleanFalse(t *testing.T) {
 func TestGetBooleanNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetBooleanNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -307,9 +263,7 @@ func TestGetBooleanNull(t *testing.T) {
 func TestGetBooleanTrue(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetBooleanTrue(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -319,9 +273,7 @@ func TestGetBooleanTrue(t *testing.T) {
 func TestGetIntNegativeOneMillion(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetIntNegativeOneMillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -331,9 +283,7 @@ func TestGetIntNegativeOneMillion(t *testing.T) {
 func TestGetIntNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetIntNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -343,9 +293,7 @@ func TestGetIntNull(t *testing.T) {
 func TestGetIntOneMillion(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetIntOneMillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -355,9 +303,7 @@ func TestGetIntOneMillion(t *testing.T) {
 func TestGetLongNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetLongNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -367,9 +313,7 @@ func TestGetLongNull(t *testing.T) {
 func TestGetNegativeTenBillion(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetNegativeTenBillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -379,9 +323,7 @@ func TestGetNegativeTenBillion(t *testing.T) {
 func TestGetTenBillion(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.GetTenBillion(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -391,9 +333,7 @@ func TestGetTenBillion(t *testing.T) {
 func TestStringEmpty(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.StringEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -403,9 +343,7 @@ func TestStringEmpty(t *testing.T) {
 func TestStringNull(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.StringNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -415,9 +353,7 @@ func TestStringNull(t *testing.T) {
 func TestStringURLEncoded(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.StringURLEncoded(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -427,9 +363,7 @@ func TestStringURLEncoded(t *testing.T) {
 func TestStringUnicode(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.StringUnicode(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

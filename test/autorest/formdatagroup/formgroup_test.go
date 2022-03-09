@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
+	"github.com/stretchr/testify/require"
 )
 
 func newFormdataClient() *FormdataClient {
@@ -21,13 +22,9 @@ func TestUploadFile(t *testing.T) {
 	client := newFormdataClient()
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFile(context.Background(), streaming.NopCloser(s), "sample", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
 	}
@@ -37,13 +34,9 @@ func TestUploadFileViaBody(t *testing.T) {
 	client := newFormdataClient()
 	s := strings.NewReader("the data")
 	resp, err := client.UploadFileViaBody(context.Background(), streaming.NopCloser(s), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
 	}
@@ -58,13 +51,9 @@ func TestUploadFiles(t *testing.T) {
 		streaming.NopCloser(s1),
 		streaming.NopCloser(s2),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if string(b) != "the data" {
 		t.Fatalf("unexpected result %s", string(b))
 	}

@@ -11,6 +11,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newDictionaryClient() *DictionaryClient {
@@ -21,9 +22,7 @@ func newDictionaryClient() *DictionaryClient {
 func TestGetArrayEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetArrayEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(len(resp.Value), 0); r != "" {
 		t.Fatal(r)
 	}
@@ -33,9 +32,7 @@ func TestGetArrayEmpty(t *testing.T) {
 func TestGetArrayItemEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetArrayItemEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string][]*string{
 		"0": to.StringPtrArray("1", "2", "3"),
 		"1": {},
@@ -49,9 +46,7 @@ func TestGetArrayItemEmpty(t *testing.T) {
 func TestGetArrayItemNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetArrayItemNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	// TODO: this should technically fail since there's no x-nullable
 	if r := cmp.Diff(resp.Value, map[string][]*string{
 		"0": to.StringPtrArray("1", "2", "3"),
@@ -66,9 +61,7 @@ func TestGetArrayItemNull(t *testing.T) {
 func TestGetArrayNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetArrayNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if resp.Value != nil {
 		t.Fatal("expected nil dictionary")
 	}
@@ -78,9 +71,7 @@ func TestGetArrayNull(t *testing.T) {
 func TestGetArrayValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetArrayValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string][]*string{
 		"0": to.StringPtrArray("1", "2", "3"),
 		"1": to.StringPtrArray("4", "5", "6"),
@@ -95,9 +86,7 @@ func TestGetBase64URL(t *testing.T) {
 	t.Skip("unmarshalling fails")
 	client := newDictionaryClient()
 	resp, err := client.GetBase64URL(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string][]byte{
 		"0": {},
 		"1": {},
@@ -111,9 +100,7 @@ func TestGetBase64URL(t *testing.T) {
 func TestGetBooleanInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetBooleanInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*bool{
 		"0": to.BoolPtr(true),
 		"1": nil,
@@ -127,9 +114,7 @@ func TestGetBooleanInvalidNull(t *testing.T) {
 func TestGetBooleanInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetBooleanInvalidString(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -139,9 +124,7 @@ func TestGetBooleanInvalidString(t *testing.T) {
 func TestGetBooleanTfft(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetBooleanTfft(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*bool{
 		"0": to.BoolPtr(true),
 		"1": to.BoolPtr(false),
@@ -156,9 +139,7 @@ func TestGetBooleanTfft(t *testing.T) {
 func TestGetByteInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetByteInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string][]byte{
 		"0": {0xab, 0xac, 0xad},
 		"1": nil,
@@ -171,9 +152,7 @@ func TestGetByteInvalidNull(t *testing.T) {
 func TestGetByteValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetByteValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string][]byte{
 		"0": {255, 255, 255, 250},
 		"1": {1, 2, 3},
@@ -187,9 +166,7 @@ func TestGetByteValid(t *testing.T) {
 func TestGetComplexEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetComplexEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*Widget{}); r != "" {
 		t.Fatal(r)
 	}
@@ -199,9 +176,7 @@ func TestGetComplexEmpty(t *testing.T) {
 func TestGetComplexItemEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetComplexItemEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {},
@@ -215,9 +190,7 @@ func TestGetComplexItemEmpty(t *testing.T) {
 func TestGetComplexItemNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetComplexItemNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": nil,
@@ -231,9 +204,7 @@ func TestGetComplexItemNull(t *testing.T) {
 func TestGetComplexNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetComplexNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if resp.Value != nil {
 		t.Fatal("expected nil dictionary")
 	}
@@ -243,9 +214,7 @@ func TestGetComplexNull(t *testing.T) {
 func TestGetComplexValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetComplexValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*Widget{
 		"0": {Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
 		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
@@ -259,9 +228,7 @@ func TestGetComplexValid(t *testing.T) {
 func TestGetDateInvalidChars(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateInvalidChars(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -271,9 +238,7 @@ func TestGetDateInvalidChars(t *testing.T) {
 func TestGetDateInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	v1 := time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
 	v3 := time.Date(1776, 7, 4, 0, 0, 0, 0, time.UTC)
 	if r := cmp.Diff(resp.Value, map[string]*time.Time{
@@ -289,9 +254,7 @@ func TestGetDateInvalidNull(t *testing.T) {
 func TestGetDateTimeInvalidChars(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateTimeInvalidChars(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -301,9 +264,7 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 func TestGetDateTimeInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateTimeInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	if r := cmp.Diff(resp.Value, map[string]*time.Time{
 		"0": &dt1,
@@ -317,9 +278,7 @@ func TestGetDateTimeInvalidNull(t *testing.T) {
 func TestGetDateTimeRFC1123Valid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateTimeRFC1123Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	dt1, _ := time.Parse(time.RFC1123, "Fri, 01 Dec 2000 00:00:01 GMT")
 	dt2, _ := time.Parse(time.RFC1123, "Wed, 02 Jan 1980 00:11:35 GMT")
 	dt3, _ := time.Parse(time.RFC1123, "Wed, 12 Oct 1492 10:15:01 GMT")
@@ -336,9 +295,7 @@ func TestGetDateTimeRFC1123Valid(t *testing.T) {
 func TestGetDateTimeValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateTimeValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	dt1, _ := time.Parse(time.RFC3339, "2000-12-01T00:00:01Z")
 	dt2, _ := time.Parse(time.RFC3339, "1980-01-02T00:11:35+01:00")
 	dt3, _ := time.Parse(time.RFC3339, "1492-10-12T10:15:01-08:00")
@@ -355,9 +312,7 @@ func TestGetDateTimeValid(t *testing.T) {
 func TestGetDateValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	dt1 := time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC)
 	dt2 := time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC)
 	dt3 := time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)
@@ -374,9 +329,7 @@ func TestGetDateValid(t *testing.T) {
 func TestGetDictionaryEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]map[string]*string{}); r != "" {
 		t.Fatal(r)
 	}
@@ -386,9 +339,7 @@ func TestGetDictionaryEmpty(t *testing.T) {
 func TestGetDictionaryItemEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryItemEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]map[string]*string{
 		"0": {
 			"1": to.StringPtr("one"),
@@ -410,9 +361,7 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 func TestGetDictionaryItemNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryItemNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]map[string]*string{
 		"0": {
 			"1": to.StringPtr("one"),
@@ -434,9 +383,7 @@ func TestGetDictionaryItemNull(t *testing.T) {
 func TestGetDictionaryNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if resp.Value != nil {
 		t.Fatal("expected nil value")
 	}
@@ -446,9 +393,7 @@ func TestGetDictionaryNull(t *testing.T) {
 func TestGetDictionaryValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDictionaryValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]map[string]*string{
 		"0": {
 			"1": to.StringPtr("one"),
@@ -474,9 +419,7 @@ func TestGetDictionaryValid(t *testing.T) {
 func TestGetDoubleInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*float64{
 		"0": to.Float64Ptr(0),
 		"1": nil,
@@ -490,9 +433,7 @@ func TestGetDoubleInvalidNull(t *testing.T) {
 func TestGetDoubleInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDoubleInvalidString(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -502,9 +443,7 @@ func TestGetDoubleInvalidString(t *testing.T) {
 func TestGetDoubleValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDoubleValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*float64{
 		"0": to.Float64Ptr(0),
 		"1": to.Float64Ptr(-0.01),
@@ -518,9 +457,7 @@ func TestGetDoubleValid(t *testing.T) {
 func TestGetDurationValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDurationValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*string{
 		"0": to.StringPtr("P123DT22H14M12.011S"),
 		"1": to.StringPtr("P5DT1H"),
@@ -533,9 +470,7 @@ func TestGetDurationValid(t *testing.T) {
 func TestGetEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if len(resp.Value) != 0 {
 		t.Fatal("expected empty dictionary")
 	}
@@ -545,9 +480,7 @@ func TestGetEmpty(t *testing.T) {
 func TestGetEmptyStringKey(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetEmptyStringKey(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*string{"": to.StringPtr("val1")}); r != "" {
 		t.Fatal(r)
 	}
@@ -557,9 +490,7 @@ func TestGetEmptyStringKey(t *testing.T) {
 func TestGetFloatInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*float32{
 		"0": to.Float32Ptr(0),
 		"1": nil,
@@ -573,9 +504,7 @@ func TestGetFloatInvalidNull(t *testing.T) {
 func TestGetFloatInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetFloatInvalidString(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -585,9 +514,7 @@ func TestGetFloatInvalidString(t *testing.T) {
 func TestGetFloatValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetFloatValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*float32{
 		"0": to.Float32Ptr(0),
 		"1": to.Float32Ptr(-0.01),
@@ -601,9 +528,7 @@ func TestGetFloatValid(t *testing.T) {
 func TestGetIntInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*int32{
 		"0": to.Int32Ptr(1),
 		"1": nil,
@@ -617,9 +542,7 @@ func TestGetIntInvalidNull(t *testing.T) {
 func TestGetIntInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetIntInvalidString(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -629,9 +552,7 @@ func TestGetIntInvalidString(t *testing.T) {
 func TestGetIntegerValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetIntegerValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*int32{
 		"0": to.Int32Ptr(1),
 		"1": to.Int32Ptr(-1),
@@ -646,9 +567,7 @@ func TestGetIntegerValid(t *testing.T) {
 func TestGetInvalid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetInvalid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -658,9 +577,7 @@ func TestGetInvalid(t *testing.T) {
 func TestGetLongInvalidNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*int64{
 		"0": to.Int64Ptr(1),
 		"1": nil,
@@ -674,9 +591,7 @@ func TestGetLongInvalidNull(t *testing.T) {
 func TestGetLongInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetLongInvalidString(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -686,9 +601,7 @@ func TestGetLongInvalidString(t *testing.T) {
 func TestGetLongValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetLongValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*int64{
 		"0": to.Int64Ptr(1),
 		"1": to.Int64Ptr(-1),
@@ -703,9 +616,7 @@ func TestGetLongValid(t *testing.T) {
 func TestGetNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if resp.Value != nil {
 		t.Fatal("expected nil map")
 	}
@@ -715,9 +626,7 @@ func TestGetNull(t *testing.T) {
 func TestGetNullKey(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetNullKey(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -727,9 +636,7 @@ func TestGetNullKey(t *testing.T) {
 func TestGetNullValue(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetNullValue(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*string{
 		"key1": nil,
 	}); r != "" {
@@ -741,9 +648,7 @@ func TestGetNullValue(t *testing.T) {
 func TestGetStringValid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetStringValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*string{
 		"0": to.StringPtr("foo1"),
 		"1": to.StringPtr("foo2"),
@@ -757,9 +662,7 @@ func TestGetStringValid(t *testing.T) {
 func TestGetStringWithInvalid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetStringWithInvalid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -769,9 +672,7 @@ func TestGetStringWithInvalid(t *testing.T) {
 func TestGetStringWithNull(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetStringWithNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Value, map[string]*string{
 		"0": to.StringPtr("foo"),
 		"1": nil,
@@ -789,9 +690,7 @@ func TestPutArrayValid(t *testing.T) {
 		"1": to.StringPtrArray("4", "5", "6"),
 		"2": to.StringPtrArray("7", "8", "9"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -806,9 +705,7 @@ func TestPutBooleanTfft(t *testing.T) {
 		"2": to.BoolPtr(false),
 		"3": to.BoolPtr(true),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -822,9 +719,7 @@ func TestPutByteValid(t *testing.T) {
 		"1": {1, 2, 3},
 		"2": {37, 41, 67},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -838,9 +733,7 @@ func TestPutComplexValid(t *testing.T) {
 		"1": {Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -857,9 +750,7 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 		"1": &dt2,
 		"2": &dt3,
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -876,9 +767,7 @@ func TestPutDateTimeValid(t *testing.T) {
 		"1": &dt2,
 		"2": &dt3,
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -895,9 +784,7 @@ func TestPutDateValid(t *testing.T) {
 		"1": &d2,
 		"2": &d3,
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -923,9 +810,7 @@ func TestPutDictionaryValid(t *testing.T) {
 			"9": to.StringPtr("nine"),
 		},
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -939,9 +824,7 @@ func TestPutDoubleValid(t *testing.T) {
 		"1": to.Float64Ptr(-0.01),
 		"2": to.Float64Ptr(-1.2e20),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -954,9 +837,7 @@ func TestPutDurationValid(t *testing.T) {
 		"0": to.StringPtr("P123DT22H14M12.011S"),
 		"1": to.StringPtr("P5DT1H"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -966,9 +847,7 @@ func TestPutDurationValid(t *testing.T) {
 func TestPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.PutEmpty(context.Background(), map[string]*string{}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -982,9 +861,7 @@ func TestPutFloatValid(t *testing.T) {
 		"1": to.Float32Ptr(-0.01),
 		"2": to.Float32Ptr(-1.2e20),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -999,9 +876,7 @@ func TestPutIntegerValid(t *testing.T) {
 		"2": to.Int32Ptr(3),
 		"3": to.Int32Ptr(300),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -1016,9 +891,7 @@ func TestPutLongValid(t *testing.T) {
 		"2": to.Int64Ptr(3),
 		"3": to.Int64Ptr(300),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -1032,9 +905,7 @@ func TestPutStringValid(t *testing.T) {
 		"1": to.StringPtr("foo2"),
 		"2": to.StringPtr("foo3"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(resp).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

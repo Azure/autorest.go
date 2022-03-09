@@ -10,6 +10,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newDurationClient() *DurationClient {
@@ -20,17 +21,13 @@ func TestGetInvalid(t *testing.T) {
 	t.Skip("this does not apply to us meanwhile we do not parse durations")
 	client := newDurationClient()
 	_, err := client.GetInvalid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 }
 
 func TestGetNull(t *testing.T) {
 	client := newDurationClient()
 	result, err := client.GetNull(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	var s *string
 	if r := cmp.Diff(result.Value, s); r != "" {
 		t.Fatal(r)
@@ -40,9 +37,7 @@ func TestGetNull(t *testing.T) {
 func TestGetPositiveDuration(t *testing.T) {
 	client := newDurationClient()
 	result, err := client.GetPositiveDuration(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.StringPtr("P3Y6M4DT12H30M5S")); r != "" {
 		t.Fatal(r)
 	}
@@ -51,9 +46,7 @@ func TestGetPositiveDuration(t *testing.T) {
 func TestPutPositiveDuration(t *testing.T) {
 	client := newDurationClient()
 	result, err := client.PutPositiveDuration(context.Background(), "P123DT22H14M12.011S", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/stretchr/testify/require"
 )
 
 func newODataClient() *ODataClient {
@@ -23,9 +24,7 @@ func TestGetWithFilter(t *testing.T) {
 		Orderby: to.StringPtr("id"),
 		Top:     to.Int32Ptr(10),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

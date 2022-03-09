@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newObjectTypeClient() *ObjectTypeClient {
@@ -18,9 +19,7 @@ func newObjectTypeClient() *ObjectTypeClient {
 func TestGet(t *testing.T) {
 	client := newObjectTypeClient()
 	resp, err := client.Get(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(resp.Interface, map[string]interface{}{
 		"message": "An object was successfully returned",
 	}); r != "" {
@@ -33,9 +32,7 @@ func TestPut(t *testing.T) {
 	result, err := client.Put(context.Background(), map[string]interface{}{
 		"foo": "bar",
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

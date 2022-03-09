@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/stretchr/testify/require"
 )
 
 func newXMSClientRequestIDClient() *XMSClientRequestIDClient {
@@ -22,9 +23,7 @@ func TestGet(t *testing.T) {
 	result, err := client.Get(runtime.WithHTTPHeader(context.Background(), http.Header{
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -34,9 +33,7 @@ func TestGet(t *testing.T) {
 func TestParamGet(t *testing.T) {
 	client := newXMSClientRequestIDClient()
 	result, err := client.ParamGet(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

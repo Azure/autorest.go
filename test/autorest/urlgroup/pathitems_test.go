@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetAllWithValues(t *testing.T) {
@@ -17,9 +18,7 @@ func TestGetAllWithValues(t *testing.T) {
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -30,9 +29,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetGlobalAndLocalQueryNullOptions{
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -44,9 +41,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -55,9 +50,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 func TestGetLocalPathItemQueryNull(t *testing.T) {
 	grp := NewPathItemsClient("globalStringPath", to.StringPtr("globalStringQuery"), nil)
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

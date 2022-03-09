@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/stretchr/testify/require"
 )
 
 func newMultipleResponsesClient() *MultipleResponsesClient {
@@ -23,9 +24,7 @@ func newMultipleResponsesClient() *MultipleResponsesClient {
 func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model201ModelDefaultError200Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	switch x := result.Value.(type) {
 	case MyException:
 		if r := cmp.Diff(x.StatusCode, to.StringPtr("200")); r != "" {
@@ -44,9 +43,7 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model201ModelDefaultError201Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	r, ok := result.Value.(B)
 	if !ok {
 		t.Fatalf("unexpected response type %T", result)
@@ -90,9 +87,7 @@ ERROR CODE UNAVAILABLE
 func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError200Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
@@ -154,9 +149,7 @@ Response contained no body
 func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError204Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -201,9 +194,7 @@ func TestGet200ModelA200Invalid(t *testing.T) {
 func TestGet200ModelA200None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA200None(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result.MyException).IsZero() {
 		t.Fatal("expected zero-value MyException")
 	}
@@ -213,9 +204,7 @@ func TestGet200ModelA200None(t *testing.T) {
 func TestGet200ModelA200Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA200Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
@@ -227,9 +216,7 @@ func TestGet200ModelA200Valid(t *testing.T) {
 func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA201ModelC404ModelDDefaultError200Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	r, ok := result.Value.(MyException)
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
@@ -245,9 +232,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA201ModelC404ModelDDefaultError201Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	r, ok := result.Value.(C)
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
@@ -290,9 +275,7 @@ ERROR CODE UNAVAILABLE
 func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA201ModelC404ModelDDefaultError404Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	r, ok := result.Value.(D)
 	if !ok {
 		t.Fatalf("unexpected result type %T", result)
@@ -308,9 +291,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 func TestGet200ModelA202Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA200Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
@@ -327,9 +308,7 @@ func TestGet200ModelA400Invalid(t *testing.T) {
 func TestGet200ModelA400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA400None(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -339,9 +318,7 @@ func TestGet200ModelA400None(t *testing.T) {
 func TestGet200ModelA400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA400Valid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
 	}
@@ -351,9 +328,7 @@ func TestGet200ModelA400Valid(t *testing.T) {
 func TestGet202None204NoneDefaultError202None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultError202None(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -363,9 +338,7 @@ func TestGet202None204NoneDefaultError202None(t *testing.T) {
 func TestGet202None204NoneDefaultError204None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultError204None(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -375,9 +348,7 @@ func TestGet202None204NoneDefaultError204None(t *testing.T) {
 func TestGet202None204NoneDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultError400Valid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
@@ -387,9 +358,7 @@ func TestGet202None204NoneDefaultError400Valid(t *testing.T) {
 func TestGet202None204NoneDefaultNone202Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone202Invalid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -399,9 +368,7 @@ func TestGet202None204NoneDefaultNone202Invalid(t *testing.T) {
 func TestGet202None204NoneDefaultNone204None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone204None(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -411,9 +378,7 @@ func TestGet202None204NoneDefaultNone204None(t *testing.T) {
 func TestGet202None204NoneDefaultNone400Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone400Invalid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
@@ -423,9 +388,7 @@ func TestGet202None204NoneDefaultNone400Invalid(t *testing.T) {
 func TestGet202None204NoneDefaultNone400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone400None(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
@@ -435,9 +398,7 @@ func TestGet202None204NoneDefaultNone400None(t *testing.T) {
 func TestGetDefaultModelA200None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultModelA200None(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result.MyException).IsZero() {
 		t.Fatal("expected zero-value MyException")
 	}
@@ -447,9 +408,7 @@ func TestGetDefaultModelA200None(t *testing.T) {
 func TestGetDefaultModelA200Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultModelA200Valid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
 		StatusCode: to.StringPtr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
@@ -461,9 +420,7 @@ func TestGetDefaultModelA200Valid(t *testing.T) {
 func TestGetDefaultModelA400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultModelA400None(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
@@ -473,9 +430,7 @@ func TestGetDefaultModelA400None(t *testing.T) {
 func TestGetDefaultModelA400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultModelA400Valid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
@@ -490,9 +445,7 @@ func TestGetDefaultNone200Invalid(t *testing.T) {
 func TestGetDefaultNone200None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultNone200None(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -502,9 +455,7 @@ func TestGetDefaultNone200None(t *testing.T) {
 func TestGetDefaultNone400Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultNone400Invalid(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}
@@ -514,9 +465,7 @@ func TestGetDefaultNone400Invalid(t *testing.T) {
 func TestGetDefaultNone400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultNone400None(context.Background(), nil)
-	if err == nil {
-		t.Fatal("unexpected nil error")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("unexpected nil response")
 	}

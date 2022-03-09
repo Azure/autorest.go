@@ -7,6 +7,8 @@ import (
 	"context"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func newAPIVersionDefaultClient() *APIVersionDefaultClient {
@@ -17,9 +19,7 @@ func newAPIVersionDefaultClient() *APIVersionDefaultClient {
 func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetMethodGlobalNotProvidedValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -29,9 +29,7 @@ func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 func TestGetMethodGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetMethodGlobalValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -41,9 +39,7 @@ func TestGetMethodGlobalValid(t *testing.T) {
 func TestGetPathGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetPathGlobalValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}
@@ -53,9 +49,7 @@ func TestGetPathGlobalValid(t *testing.T) {
 func TestGetSwaggerGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetSwaggerGlobalValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

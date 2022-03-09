@@ -11,6 +11,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPolymorphicrecursiveClient() *PolymorphicrecursiveClient {
@@ -21,9 +22,7 @@ func newPolymorphicrecursiveClient() *PolymorphicrecursiveClient {
 func TestGetValid(t *testing.T) {
 	client := newPolymorphicrecursiveClient()
 	result, err := client.GetValid(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	sawBday := time.Date(1900, time.January, 5, 1, 0, 0, 0, time.UTC)
 	sharkBday := time.Date(2012, time.January, 5, 1, 0, 0, 0, time.UTC)
 	if r := cmp.Diff(result.FishClassification, &Salmon{
@@ -155,9 +154,7 @@ func TestPutValid(t *testing.T) {
 		Iswild:   to.BoolPtr(true),
 		Location: to.StringPtr("alaska"),
 	}, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value result")
 	}

@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newPrimitiveClient() *PrimitiveClient {
@@ -160,17 +161,13 @@ func TestPrimitivePutBool(t *testing.T) {
 func TestByteWrapperJSONNull(t *testing.T) {
 	bw := ByteWrapper{}
 	b, err := json.Marshal(bw)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if string(b) != "{}" {
 		t.Fatalf("unexpected value %s", string(b))
 	}
 	bw.Field = azcore.NullValue([]byte{}).([]byte)
 	b, err = json.Marshal(bw)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	if string(b) != `{"field":null}` {
 		t.Fatalf("unexpected value %s", string(b))
 	}
@@ -348,9 +345,7 @@ func TestDatetimeWrapper(t *testing.T) {
 		Now:   &now,
 	}
 	b, err := json.Marshal(dtw)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	var dtw2 DatetimeWrapper
 	if err = json.Unmarshal(b, &dtw2); err != nil {
 		t.Fatal(err)
@@ -370,9 +365,7 @@ func TestDatetimerfc1123Wrapper(t *testing.T) {
 		Now:   &now,
 	}
 	b, err := json.Marshal(dtw)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	var dtw2 Datetimerfc1123Wrapper
 	if err = json.Unmarshal(b, &dtw2); err != nil {
 		t.Fatal(err)
@@ -391,9 +384,7 @@ func TestDateWrapper(t *testing.T) {
 		Leap:  to.TimePtr(time.Date(2021, 10, 22, 0, 0, 0, 0, time.UTC)),
 	}
 	b, err := json.Marshal(dw)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 	var dw2 DateWrapper
 	if err = json.Unmarshal(b, &dw2); err != nil {
 		t.Fatal(err)
