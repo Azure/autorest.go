@@ -38,15 +38,14 @@ func TestBeginPost202Retry200(t *testing.T) {
 	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsCustomHeaderClientPost202Retry200Poller{}
-	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
-	require.NoError(t, err)
+	require.NoError(t, poller.Resume(tk, op))
 	for !poller.Done() {
-		pr, err = poller.Poll(ctxWithHTTPHeader())
-		if err != nil {
-			t.Fatal(err)
-		}
+		_, err = poller.Poll(ctxWithHTTPHeader())
+		require.NoError(t, err)
 	}
-	if !reflect.ValueOf(pr).IsZero() {
+	result, err := poller.Result(context.Background())
+	require.NoError(t, err)
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value final response")
 	}
 }
@@ -59,19 +58,14 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsCustomHeaderClientPostAsyncRetrySucceededPoller{}
-	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
-	require.NoError(t, err)
+	require.NoError(t, poller.Resume(tk, op))
 	for !poller.Done() {
-		pr, err = poller.Poll(ctxWithHTTPHeader())
-		if err != nil {
-			t.Fatal(err)
-		}
+		_, err = poller.Poll(ctxWithHTTPHeader())
+		require.NoError(t, err)
 	}
-	pr, err = poller.Poll(context.Background())
-	if err != nil {
-		t.Fatalf("Unexpected error: %v", err)
-	}
-	if !reflect.ValueOf(pr).IsZero() {
+	result, err := poller.Result(context.Background())
+	require.NoError(t, err)
+	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected zero-value final response")
 	}
 }
@@ -84,17 +78,14 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsCustomHeaderClientPut201CreatingSucceeded200Poller{}
-	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
-	require.NoError(t, err)
+	require.NoError(t, poller.Resume(tk, op))
 	for !poller.Done() {
-		pr, err = poller.Poll(ctxWithHTTPHeader())
-		if err != nil {
-			t.Fatal(err)
-		}
+		_, err = poller.Poll(ctxWithHTTPHeader())
+		require.NoError(t, err)
 	}
-	pr, err = poller.Poll(ctxWithHTTPHeader())
+	result, err := poller.Result(context.Background())
 	require.NoError(t, err)
-	if r := cmp.Diff(pr.Product, Product{
+	if r := cmp.Diff(result.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
@@ -113,15 +104,14 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsCustomHeaderClientPutAsyncRetrySucceededPoller{}
-	pr, err := poller.Resume(ctxWithHTTPHeader(), op, tk)
-	require.NoError(t, err)
+	require.NoError(t, poller.Resume(tk, op))
 	for !poller.Done() {
-		pr, err = poller.Poll(ctxWithHTTPHeader())
-		if err != nil {
-			t.Fatal(err)
-		}
+		_, err = poller.Poll(ctxWithHTTPHeader())
+		require.NoError(t, err)
 	}
-	if r := cmp.Diff(pr.Product, Product{
+	result, err := poller.Result(ctxWithHTTPHeader())
+	require.NoError(t, err)
+	if r := cmp.Diff(result.Product, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{

@@ -154,9 +154,8 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &PagingClientGetMultiplePagesLROPoller{}
-	pager, err := poller.Resume(context.Background(), client, rt)
-	require.NoError(t, err)
-	pager, err = poller.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, poller.Resume(rt, client))
+	pager, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -29,9 +29,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientDelete202Retry200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	result, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if !reflect.ValueOf(result).IsZero() {
@@ -46,9 +44,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientDeleteAsyncRelativeRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -60,9 +56,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientDeleteProvisioning202Accepted200SucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
@@ -83,9 +77,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientPost202Retry200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -97,9 +89,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientPostAsyncRelativeRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -111,9 +101,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientPut201CreatingSucceeded200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
@@ -134,9 +122,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LRORetrysClientPutAsyncRelativeRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{

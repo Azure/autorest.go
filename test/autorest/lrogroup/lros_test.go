@@ -42,9 +42,7 @@ func TestLROResumeWrongPoller(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	resp2 := LROsClientDelete202Retry200Poller{}
-	if _, err = resp2.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not find receive one")
-	}
+	require.Error(t, resp2.Resume(rt, op))
 }
 
 func TestLROBeginDelete202NoRetry204(t *testing.T) {
@@ -54,9 +52,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDelete202NoRetry204Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -68,9 +64,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDelete202Retry200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -94,9 +88,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteAsyncNoHeaderInRetryPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -108,9 +100,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteAsyncNoRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -122,9 +112,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteAsyncRetryFailedPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -147,9 +135,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteAsyncRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -161,9 +147,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteAsyncRetrycanceledPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -186,9 +170,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteNoHeaderInRetryPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -200,9 +182,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientDeleteProvisioning202Accepted200SucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -213,9 +193,10 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
@@ -224,9 +205,10 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROBeginPost200WithPayload(t *testing.T) {
@@ -236,9 +218,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPost200WithPayloadPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SKU, SKU{
@@ -256,9 +236,7 @@ func TestLROBeginPost202List(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPost202ListPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.ProductArray, []*Product{
@@ -278,9 +256,7 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPost202NoRetry204Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -292,9 +268,7 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPost202Retry200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	_, err = poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -306,9 +280,7 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostAsyncNoRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -329,9 +301,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostAsyncRetryFailedPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -354,9 +324,7 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostAsyncRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -377,9 +345,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostAsyncRetrycanceledPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -402,9 +368,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostDoubleHeadersFinalAzureHeaderGetPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -421,9 +385,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -441,9 +403,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPostDoubleHeadersFinalLocationGetPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -460,9 +420,9 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
 		t.Fatal("expected azcore.ResponseError")
@@ -518,9 +478,7 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPut200UpdatingSucceeded204Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -540,9 +498,9 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
 		t.Fatal("expected azcore.ResponseError")
@@ -558,9 +516,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPut201CreatingSucceeded200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -581,9 +537,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPut202Retry200Poller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -601,9 +555,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncNoHeaderInRetryPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -624,9 +576,7 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncNoRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -647,9 +597,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncNoRetrycanceledPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -672,9 +620,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncNonResourcePoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SKU, SKU{
@@ -692,9 +638,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncRetryFailedPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	res, err := poller.PollUntilDone(context.Background(), time.Second)
 	if err == nil {
 		t.Fatal("expected an error but did not receive one")
@@ -717,9 +661,7 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncRetrySucceededPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -740,9 +682,7 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutAsyncSubResourcePoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
@@ -763,9 +703,7 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutNoHeaderInRetryPoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -786,9 +724,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutNonResourcePoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SKU, SKU{
@@ -807,9 +743,7 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
 	poller = &LROsClientPutSubResourcePoller{}
-	if _, err = poller.Resume(context.Background(), op, rt); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, poller.Resume(rt, op))
 	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{

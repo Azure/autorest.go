@@ -25,9 +25,10 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
@@ -59,9 +60,10 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -78,9 +80,10 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
@@ -89,9 +92,10 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginDeleteNonRetry400(t *testing.T) {
@@ -116,9 +120,10 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPost202RetryInvalidHeader(t *testing.T) {
@@ -135,9 +140,10 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -154,9 +160,10 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
@@ -165,9 +172,10 @@ func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPostNonRetry400(t *testing.T) {
@@ -192,9 +200,10 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
@@ -211,9 +220,10 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
@@ -222,9 +232,10 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
@@ -233,9 +244,10 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
@@ -244,9 +256,10 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
@@ -255,9 +268,10 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
@@ -266,9 +280,10 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	if _, err = poller.Resume(context.Background(), op, rt); err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.NoError(t, poller.Resume(rt, op))
+	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestLROSADSBeginPutNonRetry400(t *testing.T) {
