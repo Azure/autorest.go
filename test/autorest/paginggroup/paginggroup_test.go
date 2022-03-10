@@ -40,14 +40,9 @@ func TestGetMultiplePages(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		}
-		if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -108,13 +103,9 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ODataProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -132,13 +123,9 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ODataProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -163,11 +150,9 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	const pageCount = 10
@@ -183,13 +168,9 @@ func TestGetMultiplePagesRetryFirst(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -204,13 +185,9 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -225,13 +202,9 @@ func TestGetMultiplePagesWithOffset(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -246,13 +219,9 @@ func TestGetNoItemNamePages(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResultValue.Value) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Value)
 		count++
 	}
 	if r := cmp.Diff(count, 1); r != "" {
@@ -267,13 +236,9 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 1); r != "" {
@@ -291,13 +256,9 @@ func TestGetOdataMultiplePages(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ODataProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 10); r != "" {
@@ -312,13 +273,9 @@ func TestGetPagingModelWithItemNameWithXMSClientName(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResultValueWithXMSClientName.Indexes) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Indexes)
 		count++
 	}
 	if r := cmp.Diff(count, 1); r != "" {
@@ -333,13 +290,9 @@ func TestGetSinglePages(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 1); r != "" {
@@ -374,13 +327,9 @@ func TestGetWithQueryParams(t *testing.T) {
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
-		if err != nil {
-			t.Fatal(err)
-		} else if reflect.ValueOf(page).IsZero() {
-			t.Fatal("unexpected empty payload")
-		} else if len(page.ProductResult.Values) == 0 {
-			t.Fatal("missing payload")
-		}
+		require.NoError(t, err)
+		require.NotZero(t, page)
+		require.NotEmpty(t, page.ProductResult.Values)
 		count++
 	}
 	if r := cmp.Diff(count, 2); r != "" {

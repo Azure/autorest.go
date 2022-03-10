@@ -5,11 +5,11 @@ package validationgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newAutoRestValidationTestClient() *AutoRestValidationTestClient {
@@ -19,12 +19,8 @@ func newAutoRestValidationTestClient() *AutoRestValidationTestClient {
 func TestValidationGetWithConstantInPath(t *testing.T) {
 	client := newAutoRestValidationTestClient()
 	result, err := client.GetWithConstantInPath(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetWithConstantInPath: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
@@ -38,9 +34,7 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 			ConstProperty:  to.StringPtr("constant"),
 			ConstProperty2: to.StringPtr("constant2")}}
 	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestClientPostWithConstantInBodyOptions{Body: &product})
-	if err != nil {
-		t.Fatalf("PostWithConstantInBody: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(product, result.Product); r != "" {
 		t.Fatal(r)
 	}
@@ -60,10 +54,6 @@ func TestValidationValidationOfBody(t *testing.T) {
 				to.StringPtr("displayname6"),
 				to.StringPtr("displayname7")}},
 	})
-	if err != nil {
-		t.Fatalf("ValidationOfBody: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }

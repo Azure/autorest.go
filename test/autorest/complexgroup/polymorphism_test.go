@@ -5,7 +5,6 @@ package complexgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -355,9 +354,7 @@ func TestPolymorphismPutComplicated(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
@@ -469,9 +466,7 @@ func TestPolymorphismPutValid(t *testing.T) {
 		Location: to.StringPtr("alaska"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request should not be allowed from the client

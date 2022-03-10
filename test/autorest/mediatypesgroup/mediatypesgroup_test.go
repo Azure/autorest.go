@@ -10,6 +10,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/stretchr/testify/require"
 )
 
 func newMediaTypesClient() *MediaTypesClient {
@@ -22,9 +23,7 @@ func TestAnalyzeBody(t *testing.T) {
 	result, err := client.AnalyzeBody(context.Background(), ContentTypeApplicationPDF, &MediaTypesClientAnalyzeBodyOptions{
 		Input: body,
 	})
-	if err != nil {
-		t.Fatalf("AnalyzeBody: %v", err)
-	}
+	require.NoError(t, err)
 	if *result.Value != "Nice job with PDF" {
 		t.Fatalf("unexpected result %s", *result.Value)
 	}
@@ -36,9 +35,7 @@ func TestAnalyzeBodyWithJSON(t *testing.T) {
 		Source: to.StringPtr("test"),
 	}
 	result, err := client.AnalyzeBodyWithJSON(context.Background(), &MediaTypesClientAnalyzeBodyWithJSONOptions{Input: &body})
-	if err != nil {
-		t.Fatalf("AnalyzeBodyWithSourcePath: %v", err)
-	}
+	require.NoError(t, err)
 	if *result.Value != "Nice job with JSON" {
 		t.Fatalf("unexpected result %s", *result.Value)
 	}
@@ -49,9 +46,7 @@ func TestContentTypeWithEncoding(t *testing.T) {
 	result, err := client.ContentTypeWithEncoding(context.Background(), &MediaTypesClientContentTypeWithEncodingOptions{
 		Input: to.StringPtr("foo"),
 	})
-	if err != nil {
-		t.Fatalf("ContentTypeWithEncoding: %v", err)
-	}
+	require.NoError(t, err)
 	if *result.Value != "Nice job sending content type with encoding" {
 		t.Fatalf("unexpected result %s", *result.Value)
 	}

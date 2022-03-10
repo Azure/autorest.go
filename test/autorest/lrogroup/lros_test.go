@@ -84,9 +84,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	require.NoError(t, err)
 	poller := resp.Poller
 	_, err = poller.ResumeToken()
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	_, err = resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 }
@@ -133,9 +131,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
@@ -174,9 +170,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
@@ -352,9 +346,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
@@ -402,9 +394,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
@@ -502,9 +492,7 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 	require.NoError(t, err)
 	poller := resp.Poller
 	_, err = poller.ResumeToken()
-	if err == nil {
-		t.Fatal("Expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -524,9 +512,7 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	require.NoError(t, err)
 	poller := resp.Poller
 	_, err = poller.ResumeToken()
-	if err == nil {
-		t.Fatal("Expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
@@ -685,9 +671,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}
@@ -732,9 +716,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := resp.PollUntilDone(context.Background(), time.Second)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
 	}

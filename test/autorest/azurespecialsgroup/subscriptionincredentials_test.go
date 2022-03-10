@@ -6,7 +6,6 @@ package azurespecialsgroup
 import (
 	"context"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,9 +23,7 @@ func TestPostMethodGlobalNotProvidedValid(t *testing.T) {
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to null, and client-side validation should prevent you from making this call
@@ -41,9 +38,7 @@ func TestPostMethodGlobalValid(t *testing.T) {
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -53,9 +48,7 @@ func TestPostPathGlobalValid(t *testing.T) {
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
@@ -65,7 +58,5 @@ func TestPostSwaggerGlobalValid(t *testing.T) {
 		"x-ms-client-request-id": []string{"9C4D50EE-2D56-4CD3-8152-34347DC9F2B0"},
 	}), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

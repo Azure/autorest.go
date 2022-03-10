@@ -6,7 +6,6 @@ package binarygroup
 import (
 	"bytes"
 	"context"
-	"reflect"
 	"strings"
 	"testing"
 
@@ -22,9 +21,7 @@ func TestBinary(t *testing.T) {
 	client := newBinaryGroupClient()
 	resp, err := client.Binary(context.Background(), streaming.NopCloser(bytes.NewReader([]byte{0xff, 0xfe, 0xfd})), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 func TestFile(t *testing.T) {
@@ -32,7 +29,5 @@ func TestFile(t *testing.T) {
 	jsonFile := strings.NewReader(`{ "more": "cowbell" }`)
 	resp, err := client.File(context.Background(), streaming.NopCloser(jsonFile), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }

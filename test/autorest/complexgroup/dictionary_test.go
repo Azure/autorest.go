@@ -5,10 +5,10 @@ package complexgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newDictionaryClient() *DictionaryClient {
@@ -18,9 +18,7 @@ func newDictionaryClient() *DictionaryClient {
 func TestDictionaryGetEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	result, err := client.GetEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetEmpty: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{DefaultProgram: map[string]*string{}}); r != "" {
 		t.Fatal(r)
 	}
@@ -29,9 +27,7 @@ func TestDictionaryGetEmpty(t *testing.T) {
 func TestDictionaryGetNotProvided(t *testing.T) {
 	client := newDictionaryClient()
 	result, err := client.GetNotProvided(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetNotProvided: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{}); r != "" {
 		t.Fatal(r)
 	}
@@ -40,9 +36,7 @@ func TestDictionaryGetNotProvided(t *testing.T) {
 func TestDictionaryGetNull(t *testing.T) {
 	client := newDictionaryClient()
 	result, err := client.GetNull(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetNull: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DictionaryWrapper, DictionaryWrapper{}); r != "" {
 		t.Fatal(r)
 	}
@@ -51,9 +45,7 @@ func TestDictionaryGetNull(t *testing.T) {
 func TestDictionaryGetValid(t *testing.T) {
 	client := newDictionaryClient()
 	result, err := client.GetValid(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetValid: %v", err)
-	}
+	require.NoError(t, err)
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
 	val := DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}
 	if r := cmp.Diff(result.DictionaryWrapper, val); r != "" {
@@ -64,22 +56,14 @@ func TestDictionaryGetValid(t *testing.T) {
 func TestDictionaryPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	result, err := client.PutEmpty(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{}}, nil)
-	if err != nil {
-		t.Fatalf("PutEmpty: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestDictionaryPutValid(t *testing.T) {
 	client := newDictionaryClient()
 	s1, s2, s3, s4 := "notepad", "mspaint", "excel", ""
 	result, err := client.PutValid(context.Background(), DictionaryWrapper{DefaultProgram: map[string]*string{"txt": &s1, "bmp": &s2, "xls": &s3, "exe": &s4, "": nil}}, nil)
-	if err != nil {
-		t.Fatalf("PutValid: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }

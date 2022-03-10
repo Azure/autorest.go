@@ -31,9 +31,7 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 			t.Fatal(r)
 		}
 	case B:
-		if !reflect.ValueOf(result).IsZero() {
-			t.Fatal("expected zero-value result")
-		}
+		require.Zero(t, result)
 	default:
 		t.Fatalf("unhandled response type %T", x)
 	}
@@ -78,9 +76,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected nil result")
-	}
+	require.Zero(t, result)
 }
 
 // Get200Model204NoModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
@@ -116,9 +112,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 // Get200Model204NoModelDefaultError202None - Send a 202 response with no payload:
@@ -140,9 +134,7 @@ Response contained no body
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 // Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
@@ -150,9 +142,7 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError204Valid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 	if !reflect.ValueOf(result.MyException).IsZero() {
 		t.Fatal("expected zero-value MyException")
 	}
@@ -180,9 +170,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 // Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
@@ -266,9 +254,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected nil result")
-	}
+	require.Zero(t, result)
 }
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}
@@ -309,9 +295,7 @@ func TestGet200ModelA400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA400None(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 // Get200ModelA400Valid - Send a 200 response with payload {'statusCode': '400'}
@@ -319,9 +303,7 @@ func TestGet200ModelA400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA400Valid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultError202None - Send a 202 response with no payload
@@ -329,9 +311,7 @@ func TestGet202None204NoneDefaultError202None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultError202None(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultError204None - Send a 204 response with no payload
@@ -339,9 +319,7 @@ func TestGet202None204NoneDefaultError204None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultError204None(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
@@ -349,9 +327,7 @@ func TestGet202None204NoneDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultError400Valid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultNone202Invalid - Send a 202 response with an unexpected payload {'property': 'value'}
@@ -359,9 +335,7 @@ func TestGet202None204NoneDefaultNone202Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone202Invalid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
@@ -369,9 +343,7 @@ func TestGet202None204NoneDefaultNone204None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone204None(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
@@ -379,9 +351,7 @@ func TestGet202None204NoneDefaultNone400Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone400Invalid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }
 
 // Get202None204NoneDefaultNone400None - Send a 400 response with no payload
@@ -389,9 +359,7 @@ func TestGet202None204NoneDefaultNone400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get202None204NoneDefaultNone400None(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }
 
 // GetDefaultModelA200None - Send a 200 response with no payload
@@ -421,9 +389,7 @@ func TestGetDefaultModelA400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultModelA400None(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }
 
 // GetDefaultModelA400Valid - Send a 400 response with valid payload: {'statusCode': '400'}
@@ -431,9 +397,7 @@ func TestGetDefaultModelA400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultModelA400Valid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }
 
 // GetDefaultNone200Invalid - Send a 200 response with invalid payload: {'statusCode': '200'}
@@ -446,9 +410,7 @@ func TestGetDefaultNone200None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultNone200None(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}
@@ -456,9 +418,7 @@ func TestGetDefaultNone400Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultNone400Invalid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }
 
 // GetDefaultNone400None - Send a 400 response with no payload
@@ -466,7 +426,5 @@ func TestGetDefaultNone400None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.GetDefaultNone400None(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("unexpected nil response")
-	}
+	require.Zero(t, result)
 }

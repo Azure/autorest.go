@@ -5,7 +5,6 @@ package complexgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -155,7 +154,5 @@ func TestPutValid(t *testing.T) {
 		Location: to.StringPtr("alaska"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

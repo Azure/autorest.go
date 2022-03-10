@@ -5,7 +5,6 @@ package lrogroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -35,9 +34,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	}
 	result, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {

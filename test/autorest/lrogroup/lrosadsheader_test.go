@@ -34,9 +34,7 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 func TestLROSADSBeginDelete202RetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginDelete202RetryInvalidHeader(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
@@ -45,9 +43,7 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	require.NoError(t, err)
 	poller := resp.Poller
 	rt, err := poller.ResumeToken()
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 	if rt != "" {
 		t.Fatal("expected an empty resume token")
 	}
@@ -70,9 +66,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginDeleteAsyncRelativeRetryInvalidHeader(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
@@ -102,17 +96,13 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 func TestLROSADSBeginDeleteNonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginDeleteNonRetry400(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPost202NoLocation(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPost202NoLocation(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
@@ -130,9 +120,7 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 func TestLROSADSBeginPost202RetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPost202RetryInvalidHeader(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
@@ -150,9 +138,7 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPostAsyncRelativeRetryInvalidHeader(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
@@ -182,17 +168,13 @@ func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 func TestLROSADSBeginPostNonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPostNonRetry400(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPut200InvalidJSON(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPut200InvalidJSON(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
@@ -210,9 +192,7 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidHeader(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPutAsyncRelativeRetryInvalidHeader(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }
 
 func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
@@ -290,7 +270,5 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 func TestLROSADSBeginPutNonRetry400(t *testing.T) {
 	op := newLrosaDsClient()
 	_, err := op.BeginPutNonRetry400(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected an error but did not receive one")
-	}
+	require.Error(t, err)
 }

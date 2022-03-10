@@ -5,7 +5,6 @@ package xmlgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -276,9 +275,7 @@ func TestJSONInput(t *testing.T) {
 		ID: to.Int32Ptr(42),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestJSONOutput(t *testing.T) {
@@ -467,9 +464,7 @@ func TestPutACLs(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutBinary(t *testing.T) {
@@ -489,9 +484,7 @@ func TestPutComplexTypeRefNoMeta(t *testing.T) {
 		Something: to.StringPtr("else"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutComplexTypeRefWithMeta(t *testing.T) {
@@ -503,9 +496,7 @@ func TestPutComplexTypeRefWithMeta(t *testing.T) {
 		Something: to.StringPtr("else"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutEmptyChildElement(t *testing.T) {
@@ -516,9 +507,7 @@ func TestPutEmptyChildElement(t *testing.T) {
 		Flavor:     to.StringPtr(""),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutEmptyList(t *testing.T) {
@@ -527,18 +516,14 @@ func TestPutEmptyList(t *testing.T) {
 		Slides: []*Slide{},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutEmptyRootList(t *testing.T) {
 	client := newXMLClient()
 	result, err := client.PutEmptyRootList(context.Background(), []*Banana{}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutEmptyWrappedLists(t *testing.T) {
@@ -548,9 +533,7 @@ func TestPutEmptyWrappedLists(t *testing.T) {
 		GoodApples: []*string{},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutRootList(t *testing.T) {
@@ -568,9 +551,7 @@ func TestPutRootList(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutRootListSingleItem(t *testing.T) {
@@ -583,9 +564,7 @@ func TestPutRootListSingleItem(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutServiceProperties(t *testing.T) {
@@ -621,9 +600,7 @@ func TestPutServiceProperties(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutSimple(t *testing.T) {
@@ -645,9 +622,7 @@ func TestPutSimple(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutWrappedLists(t *testing.T) {
@@ -657,7 +632,5 @@ func TestPutWrappedLists(t *testing.T) {
 		GoodApples: to.StringPtrArray("Fuji", "Gala"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

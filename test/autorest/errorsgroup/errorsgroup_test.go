@@ -6,7 +6,6 @@ package errorsgroup
 import (
 	"context"
 	"errors"
-	"reflect"
 	"testing"
 	"time"
 
@@ -56,9 +55,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestDoSomethingError2(t *testing.T) {
@@ -85,9 +82,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestDoSomethingError3(t *testing.T) {
@@ -111,9 +106,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 // GetPetByID - Gets pets by id.
@@ -133,9 +126,7 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "django", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetPetByIDError1(t *testing.T) {
@@ -161,9 +152,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetPetByIDError2(t *testing.T) {
@@ -189,9 +178,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetPetByIDError3(t *testing.T) {
@@ -213,9 +200,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetPetByIDError4(t *testing.T) {
@@ -237,9 +222,7 @@ ERROR CODE UNAVAILABLE
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetPetByIDError5(t *testing.T) {
@@ -261,7 +244,5 @@ That's all folks!!
 	if got := respErr.Error(); got != want {
 		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }

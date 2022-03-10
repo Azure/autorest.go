@@ -6,7 +6,6 @@ package complexgroup
 import (
 	"context"
 	"encoding/json"
-	"reflect"
 	"testing"
 	"time"
 
@@ -23,9 +22,7 @@ func newPrimitiveClient() *PrimitiveClient {
 func TestPrimitiveGetInt(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetInt(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetInt: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.IntWrapper, IntWrapper{Field1: to.Int32Ptr(-1), Field2: to.Int32Ptr(2)}); r != "" {
 		t.Fatal(r)
 	}
@@ -35,20 +32,14 @@ func TestPrimitivePutInt(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := int32(-1), int32(2)
 	result, err := client.PutInt(context.Background(), IntWrapper{Field1: &a, Field2: &b}, nil)
-	if err != nil {
-		t.Fatalf("PutInt: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetLong(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetLong(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetLong: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.LongWrapper, LongWrapper{
 		Field1: to.Int64Ptr(1099511627775),
 		Field2: to.Int64Ptr(-999511627788),
@@ -61,20 +52,14 @@ func TestPrimitivePutLong(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := int64(1099511627775), int64(-999511627788)
 	result, err := client.PutLong(context.Background(), LongWrapper{Field1: &a, Field2: &b}, nil)
-	if err != nil {
-		t.Fatalf("PutLong: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetFloat(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetFloat(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetFloat: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.FloatWrapper, FloatWrapper{
 		Field1: to.Float32Ptr(1.05),
 		Field2: to.Float32Ptr(-0.003),
@@ -87,20 +72,14 @@ func TestPrimitivePutFloat(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := float32(1.05), float32(-0.003)
 	result, err := client.PutFloat(context.Background(), FloatWrapper{Field1: &a, Field2: &b}, nil)
-	if err != nil {
-		t.Fatalf("PutFloat: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetDouble(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetDouble(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetDouble: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DoubleWrapper, DoubleWrapper{
 		Field1: to.Float64Ptr(3e-100),
 		Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: to.Float64Ptr(-0.000000000000000000000000000000000000000000000000000000005),
@@ -113,20 +92,14 @@ func TestPrimitivePutDouble(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := float64(3e-100), float64(-0.000000000000000000000000000000000000000000000000000000005)
 	result, err := client.PutDouble(context.Background(), DoubleWrapper{Field1: &a, Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: &b}, nil)
-	if err != nil {
-		t.Fatalf("PutDouble: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetBool(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetBool(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetBool: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.BooleanWrapper, BooleanWrapper{
 		FieldFalse: to.BoolPtr(false),
 		FieldTrue:  to.BoolPtr(true),
@@ -138,9 +111,7 @@ func TestPrimitiveGetBool(t *testing.T) {
 func TestPrimitiveGetByte(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetByte(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetByte: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.ByteWrapper, ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}); r != "" {
 		t.Fatal(r)
 	}
@@ -150,12 +121,8 @@ func TestPrimitivePutBool(t *testing.T) {
 	client := newPrimitiveClient()
 	a, b := true, false
 	result, err := client.PutBool(context.Background(), BooleanWrapper{FieldTrue: &a, FieldFalse: &b}, nil)
-	if err != nil {
-		t.Fatalf("PutBool: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestByteWrapperJSONNull(t *testing.T) {
@@ -176,20 +143,14 @@ func TestByteWrapperJSONNull(t *testing.T) {
 func TestPrimitivePutByte(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.PutByte(context.Background(), ByteWrapper{Field: []byte{255, 254, 253, 252, 0, 250, 249, 248, 247, 246}}, nil)
-	if err != nil {
-		t.Fatalf("PutByte: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetString(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetString(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetString: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.StringWrapper, StringWrapper{
 		Empty: to.StringPtr(""),
 		Field: to.StringPtr("goodrequest"),
@@ -203,28 +164,18 @@ func TestPrimitivePutString(t *testing.T) {
 	var c *string
 	a, b, c := "goodrequest", "", nil
 	result, err := client.PutString(context.Background(), StringWrapper{Field: &a, Empty: &b, Null: c}, nil)
-	if err != nil {
-		t.Fatalf("PutString: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetDate(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetDate(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetDate: %v", err)
-	}
+	require.NoError(t, err)
 	a, err := time.Parse("2006-01-02", "0001-01-01")
-	if err != nil {
-		t.Fatalf("Unable to parse date string: %v", err)
-	}
+	require.NoError(t, err)
 	b, err := time.Parse("2006-01-02", "2016-02-29")
-	if err != nil {
-		t.Fatalf("Unable to parse leap year date string: %v", err)
-	}
+	require.NoError(t, err)
 	dw := DateWrapper{Field: &a, Leap: &b}
 	if r := cmp.Diff(result.DateWrapper, dw); r != "" {
 		t.Fatal(r)
@@ -234,28 +185,18 @@ func TestPrimitiveGetDate(t *testing.T) {
 func TestPrimitivePutDate(t *testing.T) {
 	client := newPrimitiveClient()
 	a, err := time.Parse("2006-01-02", "0001-01-01")
-	if err != nil {
-		t.Fatalf("Unable to parse date string: %v", err)
-	}
+	require.NoError(t, err)
 	b, err := time.Parse("2006-01-02", "2016-02-29")
-	if err != nil {
-		t.Fatalf("Unable to parse leap year date string: %v", err)
-	}
+	require.NoError(t, err)
 	result, err := client.PutDate(context.Background(), DateWrapper{Field: &a, Leap: &b}, nil)
-	if err != nil {
-		t.Fatalf("PutDate: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetDuration(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetDuration(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetDuration: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.DurationWrapper, DurationWrapper{
 		Field: to.StringPtr("P123DT22H14M12.011S"),
 	}); r != "" {
@@ -266,20 +207,14 @@ func TestPrimitiveGetDuration(t *testing.T) {
 func TestPrimitivePutDuration(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.PutDuration(context.Background(), DurationWrapper{Field: to.StringPtr("P123DT22H14M12.011S")}, nil)
-	if err != nil {
-		t.Fatalf("PutDuration: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitiveGetDateTime(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetDateTime(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetDateTime: %v", err)
-	}
+	require.NoError(t, err)
 	f, _ := time.Parse(time.RFC3339, "0001-01-01T00:00:00Z")
 	n, _ := time.Parse(time.RFC3339, "2015-05-18T18:38:00Z")
 	if r := cmp.Diff(result.DatetimeWrapper, DatetimeWrapper{
@@ -293,9 +228,7 @@ func TestPrimitiveGetDateTime(t *testing.T) {
 func TestPrimitiveGetDateTimeRFC1123(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetDateTimeRFC1123(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetDateTimeRFC1123: %v", err)
-	}
+	require.NoError(t, err)
 	f, _ := time.Parse(time.RFC1123, "Mon, 01 Jan 0001 00:00:00 GMT")
 	n, _ := time.Parse(time.RFC1123, "Mon, 18 May 2015 11:38:00 GMT")
 	if r := cmp.Diff(result.Datetimerfc1123Wrapper, Datetimerfc1123Wrapper{
@@ -314,12 +247,8 @@ func TestPrimitivePutDateTime(t *testing.T) {
 		Field: &f,
 		Now:   &n,
 	}, nil)
-	if err != nil {
-		t.Fatalf("PutDateTime: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
@@ -330,12 +259,8 @@ func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
 		Field: &f,
 		Now:   &n,
 	}, nil)
-	if err != nil {
-		t.Fatalf("PutDateTimeRFC1123: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestDatetimeWrapper(t *testing.T) {

@@ -5,7 +5,6 @@ package datetimerfc1123group
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -87,9 +86,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutUTCMaxDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PutUTCMinDateTime - Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
@@ -99,7 +96,5 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutUTCMinDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

@@ -5,11 +5,11 @@ package complexgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newInheritanceClient() *InheritanceClient {
@@ -19,9 +19,7 @@ func newInheritanceClient() *InheritanceClient {
 func TestInheritanceGetValid(t *testing.T) {
 	client := newInheritanceClient()
 	result, err := client.GetValid(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetValid: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Siamese, Siamese{
 		ID:    to.Int32Ptr(2),
 		Name:  to.StringPtr("Siameeee"),
@@ -64,10 +62,6 @@ func TestInheritancePutValid(t *testing.T) {
 		},
 		Breed: to.StringPtr("persian"),
 	}, nil)
-	if err != nil {
-		t.Fatalf("PutValid: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
