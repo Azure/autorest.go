@@ -391,6 +391,7 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
     let auxType = addlProps.elementType.language.go!.name;
     let assignment = `${ref}aux`;
     if (addlProps.elementType.language.go!.internalTimeType) {
+      imports.add('time');
       auxType = addlProps.elementType.language.go!.internalTimeType;
       assignment = `(*time.Time)(${assignment})`;
     }
@@ -421,6 +422,7 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
     } else if (prop.schema.language.go!.internalTimeType) {
       unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, &${receiver}.${prop.language.go!.name})\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
+      imports.add('time');
       unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
       unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
