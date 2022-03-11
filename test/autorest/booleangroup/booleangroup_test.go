@@ -5,7 +5,6 @@ package booleangroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -20,9 +19,7 @@ func newBoolClient() *BoolClient {
 func TestGetTrue(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.GetTrue(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetTrue: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.BoolPtr(true)); r != "" {
 		t.Fatal(r)
 	}
@@ -31,9 +28,7 @@ func TestGetTrue(t *testing.T) {
 func TestGetFalse(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.GetFalse(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetFalse: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, to.BoolPtr(false)); r != "" {
 		t.Fatal(r)
 	}
@@ -42,9 +37,7 @@ func TestGetFalse(t *testing.T) {
 func TestGetNull(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.GetNull(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetNull: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, (*bool)(nil)); r != "" {
 		t.Fatal(r)
 	}
@@ -55,29 +48,19 @@ func TestGetInvalid(t *testing.T) {
 	result, err := client.GetInvalid(context.Background(), nil)
 	// TODO: verify error response is clear and actionable
 	require.Error(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutTrue(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.PutTrue(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("PutTrue: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestPutFalse(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.PutFalse(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("PutFalse: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }

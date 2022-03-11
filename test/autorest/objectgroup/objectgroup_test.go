@@ -5,7 +5,6 @@ package objectgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -33,7 +32,5 @@ func TestPut(t *testing.T) {
 		"foo": "bar",
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

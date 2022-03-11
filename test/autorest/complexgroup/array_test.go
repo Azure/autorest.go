@@ -5,11 +5,11 @@ package complexgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newArrayClient() *ArrayClient {
@@ -19,9 +19,7 @@ func newArrayClient() *ArrayClient {
 func TestArrayGetEmpty(t *testing.T) {
 	client := newArrayClient()
 	result, err := client.GetEmpty(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetEmpty: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
 		Array: []*string{},
 	}); r != "" {
@@ -32,9 +30,7 @@ func TestArrayGetEmpty(t *testing.T) {
 func TestArrayGetNotProvided(t *testing.T) {
 	client := newArrayClient()
 	result, err := client.GetNotProvided(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetNotProvided: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{}); r != "" {
 		t.Fatal(r)
 	}
@@ -43,9 +39,7 @@ func TestArrayGetNotProvided(t *testing.T) {
 func TestArrayGetValid(t *testing.T) {
 	client := newArrayClient()
 	result, err := client.GetValid(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetValid: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
 		Array: []*string{
 			to.StringPtr("1, 2, 3, 4"),
@@ -62,12 +56,8 @@ func TestArrayGetValid(t *testing.T) {
 func TestArrayPutEmpty(t *testing.T) {
 	client := newArrayClient()
 	result, err := client.PutEmpty(context.Background(), ArrayWrapper{Array: []*string{}}, nil)
-	if err != nil {
-		t.Fatalf("PutEmpty: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestArrayPutValid(t *testing.T) {
@@ -79,10 +69,6 @@ func TestArrayPutValid(t *testing.T) {
 		to.StringPtr("&S#$(*Y"),
 		to.StringPtr("The quick brown fox jumps over the lazy dog"),
 	}}, nil)
-	if err != nil {
-		t.Fatalf("PutValid: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }

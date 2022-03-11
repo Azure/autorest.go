@@ -5,7 +5,6 @@ package paramgroupinggroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -20,9 +19,7 @@ func TestPostMultiParamGroups(t *testing.T) {
 	client := newParameterGroupingClient()
 	result, err := client.PostMultiParamGroups(context.Background(), nil, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PostOptional - Post a bunch of optional parameters grouped
@@ -30,9 +27,7 @@ func TestPostOptional(t *testing.T) {
 	client := newParameterGroupingClient()
 	result, err := client.PostOptional(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PostRequired - Post a bunch of required parameters grouped
@@ -43,9 +38,7 @@ func TestPostRequired(t *testing.T) {
 		Path: "path",
 	})
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
@@ -53,7 +46,5 @@ func TestPostSharedParameterGroupObject(t *testing.T) {
 	client := newParameterGroupingClient()
 	result, err := client.PostSharedParameterGroupObject(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

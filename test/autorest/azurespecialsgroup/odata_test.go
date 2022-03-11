@@ -5,7 +5,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -25,7 +24,5 @@ func TestGetWithFilter(t *testing.T) {
 		Top:     to.Int32Ptr(10),
 	})
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

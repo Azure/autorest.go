@@ -5,7 +5,6 @@ package urlgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -19,9 +18,7 @@ func TestGetAllWithValues(t *testing.T) {
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
@@ -30,9 +27,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
@@ -42,16 +37,12 @@ func TestGetGlobalQueryNull(t *testing.T) {
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
 	grp := NewPathItemsClient("globalStringPath", to.StringPtr("globalStringQuery"), nil)
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

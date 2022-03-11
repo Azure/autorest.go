@@ -5,7 +5,6 @@ package dictionarygroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -115,9 +114,7 @@ func TestGetBooleanInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetBooleanInvalidString(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
@@ -229,9 +226,7 @@ func TestGetDateInvalidChars(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateInvalidChars(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
@@ -255,9 +250,7 @@ func TestGetDateTimeInvalidChars(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDateTimeInvalidChars(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
@@ -434,9 +427,7 @@ func TestGetDoubleInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetDoubleInvalidString(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -505,9 +496,7 @@ func TestGetFloatInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetFloatInvalidString(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -543,9 +532,7 @@ func TestGetIntInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetIntInvalidString(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -568,9 +555,7 @@ func TestGetInvalid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetInvalid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
@@ -592,9 +577,7 @@ func TestGetLongInvalidString(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetLongInvalidString(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -627,9 +610,7 @@ func TestGetNullKey(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetNullKey(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetNullValue - Get Dictionary with null value
@@ -663,9 +644,7 @@ func TestGetStringWithInvalid(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.GetStringWithInvalid(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
@@ -691,9 +670,7 @@ func TestPutArrayValid(t *testing.T) {
 		"2": to.StringPtrArray("7", "8", "9"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
@@ -706,9 +683,7 @@ func TestPutBooleanTfft(t *testing.T) {
 		"3": to.BoolPtr(true),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
@@ -720,9 +695,7 @@ func TestPutByteValid(t *testing.T) {
 		"2": {37, 41, 67},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string": "4"}, "2": {"integer": 5, "string": "6"}}
@@ -734,9 +707,7 @@ func TestPutComplexValid(t *testing.T) {
 		"2": {Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
@@ -751,9 +722,7 @@ func TestPutDateTimeRFC1123Valid(t *testing.T) {
 		"2": &dt3,
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutDateTimeValid - Set dictionary value  {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
@@ -768,9 +737,7 @@ func TestPutDateTimeValid(t *testing.T) {
 		"2": &dt3,
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutDateValid - Set dictionary value  {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
@@ -785,9 +752,7 @@ func TestPutDateValid(t *testing.T) {
 		"2": &d3,
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutDictionaryValid - Get an dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
@@ -811,9 +776,7 @@ func TestPutDictionaryValid(t *testing.T) {
 		},
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -825,9 +788,7 @@ func TestPutDoubleValid(t *testing.T) {
 		"2": to.Float64Ptr(-1.2e20),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutDurationValid - Set dictionary value  {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
@@ -838,9 +799,7 @@ func TestPutDurationValid(t *testing.T) {
 		"1": to.StringPtr("P5DT1H"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutEmpty - Set dictionary value empty {}
@@ -848,9 +807,7 @@ func TestPutEmpty(t *testing.T) {
 	client := newDictionaryClient()
 	resp, err := client.PutEmpty(context.Background(), map[string]*string{}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
@@ -862,9 +819,7 @@ func TestPutFloatValid(t *testing.T) {
 		"2": to.Float32Ptr(-1.2e20),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -877,9 +832,7 @@ func TestPutIntegerValid(t *testing.T) {
 		"3": to.Int32Ptr(300),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
@@ -892,9 +845,7 @@ func TestPutLongValid(t *testing.T) {
 		"3": to.Int64Ptr(300),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
@@ -906,7 +857,5 @@ func TestPutStringValid(t *testing.T) {
 		"2": to.StringPtr("foo3"),
 	}, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, resp)
 }

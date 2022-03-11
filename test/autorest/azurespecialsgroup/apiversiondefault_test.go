@@ -5,7 +5,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -20,9 +19,7 @@ func TestGetMethodGlobalNotProvidedValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetMethodGlobalNotProvidedValid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
@@ -30,9 +27,7 @@ func TestGetMethodGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetMethodGlobalValid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
@@ -40,9 +35,7 @@ func TestGetPathGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetPathGlobalValid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
@@ -50,7 +43,5 @@ func TestGetSwaggerGlobalValid(t *testing.T) {
 	client := newAPIVersionDefaultClient()
 	result, err := client.GetSwaggerGlobalValid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

@@ -5,7 +5,6 @@ package durationgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
@@ -47,7 +46,5 @@ func TestPutPositiveDuration(t *testing.T) {
 	client := newDurationClient()
 	result, err := client.PutPositiveDuration(context.Background(), "P123DT22H14M12.011S", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

@@ -5,10 +5,10 @@ package morecustombaseurigroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+	"github.com/stretchr/testify/require"
 )
 
 func newPathsClient() *PathsClient {
@@ -24,10 +24,6 @@ func TestGetEmpty(t *testing.T) {
 	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &PathsClientGetEmptyOptions{
 		KeyVersion: to.StringPtr("v1"),
 	})
-	if err != nil {
-		t.Fatalf("GetEmpty: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }

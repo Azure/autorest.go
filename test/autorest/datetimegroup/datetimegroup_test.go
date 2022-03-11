@@ -5,7 +5,6 @@ package datetimegroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -172,9 +171,7 @@ func TestPutLocalNegativeOffsetMaxDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutLocalNegativeOffsetMaxDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
@@ -183,9 +180,7 @@ func TestPutLocalNegativeOffsetMinDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutLocalNegativeOffsetMinDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
@@ -194,9 +189,7 @@ func TestPutLocalPositiveOffsetMaxDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutLocalPositiveOffsetMaxDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
@@ -205,9 +198,7 @@ func TestPutLocalPositiveOffsetMinDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutLocalPositiveOffsetMinDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutUTCMaxDateTime(t *testing.T) {
@@ -216,9 +207,7 @@ func TestPutUTCMaxDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutUTCMaxDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutUTCMaxDateTime7Digits(t *testing.T) {
@@ -227,9 +216,7 @@ func TestPutUTCMaxDateTime7Digits(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutUTCMaxDateTime7Digits(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutUTCMinDateTime(t *testing.T) {
@@ -238,7 +225,5 @@ func TestPutUTCMinDateTime(t *testing.T) {
 	require.NoError(t, err)
 	result, err := client.PutUTCMinDateTime(context.Background(), body, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

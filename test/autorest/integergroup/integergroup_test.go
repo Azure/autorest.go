@@ -6,11 +6,11 @@ package integergroup
 import (
 	"context"
 	"math"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/require"
 )
 
 func newIntClient() *IntClient {
@@ -20,31 +20,21 @@ func newIntClient() *IntClient {
 func TestIntGetInvalid(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetInvalid(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntGetInvalidUnixTime(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetInvalidUnixTime(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntGetNull(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetNull(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetNull: %v", err)
-	}
+	require.NoError(t, err)
 	if r := cmp.Diff(result.Value, (*int32)(nil)); r != "" {
 		t.Fatal(r)
 	}
@@ -53,9 +43,7 @@ func TestIntGetNull(t *testing.T) {
 func TestIntGetNullUnixTime(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetNullUnixTime(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetNullUnixTime: %v", err)
-	}
+	require.NoError(t, err)
 	if result.Value != nil {
 		t.Fatal("expected nil value")
 	}
@@ -64,53 +52,35 @@ func TestIntGetNullUnixTime(t *testing.T) {
 func TestIntGetOverflowInt32(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetOverflowInt32(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntGetOverflowInt64(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetOverflowInt64(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntGetUnderflowInt32(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetUnderflowInt32(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntGetUnderflowInt64(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetUnderflowInt64(context.Background(), nil)
-	if err == nil {
-		t.Fatalf("Expected an error but did not receive one")
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Error(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntGetUnixTime(t *testing.T) {
 	client := newIntClient()
 	result, err := client.GetUnixTime(context.Background(), nil)
-	if err != nil {
-		t.Fatalf("GetUnixTime: %v", err)
-	}
+	require.NoError(t, err)
 	t1 := time.Unix(1460505600, 0)
 	if r := cmp.Diff(result.Value, &t1); r != "" {
 		t.Fatal(r)
@@ -120,55 +90,35 @@ func TestIntGetUnixTime(t *testing.T) {
 func TestIntPutMax32(t *testing.T) {
 	client := newIntClient()
 	result, err := client.PutMax32(context.Background(), math.MaxInt32, nil)
-	if err != nil {
-		t.Fatalf("PutMax32: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntPutMax64(t *testing.T) {
 	client := newIntClient()
 	result, err := client.PutMax64(context.Background(), math.MaxInt64, nil)
-	if err != nil {
-		t.Fatalf("PutMax64: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntPutMin32(t *testing.T) {
 	client := newIntClient()
 	result, err := client.PutMin32(context.Background(), math.MinInt32, nil)
-	if err != nil {
-		t.Fatalf("PutMin32: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntPutMin64(t *testing.T) {
 	client := newIntClient()
 	result, err := client.PutMin64(context.Background(), math.MinInt64, nil)
-	if err != nil {
-		t.Fatalf("PutMin64: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }
 
 func TestIntPutUnixTimeDate(t *testing.T) {
 	client := newIntClient()
 	t1 := time.Unix(1460505600, 0)
 	result, err := client.PutUnixTimeDate(context.Background(), t1, nil)
-	if err != nil {
-		t.Fatalf("PutUnixTimeDate: %v", err)
-	}
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.NoError(t, err)
+	require.Zero(t, result)
 }

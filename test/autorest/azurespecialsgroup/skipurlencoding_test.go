@@ -5,7 +5,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -20,9 +19,7 @@ func TestGetMethodPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetMethodPathValid(context.Background(), "path1/path2/path3", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
@@ -30,9 +27,7 @@ func TestGetMethodQueryNull(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetMethodQueryNull(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
@@ -40,9 +35,7 @@ func TestGetMethodQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetMethodQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
@@ -50,9 +43,7 @@ func TestGetPathQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetPathQueryValid(context.Background(), "value1&q2=value2&q3=value3", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
@@ -60,9 +51,7 @@ func TestGetPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetPathValid(context.Background(), "path1/path2/path3", nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
@@ -70,9 +59,7 @@ func TestGetSwaggerPathValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetSwaggerPathValid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
@@ -80,7 +67,5 @@ func TestGetSwaggerQueryValid(t *testing.T) {
 	client := newSkipURLEncodingClient()
 	result, err := client.GetSwaggerQueryValid(context.Background(), nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }

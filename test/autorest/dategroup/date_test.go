@@ -5,7 +5,6 @@ package dategroup
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
@@ -21,9 +20,7 @@ func TestGetInvalidDate(t *testing.T) {
 	client := newDateClient()
 	resp, err := client.GetInvalidDate(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 func TestGetMaxDate(t *testing.T) {
@@ -59,18 +56,14 @@ func TestGetOverflowDate(t *testing.T) {
 	client := newDateClient()
 	resp, err := client.GetOverflowDate(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 func TestGetUnderflowDate(t *testing.T) {
 	client := newDateClient()
 	resp, err := client.GetUnderflowDate(context.Background(), nil)
 	require.Error(t, err)
-	if !reflect.ValueOf(resp).IsZero() {
-		t.Fatal("expected empty response")
-	}
+	require.Zero(t, resp)
 }
 
 func TestPutMaxDate(t *testing.T) {
@@ -78,9 +71,7 @@ func TestPutMaxDate(t *testing.T) {
 	dt := time.Date(9999, 12, 31, 0, 0, 0, 0, time.UTC)
 	result, err := client.PutMaxDate(context.Background(), dt, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
 
 func TestPutMinDate(t *testing.T) {
@@ -88,7 +79,5 @@ func TestPutMinDate(t *testing.T) {
 	dt := time.Date(0001, 01, 01, 0, 0, 0, 0, time.UTC)
 	result, err := client.PutMinDate(context.Background(), dt, nil)
 	require.NoError(t, err)
-	if !reflect.ValueOf(result).IsZero() {
-		t.Fatal("expected zero-value result")
-	}
+	require.Zero(t, result)
 }
