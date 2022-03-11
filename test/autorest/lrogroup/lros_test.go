@@ -236,6 +236,40 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	}
 }
 
+func TestLROBeginPatch201RetryWithAsyncHeader(t *testing.T) {
+	op := newLROSClient()
+	resp, err := op.BeginPatch201RetryWithAsyncHeader(context.Background(), nil)
+	require.NoError(t, err)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, err)
+	if r := cmp.Diff(res.Product, Product{
+		ID:   to.StringPtr("/lro/patch/201/retry/onlyAsyncHeader"),
+		Name: to.StringPtr("foo"),
+		Properties: &ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	}); r != "" {
+		t.Fatal(r)
+	}
+}
+
+func TestLROBeginPatch202RetryWithAsyncAndLocationHeader(t *testing.T) {
+	op := newLROSClient()
+	resp, err := op.BeginPatch202RetryWithAsyncAndLocationHeader(context.Background(), nil)
+	require.NoError(t, err)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, err)
+	if r := cmp.Diff(res.Product, Product{
+		ID:   to.StringPtr("/lro/patch/202/retry/asyncAndLocationHeader"),
+		Name: to.StringPtr("foo"),
+		Properties: &ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	}); r != "" {
+		t.Fatal(r)
+	}
+}
+
 func TestLROBeginPost200WithPayload(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPost200WithPayload(context.Background(), nil)
@@ -590,6 +624,23 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	}
 }
 
+func TestLROBeginPut201Succeeded(t *testing.T) {
+	op := newLROSClient()
+	resp, err := op.BeginPut201Succeeded(context.Background(), nil)
+	require.NoError(t, err)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, err)
+	if r := cmp.Diff(res.Product, Product{
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
+		Properties: &ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	}); r != "" {
+		t.Fatal(r)
+	}
+}
+
 func TestLROBeginPut202Retry200(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut202Retry200(context.Background(), &LROsClientBeginPut202Retry200Options{Product: &Product{}})
@@ -776,7 +827,6 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 }
 
 func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
-	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutNoHeaderInRetry(context.Background(), nil)
 	require.NoError(t, err)
@@ -790,7 +840,8 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
 	if r := cmp.Diff(pollResp.Product, Product{
-		ID: to.StringPtr("100"),
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -800,7 +851,6 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 }
 
 func TestLROBeginPutNonResource(t *testing.T) {
-	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutNonResource(context.Background(), nil)
 	require.NoError(t, err)
@@ -822,7 +872,6 @@ func TestLROBeginPutNonResource(t *testing.T) {
 }
 
 func TestLROBeginPutSubResource(t *testing.T) {
-	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutSubResource(context.Background(), nil)
 	require.NoError(t, err)
