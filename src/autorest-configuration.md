@@ -63,6 +63,9 @@ help-content:
       - key: module
         type: string
         description: The name of the Go module written to go.mod.  Omit to skip go.mod generation.
+      - key: azcore-version
+        description: Semantic version of azcore without the leading 'v' to use if different from the default version (e.g. 1.2.3).
+        type: string
       - key: file-prefix
         type: string
         description: Optional prefix to file names. For example, if you set your file prefix to "zzz_", all generated code files will begin with "zzz_".
