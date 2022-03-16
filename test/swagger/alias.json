@@ -196,7 +196,10 @@
             }
           },
           "default": {
-            "$ref": "#/definitions/ErrorResponse"
+            "description": "failed",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -246,7 +249,10 @@
             }
           },
           "default": {
-            "$ref": "#/definitions/ErrorResponse"
+            "description": "failed",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }

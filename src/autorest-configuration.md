@@ -8,7 +8,7 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 
 # Pipeline Configuration
 ``` yaml
-version: 3.7.2
+version: 3.8.0
 use-extension:
   "@autorest/modelerfour" : "4.22.3"
 

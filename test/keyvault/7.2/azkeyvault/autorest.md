@@ -24,12 +24,15 @@ directive:
 
   - from: swagger-document
     where: $..['$ref']
-    transform: >
-      $ = $ === "#/definitions/${$.Error}" ? "#/definitions/${$.ErrorInfo}" : $
+    transform: |
+      $ = $ === "common.json#/definitions/Error" 
+        ? "common.json#/definitions/ErrorInfo" 
+        : $
 
   - from: swagger-document
     where: $..['$ref']
-    debug: true
-    transform: >
-      $ = $ === "https://github.com/Azure/azure-rest-api-specs/blob/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.2/common.json#/definitions/Error" ? "https://github.com/Azure/azure-rest-api-specs/blob/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.2/common.json#/definitions/ErrorInfo" : $
+    transform: |
+      $ = $ === "#/definitions/Error" 
+        ? "#/definitions/ErrorInfo" 
+        : $
 ```
