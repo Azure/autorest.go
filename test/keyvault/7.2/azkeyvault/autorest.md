@@ -22,7 +22,7 @@ directive:
     transform: >
       if ($.Error) { $.ErrorInfo = $.Error; delete $.Error; }
 
-  - from: swagger-document 
+  - from: swagger-document
     where: $..['$ref']
     transform: |
       $ = $ === "common.json#/definitions/Error" 
