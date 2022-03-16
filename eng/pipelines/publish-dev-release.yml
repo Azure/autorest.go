@@ -42,7 +42,7 @@ steps:
   - script: |
       set -e
       go version
-      go get github.com/jstemmer/go-junit-report
+      go install github.com/jstemmer/go-junit-report@v1.0.0
     displayName: 'Install Dependencies'
     workingDirectory: '$(goTestPath)'
 
