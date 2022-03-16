@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -52,16 +52,32 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 // options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
-func (client *EventsClient) List(startDate string, endDate string, scope string, options *EventsClientListOptions) *EventsClientListPager {
-	return &EventsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, startDate, endDate, scope, options)
+func (client *EventsClient) List(startDate string, endDate string, scope string, options *EventsClientListOptions) *runtime.Pager[EventsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[EventsClientListResponse]{
+		More: func(page EventsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp EventsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.Events.NextLink)
+		Fetcher: func(ctx context.Context, page *EventsClientListResponse) (EventsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, startDate, endDate, scope, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return EventsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return EventsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return EventsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

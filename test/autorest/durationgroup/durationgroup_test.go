@@ -37,7 +37,7 @@ func TestGetPositiveDuration(t *testing.T) {
 	client := newDurationClient()
 	result, err := client.GetPositiveDuration(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.StringPtr("P3Y6M4DT12H30M5S")); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr("P3Y6M4DT12H30M5S")); r != "" {
 		t.Fatal(r)
 	}
 }

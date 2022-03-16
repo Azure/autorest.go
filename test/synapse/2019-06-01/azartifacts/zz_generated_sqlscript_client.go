@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -40,20 +40,16 @@ func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
 // sqlScript - Sql Script resource definition.
 // options - sqlScriptClientBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginCreateOrUpdateSQLScript
 // method.
-func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *sqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (sqlScriptClientCreateOrUpdateSQLScriptPollerResponse, error) {
-	resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
-	if err != nil {
-		return sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}, err
+func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *sqlScriptClientBeginCreateOrUpdateSQLScriptOptions) (*runtime.Poller[sqlScriptClientCreateOrUpdateSQLScriptResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[sqlScriptClientCreateOrUpdateSQLScriptResponse]("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[sqlScriptClientCreateOrUpdateSQLScriptResponse]("sqlScriptClient.CreateOrUpdateSQLScript", options.ResumeToken, client.pl, nil)
 	}
-	result := sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}
-	pt, err := runtime.NewPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.pl)
-	if err != nil {
-		return sqlScriptClientCreateOrUpdateSQLScriptPollerResponse{}, err
-	}
-	result.Poller = &sqlScriptClientCreateOrUpdateSQLScriptPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdateSQLScript - Creates or updates a Sql Script.
@@ -99,20 +95,16 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 // sqlScriptName - The sql script name.
 // options - sqlScriptClientBeginDeleteSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginDeleteSQLScript
 // method.
-func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *sqlScriptClientBeginDeleteSQLScriptOptions) (sqlScriptClientDeleteSQLScriptPollerResponse, error) {
-	resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
-	if err != nil {
-		return sqlScriptClientDeleteSQLScriptPollerResponse{}, err
+func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *sqlScriptClientBeginDeleteSQLScriptOptions) (*runtime.Poller[sqlScriptClientDeleteSQLScriptResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[sqlScriptClientDeleteSQLScriptResponse]("sqlScriptClient.DeleteSQLScript", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[sqlScriptClientDeleteSQLScriptResponse]("sqlScriptClient.DeleteSQLScript", options.ResumeToken, client.pl, nil)
 	}
-	result := sqlScriptClientDeleteSQLScriptPollerResponse{}
-	pt, err := runtime.NewPoller("sqlScriptClient.DeleteSQLScript", resp, client.pl)
-	if err != nil {
-		return sqlScriptClientDeleteSQLScriptPollerResponse{}, err
-	}
-	result.Poller = &sqlScriptClientDeleteSQLScriptPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // DeleteSQLScript - Deletes a Sql Script.
@@ -203,16 +195,32 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - sqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
 // method.
-func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *sqlScriptClientGetSQLScriptsByWorkspaceOptions) *sqlScriptClientGetSQLScriptsByWorkspacePager {
-	return &sqlScriptClientGetSQLScriptsByWorkspacePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getSQLScriptsByWorkspaceCreateRequest(ctx, options)
+func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *sqlScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[sqlScriptClientGetSQLScriptsByWorkspaceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[sqlScriptClientGetSQLScriptsByWorkspaceResponse]{
+		More: func(page sqlScriptClientGetSQLScriptsByWorkspaceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp sqlScriptClientGetSQLScriptsByWorkspaceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SQLScriptsListResponse.NextLink)
+		Fetcher: func(ctx context.Context, page *sqlScriptClientGetSQLScriptsByWorkspaceResponse) (sqlScriptClientGetSQLScriptsByWorkspaceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getSQLScriptsByWorkspaceCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return sqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return sqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return sqlScriptClientGetSQLScriptsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getSQLScriptsByWorkspaceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getSQLScriptsByWorkspaceCreateRequest creates the GetSQLScriptsByWorkspace request.
@@ -244,20 +252,16 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http
 // request - proposed new name.
 // options - sqlScriptClientBeginRenameSQLScriptOptions contains the optional parameters for the sqlScriptClient.BeginRenameSQLScript
 // method.
-func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *sqlScriptClientBeginRenameSQLScriptOptions) (sqlScriptClientRenameSQLScriptPollerResponse, error) {
-	resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
-	if err != nil {
-		return sqlScriptClientRenameSQLScriptPollerResponse{}, err
+func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *sqlScriptClientBeginRenameSQLScriptOptions) (*runtime.Poller[sqlScriptClientRenameSQLScriptResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[sqlScriptClientRenameSQLScriptResponse]("sqlScriptClient.RenameSQLScript", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[sqlScriptClientRenameSQLScriptResponse]("sqlScriptClient.RenameSQLScript", options.ResumeToken, client.pl, nil)
 	}
-	result := sqlScriptClientRenameSQLScriptPollerResponse{}
-	pt, err := runtime.NewPoller("sqlScriptClient.RenameSQLScript", resp, client.pl)
-	if err != nil {
-		return sqlScriptClientRenameSQLScriptPollerResponse{}, err
-	}
-	result.Poller = &sqlScriptClientRenameSQLScriptPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // RenameSQLScript - Renames a sqlScript.

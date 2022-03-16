@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -112,20 +112,16 @@ func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (
 // securitySettings - The security settings.
 // options - DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
 // method.
-func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (DevicesClientCreateOrUpdateSecuritySettingsPollerResponse, error) {
-	resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
-	if err != nil {
-		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
+func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*armruntime.Poller[DevicesClientCreateOrUpdateSecuritySettingsResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DevicesClientCreateOrUpdateSecuritySettingsResponse]("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DevicesClientCreateOrUpdateSecuritySettingsResponse]("DevicesClient.CreateOrUpdateSecuritySettings", options.ResumeToken, client.pl, nil)
 	}
-	result := DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}
-	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl)
-	if err != nil {
-		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
-	}
-	result.Poller = &DevicesClientCreateOrUpdateSecuritySettingsPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdateSecuritySettings - Updates the security settings on a Data Box Edge/Data Box Gateway device.
@@ -176,20 +172,16 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
-func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (DevicesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
-	if err != nil {
-		return DevicesClientDeletePollerResponse{}, err
+func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*armruntime.Poller[DevicesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DevicesClientDeleteResponse]("DevicesClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DevicesClientDeleteResponse]("DevicesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := DevicesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return DevicesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &DevicesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the Data Box Edge/Data Box Gateway device.
@@ -241,20 +233,16 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
 // method.
-func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (DevicesClientDownloadUpdatesPollerResponse, error) {
-	resp, err := client.downloadUpdates(ctx, deviceName, resourceGroupName, options)
-	if err != nil {
-		return DevicesClientDownloadUpdatesPollerResponse{}, err
+func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*armruntime.Poller[DevicesClientDownloadUpdatesResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.downloadUpdates(ctx, deviceName, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DevicesClientDownloadUpdatesResponse]("DevicesClient.DownloadUpdates", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DevicesClientDownloadUpdatesResponse]("DevicesClient.DownloadUpdates", options.ResumeToken, client.pl, nil)
 	}
-	result := DevicesClientDownloadUpdatesPollerResponse{}
-	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.pl)
-	if err != nil {
-		return DevicesClientDownloadUpdatesPollerResponse{}, err
-	}
-	result.Poller = &DevicesClientDownloadUpdatesPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // DownloadUpdates - Downloads the updates on a Data Box Edge/Data Box Gateway device.
@@ -586,20 +574,16 @@ func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response)
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
 // method.
-func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (DevicesClientInstallUpdatesPollerResponse, error) {
-	resp, err := client.installUpdates(ctx, deviceName, resourceGroupName, options)
-	if err != nil {
-		return DevicesClientInstallUpdatesPollerResponse{}, err
+func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*armruntime.Poller[DevicesClientInstallUpdatesResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.installUpdates(ctx, deviceName, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DevicesClientInstallUpdatesResponse]("DevicesClient.InstallUpdates", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DevicesClientInstallUpdatesResponse]("DevicesClient.InstallUpdates", options.ResumeToken, client.pl, nil)
 	}
-	result := DevicesClientInstallUpdatesPollerResponse{}
-	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.pl)
-	if err != nil {
-		return DevicesClientInstallUpdatesPollerResponse{}, err
-	}
-	result.Poller = &DevicesClientInstallUpdatesPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // InstallUpdates - Installs the updates on the Data Box Edge/Data Box Gateway device.
@@ -650,16 +634,32 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 // resourceGroupName - The resource group name.
 // options - DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup
 // method.
-func (client *DevicesClient) ListByResourceGroup(resourceGroupName string, options *DevicesClientListByResourceGroupOptions) *DevicesClientListByResourceGroupPager {
-	return &DevicesClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *DevicesClient) ListByResourceGroup(resourceGroupName string, options *DevicesClientListByResourceGroupOptions) *runtime.Pager[DevicesClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[DevicesClientListByResourceGroupResponse]{
+		More: func(page DevicesClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp DevicesClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeviceList.NextLink)
+		Fetcher: func(ctx context.Context, page *DevicesClientListByResourceGroupResponse) (DevicesClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return DevicesClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return DevicesClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return DevicesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
@@ -700,16 +700,32 @@ func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Respon
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription
 // method.
-func (client *DevicesClient) ListBySubscription(options *DevicesClientListBySubscriptionOptions) *DevicesClientListBySubscriptionPager {
-	return &DevicesClientListBySubscriptionPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listBySubscriptionCreateRequest(ctx, options)
+func (client *DevicesClient) ListBySubscription(options *DevicesClientListBySubscriptionOptions) *runtime.Pager[DevicesClientListBySubscriptionResponse] {
+	return runtime.NewPager(runtime.PageProcessor[DevicesClientListBySubscriptionResponse]{
+		More: func(page DevicesClientListBySubscriptionResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp DevicesClientListBySubscriptionResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeviceList.NextLink)
+		Fetcher: func(ctx context.Context, page *DevicesClientListBySubscriptionResponse) (DevicesClientListBySubscriptionResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listBySubscriptionCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return DevicesClientListBySubscriptionResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return DevicesClientListBySubscriptionResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return DevicesClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listBySubscriptionHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
@@ -748,20 +764,16 @@ func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Respons
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
 // method.
-func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (DevicesClientScanForUpdatesPollerResponse, error) {
-	resp, err := client.scanForUpdates(ctx, deviceName, resourceGroupName, options)
-	if err != nil {
-		return DevicesClientScanForUpdatesPollerResponse{}, err
+func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*armruntime.Poller[DevicesClientScanForUpdatesResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.scanForUpdates(ctx, deviceName, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DevicesClientScanForUpdatesResponse]("DevicesClient.ScanForUpdates", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DevicesClientScanForUpdatesResponse]("DevicesClient.ScanForUpdates", options.ResumeToken, client.pl, nil)
 	}
-	result := DevicesClientScanForUpdatesPollerResponse{}
-	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.pl)
-	if err != nil {
-		return DevicesClientScanForUpdatesPollerResponse{}, err
-	}
-	result.Poller = &DevicesClientScanForUpdatesPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // ScanForUpdates - Scans for updates on a Data Box Edge/Data Box Gateway device.

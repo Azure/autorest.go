@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewSubnetsClient(subscriptionID string, credential azcore.TokenCredential, 
 // subnetParameters - Parameters supplied to the create or update subnet operation.
 // options - SubnetsClientBeginCreateOrUpdateOptions contains the optional parameters for the SubnetsClient.BeginCreateOrUpdate
 // method.
-func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsClientBeginCreateOrUpdateOptions) (SubnetsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
-	if err != nil {
-		return SubnetsClientCreateOrUpdatePollerResponse{}, err
+func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[SubnetsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SubnetsClientCreateOrUpdateResponse]("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SubnetsClientCreateOrUpdateResponse]("SubnetsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := SubnetsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return SubnetsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &SubnetsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
@@ -127,20 +123,16 @@ func (client *SubnetsClient) createOrUpdateCreateRequest(ctx context.Context, re
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
 // options - SubnetsClientBeginDeleteOptions contains the optional parameters for the SubnetsClient.BeginDelete method.
-func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsClientBeginDeleteOptions) (SubnetsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
-	if err != nil {
-		return SubnetsClientDeletePollerResponse{}, err
+func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsClientBeginDeleteOptions) (*armruntime.Poller[SubnetsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SubnetsClientDeleteResponse]("SubnetsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SubnetsClientDeleteResponse]("SubnetsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := SubnetsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("SubnetsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return SubnetsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &SubnetsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified subnet.
@@ -258,16 +250,32 @@ func (client *SubnetsClient) getHandleResponse(resp *http.Response) (SubnetsClie
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - SubnetsClientListOptions contains the optional parameters for the SubnetsClient.List method.
-func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsClientListOptions) *SubnetsClientListPager {
-	return &SubnetsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
+func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsClientListOptions) *runtime.Pager[SubnetsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[SubnetsClientListResponse]{
+		More: func(page SubnetsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp SubnetsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SubnetListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *SubnetsClientListResponse) (SubnetsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return SubnetsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return SubnetsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return SubnetsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -313,20 +321,16 @@ func (client *SubnetsClient) listHandleResponse(resp *http.Response) (SubnetsCli
 // prepareNetworkPoliciesRequestParameters - Parameters supplied to prepare subnet by applying network intent policies.
 // options - SubnetsClientBeginPrepareNetworkPoliciesOptions contains the optional parameters for the SubnetsClient.BeginPrepareNetworkPolicies
 // method.
-func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsClientBeginPrepareNetworkPoliciesOptions) (SubnetsClientPrepareNetworkPoliciesPollerResponse, error) {
-	resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
-	if err != nil {
-		return SubnetsClientPrepareNetworkPoliciesPollerResponse{}, err
+func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsClientBeginPrepareNetworkPoliciesOptions) (*armruntime.Poller[SubnetsClientPrepareNetworkPoliciesResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SubnetsClientPrepareNetworkPoliciesResponse]("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SubnetsClientPrepareNetworkPoliciesResponse]("SubnetsClient.PrepareNetworkPolicies", options.ResumeToken, client.pl, nil)
 	}
-	result := SubnetsClientPrepareNetworkPoliciesPollerResponse{}
-	pt, err := armruntime.NewPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.pl)
-	if err != nil {
-		return SubnetsClientPrepareNetworkPoliciesPollerResponse{}, err
-	}
-	result.Poller = &SubnetsClientPrepareNetworkPoliciesPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
@@ -384,20 +388,16 @@ func (client *SubnetsClient) prepareNetworkPoliciesCreateRequest(ctx context.Con
 // unprepareNetworkPoliciesRequestParameters - Parameters supplied to unprepare subnet to remove network intent policies.
 // options - SubnetsClientBeginUnprepareNetworkPoliciesOptions contains the optional parameters for the SubnetsClient.BeginUnprepareNetworkPolicies
 // method.
-func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsClientBeginUnprepareNetworkPoliciesOptions) (SubnetsClientUnprepareNetworkPoliciesPollerResponse, error) {
-	resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
-	if err != nil {
-		return SubnetsClientUnprepareNetworkPoliciesPollerResponse{}, err
+func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsClientBeginUnprepareNetworkPoliciesOptions) (*armruntime.Poller[SubnetsClientUnprepareNetworkPoliciesResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SubnetsClientUnprepareNetworkPoliciesResponse]("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SubnetsClientUnprepareNetworkPoliciesResponse]("SubnetsClient.UnprepareNetworkPolicies", options.ResumeToken, client.pl, nil)
 	}
-	result := SubnetsClientUnprepareNetworkPoliciesPollerResponse{}
-	pt, err := armruntime.NewPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.pl)
-	if err != nil {
-		return SubnetsClientUnprepareNetworkPoliciesPollerResponse{}, err
-	}
-	result.Poller = &SubnetsClientUnprepareNetworkPoliciesPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // UnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.

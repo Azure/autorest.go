@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters supplied to the Create Dedicated Host.
 // options - DedicatedHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginCreateOrUpdate
 // method.
-func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (DedicatedHostsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
-	if err != nil {
-		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
+func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[DedicatedHostsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DedicatedHostsClientCreateOrUpdateResponse]("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientCreateOrUpdateResponse]("DedicatedHostsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := DedicatedHostsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &DedicatedHostsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Create or update a dedicated host .
@@ -128,20 +124,16 @@ func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Cont
 // hostName - The name of the dedicated host.
 // options - DedicatedHostsClientBeginDeleteOptions contains the optional parameters for the DedicatedHostsClient.BeginDelete
 // method.
-func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (DedicatedHostsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
-	if err != nil {
-		return DedicatedHostsClientDeletePollerResponse{}, err
+func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (*armruntime.Poller[DedicatedHostsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DedicatedHostsClientDeleteResponse]("DedicatedHostsClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientDeleteResponse]("DedicatedHostsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := DedicatedHostsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("DedicatedHostsClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return DedicatedHostsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &DedicatedHostsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Delete a dedicated host.
@@ -260,16 +252,32 @@ func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (Dedi
 // hostGroupName - The name of the dedicated host group.
 // options - DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
 // method.
-func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsClientListByHostGroupOptions) *DedicatedHostsClientListByHostGroupPager {
-	return &DedicatedHostsClientListByHostGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByHostGroupCreateRequest(ctx, resourceGroupName, hostGroupName, options)
+func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsClientListByHostGroupOptions) *runtime.Pager[DedicatedHostsClientListByHostGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[DedicatedHostsClientListByHostGroupResponse]{
+		More: func(page DedicatedHostsClientListByHostGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp DedicatedHostsClientListByHostGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DedicatedHostListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *DedicatedHostsClientListByHostGroupResponse) (DedicatedHostsClientListByHostGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByHostGroupCreateRequest(ctx, resourceGroupName, hostGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return DedicatedHostsClientListByHostGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return DedicatedHostsClientListByHostGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return DedicatedHostsClientListByHostGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByHostGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByHostGroupCreateRequest creates the ListByHostGroup request.
@@ -315,20 +323,16 @@ func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Res
 // parameters - Parameters supplied to the Update Dedicated Host operation.
 // options - DedicatedHostsClientBeginUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginUpdate
 // method.
-func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (DedicatedHostsClientUpdatePollerResponse, error) {
-	resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
-	if err != nil {
-		return DedicatedHostsClientUpdatePollerResponse{}, err
+func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (*armruntime.Poller[DedicatedHostsClientUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DedicatedHostsClientUpdateResponse]("DedicatedHostsClient.Update", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientUpdateResponse]("DedicatedHostsClient.Update", options.ResumeToken, client.pl, nil)
 	}
-	result := DedicatedHostsClientUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("DedicatedHostsClient.Update", "", resp, client.pl)
-	if err != nil {
-		return DedicatedHostsClientUpdatePollerResponse{}, err
-	}
-	result.Poller = &DedicatedHostsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Update - Update an dedicated host .

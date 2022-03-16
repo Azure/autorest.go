@@ -23,7 +23,7 @@ func TestPrimitiveGetInt(t *testing.T) {
 	client := newPrimitiveClient()
 	result, err := client.GetInt(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.IntWrapper, IntWrapper{Field1: to.Int32Ptr(-1), Field2: to.Int32Ptr(2)}); r != "" {
+	if r := cmp.Diff(result.IntWrapper, IntWrapper{Field1: to.Ptr[int32](-1), Field2: to.Ptr[int32](2)}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -41,8 +41,8 @@ func TestPrimitiveGetLong(t *testing.T) {
 	result, err := client.GetLong(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.LongWrapper, LongWrapper{
-		Field1: to.Int64Ptr(1099511627775),
-		Field2: to.Int64Ptr(-999511627788),
+		Field1: to.Ptr[int64](1099511627775),
+		Field2: to.Ptr[int64](-999511627788),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -61,8 +61,8 @@ func TestPrimitiveGetFloat(t *testing.T) {
 	result, err := client.GetFloat(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.FloatWrapper, FloatWrapper{
-		Field1: to.Float32Ptr(1.05),
-		Field2: to.Float32Ptr(-0.003),
+		Field1: to.Ptr[float32](1.05),
+		Field2: to.Ptr[float32](-0.003),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -81,8 +81,8 @@ func TestPrimitiveGetDouble(t *testing.T) {
 	result, err := client.GetDouble(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DoubleWrapper, DoubleWrapper{
-		Field1: to.Float64Ptr(3e-100),
-		Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: to.Float64Ptr(-0.000000000000000000000000000000000000000000000000000000005),
+		Field1: to.Ptr(3e-100),
+		Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose: to.Ptr(-0.000000000000000000000000000000000000000000000000000000005),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -101,8 +101,8 @@ func TestPrimitiveGetBool(t *testing.T) {
 	result, err := client.GetBool(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.BooleanWrapper, BooleanWrapper{
-		FieldFalse: to.BoolPtr(false),
-		FieldTrue:  to.BoolPtr(true),
+		FieldFalse: to.Ptr(false),
+		FieldTrue:  to.Ptr(true),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -132,7 +132,7 @@ func TestByteWrapperJSONNull(t *testing.T) {
 	if string(b) != "{}" {
 		t.Fatalf("unexpected value %s", string(b))
 	}
-	bw.Field = azcore.NullValue([]byte{}).([]byte)
+	bw.Field = azcore.NullValue[[]byte]()
 	b, err = json.Marshal(bw)
 	require.NoError(t, err)
 	if string(b) != `{"field":null}` {
@@ -152,8 +152,8 @@ func TestPrimitiveGetString(t *testing.T) {
 	result, err := client.GetString(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.StringWrapper, StringWrapper{
-		Empty: to.StringPtr(""),
-		Field: to.StringPtr("goodrequest"),
+		Empty: to.Ptr(""),
+		Field: to.Ptr("goodrequest"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -198,7 +198,7 @@ func TestPrimitiveGetDuration(t *testing.T) {
 	result, err := client.GetDuration(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.DurationWrapper, DurationWrapper{
-		Field: to.StringPtr("P123DT22H14M12.011S"),
+		Field: to.Ptr("P123DT22H14M12.011S"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -206,7 +206,7 @@ func TestPrimitiveGetDuration(t *testing.T) {
 
 func TestPrimitivePutDuration(t *testing.T) {
 	client := newPrimitiveClient()
-	result, err := client.PutDuration(context.Background(), DurationWrapper{Field: to.StringPtr("P123DT22H14M12.011S")}, nil)
+	result, err := client.PutDuration(context.Background(), DurationWrapper{Field: to.Ptr("P123DT22H14M12.011S")}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
@@ -266,7 +266,7 @@ func TestPrimitivePutDateTimeRFC1123(t *testing.T) {
 func TestDatetimeWrapper(t *testing.T) {
 	now := time.Now()
 	dtw := DatetimeWrapper{
-		Field: azcore.NullValue(&time.Time{}).(*time.Time),
+		Field: azcore.NullValue[*time.Time](),
 		Now:   &now,
 	}
 	b, err := json.Marshal(dtw)
@@ -286,7 +286,7 @@ func TestDatetimeWrapper(t *testing.T) {
 func TestDatetimerfc1123Wrapper(t *testing.T) {
 	now := time.Now()
 	dtw := Datetimerfc1123Wrapper{
-		Field: azcore.NullValue(&time.Time{}).(*time.Time),
+		Field: azcore.NullValue[*time.Time](),
 		Now:   &now,
 	}
 	b, err := json.Marshal(dtw)
@@ -305,8 +305,8 @@ func TestDatetimerfc1123Wrapper(t *testing.T) {
 
 func TestDateWrapper(t *testing.T) {
 	dw := DateWrapper{
-		Field: azcore.NullValue(&time.Time{}).(*time.Time),
-		Leap:  to.TimePtr(time.Date(2021, 10, 22, 0, 0, 0, 0, time.UTC)),
+		Field: azcore.NullValue[*time.Time](),
+		Leap:  to.Ptr(time.Date(2021, 10, 22, 0, 0, 0, 0, time.UTC)),
 	}
 	b, err := json.Marshal(dw)
 	require.NoError(t, err)

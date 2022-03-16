@@ -34,9 +34,9 @@ func TestGetArrayItemEmpty(t *testing.T) {
 	resp, err := client.GetArrayItemEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
-		to.StringPtrArray("1", "2", "3"),
+		to.SliceOfPtrs("1", "2", "3"),
 		{},
-		to.StringPtrArray("7", "8", "9"),
+		to.SliceOfPtrs("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -48,9 +48,9 @@ func TestGetArrayItemNull(t *testing.T) {
 	resp, err := client.GetArrayItemNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
-		to.StringPtrArray("1", "2", "3"),
+		to.SliceOfPtrs("1", "2", "3"),
 		nil,
-		to.StringPtrArray("7", "8", "9"),
+		to.SliceOfPtrs("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -70,9 +70,9 @@ func TestGetArrayValid(t *testing.T) {
 	resp, err := client.GetArrayValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.StringArrayArray, [][]*string{
-		to.StringPtrArray("1", "2", "3"),
-		to.StringPtrArray("4", "5", "6"),
-		to.StringPtrArray("7", "8", "9"),
+		to.SliceOfPtrs("1", "2", "3"),
+		to.SliceOfPtrs("4", "5", "6"),
+		to.SliceOfPtrs("7", "8", "9"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -115,7 +115,7 @@ func TestGetBooleanTfft(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetBooleanTfft(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.BoolArray, to.BoolPtrArray(true, false, false, true)); r != "" {
+	if r := cmp.Diff(resp.BoolArray, to.SliceOfPtrs(true, false, false, true)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -160,9 +160,9 @@ func TestGetComplexItemEmpty(t *testing.T) {
 	resp, err := client.GetComplexItemEmpty(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ProductArray, []*Product{
-		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		{Integer: to.Ptr[int32](1), String: to.Ptr("2")},
 		{},
-		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Ptr[int32](5), String: to.Ptr("6")},
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -174,9 +174,9 @@ func TestGetComplexItemNull(t *testing.T) {
 	resp, err := client.GetComplexItemNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ProductArray, []*Product{
-		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
+		{Integer: to.Ptr[int32](1), String: to.Ptr("2")},
 		nil,
-		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Ptr[int32](5), String: to.Ptr("6")},
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -196,9 +196,9 @@ func TestGetComplexValid(t *testing.T) {
 	resp, err := client.GetComplexValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.ProductArray, []*Product{
-		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Ptr[int32](1), String: to.Ptr("2")},
+		{Integer: to.Ptr[int32](3), String: to.Ptr("4")},
+		{Integer: to.Ptr[int32](5), String: to.Ptr("6")},
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -289,7 +289,7 @@ func TestGetDateValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetDateValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.TimeArray, to.TimePtrArray(
+	if r := cmp.Diff(resp.TimeArray, to.SliceOfPtrs(
 		time.Date(2000, time.December, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, time.January, 02, 0, 0, 0, 0, time.UTC),
 		time.Date(1492, time.October, 12, 0, 0, 0, 0, time.UTC),
@@ -315,15 +315,15 @@ func TestGetDictionaryItemEmpty(t *testing.T) {
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
 		{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+			"1": to.Ptr("one"),
+			"2": to.Ptr("two"),
+			"3": to.Ptr("three"),
 		},
 		{},
 		{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+			"7": to.Ptr("seven"),
+			"8": to.Ptr("eight"),
+			"9": to.Ptr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -337,15 +337,15 @@ func TestGetDictionaryItemNull(t *testing.T) {
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
 		{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+			"1": to.Ptr("one"),
+			"2": to.Ptr("two"),
+			"3": to.Ptr("three"),
 		},
 		nil,
 		{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+			"7": to.Ptr("seven"),
+			"8": to.Ptr("eight"),
+			"9": to.Ptr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -367,19 +367,19 @@ func TestGetDictionaryValid(t *testing.T) {
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.MapOfStringArray, []map[string]*string{
 		{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+			"1": to.Ptr("one"),
+			"2": to.Ptr("two"),
+			"3": to.Ptr("three"),
 		},
 		{
-			"4": to.StringPtr("four"),
-			"5": to.StringPtr("five"),
-			"6": to.StringPtr("six"),
+			"4": to.Ptr("four"),
+			"5": to.Ptr("five"),
+			"6": to.Ptr("six"),
 		},
 		{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+			"7": to.Ptr("seven"),
+			"8": to.Ptr("eight"),
+			"9": to.Ptr("nine"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -392,9 +392,9 @@ func TestGetDoubleInvalidNull(t *testing.T) {
 	resp, err := client.GetDoubleInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Float64Array, []*float64{
-		to.Float64Ptr(0),
+		to.Ptr[float64](0),
 		nil,
-		to.Float64Ptr(-1.2e20),
+		to.Ptr(-1.2e20),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -413,7 +413,7 @@ func TestGetDoubleValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetDoubleValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.Float64Array, to.Float64PtrArray(0, -0.01, -1.2e20)); r != "" {
+	if r := cmp.Diff(resp.Float64Array, to.SliceOfPtrs[float64](0, -0.01, -1.2e20)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -423,7 +423,7 @@ func TestGetDurationValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetDurationValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.StringArray, to.StringPtrArray("P123DT22H14M12.011S", "P5DT1H0M0S")); r != "" {
+	if r := cmp.Diff(resp.StringArray, to.SliceOfPtrs("P123DT22H14M12.011S", "P5DT1H0M0S")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -456,9 +456,9 @@ func TestGetFloatInvalidNull(t *testing.T) {
 	resp, err := client.GetFloatInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Float32Array, []*float32{
-		to.Float32Ptr(0),
+		to.Ptr[float32](0),
 		nil,
-		to.Float32Ptr(-1.2e20),
+		to.Ptr[float32](-1.2e20),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -477,7 +477,7 @@ func TestGetFloatValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetFloatValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.Float32Array, to.Float32PtrArray(0, -0.01, -1.2e20)); r != "" {
+	if r := cmp.Diff(resp.Float32Array, to.SliceOfPtrs[float32](0, -0.01, -1.2e20)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -488,9 +488,9 @@ func TestGetIntInvalidNull(t *testing.T) {
 	resp, err := client.GetIntInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Int32Array, []*int32{
-		to.Int32Ptr(1),
+		to.Ptr[int32](1),
 		nil,
-		to.Int32Ptr(0),
+		to.Ptr[int32](0),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -509,7 +509,7 @@ func TestGetIntegerValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetIntegerValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.Int32Array, to.Int32PtrArray(1, -1, 3, 300)); r != "" {
+	if r := cmp.Diff(resp.Int32Array, to.SliceOfPtrs[int32](1, -1, 3, 300)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -528,9 +528,9 @@ func TestGetLongInvalidNull(t *testing.T) {
 	resp, err := client.GetLongInvalidNull(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Int64Array, []*int64{
-		to.Int64Ptr(1),
+		to.Ptr[int64](1),
 		nil,
-		to.Int64Ptr(0),
+		to.Ptr[int64](0),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -549,7 +549,7 @@ func TestGetLongValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetLongValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.Int64Array, to.Int64PtrArray(1, -1, 3, 300)); r != "" {
+	if r := cmp.Diff(resp.Int64Array, to.SliceOfPtrs[int64](1, -1, 3, 300)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -578,7 +578,7 @@ func TestGetStringValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetStringValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.StringArray, to.StringPtrArray("foo1", "foo2", "foo3")); r != "" {
+	if r := cmp.Diff(resp.StringArray, to.SliceOfPtrs("foo1", "foo2", "foo3")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -596,7 +596,7 @@ func TestGetStringWithNull(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetStringWithNull(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.StringArray, []*string{to.StringPtr("foo"), nil, to.StringPtr("foo2")}); r != "" {
+	if r := cmp.Diff(resp.StringArray, []*string{to.Ptr("foo"), nil, to.Ptr("foo2")}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -611,7 +611,7 @@ func TestGetUUIDValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.GetUUIDValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(resp.StringArray, to.StringPtrArray("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205")); r != "" {
+	if r := cmp.Diff(resp.StringArray, to.SliceOfPtrs("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -620,9 +620,9 @@ func TestGetUUIDValid(t *testing.T) {
 func TestPutArrayValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutArrayValid(context.Background(), [][]*string{
-		to.StringPtrArray("1", "2", "3"),
-		to.StringPtrArray("4", "5", "6"),
-		to.StringPtrArray("7", "8", "9"),
+		to.SliceOfPtrs("1", "2", "3"),
+		to.SliceOfPtrs("4", "5", "6"),
+		to.SliceOfPtrs("7", "8", "9"),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -631,7 +631,7 @@ func TestPutArrayValid(t *testing.T) {
 // PutBooleanTfft - Set array value empty [true, false, false, true]
 func TestPutBooleanTfft(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutBooleanTfft(context.Background(), to.BoolPtrArray(true, false, false, true), nil)
+	resp, err := client.PutBooleanTfft(context.Background(), to.SliceOfPtrs(true, false, false, true), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -652,9 +652,9 @@ func TestPutByteValid(t *testing.T) {
 func TestPutComplexValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutComplexValid(context.Background(), []*Product{
-		{Integer: to.Int32Ptr(1), String: to.StringPtr("2")},
-		{Integer: to.Int32Ptr(3), String: to.StringPtr("4")},
-		{Integer: to.Int32Ptr(5), String: to.StringPtr("6")},
+		{Integer: to.Ptr[int32](1), String: to.Ptr("2")},
+		{Integer: to.Ptr[int32](3), String: to.Ptr("4")},
+		{Integer: to.Ptr[int32](5), String: to.Ptr("6")},
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
@@ -685,7 +685,7 @@ func TestPutDateTimeValid(t *testing.T) {
 // PutDateValid - Set array value  ['2000-12-01', '1980-01-02', '1492-10-12']
 func TestPutDateValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDateValid(context.Background(), to.TimePtrArray(time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC),
+	resp, err := client.PutDateValid(context.Background(), to.SliceOfPtrs(time.Date(2000, 12, 01, 0, 0, 0, 0, time.UTC),
 		time.Date(1980, 01, 02, 0, 0, 0, 0, time.UTC),
 		time.Date(1492, 10, 12, 0, 0, 0, 0, time.UTC)), nil)
 	require.NoError(t, err)
@@ -697,19 +697,19 @@ func TestPutDictionaryValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutDictionaryValid(context.Background(), []map[string]*string{
 		{
-			"1": to.StringPtr("one"),
-			"2": to.StringPtr("two"),
-			"3": to.StringPtr("three"),
+			"1": to.Ptr("one"),
+			"2": to.Ptr("two"),
+			"3": to.Ptr("three"),
 		},
 		{
-			"4": to.StringPtr("four"),
-			"5": to.StringPtr("five"),
-			"6": to.StringPtr("six"),
+			"4": to.Ptr("four"),
+			"5": to.Ptr("five"),
+			"6": to.Ptr("six"),
 		},
 		{
-			"7": to.StringPtr("seven"),
-			"8": to.StringPtr("eight"),
-			"9": to.StringPtr("nine"),
+			"7": to.Ptr("seven"),
+			"8": to.Ptr("eight"),
+			"9": to.Ptr("nine"),
 		},
 	}, nil)
 	require.NoError(t, err)
@@ -719,7 +719,7 @@ func TestPutDictionaryValid(t *testing.T) {
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 func TestPutDoubleValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDoubleValid(context.Background(), to.Float64PtrArray(0, -0.01, -1.2e20), nil)
+	resp, err := client.PutDoubleValid(context.Background(), to.SliceOfPtrs[float64](0, -0.01, -1.2e20), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -727,7 +727,7 @@ func TestPutDoubleValid(t *testing.T) {
 // PutDurationValid - Set array value  ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 func TestPutDurationValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutDurationValid(context.Background(), to.StringPtrArray("P123DT22H14M12.011S", "P5DT1H"), nil)
+	resp, err := client.PutDurationValid(context.Background(), to.SliceOfPtrs("P123DT22H14M12.011S", "P5DT1H"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -752,7 +752,7 @@ func TestPutEnumValid(t *testing.T) {
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
 func TestPutFloatValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutFloatValid(context.Background(), to.Float32PtrArray(0, -0.01, -1.2e20), nil)
+	resp, err := client.PutFloatValid(context.Background(), to.SliceOfPtrs[float32](0, -0.01, -1.2e20), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -760,7 +760,7 @@ func TestPutFloatValid(t *testing.T) {
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
 func TestPutIntegerValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutIntegerValid(context.Background(), to.Int32PtrArray(1, -1, 3, 300), nil)
+	resp, err := client.PutIntegerValid(context.Background(), to.SliceOfPtrs[int32](1, -1, 3, 300), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -768,7 +768,7 @@ func TestPutIntegerValid(t *testing.T) {
 // PutLongValid - Set array value empty [1, -1, 3, 300]
 func TestPutLongValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutLongValid(context.Background(), to.Int64PtrArray(1, -1, 3, 300), nil)
+	resp, err := client.PutLongValid(context.Background(), to.SliceOfPtrs[int64](1, -1, 3, 300), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -785,7 +785,7 @@ func TestPutStringEnumValid(t *testing.T) {
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 func TestPutStringValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutStringValid(context.Background(), to.StringPtrArray("foo1", "foo2", "foo3"), nil)
+	resp, err := client.PutStringValid(context.Background(), to.SliceOfPtrs("foo1", "foo2", "foo3"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -793,7 +793,7 @@ func TestPutStringValid(t *testing.T) {
 // PutUUIDValid - Set array value  ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 func TestPutUUIDValid(t *testing.T) {
 	client := newArrayClient()
-	resp, err := client.PutUUIDValid(context.Background(), to.StringPtrArray("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"), nil)
+	resp, err := client.PutUUIDValid(context.Background(), to.SliceOfPtrs("6dcc7237-45fe-45c4-8a6b-3a8a3f625652", "d1399005-30f7-40d6-8da6-dd7c89ad34db", "f42f6aa1-a5bc-4ddf-907e-5f915de43205"), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

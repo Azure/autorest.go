@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -41,20 +41,16 @@ func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderC
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPost202Retry200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPost202Retry200
 // method.
-func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (LROsCustomHeaderClientPost202Retry200PollerResponse, error) {
-	resp, err := client.post202Retry200(ctx, options)
-	if err != nil {
-		return LROsCustomHeaderClientPost202Retry200PollerResponse{}, err
+func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (*armruntime.Poller[LROsCustomHeaderClientPost202Retry200Response], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.post202Retry200(ctx, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LROsCustomHeaderClientPost202Retry200Response]("LROsCustomHeaderClient.Post202Retry200", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPost202Retry200Response]("LROsCustomHeaderClient.Post202Retry200", options.ResumeToken, client.pl, nil)
 	}
-	result := LROsCustomHeaderClientPost202Retry200PollerResponse{}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Post202Retry200", "", resp, client.pl)
-	if err != nil {
-		return LROsCustomHeaderClientPost202Retry200PollerResponse{}, err
-	}
-	result.Poller = &LROsCustomHeaderClientPost202Retry200Poller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Post202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests.
@@ -96,20 +92,16 @@ func (client *LROsCustomHeaderClient) post202Retry200CreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded
 // method.
-func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse, error) {
-	resp, err := client.postAsyncRetrySucceeded(ctx, options)
-	if err != nil {
-		return LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}, err
+func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (*armruntime.Poller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.postAsyncRetrySucceeded(ctx, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPostAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PostAsyncRetrySucceeded", options.ResumeToken, client.pl, nil)
 	}
-	result := LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.pl)
-	if err != nil {
-		return LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}, err
-	}
-	result.Poller = &LROsCustomHeaderClientPostAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // PostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for
@@ -151,20 +143,16 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPut201CreatingSucceeded200
 // method.
-func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse, error) {
-	resp, err := client.put201CreatingSucceeded200(ctx, options)
-	if err != nil {
-		return LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}, err
+func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*armruntime.Poller[LROsCustomHeaderClientPut201CreatingSucceeded200Response], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.put201CreatingSucceeded200(ctx, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LROsCustomHeaderClientPut201CreatingSucceeded200Response]("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPut201CreatingSucceeded200Response]("LROsCustomHeaderClient.Put201CreatingSucceeded200", options.ResumeToken, client.pl, nil)
 	}
-	result := LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.pl)
-	if err != nil {
-		return LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}, err
-	}
-	result.Poller = &LROsCustomHeaderClientPut201CreatingSucceeded200Poller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Put201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for
@@ -206,20 +194,16 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded
 // method.
-func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse, error) {
-	resp, err := client.putAsyncRetrySucceeded(ctx, options)
-	if err != nil {
-		return LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}, err
+func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*armruntime.Poller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.putAsyncRetrySucceeded(ctx, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPutAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PutAsyncRetrySucceeded", options.ResumeToken, client.pl, nil)
 	}
-	result := LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.pl)
-	if err != nil {
-		return LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}, err
-	}
-	result.Poller = &LROsCustomHeaderClientPutAsyncRetrySucceededPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // PutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all

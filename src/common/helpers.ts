@@ -46,19 +46,9 @@ export function isBinaryResponse(resp: Response): resp is BinaryResponse {
   return (resp as BinaryResponse).binary !== undefined;
 }
 
-export interface PagerInfo {
-  name: string;
-  op: Operation;
-}
-
 // returns true if the operation is pageable
 export function isPageableOperation(op: Operation): boolean {
   return op.language.go!.paging;
-}
-
-export interface PollerInfo {
-  name: string;
-  op: Operation;
 }
 
 // returns true if the operation is a long-running operation

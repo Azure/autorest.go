@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -211,16 +211,32 @@ func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (Av
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
-func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsClientListOptions) *AvailabilitySetsClientListPager {
-	return &AvailabilitySetsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, options)
+func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsClientListOptions) *runtime.Pager[AvailabilitySetsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[AvailabilitySetsClientListResponse]{
+		More: func(page AvailabilitySetsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp AvailabilitySetsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailabilitySetListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *AvailabilitySetsClientListResponse) (AvailabilitySetsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return AvailabilitySetsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return AvailabilitySetsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return AvailabilitySetsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -261,13 +277,26 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (A
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
 // method.
-func (client *AvailabilitySetsClient) ListAvailableSizes(resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) *AvailabilitySetsClientListAvailableSizesPager {
-	return &AvailabilitySetsClientListAvailableSizesPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
+func (client *AvailabilitySetsClient) ListAvailableSizes(resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) *runtime.Pager[AvailabilitySetsClientListAvailableSizesResponse] {
+	return runtime.NewPager(runtime.PageProcessor[AvailabilitySetsClientListAvailableSizesResponse]{
+		More: func(page AvailabilitySetsClientListAvailableSizesResponse) bool {
+			return false
 		},
-	}
+		Fetcher: func(ctx context.Context, page *AvailabilitySetsClientListAvailableSizesResponse) (AvailabilitySetsClientListAvailableSizesResponse, error) {
+			req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
+			if err != nil {
+				return AvailabilitySetsClientListAvailableSizesResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return AvailabilitySetsClientListAvailableSizesResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listAvailableSizesHandleResponse(resp)
+		},
+	})
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
@@ -309,16 +338,32 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *htt
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
 // method.
-func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsClientListBySubscriptionOptions) *AvailabilitySetsClientListBySubscriptionPager {
-	return &AvailabilitySetsClientListBySubscriptionPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listBySubscriptionCreateRequest(ctx, options)
+func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsClientListBySubscriptionOptions) *runtime.Pager[AvailabilitySetsClientListBySubscriptionResponse] {
+	return runtime.NewPager(runtime.PageProcessor[AvailabilitySetsClientListBySubscriptionResponse]{
+		More: func(page AvailabilitySetsClientListBySubscriptionResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp AvailabilitySetsClientListBySubscriptionResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailabilitySetListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *AvailabilitySetsClientListBySubscriptionResponse) (AvailabilitySetsClientListBySubscriptionResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listBySubscriptionCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return AvailabilitySetsClientListBySubscriptionResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return AvailabilitySetsClientListBySubscriptionResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return AvailabilitySetsClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listBySubscriptionHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.

@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 // parameters - Parameters supplied to the create or update local network gateway operation.
 // options - LocalNetworkGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (LocalNetworkGatewaysClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
-	if err != nil {
-		return LocalNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
+func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (*armruntime.Poller[LocalNetworkGatewaysClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LocalNetworkGatewaysClientCreateOrUpdateResponse]("LocalNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LocalNetworkGatewaysClientCreateOrUpdateResponse]("LocalNetworkGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := LocalNetworkGatewaysClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("LocalNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return LocalNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &LocalNetworkGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
@@ -122,20 +118,16 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateCreateRequest(ctx contex
 // localNetworkGatewayName - The name of the local network gateway.
 // options - LocalNetworkGatewaysClientBeginDeleteOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginDelete
 // method.
-func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (LocalNetworkGatewaysClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
-	if err != nil {
-		return LocalNetworkGatewaysClientDeletePollerResponse{}, err
+func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (*armruntime.Poller[LocalNetworkGatewaysClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LocalNetworkGatewaysClientDeleteResponse]("LocalNetworkGatewaysClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LocalNetworkGatewaysClientDeleteResponse]("LocalNetworkGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := LocalNetworkGatewaysClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("LocalNetworkGatewaysClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return LocalNetworkGatewaysClientDeletePollerResponse{}, err
-	}
-	result.Poller = &LocalNetworkGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified local network gateway.
@@ -242,16 +234,32 @@ func (client *LocalNetworkGatewaysClient) getHandleResponse(resp *http.Response)
 // resourceGroupName - The name of the resource group.
 // options - LocalNetworkGatewaysClientListOptions contains the optional parameters for the LocalNetworkGatewaysClient.List
 // method.
-func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysClientListOptions) *LocalNetworkGatewaysClientListPager {
-	return &LocalNetworkGatewaysClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, options)
+func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysClientListOptions) *runtime.Pager[LocalNetworkGatewaysClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[LocalNetworkGatewaysClientListResponse]{
+		More: func(page LocalNetworkGatewaysClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp LocalNetworkGatewaysClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.LocalNetworkGatewayListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *LocalNetworkGatewaysClientListResponse) (LocalNetworkGatewaysClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return LocalNetworkGatewaysClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return LocalNetworkGatewaysClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return LocalNetworkGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

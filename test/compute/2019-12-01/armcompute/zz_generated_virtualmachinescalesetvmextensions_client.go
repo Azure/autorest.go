@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -59,20 +59,16 @@ func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credenti
 // extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
 // options - VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse{}, err
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse]("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientCreateOrUpdateResponse]("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
@@ -134,20 +130,16 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateCreateRequ
 // vmExtensionName - The name of the virtual machine extension.
 // options - VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginDelete
 // method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse{}, err
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (*armruntime.Poller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualMachineScaleSetVMExtensionsClientDeleteResponse]("VirtualMachineScaleSetVMExtensionsClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientDeleteResponse]("VirtualMachineScaleSetVMExtensionsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VirtualMachineScaleSetVMExtensionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - The operation to delete the VMSS VM extension.
@@ -343,20 +335,16 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleResponse(resp 
 // extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
 // options - VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginUpdate
 // method.
-func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse, error) {
-	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse{}, err
+func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (*armruntime.Poller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualMachineScaleSetVMExtensionsClientUpdateResponse]("VirtualMachineScaleSetVMExtensionsClient.Update", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetVMExtensionsClientUpdateResponse]("VirtualMachineScaleSetVMExtensionsClient.Update", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Update", "", resp, client.pl)
-	if err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualMachineScaleSetVMExtensionsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Update - The operation to update the VMSS VM extension.

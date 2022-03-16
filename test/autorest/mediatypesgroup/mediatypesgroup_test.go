@@ -32,7 +32,7 @@ func TestAnalyzeBody(t *testing.T) {
 func TestAnalyzeBodyWithJSON(t *testing.T) {
 	client := newMediaTypesClient()
 	body := SourcePath{
-		Source: to.StringPtr("test"),
+		Source: to.Ptr("test"),
 	}
 	result, err := client.AnalyzeBodyWithJSON(context.Background(), &MediaTypesClientAnalyzeBodyWithJSONOptions{Input: &body})
 	require.NoError(t, err)
@@ -44,7 +44,7 @@ func TestAnalyzeBodyWithJSON(t *testing.T) {
 func TestContentTypeWithEncoding(t *testing.T) {
 	client := newMediaTypesClient()
 	result, err := client.ContentTypeWithEncoding(context.Background(), &MediaTypesClientContentTypeWithEncodingOptions{
-		Input: to.StringPtr("foo"),
+		Input: to.Ptr("foo"),
 	})
 	require.NoError(t, err)
 	if *result.Value != "Nice job sending content type with encoding" {

@@ -13,11 +13,11 @@ export async function generateGoModFile(session: Session<CodeModel>): Promise<st
     return '';
   }
   let text = `module ${modName}\n\n`;
-  text += 'go 1.16\n\n';
+  text += 'go 1.18\n\n';
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
-  const version = await session.getValue('azcore-version', '0.21.0');
-  if (!version.match(/^\d+\.\d+\.\d+$/) && !version.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
+  const version = await session.getValue('azcore-version', '0.22.1-0.20220315231014-ed309e73db6b');
+  if (!version.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
     throw new Error(`azcore version ${version} must in the format major.minor.patch[-beta.N]`);
   }
   const azcore = 'github.com/Azure/azure-sdk-for-go/sdk/azcore v' + version;

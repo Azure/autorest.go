@@ -27,12 +27,12 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
 	product := Product{
 		Child: &ChildProduct{
-			ConstProperty: to.StringPtr("constant")},
-		ConstString: to.StringPtr("constant"),
-		ConstInt:    to.Int32Ptr(0),
+			ConstProperty: to.Ptr("constant")},
+		ConstString: to.Ptr("constant"),
+		ConstInt:    to.Ptr[int32](0),
 		ConstChild: &ConstantProduct{
-			ConstProperty:  to.StringPtr("constant"),
-			ConstProperty2: to.StringPtr("constant2")}}
+			ConstProperty:  to.Ptr("constant"),
+			ConstProperty2: to.Ptr("constant2")}}
 	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestClientPostWithConstantInBodyOptions{Body: &product})
 	require.NoError(t, err)
 	if r := cmp.Diff(product, result.Product); r != "" {
@@ -46,13 +46,13 @@ func TestValidationValidationOfBody(t *testing.T) {
 	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestClientValidationOfBodyOptions{
 		Body: &Product{
 			DisplayNames: []*string{
-				to.StringPtr("displayname1"),
-				to.StringPtr("displayname2"),
-				to.StringPtr("displayname3"),
-				to.StringPtr("displayname4"),
-				to.StringPtr("displayname5"),
-				to.StringPtr("displayname6"),
-				to.StringPtr("displayname7")}},
+				to.Ptr("displayname1"),
+				to.Ptr("displayname2"),
+				to.Ptr("displayname3"),
+				to.Ptr("displayname4"),
+				to.Ptr("displayname5"),
+				to.Ptr("displayname6"),
+				to.Ptr("displayname7")}},
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)

@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewBandwidthSchedulesClient(subscriptionID string, credential azcore.TokenC
 // parameters - The bandwidth schedule to be added or updated.
 // options - BandwidthSchedulesClientBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
 // method.
-func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (BandwidthSchedulesClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, parameters, options)
-	if err != nil {
-		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
+func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[BandwidthSchedulesClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[BandwidthSchedulesClientCreateOrUpdateResponse]("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[BandwidthSchedulesClientCreateOrUpdateResponse]("BandwidthSchedulesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := BandwidthSchedulesClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &BandwidthSchedulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a bandwidth schedule.
@@ -127,20 +123,16 @@ func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.
 // resourceGroupName - The resource group name.
 // options - BandwidthSchedulesClientBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
 // method.
-func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (BandwidthSchedulesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
-	if err != nil {
-		return BandwidthSchedulesClientDeletePollerResponse{}, err
+func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*armruntime.Poller[BandwidthSchedulesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[BandwidthSchedulesClientDeleteResponse]("BandwidthSchedulesClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[BandwidthSchedulesClientDeleteResponse]("BandwidthSchedulesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := BandwidthSchedulesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return BandwidthSchedulesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &BandwidthSchedulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified bandwidth schedule.
@@ -256,16 +248,32 @@ func (client *BandwidthSchedulesClient) getHandleResponse(resp *http.Response) (
 // resourceGroupName - The resource group name.
 // options - BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
 // method.
-func (client *BandwidthSchedulesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) *BandwidthSchedulesClientListByDataBoxEdgeDevicePager {
-	return &BandwidthSchedulesClientListByDataBoxEdgeDevicePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+func (client *BandwidthSchedulesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse]{
+		More: func(page BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.BandwidthSchedulesList.NextLink)
+		Fetcher: func(ctx context.Context, page *BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse) (BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.

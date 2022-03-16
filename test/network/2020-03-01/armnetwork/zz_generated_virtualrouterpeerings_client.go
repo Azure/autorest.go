@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.Tok
 // parameters - Parameters supplied to the create or update Virtual Router Peering operation.
 // options - VirtualRouterPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeeringsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsClientBeginCreateOrUpdateOptions) (VirtualRouterPeeringsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
-	if err != nil {
-		return VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}, err
+func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualRouterPeeringsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualRouterPeeringsClientCreateOrUpdateResponse]("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualRouterPeeringsClientCreateOrUpdateResponse]("VirtualRouterPeeringsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualRouterPeeringsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
@@ -128,20 +124,16 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateCreateRequest(ctx conte
 // peeringName - The name of the peering.
 // options - VirtualRouterPeeringsClientBeginDeleteOptions contains the optional parameters for the VirtualRouterPeeringsClient.BeginDelete
 // method.
-func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsClientBeginDeleteOptions) (VirtualRouterPeeringsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
-	if err != nil {
-		return VirtualRouterPeeringsClientDeletePollerResponse{}, err
+func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsClientBeginDeleteOptions) (*armruntime.Poller[VirtualRouterPeeringsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualRouterPeeringsClientDeleteResponse]("VirtualRouterPeeringsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualRouterPeeringsClientDeleteResponse]("VirtualRouterPeeringsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualRouterPeeringsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return VirtualRouterPeeringsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VirtualRouterPeeringsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified peering from a Virtual Router.
@@ -258,16 +250,32 @@ func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *http.Response
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRouterPeeringsClientListOptions contains the optional parameters for the VirtualRouterPeeringsClient.List
 // method.
-func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsClientListOptions) *VirtualRouterPeeringsClientListPager {
-	return &VirtualRouterPeeringsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
+func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsClientListOptions) *runtime.Pager[VirtualRouterPeeringsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualRouterPeeringsClientListResponse]{
+		More: func(page VirtualRouterPeeringsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualRouterPeeringsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterPeeringListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualRouterPeeringsClientListResponse) (VirtualRouterPeeringsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualRouterPeeringsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualRouterPeeringsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualRouterPeeringsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

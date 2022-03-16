@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -56,20 +56,16 @@ func NewApplicationGatewaysClient(subscriptionID string, credential azcore.Token
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginBackendHealthOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealth
 // method.
-func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (ApplicationGatewaysClientBackendHealthPollerResponse, error) {
-	resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
-	if err != nil {
-		return ApplicationGatewaysClientBackendHealthPollerResponse{}, err
+func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (*armruntime.Poller[ApplicationGatewaysClientBackendHealthResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ApplicationGatewaysClientBackendHealthResponse]("ApplicationGatewaysClient.BackendHealth", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthResponse]("ApplicationGatewaysClient.BackendHealth", options.ResumeToken, client.pl, nil)
 	}
-	result := ApplicationGatewaysClientBackendHealthPollerResponse{}
-	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.BackendHealth", "location", resp, client.pl)
-	if err != nil {
-		return ApplicationGatewaysClientBackendHealthPollerResponse{}, err
-	}
-	result.Poller = &ApplicationGatewaysClientBackendHealthPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
@@ -126,20 +122,16 @@ func (client *ApplicationGatewaysClient) backendHealthCreateRequest(ctx context.
 // probeRequest - Request body for on-demand test probe operation.
 // options - ApplicationGatewaysClientBeginBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealthOnDemand
 // method.
-func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (ApplicationGatewaysClientBackendHealthOnDemandPollerResponse, error) {
-	resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
-	if err != nil {
-		return ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{}, err
+func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (*armruntime.Poller[ApplicationGatewaysClientBackendHealthOnDemandResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ApplicationGatewaysClientBackendHealthOnDemandResponse]("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthOnDemandResponse]("ApplicationGatewaysClient.BackendHealthOnDemand", options.ResumeToken, client.pl, nil)
 	}
-	result := ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{}
-	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.pl)
-	if err != nil {
-		return ApplicationGatewaysClientBackendHealthOnDemandPollerResponse{}, err
-	}
-	result.Poller = &ApplicationGatewaysClientBackendHealthOnDemandPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified
@@ -196,20 +188,16 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandCreateRequest(ctx 
 // parameters - Parameters supplied to the create or update application gateway operation.
 // options - ApplicationGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (ApplicationGatewaysClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
-	if err != nil {
-		return ApplicationGatewaysClientCreateOrUpdatePollerResponse{}, err
+func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ApplicationGatewaysClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ApplicationGatewaysClientCreateOrUpdateResponse]("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientCreateOrUpdateResponse]("ApplicationGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := ApplicationGatewaysClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return ApplicationGatewaysClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &ApplicationGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified application gateway.
@@ -261,20 +249,16 @@ func (client *ApplicationGatewaysClient) createOrUpdateCreateRequest(ctx context
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginDeleteOptions contains the optional parameters for the ApplicationGatewaysClient.BeginDelete
 // method.
-func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (ApplicationGatewaysClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
-	if err != nil {
-		return ApplicationGatewaysClientDeletePollerResponse{}, err
+func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (*armruntime.Poller[ApplicationGatewaysClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ApplicationGatewaysClientDeleteResponse]("ApplicationGatewaysClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientDeleteResponse]("ApplicationGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := ApplicationGatewaysClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return ApplicationGatewaysClientDeletePollerResponse{}, err
-	}
-	result.Poller = &ApplicationGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified application gateway.
@@ -431,16 +415,32 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(re
 // resourceGroupName - The name of the resource group.
 // options - ApplicationGatewaysClientListOptions contains the optional parameters for the ApplicationGatewaysClient.List
 // method.
-func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysClientListOptions) *ApplicationGatewaysClientListPager {
-	return &ApplicationGatewaysClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, options)
+func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysClientListOptions) *runtime.Pager[ApplicationGatewaysClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ApplicationGatewaysClientListResponse]{
+		More: func(page ApplicationGatewaysClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ApplicationGatewaysClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListResponse) (ApplicationGatewaysClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ApplicationGatewaysClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ApplicationGatewaysClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ApplicationGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -478,16 +478,32 @@ func (client *ApplicationGatewaysClient) listHandleResponse(resp *http.Response)
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ApplicationGatewaysClientListAllOptions contains the optional parameters for the ApplicationGatewaysClient.ListAll
 // method.
-func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysClientListAllOptions) *ApplicationGatewaysClientListAllPager {
-	return &ApplicationGatewaysClientListAllPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listAllCreateRequest(ctx, options)
+func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysClientListAllOptions) *runtime.Pager[ApplicationGatewaysClientListAllResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ApplicationGatewaysClientListAllResponse]{
+		More: func(page ApplicationGatewaysClientListAllResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ApplicationGatewaysClientListAllResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListAllResponse) (ApplicationGatewaysClientListAllResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listAllCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ApplicationGatewaysClientListAllResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ApplicationGatewaysClientListAllResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ApplicationGatewaysClientListAllResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listAllHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listAllCreateRequest creates the ListAll request.
@@ -659,16 +675,32 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(r
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies
 // method.
-func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions) *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesPager {
-	return &ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
+func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions) *runtime.Pager[ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse]{
+		More: func(page ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ApplicationGatewayAvailableSSLPredefinedPolicies.NextLink)
+		Fetcher: func(ctx context.Context, page *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse) (ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listAvailableSSLPredefinedPoliciesCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listAvailableSSLPredefinedPoliciesHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listAvailableSSLPredefinedPoliciesCreateRequest creates the ListAvailableSSLPredefinedPolicies request.
@@ -796,20 +828,16 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginStartOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStart
 // method.
-func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (ApplicationGatewaysClientStartPollerResponse, error) {
-	resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
-	if err != nil {
-		return ApplicationGatewaysClientStartPollerResponse{}, err
+func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (*armruntime.Poller[ApplicationGatewaysClientStartResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ApplicationGatewaysClientStartResponse]("ApplicationGatewaysClient.Start", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientStartResponse]("ApplicationGatewaysClient.Start", options.ResumeToken, client.pl, nil)
 	}
-	result := ApplicationGatewaysClientStartPollerResponse{}
-	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.Start", "location", resp, client.pl)
-	if err != nil {
-		return ApplicationGatewaysClientStartPollerResponse{}, err
-	}
-	result.Poller = &ApplicationGatewaysClientStartPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Start - Starts the specified application gateway.
@@ -861,20 +889,16 @@ func (client *ApplicationGatewaysClient) startCreateRequest(ctx context.Context,
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginStopOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStop
 // method.
-func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (ApplicationGatewaysClientStopPollerResponse, error) {
-	resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
-	if err != nil {
-		return ApplicationGatewaysClientStopPollerResponse{}, err
+func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (*armruntime.Poller[ApplicationGatewaysClientStopResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ApplicationGatewaysClientStopResponse]("ApplicationGatewaysClient.Stop", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientStopResponse]("ApplicationGatewaysClient.Stop", options.ResumeToken, client.pl, nil)
 	}
-	result := ApplicationGatewaysClientStopPollerResponse{}
-	pt, err := armruntime.NewPoller("ApplicationGatewaysClient.Stop", "location", resp, client.pl)
-	if err != nil {
-		return ApplicationGatewaysClientStopPollerResponse{}, err
-	}
-	result.Poller = &ApplicationGatewaysClientStopPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Stop - Stops the specified application gateway in a resource group.

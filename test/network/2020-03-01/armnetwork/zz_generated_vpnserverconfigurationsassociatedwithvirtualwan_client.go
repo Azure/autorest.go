@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -56,20 +56,16 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 // options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
 // VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse, error) {
-	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
-	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*armruntime.Poller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", options.ResumeToken, client.pl, nil)
 	}
-	result := VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}
-	pt, err := armruntime.NewPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl)
-	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
-	}
-	result.Poller = &VPNServerConfigurationsAssociatedWithVirtualWanClientListPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.

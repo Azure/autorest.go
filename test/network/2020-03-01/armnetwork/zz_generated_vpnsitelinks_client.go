@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -116,16 +116,32 @@ func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSit
 // vpnSiteName - The name of the VpnSite.
 // options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
 // method.
-func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) *VPNSiteLinksClientListByVPNSitePager {
-	return &VPNSiteLinksClientListByVPNSitePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
+func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) *runtime.Pager[VPNSiteLinksClientListByVPNSiteResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VPNSiteLinksClientListByVPNSiteResponse]{
+		More: func(page VPNSiteLinksClientListByVPNSiteResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VPNSiteLinksClientListByVPNSiteResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinksResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VPNSiteLinksClientListByVPNSiteResponse) (VPNSiteLinksClientListByVPNSiteResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VPNSiteLinksClientListByVPNSiteResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VPNSiteLinksClientListByVPNSiteResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VPNSiteLinksClientListByVPNSiteResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByVPNSiteHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByVPNSiteCreateRequest creates the ListByVPNSite request.

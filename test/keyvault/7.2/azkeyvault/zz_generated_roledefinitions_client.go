@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -193,16 +193,32 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition.
 // options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
-func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *RoleDefinitionsClientListPager {
-	return &RoleDefinitionsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, vaultBaseURL, scope, options)
+func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *runtime.Pager[RoleDefinitionsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[RoleDefinitionsClientListResponse]{
+		More: func(page RoleDefinitionsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp RoleDefinitionsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.RoleDefinitionListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *RoleDefinitionsClientListResponse) (RoleDefinitionsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, vaultBaseURL, scope, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return RoleDefinitionsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return RoleDefinitionsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return RoleDefinitionsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

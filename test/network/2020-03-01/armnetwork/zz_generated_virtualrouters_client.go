@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCrede
 // parameters - Parameters supplied to the create or update Virtual Router.
 // options - VirtualRoutersClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRoutersClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (VirtualRoutersClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters, options)
-	if err != nil {
-		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
+func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualRoutersClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualRoutersClientCreateOrUpdateResponse]("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualRoutersClientCreateOrUpdateResponse]("VirtualRoutersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualRoutersClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualRoutersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router.
@@ -122,20 +118,16 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRoutersClientBeginDeleteOptions contains the optional parameters for the VirtualRoutersClient.BeginDelete
 // method.
-func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (VirtualRoutersClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
-	if err != nil {
-		return VirtualRoutersClientDeletePollerResponse{}, err
+func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*armruntime.Poller[VirtualRoutersClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualRoutersClientDeleteResponse]("VirtualRoutersClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualRoutersClientDeleteResponse]("VirtualRoutersClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualRoutersClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualRoutersClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return VirtualRoutersClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VirtualRoutersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified Virtual Router.
@@ -242,16 +234,32 @@ func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (Virt
 // List - Gets all the Virtual Routers in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualRoutersClientListOptions contains the optional parameters for the VirtualRoutersClient.List method.
-func (client *VirtualRoutersClient) List(options *VirtualRoutersClientListOptions) *VirtualRoutersClientListPager {
-	return &VirtualRoutersClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *VirtualRoutersClient) List(options *VirtualRoutersClientListOptions) *runtime.Pager[VirtualRoutersClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualRoutersClientListResponse]{
+		More: func(page VirtualRoutersClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualRoutersClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualRoutersClientListResponse) (VirtualRoutersClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualRoutersClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualRoutersClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualRoutersClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -286,16 +294,32 @@ func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (Vir
 // resourceGroupName - The name of the resource group.
 // options - VirtualRoutersClientListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.ListByResourceGroup
 // method.
-func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string, options *VirtualRoutersClientListByResourceGroupOptions) *VirtualRoutersClientListByResourceGroupPager {
-	return &VirtualRoutersClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string, options *VirtualRoutersClientListByResourceGroupOptions) *runtime.Pager[VirtualRoutersClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualRoutersClientListByResourceGroupResponse]{
+		More: func(page VirtualRoutersClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualRoutersClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualRoutersClientListByResourceGroupResponse) (VirtualRoutersClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualRoutersClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualRoutersClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualRoutersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

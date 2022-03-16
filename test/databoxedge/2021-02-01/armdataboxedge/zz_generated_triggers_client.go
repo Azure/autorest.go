@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 // trigger - The trigger.
 // options - TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
 // method.
-func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (TriggersClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
-	if err != nil {
-		return TriggersClientCreateOrUpdatePollerResponse{}, err
+func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[TriggersClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[TriggersClientCreateOrUpdateResponse]("TriggersClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[TriggersClientCreateOrUpdateResponse]("TriggersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := TriggersClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("TriggersClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return TriggersClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &TriggersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a trigger.
@@ -126,20 +122,16 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 // name - The trigger name.
 // resourceGroupName - The resource group name.
 // options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
-func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (TriggersClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
-	if err != nil {
-		return TriggersClientDeletePollerResponse{}, err
+func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*armruntime.Poller[TriggersClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[TriggersClientDeleteResponse]("TriggersClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[TriggersClientDeleteResponse]("TriggersClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := TriggersClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("TriggersClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return TriggersClientDeletePollerResponse{}, err
-	}
-	result.Poller = &TriggersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the trigger on the gateway device.
@@ -255,16 +247,32 @@ func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersCl
 // resourceGroupName - The resource group name.
 // options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
 // method.
-func (client *TriggersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *TriggersClientListByDataBoxEdgeDeviceOptions) *TriggersClientListByDataBoxEdgeDevicePager {
-	return &TriggersClientListByDataBoxEdgeDevicePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+func (client *TriggersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *TriggersClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[TriggersClientListByDataBoxEdgeDeviceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[TriggersClientListByDataBoxEdgeDeviceResponse]{
+		More: func(page TriggersClientListByDataBoxEdgeDeviceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp TriggersClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.TriggerList.NextLink)
+		Fetcher: func(ctx context.Context, page *TriggersClientListByDataBoxEdgeDeviceResponse) (TriggersClientListByDataBoxEdgeDeviceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return TriggersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.

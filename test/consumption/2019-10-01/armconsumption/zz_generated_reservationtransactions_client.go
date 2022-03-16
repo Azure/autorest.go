@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -51,16 +51,32 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 // billingAccountID - BillingAccount ID
 // options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List
 // method.
-func (client *ReservationTransactionsClient) List(billingAccountID string, options *ReservationTransactionsClientListOptions) *ReservationTransactionsClientListPager {
-	return &ReservationTransactionsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, billingAccountID, options)
+func (client *ReservationTransactionsClient) List(billingAccountID string, options *ReservationTransactionsClientListOptions) *runtime.Pager[ReservationTransactionsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ReservationTransactionsClientListResponse]{
+		More: func(page ReservationTransactionsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ReservationTransactionsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationTransactionsListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ReservationTransactionsClientListResponse) (ReservationTransactionsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, billingAccountID, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ReservationTransactionsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ReservationTransactionsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ReservationTransactionsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -99,16 +115,32 @@ func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Respo
 // billingProfileID - Azure Billing Profile ID.
 // options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
 // method.
-func (client *ReservationTransactionsClient) ListByBillingProfile(billingAccountID string, billingProfileID string, options *ReservationTransactionsClientListByBillingProfileOptions) *ReservationTransactionsClientListByBillingProfilePager {
-	return &ReservationTransactionsClientListByBillingProfilePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByBillingProfileCreateRequest(ctx, billingAccountID, billingProfileID, options)
+func (client *ReservationTransactionsClient) ListByBillingProfile(billingAccountID string, billingProfileID string, options *ReservationTransactionsClientListByBillingProfileOptions) *runtime.Pager[ReservationTransactionsClientListByBillingProfileResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ReservationTransactionsClientListByBillingProfileResponse]{
+		More: func(page ReservationTransactionsClientListByBillingProfileResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ReservationTransactionsClientListByBillingProfileResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ModernReservationTransactionsListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ReservationTransactionsClientListByBillingProfileResponse) (ReservationTransactionsClientListByBillingProfileResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByBillingProfileCreateRequest(ctx, billingAccountID, billingProfileID, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ReservationTransactionsClientListByBillingProfileResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ReservationTransactionsClientListByBillingProfileResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ReservationTransactionsClientListByBillingProfileResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByBillingProfileHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByBillingProfileCreateRequest creates the ListByBillingProfile request.

@@ -20,7 +20,7 @@ func TestGetTrue(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.GetTrue(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.BoolPtr(true)); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr(true)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -29,7 +29,7 @@ func TestGetFalse(t *testing.T) {
 	client := newBoolClient()
 	result, err := client.GetFalse(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.BoolPtr(false)); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr(false)); r != "" {
 		t.Fatal(r)
 	}
 }

@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -358,12 +358,16 @@ type ClientBeginFullBackupOptions struct {
 	// This token needs to be valid for at least next 24 hours from the time of making
 	// this call
 	AzureStorageBlobContainerURI *SASTokenParameter
+	// Resumes the LRO from the provided token.
+	ResumeToken string
 }
 
 // ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation method.
 type ClientBeginFullRestoreOperationOptions struct {
 	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
 	RestoreBlobDetails *RestoreOperationParameters
+	// Resumes the LRO from the provided token.
+	ResumeToken string
 }
 
 // ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
@@ -371,6 +375,8 @@ type ClientBeginFullRestoreOperationOptions struct {
 type ClientBeginSelectiveKeyRestoreOperationOptions struct {
 	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
 	RestoreBlobDetails *SelectiveKeyRestoreOperationParameters
+	// Resumes the LRO from the provided token.
+	ResumeToken string
 }
 
 // ClientCreateCertificateOptions contains the optional parameters for the Client.CreateCertificate method.
@@ -1183,13 +1189,15 @@ type FullBackupOperation struct {
 // HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
 // method.
 type HSMSecurityDomainClientBeginDownloadOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the LRO from the provided token.
+	ResumeToken string
 }
 
 // HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
 // method.
 type HSMSecurityDomainClientBeginUploadOptions struct {
-	// placeholder for future optional parameters
+	// Resumes the LRO from the provided token.
+	ResumeToken string
 }
 
 // HSMSecurityDomainClientDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending

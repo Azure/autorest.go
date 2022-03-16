@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 // parameters - Parameters supplied to the create or update load balancer operation.
 // options - LoadBalancersClientBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancersClient.BeginCreateOrUpdate
 // method.
-func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (LoadBalancersClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
-	if err != nil {
-		return LoadBalancersClientCreateOrUpdatePollerResponse{}, err
+func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[LoadBalancersClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LoadBalancersClientCreateOrUpdateResponse]("LoadBalancersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LoadBalancersClientCreateOrUpdateResponse]("LoadBalancersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := LoadBalancersClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("LoadBalancersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return LoadBalancersClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &LoadBalancersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a load balancer.
@@ -122,20 +118,16 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancersClientBeginDeleteOptions contains the optional parameters for the LoadBalancersClient.BeginDelete
 // method.
-func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (LoadBalancersClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
-	if err != nil {
-		return LoadBalancersClientDeletePollerResponse{}, err
+func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (*armruntime.Poller[LoadBalancersClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[LoadBalancersClientDeleteResponse]("LoadBalancersClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[LoadBalancersClientDeleteResponse]("LoadBalancersClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := LoadBalancersClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("LoadBalancersClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return LoadBalancersClientDeletePollerResponse{}, err
-	}
-	result.Poller = &LoadBalancersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified load balancer.
@@ -243,16 +235,32 @@ func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadB
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.List method.
-func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadBalancersClientListOptions) *LoadBalancersClientListPager {
-	return &LoadBalancersClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, options)
+func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadBalancersClientListOptions) *runtime.Pager[LoadBalancersClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[LoadBalancersClientListResponse]{
+		More: func(page LoadBalancersClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp LoadBalancersClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *LoadBalancersClientListResponse) (LoadBalancersClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return LoadBalancersClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return LoadBalancersClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return LoadBalancersClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -289,16 +297,32 @@ func (client *LoadBalancersClient) listHandleResponse(resp *http.Response) (Load
 // ListAll - Gets all the load balancers in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - LoadBalancersClientListAllOptions contains the optional parameters for the LoadBalancersClient.ListAll method.
-func (client *LoadBalancersClient) ListAll(options *LoadBalancersClientListAllOptions) *LoadBalancersClientListAllPager {
-	return &LoadBalancersClientListAllPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listAllCreateRequest(ctx, options)
+func (client *LoadBalancersClient) ListAll(options *LoadBalancersClientListAllOptions) *runtime.Pager[LoadBalancersClientListAllResponse] {
+	return runtime.NewPager(runtime.PageProcessor[LoadBalancersClientListAllResponse]{
+		More: func(page LoadBalancersClientListAllResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp LoadBalancersClientListAllResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *LoadBalancersClientListAllResponse) (LoadBalancersClientListAllResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listAllCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return LoadBalancersClientListAllResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return LoadBalancersClientListAllResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return LoadBalancersClientListAllResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listAllHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listAllCreateRequest creates the ListAll request.

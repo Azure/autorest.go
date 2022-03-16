@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, o
 // routeParameters - Parameters supplied to the create or update route operation.
 // options - RoutesClientBeginCreateOrUpdateOptions contains the optional parameters for the RoutesClient.BeginCreateOrUpdate
 // method.
-func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (RoutesClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
-	if err != nil {
-		return RoutesClientCreateOrUpdatePollerResponse{}, err
+func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[RoutesClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[RoutesClientCreateOrUpdateResponse]("RoutesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[RoutesClientCreateOrUpdateResponse]("RoutesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := RoutesClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("RoutesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return RoutesClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &RoutesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a route in the specified route table.
@@ -127,20 +123,16 @@ func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, res
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
 // options - RoutesClientBeginDeleteOptions contains the optional parameters for the RoutesClient.BeginDelete method.
-func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (RoutesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
-	if err != nil {
-		return RoutesClientDeletePollerResponse{}, err
+func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (*armruntime.Poller[RoutesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[RoutesClientDeleteResponse]("RoutesClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[RoutesClientDeleteResponse]("RoutesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := RoutesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("RoutesClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return RoutesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &RoutesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified route from a route table.
@@ -255,16 +247,32 @@ func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesClient
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // options - RoutesClientListOptions contains the optional parameters for the RoutesClient.List method.
-func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesClientListOptions) *RoutesClientListPager {
-	return &RoutesClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, routeTableName, options)
+func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesClientListOptions) *runtime.Pager[RoutesClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[RoutesClientListResponse]{
+		More: func(page RoutesClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp RoutesClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.RouteListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *RoutesClientListResponse) (RoutesClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, routeTableName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return RoutesClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return RoutesClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return RoutesClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

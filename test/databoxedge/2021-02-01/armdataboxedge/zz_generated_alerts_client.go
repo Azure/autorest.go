@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -115,16 +115,32 @@ func (client *AlertsClient) getHandleResponse(resp *http.Response) (AlertsClient
 // resourceGroupName - The resource group name.
 // options - AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice
 // method.
-func (client *AlertsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *AlertsClientListByDataBoxEdgeDeviceOptions) *AlertsClientListByDataBoxEdgeDevicePager {
-	return &AlertsClientListByDataBoxEdgeDevicePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+func (client *AlertsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *AlertsClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[AlertsClientListByDataBoxEdgeDeviceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[AlertsClientListByDataBoxEdgeDeviceResponse]{
+		More: func(page AlertsClientListByDataBoxEdgeDeviceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp AlertsClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.AlertList.NextLink)
+		Fetcher: func(ctx context.Context, page *AlertsClientListByDataBoxEdgeDeviceResponse) (AlertsClientListByDataBoxEdgeDeviceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return AlertsClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return AlertsClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return AlertsClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.

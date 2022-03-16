@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 // request - Parameters supplied to download vpn-sites configuration.
 // options - VPNSitesConfigurationClientBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
 // method.
-func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (VPNSitesConfigurationClientDownloadPollerResponse, error) {
-	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
-	if err != nil {
-		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
+func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*armruntime.Poller[VPNSitesConfigurationClientDownloadResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VPNSitesConfigurationClientDownloadResponse]("VPNSitesConfigurationClient.Download", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VPNSitesConfigurationClientDownloadResponse]("VPNSitesConfigurationClient.Download", options.ResumeToken, client.pl, nil)
 	}
-	result := VPNSitesConfigurationClientDownloadPollerResponse{}
-	pt, err := armruntime.NewPoller("VPNSitesConfigurationClient.Download", "location", resp, client.pl)
-	if err != nil {
-		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
-	}
-	result.Poller = &VPNSitesConfigurationClientDownloadPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.

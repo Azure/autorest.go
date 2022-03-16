@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -171,20 +171,16 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 // proactiveLogCollectionSettings - The proactive log collection settings.
 // options - DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters
 // for the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
-func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse, error) {
-	resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
-	if err != nil {
-		return DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
+func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*armruntime.Poller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", options.ResumeToken, client.pl, nil)
 	}
-	result := DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}
-	pt, err := armruntime.NewPoller("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", "", resp, client.pl)
-	if err != nil {
-		return DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
-	}
-	result.Poller = &DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // UpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data
@@ -239,20 +235,16 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 // diagnosticRemoteSupportSettings - The diagnostic remote support settings.
 // options - DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for
 // the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings method.
-func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse, error) {
-	resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
-	if err != nil {
-		return DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
+func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*armruntime.Poller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", options.ResumeToken, client.pl, nil)
 	}
-	result := DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}
-	pt, err := armruntime.NewPoller("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", "", resp, client.pl)
-	if err != nil {
-		return DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
-	}
-	result.Poller = &DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // UpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway

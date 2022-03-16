@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 // serviceEndpointPolicyDefinitions - Parameters supplied to the create or update service endpoint policy operation.
 // options - ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate
 // method.
-func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}, err
+func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse]("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse]("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
@@ -128,20 +124,16 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 // serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
 // options - ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginDelete
 // method.
-func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (ServiceEndpointPolicyDefinitionsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}, err
+func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*armruntime.Poller[ServiceEndpointPolicyDefinitionsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ServiceEndpointPolicyDefinitionsClientDeleteResponse]("ServiceEndpointPolicyDefinitionsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ServiceEndpointPolicyDefinitionsClientDeleteResponse]("ServiceEndpointPolicyDefinitionsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &ServiceEndpointPolicyDefinitionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified ServiceEndpoint policy definitions.
@@ -258,16 +250,32 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *ht
 // serviceEndpointPolicyName - The name of the service endpoint policy name.
 // options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup
 // method.
-func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions) *ServiceEndpointPolicyDefinitionsClientListByResourceGroupPager {
-	return &ServiceEndpointPolicyDefinitionsClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)
+func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions) *runtime.Pager[ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse]{
+		More: func(page ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ServiceEndpointPolicyDefinitionListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse) (ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

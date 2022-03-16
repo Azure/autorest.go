@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -56,20 +56,16 @@ func NewVirtualMachineScaleSetRollingUpgradesClient(subscriptionID string, crede
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetRollingUpgradesClientBeginCancelOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgradesClient.BeginCancel
 // method.
-func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginCancelOptions) (VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse, error) {
-	resp, err := client.cancel(ctx, resourceGroupName, vmScaleSetName, options)
-	if err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{}, err
+func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginCancelOptions) (*armruntime.Poller[VirtualMachineScaleSetRollingUpgradesClientCancelResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.cancel(ctx, resourceGroupName, vmScaleSetName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientCancelResponse]("VirtualMachineScaleSetRollingUpgradesClient.Cancel", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientCancelResponse]("VirtualMachineScaleSetRollingUpgradesClient.Cancel", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetRollingUpgradesClient.Cancel", "", resp, client.pl)
-	if err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse{}, err
-	}
-	result.Poller = &VirtualMachineScaleSetRollingUpgradesClientCancelPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Cancel - Cancels the current virtual machine scale set rolling upgrade.
@@ -178,20 +174,16 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) getLatestHandleRespon
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetRollingUpgradesClientBeginStartExtensionUpgradeOptions contains the optional parameters
 // for the VirtualMachineScaleSetRollingUpgradesClient.BeginStartExtensionUpgrade method.
-func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginStartExtensionUpgradeOptions) (VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse, error) {
-	resp, err := client.startExtensionUpgrade(ctx, resourceGroupName, vmScaleSetName, options)
-	if err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{}, err
+func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginStartExtensionUpgradeOptions) (*armruntime.Poller[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.startExtensionUpgrade(ctx, resourceGroupName, vmScaleSetName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", "", resp, client.pl)
-	if err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse{}, err
-	}
-	result.Poller = &VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // StartExtensionUpgrade - Starts a rolling upgrade to move all extensions for all virtual machine scale set instances to
@@ -246,20 +238,16 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) startExtensionUpgrade
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetRollingUpgradesClientBeginStartOSUpgradeOptions contains the optional parameters for the
 // VirtualMachineScaleSetRollingUpgradesClient.BeginStartOSUpgrade method.
-func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginStartOSUpgradeOptions) (VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse, error) {
-	resp, err := client.startOSUpgrade(ctx, resourceGroupName, vmScaleSetName, options)
-	if err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{}, err
+func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetRollingUpgradesClientBeginStartOSUpgradeOptions) (*armruntime.Poller[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.startOSUpgrade(ctx, resourceGroupName, vmScaleSetName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", "", resp, client.pl)
-	if err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse{}, err
-	}
-	result.Poller = &VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // StartOSUpgrade - Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform

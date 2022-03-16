@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -55,16 +55,32 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 // location - The location of the subnet.
 // options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
 // method.
-func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsClientListOptions) *AvailableDelegationsClientListPager {
-	return &AvailableDelegationsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, location, options)
+func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsClientListOptions) *runtime.Pager[AvailableDelegationsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[AvailableDelegationsClientListResponse]{
+		More: func(page AvailableDelegationsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp AvailableDelegationsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
+		Fetcher: func(ctx context.Context, page *AvailableDelegationsClientListResponse) (AvailableDelegationsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, location, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return AvailableDelegationsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return AvailableDelegationsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return AvailableDelegationsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

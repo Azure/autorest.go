@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credent
 // peeringParameters - Parameters supplied to the create or update ExpressRouteCrossConnection peering operation.
 // options - ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the
 // ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate method.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}, err
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
@@ -128,20 +124,16 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 // peeringName - The name of the peering.
 // options - ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.BeginDelete
 // method.
-func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions) (ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}, err
+func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions) (*armruntime.Poller[ExpressRouteCrossConnectionPeeringsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteCrossConnectionPeeringsClientDeleteResponse]("ExpressRouteCrossConnectionPeeringsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionPeeringsClientDeleteResponse]("ExpressRouteCrossConnectionPeeringsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionPeeringsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteCrossConnectionPeeringsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified peering from the ExpressRouteCrossConnection.
@@ -258,16 +250,32 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp 
 // crossConnectionName - The name of the ExpressRouteCrossConnection.
 // options - ExpressRouteCrossConnectionPeeringsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.List
 // method.
-func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsClientListOptions) *ExpressRouteCrossConnectionPeeringsClientListPager {
-	return &ExpressRouteCrossConnectionPeeringsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, crossConnectionName, options)
+func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsClientListOptions) *runtime.Pager[ExpressRouteCrossConnectionPeeringsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ExpressRouteCrossConnectionPeeringsClientListResponse]{
+		More: func(page ExpressRouteCrossConnectionPeeringsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ExpressRouteCrossConnectionPeeringsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionPeeringList.NextLink)
+		Fetcher: func(ctx context.Context, page *ExpressRouteCrossConnectionPeeringsClientListResponse) (ExpressRouteCrossConnectionPeeringsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, crossConnectionName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ExpressRouteCrossConnectionPeeringsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

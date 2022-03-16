@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewExpressRouteCrossConnectionsClient(subscriptionID string, credential azc
 // parameters - Parameters supplied to the update express route crossConnection operation.
 // options - ExpressRouteCrossConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection, options *ExpressRouteCrossConnectionsClientBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, parameters, options)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{}, err
+func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection, options *ExpressRouteCrossConnectionsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteCrossConnectionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Update the specified ExpressRouteCrossConnection.
@@ -176,16 +172,32 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *http.R
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ExpressRouteCrossConnectionsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.List
 // method.
-func (client *ExpressRouteCrossConnectionsClient) List(options *ExpressRouteCrossConnectionsClientListOptions) *ExpressRouteCrossConnectionsClientListPager {
-	return &ExpressRouteCrossConnectionsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *ExpressRouteCrossConnectionsClient) List(options *ExpressRouteCrossConnectionsClientListOptions) *runtime.Pager[ExpressRouteCrossConnectionsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ExpressRouteCrossConnectionsClientListResponse]{
+		More: func(page ExpressRouteCrossConnectionsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ExpressRouteCrossConnectionsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ExpressRouteCrossConnectionsClientListResponse) (ExpressRouteCrossConnectionsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ExpressRouteCrossConnectionsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ExpressRouteCrossConnectionsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ExpressRouteCrossConnectionsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -224,20 +236,16 @@ func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *http.
 // devicePath - The path of the device.
 // options - ExpressRouteCrossConnectionsClientBeginListArpTableOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.BeginListArpTable
 // method.
-func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListArpTableOptions) (ExpressRouteCrossConnectionsClientListArpTablePollerResponse, error) {
-	resp, err := client.listArpTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientListArpTablePollerResponse{}, err
+func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListArpTableOptions) (*armruntime.Poller[ExpressRouteCrossConnectionsClientListArpTableResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.listArpTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientListArpTableResponse]("ExpressRouteCrossConnectionsClient.ListArpTable", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListArpTableResponse]("ExpressRouteCrossConnectionsClient.ListArpTable", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteCrossConnectionsClientListArpTablePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.ListArpTable", "location", resp, client.pl)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientListArpTablePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteCrossConnectionsClientListArpTablePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource
@@ -297,16 +305,32 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableCreateRequest(ctx 
 // resourceGroupName - The name of the resource group.
 // options - ExpressRouteCrossConnectionsClientListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.ListByResourceGroup
 // method.
-func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRouteCrossConnectionsClientListByResourceGroupOptions) *ExpressRouteCrossConnectionsClientListByResourceGroupPager {
-	return &ExpressRouteCrossConnectionsClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRouteCrossConnectionsClientListByResourceGroupOptions) *runtime.Pager[ExpressRouteCrossConnectionsClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ExpressRouteCrossConnectionsClientListByResourceGroupResponse]{
+		More: func(page ExpressRouteCrossConnectionsClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ExpressRouteCrossConnectionsClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ExpressRouteCrossConnectionListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ExpressRouteCrossConnectionsClientListByResourceGroupResponse) (ExpressRouteCrossConnectionsClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
@@ -349,20 +373,16 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleRespo
 // devicePath - The path of the device.
 // options - ExpressRouteCrossConnectionsClientBeginListRoutesTableOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.BeginListRoutesTable
 // method.
-func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableOptions) (ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse, error) {
-	resp, err := client.listRoutesTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{}, err
+func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableOptions) (*armruntime.Poller[ExpressRouteCrossConnectionsClientListRoutesTableResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.listRoutesTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientListRoutesTableResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTable", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListRoutesTableResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTable", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.ListRoutesTable", "location", resp, client.pl)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteCrossConnectionsClientListRoutesTablePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource
@@ -426,20 +446,16 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableCreateRequest(c
 // devicePath - The path of the device.
 // options - ExpressRouteCrossConnectionsClientBeginListRoutesTableSummaryOptions contains the optional parameters for the
 // ExpressRouteCrossConnectionsClient.BeginListRoutesTableSummary method.
-func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableSummaryOptions) (ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse, error) {
-	resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{}, err
+func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsClientBeginListRoutesTableSummaryOptions) (*armruntime.Poller[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", "location", resp, client.pl)
-	if err != nil {
-		return ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteCrossConnectionsClientListRoutesTableSummaryPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // ListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource

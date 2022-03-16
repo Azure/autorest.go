@@ -20,7 +20,7 @@ func TestReadonlypropertyGetValid(t *testing.T) {
 	client := newReadonlypropertyClient()
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.ReadonlyObj, ReadonlyObj{ID: to.StringPtr("1234"), Size: to.Int32Ptr(2)}); r != "" {
+	if r := cmp.Diff(result.ReadonlyObj, ReadonlyObj{ID: to.Ptr("1234"), Size: to.Ptr[int32](2)}); r != "" {
 		t.Fatal(r)
 	}
 }

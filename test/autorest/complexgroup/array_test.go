@@ -42,11 +42,11 @@ func TestArrayGetValid(t *testing.T) {
 	require.NoError(t, err)
 	if r := cmp.Diff(result.ArrayWrapper, ArrayWrapper{
 		Array: []*string{
-			to.StringPtr("1, 2, 3, 4"),
-			to.StringPtr(""),
+			to.Ptr("1, 2, 3, 4"),
+			to.Ptr(""),
 			nil,
-			to.StringPtr("&S#$(*Y"),
-			to.StringPtr("The quick brown fox jumps over the lazy dog"),
+			to.Ptr("&S#$(*Y"),
+			to.Ptr("The quick brown fox jumps over the lazy dog"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -63,11 +63,11 @@ func TestArrayPutEmpty(t *testing.T) {
 func TestArrayPutValid(t *testing.T) {
 	client := newArrayClient()
 	result, err := client.PutValid(context.Background(), ArrayWrapper{Array: []*string{
-		to.StringPtr("1, 2, 3, 4"),
-		to.StringPtr(""),
+		to.Ptr("1, 2, 3, 4"),
+		to.Ptr(""),
 		nil,
-		to.StringPtr("&S#$(*Y"),
-		to.StringPtr("The quick brown fox jumps over the lazy dog"),
+		to.Ptr("&S#$(*Y"),
+		to.Ptr("The quick brown fox jumps over the lazy dog"),
 	}}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

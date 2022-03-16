@@ -12,8 +12,6 @@ import { generateModels } from './models';
 import { generateResponses } from './responses';
 import { generateConstants } from './constants';
 import { generateTimeHelpers } from './time';
-import { generatePagers } from './pagers';
-import { generatePollers } from './pollers';
 import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
@@ -106,22 +104,6 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const pagers = await generatePagers(session);
-    if (pagers.length > 0) {
-      host.writeFile({
-        filename: `${filePrefix}pagers.go`,
-        content: pagers,
-        artifactType: 'source-file-go'
-      });
-    }
-    const pollers = await generatePollers(session);
-    if (pollers.length > 0) {
-      host.writeFile({
-        filename: `${filePrefix}pollers.go`,
-        content: pollers,
-        artifactType: 'source-file-go'
-      });
-    }
     const polymorphics = await generatePolymorphicHelpers(session);
     if (polymorphics.length > 0) {
       host.writeFile({

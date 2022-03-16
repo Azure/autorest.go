@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 // parameters - Parameters supplied to the create or update Security Partner Provider operation.
 // options - SecurityPartnerProvidersClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (SecurityPartnerProvidersClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
-	if err != nil {
-		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
+func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[SecurityPartnerProvidersClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SecurityPartnerProvidersClientCreateOrUpdateResponse]("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SecurityPartnerProvidersClientCreateOrUpdateResponse]("SecurityPartnerProvidersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &SecurityPartnerProvidersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
@@ -122,20 +118,16 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx co
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // options - SecurityPartnerProvidersClientBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
 // method.
-func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (SecurityPartnerProvidersClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
-	if err != nil {
-		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
+func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*armruntime.Poller[SecurityPartnerProvidersClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SecurityPartnerProvidersClientDeleteResponse]("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SecurityPartnerProvidersClientDeleteResponse]("SecurityPartnerProvidersClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := SecurityPartnerProvidersClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
-	}
-	result.Poller = &SecurityPartnerProvidersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified Security Partner Provider.
@@ -241,16 +233,32 @@ func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Respo
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
 // method.
-func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersClientListOptions) *SecurityPartnerProvidersClientListPager {
-	return &SecurityPartnerProvidersClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersClientListOptions) *runtime.Pager[SecurityPartnerProvidersClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[SecurityPartnerProvidersClientListResponse]{
+		More: func(page SecurityPartnerProvidersClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp SecurityPartnerProvidersClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *SecurityPartnerProvidersClientListResponse) (SecurityPartnerProvidersClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return SecurityPartnerProvidersClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return SecurityPartnerProvidersClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return SecurityPartnerProvidersClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -285,16 +293,32 @@ func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Resp
 // resourceGroupName - The name of the resource group.
 // options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
 // method.
-func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) *SecurityPartnerProvidersClientListByResourceGroupPager {
-	return &SecurityPartnerProvidersClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) *runtime.Pager[SecurityPartnerProvidersClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[SecurityPartnerProvidersClientListByResourceGroupResponse]{
+		More: func(page SecurityPartnerProvidersClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp SecurityPartnerProvidersClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *SecurityPartnerProvidersClientListByResourceGroupResponse) (SecurityPartnerProvidersClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return SecurityPartnerProvidersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 // securityRuleParameters - Parameters supplied to the create or update network security rule operation.
 // options - SecurityRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRulesClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (SecurityRulesClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
-	if err != nil {
-		return SecurityRulesClientCreateOrUpdatePollerResponse{}, err
+func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[SecurityRulesClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SecurityRulesClientCreateOrUpdateResponse]("SecurityRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SecurityRulesClientCreateOrUpdateResponse]("SecurityRulesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := SecurityRulesClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("SecurityRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return SecurityRulesClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &SecurityRulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
@@ -128,20 +124,16 @@ func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Conte
 // securityRuleName - The name of the security rule.
 // options - SecurityRulesClientBeginDeleteOptions contains the optional parameters for the SecurityRulesClient.BeginDelete
 // method.
-func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (SecurityRulesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
-	if err != nil {
-		return SecurityRulesClientDeletePollerResponse{}, err
+func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (*armruntime.Poller[SecurityRulesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SecurityRulesClientDeleteResponse]("SecurityRulesClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SecurityRulesClientDeleteResponse]("SecurityRulesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := SecurityRulesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("SecurityRulesClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return SecurityRulesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &SecurityRulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified network security rule.
@@ -256,16 +248,32 @@ func (client *SecurityRulesClient) getHandleResponse(resp *http.Response) (Secur
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // options - SecurityRulesClientListOptions contains the optional parameters for the SecurityRulesClient.List method.
-func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesClientListOptions) *SecurityRulesClientListPager {
-	return &SecurityRulesClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
+func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesClientListOptions) *runtime.Pager[SecurityRulesClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[SecurityRulesClientListResponse]{
+		More: func(page SecurityRulesClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp SecurityRulesClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityRuleListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *SecurityRulesClientListResponse) (SecurityRulesClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return SecurityRulesClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return SecurityRulesClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return SecurityRulesClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

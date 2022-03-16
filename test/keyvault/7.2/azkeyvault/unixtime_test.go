@@ -19,9 +19,9 @@ import (
 
 func TestAttributes(t *testing.T) {
 	attr := Attributes{
-		Enabled:   azcore.NullValue(false).(*bool),
-		Expires:   azcore.NullValue(&time.Time{}).(*time.Time),
-		NotBefore: to.TimePtr(time.Now()),
+		Enabled:   azcore.NullValue[*bool](),
+		Expires:   azcore.NullValue[*time.Time](),
+		NotBefore: to.Ptr(time.Now()),
 	}
 	b, err := json.Marshal(attr)
 	if err != nil {

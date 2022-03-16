@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 // parameters - Parameters supplied to the create or update Bastion Host operation.
 // options - BastionHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the BastionHostsClient.BeginCreateOrUpdate
 // method.
-func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (BastionHostsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
-	if err != nil {
-		return BastionHostsClientCreateOrUpdatePollerResponse{}, err
+func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[BastionHostsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[BastionHostsClientCreateOrUpdateResponse]("BastionHostsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[BastionHostsClientCreateOrUpdateResponse]("BastionHostsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := BastionHostsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("BastionHostsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return BastionHostsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &BastionHostsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
@@ -122,20 +118,16 @@ func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Contex
 // bastionHostName - The name of the Bastion Host.
 // options - BastionHostsClientBeginDeleteOptions contains the optional parameters for the BastionHostsClient.BeginDelete
 // method.
-func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (BastionHostsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
-	if err != nil {
-		return BastionHostsClientDeletePollerResponse{}, err
+func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (*armruntime.Poller[BastionHostsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[BastionHostsClientDeleteResponse]("BastionHostsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[BastionHostsClientDeleteResponse]("BastionHostsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := BastionHostsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("BastionHostsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return BastionHostsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &BastionHostsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified Bastion Host.
@@ -239,16 +231,32 @@ func (client *BastionHostsClient) getHandleResponse(resp *http.Response) (Bastio
 // List - Lists all Bastion Hosts in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.List method.
-func (client *BastionHostsClient) List(options *BastionHostsClientListOptions) *BastionHostsClientListPager {
-	return &BastionHostsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *BastionHostsClient) List(options *BastionHostsClientListOptions) *runtime.Pager[BastionHostsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[BastionHostsClientListResponse]{
+		More: func(page BastionHostsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp BastionHostsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.BastionHostListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *BastionHostsClientListResponse) (BastionHostsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return BastionHostsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return BastionHostsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return BastionHostsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -283,16 +291,32 @@ func (client *BastionHostsClient) listHandleResponse(resp *http.Response) (Basti
 // resourceGroupName - The name of the resource group.
 // options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup
 // method.
-func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsClientListByResourceGroupOptions) *BastionHostsClientListByResourceGroupPager {
-	return &BastionHostsClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsClientListByResourceGroupOptions) *runtime.Pager[BastionHostsClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[BastionHostsClientListByResourceGroupResponse]{
+		More: func(page BastionHostsClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp BastionHostsClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.BastionHostListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *BastionHostsClientListByResourceGroupResponse) (BastionHostsClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return BastionHostsClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return BastionHostsClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return BastionHostsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
