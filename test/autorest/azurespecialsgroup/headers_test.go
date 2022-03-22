@@ -44,7 +44,7 @@ func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
 	client := newHeaderClient()
 	result, err := client.CustomNamedRequestIDParamGrouping(context.Background(), HeaderClientCustomNamedRequestIDParamGroupingParameters{
 		FooClientRequestID: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
-	})
+	}, nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.FooRequestID, to.StringPtr("123")); r != "" {
 		t.Fatal(r)

@@ -17,7 +17,7 @@ func newParameterGroupingClient() *ParameterGroupingClient {
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 func TestPostMultiParamGroups(t *testing.T) {
 	client := newParameterGroupingClient()
-	result, err := client.PostMultiParamGroups(context.Background(), nil, nil)
+	result, err := client.PostMultiParamGroups(context.Background(), nil, nil, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
@@ -25,7 +25,7 @@ func TestPostMultiParamGroups(t *testing.T) {
 // PostOptional - Post a bunch of optional parameters grouped
 func TestPostOptional(t *testing.T) {
 	client := newParameterGroupingClient()
-	result, err := client.PostOptional(context.Background(), nil)
+	result, err := client.PostOptional(context.Background(), nil, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
@@ -36,7 +36,7 @@ func TestPostRequired(t *testing.T) {
 	result, err := client.PostRequired(context.Background(), ParameterGroupingClientPostRequiredParameters{
 		Body: 1234,
 		Path: "path",
-	})
+	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
@@ -44,7 +44,7 @@ func TestPostRequired(t *testing.T) {
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 func TestPostSharedParameterGroupObject(t *testing.T) {
 	client := newParameterGroupingClient()
-	result, err := client.PostSharedParameterGroupObject(context.Background(), nil)
+	result, err := client.PostSharedParameterGroupObject(context.Background(), nil, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }

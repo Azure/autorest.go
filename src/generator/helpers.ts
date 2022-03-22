@@ -158,14 +158,9 @@ export function getMethodParameters(op: Operation): Parameter[] {
     }
     params.push(param);
   }
-  // this handles the case where the operation has no optional params
-  // but has the optional params placeholder type.
-  if (paramGroups.length === 0 && op.language.go!.optionalParamGroup) {
-    paramGroups.push(op.language.go!.optionalParamGroup);
-  }
   // move global optional params to the end of the slice
   params.sort(sortParametersByRequired);
-  // add any parameter groups.  optional group goes last
+  // add any parameter groups.  optional groups go last
   paramGroups.sort((a: GroupProperty, b: GroupProperty) => {
     if (a.required === b.required) {
       return 0;
@@ -175,12 +170,13 @@ export function getMethodParameters(op: Operation): Parameter[] {
     }
     return 1;
   })
+  // add the optional param group last if it's not already in the list.
+  // all operations should have an optional params type.  the only exception
+  // is the next link operation for pageable operations.
+  if (op.language.go!.optionalParamGroup && !values(paramGroups).any(gp => { return gp.language.go!.name === op.language.go!.optionalParamGroup.language.go!.name})) {
+    paramGroups.push(op.language.go!.optionalParamGroup);
+  }
   for (const paramGroup of values(paramGroups)) {
-    // if there's only one optional param group, and there's no existing param
-    // named options, name the param "options" instead of its (long) type name
-    if (!paramGroup.required && paramGroups.length === 1 && !values(params).where(p => p.language.go!.name === 'options').any()) {
-      paramGroup.language.go!.name = 'options';
-    }
     params.push(paramGroup);
   }
   return params;
