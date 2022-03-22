@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -244,7 +245,8 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.BodyParameter != nil {
-		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
+		body := streaming.NopCloser(strings.NewReader(*options.BodyParameter))
+		return req, req.SetBody(body, "application/json")
 	}
 	return req, nil
 }

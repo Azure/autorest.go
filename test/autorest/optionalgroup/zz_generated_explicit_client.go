@@ -13,6 +13,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"io"
 	"net/http"
 	"strconv"
@@ -362,7 +363,8 @@ func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx conte
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.BodyParameter != nil {
-		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
+		body := streaming.NopCloser(strings.NewReader(*options.BodyParameter))
+		return req, req.SetBody(body, "application/json")
 	}
 	return req, nil
 }
@@ -710,7 +712,8 @@ func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx conte
 		return nil, err
 	}
 	req.Raw().Header.Set("Accept", "application/json")
-	return req, runtime.MarshalAsJSON(req, bodyParameter)
+	body := streaming.NopCloser(strings.NewReader(bodyParameter))
+	return req, req.SetBody(body, "application/json")
 }
 
 // PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and
