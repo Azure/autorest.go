@@ -179,7 +179,9 @@ type Session struct {
 	// Dictionary of
 	AppInfo    map[string]*string `json:"appInfo,omitempty"`
 	ArtifactID *string            `json:"artifactId,omitempty"`
-	Errors     []*ServiceError    `json:"errorInfo,omitempty"`
+
+	// The error information.
+	Errors []*ServiceError `json:"errorInfo,omitempty"`
 
 	// The job type.
 	JobType       *SparkJobType           `json:"jobType,omitempty"`

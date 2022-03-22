@@ -534,7 +534,7 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp 
 		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
-	return req, runtime.MarshalAsXML(req, body)
+	return req, req.SetBody(body, "application/xml")
 }
 
 // submitBatchHandleResponse handles the SubmitBatch response.
