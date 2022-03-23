@@ -119,7 +119,7 @@ func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	pager := client.GetMultiplePagesFragmentWithGroupingNextLink(CustomParameterGroup{
 		APIVersion: "1.6",
 		Tenant:     "test_user",
-	})
+	}, nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())

@@ -283,11 +283,13 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 // If the operation fails it returns an *azcore.ResponseError type.
 // CustomParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
-func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager {
+// options - PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
+// method.
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup, options *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions) *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager {
 	return &PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx, customParameterGroup)
+			return client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx, customParameterGroup, options)
 		},
 		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error) {
 			return client.nextFragmentWithGroupingCreateRequest(ctx, *resp.ODataProductResult.ODataNextLink, customParameterGroup)
@@ -296,7 +298,7 @@ func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customP
 }
 
 // getMultiplePagesFragmentWithGroupingNextLinkCreateRequest creates the GetMultiplePagesFragmentWithGroupingNextLink request.
-func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx context.Context, customParameterGroup CustomParameterGroup) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx context.Context, customParameterGroup CustomParameterGroup, options *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/fragmentwithgrouping/{tenant}"
 	if customParameterGroup.Tenant == "" {
 		return nil, errors.New("parameter customParameterGroup.Tenant cannot be empty")
@@ -465,13 +467,13 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns an *azcore.ResponseError type.
-// PagingClientGetMultiplePagesWithOffsetOptions - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters
-// for the PagingClient.GetMultiplePagesWithOffset method.
-func (client *PagingClient) GetMultiplePagesWithOffset(pagingClientGetMultiplePagesWithOffsetOptions PagingClientGetMultiplePagesWithOffsetOptions) *PagingClientGetMultiplePagesWithOffsetPager {
+// options - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.GetMultiplePagesWithOffset
+// method.
+func (client *PagingClient) GetMultiplePagesWithOffset(options PagingClientGetMultiplePagesWithOffsetOptions) *PagingClientGetMultiplePagesWithOffsetPager {
 	return &PagingClientGetMultiplePagesWithOffsetPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getMultiplePagesWithOffsetCreateRequest(ctx, pagingClientGetMultiplePagesWithOffsetOptions)
+			return client.getMultiplePagesWithOffsetCreateRequest(ctx, options)
 		},
 		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesWithOffsetResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
@@ -480,21 +482,21 @@ func (client *PagingClient) GetMultiplePagesWithOffset(pagingClientGetMultiplePa
 }
 
 // getMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
-func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.Context, pagingClientGetMultiplePagesWithOffsetOptions PagingClientGetMultiplePagesWithOffsetOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.Context, options PagingClientGetMultiplePagesWithOffsetOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/withpath/{offset}"
-	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingClientGetMultiplePagesWithOffsetOptions.Offset), 10)))
+	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(options.Offset), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	if pagingClientGetMultiplePagesWithOffsetOptions.ClientRequestID != nil {
-		req.Raw().Header.Set("client-request-id", *pagingClientGetMultiplePagesWithOffsetOptions.ClientRequestID)
+	if options.ClientRequestID != nil {
+		req.Raw().Header.Set("client-request-id", *options.ClientRequestID)
 	}
-	if pagingClientGetMultiplePagesWithOffsetOptions.Maxresults != nil {
-		req.Raw().Header.Set("maxresults", strconv.FormatInt(int64(*pagingClientGetMultiplePagesWithOffsetOptions.Maxresults), 10))
+	if options.Maxresults != nil {
+		req.Raw().Header.Set("maxresults", strconv.FormatInt(int64(*options.Maxresults), 10))
 	}
-	if pagingClientGetMultiplePagesWithOffsetOptions.Timeout != nil {
-		req.Raw().Header.Set("timeout", strconv.FormatInt(int64(*pagingClientGetMultiplePagesWithOffsetOptions.Timeout), 10))
+	if options.Timeout != nil {
+		req.Raw().Header.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil

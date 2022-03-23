@@ -43,11 +43,10 @@ func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *co
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientAcquireLeaseOptions - containerClientAcquireLeaseOptions contains the optional parameters for the containerClient.AcquireLease
-// method.
+// options - containerClientAcquireLeaseOptions contains the optional parameters for the containerClient.AcquireLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, restype Enum11, containerClientAcquireLeaseOptions *containerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientAcquireLeaseResponse, error) {
-	req, err := client.acquireLeaseCreateRequest(ctx, comp, restype, containerClientAcquireLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, restype Enum11, options *containerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientAcquireLeaseResponse, error) {
+	req, err := client.acquireLeaseCreateRequest(ctx, comp, restype, options, modifiedAccessConditions)
 	if err != nil {
 		return containerClientAcquireLeaseResponse{}, err
 	}
@@ -62,7 +61,7 @@ func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, re
 }
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
-func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, containerClientAcquireLeaseOptions *containerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, options *containerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -70,16 +69,16 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("restype", string(restype))
-	if containerClientAcquireLeaseOptions != nil && containerClientAcquireLeaseOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientAcquireLeaseOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-lease-action", "acquire")
-	if containerClientAcquireLeaseOptions != nil && containerClientAcquireLeaseOptions.Duration != nil {
-		req.Raw().Header.Set("x-ms-lease-duration", strconv.FormatInt(int64(*containerClientAcquireLeaseOptions.Duration), 10))
+	if options != nil && options.Duration != nil {
+		req.Raw().Header.Set("x-ms-lease-duration", strconv.FormatInt(int64(*options.Duration), 10))
 	}
-	if containerClientAcquireLeaseOptions != nil && containerClientAcquireLeaseOptions.ProposedLeaseID != nil {
-		req.Raw().Header.Set("x-ms-proposed-lease-id", *containerClientAcquireLeaseOptions.ProposedLeaseID)
+	if options != nil && options.ProposedLeaseID != nil {
+		req.Raw().Header.Set("x-ms-proposed-lease-id", *options.ProposedLeaseID)
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -88,8 +87,8 @@ func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, co
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientAcquireLeaseOptions != nil && containerClientAcquireLeaseOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientAcquireLeaseOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -133,11 +132,10 @@ func (client *containerClient) acquireLeaseHandleResponse(resp *http.Response) (
 // BreakLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientBreakLeaseOptions - containerClientBreakLeaseOptions contains the optional parameters for the containerClient.BreakLease
-// method.
+// options - containerClientBreakLeaseOptions contains the optional parameters for the containerClient.BreakLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, restype Enum11, containerClientBreakLeaseOptions *containerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientBreakLeaseResponse, error) {
-	req, err := client.breakLeaseCreateRequest(ctx, comp, restype, containerClientBreakLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, restype Enum11, options *containerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientBreakLeaseResponse, error) {
+	req, err := client.breakLeaseCreateRequest(ctx, comp, restype, options, modifiedAccessConditions)
 	if err != nil {
 		return containerClientBreakLeaseResponse{}, err
 	}
@@ -152,7 +150,7 @@ func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, rest
 }
 
 // breakLeaseCreateRequest creates the BreakLease request.
-func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, containerClientBreakLeaseOptions *containerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, options *containerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -160,13 +158,13 @@ func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, comp
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("restype", string(restype))
-	if containerClientBreakLeaseOptions != nil && containerClientBreakLeaseOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientBreakLeaseOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-lease-action", "break")
-	if containerClientBreakLeaseOptions != nil && containerClientBreakLeaseOptions.BreakPeriod != nil {
-		req.Raw().Header.Set("x-ms-lease-break-period", strconv.FormatInt(int64(*containerClientBreakLeaseOptions.BreakPeriod), 10))
+	if options != nil && options.BreakPeriod != nil {
+		req.Raw().Header.Set("x-ms-lease-break-period", strconv.FormatInt(int64(*options.BreakPeriod), 10))
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -175,8 +173,8 @@ func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, comp
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientBreakLeaseOptions != nil && containerClientBreakLeaseOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientBreakLeaseOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -229,11 +227,10 @@ func (client *containerClient) breakLeaseHandleResponse(resp *http.Response) (co
 // proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 // lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
 // string formats.
-// containerClientChangeLeaseOptions - containerClientChangeLeaseOptions contains the optional parameters for the containerClient.ChangeLease
-// method.
+// options - containerClientChangeLeaseOptions contains the optional parameters for the containerClient.ChangeLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, containerClientChangeLeaseOptions *containerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientChangeLeaseResponse, error) {
-	req, err := client.changeLeaseCreateRequest(ctx, comp, restype, leaseID, proposedLeaseID, containerClientChangeLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, options *containerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientChangeLeaseResponse, error) {
+	req, err := client.changeLeaseCreateRequest(ctx, comp, restype, leaseID, proposedLeaseID, options, modifiedAccessConditions)
 	if err != nil {
 		return containerClientChangeLeaseResponse{}, err
 	}
@@ -248,7 +245,7 @@ func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, res
 }
 
 // changeLeaseCreateRequest creates the ChangeLease request.
-func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, containerClientChangeLeaseOptions *containerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, options *containerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -256,8 +253,8 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, com
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("restype", string(restype))
-	if containerClientChangeLeaseOptions != nil && containerClientChangeLeaseOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientChangeLeaseOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-lease-action", "change")
@@ -270,8 +267,8 @@ func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, com
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientChangeLeaseOptions != nil && containerClientChangeLeaseOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientChangeLeaseOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -315,11 +312,10 @@ func (client *containerClient) changeLeaseHandleResponse(resp *http.Response) (c
 // Create - creates a new container under the specified account. If the container with the same name already exists, the operation
 // fails
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientCreateOptions - containerClientCreateOptions contains the optional parameters for the containerClient.Create
-// method.
+// options - containerClientCreateOptions contains the optional parameters for the containerClient.Create method.
 // ContainerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the containerClient.Create method.
-func (client *containerClient) Create(ctx context.Context, restype Enum11, containerClientCreateOptions *containerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (containerClientCreateResponse, error) {
-	req, err := client.createCreateRequest(ctx, restype, containerClientCreateOptions, containerCpkScopeInfo)
+func (client *containerClient) Create(ctx context.Context, restype Enum11, options *containerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (containerClientCreateResponse, error) {
+	req, err := client.createCreateRequest(ctx, restype, options, containerCpkScopeInfo)
 	if err != nil {
 		return containerClientCreateResponse{}, err
 	}
@@ -334,28 +330,28 @@ func (client *containerClient) Create(ctx context.Context, restype Enum11, conta
 }
 
 // createCreateRequest creates the Create request.
-func (client *containerClient) createCreateRequest(ctx context.Context, restype Enum11, containerClientCreateOptions *containerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (*policy.Request, error) {
+func (client *containerClient) createCreateRequest(ctx context.Context, restype Enum11, options *containerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("restype", string(restype))
-	if containerClientCreateOptions != nil && containerClientCreateOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientCreateOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	if containerClientCreateOptions != nil && containerClientCreateOptions.Metadata != nil {
-		for k, v := range containerClientCreateOptions.Metadata {
+	if options != nil && options.Metadata != nil {
+		for k, v := range options.Metadata {
 			req.Raw().Header.Set("x-ms-meta-"+k, v)
 		}
 	}
-	if containerClientCreateOptions != nil && containerClientCreateOptions.Access != nil {
-		req.Raw().Header.Set("x-ms-blob-public-access", string(*containerClientCreateOptions.Access))
+	if options != nil && options.Access != nil {
+		req.Raw().Header.Set("x-ms-blob-public-access", string(*options.Access))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientCreateOptions != nil && containerClientCreateOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientCreateOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	if containerCpkScopeInfo != nil && containerCpkScopeInfo.DefaultEncryptionScope != nil {
 		req.Raw().Header.Set("x-ms-default-encryption-scope", *containerCpkScopeInfo.DefaultEncryptionScope)
@@ -402,12 +398,11 @@ func (client *containerClient) createHandleResponse(resp *http.Response) (contai
 // Delete - operation marks the specified container for deletion. The container and any blobs contained within it are later
 // deleted during garbage collection
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientDeleteOptions - containerClientDeleteOptions contains the optional parameters for the containerClient.Delete
-// method.
+// options - containerClientDeleteOptions contains the optional parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) Delete(ctx context.Context, restype Enum11, containerClientDeleteOptions *containerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientDeleteResponse, error) {
-	req, err := client.deleteCreateRequest(ctx, restype, containerClientDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client *containerClient) Delete(ctx context.Context, restype Enum11, options *containerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientDeleteResponse, error) {
+	req, err := client.deleteCreateRequest(ctx, restype, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return containerClientDeleteResponse{}, err
 	}
@@ -422,15 +417,15 @@ func (client *containerClient) Delete(ctx context.Context, restype Enum11, conta
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *containerClient) deleteCreateRequest(ctx context.Context, restype Enum11, containerClientDeleteOptions *containerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) deleteCreateRequest(ctx context.Context, restype Enum11, options *containerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("restype", string(restype))
-	if containerClientDeleteOptions != nil && containerClientDeleteOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientDeleteOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
@@ -443,8 +438,8 @@ func (client *containerClient) deleteCreateRequest(ctx context.Context, restype 
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientDeleteOptions != nil && containerClientDeleteOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientDeleteOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -475,11 +470,11 @@ func (client *containerClient) deleteHandleResponse(resp *http.Response) (contai
 // GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may
 // be accessed publicly.
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientGetAccessPolicyOptions - containerClientGetAccessPolicyOptions contains the optional parameters for the
-// containerClient.GetAccessPolicy method.
+// options - containerClientGetAccessPolicyOptions contains the optional parameters for the containerClient.GetAccessPolicy
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum11, comp Enum13, containerClientGetAccessPolicyOptions *containerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (containerClientGetAccessPolicyResponse, error) {
-	req, err := client.getAccessPolicyCreateRequest(ctx, restype, comp, containerClientGetAccessPolicyOptions, leaseAccessConditions)
+func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum11, comp Enum13, options *containerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (containerClientGetAccessPolicyResponse, error) {
+	req, err := client.getAccessPolicyCreateRequest(ctx, restype, comp, options, leaseAccessConditions)
 	if err != nil {
 		return containerClientGetAccessPolicyResponse{}, err
 	}
@@ -494,7 +489,7 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum
 }
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
-func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context, restype Enum11, comp Enum13, containerClientGetAccessPolicyOptions *containerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context, restype Enum11, comp Enum13, options *containerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -502,16 +497,16 @@ func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context,
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
-	if containerClientGetAccessPolicyOptions != nil && containerClientGetAccessPolicyOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientGetAccessPolicyOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientGetAccessPolicyOptions != nil && containerClientGetAccessPolicyOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientGetAccessPolicyOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -620,11 +615,10 @@ func (client *containerClient) getAccountInfoHandleResponse(resp *http.Response)
 // GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned
 // does not include the container's list of blobs
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientGetPropertiesOptions - containerClientGetPropertiesOptions contains the optional parameters for the containerClient.GetProperties
-// method.
+// options - containerClientGetPropertiesOptions contains the optional parameters for the containerClient.GetProperties method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *containerClient) GetProperties(ctx context.Context, restype Enum11, containerClientGetPropertiesOptions *containerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (containerClientGetPropertiesResponse, error) {
-	req, err := client.getPropertiesCreateRequest(ctx, restype, containerClientGetPropertiesOptions, leaseAccessConditions)
+func (client *containerClient) GetProperties(ctx context.Context, restype Enum11, options *containerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (containerClientGetPropertiesResponse, error) {
+	req, err := client.getPropertiesCreateRequest(ctx, restype, options, leaseAccessConditions)
 	if err != nil {
 		return containerClientGetPropertiesResponse{}, err
 	}
@@ -639,23 +633,23 @@ func (client *containerClient) GetProperties(ctx context.Context, restype Enum11
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, restype Enum11, containerClientGetPropertiesOptions *containerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
+func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, restype Enum11, options *containerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("restype", string(restype))
-	if containerClientGetPropertiesOptions != nil && containerClientGetPropertiesOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientGetPropertiesOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientGetPropertiesOptions != nil && containerClientGetPropertiesOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientGetPropertiesOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -906,11 +900,10 @@ func (client *containerClient) listBlobHierarchySegmentHandleResponse(resp *http
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
-// containerClientReleaseLeaseOptions - containerClientReleaseLeaseOptions contains the optional parameters for the containerClient.ReleaseLease
-// method.
+// options - containerClientReleaseLeaseOptions contains the optional parameters for the containerClient.ReleaseLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, containerClientReleaseLeaseOptions *containerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientReleaseLeaseResponse, error) {
-	req, err := client.releaseLeaseCreateRequest(ctx, comp, restype, leaseID, containerClientReleaseLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, options *containerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientReleaseLeaseResponse, error) {
+	req, err := client.releaseLeaseCreateRequest(ctx, comp, restype, leaseID, options, modifiedAccessConditions)
 	if err != nil {
 		return containerClientReleaseLeaseResponse{}, err
 	}
@@ -925,7 +918,7 @@ func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, re
 }
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
-func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, containerClientReleaseLeaseOptions *containerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, options *containerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -933,8 +926,8 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("restype", string(restype))
-	if containerClientReleaseLeaseOptions != nil && containerClientReleaseLeaseOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientReleaseLeaseOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-lease-action", "release")
@@ -946,8 +939,8 @@ func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, co
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientReleaseLeaseOptions != nil && containerClientReleaseLeaseOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientReleaseLeaseOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -1055,11 +1048,10 @@ func (client *containerClient) renameHandleResponse(resp *http.Response) (contai
 // to 60 seconds, or can be infinite
 // If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
-// containerClientRenewLeaseOptions - containerClientRenewLeaseOptions contains the optional parameters for the containerClient.RenewLease
-// method.
+// options - containerClientRenewLeaseOptions contains the optional parameters for the containerClient.RenewLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, containerClientRenewLeaseOptions *containerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientRenewLeaseResponse, error) {
-	req, err := client.renewLeaseCreateRequest(ctx, comp, restype, leaseID, containerClientRenewLeaseOptions, modifiedAccessConditions)
+func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, options *containerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientRenewLeaseResponse, error) {
+	req, err := client.renewLeaseCreateRequest(ctx, comp, restype, leaseID, options, modifiedAccessConditions)
 	if err != nil {
 		return containerClientRenewLeaseResponse{}, err
 	}
@@ -1074,7 +1066,7 @@ func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, rest
 }
 
 // renewLeaseCreateRequest creates the RenewLease request.
-func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, containerClientRenewLeaseOptions *containerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, options *containerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1082,8 +1074,8 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, comp
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("restype", string(restype))
-	if containerClientRenewLeaseOptions != nil && containerClientRenewLeaseOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientRenewLeaseOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-lease-action", "renew")
@@ -1095,8 +1087,8 @@ func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, comp
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientRenewLeaseOptions != nil && containerClientRenewLeaseOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientRenewLeaseOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
@@ -1207,12 +1199,12 @@ func (client *containerClient) restoreHandleResponse(resp *http.Response) (conta
 // SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container
 // may be accessed publicly.
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientSetAccessPolicyOptions - containerClientSetAccessPolicyOptions contains the optional parameters for the
-// containerClient.SetAccessPolicy method.
+// options - containerClientSetAccessPolicyOptions contains the optional parameters for the containerClient.SetAccessPolicy
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum11, comp Enum13, containerClientSetAccessPolicyOptions *containerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientSetAccessPolicyResponse, error) {
-	req, err := client.setAccessPolicyCreateRequest(ctx, restype, comp, containerClientSetAccessPolicyOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum11, comp Enum13, options *containerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientSetAccessPolicyResponse, error) {
+	req, err := client.setAccessPolicyCreateRequest(ctx, restype, comp, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return containerClientSetAccessPolicyResponse{}, err
 	}
@@ -1227,7 +1219,7 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
-func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context, restype Enum11, comp Enum13, containerClientSetAccessPolicyOptions *containerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context, restype Enum11, comp Enum13, options *containerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1235,15 +1227,15 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
-	if containerClientSetAccessPolicyOptions != nil && containerClientSetAccessPolicyOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientSetAccessPolicyOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
-	if containerClientSetAccessPolicyOptions != nil && containerClientSetAccessPolicyOptions.Access != nil {
-		req.Raw().Header.Set("x-ms-blob-public-access", string(*containerClientSetAccessPolicyOptions.Access))
+	if options != nil && options.Access != nil {
+		req.Raw().Header.Set("x-ms-blob-public-access", string(*options.Access))
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -1252,16 +1244,16 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientSetAccessPolicyOptions != nil && containerClientSetAccessPolicyOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientSetAccessPolicyOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	type wrapper struct {
 		XMLName      xml.Name             `xml:"SignedIdentifiers"`
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
-	if containerClientSetAccessPolicyOptions != nil && containerClientSetAccessPolicyOptions.ContainerACL != nil {
-		return req, runtime.MarshalAsXML(req, wrapper{ContainerACL: &containerClientSetAccessPolicyOptions.ContainerACL})
+	if options != nil && options.ContainerACL != nil {
+		return req, runtime.MarshalAsXML(req, wrapper{ContainerACL: &options.ContainerACL})
 	}
 	return req, nil
 }
@@ -1300,12 +1292,11 @@ func (client *containerClient) setAccessPolicyHandleResponse(resp *http.Response
 
 // SetMetadata - operation sets one or more user-defined name-value pairs for the specified container.
 // If the operation fails it returns an *azcore.ResponseError type.
-// containerClientSetMetadataOptions - containerClientSetMetadataOptions contains the optional parameters for the containerClient.SetMetadata
-// method.
+// options - containerClientSetMetadataOptions contains the optional parameters for the containerClient.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, comp Enum12, containerClientSetMetadataOptions *containerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientSetMetadataResponse, error) {
-	req, err := client.setMetadataCreateRequest(ctx, restype, comp, containerClientSetMetadataOptions, leaseAccessConditions, modifiedAccessConditions)
+func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, comp Enum12, options *containerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (containerClientSetMetadataResponse, error) {
+	req, err := client.setMetadataCreateRequest(ctx, restype, comp, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return containerClientSetMetadataResponse{}, err
 	}
@@ -1320,7 +1311,7 @@ func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, 
 }
 
 // setMetadataCreateRequest creates the SetMetadata request.
-func (client *containerClient) setMetadataCreateRequest(ctx context.Context, restype Enum11, comp Enum12, containerClientSetMetadataOptions *containerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *containerClient) setMetadataCreateRequest(ctx context.Context, restype Enum11, comp Enum12, options *containerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1328,15 +1319,15 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, res
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("restype", string(restype))
 	reqQP.Set("comp", string(comp))
-	if containerClientSetMetadataOptions != nil && containerClientSetMetadataOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*containerClientSetMetadataOptions.Timeout), 10))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
-	if containerClientSetMetadataOptions != nil && containerClientSetMetadataOptions.Metadata != nil {
-		for k, v := range containerClientSetMetadataOptions.Metadata {
+	if options != nil && options.Metadata != nil {
+		for k, v := range options.Metadata {
 			req.Raw().Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -1344,8 +1335,8 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, res
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if containerClientSetMetadataOptions != nil && containerClientSetMetadataOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *containerClientSetMetadataOptions.RequestID)
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil

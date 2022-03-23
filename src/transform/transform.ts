@@ -338,6 +338,21 @@ function processOperationRequests(session: Session<CodeModel>) {
           head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
         }
       }
+      const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
+      // create an optional params struct even if the operation contains no optional params.
+      // this provides version resiliency in case optional params are added in the future.
+      // don't do this for paging next link operation as this isn't part of the public API
+      if (!op.language.go!.paging || !op.language.go!.paging.isNextOp) {
+        // create a type named <OperationGroup><Operation>Options
+        const optionalParamsGroupName = `${group.language.go!.clientName}${opName}Options`;
+        const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
+        const gp = createGroupProperty(optionalParamsGroupName, desc);
+        gp.language.go!.name = 'options';
+        gp.required = false;
+        paramGroups.set(optionalParamsGroupName, gp);
+        // associate the param group with the operation
+        op.language.go!.optionalParamGroup = gp;
+      }
       for (const param of values(aggregateParameters(op))) {
         if (param.language.go!.description) {
           param.language.go!.description = parseComments(param.language.go!.description);
@@ -406,10 +421,6 @@ function processOperationRequests(session: Session<CodeModel>) {
           // at least one method contains a parameterized host param, bye-bye simple case
           group.language.go!.complexHostParams = true;
         }
-        let opName = op.language.go!.name;
-        if (isLROOperation(op)) {
-          opName = 'Begin' + opName;
-        }
         // check for grouping
         if (param.extensions?.['x-ms-parameter-grouping'] && <boolean>session.model.language.go!.groupParameters) {
           // this param belongs to a param group, init name with default
@@ -440,29 +451,11 @@ function processOperationRequests(session: Session<CodeModel>) {
           } else if (dupe.schema !== param.schema) {
             throw new Error(`parameter group ${paramGroupName} contains overlapping parameters with different schemas`);
           }
-          continue;
-        }
-        // create an optional params struct even if the operation contains no optional params.
-        // this provides version resiliency in case optional params are added in the future.
-        // don't do this for paging next link operation as this isn't part of the public API
-        if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
-          continue;
-        }
-        // create a type named <OperationGroup><Operation>Options
-        const paramGroupName = `${group.language.go!.clientName}${opName}Options`;
-        if (!paramGroups.has(paramGroupName)) {
-          const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
-          const gp = createGroupProperty(paramGroupName, desc);
-          gp.required = false;
-          paramGroups.set(paramGroupName, gp);
-          // associate the param group with the operation
-          op.language.go!.optionalParamGroup = gp;
-        }
-        // include non-required constants that aren't body params in the optional values struct
-        if (param.required !== true && !(param.schema.type === SchemaType.Constant && param.protocol.http!.in === 'body')) {
+        } else if (param.required !== true && !(param.schema.type === SchemaType.Constant && param.protocol.http!.in === 'body')) {
+          // include non-required constants that aren't body params in the optional values struct.
+          (<GroupProperty>op.language.go!.optionalParamGroup).originalParameter.push(param);
           // associate the group with the param
-          param.language.go!.paramGroup = paramGroups.get(paramGroupName);
-          paramGroups.get(paramGroupName)!.originalParameter.push(param);
+          param.language.go!.paramGroup = op.language.go!.optionalParamGroup;
         }
       }
       // recursively add the marshalling format to the body param if applicable
