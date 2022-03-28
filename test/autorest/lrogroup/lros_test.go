@@ -15,7 +15,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
@@ -236,6 +235,37 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 	}
 }
 
+func TestLROBeginPatch201RetryWithAsyncHeader(t *testing.T) {
+	op := newLROSClient()
+	resp, err := op.BeginPatch201RetryWithAsyncHeader(context.Background(), nil)
+	require.NoError(t, err)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, err)
+	require.Equal(t, Product{
+		ID:   to.StringPtr("/lro/patch/201/retry/onlyAsyncHeader"),
+		Name: to.StringPtr("foo"),
+		Properties: &ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	}, res.Product)
+}
+
+func TestLROBeginPatch202RetryWithAsyncAndLocationHeader(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.testserver/pull/369")
+	op := newLROSClient()
+	resp, err := op.BeginPatch202RetryWithAsyncAndLocationHeader(context.Background(), nil)
+	require.NoError(t, err)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, err)
+	require.Equal(t, Product{
+		ID:   to.StringPtr("/lro/patch/202/retry/asyncAndLocationHeader"),
+		Name: to.StringPtr("foo"),
+		Properties: &ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	}, res.Product)
+}
+
 func TestLROBeginPost200WithPayload(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPost200WithPayload(context.Background(), nil)
@@ -249,12 +279,10 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.SKU, SKU{
+	require.Equal(t, SKU{
 		ID:   to.StringPtr("1"),
 		Name: to.StringPtr("product"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.SKU)
 }
 
 func TestLROBeginPost202List(t *testing.T) {
@@ -270,14 +298,10 @@ func TestLROBeginPost202List(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.ProductArray, []*Product{
-		{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	require.Equal(t, []*Product{{
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
+	}}, pollResp.ProductArray)
 }
 
 func TestLROBeginPost202NoRetry204(t *testing.T) {
@@ -323,15 +347,13 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
@@ -371,15 +393,13 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
@@ -419,11 +439,9 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID: to.StringPtr("100"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
@@ -439,12 +457,10 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
@@ -460,12 +476,10 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
@@ -495,15 +509,13 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 	require.Error(t, err)
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPut200SucceededNoState(t *testing.T) {
@@ -515,12 +527,10 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	require.Error(t, err)
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 // TODO check if this test should actually be returning a 200 or a 204
@@ -537,15 +547,13 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPut201CreatingFailed200(t *testing.T) {
@@ -579,15 +587,28 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
+}
+
+func TestLROBeginPut201Succeeded(t *testing.T) {
+	op := newLROSClient()
+	resp, err := op.BeginPut201Succeeded(context.Background(), nil)
+	require.NoError(t, err)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	require.NoError(t, err)
+	require.Equal(t, Product{
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
+		Properties: &ProductProperties{
+			ProvisioningState: to.StringPtr("Succeeded"),
+		},
+	}, res.Product)
 }
 
 func TestLROBeginPut202Retry200(t *testing.T) {
@@ -603,12 +624,10 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
@@ -624,15 +643,13 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
@@ -648,15 +665,13 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
@@ -696,12 +711,10 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.SKU, SKU{
+	require.Equal(t, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.SKU)
 }
 
 func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
@@ -741,15 +754,13 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
+	require.Equal(t, Product{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPutAsyncSubResource(t *testing.T) {
@@ -765,18 +776,15 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
+	require.Equal(t, SubProduct{
 		ID: to.StringPtr("100"),
 		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.SubProduct)
 }
 
 func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
-	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutNoHeaderInRetry(context.Background(), nil)
 	require.NoError(t, err)
@@ -789,18 +797,16 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.Product, Product{
-		ID: to.StringPtr("100"),
+	require.Equal(t, Product{
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.Product)
 }
 
 func TestLROBeginPutNonResource(t *testing.T) {
-	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutNonResource(context.Background(), nil)
 	require.NoError(t, err)
@@ -813,16 +819,13 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.SKU, SKU{
+	require.Equal(t, SKU{
 		ID:   to.StringPtr("100"),
 		Name: to.StringPtr("sku"),
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.SKU)
 }
 
 func TestLROBeginPutSubResource(t *testing.T) {
-	t.Skip("problem with put flow")
 	op := newLROSClient()
 	resp, err := op.BeginPutSubResource(context.Background(), nil)
 	require.NoError(t, err)
@@ -835,12 +838,10 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	}
 	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	require.NoError(t, err)
-	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
+	require.Equal(t, SubProduct{
 		ID: to.StringPtr("100"),
 		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
-	}); r != "" {
-		t.Fatal(r)
-	}
+	}, pollResp.SubProduct)
 }
