@@ -251,6 +251,7 @@ func TestLROBeginPatch201RetryWithAsyncHeader(t *testing.T) {
 }
 
 func TestLROBeginPatch202RetryWithAsyncAndLocationHeader(t *testing.T) {
+	t.Skip("https://github.com/Azure/autorest.testserver/pull/369")
 	op := newLROSClient()
 	resp, err := op.BeginPatch202RetryWithAsyncAndLocationHeader(context.Background(), nil)
 	require.NoError(t, err)
