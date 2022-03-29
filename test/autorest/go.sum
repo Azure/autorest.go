@@ -1,5 +1,5 @@
-github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220315231014-ed309e73db6b h1:Fd2lh6PYLbmtUbuuvKyZIyAHO1q9c4XjOTIe91aZ/xM=
-github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220315231014-ed309e73db6b/go.mod h1:VP3SVEdym/u1wLrKqY0Jt+xIiyFyRG8B3wtfZm8lZik=
+github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220329001934-0cf20e37b0e0 h1:TY3YrTkEB8u1QkUAxo0FyW6JQK7856XHdJXa+X/q09E=
+github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220329001934-0cf20e37b0e0/go.mod h1:VP3SVEdym/u1wLrKqY0Jt+xIiyFyRG8B3wtfZm8lZik=
 github.com/Azure/azure-sdk-for-go/sdk/internal v0.8.3 h1:E+m3SkZCN0Bf5q7YdTs5lSm2CYY3CK4spn5OmUIiQtk=
 github.com/Azure/azure-sdk-for-go/sdk/internal v0.8.3/go.mod h1:KLF4gFr6DcKFZwSuH8w8yEK6DpFl3LP5rhdvAb7Yz5I=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
