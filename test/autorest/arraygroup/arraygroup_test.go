@@ -445,7 +445,7 @@ func TestGetEnumValid(t *testing.T) {
 	resp, err := client.GetEnumValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.FooEnumArray, []*FooEnum{
-		FooEnumFoo1.ToPtr(), FooEnumFoo2.ToPtr(), FooEnumFoo3.ToPtr()}); r != "" {
+		to.Ptr(FooEnumFoo1), to.Ptr(FooEnumFoo2), to.Ptr(FooEnumFoo3)}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -568,7 +568,7 @@ func TestGetStringEnumValid(t *testing.T) {
 	resp, err := client.GetStringEnumValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(resp.Enum0Array, []*Enum0{
-		Enum0Foo1.ToPtr(), Enum0Foo2.ToPtr(), Enum0Foo3.ToPtr()}); r != "" {
+		to.Ptr(Enum0Foo1), to.Ptr(Enum0Foo2), to.Ptr(Enum0Foo3)}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -744,7 +744,7 @@ func TestPutEmpty(t *testing.T) {
 func TestPutEnumValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutEnumValid(context.Background(), []*FooEnum{
-		FooEnumFoo1.ToPtr(), FooEnumFoo2.ToPtr(), FooEnumFoo3.ToPtr()}, nil)
+		to.Ptr(FooEnumFoo1), to.Ptr(FooEnumFoo2), to.Ptr(FooEnumFoo3)}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -777,7 +777,7 @@ func TestPutLongValid(t *testing.T) {
 func TestPutStringEnumValid(t *testing.T) {
 	client := newArrayClient()
 	resp, err := client.PutStringEnumValid(context.Background(), []*Enum1{
-		Enum1Foo1.ToPtr(), Enum1Foo2.ToPtr(), Enum1Foo3.ToPtr()}, nil)
+		to.Ptr(Enum1Foo1), to.Ptr(Enum1Foo2), to.Ptr(Enum1Foo3)}, nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

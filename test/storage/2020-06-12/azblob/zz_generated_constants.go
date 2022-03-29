@@ -52,11 +52,6 @@ func PossibleAccessTierValues() []AccessTier {
 	}
 }
 
-// ToPtr returns a *AccessTier pointing to the current value.
-func (c AccessTier) ToPtr() *AccessTier {
-	return &c
-}
-
 type AccountKind string
 
 const (
@@ -78,11 +73,6 @@ func PossibleAccountKindValues() []AccountKind {
 	}
 }
 
-// ToPtr returns a *AccountKind pointing to the current value.
-func (c AccountKind) ToPtr() *AccountKind {
-	return &c
-}
-
 type ArchiveStatus string
 
 const (
@@ -96,11 +86,6 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 		ArchiveStatusRehydratePendingToCool,
 		ArchiveStatusRehydratePendingToHot,
 	}
-}
-
-// ToPtr returns a *ArchiveStatus pointing to the current value.
-func (c ArchiveStatus) ToPtr() *ArchiveStatus {
-	return &c
 }
 
 type BlobExpiryOptions string
@@ -122,11 +107,6 @@ func PossibleBlobExpiryOptionsValues() []BlobExpiryOptions {
 	}
 }
 
-// ToPtr returns a *BlobExpiryOptions pointing to the current value.
-func (c BlobExpiryOptions) ToPtr() *BlobExpiryOptions {
-	return &c
-}
-
 type BlobImmutabilityPolicyMode string
 
 const (
@@ -142,11 +122,6 @@ func PossibleBlobImmutabilityPolicyModeValues() []BlobImmutabilityPolicyMode {
 		BlobImmutabilityPolicyModeLocked,
 		BlobImmutabilityPolicyModeMutable,
 	}
-}
-
-// ToPtr returns a *BlobImmutabilityPolicyMode pointing to the current value.
-func (c BlobImmutabilityPolicyMode) ToPtr() *BlobImmutabilityPolicyMode {
-	return &c
 }
 
 type BlobType string
@@ -166,11 +141,6 @@ func PossibleBlobTypeValues() []BlobType {
 	}
 }
 
-// ToPtr returns a *BlobType pointing to the current value.
-func (c BlobType) ToPtr() *BlobType {
-	return &c
-}
-
 type BlockListType string
 
 const (
@@ -186,11 +156,6 @@ func PossibleBlockListTypeValues() []BlockListType {
 		BlockListTypeUncommitted,
 		BlockListTypeAll,
 	}
-}
-
-// ToPtr returns a *BlockListType pointing to the current value.
-func (c BlockListType) ToPtr() *BlockListType {
-	return &c
 }
 
 type CopyStatusType string
@@ -212,11 +177,6 @@ func PossibleCopyStatusTypeValues() []CopyStatusType {
 	}
 }
 
-// ToPtr returns a *CopyStatusType pointing to the current value.
-func (c CopyStatusType) ToPtr() *CopyStatusType {
-	return &c
-}
-
 type DeleteSnapshotsOptionType string
 
 const (
@@ -232,11 +192,6 @@ func PossibleDeleteSnapshotsOptionTypeValues() []DeleteSnapshotsOptionType {
 	}
 }
 
-// ToPtr returns a *DeleteSnapshotsOptionType pointing to the current value.
-func (c DeleteSnapshotsOptionType) ToPtr() *DeleteSnapshotsOptionType {
-	return &c
-}
-
 type Enum0 string
 
 const (
@@ -248,11 +203,6 @@ func PossibleEnum0Values() []Enum0 {
 	return []Enum0{
 		Enum0Service,
 	}
-}
-
-// ToPtr returns a *Enum0 pointing to the current value.
-func (c Enum0) ToPtr() *Enum0 {
-	return &c
 }
 
 type Enum1 string
@@ -268,11 +218,6 @@ func PossibleEnum1Values() []Enum1 {
 	}
 }
 
-// ToPtr returns a *Enum1 pointing to the current value.
-func (c Enum1) ToPtr() *Enum1 {
-	return &c
-}
-
 type Enum10 string
 
 const (
@@ -284,11 +229,6 @@ func PossibleEnum10Values() []Enum10 {
 	return []Enum10{
 		Enum10Blobs,
 	}
-}
-
-// ToPtr returns a *Enum10 pointing to the current value.
-func (c Enum10) ToPtr() *Enum10 {
-	return &c
 }
 
 type Enum11 string
@@ -304,11 +244,6 @@ func PossibleEnum11Values() []Enum11 {
 	}
 }
 
-// ToPtr returns a *Enum11 pointing to the current value.
-func (c Enum11) ToPtr() *Enum11 {
-	return &c
-}
-
 type Enum12 string
 
 const (
@@ -320,11 +255,6 @@ func PossibleEnum12Values() []Enum12 {
 	return []Enum12{
 		Enum12Metadata,
 	}
-}
-
-// ToPtr returns a *Enum12 pointing to the current value.
-func (c Enum12) ToPtr() *Enum12 {
-	return &c
 }
 
 type Enum13 string
@@ -340,11 +270,6 @@ func PossibleEnum13Values() []Enum13 {
 	}
 }
 
-// ToPtr returns a *Enum13 pointing to the current value.
-func (c Enum13) ToPtr() *Enum13 {
-	return &c
-}
-
 type Enum14 string
 
 const (
@@ -356,11 +281,6 @@ func PossibleEnum14Values() []Enum14 {
 	return []Enum14{
 		Enum14Undelete,
 	}
-}
-
-// ToPtr returns a *Enum14 pointing to the current value.
-func (c Enum14) ToPtr() *Enum14 {
-	return &c
 }
 
 type Enum15 string
@@ -376,11 +296,6 @@ func PossibleEnum15Values() []Enum15 {
 	}
 }
 
-// ToPtr returns a *Enum15 pointing to the current value.
-func (c Enum15) ToPtr() *Enum15 {
-	return &c
-}
-
 type Enum16 string
 
 const (
@@ -392,11 +307,6 @@ func PossibleEnum16Values() []Enum16 {
 	return []Enum16{
 		Enum16Lease,
 	}
-}
-
-// ToPtr returns a *Enum16 pointing to the current value.
-func (c Enum16) ToPtr() *Enum16 {
-	return &c
 }
 
 type Enum2 string
@@ -412,11 +322,6 @@ func PossibleEnum2Values() []Enum2 {
 	}
 }
 
-// ToPtr returns a *Enum2 pointing to the current value.
-func (c Enum2) ToPtr() *Enum2 {
-	return &c
-}
-
 type Enum20 string
 
 const (
@@ -428,11 +333,6 @@ func PossibleEnum20Values() []Enum20 {
 	return []Enum20{
 		Enum20Directory,
 	}
-}
-
-// ToPtr returns a *Enum20 pointing to the current value.
-func (c Enum20) ToPtr() *Enum20 {
-	return &c
 }
 
 type Enum21 string
@@ -448,11 +348,6 @@ func PossibleEnum21Values() []Enum21 {
 	}
 }
 
-// ToPtr returns a *Enum21 pointing to the current value.
-func (c Enum21) ToPtr() *Enum21 {
-	return &c
-}
-
 type Enum22 string
 
 const (
@@ -464,11 +359,6 @@ func PossibleEnum22Values() []Enum22 {
 	return []Enum22{
 		Enum22GetAccessControl,
 	}
-}
-
-// ToPtr returns a *Enum22 pointing to the current value.
-func (c Enum22) ToPtr() *Enum22 {
-	return &c
 }
 
 type Enum24 string
@@ -484,11 +374,6 @@ func PossibleEnum24Values() []Enum24 {
 	}
 }
 
-// ToPtr returns a *Enum24 pointing to the current value.
-func (c Enum24) ToPtr() *Enum24 {
-	return &c
-}
-
 type Enum26 string
 
 const (
@@ -500,11 +385,6 @@ func PossibleEnum26Values() []Enum26 {
 	return []Enum26{
 		Enum26ImmutabilityPolicies,
 	}
-}
-
-// ToPtr returns a *Enum26 pointing to the current value.
-func (c Enum26) ToPtr() *Enum26 {
-	return &c
 }
 
 type Enum27 string
@@ -520,11 +400,6 @@ func PossibleEnum27Values() []Enum27 {
 	}
 }
 
-// ToPtr returns a *Enum27 pointing to the current value.
-func (c Enum27) ToPtr() *Enum27 {
-	return &c
-}
-
 type Enum28 string
 
 const (
@@ -536,11 +411,6 @@ func PossibleEnum28Values() []Enum28 {
 	return []Enum28{
 		Enum28Snapshot,
 	}
-}
-
-// ToPtr returns a *Enum28 pointing to the current value.
-func (c Enum28) ToPtr() *Enum28 {
-	return &c
 }
 
 type Enum29 string
@@ -556,11 +426,6 @@ func PossibleEnum29Values() []Enum29 {
 	}
 }
 
-// ToPtr returns a *Enum29 pointing to the current value.
-func (c Enum29) ToPtr() *Enum29 {
-	return &c
-}
-
 type Enum3 string
 
 const (
@@ -572,11 +437,6 @@ func PossibleEnum3Values() []Enum3 {
 	return []Enum3{
 		Enum3Stats,
 	}
-}
-
-// ToPtr returns a *Enum3 pointing to the current value.
-func (c Enum3) ToPtr() *Enum3 {
-	return &c
 }
 
 type Enum30 string
@@ -592,11 +452,6 @@ func PossibleEnum30Values() []Enum30 {
 	}
 }
 
-// ToPtr returns a *Enum30 pointing to the current value.
-func (c Enum30) ToPtr() *Enum30 {
-	return &c
-}
-
 type Enum31 string
 
 const (
@@ -608,11 +463,6 @@ func PossibleEnum31Values() []Enum31 {
 	return []Enum31{
 		Enum31Abort,
 	}
-}
-
-// ToPtr returns a *Enum31 pointing to the current value.
-func (c Enum31) ToPtr() *Enum31 {
-	return &c
 }
 
 type Enum32 string
@@ -628,11 +478,6 @@ func PossibleEnum32Values() []Enum32 {
 	}
 }
 
-// ToPtr returns a *Enum32 pointing to the current value.
-func (c Enum32) ToPtr() *Enum32 {
-	return &c
-}
-
 type Enum33 string
 
 const (
@@ -644,11 +489,6 @@ func PossibleEnum33Values() []Enum33 {
 	return []Enum33{
 		Enum33Block,
 	}
-}
-
-// ToPtr returns a *Enum33 pointing to the current value.
-func (c Enum33) ToPtr() *Enum33 {
-	return &c
 }
 
 type Enum34 string
@@ -664,11 +504,6 @@ func PossibleEnum34Values() []Enum34 {
 	}
 }
 
-// ToPtr returns a *Enum34 pointing to the current value.
-func (c Enum34) ToPtr() *Enum34 {
-	return &c
-}
-
 type Enum35 string
 
 const (
@@ -680,11 +515,6 @@ func PossibleEnum35Values() []Enum35 {
 	return []Enum35{
 		Enum35Page,
 	}
-}
-
-// ToPtr returns a *Enum35 pointing to the current value.
-func (c Enum35) ToPtr() *Enum35 {
-	return &c
 }
 
 type Enum36 string
@@ -700,11 +530,6 @@ func PossibleEnum36Values() []Enum36 {
 	}
 }
 
-// ToPtr returns a *Enum36 pointing to the current value.
-func (c Enum36) ToPtr() *Enum36 {
-	return &c
-}
-
 type Enum37 string
 
 const (
@@ -716,11 +541,6 @@ func PossibleEnum37Values() []Enum37 {
 	return []Enum37{
 		Enum37Incrementalcopy,
 	}
-}
-
-// ToPtr returns a *Enum37 pointing to the current value.
-func (c Enum37) ToPtr() *Enum37 {
-	return &c
 }
 
 type Enum38 string
@@ -736,11 +556,6 @@ func PossibleEnum38Values() []Enum38 {
 	}
 }
 
-// ToPtr returns a *Enum38 pointing to the current value.
-func (c Enum38) ToPtr() *Enum38 {
-	return &c
-}
-
 type Enum39 string
 
 const (
@@ -752,11 +567,6 @@ func PossibleEnum39Values() []Enum39 {
 	return []Enum39{
 		Enum39Seal,
 	}
-}
-
-// ToPtr returns a *Enum39 pointing to the current value.
-func (c Enum39) ToPtr() *Enum39 {
-	return &c
 }
 
 type Enum40 string
@@ -772,11 +582,6 @@ func PossibleEnum40Values() []Enum40 {
 	}
 }
 
-// ToPtr returns a *Enum40 pointing to the current value.
-func (c Enum40) ToPtr() *Enum40 {
-	return &c
-}
-
 type Enum42 string
 
 const (
@@ -788,11 +593,6 @@ func PossibleEnum42Values() []Enum42 {
 	return []Enum42{
 		Enum42Tags,
 	}
-}
-
-// ToPtr returns a *Enum42 pointing to the current value.
-func (c Enum42) ToPtr() *Enum42 {
-	return &c
 }
 
 type Enum5 string
@@ -808,11 +608,6 @@ func PossibleEnum5Values() []Enum5 {
 	}
 }
 
-// ToPtr returns a *Enum5 pointing to the current value.
-func (c Enum5) ToPtr() *Enum5 {
-	return &c
-}
-
 type Enum7 string
 
 const (
@@ -824,11 +619,6 @@ func PossibleEnum7Values() []Enum7 {
 	return []Enum7{
 		Enum7Userdelegationkey,
 	}
-}
-
-// ToPtr returns a *Enum7 pointing to the current value.
-func (c Enum7) ToPtr() *Enum7 {
-	return &c
 }
 
 type Enum8 string
@@ -844,11 +634,6 @@ func PossibleEnum8Values() []Enum8 {
 	}
 }
 
-// ToPtr returns a *Enum8 pointing to the current value.
-func (c Enum8) ToPtr() *Enum8 {
-	return &c
-}
-
 type Enum9 string
 
 const (
@@ -860,11 +645,6 @@ func PossibleEnum9Values() []Enum9 {
 	return []Enum9{
 		Enum9Batch,
 	}
-}
-
-// ToPtr returns a *Enum9 pointing to the current value.
-func (c Enum9) ToPtr() *Enum9 {
-	return &c
 }
 
 // GeoReplicationStatusType - The status of the secondary location
@@ -885,11 +665,6 @@ func PossibleGeoReplicationStatusTypeValues() []GeoReplicationStatusType {
 	}
 }
 
-// ToPtr returns a *GeoReplicationStatusType pointing to the current value.
-func (c GeoReplicationStatusType) ToPtr() *GeoReplicationStatusType {
-	return &c
-}
-
 type LeaseDurationType string
 
 const (
@@ -903,11 +678,6 @@ func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 		LeaseDurationTypeInfinite,
 		LeaseDurationTypeFixed,
 	}
-}
-
-// ToPtr returns a *LeaseDurationType pointing to the current value.
-func (c LeaseDurationType) ToPtr() *LeaseDurationType {
-	return &c
 }
 
 type LeaseStateType string
@@ -931,11 +701,6 @@ func PossibleLeaseStateTypeValues() []LeaseStateType {
 	}
 }
 
-// ToPtr returns a *LeaseStateType pointing to the current value.
-func (c LeaseStateType) ToPtr() *LeaseStateType {
-	return &c
-}
-
 type LeaseStatusType string
 
 const (
@@ -949,11 +714,6 @@ func PossibleLeaseStatusTypeValues() []LeaseStatusType {
 		LeaseStatusTypeLocked,
 		LeaseStatusTypeUnlocked,
 	}
-}
-
-// ToPtr returns a *LeaseStatusType pointing to the current value.
-func (c LeaseStatusType) ToPtr() *LeaseStatusType {
-	return &c
 }
 
 type ListBlobsIncludeItem string
@@ -985,11 +745,6 @@ func PossibleListBlobsIncludeItemValues() []ListBlobsIncludeItem {
 	}
 }
 
-// ToPtr returns a *ListBlobsIncludeItem pointing to the current value.
-func (c ListBlobsIncludeItem) ToPtr() *ListBlobsIncludeItem {
-	return &c
-}
-
 type ListContainersIncludeType string
 
 const (
@@ -1005,11 +760,6 @@ func PossibleListContainersIncludeTypeValues() []ListContainersIncludeType {
 	}
 }
 
-// ToPtr returns a *ListContainersIncludeType pointing to the current value.
-func (c ListContainersIncludeType) ToPtr() *ListContainersIncludeType {
-	return &c
-}
-
 type PathRenameMode string
 
 const (
@@ -1023,11 +773,6 @@ func PossiblePathRenameModeValues() []PathRenameMode {
 		PathRenameModeLegacy,
 		PathRenameModePosix,
 	}
-}
-
-// ToPtr returns a *PathRenameMode pointing to the current value.
-func (c PathRenameMode) ToPtr() *PathRenameMode {
-	return &c
 }
 
 type PremiumPageBlobAccessTier string
@@ -1063,11 +808,6 @@ func PossiblePremiumPageBlobAccessTierValues() []PremiumPageBlobAccessTier {
 	}
 }
 
-// ToPtr returns a *PremiumPageBlobAccessTier pointing to the current value.
-func (c PremiumPageBlobAccessTier) ToPtr() *PremiumPageBlobAccessTier {
-	return &c
-}
-
 type PublicAccessType string
 
 const (
@@ -1081,11 +821,6 @@ func PossiblePublicAccessTypeValues() []PublicAccessType {
 		PublicAccessTypeBlob,
 		PublicAccessTypeContainer,
 	}
-}
-
-// ToPtr returns a *PublicAccessType pointing to the current value.
-func (c PublicAccessType) ToPtr() *PublicAccessType {
-	return &c
 }
 
 // QueryFormatType - The quick query format type.
@@ -1106,11 +841,6 @@ func PossibleQueryFormatTypeValues() []QueryFormatType {
 	}
 }
 
-// ToPtr returns a *QueryFormatType pointing to the current value.
-func (c QueryFormatType) ToPtr() *QueryFormatType {
-	return &c
-}
-
 // QueryRequestQueryType - the query type
 type QueryRequestQueryType string
 
@@ -1123,11 +853,6 @@ func PossibleQueryRequestQueryTypeValues() []QueryRequestQueryType {
 	return []QueryRequestQueryType{
 		QueryRequestQueryTypeSQL,
 	}
-}
-
-// ToPtr returns a *QueryRequestQueryType pointing to the current value.
-func (c QueryRequestQueryType) ToPtr() *QueryRequestQueryType {
-	return &c
 }
 
 // RehydratePriority - If an object is in rehydrate pending state then this header is returned with priority of rehydrate.
@@ -1145,11 +870,6 @@ func PossibleRehydratePriorityValues() []RehydratePriority {
 		RehydratePriorityHigh,
 		RehydratePriorityStandard,
 	}
-}
-
-// ToPtr returns a *RehydratePriority pointing to the current value.
-func (c RehydratePriority) ToPtr() *RehydratePriority {
-	return &c
 }
 
 type SKUName string
@@ -1173,11 +893,6 @@ func PossibleSKUNameValues() []SKUName {
 	}
 }
 
-// ToPtr returns a *SKUName pointing to the current value.
-func (c SKUName) ToPtr() *SKUName {
-	return &c
-}
-
 type SequenceNumberActionType string
 
 const (
@@ -1193,11 +908,6 @@ func PossibleSequenceNumberActionTypeValues() []SequenceNumberActionType {
 		SequenceNumberActionTypeUpdate,
 		SequenceNumberActionTypeIncrement,
 	}
-}
-
-// ToPtr returns a *SequenceNumberActionType pointing to the current value.
-func (c SequenceNumberActionType) ToPtr() *SequenceNumberActionType {
-	return &c
 }
 
 // StorageErrorCode - Error codes returned by the service
@@ -1436,9 +1146,4 @@ func PossibleStorageErrorCodeValues() []StorageErrorCode {
 		StorageErrorCodeUnsupportedQueryParameter,
 		StorageErrorCodeUnsupportedXMLNode,
 	}
-}
-
-// ToPtr returns a *StorageErrorCode pointing to the current value.
-func (c StorageErrorCode) ToPtr() *StorageErrorCode {
-	return &c
 }

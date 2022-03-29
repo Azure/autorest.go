@@ -31,8 +31,3 @@ func PossibleURIColorValues() []URIColor {
 		URIColorBlueColor,
 	}
 }
-
-// ToPtr returns a *URIColor pointing to the current value.
-func (c URIColor) ToPtr() *URIColor {
-	return &c
-}

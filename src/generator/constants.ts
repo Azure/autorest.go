@@ -51,10 +51,6 @@ export async function generateConstants(session: Session<CodeModel>, version: st
     }
     text += '\t}\n';
     text += '}\n\n';
-    text += `// ToPtr returns a *${enm.name} pointing to the current value.\n`;
-    text += `func (c ${enm.name}) ToPtr() *${enm.name} {\n`;
-    text += '\treturn &c\n';
-    text += `}\n\n`;
   }
   return text;
 }

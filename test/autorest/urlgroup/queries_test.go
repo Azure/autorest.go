@@ -7,6 +7,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
@@ -166,7 +167,7 @@ func TestEnumNull(t *testing.T) {
 func TestEnumValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.EnumValid(context.Background(), &QueriesClientEnumValidOptions{
-		EnumQuery: URIColorGreenColor.ToPtr(),
+		EnumQuery: to.Ptr(URIColorGreenColor),
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)

@@ -32,8 +32,3 @@ func PossibleColorsValues() []Colors {
 		ColorsBlueColor,
 	}
 }
-
-// ToPtr returns a *Colors pointing to the current value.
-func (c Colors) ToPtr() *Colors {
-	return &c
-}

@@ -29,11 +29,6 @@ func PossibleActionTypeValues() []ActionType {
 	}
 }
 
-// ToPtr returns a *ActionType pointing to the current value.
-func (c ActionType) ToPtr() *ActionType {
-	return &c
-}
-
 // DataAction - Supported permissions for data actions.
 type DataAction string
 
@@ -133,11 +128,6 @@ func PossibleDataActionValues() []DataAction {
 	}
 }
 
-// ToPtr returns a *DataAction pointing to the current value.
-func (c DataAction) ToPtr() *DataAction {
-	return &c
-}
-
 // DeletionRecoveryLevel - Reflects the deletion recovery level currently in effect for certificates in the current vault.
 // If it contains 'Purgeable', the certificate can be permanently deleted by a privileged user; otherwise,
 // only the system can purge the certificate, at the end of the retention interval.
@@ -191,11 +181,6 @@ func PossibleDeletionRecoveryLevelValues() []DeletionRecoveryLevel {
 	}
 }
 
-// ToPtr returns a *DeletionRecoveryLevel pointing to the current value.
-func (c DeletionRecoveryLevel) ToPtr() *DeletionRecoveryLevel {
-	return &c
-}
-
 // JSONWebKeyCurveName - Elliptic curve name. For valid values, see JsonWebKeyCurveName.
 type JSONWebKeyCurveName string
 
@@ -218,11 +203,6 @@ func PossibleJSONWebKeyCurveNameValues() []JSONWebKeyCurveName {
 		JSONWebKeyCurveNameP384,
 		JSONWebKeyCurveNameP521,
 	}
-}
-
-// ToPtr returns a *JSONWebKeyCurveName pointing to the current value.
-func (c JSONWebKeyCurveName) ToPtr() *JSONWebKeyCurveName {
-	return &c
 }
 
 // JSONWebKeyEncryptionAlgorithm - algorithm identifier
@@ -267,11 +247,6 @@ func PossibleJSONWebKeyEncryptionAlgorithmValues() []JSONWebKeyEncryptionAlgorit
 	}
 }
 
-// ToPtr returns a *JSONWebKeyEncryptionAlgorithm pointing to the current value.
-func (c JSONWebKeyEncryptionAlgorithm) ToPtr() *JSONWebKeyEncryptionAlgorithm {
-	return &c
-}
-
 // JSONWebKeyOperation - JSON web key operations. For more information, see JsonWebKeyOperation.
 type JSONWebKeyOperation string
 
@@ -296,11 +271,6 @@ func PossibleJSONWebKeyOperationValues() []JSONWebKeyOperation {
 		JSONWebKeyOperationVerify,
 		JSONWebKeyOperationWrapKey,
 	}
-}
-
-// ToPtr returns a *JSONWebKeyOperation pointing to the current value.
-func (c JSONWebKeyOperation) ToPtr() *JSONWebKeyOperation {
-	return &c
 }
 
 // JSONWebKeySignatureAlgorithm - The signing/verification algorithm identifier. For more information on possible algorithm
@@ -349,11 +319,6 @@ func PossibleJSONWebKeySignatureAlgorithmValues() []JSONWebKeySignatureAlgorithm
 	}
 }
 
-// ToPtr returns a *JSONWebKeySignatureAlgorithm pointing to the current value.
-func (c JSONWebKeySignatureAlgorithm) ToPtr() *JSONWebKeySignatureAlgorithm {
-	return &c
-}
-
 // JSONWebKeyType - JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
 type JSONWebKeyType string
 
@@ -382,11 +347,6 @@ func PossibleJSONWebKeyTypeValues() []JSONWebKeyType {
 		JSONWebKeyTypeRSA,
 		JSONWebKeyTypeRSAHSM,
 	}
-}
-
-// ToPtr returns a *JSONWebKeyType pointing to the current value.
-func (c JSONWebKeyType) ToPtr() *JSONWebKeyType {
-	return &c
 }
 
 type KeyUsageType string
@@ -418,11 +378,6 @@ func PossibleKeyUsageTypeValues() []KeyUsageType {
 	}
 }
 
-// ToPtr returns a *KeyUsageType pointing to the current value.
-func (c KeyUsageType) ToPtr() *KeyUsageType {
-	return &c
-}
-
 // OperationStatus - operation status
 type OperationStatus string
 
@@ -441,11 +396,6 @@ func PossibleOperationStatusValues() []OperationStatus {
 	}
 }
 
-// ToPtr returns a *OperationStatus pointing to the current value.
-func (c OperationStatus) ToPtr() *OperationStatus {
-	return &c
-}
-
 // RoleDefinitionType - The role definition type.
 type RoleDefinitionType string
 
@@ -458,11 +408,6 @@ func PossibleRoleDefinitionTypeValues() []RoleDefinitionType {
 	return []RoleDefinitionType{
 		RoleDefinitionTypeMicrosoftAuthorizationRoleDefinitions,
 	}
-}
-
-// ToPtr returns a *RoleDefinitionType pointing to the current value.
-func (c RoleDefinitionType) ToPtr() *RoleDefinitionType {
-	return &c
 }
 
 // RoleScope - The role scope.
@@ -483,11 +428,6 @@ func PossibleRoleScopeValues() []RoleScope {
 	}
 }
 
-// ToPtr returns a *RoleScope pointing to the current value.
-func (c RoleScope) ToPtr() *RoleScope {
-	return &c
-}
-
 // RoleType - The role type.
 type RoleType string
 
@@ -506,11 +446,6 @@ func PossibleRoleTypeValues() []RoleType {
 	}
 }
 
-// ToPtr returns a *RoleType pointing to the current value.
-func (c RoleType) ToPtr() *RoleType {
-	return &c
-}
-
 // SasTokenType - The type of SAS token the SAS definition will create.
 type SasTokenType string
 
@@ -525,9 +460,4 @@ func PossibleSasTokenTypeValues() []SasTokenType {
 		SasTokenTypeAccount,
 		SasTokenTypeService,
 	}
-}
-
-// ToPtr returns a *SasTokenType pointing to the current value.
-func (c SasTokenType) ToPtr() *SasTokenType {
-	return &c
 }

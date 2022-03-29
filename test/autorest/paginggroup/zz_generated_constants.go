@@ -48,8 +48,3 @@ func PossibleOperationResultStatusValues() []OperationResultStatus {
 		OperationResultStatusUpdating,
 	}
 }
-
-// ToPtr returns a *OperationResultStatus pointing to the current value.
-func (c OperationResultStatus) ToPtr() *OperationResultStatus {
-	return &c
-}

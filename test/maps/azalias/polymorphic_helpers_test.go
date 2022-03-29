@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
 func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
@@ -30,7 +32,7 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			CollectionName: stringPtr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
-					Type:        GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
 					ID:          stringPtr("id/feature"),
 					FeatureType: stringPtr("some type"),
 				},
@@ -43,7 +45,7 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			CollectionName: stringPtr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
-					Type:        GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
 					ID:          stringPtr("id/feature"),
 					FeatureType: stringPtr("some type"),
 				},
@@ -54,7 +56,7 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			CollectionName: stringPtr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
-					Type:        GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
+					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
 					ID:          stringPtr("id/feature"),
 					FeatureType: stringPtr("some type"),
 				},

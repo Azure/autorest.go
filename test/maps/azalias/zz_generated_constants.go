@@ -54,11 +54,6 @@ func PossibleGeoJSONObjectTypeValues() []GeoJSONObjectType {
 	}
 }
 
-// ToPtr returns a *GeoJSONObjectType pointing to the current value.
-func (c GeoJSONObjectType) ToPtr() *GeoJSONObjectType {
-	return &c
-}
-
 type GeographicResourceLocation string
 
 const (
@@ -76,11 +71,6 @@ func PossibleGeographicResourceLocationValues() []GeographicResourceLocation {
 	}
 }
 
-// ToPtr returns a *GeographicResourceLocation pointing to the current value.
-func (c GeographicResourceLocation) ToPtr() *GeographicResourceLocation {
-	return &c
-}
-
 // Geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
 type Geography string
 
@@ -95,11 +85,6 @@ func PossibleGeographyValues() []Geography {
 		GeographyEu,
 		GeographyUs,
 	}
-}
-
-// ToPtr returns a *Geography pointing to the current value.
-func (c Geography) ToPtr() *Geography {
-	return &c
 }
 
 type LogMetricsGroupBy string
@@ -123,11 +108,6 @@ func PossibleLogMetricsGroupByValues() []LogMetricsGroupBy {
 	}
 }
 
-// ToPtr returns a *LogMetricsGroupBy pointing to the current value.
-func (c LogMetricsGroupBy) ToPtr() *LogMetricsGroupBy {
-	return &c
-}
-
 type SomethingCount int32
 
 const (
@@ -145,9 +125,4 @@ func PossibleSomethingCountValues() []SomethingCount {
 		SomethingCountThirty,
 		SomethingCountForty,
 	}
-}
-
-// ToPtr returns a *SomethingCount pointing to the current value.
-func (c SomethingCount) ToPtr() *SomethingCount {
-	return &c
 }

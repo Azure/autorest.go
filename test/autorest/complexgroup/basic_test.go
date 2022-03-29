@@ -20,7 +20,7 @@ func TestBasicGetValid(t *testing.T) {
 	client := newBasicClient()
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Basic, Basic{ID: to.Ptr[int32](2), Name: to.Ptr("abc"), Color: CMYKColorsYELLOW.ToPtr()}); r != "" {
+	if r := cmp.Diff(result.Basic, Basic{ID: to.Ptr[int32](2), Name: to.Ptr("abc"), Color: to.Ptr(CMYKColorsYELLOW)}); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -30,7 +30,7 @@ func TestBasicPutValid(t *testing.T) {
 	result, err := client.PutValid(context.Background(), Basic{
 		ID:    to.Ptr[int32](2),
 		Name:  to.Ptr("abc"),
-		Color: CMYKColorsMagenta.ToPtr(),
+		Color: to.Ptr(CMYKColorsMagenta),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

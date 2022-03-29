@@ -31,11 +31,6 @@ func PossibleBillingFrequencyValues() []BillingFrequency {
 	}
 }
 
-// ToPtr returns a *BillingFrequency pointing to the current value.
-func (c BillingFrequency) ToPtr() *BillingFrequency {
-	return &c
-}
-
 // Bound - The boundary of the percentage, values could be 'Upper' or 'Lower'
 type Bound string
 
@@ -52,11 +47,6 @@ func PossibleBoundValues() []Bound {
 	}
 }
 
-// ToPtr returns a *Bound pointing to the current value.
-func (c Bound) ToPtr() *Bound {
-	return &c
-}
-
 // BudgetOperatorType - The operator to use for comparison.
 type BudgetOperatorType string
 
@@ -71,11 +61,6 @@ func PossibleBudgetOperatorTypeValues() []BudgetOperatorType {
 	}
 }
 
-// ToPtr returns a *BudgetOperatorType pointing to the current value.
-func (c BudgetOperatorType) ToPtr() *BudgetOperatorType {
-	return &c
-}
-
 // CategoryType - The category of the budget, whether the budget tracks cost or usage.
 type CategoryType string
 
@@ -88,11 +73,6 @@ func PossibleCategoryTypeValues() []CategoryType {
 	return []CategoryType{
 		CategoryTypeCost,
 	}
-}
-
-// ToPtr returns a *CategoryType pointing to the current value.
-func (c CategoryType) ToPtr() *CategoryType {
-	return &c
 }
 
 // ChargeSummaryKind - Specifies the kind of charge summary.
@@ -111,11 +91,6 @@ func PossibleChargeSummaryKindValues() []ChargeSummaryKind {
 	}
 }
 
-// ToPtr returns a *ChargeSummaryKind pointing to the current value.
-func (c ChargeSummaryKind) ToPtr() *ChargeSummaryKind {
-	return &c
-}
-
 // ChargeType - The type of the charge. Could be actual or forecast
 type ChargeType string
 
@@ -130,11 +105,6 @@ func PossibleChargeTypeValues() []ChargeType {
 		ChargeTypeActual,
 		ChargeTypeForecast,
 	}
-}
-
-// ToPtr returns a *ChargeType pointing to the current value.
-func (c ChargeType) ToPtr() *ChargeType {
-	return &c
 }
 
 // CultureCode - Language in which the recipient will receive the notification
@@ -191,11 +161,6 @@ func PossibleCultureCodeValues() []CultureCode {
 	}
 }
 
-// ToPtr returns a *CultureCode pointing to the current value.
-func (c CultureCode) ToPtr() *CultureCode {
-	return &c
-}
-
 type Datagrain string
 
 const (
@@ -211,11 +176,6 @@ func PossibleDatagrainValues() []Datagrain {
 		DatagrainDailyGrain,
 		DatagrainMonthlyGrain,
 	}
-}
-
-// ToPtr returns a *Datagrain pointing to the current value.
-func (c Datagrain) ToPtr() *Datagrain {
-	return &c
 }
 
 // EventType - The type of event.
@@ -244,11 +204,6 @@ func PossibleEventTypeValues() []EventType {
 	}
 }
 
-// ToPtr returns a *EventType pointing to the current value.
-func (c EventType) ToPtr() *EventType {
-	return &c
-}
-
 // Grain - The granularity of forecast. Please note that Yearly is not currently supported in this API. The API will provide
 // responses in the Monthly grain if Yearly is selected. To get yearly grain data, please
 // use our newer Forecast API.
@@ -267,11 +222,6 @@ func PossibleGrainValues() []Grain {
 		GrainMonthly,
 		GrainYearly,
 	}
-}
-
-// ToPtr returns a *Grain pointing to the current value.
-func (c Grain) ToPtr() *Grain {
-	return &c
 }
 
 type LookBackPeriod string
@@ -294,11 +244,6 @@ func PossibleLookBackPeriodValues() []LookBackPeriod {
 	}
 }
 
-// ToPtr returns a *LookBackPeriod pointing to the current value.
-func (c LookBackPeriod) ToPtr() *LookBackPeriod {
-	return &c
-}
-
 // LotSource - Lot source.
 type LotSource string
 
@@ -313,11 +258,6 @@ func PossibleLotSourceValues() []LotSource {
 		LotSourcePromotionalCredit,
 		LotSourcePurchasedCredit,
 	}
-}
-
-// ToPtr returns a *LotSource pointing to the current value.
-func (c LotSource) ToPtr() *LotSource {
-	return &c
 }
 
 type Metrictype string
@@ -340,11 +280,6 @@ func PossibleMetrictypeValues() []Metrictype {
 	}
 }
 
-// ToPtr returns a *Metrictype pointing to the current value.
-func (c Metrictype) ToPtr() *Metrictype {
-	return &c
-}
-
 // OperatorType - The comparison operator.
 type OperatorType string
 
@@ -363,11 +298,6 @@ func PossibleOperatorTypeValues() []OperatorType {
 	}
 }
 
-// ToPtr returns a *OperatorType pointing to the current value.
-func (c OperatorType) ToPtr() *OperatorType {
-	return &c
-}
-
 // ReservationRecommendationKind - Specifies the kind of reservation recommendation.
 type ReservationRecommendationKind string
 
@@ -384,11 +314,6 @@ func PossibleReservationRecommendationKindValues() []ReservationRecommendationKi
 	}
 }
 
-// ToPtr returns a *ReservationRecommendationKind pointing to the current value.
-func (c ReservationRecommendationKind) ToPtr() *ReservationRecommendationKind {
-	return &c
-}
-
 type Scope string
 
 const (
@@ -402,11 +327,6 @@ func PossibleScopeValues() []Scope {
 		ScopeShared,
 		ScopeSingle,
 	}
-}
-
-// ToPtr returns a *Scope pointing to the current value.
-func (c Scope) ToPtr() *Scope {
-	return &c
 }
 
 type Term string
@@ -426,11 +346,6 @@ func PossibleTermValues() []Term {
 	}
 }
 
-// ToPtr returns a *Term pointing to the current value.
-func (c Term) ToPtr() *Term {
-	return &c
-}
-
 // ThresholdType - The type of threshold
 type ThresholdType string
 
@@ -443,11 +358,6 @@ func PossibleThresholdTypeValues() []ThresholdType {
 	return []ThresholdType{
 		ThresholdTypeActual,
 	}
-}
-
-// ToPtr returns a *ThresholdType pointing to the current value.
-func (c ThresholdType) ToPtr() *ThresholdType {
-	return &c
 }
 
 // TimeGrainType - The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth,
@@ -475,11 +385,6 @@ func PossibleTimeGrainTypeValues() []TimeGrainType {
 	}
 }
 
-// ToPtr returns a *TimeGrainType pointing to the current value.
-func (c TimeGrainType) ToPtr() *TimeGrainType {
-	return &c
-}
-
 // UsageDetailsKind - Specifies the kind of usage details.
 type UsageDetailsKind string
 
@@ -494,9 +399,4 @@ func PossibleUsageDetailsKindValues() []UsageDetailsKind {
 		UsageDetailsKindLegacy,
 		UsageDetailsKindModern,
 	}
-}
-
-// ToPtr returns a *UsageDetailsKind pointing to the current value.
-func (c UsageDetailsKind) ToPtr() *UsageDetailsKind {
-	return &c
 }
