@@ -1,5 +1,4 @@
 dependencies:
-  '@autorest/autorest': 3.0.6187
   '@autorest/codemodel': 4.18.2
   '@autorest/extension-base': 3.4.4
   '@azure-tools/async-io': 3.0.252
@@ -11,7 +10,7 @@ dependencies:
   '@types/html-to-text': 5.1.2
   '@types/jest': 26.0.24
   '@types/js-yaml': 3.12.1
-  '@types/node': 12.7.2
+  '@types/node': 17.0.23
   '@types/showdown': 1.9.3
   '@typescript-eslint/eslint-plugin': 2.6.1_8eb6dca8b169896fa05b05f8cbfc319b
   '@typescript-eslint/parser': 2.6.1_eslint@6.6.0+typescript@4.4.3
@@ -1035,6 +1034,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dyYO+f6ihZEtNPDcWNR1fkoTDf3zAK3lAABDze3mz6POyIercH0lEUawUFXlG8xaQZmm1yEBON/4TsYv/laDYg==
+  /@types/node/17.0.23:
+    dev: false
+    resolution:
+      integrity: sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==
   /@types/prettier/2.2.3:
     dev: false
     resolution:
@@ -6441,7 +6444,7 @@ packages:
       '@types/jest': 26.0.24
       '@types/js-yaml': 3.12.1
       '@types/mocha': 5.2.5
-      '@types/node': 12.7.2
+      '@types/node': 17.0.23
       '@types/showdown': 1.9.3
       '@typescript-eslint/eslint-plugin': 2.6.1_8eb6dca8b169896fa05b05f8cbfc319b
       '@typescript-eslint/parser': 2.6.1_eslint@6.6.0+typescript@4.4.3
@@ -6458,12 +6461,11 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-3g2SBXr1ajy3mnXGbDIBfoMcRoffjObpT8neslGBqmhQjGO6aO8t2mqVi7ApPIs1pvj8/Z/jGUtD5zvvdL1RcA==
+      integrity: sha512-hPggTiRtWIhXAIyl+bocL2XLeHdBW1ZIPZJ48hA30TiZ/rbna1kn16lavrn/TLTlEdendefIrtP3jl0LdEZHcg==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
-  '@autorest/autorest': ~3.0.6173
   '@autorest/codemodel': ~4.18.2
   '@autorest/extension-base': ~3.4.4
   '@azure-tools/async-io': ~3.0.0
@@ -6475,7 +6477,7 @@ specifiers:
   '@types/html-to-text': ^5.1.2
   '@types/jest': ~26.0.24
   '@types/js-yaml': 3.12.1
-  '@types/node': 12.7.2
+  '@types/node': 17.0.23
   '@types/showdown': ^1.9.3
   '@typescript-eslint/eslint-plugin': ~2.6.0
   '@typescript-eslint/parser': ~2.6.0
