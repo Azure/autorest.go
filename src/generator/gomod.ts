@@ -16,7 +16,7 @@ export async function generateGoModFile(session: Session<CodeModel>): Promise<st
   text += 'go 1.18\n\n';
   // here we specify the minimum version of azcore as required by the code generator.
   // the version can be overwritten by passing the --azcore-version switch during generation.
-  const version = await session.getValue('azcore-version', '0.22.1-0.20220315231014-ed309e73db6b');
+  const version = await session.getValue('azcore-version', '0.22.1-0.20220330183203-27ad5f44019c');
   if (!version.match(/^\d+\.\d+\.\d+(?:-[a-zA-Z0-9_.-]+)?$/)) {
     throw new Error(`azcore version ${version} must in the format major.minor.patch[-beta.N]`);
   }
