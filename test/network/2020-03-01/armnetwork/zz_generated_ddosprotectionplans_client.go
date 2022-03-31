@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 // parameters - Parameters supplied to the create or update operation.
 // options - DdosProtectionPlansClientBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlansClient.BeginCreateOrUpdate
 // method.
-func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (DdosProtectionPlansClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
-	if err != nil {
-		return DdosProtectionPlansClientCreateOrUpdatePollerResponse{}, err
+func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*armruntime.Poller[DdosProtectionPlansClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DdosProtectionPlansClientCreateOrUpdateResponse]("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DdosProtectionPlansClientCreateOrUpdateResponse]("DdosProtectionPlansClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := DdosProtectionPlansClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return DdosProtectionPlansClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &DdosProtectionPlansClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
@@ -122,20 +118,16 @@ func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // options - DdosProtectionPlansClientBeginDeleteOptions contains the optional parameters for the DdosProtectionPlansClient.BeginDelete
 // method.
-func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (DdosProtectionPlansClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
-	if err != nil {
-		return DdosProtectionPlansClientDeletePollerResponse{}, err
+func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*armruntime.Poller[DdosProtectionPlansClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[DdosProtectionPlansClientDeleteResponse]("DdosProtectionPlansClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[DdosProtectionPlansClientDeleteResponse]("DdosProtectionPlansClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := DdosProtectionPlansClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("DdosProtectionPlansClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return DdosProtectionPlansClientDeletePollerResponse{}, err
-	}
-	result.Poller = &DdosProtectionPlansClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified DDoS protection plan.
@@ -240,16 +232,32 @@ func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) 
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - DdosProtectionPlansClientListOptions contains the optional parameters for the DdosProtectionPlansClient.List
 // method.
-func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansClientListOptions) *DdosProtectionPlansClientListPager {
-	return &DdosProtectionPlansClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansClientListOptions) *runtime.Pager[DdosProtectionPlansClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[DdosProtectionPlansClientListResponse]{
+		More: func(page DdosProtectionPlansClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp DdosProtectionPlansClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *DdosProtectionPlansClientListResponse) (DdosProtectionPlansClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return DdosProtectionPlansClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return DdosProtectionPlansClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return DdosProtectionPlansClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -284,16 +292,32 @@ func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response)
 // resourceGroupName - The name of the resource group.
 // options - DdosProtectionPlansClientListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.ListByResourceGroup
 // method.
-func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansClientListByResourceGroupOptions) *DdosProtectionPlansClientListByResourceGroupPager {
-	return &DdosProtectionPlansClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansClientListByResourceGroupOptions) *runtime.Pager[DdosProtectionPlansClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[DdosProtectionPlansClientListByResourceGroupResponse]{
+		More: func(page DdosProtectionPlansClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp DdosProtectionPlansClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *DdosProtectionPlansClientListByResourceGroupResponse) (DdosProtectionPlansClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return DdosProtectionPlansClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return DdosProtectionPlansClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return DdosProtectionPlansClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

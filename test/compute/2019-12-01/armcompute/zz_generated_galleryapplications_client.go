@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -60,20 +60,16 @@ func NewGalleryApplicationsClient(subscriptionID string, credential azcore.Token
 // galleryApplication - Parameters supplied to the create or update gallery Application operation.
 // options - GalleryApplicationsClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginCreateOrUpdate
 // method.
-func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsClientBeginCreateOrUpdateOptions) (GalleryApplicationsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
-	if err != nil {
-		return GalleryApplicationsClientCreateOrUpdatePollerResponse{}, err
+func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[GalleryApplicationsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[GalleryApplicationsClientCreateOrUpdateResponse]("GalleryApplicationsClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientCreateOrUpdateResponse]("GalleryApplicationsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := GalleryApplicationsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("GalleryApplicationsClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return GalleryApplicationsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &GalleryApplicationsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Create or update a gallery Application Definition.
@@ -130,20 +126,16 @@ func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context
 // galleryApplicationName - The name of the gallery Application Definition to be deleted.
 // options - GalleryApplicationsClientBeginDeleteOptions contains the optional parameters for the GalleryApplicationsClient.BeginDelete
 // method.
-func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientBeginDeleteOptions) (GalleryApplicationsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
-	if err != nil {
-		return GalleryApplicationsClientDeletePollerResponse{}, err
+func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientBeginDeleteOptions) (*armruntime.Poller[GalleryApplicationsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[GalleryApplicationsClientDeleteResponse]("GalleryApplicationsClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientDeleteResponse]("GalleryApplicationsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := GalleryApplicationsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("GalleryApplicationsClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return GalleryApplicationsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &GalleryApplicationsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Delete a gallery Application.
@@ -259,16 +251,32 @@ func (client *GalleryApplicationsClient) getHandleResponse(resp *http.Response) 
 // galleryName - The name of the Shared Application Gallery from which Application Definitions are to be listed.
 // options - GalleryApplicationsClientListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
 // method.
-func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsClientListByGalleryOptions) *GalleryApplicationsClientListByGalleryPager {
-	return &GalleryApplicationsClientListByGalleryPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByGalleryCreateRequest(ctx, resourceGroupName, galleryName, options)
+func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsClientListByGalleryOptions) *runtime.Pager[GalleryApplicationsClientListByGalleryResponse] {
+	return runtime.NewPager(runtime.PageProcessor[GalleryApplicationsClientListByGalleryResponse]{
+		More: func(page GalleryApplicationsClientListByGalleryResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp GalleryApplicationsClientListByGalleryResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.GalleryApplicationList.NextLink)
+		Fetcher: func(ctx context.Context, page *GalleryApplicationsClientListByGalleryResponse) (GalleryApplicationsClientListByGalleryResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByGalleryCreateRequest(ctx, resourceGroupName, galleryName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return GalleryApplicationsClientListByGalleryResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return GalleryApplicationsClientListByGalleryResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return GalleryApplicationsClientListByGalleryResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByGalleryHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByGalleryCreateRequest creates the ListByGallery request.
@@ -316,20 +324,16 @@ func (client *GalleryApplicationsClient) listByGalleryHandleResponse(resp *http.
 // galleryApplication - Parameters supplied to the update gallery Application operation.
 // options - GalleryApplicationsClientBeginUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginUpdate
 // method.
-func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsClientBeginUpdateOptions) (GalleryApplicationsClientUpdatePollerResponse, error) {
-	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
-	if err != nil {
-		return GalleryApplicationsClientUpdatePollerResponse{}, err
+func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsClientBeginUpdateOptions) (*armruntime.Poller[GalleryApplicationsClientUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[GalleryApplicationsClientUpdateResponse]("GalleryApplicationsClient.Update", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientUpdateResponse]("GalleryApplicationsClient.Update", options.ResumeToken, client.pl, nil)
 	}
-	result := GalleryApplicationsClientUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("GalleryApplicationsClient.Update", "", resp, client.pl)
-	if err != nil {
-		return GalleryApplicationsClientUpdatePollerResponse{}, err
-	}
-	result.Poller = &GalleryApplicationsClientUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Update - Update a gallery Application Definition.

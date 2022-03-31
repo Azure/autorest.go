@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -742,16 +742,32 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
 // method.
-func (client *containerClient) ListBlobFlatSegment(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *containerClientListBlobFlatSegmentPager {
-	return &containerClientListBlobFlatSegmentPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listBlobFlatSegmentCreateRequest(ctx, restype, comp, options)
+func (client *containerClient) ListBlobFlatSegment(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *runtime.Pager[containerClientListBlobFlatSegmentResponse] {
+	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobFlatSegmentResponse]{
+		More: func(page containerClientListBlobFlatSegmentResponse) bool {
+			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
-		advancer: func(ctx context.Context, resp containerClientListBlobFlatSegmentResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListBlobsFlatSegmentResponse.NextMarker)
+		Fetcher: func(ctx context.Context, page *containerClientListBlobFlatSegmentResponse) (containerClientListBlobFlatSegmentResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listBlobFlatSegmentCreateRequest(ctx, restype, comp, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			}
+			if err != nil {
+				return containerClientListBlobFlatSegmentResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return containerClientListBlobFlatSegmentResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return containerClientListBlobFlatSegmentResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listBlobFlatSegmentHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listBlobFlatSegmentCreateRequest creates the ListBlobFlatSegment request.
@@ -822,16 +838,32 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 // appearance of the delimiter character. The delimiter may be a single character or a string.
 // options - containerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
 // method.
-func (client *containerClient) ListBlobHierarchySegment(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *containerClientListBlobHierarchySegmentPager {
-	return &containerClientListBlobHierarchySegmentPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listBlobHierarchySegmentCreateRequest(ctx, restype, comp, delimiter, options)
+func (client *containerClient) ListBlobHierarchySegment(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *runtime.Pager[containerClientListBlobHierarchySegmentResponse] {
+	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobHierarchySegmentResponse]{
+		More: func(page containerClientListBlobHierarchySegmentResponse) bool {
+			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
-		advancer: func(ctx context.Context, resp containerClientListBlobHierarchySegmentResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListBlobsHierarchySegmentResponse.NextMarker)
+		Fetcher: func(ctx context.Context, page *containerClientListBlobHierarchySegmentResponse) (containerClientListBlobHierarchySegmentResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listBlobHierarchySegmentCreateRequest(ctx, restype, comp, delimiter, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
+			}
+			if err != nil {
+				return containerClientListBlobHierarchySegmentResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return containerClientListBlobHierarchySegmentResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return containerClientListBlobHierarchySegmentResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listBlobHierarchySegmentHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listBlobHierarchySegmentCreateRequest creates the ListBlobHierarchySegment request.

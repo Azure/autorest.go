@@ -270,7 +270,7 @@ func TestHeaderResponseDuration(t *testing.T) {
 	client := newHeaderClient()
 	result, err := client.ResponseDuration(context.Background(), "valid", nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.StringPtr("P123DT22H14M12.011S")); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr("P123DT22H14M12.011S")); r != "" {
 		t.Fatal(r)
 	}
 }

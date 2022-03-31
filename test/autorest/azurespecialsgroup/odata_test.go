@@ -19,9 +19,9 @@ func newODataClient() *ODataClient {
 func TestGetWithFilter(t *testing.T) {
 	client := newODataClient()
 	result, err := client.GetWithFilter(context.Background(), &ODataClientGetWithFilterOptions{
-		Filter:  to.StringPtr("id gt 5 and name eq 'foo'"),
-		Orderby: to.StringPtr("id"),
-		Top:     to.Int32Ptr(10),
+		Filter:  to.Ptr("id gt 5 and name eq 'foo'"),
+		Orderby: to.Ptr("id"),
+		Top:     to.Ptr[int32](10),
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)

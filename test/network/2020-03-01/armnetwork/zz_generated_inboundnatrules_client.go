@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 // inboundNatRuleParameters - Parameters supplied to the create or update inbound nat rule operation.
 // options - InboundNatRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRulesClient.BeginCreateOrUpdate
 // method.
-func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (InboundNatRulesClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
-	if err != nil {
-		return InboundNatRulesClientCreateOrUpdatePollerResponse{}, err
+func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[InboundNatRulesClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[InboundNatRulesClientCreateOrUpdateResponse]("InboundNatRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[InboundNatRulesClientCreateOrUpdateResponse]("InboundNatRulesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := InboundNatRulesClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("InboundNatRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return InboundNatRulesClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &InboundNatRulesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a load balancer inbound nat rule.
@@ -128,20 +124,16 @@ func (client *InboundNatRulesClient) createOrUpdateCreateRequest(ctx context.Con
 // inboundNatRuleName - The name of the inbound nat rule.
 // options - InboundNatRulesClientBeginDeleteOptions contains the optional parameters for the InboundNatRulesClient.BeginDelete
 // method.
-func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (InboundNatRulesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
-	if err != nil {
-		return InboundNatRulesClientDeletePollerResponse{}, err
+func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesClientBeginDeleteOptions) (*armruntime.Poller[InboundNatRulesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[InboundNatRulesClientDeleteResponse]("InboundNatRulesClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[InboundNatRulesClientDeleteResponse]("InboundNatRulesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := InboundNatRulesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("InboundNatRulesClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return InboundNatRulesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &InboundNatRulesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified load balancer inbound nat rule.
@@ -259,16 +251,32 @@ func (client *InboundNatRulesClient) getHandleResponse(resp *http.Response) (Inb
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - InboundNatRulesClientListOptions contains the optional parameters for the InboundNatRulesClient.List method.
-func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesClientListOptions) *InboundNatRulesClientListPager {
-	return &InboundNatRulesClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
+func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesClientListOptions) *runtime.Pager[InboundNatRulesClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[InboundNatRulesClientListResponse]{
+		More: func(page InboundNatRulesClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp InboundNatRulesClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.InboundNatRuleListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *InboundNatRulesClientListResponse) (InboundNatRulesClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return InboundNatRulesClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return InboundNatRulesClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return InboundNatRulesClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

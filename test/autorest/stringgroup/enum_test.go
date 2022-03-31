@@ -7,6 +7,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
@@ -19,7 +20,7 @@ func TestEnumGetNotExpandable(t *testing.T) {
 	client := newEnumClient()
 	result, err := client.GetNotExpandable(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, ColorsRedColor.ToPtr()); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr(ColorsRedColor)); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -28,7 +29,7 @@ func TestEnumGetReferenced(t *testing.T) {
 	client := newEnumClient()
 	result, err := client.GetReferenced(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, ColorsRedColor.ToPtr()); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr(ColorsRedColor)); r != "" {
 		t.Fatal(r)
 	}
 }

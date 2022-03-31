@@ -13,7 +13,7 @@ import (
 
 func newPathsClient() *PathsClient {
 	return NewPathsClient(&PathsClientOptions{
-		Host: to.StringPtr(":3000"),
+		Host: to.Ptr(":3000"),
 	})
 }
 

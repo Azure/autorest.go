@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -32,11 +32,6 @@ func PossibleEnum0Values() []Enum0 {
 	}
 }
 
-// ToPtr returns a *Enum0 pointing to the current value.
-func (c Enum0) ToPtr() *Enum0 {
-	return &c
-}
-
 type Enum1 string
 
 const (
@@ -54,11 +49,6 @@ func PossibleEnum1Values() []Enum1 {
 	}
 }
 
-// ToPtr returns a *Enum1 pointing to the current value.
-func (c Enum1) ToPtr() *Enum1 {
-	return &c
-}
-
 type FooEnum string
 
 const (
@@ -74,9 +64,4 @@ func PossibleFooEnumValues() []FooEnum {
 		FooEnumFoo2,
 		FooEnumFoo3,
 	}
-}
-
-// ToPtr returns a *FooEnum pointing to the current value.
-func (c FooEnum) ToPtr() *FooEnum {
-	return &c
 }

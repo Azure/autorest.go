@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -49,11 +49,6 @@ func PossibleOperationResultStatusValues() []OperationResultStatus {
 	}
 }
 
-// ToPtr returns a *OperationResultStatus pointing to the current value.
-func (c OperationResultStatus) ToPtr() *OperationResultStatus {
-	return &c
-}
-
 type ProductPropertiesProvisioningStateValues string
 
 const (
@@ -87,11 +82,6 @@ func PossibleProductPropertiesProvisioningStateValuesValues() []ProductPropertie
 	}
 }
 
-// ToPtr returns a *ProductPropertiesProvisioningStateValues pointing to the current value.
-func (c ProductPropertiesProvisioningStateValues) ToPtr() *ProductPropertiesProvisioningStateValues {
-	return &c
-}
-
 type SubProductPropertiesProvisioningStateValues string
 
 const (
@@ -123,9 +113,4 @@ func PossibleSubProductPropertiesProvisioningStateValuesValues() []SubProductPro
 		SubProductPropertiesProvisioningStateValuesUpdated,
 		SubProductPropertiesProvisioningStateValuesUpdating,
 	}
-}
-
-// ToPtr returns a *SubProductPropertiesProvisioningStateValues pointing to the current value.
-func (c SubProductPropertiesProvisioningStateValues) ToPtr() *SubProductPropertiesProvisioningStateValues {
-	return &c
 }

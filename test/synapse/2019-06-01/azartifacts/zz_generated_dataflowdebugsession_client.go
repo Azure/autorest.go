@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -79,20 +79,16 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.R
 // request - Data flow debug session definition
 // options - dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 // method.
-func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse, error) {
-	resp, err := client.createDataFlowDebugSession(ctx, request, options)
-	if err != nil {
-		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
+func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*runtime.Poller[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createDataFlowDebugSession(ctx, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse]("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse]("dataFlowDebugSessionClient.CreateDataFlowDebugSession", options.ResumeToken, client.pl, nil)
 	}
-	result := dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}
-	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl)
-	if err != nil {
-		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
-	}
-	result.Poller = &dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
@@ -165,20 +161,16 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 // request - Data flow debug command definition.
 // options - dataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginExecuteCommand
 // method.
-func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *dataFlowDebugSessionClientBeginExecuteCommandOptions) (dataFlowDebugSessionClientExecuteCommandPollerResponse, error) {
-	resp, err := client.executeCommand(ctx, request, options)
-	if err != nil {
-		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
+func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *dataFlowDebugSessionClientBeginExecuteCommandOptions) (*runtime.Poller[dataFlowDebugSessionClientExecuteCommandResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.executeCommand(ctx, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[dataFlowDebugSessionClientExecuteCommandResponse]("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[dataFlowDebugSessionClientExecuteCommandResponse]("dataFlowDebugSessionClient.ExecuteCommand", options.ResumeToken, client.pl, nil)
 	}
-	result := dataFlowDebugSessionClientExecuteCommandPollerResponse{}
-	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl)
-	if err != nil {
-		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
-	}
-	result.Poller = &dataFlowDebugSessionClientExecuteCommandPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // ExecuteCommand - Execute a data flow debug command.
@@ -216,16 +208,32 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 // dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace method.
-func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager {
-	return &dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx, options)
+func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *runtime.Pager[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse]{
+		More: func(page dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.QueryDataFlowDebugSessionsResponse.NextLink)
+		Fetcher: func(ctx context.Context, page *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) (dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // queryDataFlowDebugSessionsByWorkspaceCreateRequest creates the QueryDataFlowDebugSessionsByWorkspace request.

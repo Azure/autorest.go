@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewP2SVPNGatewaysClient(subscriptionID string, credential azcore.TokenCrede
 // p2SVPNGatewayParameters - Parameters supplied to create or Update a virtual wan p2s vpn gateway.
 // options - P2SVPNGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysClientBeginCreateOrUpdateOptions) (P2SVPNGatewaysClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
-	if err != nil {
-		return P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}, err
+func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysClientBeginCreateOrUpdateOptions) (*armruntime.Poller[P2SVPNGatewaysClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[P2SVPNGatewaysClientCreateOrUpdateResponse]("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientCreateOrUpdateResponse]("P2SVPNGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &P2SVPNGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
@@ -122,20 +118,16 @@ func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Cont
 // gatewayName - The name of the gateway.
 // options - P2SVPNGatewaysClientBeginDeleteOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginDelete
 // method.
-func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginDeleteOptions) (P2SVPNGatewaysClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
-	if err != nil {
-		return P2SVPNGatewaysClientDeletePollerResponse{}, err
+func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginDeleteOptions) (*armruntime.Poller[P2SVPNGatewaysClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[P2SVPNGatewaysClientDeleteResponse]("P2SVPNGatewaysClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientDeleteResponse]("P2SVPNGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := P2SVPNGatewaysClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return P2SVPNGatewaysClientDeletePollerResponse{}, err
-	}
-	result.Poller = &P2SVPNGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes a virtual wan p2s vpn gateway.
@@ -189,20 +181,16 @@ func (client *P2SVPNGatewaysClient) deleteCreateRequest(ctx context.Context, res
 // request - The parameters are supplied to disconnect p2s vpn connections.
 // options - P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections
 // method.
-func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions) (P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse, error) {
-	resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
-	if err != nil {
-		return P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}, err
+func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions) (*armruntime.Poller[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse]("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse]("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", options.ResumeToken, client.pl, nil)
 	}
-	result := P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.pl)
-	if err != nil {
-		return P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}, err
-	}
-	result.Poller = &P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // DisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
@@ -256,20 +244,16 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx
 // parameters - Parameters supplied to the generate P2SVpnGateway VPN client package operation.
 // options - P2SVPNGatewaysClientBeginGenerateVPNProfileOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGenerateVPNProfile
 // method.
-func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysClientBeginGenerateVPNProfileOptions) (P2SVPNGatewaysClientGenerateVPNProfilePollerResponse, error) {
-	resp, err := client.generateVPNProfile(ctx, resourceGroupName, gatewayName, parameters, options)
-	if err != nil {
-		return P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}, err
+func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysClientBeginGenerateVPNProfileOptions) (*armruntime.Poller[P2SVPNGatewaysClientGenerateVPNProfileResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.generateVPNProfile(ctx, resourceGroupName, gatewayName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[P2SVPNGatewaysClientGenerateVPNProfileResponse]("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGenerateVPNProfileResponse]("P2SVPNGatewaysClient.GenerateVPNProfile", options.ResumeToken, client.pl, nil)
 	}
-	result := P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.pl)
-	if err != nil {
-		return P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}, err
-	}
-	result.Poller = &P2SVPNGatewaysClientGenerateVPNProfilePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // GenerateVPNProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
@@ -377,20 +361,16 @@ func (client *P2SVPNGatewaysClient) getHandleResponse(resp *http.Response) (P2SV
 // gatewayName - The name of the P2SVpnGateway.
 // options - P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth
 // method.
-func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions) (P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse, error) {
-	resp, err := client.getP2SVPNConnectionHealth(ctx, resourceGroupName, gatewayName, options)
-	if err != nil {
-		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}, err
+func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions) (*armruntime.Poller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.getP2SVPNConnectionHealth(ctx, resourceGroupName, gatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", options.ResumeToken, client.pl, nil)
 	}
-	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.pl)
-	if err != nil {
-		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}, err
-	}
-	result.Poller = &P2SVPNGatewaysClientGetP2SVPNConnectionHealthPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // GetP2SVPNConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
@@ -445,20 +425,16 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthCreateRequest(ctx c
 // request - Request parameters supplied to get p2s vpn connections detailed health.
 // options - P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthDetailedOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed
 // method.
-func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthDetailedOptions) (P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse, error) {
-	resp, err := client.getP2SVPNConnectionHealthDetailed(ctx, resourceGroupName, gatewayName, request, options)
-	if err != nil {
-		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
+func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthDetailedOptions) (*armruntime.Poller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.getP2SVPNConnectionHealthDetailed(ctx, resourceGroupName, gatewayName, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", options.ResumeToken, client.pl, nil)
 	}
-	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.pl)
-	if err != nil {
-		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
-	}
-	result.Poller = &P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // GetP2SVPNConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
@@ -508,16 +484,32 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedCreateReque
 // List - Lists all the P2SVpnGateways in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - P2SVPNGatewaysClientListOptions contains the optional parameters for the P2SVPNGatewaysClient.List method.
-func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysClientListOptions) *P2SVPNGatewaysClientListPager {
-	return &P2SVPNGatewaysClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysClientListOptions) *runtime.Pager[P2SVPNGatewaysClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[P2SVPNGatewaysClientListResponse]{
+		More: func(page P2SVPNGatewaysClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp P2SVPNGatewaysClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListP2SVPNGatewaysResult.NextLink)
+		Fetcher: func(ctx context.Context, page *P2SVPNGatewaysClientListResponse) (P2SVPNGatewaysClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return P2SVPNGatewaysClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return P2SVPNGatewaysClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return P2SVPNGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -552,16 +544,32 @@ func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2S
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // options - P2SVPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.ListByResourceGroup
 // method.
-func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysClientListByResourceGroupOptions) *P2SVPNGatewaysClientListByResourceGroupPager {
-	return &P2SVPNGatewaysClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysClientListByResourceGroupOptions) *runtime.Pager[P2SVPNGatewaysClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[P2SVPNGatewaysClientListByResourceGroupResponse]{
+		More: func(page P2SVPNGatewaysClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp P2SVPNGatewaysClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListP2SVPNGatewaysResult.NextLink)
+		Fetcher: func(ctx context.Context, page *P2SVPNGatewaysClientListByResourceGroupResponse) (P2SVPNGatewaysClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return P2SVPNGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

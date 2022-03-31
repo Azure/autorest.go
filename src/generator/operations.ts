@@ -7,9 +7,9 @@ import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, emitPoller, formatParameterTypeName, formatStatusCodes, formatValue, getFinalResponseEnvelopeName, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -341,11 +341,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         // generate Begin method
         opText += generateLROBeginMethod(op, imports, isARM);
       }
-      opText += generateOperation(op, imports);
+      opText += generateOperation(op, imports, isARM);
       opText += createProtocolRequest(group, op, imports);
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
-        opText += createProtocolResponse(op, imports);
+        opText += createProtocolResponse(op, imports, isARM);
       }
     }
 
@@ -486,11 +486,12 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
 function getZeroReturnValue(op: Operation, apiType: 'api' | 'op' | 'handler'): string {
   let returnType = `${getResponseEnvelopeName(op)}{}`;
   if (isLROOperation(op)) {
-    if (apiType === 'op') {
+    if (apiType === 'api' || apiType === 'op') {
+      // the api returns a *Poller[T]
       // the operation returns an *http.Response
       returnType = 'nil';
     } else if (apiType === 'handler' && isPageableOperation(op)) {
-      returnType = `${getFinalResponseEnvelopeName(op)}{}`;
+      returnType = `${getResponseEnvelopeName(op)}{}`;
     }
   }
   return returnType
@@ -507,14 +508,80 @@ function responseHasHeaders(op: Operation): boolean {
   return false;
 }
 
-function generateOperation(op: Operation, imports: ImportManager): string {
+function emitPagerDefinition(op: Operation, imports: ImportManager): string {
+  const info = <OperationNaming>op.language.go!;
+  const nextLink = op.language.go!.paging.nextLinkName;
+  imports.add('context');
+  let text = `runtime.NewPager(runtime.PageProcessor[${getResponseEnvelopeName(op)}]{\n`;
+  text += `\t\tMore: func(page ${getResponseEnvelopeName(op)}) bool {\n`;
+  // there is no advancer for single-page pagers
+  if (op.language.go!.paging.nextLinkName) {
+    text += `\t\t\treturn page.${nextLink} != nil && len(*page.${nextLink}) > 0\n`;
+    text += '\t\t},\n';
+  } else {
+    text += `\t\t\treturn false\n`;
+    text += '\t\t},\n';
+  }
+  text += `\t\tFetcher: func(ctx context.Context, page *${getResponseEnvelopeName(op)}) (${getResponseEnvelopeName(op)}, error) {\n`;
+  const reqParams = getCreateRequestParameters(op);
+  if (op.language.go!.paging.nextLinkName) {
+    const isLRO = isLROOperation(op);
+    const defineOrAssign = isLRO ? ':=' : '=';
+    if (!isLRO) {
+      text += '\t\t\tvar req *policy.Request\n';
+      text += '\t\t\tvar err error\n';
+      text += '\t\t\tif page == nil {\n';
+      text += `\t\t\t\treq, err = client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
+      text += '\t\t\t} else {\n';
+    }
+    // nextLinkOperation might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
+    if (op.language.go!.paging.nextLinkOperation) {
+      const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
+      // keep the parameter names from the name/type tuples and find nextLink param
+      for (let i = 0; i < nextOpParams.length; ++i) {
+        const paramName = nextOpParams[i].trim().split(' ')[0];
+        const paramType = nextOpParams[i].trim().split(' ')[1];
+        if (paramName.startsWith('next') && paramType === 'string') {
+          nextOpParams[i] = `*page.${nextLink}`;
+        } else {
+          nextOpParams[i] = paramName;
+        }
+      }
+      text += `\t\t\t\treq, err ${defineOrAssign} client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
+    } else {
+      text += `\t\t\t\treq, err ${defineOrAssign} runtime.NewRequest(ctx, http.MethodGet, *page.${nextLink})\n`;
+    }
+    if (!isLRO) {
+      text += '\t\t\t}\n';
+    }
+  } else {
+    // this is the singular page case
+    text += `\t\t\treq, err := client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
+  }
+  text += '\t\t\tif err != nil {\n';
+  text += `\t\t\t\treturn ${getResponseEnvelopeName(op)}{}, err\n`;
+  text += '\t\t\t}\n';
+  text += '\t\t\tresp, err := client.pl.Do(req)\n';
+  text += '\t\t\tif err != nil {\n';
+  text += `\t\t\t\treturn ${getResponseEnvelopeName(op)}{}, err\n`;
+  text += '\t\t\t}\n';
+  text += '\t\t\tif !runtime.HasStatusCode(resp, http.StatusOK) {\n';
+  text += `\t\t\t\treturn ${getResponseEnvelopeName(op)}{}, runtime.NewResponseError(resp)\n`;
+  text += '\t\t\t}\n';
+  text += `\t\t\treturn client.${info.protocolNaming.responseMethod}(resp)\n`;
+  text += '\t\t},\n';
+  text += `\t})\n`;
+  return text;
+}
+
+function generateOperation(op: Operation, imports: ImportManager, isARM: boolean): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
   }
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = generateReturnsInfo(op, 'op');
+  const returns = generateReturnsInfo(op, 'op', isARM);
   const clientName = op.language.go!.clientName;
   let text = '';
   if (hasDescription(op.language.go!)) {
@@ -535,37 +602,8 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   const reqParams = getCreateRequestParameters(op);
   const statusCodes = getStatusCodes(op);
   if (isPageableOperation(op) && !isLROOperation(op)) {
-    imports.add('context');
-    text += `\treturn &${(<PagerInfo>op.language.go!.pageableType).name}{\n`;
-    text += `\t\tclient: client,\n`;
-    text += `\t\trequester: func(ctx context.Context) (*policy.Request, error) {\n`;
-    text += `\t\t\treturn client.${info.protocolNaming.requestMethod}(${reqParams})\n`;
-    text += '\t\t},\n';
-    // there is no advancer for single-page pagers
-    if (op.language.go!.paging.nextLinkName) {
-      text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*policy.Request, error) {\n`;
-      const nextLink = op.language.go!.paging.nextLinkName;
-      const response = getResultFieldName(op);
-      // nextLinkOperation might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
-      if (op.language.go!.paging.nextLinkOperation) {
-        const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
-        // keep the parameter names from the name/type tuples and find nextLink param
-        for (let i = 0; i < nextOpParams.length; ++i) {
-          const paramName = nextOpParams[i].trim().split(' ')[0];
-          const paramType = nextOpParams[i].trim().split(' ')[1];
-          if (paramName.startsWith('next') && paramType === 'string') {
-            nextOpParams[i] = `*resp.${response}.${nextLink}`;
-          } else {
-            nextOpParams[i] = paramName;
-          }
-        }
-        text += `\t\t\treturn client.${op.language.go!.paging.member}CreateRequest(${nextOpParams.join(', ')})\n`;
-      } else {
-        text += `\t\t\treturn runtime.NewRequest(ctx, http.MethodGet, *resp.${response}.${nextLink})\n`;
-      }
-      text += '\t\t},\n';
-    }
-    text += `\t}\n`;
+    text += '\treturn ';
+    text += emitPagerDefinition(op, imports);
     text += '}\n\n';
     return text;
   }
@@ -1047,7 +1085,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   return unmarshallerText;
 }
 
-function createProtocolResponse(op: Operation, imports: ImportManager): string {
+function createProtocolResponse(op: Operation, imports: ImportManager, isARM: boolean): string {
   if (!needsResponseHandler(op)) {
     return '';
   }
@@ -1055,7 +1093,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(op, 'handler', isARM).join(', ')}) {\n`;
   const addHeaders = function (props?: Property[]) {
     const headerVals = new Array<Property>();
     for (const prop of values(props)) {
@@ -1068,10 +1106,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     }
   }
   if (!isMultiRespOperation(op)) {
-    let respEnvName = getResponseEnvelopeName(op);
-    if (isLROOperation(op)) {
-      respEnvName = getFinalResponseEnvelopeName(op);
-    }
+    const respEnvName = getResponseEnvelopeName(op);
     text += `\tresult := ${respEnvName}{`;
     if (isBinaryResponseOperation(op)) {
       text += 'Body: resp.Body';
@@ -1219,15 +1254,24 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 //   api - for the API definition
 //    op - for the operation
 // handler - for the response handler
-function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
+function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler', isARM: boolean): string[] {
   let returnType = getResponseEnvelopeName(op);
   if (isLROOperation(op)) {
     switch (apiType) {
+      case 'api':
+        // this should go away once we can type alias a generic type
+        const packageName = isARM ? 'armruntime' : 'runtime';
+        if (isPageableOperation(op)) {
+          returnType = `*${packageName}.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
+        } else {
+          returnType = `*${packageName}.Poller[${getResponseEnvelopeName(op)}]`;
+        }
+        break;
       case 'handler':
         // we only have a handler for operations that return a schema
         if (isPageableOperation(op)) {
           // we need to consult the final response type name
-          returnType = getFinalResponseEnvelopeName(op);
+          returnType = getResponseEnvelopeName(op);
         } else {
           throw new Error(`handler being generated for non-pageable LRO ${op.language.go!.name} which is unexpected`);
         }
@@ -1241,7 +1285,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
       case 'api':
       case 'op':
         // pager operations don't return an error
-        return [`*${(<PagerInfo>op.language.go!.pageableType).name}`];
+        return [`*runtime.Pager[${returnType}]`];
     }
   }
   return [returnType, 'error'];
@@ -1250,7 +1294,7 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): 
 function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: boolean): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = generateReturnsInfo(op, 'api');
+  const returns = generateReturnsInfo(op, 'api', isARM);
   const clientName = op.language.go!.clientName;
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
@@ -1267,13 +1311,23 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     }
   }
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
+  let pollerType = 'nil';
+  let pollerTypeParam = `[${getResponseEnvelopeName(op)}]`;
+  if (isPageableOperation(op)) {
+    // pager doesn't neet it as the type is inferred from the pager param
+    pollerTypeParam = '';
+    pollerType = '&pager';
+    text += '\tpager := ';
+    text += emitPagerDefinition(op, imports);
+  }
+  const packageName = isARM ? 'armruntime' : 'runtime';
+  text += '\tif options == nil || options.ResumeToken == "" {\n';
   let opName = op.language.go!.name;
   opName = info.protocolNaming.internalMethod;
-  text += `\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
-  text += `\tif err != nil {\n`;
-  text += `\t\treturn ${zeroResp}, err\n`;
-  text += `\t}\n`;
-  text += `\tresult := ${getResponseEnvelopeName(op)}{}\n`;
+  text += `\t\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
+  text += `\t\tif err != nil {\n`;
+  text += `\t\t\treturn ${zeroResp}, err\n`;
+  text += `\t\t}\n`;
   if (isARM) {
     // LRO operation might have a special configuration set in x-ms-long-running-operation-options
     // which indicates a specific url to perform the final Get operation on
@@ -1281,17 +1335,14 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    text += `\tpt, err := armruntime.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.pl)\n`;
+    text += `\t\treturn ${packageName}.NewPoller${pollerTypeParam}("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.pl, ${pollerType})\n`;
   } else {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    text += `\tpt, err := runtime.NewPoller("${clientName}.${op.language.go!.name}",resp, client.pl)\n`;
+    text += `\t\treturn runtime.NewPoller${pollerTypeParam}("${clientName}.${op.language.go!.name}", resp, client.pl, ${pollerType})\n`;
   }
-  text += '\tif err != nil {\n';
-  text += `\t\treturn ${zeroResp}, err\n`;
+  text += '\t} else {\n';
+  text += `\t\treturn ${packageName}.NewPollerFromResumeToken${pollerTypeParam}("${clientName}.${op.language.go!.name}", options.ResumeToken, client.pl, ${pollerType})\n`;
   text += '\t}\n';
-  text += `\tresult.Poller = ${emitPoller(op)}`;
-  text += `\treturn result, nil\n`;
-  // closing braces
   text += '}\n\n';
   return text;
 }

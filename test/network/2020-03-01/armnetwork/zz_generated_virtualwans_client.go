@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredenti
 // wanParameters - Parameters supplied to create or update VirtualWAN.
 // options - VirtualWansClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWansClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (VirtualWansClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
-	if err != nil {
-		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
+func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualWansClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualWansClientCreateOrUpdateResponse]("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualWansClientCreateOrUpdateResponse]("VirtualWansClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualWansClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualWansClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
@@ -121,20 +117,16 @@ func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being deleted.
 // options - VirtualWansClientBeginDeleteOptions contains the optional parameters for the VirtualWansClient.BeginDelete method.
-func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (VirtualWansClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
-	if err != nil {
-		return VirtualWansClientDeletePollerResponse{}, err
+func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (*armruntime.Poller[VirtualWansClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualWansClientDeleteResponse]("VirtualWansClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualWansClientDeleteResponse]("VirtualWansClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualWansClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualWansClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return VirtualWansClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VirtualWansClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes a VirtualWAN.
@@ -238,16 +230,32 @@ func (client *VirtualWansClient) getHandleResponse(resp *http.Response) (Virtual
 // List - Lists all the VirtualWANs in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualWansClientListOptions contains the optional parameters for the VirtualWansClient.List method.
-func (client *VirtualWansClient) List(options *VirtualWansClientListOptions) *VirtualWansClientListPager {
-	return &VirtualWansClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *VirtualWansClient) List(options *VirtualWansClientListOptions) *runtime.Pager[VirtualWansClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualWansClientListResponse]{
+		More: func(page VirtualWansClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualWansClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWANsResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualWansClientListResponse) (VirtualWansClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualWansClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualWansClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualWansClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -282,16 +290,32 @@ func (client *VirtualWansClient) listHandleResponse(resp *http.Response) (Virtua
 // resourceGroupName - The resource group name of the VirtualWan.
 // options - VirtualWansClientListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.ListByResourceGroup
 // method.
-func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansClientListByResourceGroupOptions) *VirtualWansClientListByResourceGroupPager {
-	return &VirtualWansClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansClientListByResourceGroupOptions) *runtime.Pager[VirtualWansClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualWansClientListByResourceGroupResponse]{
+		More: func(page VirtualWansClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualWansClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWANsResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualWansClientListByResourceGroupResponse) (VirtualWansClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualWansClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualWansClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualWansClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

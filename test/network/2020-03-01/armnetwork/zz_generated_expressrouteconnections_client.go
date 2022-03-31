@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewExpressRouteConnectionsClient(subscriptionID string, credential azcore.T
 // putExpressRouteConnectionParameters - Parameters required in an ExpressRouteConnection PUT operation.
 // options - ExpressRouteConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnectionsClient.BeginCreateOrUpdate
 // method.
-func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsClientBeginCreateOrUpdateOptions) (ExpressRouteConnectionsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
-	if err != nil {
-		return ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}, err
+func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ExpressRouteConnectionsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteConnectionsClientCreateOrUpdateResponse]("ExpressRouteConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteConnectionsClientCreateOrUpdateResponse]("ExpressRouteConnectionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return ExpressRouteConnectionsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteConnectionsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
@@ -128,20 +124,16 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateCreateRequest(ctx con
 // connectionName - The name of the connection subresource.
 // options - ExpressRouteConnectionsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteConnectionsClient.BeginDelete
 // method.
-func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsClientBeginDeleteOptions) (ExpressRouteConnectionsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
-	if err != nil {
-		return ExpressRouteConnectionsClientDeletePollerResponse{}, err
+func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsClientBeginDeleteOptions) (*armruntime.Poller[ExpressRouteConnectionsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ExpressRouteConnectionsClientDeleteResponse]("ExpressRouteConnectionsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ExpressRouteConnectionsClientDeleteResponse]("ExpressRouteConnectionsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := ExpressRouteConnectionsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("ExpressRouteConnectionsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return ExpressRouteConnectionsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &ExpressRouteConnectionsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes a connection to a ExpressRoute circuit.

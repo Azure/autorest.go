@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -37,11 +37,6 @@ func PossibleFloatEnumValues() []FloatEnum {
 	}
 }
 
-// ToPtr returns a *FloatEnum pointing to the current value.
-func (c FloatEnum) ToPtr() *FloatEnum {
-	return &c
-}
-
 // IntEnum - List of integer enums
 type IntEnum int32
 
@@ -62,9 +57,4 @@ func PossibleIntEnumValues() []IntEnum {
 		IntEnumFourHundredTwentyNine,
 		IntEnumTwoHundred,
 	}
-}
-
-// ToPtr returns a *IntEnum pointing to the current value.
-func (c IntEnum) ToPtr() *IntEnum {
-	return &c
 }

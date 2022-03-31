@@ -21,7 +21,7 @@ func TestCustomNamedRequestID(t *testing.T) {
 	client := newHeaderClient()
 	result, err := client.CustomNamedRequestID(context.Background(), "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0", nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.FooRequestID, to.StringPtr("123")); r != "" {
+	if r := cmp.Diff(result.FooRequestID, to.Ptr("123")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -34,7 +34,7 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 	if !result.Success {
 		t.Fatal("expected success")
 	}
-	if r := cmp.Diff(result.FooRequestID, to.StringPtr("123")); r != "" {
+	if r := cmp.Diff(result.FooRequestID, to.Ptr("123")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -46,7 +46,7 @@ func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
 		FooClientRequestID: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
 	}, nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.FooRequestID, to.StringPtr("123")); r != "" {
+	if r := cmp.Diff(result.FooRequestID, to.Ptr("123")); r != "" {
 		t.Fatal(r)
 	}
 }

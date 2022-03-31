@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCr
 // parameters - Parameters supplied to the create or update Network Virtual Appliance.
 // options - VirtualAppliancesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (VirtualAppliancesClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
-	if err != nil {
-		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
+func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualAppliancesClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualAppliancesClientCreateOrUpdateResponse]("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualAppliancesClientCreateOrUpdateResponse]("VirtualAppliancesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualAppliancesClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualAppliancesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
@@ -122,20 +118,16 @@ func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.C
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
 // method.
-func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (VirtualAppliancesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
-	if err != nil {
-		return VirtualAppliancesClientDeletePollerResponse{}, err
+func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*armruntime.Poller[VirtualAppliancesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualAppliancesClientDeleteResponse]("VirtualAppliancesClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualAppliancesClientDeleteResponse]("VirtualAppliancesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualAppliancesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualAppliancesClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return VirtualAppliancesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VirtualAppliancesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified Network Virtual Appliance.
@@ -242,16 +234,32 @@ func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (V
 // List - Gets all Network Virtual Appliances in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
-func (client *VirtualAppliancesClient) List(options *VirtualAppliancesClientListOptions) *VirtualAppliancesClientListPager {
-	return &VirtualAppliancesClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *VirtualAppliancesClient) List(options *VirtualAppliancesClientListOptions) *runtime.Pager[VirtualAppliancesClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualAppliancesClientListResponse]{
+		More: func(page VirtualAppliancesClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualAppliancesClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualApplianceListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualAppliancesClientListResponse) (VirtualAppliancesClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualAppliancesClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualAppliancesClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualAppliancesClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -286,16 +294,32 @@ func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (
 // resourceGroupName - The name of the resource group.
 // options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
 // method.
-func (client *VirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *VirtualAppliancesClientListByResourceGroupOptions) *VirtualAppliancesClientListByResourceGroupPager {
-	return &VirtualAppliancesClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *VirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *VirtualAppliancesClientListByResourceGroupOptions) *runtime.Pager[VirtualAppliancesClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualAppliancesClientListByResourceGroupResponse]{
+		More: func(page VirtualAppliancesClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualAppliancesClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualApplianceListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualAppliancesClientListByResourceGroupResponse) (VirtualAppliancesClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualAppliancesClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualAppliancesClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualAppliancesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

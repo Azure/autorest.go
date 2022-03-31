@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -30,11 +30,6 @@ func PossibleAccessLevelValues() []AccessLevel {
 	}
 }
 
-// ToPtr returns a *AccessLevel pointing to the current value.
-func (c AccessLevel) ToPtr() *AccessLevel {
-	return &c
-}
-
 // AggregatedReplicationState - This is the aggregated replication status based on all the regional replication status flags.
 type AggregatedReplicationState string
 
@@ -55,11 +50,6 @@ func PossibleAggregatedReplicationStateValues() []AggregatedReplicationState {
 	}
 }
 
-// ToPtr returns a *AggregatedReplicationState pointing to the current value.
-func (c AggregatedReplicationState) ToPtr() *AggregatedReplicationState {
-	return &c
-}
-
 // AvailabilitySetSKUTypes - Specifies the sku of an Availability Set. Use 'Aligned' for virtual machines with managed disks
 // and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'.
 type AvailabilitySetSKUTypes string
@@ -75,11 +65,6 @@ func PossibleAvailabilitySetSKUTypesValues() []AvailabilitySetSKUTypes {
 		AvailabilitySetSKUTypesAligned,
 		AvailabilitySetSKUTypesClassic,
 	}
-}
-
-// ToPtr returns a *AvailabilitySetSKUTypes pointing to the current value.
-func (c AvailabilitySetSKUTypes) ToPtr() *AvailabilitySetSKUTypes {
-	return &c
 }
 
 // CachingTypes - Specifies the caching requirements.
@@ -105,11 +90,6 @@ func PossibleCachingTypesValues() []CachingTypes {
 	}
 }
 
-// ToPtr returns a *CachingTypes pointing to the current value.
-func (c CachingTypes) ToPtr() *CachingTypes {
-	return &c
-}
-
 // ContainerServiceMasterProfileCount - Number of masters (VMs) in the container service cluster. Allowed values are 1, 3,
 // and 5. The default value is 1.
 type ContainerServiceMasterProfileCount int32
@@ -127,11 +107,6 @@ func PossibleContainerServiceMasterProfileCountValues() []ContainerServiceMaster
 		ContainerServiceMasterProfileCountOne,
 		ContainerServiceMasterProfileCountThree,
 	}
-}
-
-// ToPtr returns a *ContainerServiceMasterProfileCount pointing to the current value.
-func (c ContainerServiceMasterProfileCount) ToPtr() *ContainerServiceMasterProfileCount {
-	return &c
 }
 
 // ContainerServiceOrchestratorTypes - The orchestrator to use to manage container service cluster resources. Valid values
@@ -153,11 +128,6 @@ func PossibleContainerServiceOrchestratorTypesValues() []ContainerServiceOrchest
 		ContainerServiceOrchestratorTypesCustom,
 		ContainerServiceOrchestratorTypesKubernetes,
 	}
-}
-
-// ToPtr returns a *ContainerServiceOrchestratorTypes pointing to the current value.
-func (c ContainerServiceOrchestratorTypes) ToPtr() *ContainerServiceOrchestratorTypes {
-	return &c
 }
 
 // ContainerServiceVMSizeTypes - Size of agent VMs.
@@ -266,11 +236,6 @@ func PossibleContainerServiceVMSizeTypesValues() []ContainerServiceVMSizeTypes {
 	}
 }
 
-// ToPtr returns a *ContainerServiceVMSizeTypes pointing to the current value.
-func (c ContainerServiceVMSizeTypes) ToPtr() *ContainerServiceVMSizeTypes {
-	return &c
-}
-
 // DedicatedHostLicenseTypes - Specifies the software license type that will be applied to the VMs deployed on the dedicated
 // host.
 // Possible values are:
@@ -295,11 +260,6 @@ func PossibleDedicatedHostLicenseTypesValues() []DedicatedHostLicenseTypes {
 	}
 }
 
-// ToPtr returns a *DedicatedHostLicenseTypes pointing to the current value.
-func (c DedicatedHostLicenseTypes) ToPtr() *DedicatedHostLicenseTypes {
-	return &c
-}
-
 // DiffDiskOptions - Specifies the ephemeral disk option for operating system disk.
 type DiffDiskOptions string
 
@@ -312,11 +272,6 @@ func PossibleDiffDiskOptionsValues() []DiffDiskOptions {
 	return []DiffDiskOptions{
 		DiffDiskOptionsLocal,
 	}
-}
-
-// ToPtr returns a *DiffDiskOptions pointing to the current value.
-func (c DiffDiskOptions) ToPtr() *DiffDiskOptions {
-	return &c
 }
 
 // DiffDiskPlacement - Specifies the ephemeral disk placement for operating system disk. This property can be used by user
@@ -338,11 +293,6 @@ func PossibleDiffDiskPlacementValues() []DiffDiskPlacement {
 		DiffDiskPlacementCacheDisk,
 		DiffDiskPlacementResourceDisk,
 	}
-}
-
-// ToPtr returns a *DiffDiskPlacement pointing to the current value.
-func (c DiffDiskPlacement) ToPtr() *DiffDiskPlacement {
-	return &c
 }
 
 // DiskCreateOption - This enumerates the possible sources of a disk's creation.
@@ -380,11 +330,6 @@ func PossibleDiskCreateOptionValues() []DiskCreateOption {
 	}
 }
 
-// ToPtr returns a *DiskCreateOption pointing to the current value.
-func (c DiskCreateOption) ToPtr() *DiskCreateOption {
-	return &c
-}
-
 // DiskCreateOptionTypes - Specifies how the virtual machine should be created.
 // Possible values are:
 // Attach \u2013 This value is used when you are using a specialized disk to create the virtual machine.
@@ -408,11 +353,6 @@ func PossibleDiskCreateOptionTypesValues() []DiskCreateOptionTypes {
 	}
 }
 
-// ToPtr returns a *DiskCreateOptionTypes pointing to the current value.
-func (c DiskCreateOptionTypes) ToPtr() *DiskCreateOptionTypes {
-	return &c
-}
-
 // DiskEncryptionSetIdentityType - The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported.
 type DiskEncryptionSetIdentityType string
 
@@ -425,11 +365,6 @@ func PossibleDiskEncryptionSetIdentityTypeValues() []DiskEncryptionSetIdentityTy
 	return []DiskEncryptionSetIdentityType{
 		DiskEncryptionSetIdentityTypeSystemAssigned,
 	}
-}
-
-// ToPtr returns a *DiskEncryptionSetIdentityType pointing to the current value.
-func (c DiskEncryptionSetIdentityType) ToPtr() *DiskEncryptionSetIdentityType {
-	return &c
 }
 
 // DiskState - The state of the disk.
@@ -462,11 +397,6 @@ func PossibleDiskStateValues() []DiskState {
 	}
 }
 
-// ToPtr returns a *DiskState pointing to the current value.
-func (c DiskState) ToPtr() *DiskState {
-	return &c
-}
-
 // DiskStorageAccountTypes - The sku name.
 type DiskStorageAccountTypes string
 
@@ -495,11 +425,6 @@ func PossibleDiskStorageAccountTypesValues() []DiskStorageAccountTypes {
 	}
 }
 
-// ToPtr returns a *DiskStorageAccountTypes pointing to the current value.
-func (c DiskStorageAccountTypes) ToPtr() *DiskStorageAccountTypes {
-	return &c
-}
-
 // EncryptionType - The type of key used to encrypt the data of the disk.
 type EncryptionType string
 
@@ -517,11 +442,6 @@ func PossibleEncryptionTypeValues() []EncryptionType {
 		EncryptionTypeEncryptionAtRestWithCustomerKey,
 		EncryptionTypeEncryptionAtRestWithPlatformKey,
 	}
-}
-
-// ToPtr returns a *EncryptionType pointing to the current value.
-func (c EncryptionType) ToPtr() *EncryptionType {
-	return &c
 }
 
 // GalleryApplicationVersionPropertiesProvisioningState - The provisioning state, which only appears in the response.
@@ -548,11 +468,6 @@ func PossibleGalleryApplicationVersionPropertiesProvisioningStateValues() []Gall
 	}
 }
 
-// ToPtr returns a *GalleryApplicationVersionPropertiesProvisioningState pointing to the current value.
-func (c GalleryApplicationVersionPropertiesProvisioningState) ToPtr() *GalleryApplicationVersionPropertiesProvisioningState {
-	return &c
-}
-
 // GalleryImagePropertiesProvisioningState - The provisioning state, which only appears in the response.
 type GalleryImagePropertiesProvisioningState string
 
@@ -575,11 +490,6 @@ func PossibleGalleryImagePropertiesProvisioningStateValues() []GalleryImagePrope
 		GalleryImagePropertiesProvisioningStateSucceeded,
 		GalleryImagePropertiesProvisioningStateUpdating,
 	}
-}
-
-// ToPtr returns a *GalleryImagePropertiesProvisioningState pointing to the current value.
-func (c GalleryImagePropertiesProvisioningState) ToPtr() *GalleryImagePropertiesProvisioningState {
-	return &c
 }
 
 // GalleryImageVersionPropertiesProvisioningState - The provisioning state, which only appears in the response.
@@ -606,11 +516,6 @@ func PossibleGalleryImageVersionPropertiesProvisioningStateValues() []GalleryIma
 	}
 }
 
-// ToPtr returns a *GalleryImageVersionPropertiesProvisioningState pointing to the current value.
-func (c GalleryImageVersionPropertiesProvisioningState) ToPtr() *GalleryImageVersionPropertiesProvisioningState {
-	return &c
-}
-
 // GalleryPropertiesProvisioningState - The provisioning state, which only appears in the response.
 type GalleryPropertiesProvisioningState string
 
@@ -635,11 +540,6 @@ func PossibleGalleryPropertiesProvisioningStateValues() []GalleryPropertiesProvi
 	}
 }
 
-// ToPtr returns a *GalleryPropertiesProvisioningState pointing to the current value.
-func (c GalleryPropertiesProvisioningState) ToPtr() *GalleryPropertiesProvisioningState {
-	return &c
-}
-
 // HostCaching - The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'
 type HostCaching string
 
@@ -658,11 +558,6 @@ func PossibleHostCachingValues() []HostCaching {
 	}
 }
 
-// ToPtr returns a *HostCaching pointing to the current value.
-func (c HostCaching) ToPtr() *HostCaching {
-	return &c
-}
-
 // HyperVGeneration - The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
 type HyperVGeneration string
 
@@ -677,11 +572,6 @@ func PossibleHyperVGenerationValues() []HyperVGeneration {
 		HyperVGenerationV1,
 		HyperVGenerationV2,
 	}
-}
-
-// ToPtr returns a *HyperVGeneration pointing to the current value.
-func (c HyperVGeneration) ToPtr() *HyperVGeneration {
-	return &c
 }
 
 // HyperVGenerationType - Specifies the HyperVGeneration Type associated with a resource
@@ -700,11 +590,6 @@ func PossibleHyperVGenerationTypeValues() []HyperVGenerationType {
 	}
 }
 
-// ToPtr returns a *HyperVGenerationType pointing to the current value.
-func (c HyperVGenerationType) ToPtr() *HyperVGenerationType {
-	return &c
-}
-
 // HyperVGenerationTypes - Specifies the HyperVGeneration Type
 type HyperVGenerationTypes string
 
@@ -719,11 +604,6 @@ func PossibleHyperVGenerationTypesValues() []HyperVGenerationTypes {
 		HyperVGenerationTypesV1,
 		HyperVGenerationTypesV2,
 	}
-}
-
-// ToPtr returns a *HyperVGenerationTypes pointing to the current value.
-func (c HyperVGenerationTypes) ToPtr() *HyperVGenerationTypes {
-	return &c
 }
 
 // IPVersion - Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or
@@ -741,11 +621,6 @@ func PossibleIPVersionValues() []IPVersion {
 		IPVersionIPv4,
 		IPVersionIPv6,
 	}
-}
-
-// ToPtr returns a *IPVersion pointing to the current value.
-func (c IPVersion) ToPtr() *IPVersion {
-	return &c
 }
 
 // IntervalInMins - Interval value in minutes used to create LogAnalytics call rate logs.
@@ -768,11 +643,6 @@ func PossibleIntervalInMinsValues() []IntervalInMins {
 	}
 }
 
-// ToPtr returns a *IntervalInMins pointing to the current value.
-func (c IntervalInMins) ToPtr() *IntervalInMins {
-	return &c
-}
-
 // MaintenanceOperationResultCodeTypes - The Last Maintenance Operation Result Code.
 type MaintenanceOperationResultCodeTypes string
 
@@ -793,11 +663,6 @@ func PossibleMaintenanceOperationResultCodeTypesValues() []MaintenanceOperationR
 	}
 }
 
-// ToPtr returns a *MaintenanceOperationResultCodeTypes pointing to the current value.
-func (c MaintenanceOperationResultCodeTypes) ToPtr() *MaintenanceOperationResultCodeTypes {
-	return &c
-}
-
 // OperatingSystemStateTypes - The OS State.
 type OperatingSystemStateTypes string
 
@@ -816,11 +681,6 @@ func PossibleOperatingSystemStateTypesValues() []OperatingSystemStateTypes {
 	}
 }
 
-// ToPtr returns a *OperatingSystemStateTypes pointing to the current value.
-func (c OperatingSystemStateTypes) ToPtr() *OperatingSystemStateTypes {
-	return &c
-}
-
 // OperatingSystemTypes - The Operating System type.
 type OperatingSystemTypes string
 
@@ -837,11 +697,6 @@ func PossibleOperatingSystemTypesValues() []OperatingSystemTypes {
 	}
 }
 
-// ToPtr returns a *OperatingSystemTypes pointing to the current value.
-func (c OperatingSystemTypes) ToPtr() *OperatingSystemTypes {
-	return &c
-}
-
 // OrchestrationServiceNames - The name of the service.
 type OrchestrationServiceNames string
 
@@ -854,11 +709,6 @@ func PossibleOrchestrationServiceNamesValues() []OrchestrationServiceNames {
 	return []OrchestrationServiceNames{
 		OrchestrationServiceNamesAutomaticRepairs,
 	}
-}
-
-// ToPtr returns a *OrchestrationServiceNames pointing to the current value.
-func (c OrchestrationServiceNames) ToPtr() *OrchestrationServiceNames {
-	return &c
 }
 
 // OrchestrationServiceState - The current state of the service.
@@ -879,11 +729,6 @@ func PossibleOrchestrationServiceStateValues() []OrchestrationServiceState {
 	}
 }
 
-// ToPtr returns a *OrchestrationServiceState pointing to the current value.
-func (c OrchestrationServiceState) ToPtr() *OrchestrationServiceState {
-	return &c
-}
-
 // OrchestrationServiceStateAction - The action to be performed.
 type OrchestrationServiceStateAction string
 
@@ -898,11 +743,6 @@ func PossibleOrchestrationServiceStateActionValues() []OrchestrationServiceState
 		OrchestrationServiceStateActionResume,
 		OrchestrationServiceStateActionSuspend,
 	}
-}
-
-// ToPtr returns a *OrchestrationServiceStateAction pointing to the current value.
-func (c OrchestrationServiceStateAction) ToPtr() *OrchestrationServiceStateAction {
-	return &c
 }
 
 // ProtocolTypes - Specifies the protocol of WinRM listener.
@@ -924,11 +764,6 @@ func PossibleProtocolTypesValues() []ProtocolTypes {
 	}
 }
 
-// ToPtr returns a *ProtocolTypes pointing to the current value.
-func (c ProtocolTypes) ToPtr() *ProtocolTypes {
-	return &c
-}
-
 // ProximityPlacementGroupType - Specifies the type of the proximity placement group.
 // Possible values are:
 // Standard : Co-locate resources within an Azure region or Availability Zone.
@@ -946,11 +781,6 @@ func PossibleProximityPlacementGroupTypeValues() []ProximityPlacementGroupType {
 		ProximityPlacementGroupTypeStandard,
 		ProximityPlacementGroupTypeUltra,
 	}
-}
-
-// ToPtr returns a *ProximityPlacementGroupType pointing to the current value.
-func (c ProximityPlacementGroupType) ToPtr() *ProximityPlacementGroupType {
-	return &c
 }
 
 // ReplicationState - This is the regional replication state.
@@ -973,11 +803,6 @@ func PossibleReplicationStateValues() []ReplicationState {
 	}
 }
 
-// ToPtr returns a *ReplicationState pointing to the current value.
-func (c ReplicationState) ToPtr() *ReplicationState {
-	return &c
-}
-
 type ReplicationStatusTypes string
 
 const (
@@ -989,11 +814,6 @@ func PossibleReplicationStatusTypesValues() []ReplicationStatusTypes {
 	return []ReplicationStatusTypes{
 		ReplicationStatusTypesReplicationStatus,
 	}
-}
-
-// ToPtr returns a *ReplicationStatusTypes pointing to the current value.
-func (c ReplicationStatusTypes) ToPtr() *ReplicationStatusTypes {
-	return &c
 }
 
 // ResourceIdentityType - The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes
@@ -1018,11 +838,6 @@ func PossibleResourceIdentityTypeValues() []ResourceIdentityType {
 	}
 }
 
-// ToPtr returns a *ResourceIdentityType pointing to the current value.
-func (c ResourceIdentityType) ToPtr() *ResourceIdentityType {
-	return &c
-}
-
 // ResourceSKUCapacityScaleType - The scale type applicable to the sku.
 type ResourceSKUCapacityScaleType string
 
@@ -1041,11 +856,6 @@ func PossibleResourceSKUCapacityScaleTypeValues() []ResourceSKUCapacityScaleType
 	}
 }
 
-// ToPtr returns a *ResourceSKUCapacityScaleType pointing to the current value.
-func (c ResourceSKUCapacityScaleType) ToPtr() *ResourceSKUCapacityScaleType {
-	return &c
-}
-
 // ResourceSKURestrictionsReasonCode - The reason for restriction.
 type ResourceSKURestrictionsReasonCode string
 
@@ -1060,11 +870,6 @@ func PossibleResourceSKURestrictionsReasonCodeValues() []ResourceSKURestrictions
 		ResourceSKURestrictionsReasonCodeQuotaID,
 		ResourceSKURestrictionsReasonCodeNotAvailableForSubscription,
 	}
-}
-
-// ToPtr returns a *ResourceSKURestrictionsReasonCode pointing to the current value.
-func (c ResourceSKURestrictionsReasonCode) ToPtr() *ResourceSKURestrictionsReasonCode {
-	return &c
 }
 
 // ResourceSKURestrictionsType - The type of restrictions.
@@ -1083,11 +888,6 @@ func PossibleResourceSKURestrictionsTypeValues() []ResourceSKURestrictionsType {
 	}
 }
 
-// ToPtr returns a *ResourceSKURestrictionsType pointing to the current value.
-func (c ResourceSKURestrictionsType) ToPtr() *ResourceSKURestrictionsType {
-	return &c
-}
-
 // RollingUpgradeActionType - The last action performed on the rolling upgrade.
 type RollingUpgradeActionType string
 
@@ -1102,11 +902,6 @@ func PossibleRollingUpgradeActionTypeValues() []RollingUpgradeActionType {
 		RollingUpgradeActionTypeStart,
 		RollingUpgradeActionTypeCancel,
 	}
-}
-
-// ToPtr returns a *RollingUpgradeActionType pointing to the current value.
-func (c RollingUpgradeActionType) ToPtr() *RollingUpgradeActionType {
-	return &c
 }
 
 // RollingUpgradeStatusCode - Code indicating the current status of the upgrade.
@@ -1129,11 +924,6 @@ func PossibleRollingUpgradeStatusCodeValues() []RollingUpgradeStatusCode {
 	}
 }
 
-// ToPtr returns a *RollingUpgradeStatusCode pointing to the current value.
-func (c RollingUpgradeStatusCode) ToPtr() *RollingUpgradeStatusCode {
-	return &c
-}
-
 // SettingNames - Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands
 // and AutoLogon.
 type SettingNames string
@@ -1149,11 +939,6 @@ func PossibleSettingNamesValues() []SettingNames {
 		SettingNamesAutoLogon,
 		SettingNamesFirstLogonCommands,
 	}
-}
-
-// ToPtr returns a *SettingNames pointing to the current value.
-func (c SettingNames) ToPtr() *SettingNames {
-	return &c
 }
 
 // SnapshotStorageAccountTypes - The sku name.
@@ -1177,11 +962,6 @@ func PossibleSnapshotStorageAccountTypesValues() []SnapshotStorageAccountTypes {
 	}
 }
 
-// ToPtr returns a *SnapshotStorageAccountTypes pointing to the current value.
-func (c SnapshotStorageAccountTypes) ToPtr() *SnapshotStorageAccountTypes {
-	return &c
-}
-
 // StatusLevelTypes - The level code.
 type StatusLevelTypes string
 
@@ -1200,11 +980,6 @@ func PossibleStatusLevelTypesValues() []StatusLevelTypes {
 	}
 }
 
-// ToPtr returns a *StatusLevelTypes pointing to the current value.
-func (c StatusLevelTypes) ToPtr() *StatusLevelTypes {
-	return &c
-}
-
 // StorageAccountType - Specifies the storage account type to be used to store the image. This property is not updatable.
 type StorageAccountType string
 
@@ -1221,11 +996,6 @@ func PossibleStorageAccountTypeValues() []StorageAccountType {
 		StorageAccountTypeStandardLRS,
 		StorageAccountTypeStandardZRS,
 	}
-}
-
-// ToPtr returns a *StorageAccountType pointing to the current value.
-func (c StorageAccountType) ToPtr() *StorageAccountType {
-	return &c
 }
 
 // StorageAccountTypes - Specifies the storage account type for the managed disk. Managed OS disk storage account type can
@@ -1254,11 +1024,6 @@ func PossibleStorageAccountTypesValues() []StorageAccountTypes {
 	}
 }
 
-// ToPtr returns a *StorageAccountTypes pointing to the current value.
-func (c StorageAccountTypes) ToPtr() *StorageAccountTypes {
-	return &c
-}
-
 // UpgradeMode - Specifies the mode of an upgrade to virtual machines in the scale set.
 // Possible values are:
 // Manual - You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade
@@ -1281,11 +1046,6 @@ func PossibleUpgradeModeValues() []UpgradeMode {
 	}
 }
 
-// ToPtr returns a *UpgradeMode pointing to the current value.
-func (c UpgradeMode) ToPtr() *UpgradeMode {
-	return &c
-}
-
 // UpgradeOperationInvoker - Invoker of the Upgrade Operation
 type UpgradeOperationInvoker string
 
@@ -1302,11 +1062,6 @@ func PossibleUpgradeOperationInvokerValues() []UpgradeOperationInvoker {
 		UpgradeOperationInvokerUser,
 		UpgradeOperationInvokerPlatform,
 	}
-}
-
-// ToPtr returns a *UpgradeOperationInvoker pointing to the current value.
-func (c UpgradeOperationInvoker) ToPtr() *UpgradeOperationInvoker {
-	return &c
 }
 
 // UpgradeState - Code indicating the current status of the upgrade.
@@ -1329,11 +1084,6 @@ func PossibleUpgradeStateValues() []UpgradeState {
 	}
 }
 
-// ToPtr returns a *UpgradeState pointing to the current value.
-func (c UpgradeState) ToPtr() *UpgradeState {
-	return &c
-}
-
 // VirtualMachineEvictionPolicyTypes - Specifies the eviction policy for the Azure Spot VM/VMSS
 type VirtualMachineEvictionPolicyTypes string
 
@@ -1348,11 +1098,6 @@ func PossibleVirtualMachineEvictionPolicyTypesValues() []VirtualMachineEvictionP
 		VirtualMachineEvictionPolicyTypesDeallocate,
 		VirtualMachineEvictionPolicyTypesDelete,
 	}
-}
-
-// ToPtr returns a *VirtualMachineEvictionPolicyTypes pointing to the current value.
-func (c VirtualMachineEvictionPolicyTypes) ToPtr() *VirtualMachineEvictionPolicyTypes {
-	return &c
 }
 
 // VirtualMachinePriorityTypes - Specifies the priority for a standalone virtual machine or the virtual machines in the scale
@@ -1375,11 +1120,6 @@ func PossibleVirtualMachinePriorityTypesValues() []VirtualMachinePriorityTypes {
 	}
 }
 
-// ToPtr returns a *VirtualMachinePriorityTypes pointing to the current value.
-func (c VirtualMachinePriorityTypes) ToPtr() *VirtualMachinePriorityTypes {
-	return &c
-}
-
 // VirtualMachineScaleSetSKUScaleType - The scale type applicable to the sku.
 type VirtualMachineScaleSetSKUScaleType string
 
@@ -1394,11 +1134,6 @@ func PossibleVirtualMachineScaleSetSKUScaleTypeValues() []VirtualMachineScaleSet
 		VirtualMachineScaleSetSKUScaleTypeAutomatic,
 		VirtualMachineScaleSetSKUScaleTypeNone,
 	}
-}
-
-// ToPtr returns a *VirtualMachineScaleSetSKUScaleType pointing to the current value.
-func (c VirtualMachineScaleSetSKUScaleType) ToPtr() *VirtualMachineScaleSetSKUScaleType {
-	return &c
 }
 
 type VirtualMachineScaleSetScaleInRules string
@@ -1416,11 +1151,6 @@ func PossibleVirtualMachineScaleSetScaleInRulesValues() []VirtualMachineScaleSet
 		VirtualMachineScaleSetScaleInRulesNewestVM,
 		VirtualMachineScaleSetScaleInRulesOldestVM,
 	}
-}
-
-// ToPtr returns a *VirtualMachineScaleSetScaleInRules pointing to the current value.
-func (c VirtualMachineScaleSetScaleInRules) ToPtr() *VirtualMachineScaleSetScaleInRules {
-	return &c
 }
 
 // VirtualMachineSizeTypes - Specifies the size of the virtual machine. For more information about virtual machine sizes,
@@ -1771,9 +1501,4 @@ func PossibleVirtualMachineSizeTypesValues() []VirtualMachineSizeTypes {
 		VirtualMachineSizeTypesStandardNV24,
 		VirtualMachineSizeTypesStandardNV6,
 	}
-}
-
-// ToPtr returns a *VirtualMachineSizeTypes pointing to the current value.
-func (c VirtualMachineSizeTypes) ToPtr() *VirtualMachineSizeTypes {
-	return &c
 }

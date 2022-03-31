@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewVirtualHubsClient(subscriptionID string, credential azcore.TokenCredenti
 // virtualHubParameters - Parameters supplied to create or update VirtualHub.
 // options - VirtualHubsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (VirtualHubsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
-	if err != nil {
-		return VirtualHubsClientCreateOrUpdatePollerResponse{}, err
+func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualHubsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualHubsClientCreateOrUpdateResponse]("VirtualHubsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualHubsClientCreateOrUpdateResponse]("VirtualHubsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualHubsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualHubsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return VirtualHubsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VirtualHubsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates a VirtualHub resource if it doesn't exist else updates the existing VirtualHub.
@@ -121,20 +117,16 @@ func (client *VirtualHubsClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // options - VirtualHubsClientBeginDeleteOptions contains the optional parameters for the VirtualHubsClient.BeginDelete method.
-func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (VirtualHubsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
-	if err != nil {
-		return VirtualHubsClientDeletePollerResponse{}, err
+func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsClientBeginDeleteOptions) (*armruntime.Poller[VirtualHubsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VirtualHubsClientDeleteResponse]("VirtualHubsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VirtualHubsClientDeleteResponse]("VirtualHubsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VirtualHubsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VirtualHubsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return VirtualHubsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VirtualHubsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes a VirtualHub.
@@ -238,16 +230,32 @@ func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (Virtual
 // List - Lists all the VirtualHubs in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualHubsClientListOptions contains the optional parameters for the VirtualHubsClient.List method.
-func (client *VirtualHubsClient) List(options *VirtualHubsClientListOptions) *VirtualHubsClientListPager {
-	return &VirtualHubsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *VirtualHubsClient) List(options *VirtualHubsClientListOptions) *runtime.Pager[VirtualHubsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualHubsClientListResponse]{
+		More: func(page VirtualHubsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualHubsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubsResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualHubsClientListResponse) (VirtualHubsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualHubsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualHubsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualHubsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -282,16 +290,32 @@ func (client *VirtualHubsClient) listHandleResponse(resp *http.Response) (Virtua
 // resourceGroupName - The resource group name of the VirtualHub.
 // options - VirtualHubsClientListByResourceGroupOptions contains the optional parameters for the VirtualHubsClient.ListByResourceGroup
 // method.
-func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsClientListByResourceGroupOptions) *VirtualHubsClientListByResourceGroupPager {
-	return &VirtualHubsClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsClientListByResourceGroupOptions) *runtime.Pager[VirtualHubsClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VirtualHubsClientListByResourceGroupResponse]{
+		More: func(page VirtualHubsClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VirtualHubsClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVirtualHubsResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VirtualHubsClientListByResourceGroupResponse) (VirtualHubsClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VirtualHubsClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VirtualHubsClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VirtualHubsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

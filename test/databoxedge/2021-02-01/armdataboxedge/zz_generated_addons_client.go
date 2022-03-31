@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -58,20 +58,16 @@ func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, o
 // addon - The addon properties.
 // options - AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate
 // method.
-func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (AddonsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
-	if err != nil {
-		return AddonsClientCreateOrUpdatePollerResponse{}, err
+func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[AddonsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[AddonsClientCreateOrUpdateResponse]("AddonsClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[AddonsClientCreateOrUpdateResponse]("AddonsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := AddonsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("AddonsClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return AddonsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &AddonsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Create or update a addon.
@@ -132,20 +128,16 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 // addonName - The addon name.
 // resourceGroupName - The resource group name.
 // options - AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
-func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (AddonsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
-	if err != nil {
-		return AddonsClientDeletePollerResponse{}, err
+func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*armruntime.Poller[AddonsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[AddonsClientDeleteResponse]("AddonsClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[AddonsClientDeleteResponse]("AddonsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := AddonsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("AddonsClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return AddonsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &AddonsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the addon on the device.
@@ -270,16 +262,32 @@ func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsClient
 // roleName - The role name.
 // resourceGroupName - The resource group name.
 // options - AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
-func (client *AddonsClient) ListByRole(deviceName string, roleName string, resourceGroupName string, options *AddonsClientListByRoleOptions) *AddonsClientListByRolePager {
-	return &AddonsClientListByRolePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByRoleCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
+func (client *AddonsClient) ListByRole(deviceName string, roleName string, resourceGroupName string, options *AddonsClientListByRoleOptions) *runtime.Pager[AddonsClientListByRoleResponse] {
+	return runtime.NewPager(runtime.PageProcessor[AddonsClientListByRoleResponse]{
+		More: func(page AddonsClientListByRoleResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp AddonsClientListByRoleResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.AddonList.NextLink)
+		Fetcher: func(ctx context.Context, page *AddonsClientListByRoleResponse) (AddonsClientListByRoleResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByRoleCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return AddonsClientListByRoleResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return AddonsClientListByRoleResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return AddonsClientListByRoleResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByRoleHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByRoleCreateRequest creates the ListByRole request.

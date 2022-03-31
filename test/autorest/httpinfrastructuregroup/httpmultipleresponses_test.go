@@ -27,7 +27,7 @@ func TestGet200Model201ModelDefaultError200Valid(t *testing.T) {
 	require.NoError(t, err)
 	switch x := result.Value.(type) {
 	case MyException:
-		if r := cmp.Diff(x.StatusCode, to.StringPtr("200")); r != "" {
+		if r := cmp.Diff(x.StatusCode, to.Ptr("200")); r != "" {
 			t.Fatal(r)
 		}
 	case B:
@@ -47,8 +47,8 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 		t.Fatalf("unexpected response type %T", result)
 	}
 	if r := cmp.Diff(r, B{
-		StatusCode:     to.StringPtr("201"),
-		TextStatusCode: to.StringPtr("Created"),
+		StatusCode:     to.Ptr("201"),
+		TextStatusCode: to.Ptr("Created"),
 	}, cmpopts.IgnoreUnexported(B{})); r != "" {
 		t.Fatal(r)
 	}
@@ -85,7 +85,7 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 	result, err := client.Get200Model204NoModelDefaultError200Valid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
-		StatusCode: to.StringPtr("200"),
+		StatusCode: to.Ptr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
@@ -194,7 +194,7 @@ func TestGet200ModelA200Valid(t *testing.T) {
 	result, err := client.Get200ModelA200Valid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
-		StatusCode: to.StringPtr("200"),
+		StatusCode: to.Ptr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
@@ -210,7 +210,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError200Valid(t *testing.T) {
 		t.Fatalf("unexpected result type %T", result)
 	}
 	if r := cmp.Diff(r, MyException{
-		StatusCode: to.StringPtr("200"),
+		StatusCode: to.Ptr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
@@ -226,7 +226,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 		t.Fatalf("unexpected result type %T", result)
 	}
 	if r := cmp.Diff(r, C{
-		HTTPCode: to.StringPtr("201"),
+		HTTPCode: to.Ptr("201"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -267,7 +267,7 @@ func TestGet200ModelA201ModelC404ModelDDefaultError404Valid(t *testing.T) {
 		t.Fatalf("unexpected result type %T", result)
 	}
 	if r := cmp.Diff(r, D{
-		HTTPStatusCode: to.StringPtr("404"),
+		HTTPStatusCode: to.Ptr("404"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -279,7 +279,7 @@ func TestGet200ModelA202Valid(t *testing.T) {
 	result, err := client.Get200ModelA200Valid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
-		StatusCode: to.StringPtr("200"),
+		StatusCode: to.Ptr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}
@@ -378,7 +378,7 @@ func TestGetDefaultModelA200Valid(t *testing.T) {
 	result, err := client.GetDefaultModelA200Valid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.MyException, MyException{
-		StatusCode: to.StringPtr("200"),
+		StatusCode: to.Ptr("200"),
 	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
 		t.Fatal(r)
 	}

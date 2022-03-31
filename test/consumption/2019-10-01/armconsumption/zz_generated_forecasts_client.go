@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -54,13 +54,26 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
-func (client *ForecastsClient) List(options *ForecastsClientListOptions) *ForecastsClientListPager {
-	return &ForecastsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *ForecastsClient) List(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ForecastsClientListResponse]{
+		More: func(page ForecastsClientListResponse) bool {
+			return false
 		},
-	}
+		Fetcher: func(ctx context.Context, page *ForecastsClientListResponse) (ForecastsClientListResponse, error) {
+			req, err := client.listCreateRequest(ctx, options)
+			if err != nil {
+				return ForecastsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ForecastsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ForecastsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
+		},
+	})
 }
 
 // listCreateRequest creates the List request.

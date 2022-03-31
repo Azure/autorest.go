@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -83,20 +83,16 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 // If the operation fails it returns an *azcore.ResponseError type.
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginCreateOptions contains the optional parameters for the libraryClient.BeginCreate method.
-func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (libraryClientCreatePollerResponse, error) {
-	resp, err := client.create(ctx, libraryName, options)
-	if err != nil {
-		return libraryClientCreatePollerResponse{}, err
+func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (*runtime.Poller[libraryClientCreateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.create(ctx, libraryName, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[libraryClientCreateResponse]("libraryClient.Create", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[libraryClientCreateResponse]("libraryClient.Create", options.ResumeToken, client.pl, nil)
 	}
-	result := libraryClientCreatePollerResponse{}
-	pt, err := runtime.NewPoller("libraryClient.Create", resp, client.pl)
-	if err != nil {
-		return libraryClientCreatePollerResponse{}, err
-	}
-	result.Poller = &libraryClientCreatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Create - Creates a library with the library name.
@@ -138,20 +134,16 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 // If the operation fails it returns an *azcore.ResponseError type.
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginDeleteOptions contains the optional parameters for the libraryClient.BeginDelete method.
-func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (libraryClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, libraryName, options)
-	if err != nil {
-		return libraryClientDeletePollerResponse{}, err
+func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (*runtime.Poller[libraryClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, libraryName, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[libraryClientDeleteResponse]("libraryClient.Delete", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[libraryClientDeleteResponse]("libraryClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := libraryClientDeletePollerResponse{}
-	pt, err := runtime.NewPoller("libraryClient.Delete", resp, client.pl)
-	if err != nil {
-		return libraryClientDeletePollerResponse{}, err
-	}
-	result.Poller = &libraryClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Delete Library
@@ -193,20 +185,16 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 // If the operation fails it returns an *azcore.ResponseError type.
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginFlushOptions contains the optional parameters for the libraryClient.BeginFlush method.
-func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (libraryClientFlushPollerResponse, error) {
-	resp, err := client.flush(ctx, libraryName, options)
-	if err != nil {
-		return libraryClientFlushPollerResponse{}, err
+func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (*runtime.Poller[libraryClientFlushResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.flush(ctx, libraryName, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[libraryClientFlushResponse]("libraryClient.Flush", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[libraryClientFlushResponse]("libraryClient.Flush", options.ResumeToken, client.pl, nil)
 	}
-	result := libraryClientFlushPollerResponse{}
-	pt, err := runtime.NewPoller("libraryClient.Flush", resp, client.pl)
-	if err != nil {
-		return libraryClientFlushPollerResponse{}, err
-	}
-	result.Poller = &libraryClientFlushPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Flush - Flush Library
@@ -353,16 +341,32 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 // List - Lists Library.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - libraryClientListOptions contains the optional parameters for the libraryClient.List method.
-func (client *libraryClient) List(options *libraryClientListOptions) *libraryClientListPager {
-	return &libraryClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *libraryClient) List(options *libraryClientListOptions) *runtime.Pager[libraryClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[libraryClientListResponse]{
+		More: func(page libraryClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp libraryClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.LibraryListResponse.NextLink)
+		Fetcher: func(ctx context.Context, page *libraryClientListResponse) (libraryClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return libraryClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return libraryClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return libraryClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.

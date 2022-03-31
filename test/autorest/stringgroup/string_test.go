@@ -20,7 +20,7 @@ func TestStringGetMBCS(t *testing.T) {
 	client := newStringClient()
 	result, err := client.GetMBCS(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.StringPtr("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr("啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -55,7 +55,7 @@ func TestStringGetEmpty(t *testing.T) {
 	client := newStringClient()
 	result, err := client.GetEmpty(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.StringPtr("")); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr("")); r != "" {
 		t.Fatal(r)
 	}
 }
@@ -87,7 +87,7 @@ func TestStringGetWhitespace(t *testing.T) {
 	client := newStringClient()
 	result, err := client.GetWhitespace(context.Background(), nil)
 	require.NoError(t, err)
-	if r := cmp.Diff(result.Value, to.StringPtr("    Now is the time for all good men to come to the aid of their country    ")); r != "" {
+	if r := cmp.Diff(result.Value, to.Ptr("    Now is the time for all good men to come to the aid of their country    ")); r != "" {
 		t.Fatal(r)
 	}
 }

@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -873,20 +873,16 @@ func (client *Client) encryptHandleResponse(resp *http.Response) (ClientEncryptR
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
-func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (ClientFullBackupPollerResponse, error) {
-	resp, err := client.fullBackup(ctx, vaultBaseURL, options)
-	if err != nil {
-		return ClientFullBackupPollerResponse{}, err
+func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (*runtime.Poller[ClientFullBackupResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.fullBackup(ctx, vaultBaseURL, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[ClientFullBackupResponse]("Client.FullBackup", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[ClientFullBackupResponse]("Client.FullBackup", options.ResumeToken, client.pl, nil)
 	}
-	result := ClientFullBackupPollerResponse{}
-	pt, err := runtime.NewPoller("Client.FullBackup", resp, client.pl)
-	if err != nil {
-		return ClientFullBackupPollerResponse{}, err
-	}
-	result.Poller = &ClientFullBackupPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
@@ -980,20 +976,16 @@ func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (Clien
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation
 // method.
-func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (ClientFullRestoreOperationPollerResponse, error) {
-	resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
-	if err != nil {
-		return ClientFullRestoreOperationPollerResponse{}, err
+func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (*runtime.Poller[ClientFullRestoreOperationResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[ClientFullRestoreOperationResponse]("Client.FullRestoreOperation", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[ClientFullRestoreOperationResponse]("Client.FullRestoreOperation", options.ResumeToken, client.pl, nil)
 	}
-	result := ClientFullRestoreOperationPollerResponse{}
-	pt, err := runtime.NewPoller("Client.FullRestoreOperation", resp, client.pl)
-	if err != nil {
-		return ClientFullRestoreOperationPollerResponse{}, err
-	}
-	result.Poller = &ClientFullRestoreOperationPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // FullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
@@ -1188,16 +1180,32 @@ func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (C
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
-func (client *Client) GetCertificateIssuers(vaultBaseURL string, options *ClientGetCertificateIssuersOptions) *ClientGetCertificateIssuersPager {
-	return &ClientGetCertificateIssuersPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetCertificateIssuers(vaultBaseURL string, options *ClientGetCertificateIssuersOptions) *runtime.Pager[ClientGetCertificateIssuersResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificateIssuersResponse]{
+		More: func(page ClientGetCertificateIssuersResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetCertificateIssuersResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.CertificateIssuerListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetCertificateIssuersResponse) (ClientGetCertificateIssuersResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getCertificateIssuersCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetCertificateIssuersResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetCertificateIssuersResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetCertificateIssuersResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getCertificateIssuersHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getCertificateIssuersCreateRequest creates the GetCertificateIssuers request.
@@ -1335,16 +1343,32 @@ func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (C
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
-func (client *Client) GetCertificateVersions(vaultBaseURL string, certificateName string, options *ClientGetCertificateVersionsOptions) *ClientGetCertificateVersionsPager {
-	return &ClientGetCertificateVersionsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
+func (client *Client) GetCertificateVersions(vaultBaseURL string, certificateName string, options *ClientGetCertificateVersionsOptions) *runtime.Pager[ClientGetCertificateVersionsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificateVersionsResponse]{
+		More: func(page ClientGetCertificateVersionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetCertificateVersionsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetCertificateVersionsResponse) (ClientGetCertificateVersionsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getCertificateVersionsCreateRequest(ctx, vaultBaseURL, certificateName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetCertificateVersionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetCertificateVersionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetCertificateVersionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getCertificateVersionsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getCertificateVersionsCreateRequest creates the GetCertificateVersions request.
@@ -1384,16 +1408,32 @@ func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) 
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
-func (client *Client) GetCertificates(vaultBaseURL string, options *ClientGetCertificatesOptions) *ClientGetCertificatesPager {
-	return &ClientGetCertificatesPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetCertificates(vaultBaseURL string, options *ClientGetCertificatesOptions) *runtime.Pager[ClientGetCertificatesResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificatesResponse]{
+		More: func(page ClientGetCertificatesResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetCertificatesResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.CertificateListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetCertificatesResponse) (ClientGetCertificatesResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getCertificatesCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetCertificatesResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetCertificatesResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetCertificatesResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getCertificatesHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getCertificatesCreateRequest creates the GetCertificates request.
@@ -1485,16 +1525,32 @@ func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
-func (client *Client) GetDeletedCertificates(vaultBaseURL string, options *ClientGetDeletedCertificatesOptions) *ClientGetDeletedCertificatesPager {
-	return &ClientGetDeletedCertificatesPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetDeletedCertificates(vaultBaseURL string, options *ClientGetDeletedCertificatesOptions) *runtime.Pager[ClientGetDeletedCertificatesResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedCertificatesResponse]{
+		More: func(page ClientGetDeletedCertificatesResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetDeletedCertificatesResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedCertificateListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetDeletedCertificatesResponse) (ClientGetDeletedCertificatesResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getDeletedCertificatesCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetDeletedCertificatesResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetDeletedCertificatesResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetDeletedCertificatesResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getDeletedCertificatesHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getDeletedCertificatesCreateRequest creates the GetDeletedCertificates request.
@@ -1587,16 +1643,32 @@ func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGe
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
-func (client *Client) GetDeletedKeys(vaultBaseURL string, options *ClientGetDeletedKeysOptions) *ClientGetDeletedKeysPager {
-	return &ClientGetDeletedKeysPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetDeletedKeys(vaultBaseURL string, options *ClientGetDeletedKeysOptions) *runtime.Pager[ClientGetDeletedKeysResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedKeysResponse]{
+		More: func(page ClientGetDeletedKeysResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetDeletedKeysResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedKeyListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetDeletedKeysResponse) (ClientGetDeletedKeysResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getDeletedKeysCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetDeletedKeysResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetDeletedKeysResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetDeletedKeysResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getDeletedKeysHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getDeletedKeysCreateRequest creates the GetDeletedKeys request.
@@ -1690,16 +1762,32 @@ func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response)
 // storageAccountName - The name of the storage account.
 // options - ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions
 // method.
-func (client *Client) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *ClientGetDeletedSasDefinitionsOptions) *ClientGetDeletedSasDefinitionsPager {
-	return &ClientGetDeletedSasDefinitionsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
+func (client *Client) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *ClientGetDeletedSasDefinitionsOptions) *runtime.Pager[ClientGetDeletedSasDefinitionsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedSasDefinitionsResponse]{
+		More: func(page ClientGetDeletedSasDefinitionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetDeletedSasDefinitionsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedSasDefinitionListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetDeletedSasDefinitionsResponse) (ClientGetDeletedSasDefinitionsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getDeletedSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetDeletedSasDefinitionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetDeletedSasDefinitionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetDeletedSasDefinitionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getDeletedSasDefinitionsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getDeletedSasDefinitionsCreateRequest creates the GetDeletedSasDefinitions request.
@@ -1789,16 +1877,32 @@ func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
-func (client *Client) GetDeletedSecrets(vaultBaseURL string, options *ClientGetDeletedSecretsOptions) *ClientGetDeletedSecretsPager {
-	return &ClientGetDeletedSecretsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetDeletedSecrets(vaultBaseURL string, options *ClientGetDeletedSecretsOptions) *runtime.Pager[ClientGetDeletedSecretsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedSecretsResponse]{
+		More: func(page ClientGetDeletedSecretsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetDeletedSecretsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedSecretListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetDeletedSecretsResponse) (ClientGetDeletedSecretsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getDeletedSecretsCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetDeletedSecretsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetDeletedSecretsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetDeletedSecretsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getDeletedSecretsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getDeletedSecretsCreateRequest creates the GetDeletedSecrets request.
@@ -1886,16 +1990,32 @@ func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
 // method.
-func (client *Client) GetDeletedStorageAccounts(vaultBaseURL string, options *ClientGetDeletedStorageAccountsOptions) *ClientGetDeletedStorageAccountsPager {
-	return &ClientGetDeletedStorageAccountsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetDeletedStorageAccounts(vaultBaseURL string, options *ClientGetDeletedStorageAccountsOptions) *runtime.Pager[ClientGetDeletedStorageAccountsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedStorageAccountsResponse]{
+		More: func(page ClientGetDeletedStorageAccountsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetDeletedStorageAccountsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeletedStorageListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetDeletedStorageAccountsResponse) (ClientGetDeletedStorageAccountsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getDeletedStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetDeletedStorageAccountsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetDeletedStorageAccountsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetDeletedStorageAccountsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getDeletedStorageAccountsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getDeletedStorageAccountsCreateRequest creates the GetDeletedStorageAccounts request.
@@ -1988,16 +2108,32 @@ func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyRes
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // options - ClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
-func (client *Client) GetKeyVersions(vaultBaseURL string, keyName string, options *ClientGetKeyVersionsOptions) *ClientGetKeyVersionsPager {
-	return &ClientGetKeyVersionsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
+func (client *Client) GetKeyVersions(vaultBaseURL string, keyName string, options *ClientGetKeyVersionsOptions) *runtime.Pager[ClientGetKeyVersionsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetKeyVersionsResponse]{
+		More: func(page ClientGetKeyVersionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetKeyVersionsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetKeyVersionsResponse) (ClientGetKeyVersionsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getKeyVersionsCreateRequest(ctx, vaultBaseURL, keyName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetKeyVersionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetKeyVersionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetKeyVersionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getKeyVersionsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getKeyVersionsCreateRequest creates the GetKeyVersions request.
@@ -2039,16 +2175,32 @@ func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientG
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
-func (client *Client) GetKeys(vaultBaseURL string, options *ClientGetKeysOptions) *ClientGetKeysPager {
-	return &ClientGetKeysPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getKeysCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetKeys(vaultBaseURL string, options *ClientGetKeysOptions) *runtime.Pager[ClientGetKeysResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetKeysResponse]{
+		More: func(page ClientGetKeysResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetKeysResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.KeyListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetKeysResponse) (ClientGetKeysResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getKeysCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetKeysResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetKeysResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetKeysResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getKeysHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getKeysCreateRequest creates the GetKeys request.
@@ -2140,16 +2292,32 @@ func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (Clien
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
-func (client *Client) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *ClientGetSasDefinitionsOptions) *ClientGetSasDefinitionsPager {
-	return &ClientGetSasDefinitionsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
+func (client *Client) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *ClientGetSasDefinitionsOptions) *runtime.Pager[ClientGetSasDefinitionsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetSasDefinitionsResponse]{
+		More: func(page ClientGetSasDefinitionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetSasDefinitionsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SasDefinitionListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetSasDefinitionsResponse) (ClientGetSasDefinitionsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getSasDefinitionsCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetSasDefinitionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetSasDefinitionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetSasDefinitionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getSasDefinitionsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getSasDefinitionsCreateRequest creates the GetSasDefinitions request.
@@ -2246,16 +2414,32 @@ func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSec
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
-func (client *Client) GetSecretVersions(vaultBaseURL string, secretName string, options *ClientGetSecretVersionsOptions) *ClientGetSecretVersionsPager {
-	return &ClientGetSecretVersionsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
+func (client *Client) GetSecretVersions(vaultBaseURL string, secretName string, options *ClientGetSecretVersionsOptions) *runtime.Pager[ClientGetSecretVersionsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetSecretVersionsResponse]{
+		More: func(page ClientGetSecretVersionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetSecretVersionsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetSecretVersionsResponse) (ClientGetSecretVersionsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getSecretVersionsCreateRequest(ctx, vaultBaseURL, secretName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetSecretVersionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetSecretVersionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetSecretVersionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getSecretVersionsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getSecretVersionsCreateRequest creates the GetSecretVersions request.
@@ -2296,16 +2480,32 @@ func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (Clie
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
-func (client *Client) GetSecrets(vaultBaseURL string, options *ClientGetSecretsOptions) *ClientGetSecretsPager {
-	return &ClientGetSecretsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetSecrets(vaultBaseURL string, options *ClientGetSecretsOptions) *runtime.Pager[ClientGetSecretsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetSecretsResponse]{
+		More: func(page ClientGetSecretsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetSecretsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecretListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetSecretsResponse) (ClientGetSecretsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getSecretsCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetSecretsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetSecretsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetSecretsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getSecretsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getSecretsCreateRequest creates the GetSecrets request.
@@ -2390,16 +2590,32 @@ func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (Clie
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
-func (client *Client) GetStorageAccounts(vaultBaseURL string, options *ClientGetStorageAccountsOptions) *ClientGetStorageAccountsPager {
-	return &ClientGetStorageAccountsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) GetStorageAccounts(vaultBaseURL string, options *ClientGetStorageAccountsOptions) *runtime.Pager[ClientGetStorageAccountsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ClientGetStorageAccountsResponse]{
+		More: func(page ClientGetStorageAccountsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ClientGetStorageAccountsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.StorageListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ClientGetStorageAccountsResponse) (ClientGetStorageAccountsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getStorageAccountsCreateRequest(ctx, vaultBaseURL, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ClientGetStorageAccountsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ClientGetStorageAccountsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ClientGetStorageAccountsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getStorageAccountsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getStorageAccountsCreateRequest creates the GetStorageAccounts request.
@@ -3315,20 +3531,16 @@ func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (
 // keyName - The name of the key to be restored from the user supplied backup
 // options - ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
 // method.
-func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (ClientSelectiveKeyRestoreOperationPollerResponse, error) {
-	resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
-	if err != nil {
-		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
+func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*runtime.Poller[ClientSelectiveKeyRestoreOperationResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[ClientSelectiveKeyRestoreOperationResponse]("Client.SelectiveKeyRestoreOperation", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[ClientSelectiveKeyRestoreOperationResponse]("Client.SelectiveKeyRestoreOperation", options.ResumeToken, client.pl, nil)
 	}
-	result := ClientSelectiveKeyRestoreOperationPollerResponse{}
-	pt, err := runtime.NewPoller("Client.SelectiveKeyRestoreOperation", resp, client.pl)
-	if err != nil {
-		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
-	}
-	result.Poller = &ClientSelectiveKeyRestoreOperationPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // SelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously

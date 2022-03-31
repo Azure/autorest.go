@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -46,11 +46,6 @@ func PossibleAccessTierValues() []AccessTier {
 	}
 }
 
-// ToPtr returns a *AccessTier pointing to the current value.
-func (c AccessTier) ToPtr() *AccessTier {
-	return &c
-}
-
 type ArchiveStatus string
 
 const (
@@ -64,11 +59,6 @@ func PossibleArchiveStatusValues() []ArchiveStatus {
 		ArchiveStatusRehydratePendingToCool,
 		ArchiveStatusRehydratePendingToHot,
 	}
-}
-
-// ToPtr returns a *ArchiveStatus pointing to the current value.
-func (c ArchiveStatus) ToPtr() *ArchiveStatus {
-	return &c
 }
 
 type BlobType string
@@ -86,11 +76,6 @@ func PossibleBlobTypeValues() []BlobType {
 		BlobTypePageBlob,
 		BlobTypeAppendBlob,
 	}
-}
-
-// ToPtr returns a *BlobType pointing to the current value.
-func (c BlobType) ToPtr() *BlobType {
-	return &c
 }
 
 type CopyStatusType string
@@ -112,11 +97,6 @@ func PossibleCopyStatusTypeValues() []CopyStatusType {
 	}
 }
 
-// ToPtr returns a *CopyStatusType pointing to the current value.
-func (c CopyStatusType) ToPtr() *CopyStatusType {
-	return &c
-}
-
 type LeaseDurationType string
 
 const (
@@ -130,11 +110,6 @@ func PossibleLeaseDurationTypeValues() []LeaseDurationType {
 		LeaseDurationTypeInfinite,
 		LeaseDurationTypeFixed,
 	}
-}
-
-// ToPtr returns a *LeaseDurationType pointing to the current value.
-func (c LeaseDurationType) ToPtr() *LeaseDurationType {
-	return &c
 }
 
 type LeaseStateType string
@@ -158,11 +133,6 @@ func PossibleLeaseStateTypeValues() []LeaseStateType {
 	}
 }
 
-// ToPtr returns a *LeaseStateType pointing to the current value.
-func (c LeaseStateType) ToPtr() *LeaseStateType {
-	return &c
-}
-
 type LeaseStatusType string
 
 const (
@@ -178,11 +148,6 @@ func PossibleLeaseStatusTypeValues() []LeaseStatusType {
 	}
 }
 
-// ToPtr returns a *LeaseStatusType pointing to the current value.
-func (c LeaseStatusType) ToPtr() *LeaseStatusType {
-	return &c
-}
-
 type PublicAccessType string
 
 const (
@@ -196,9 +161,4 @@ func PossiblePublicAccessTypeValues() []PublicAccessType {
 		PublicAccessTypeBlob,
 		PublicAccessTypeContainer,
 	}
-}
-
-// ToPtr returns a *PublicAccessType pointing to the current value.
-func (c PublicAccessType) ToPtr() *PublicAccessType {
-	return &c
 }

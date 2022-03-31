@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -56,20 +56,16 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 // triggerSupportPackageRequest - The trigger support package request object
 // options - SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
 // method.
-func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (SupportPackagesClientTriggerSupportPackagePollerResponse, error) {
-	resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
-	if err != nil {
-		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
+func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*armruntime.Poller[SupportPackagesClientTriggerSupportPackageResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse]("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse]("SupportPackagesClient.TriggerSupportPackage", options.ResumeToken, client.pl, nil)
 	}
-	result := SupportPackagesClientTriggerSupportPackagePollerResponse{}
-	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl)
-	if err != nil {
-		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
-	}
-	result.Poller = &SupportPackagesClientTriggerSupportPackagePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // TriggerSupportPackage - Triggers support package on the device

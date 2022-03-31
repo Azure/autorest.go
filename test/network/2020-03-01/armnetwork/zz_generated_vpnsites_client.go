@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewVPNSitesClient(subscriptionID string, credential azcore.TokenCredential,
 // vpnSiteParameters - Parameters supplied to create or update VpnSite.
 // options - VPNSitesClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNSitesClient.BeginCreateOrUpdate
 // method.
-func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VPNSite, options *VPNSitesClientBeginCreateOrUpdateOptions) (VPNSitesClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters, options)
-	if err != nil {
-		return VPNSitesClientCreateOrUpdatePollerResponse{}, err
+func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VPNSite, options *VPNSitesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VPNSitesClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VPNSitesClientCreateOrUpdateResponse]("VPNSitesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VPNSitesClientCreateOrUpdateResponse]("VPNSitesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := VPNSitesClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("VPNSitesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return VPNSitesClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &VPNSitesClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates a VpnSite resource if it doesn't exist else updates the existing VpnSite.
@@ -121,20 +117,16 @@ func (client *VPNSitesClient) createOrUpdateCreateRequest(ctx context.Context, r
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite being deleted.
 // options - VPNSitesClientBeginDeleteOptions contains the optional parameters for the VPNSitesClient.BeginDelete method.
-func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesClientBeginDeleteOptions) (VPNSitesClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnSiteName, options)
-	if err != nil {
-		return VPNSitesClientDeletePollerResponse{}, err
+func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesClientBeginDeleteOptions) (*armruntime.Poller[VPNSitesClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, vpnSiteName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[VPNSitesClientDeleteResponse]("VPNSitesClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[VPNSitesClientDeleteResponse]("VPNSitesClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := VPNSitesClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("VPNSitesClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return VPNSitesClientDeletePollerResponse{}, err
-	}
-	result.Poller = &VPNSitesClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes a VpnSite.
@@ -238,16 +230,32 @@ func (client *VPNSitesClient) getHandleResponse(resp *http.Response) (VPNSitesCl
 // List - Lists all the VpnSites in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - VPNSitesClientListOptions contains the optional parameters for the VPNSitesClient.List method.
-func (client *VPNSitesClient) List(options *VPNSitesClientListOptions) *VPNSitesClientListPager {
-	return &VPNSitesClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *VPNSitesClient) List(options *VPNSitesClientListOptions) *runtime.Pager[VPNSitesClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VPNSitesClientListResponse]{
+		More: func(page VPNSitesClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VPNSitesClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNSitesResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VPNSitesClientListResponse) (VPNSitesClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VPNSitesClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VPNSitesClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VPNSitesClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -282,16 +290,32 @@ func (client *VPNSitesClient) listHandleResponse(resp *http.Response) (VPNSitesC
 // resourceGroupName - The resource group name of the VpnSite.
 // options - VPNSitesClientListByResourceGroupOptions contains the optional parameters for the VPNSitesClient.ListByResourceGroup
 // method.
-func (client *VPNSitesClient) ListByResourceGroup(resourceGroupName string, options *VPNSitesClientListByResourceGroupOptions) *VPNSitesClientListByResourceGroupPager {
-	return &VPNSitesClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *VPNSitesClient) ListByResourceGroup(resourceGroupName string, options *VPNSitesClientListByResourceGroupOptions) *runtime.Pager[VPNSitesClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[VPNSitesClientListByResourceGroupResponse]{
+		More: func(page VPNSitesClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp VPNSitesClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNSitesResult.NextLink)
+		Fetcher: func(ctx context.Context, page *VPNSitesClientListByResourceGroupResponse) (VPNSitesClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return VPNSitesClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return VPNSitesClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return VPNSitesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

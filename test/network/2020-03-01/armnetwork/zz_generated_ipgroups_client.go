@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential,
 // parameters - Parameters supplied to the create or update IpGroups operation.
 // options - IPGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the IPGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (IPGroupsClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
-	if err != nil {
-		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
+func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[IPGroupsClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[IPGroupsClientCreateOrUpdateResponse]("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[IPGroupsClientCreateOrUpdateResponse]("IPGroupsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := IPGroupsClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &IPGroupsClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
@@ -121,20 +117,16 @@ func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, r
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // options - IPGroupsClientBeginDeleteOptions contains the optional parameters for the IPGroupsClient.BeginDelete method.
-func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (IPGroupsClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
-	if err != nil {
-		return IPGroupsClientDeletePollerResponse{}, err
+func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*armruntime.Poller[IPGroupsClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[IPGroupsClientDeleteResponse]("IPGroupsClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[IPGroupsClientDeleteResponse]("IPGroupsClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := IPGroupsClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("IPGroupsClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return IPGroupsClientDeletePollerResponse{}, err
-	}
-	result.Poller = &IPGroupsClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified ipGroups.
@@ -241,16 +233,32 @@ func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsCl
 // List - Gets all IpGroups in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - IPGroupsClientListOptions contains the optional parameters for the IPGroupsClient.List method.
-func (client *IPGroupsClient) List(options *IPGroupsClientListOptions) *IPGroupsClientListPager {
-	return &IPGroupsClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *IPGroupsClient) List(options *IPGroupsClientListOptions) *runtime.Pager[IPGroupsClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[IPGroupsClientListResponse]{
+		More: func(page IPGroupsClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp IPGroupsClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *IPGroupsClientListResponse) (IPGroupsClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return IPGroupsClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return IPGroupsClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return IPGroupsClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -285,16 +293,32 @@ func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsC
 // resourceGroupName - The name of the resource group.
 // options - IPGroupsClientListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.ListByResourceGroup
 // method.
-func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsClientListByResourceGroupOptions) *IPGroupsClientListByResourceGroupPager {
-	return &IPGroupsClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsClientListByResourceGroupOptions) *runtime.Pager[IPGroupsClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[IPGroupsClientListByResourceGroupResponse]{
+		More: func(page IPGroupsClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp IPGroupsClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *IPGroupsClientListByResourceGroupResponse) (IPGroupsClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return IPGroupsClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return IPGroupsClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return IPGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

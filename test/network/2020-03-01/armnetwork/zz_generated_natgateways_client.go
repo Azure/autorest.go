@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // parameters - Parameters supplied to the create or update nat gateway operation.
 // options - NatGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the NatGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (NatGatewaysClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
-	if err != nil {
-		return NatGatewaysClientCreateOrUpdatePollerResponse{}, err
+func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysClientBeginCreateOrUpdateOptions) (*armruntime.Poller[NatGatewaysClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[NatGatewaysClientCreateOrUpdateResponse]("NatGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[NatGatewaysClientCreateOrUpdateResponse]("NatGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := NatGatewaysClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("NatGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return NatGatewaysClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &NatGatewaysClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a nat gateway.
@@ -121,20 +117,16 @@ func (client *NatGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 // resourceGroupName - The name of the resource group.
 // natGatewayName - The name of the nat gateway.
 // options - NatGatewaysClientBeginDeleteOptions contains the optional parameters for the NatGatewaysClient.BeginDelete method.
-func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (NatGatewaysClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
-	if err != nil {
-		return NatGatewaysClientDeletePollerResponse{}, err
+func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysClientBeginDeleteOptions) (*armruntime.Poller[NatGatewaysClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[NatGatewaysClientDeleteResponse]("NatGatewaysClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[NatGatewaysClientDeleteResponse]("NatGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := NatGatewaysClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("NatGatewaysClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return NatGatewaysClientDeletePollerResponse{}, err
-	}
-	result.Poller = &NatGatewaysClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified nat gateway.
@@ -242,16 +234,32 @@ func (client *NatGatewaysClient) getHandleResponse(resp *http.Response) (NatGate
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - NatGatewaysClientListOptions contains the optional parameters for the NatGatewaysClient.List method.
-func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGatewaysClientListOptions) *NatGatewaysClientListPager {
-	return &NatGatewaysClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, resourceGroupName, options)
+func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGatewaysClientListOptions) *runtime.Pager[NatGatewaysClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[NatGatewaysClientListResponse]{
+		More: func(page NatGatewaysClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp NatGatewaysClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NatGatewayListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *NatGatewaysClientListResponse) (NatGatewaysClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return NatGatewaysClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return NatGatewaysClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return NatGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -288,16 +296,32 @@ func (client *NatGatewaysClient) listHandleResponse(resp *http.Response) (NatGat
 // ListAll - Gets all the Nat Gateways in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - NatGatewaysClientListAllOptions contains the optional parameters for the NatGatewaysClient.ListAll method.
-func (client *NatGatewaysClient) ListAll(options *NatGatewaysClientListAllOptions) *NatGatewaysClientListAllPager {
-	return &NatGatewaysClientListAllPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listAllCreateRequest(ctx, options)
+func (client *NatGatewaysClient) ListAll(options *NatGatewaysClientListAllOptions) *runtime.Pager[NatGatewaysClientListAllResponse] {
+	return runtime.NewPager(runtime.PageProcessor[NatGatewaysClientListAllResponse]{
+		More: func(page NatGatewaysClientListAllResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp NatGatewaysClientListAllResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NatGatewayListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *NatGatewaysClientListAllResponse) (NatGatewaysClientListAllResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listAllCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return NatGatewaysClientListAllResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return NatGatewaysClientListAllResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return NatGatewaysClientListAllResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listAllHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listAllCreateRequest creates the ListAll request.

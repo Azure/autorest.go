@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -41,20 +41,16 @@ func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
 // pipeline - Pipeline resource definition.
 // options - pipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
 // method.
-func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (pipelineClientCreateOrUpdatePipelinePollerResponse, error) {
-	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
-	if err != nil {
-		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
+func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (*runtime.Poller[pipelineClientCreateOrUpdatePipelineResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[pipelineClientCreateOrUpdatePipelineResponse]("pipelineClient.CreateOrUpdatePipeline", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[pipelineClientCreateOrUpdatePipelineResponse]("pipelineClient.CreateOrUpdatePipeline", options.ResumeToken, client.pl, nil)
 	}
-	result := pipelineClientCreateOrUpdatePipelinePollerResponse{}
-	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.pl)
-	if err != nil {
-		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
-	}
-	result.Poller = &pipelineClientCreateOrUpdatePipelinePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
@@ -159,20 +155,16 @@ func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Respons
 // pipelineName - The pipeline name.
 // options - pipelineClientBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline
 // method.
-func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (pipelineClientDeletePipelinePollerResponse, error) {
-	resp, err := client.deletePipeline(ctx, pipelineName, options)
-	if err != nil {
-		return pipelineClientDeletePipelinePollerResponse{}, err
+func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (*runtime.Poller[pipelineClientDeletePipelineResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deletePipeline(ctx, pipelineName, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[pipelineClientDeletePipelineResponse]("pipelineClient.DeletePipeline", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[pipelineClientDeletePipelineResponse]("pipelineClient.DeletePipeline", options.ResumeToken, client.pl, nil)
 	}
-	result := pipelineClientDeletePipelinePollerResponse{}
-	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.pl)
-	if err != nil {
-		return pipelineClientDeletePipelinePollerResponse{}, err
-	}
-	result.Poller = &pipelineClientDeletePipelinePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // DeletePipeline - Deletes a pipeline.
@@ -263,16 +255,32 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (pi
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - pipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
 // method.
-func (client *pipelineClient) GetPipelinesByWorkspace(options *pipelineClientGetPipelinesByWorkspaceOptions) *pipelineClientGetPipelinesByWorkspacePager {
-	return &pipelineClientGetPipelinesByWorkspacePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getPipelinesByWorkspaceCreateRequest(ctx, options)
+func (client *pipelineClient) GetPipelinesByWorkspace(options *pipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[pipelineClientGetPipelinesByWorkspaceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[pipelineClientGetPipelinesByWorkspaceResponse]{
+		More: func(page pipelineClientGetPipelinesByWorkspaceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp pipelineClientGetPipelinesByWorkspaceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
+		Fetcher: func(ctx context.Context, page *pipelineClientGetPipelinesByWorkspaceResponse) (pipelineClientGetPipelinesByWorkspaceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getPipelinesByWorkspaceCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return pipelineClientGetPipelinesByWorkspaceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return pipelineClientGetPipelinesByWorkspaceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return pipelineClientGetPipelinesByWorkspaceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getPipelinesByWorkspaceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
@@ -304,20 +312,16 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.R
 // request - proposed new name.
 // options - pipelineClientBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline
 // method.
-func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (pipelineClientRenamePipelinePollerResponse, error) {
-	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
-	if err != nil {
-		return pipelineClientRenamePipelinePollerResponse{}, err
+func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (*runtime.Poller[pipelineClientRenamePipelineResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.renamePipeline(ctx, pipelineName, request, options)
+		if err != nil {
+			return nil, err
+		}
+		return runtime.NewPoller[pipelineClientRenamePipelineResponse]("pipelineClient.RenamePipeline", resp, client.pl, nil)
+	} else {
+		return runtime.NewPollerFromResumeToken[pipelineClientRenamePipelineResponse]("pipelineClient.RenamePipeline", options.ResumeToken, client.pl, nil)
 	}
-	result := pipelineClientRenamePipelinePollerResponse{}
-	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.pl)
-	if err != nil {
-		return pipelineClientRenamePipelinePollerResponse{}, err
-	}
-	result.Poller = &pipelineClientRenamePipelinePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // RenamePipeline - Renames a pipeline.

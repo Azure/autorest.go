@@ -115,8 +115,8 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 	result, err := client.GetPetByID(context.Background(), "tommy", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
-		AniType: to.StringPtr("Dog"),
-		Name:    to.StringPtr("Tommy Tomson"),
+		AniType: to.Ptr("Dog"),
+		Name:    to.Ptr("Tommy Tomson"),
 	}); r != "" {
 		t.Fatal(r)
 	}

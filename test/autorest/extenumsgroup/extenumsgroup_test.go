@@ -20,12 +20,12 @@ func TestAddPet(t *testing.T) {
 	client := newPetClient()
 	result, err := client.AddPet(context.Background(), &PetClientAddPetOptions{
 		PetParam: &Pet{
-			Name: to.StringPtr("Retriever"),
+			Name: to.Ptr("Retriever"),
 		},
 	})
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
-		Name: to.StringPtr("Retriever"),
+		Name: to.Ptr("Retriever"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -36,9 +36,9 @@ func TestGetByPetIDExpected(t *testing.T) {
 	result, err := client.GetByPetID(context.Background(), "tommy", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
-		DaysOfWeek: DaysOfWeekExtensibleEnumMonday.ToPtr(),
-		IntEnum:    IntEnumOne.ToPtr(),
-		Name:       to.StringPtr("Tommy Tomson"),
+		DaysOfWeek: to.Ptr(DaysOfWeekExtensibleEnumMonday),
+		IntEnum:    to.Ptr(IntEnumOne),
+		Name:       to.Ptr("Tommy Tomson"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -49,9 +49,9 @@ func TestGetByPetIDUnexpected(t *testing.T) {
 	result, err := client.GetByPetID(context.Background(), "casper", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
-		DaysOfWeek: (*DaysOfWeekExtensibleEnum)(to.StringPtr("Weekend")),
-		IntEnum:    IntEnumTwo.ToPtr(),
-		Name:       to.StringPtr("Casper Ghosty"),
+		DaysOfWeek: (*DaysOfWeekExtensibleEnum)(to.Ptr("Weekend")),
+		IntEnum:    to.Ptr(IntEnumTwo),
+		Name:       to.Ptr("Casper Ghosty"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -62,9 +62,9 @@ func TestGetByPetIDAllowed(t *testing.T) {
 	result, err := client.GetByPetID(context.Background(), "scooby", nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Pet, Pet{
-		DaysOfWeek: DaysOfWeekExtensibleEnumThursday.ToPtr(),
-		IntEnum:    (*IntEnum)(to.StringPtr("2.1")),
-		Name:       to.StringPtr("Scooby Scarface"),
+		DaysOfWeek: to.Ptr(DaysOfWeekExtensibleEnumThursday),
+		IntEnum:    (*IntEnum)(to.Ptr("2.1")),
+		Name:       to.Ptr("Scooby Scarface"),
 	}); r != "" {
 		t.Fatal(r)
 	}

@@ -14,7 +14,7 @@ import (
 func newPathsClient() *PathsClient {
 	// dnsSuffix string, subscriptionID string
 	return NewPathsClient("test12", &PathsClientOptions{
-		DnsSuffix: to.StringPtr(":3000"),
+		DnsSuffix: to.Ptr(":3000"),
 	})
 }
 
@@ -22,7 +22,7 @@ func TestGetEmpty(t *testing.T) {
 	client := newPathsClient()
 	// vault string, secret string, keyName string, options *PathsGetEmptyOptions
 	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &PathsClientGetEmptyOptions{
-		KeyVersion: to.StringPtr("v1"),
+		KeyVersion: to.Ptr("v1"),
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)

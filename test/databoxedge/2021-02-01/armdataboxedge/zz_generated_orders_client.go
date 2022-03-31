@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -56,20 +56,16 @@ func NewOrdersClient(subscriptionID string, credential azcore.TokenCredential, o
 // order - The order to be created or updated.
 // options - OrdersClientBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate
 // method.
-func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (OrdersClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, deviceName, resourceGroupName, order, options)
-	if err != nil {
-		return OrdersClientCreateOrUpdatePollerResponse{}, err
+func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[OrdersClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, deviceName, resourceGroupName, order, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[OrdersClientCreateOrUpdateResponse]("OrdersClient.CreateOrUpdate", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[OrdersClientCreateOrUpdateResponse]("OrdersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := OrdersClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.pl)
-	if err != nil {
-		return OrdersClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &OrdersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates an order.
@@ -120,20 +116,16 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
-func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (OrdersClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
-	if err != nil {
-		return OrdersClientDeletePollerResponse{}, err
+func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*armruntime.Poller[OrdersClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[OrdersClientDeleteResponse]("OrdersClient.Delete", "", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[OrdersClientDeleteResponse]("OrdersClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := OrdersClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.pl)
-	if err != nil {
-		return OrdersClientDeletePollerResponse{}, err
-	}
-	result.Poller = &OrdersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the order related to the device.
@@ -240,16 +232,32 @@ func (client *OrdersClient) getHandleResponse(resp *http.Response) (OrdersClient
 // resourceGroupName - The resource group name.
 // options - OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
 // method.
-func (client *OrdersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *OrdersClientListByDataBoxEdgeDeviceOptions) *OrdersClientListByDataBoxEdgeDevicePager {
-	return &OrdersClientListByDataBoxEdgeDevicePager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+func (client *OrdersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *OrdersClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[OrdersClientListByDataBoxEdgeDeviceResponse] {
+	return runtime.NewPager(runtime.PageProcessor[OrdersClientListByDataBoxEdgeDeviceResponse]{
+		More: func(page OrdersClientListByDataBoxEdgeDeviceResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp OrdersClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.OrderList.NextLink)
+		Fetcher: func(ctx context.Context, page *OrdersClientListByDataBoxEdgeDeviceResponse) (OrdersClientListByDataBoxEdgeDeviceResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return OrdersClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return OrdersClientListByDataBoxEdgeDeviceResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return OrdersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByDataBoxEdgeDeviceHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.

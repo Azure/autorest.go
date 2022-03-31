@@ -21,22 +21,22 @@ func TestInheritanceGetValid(t *testing.T) {
 	result, err := client.GetValid(context.Background(), nil)
 	require.NoError(t, err)
 	if r := cmp.Diff(result.Siamese, Siamese{
-		ID:    to.Int32Ptr(2),
-		Name:  to.StringPtr("Siameeee"),
-		Color: to.StringPtr("green"),
+		ID:    to.Ptr[int32](2),
+		Name:  to.Ptr("Siameeee"),
+		Color: to.Ptr("green"),
 		Hates: []*Dog{
 			{
-				ID:   to.Int32Ptr(1),
-				Name: to.StringPtr("Potato"),
-				Food: to.StringPtr("tomato"),
+				ID:   to.Ptr[int32](1),
+				Name: to.Ptr("Potato"),
+				Food: to.Ptr("tomato"),
 			},
 			{
-				ID:   to.Int32Ptr(-1),
-				Name: to.StringPtr("Tomato"),
-				Food: to.StringPtr("french fries"),
+				ID:   to.Ptr[int32](-1),
+				Name: to.Ptr("Tomato"),
+				Food: to.Ptr("french fries"),
 			},
 		},
-		Breed: to.StringPtr("persian"),
+		Breed: to.Ptr("persian"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -45,22 +45,22 @@ func TestInheritanceGetValid(t *testing.T) {
 func TestInheritancePutValid(t *testing.T) {
 	client := newInheritanceClient()
 	result, err := client.PutValid(context.Background(), Siamese{
-		ID:    to.Int32Ptr(2),
-		Name:  to.StringPtr("Siameeee"),
-		Color: to.StringPtr("green"),
+		ID:    to.Ptr[int32](2),
+		Name:  to.Ptr("Siameeee"),
+		Color: to.Ptr("green"),
 		Hates: []*Dog{
 			{
-				ID:   to.Int32Ptr(1),
-				Name: to.StringPtr("Potato"),
-				Food: to.StringPtr("tomato"),
+				ID:   to.Ptr[int32](1),
+				Name: to.Ptr("Potato"),
+				Food: to.Ptr("tomato"),
 			},
 			{
-				ID:   to.Int32Ptr(-1),
-				Name: to.StringPtr("Tomato"),
-				Food: to.StringPtr("french fries"),
+				ID:   to.Ptr[int32](-1),
+				Name: to.Ptr("Tomato"),
+				Food: to.Ptr("french fries"),
 			},
 		},
-		Breed: to.StringPtr("persian"),
+		Breed: to.Ptr("persian"),
 	}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

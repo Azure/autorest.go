@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -110,20 +110,16 @@ func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *htt
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
 // options - ManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginDeleteBastionShareableLink
 // method.
-func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (ManagementClientDeleteBastionShareableLinkPollerResponse, error) {
-	resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
-	if err != nil {
-		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
+func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*armruntime.Poller[ManagementClientDeleteBastionShareableLinkResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ManagementClientDeleteBastionShareableLinkResponse]("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ManagementClientDeleteBastionShareableLinkResponse]("ManagementClient.DeleteBastionShareableLink", options.ResumeToken, client.pl, nil)
 	}
-	result := ManagementClientDeleteBastionShareableLinkPollerResponse{}
-	pt, err := armruntime.NewPoller("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl)
-	if err != nil {
-		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
-	}
-	result.Poller = &ManagementClientDeleteBastionShareableLinkPoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // DeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
@@ -176,16 +172,32 @@ func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx cont
 // sessionIDs - The list of sessionids to disconnect.
 // options - ManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the ManagementClient.DisconnectActiveSessions
 // method.
-func (client *ManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *ManagementClientDisconnectActiveSessionsOptions) *ManagementClientDisconnectActiveSessionsPager {
-	return &ManagementClientDisconnectActiveSessionsPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.disconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIDs, options)
+func (client *ManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *ManagementClientDisconnectActiveSessionsOptions) *runtime.Pager[ManagementClientDisconnectActiveSessionsResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ManagementClientDisconnectActiveSessionsResponse]{
+		More: func(page ManagementClientDisconnectActiveSessionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ManagementClientDisconnectActiveSessionsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.BastionSessionDeleteResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ManagementClientDisconnectActiveSessionsResponse) (ManagementClientDisconnectActiveSessionsResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.disconnectActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, sessionIDs, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ManagementClientDisconnectActiveSessionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ManagementClientDisconnectActiveSessionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ManagementClientDisconnectActiveSessionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.disconnectActiveSessionsHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // disconnectActiveSessionsCreateRequest creates the DisconnectActiveSessions request.
@@ -231,20 +243,16 @@ func (client *ManagementClient) disconnectActiveSessionsHandleResponse(resp *htt
 // vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
 // options - ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
 // for the ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
-func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse, error) {
-	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
-	if err != nil {
-		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
+func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*armruntime.Poller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", options.ResumeToken, client.pl, nil)
 	}
-	result := ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}
-	pt, err := armruntime.NewPoller("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl)
-	if err != nil {
-		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
-	}
-	result.Poller = &ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and
@@ -297,21 +305,35 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 // bastionHostName - The name of the Bastion Host.
 // options - ManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
 // method.
-func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (ManagementClientGetActiveSessionsPollerResponse, error) {
-	resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
-	if err != nil {
-		return ManagementClientGetActiveSessionsPollerResponse{}, err
+func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*armruntime.Poller[*runtime.Pager[ManagementClientGetActiveSessionsResponse]], error) {
+	pager := runtime.NewPager(runtime.PageProcessor[ManagementClientGetActiveSessionsResponse]{
+		More: func(page ManagementClientGetActiveSessionsResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ManagementClientGetActiveSessionsResponse) (ManagementClientGetActiveSessionsResponse, error) {
+			req, err := runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			if err != nil {
+				return ManagementClientGetActiveSessionsResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ManagementClientGetActiveSessionsResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ManagementClientGetActiveSessionsResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getActiveSessionsHandleResponse(resp)
+		},
+	})
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl, &pager)
+	} else {
+		return armruntime.NewPollerFromResumeToken("ManagementClient.GetActiveSessions", options.ResumeToken, client.pl, &pager)
 	}
-	result := ManagementClientGetActiveSessionsPollerResponse{}
-	pt, err := armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl)
-	if err != nil {
-		return ManagementClientGetActiveSessionsPollerResponse{}, err
-	}
-	result.Poller = &ManagementClientGetActiveSessionsPoller{
-		pt:     pt,
-		client: client,
-	}
-	return result, nil
 }
 
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
@@ -373,16 +395,32 @@ func (client *ManagementClient) getActiveSessionsHandleResponse(resp *http.Respo
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
 // options - ManagementClientGetBastionShareableLinkOptions contains the optional parameters for the ManagementClient.GetBastionShareableLink
 // method.
-func (client *ManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientGetBastionShareableLinkOptions) *ManagementClientGetBastionShareableLinkPager {
-	return &ManagementClientGetBastionShareableLinkPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
+func (client *ManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientGetBastionShareableLinkOptions) *runtime.Pager[ManagementClientGetBastionShareableLinkResponse] {
+	return runtime.NewPager(runtime.PageProcessor[ManagementClientGetBastionShareableLinkResponse]{
+		More: func(page ManagementClientGetBastionShareableLinkResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp ManagementClientGetBastionShareableLinkResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.BastionShareableLinkListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *ManagementClientGetBastionShareableLinkResponse) (ManagementClientGetBastionShareableLinkResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.getBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return ManagementClientGetBastionShareableLinkResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ManagementClientGetBastionShareableLinkResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ManagementClientGetBastionShareableLinkResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.getBastionShareableLinkHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // getBastionShareableLinkCreateRequest creates the GetBastionShareableLink request.
@@ -427,21 +465,35 @@ func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
 // options - ManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginPutBastionShareableLink
 // method.
-func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (ManagementClientPutBastionShareableLinkPollerResponse, error) {
-	resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
-	if err != nil {
-		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
+func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*armruntime.Poller[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]], error) {
+	pager := runtime.NewPager(runtime.PageProcessor[ManagementClientPutBastionShareableLinkResponse]{
+		More: func(page ManagementClientPutBastionShareableLinkResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
+		},
+		Fetcher: func(ctx context.Context, page *ManagementClientPutBastionShareableLinkResponse) (ManagementClientPutBastionShareableLinkResponse, error) {
+			req, err := runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			if err != nil {
+				return ManagementClientPutBastionShareableLinkResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return ManagementClientPutBastionShareableLinkResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return ManagementClientPutBastionShareableLinkResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.putBastionShareableLinkHandleResponse(resp)
+		},
+	})
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl, &pager)
+	} else {
+		return armruntime.NewPollerFromResumeToken("ManagementClient.PutBastionShareableLink", options.ResumeToken, client.pl, &pager)
 	}
-	result := ManagementClientPutBastionShareableLinkPollerResponse{}
-	pt, err := armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl)
-	if err != nil {
-		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
-	}
-	result.Poller = &ManagementClientPutBastionShareableLinkPoller{
-		pt:     pt,
-		client: client,
-	}
-	return result, nil
 }
 
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.

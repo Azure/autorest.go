@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -57,20 +57,16 @@ func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredent
 // routeFilterParameters - Parameters supplied to the create or update route filter operation.
 // options - RouteFiltersClientBeginCreateOrUpdateOptions contains the optional parameters for the RouteFiltersClient.BeginCreateOrUpdate
 // method.
-func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (RouteFiltersClientCreateOrUpdatePollerResponse, error) {
-	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
-	if err != nil {
-		return RouteFiltersClientCreateOrUpdatePollerResponse{}, err
+func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[RouteFiltersClientCreateOrUpdateResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[RouteFiltersClientCreateOrUpdateResponse]("RouteFiltersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[RouteFiltersClientCreateOrUpdateResponse]("RouteFiltersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
 	}
-	result := RouteFiltersClientCreateOrUpdatePollerResponse{}
-	pt, err := armruntime.NewPoller("RouteFiltersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
-	if err != nil {
-		return RouteFiltersClientCreateOrUpdatePollerResponse{}, err
-	}
-	result.Poller = &RouteFiltersClientCreateOrUpdatePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // CreateOrUpdate - Creates or updates a route filter in a specified resource group.
@@ -122,20 +118,16 @@ func (client *RouteFiltersClient) createOrUpdateCreateRequest(ctx context.Contex
 // routeFilterName - The name of the route filter.
 // options - RouteFiltersClientBeginDeleteOptions contains the optional parameters for the RouteFiltersClient.BeginDelete
 // method.
-func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (RouteFiltersClientDeletePollerResponse, error) {
-	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, options)
-	if err != nil {
-		return RouteFiltersClientDeletePollerResponse{}, err
+func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (*armruntime.Poller[RouteFiltersClientDeleteResponse], error) {
+	if options == nil || options.ResumeToken == "" {
+		resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, options)
+		if err != nil {
+			return nil, err
+		}
+		return armruntime.NewPoller[RouteFiltersClientDeleteResponse]("RouteFiltersClient.Delete", "location", resp, client.pl, nil)
+	} else {
+		return armruntime.NewPollerFromResumeToken[RouteFiltersClientDeleteResponse]("RouteFiltersClient.Delete", options.ResumeToken, client.pl, nil)
 	}
-	result := RouteFiltersClientDeletePollerResponse{}
-	pt, err := armruntime.NewPoller("RouteFiltersClient.Delete", "location", resp, client.pl)
-	if err != nil {
-		return RouteFiltersClientDeletePollerResponse{}, err
-	}
-	result.Poller = &RouteFiltersClientDeletePoller{
-		pt: pt,
-	}
-	return result, nil
 }
 
 // Delete - Deletes the specified route filter.
@@ -242,16 +234,32 @@ func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteF
 // List - Gets all route filters in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - RouteFiltersClientListOptions contains the optional parameters for the RouteFiltersClient.List method.
-func (client *RouteFiltersClient) List(options *RouteFiltersClientListOptions) *RouteFiltersClientListPager {
-	return &RouteFiltersClientListPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listCreateRequest(ctx, options)
+func (client *RouteFiltersClient) List(options *RouteFiltersClientListOptions) *runtime.Pager[RouteFiltersClientListResponse] {
+	return runtime.NewPager(runtime.PageProcessor[RouteFiltersClientListResponse]{
+		More: func(page RouteFiltersClientListResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp RouteFiltersClientListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *RouteFiltersClientListResponse) (RouteFiltersClientListResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listCreateRequest(ctx, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return RouteFiltersClientListResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return RouteFiltersClientListResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return RouteFiltersClientListResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listCreateRequest creates the List request.
@@ -286,16 +294,32 @@ func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (Route
 // resourceGroupName - The name of the resource group.
 // options - RouteFiltersClientListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.ListByResourceGroup
 // method.
-func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersClientListByResourceGroupOptions) *RouteFiltersClientListByResourceGroupPager {
-	return &RouteFiltersClientListByResourceGroupPager{
-		client: client,
-		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersClientListByResourceGroupOptions) *runtime.Pager[RouteFiltersClientListByResourceGroupResponse] {
+	return runtime.NewPager(runtime.PageProcessor[RouteFiltersClientListByResourceGroupResponse]{
+		More: func(page RouteFiltersClientListByResourceGroupResponse) bool {
+			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		advancer: func(ctx context.Context, resp RouteFiltersClientListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
+		Fetcher: func(ctx context.Context, page *RouteFiltersClientListByResourceGroupResponse) (RouteFiltersClientListByResourceGroupResponse, error) {
+			var req *policy.Request
+			var err error
+			if page == nil {
+				req, err = client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
+			} else {
+				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
+			}
+			if err != nil {
+				return RouteFiltersClientListByResourceGroupResponse{}, err
+			}
+			resp, err := client.pl.Do(req)
+			if err != nil {
+				return RouteFiltersClientListByResourceGroupResponse{}, err
+			}
+			if !runtime.HasStatusCode(resp, http.StatusOK) {
+				return RouteFiltersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+			}
+			return client.listByResourceGroupHandleResponse(resp)
 		},
-	}
+	})
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.

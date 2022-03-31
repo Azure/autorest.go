@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -34,11 +34,6 @@ func PossibleCMYKColorsValues() []CMYKColors {
 	}
 }
 
-// ToPtr returns a *CMYKColors pointing to the current value.
-func (c CMYKColors) ToPtr() *CMYKColors {
-	return &c
-}
-
 // GoblinSharkColor - Colors possible
 type GoblinSharkColor string
 
@@ -63,11 +58,6 @@ func PossibleGoblinSharkColorValues() []GoblinSharkColor {
 	}
 }
 
-// ToPtr returns a *GoblinSharkColor pointing to the current value.
-func (c GoblinSharkColor) ToPtr() *GoblinSharkColor {
-	return &c
-}
-
 type MyKind string
 
 const (
@@ -79,9 +69,4 @@ func PossibleMyKindValues() []MyKind {
 	return []MyKind{
 		MyKindKind1,
 	}
-}
-
-// ToPtr returns a *MyKind pointing to the current value.
-func (c MyKind) ToPtr() *MyKind {
-	return &c
 }

@@ -12,10 +12,10 @@ import (
 )
 
 func TestGetAllWithValues(t *testing.T) {
-	grp := NewPathItemsClient("globalStringPath", to.StringPtr("globalStringQuery"), nil)
+	grp := NewPathItemsClient("globalStringPath", to.Ptr("globalStringQuery"), nil)
 	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetAllWithValuesOptions{
-		LocalStringQuery:    to.StringPtr("localStringQuery"),
-		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
+		LocalStringQuery:    to.Ptr("localStringQuery"),
+		PathItemStringQuery: to.Ptr("pathItemStringQuery"),
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -24,7 +24,7 @@ func TestGetAllWithValues(t *testing.T) {
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 	grp := NewPathItemsClient("globalStringPath", nil, nil)
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetGlobalAndLocalQueryNullOptions{
-		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
+		PathItemStringQuery: to.Ptr("pathItemStringQuery"),
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)
@@ -33,15 +33,15 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 func TestGetGlobalQueryNull(t *testing.T) {
 	grp := NewPathItemsClient("globalStringPath", nil, nil)
 	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetGlobalQueryNullOptions{
-		LocalStringQuery:    to.StringPtr("localStringQuery"),
-		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
+		LocalStringQuery:    to.Ptr("localStringQuery"),
+		PathItemStringQuery: to.Ptr("pathItemStringQuery"),
 	})
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
-	grp := NewPathItemsClient("globalStringPath", to.StringPtr("globalStringQuery"), nil)
+	grp := NewPathItemsClient("globalStringPath", to.Ptr("globalStringQuery"), nil)
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

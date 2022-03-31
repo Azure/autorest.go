@@ -1,5 +1,5 @@
-//go:build go1.16
-// +build go1.16
+//go:build go1.18
+// +build go1.18
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
@@ -38,11 +38,6 @@ func PossiblePluginCurrentStateValues() []PluginCurrentState {
 	}
 }
 
-// ToPtr returns a *PluginCurrentState pointing to the current value.
-func (c PluginCurrentState) ToPtr() *PluginCurrentState {
-	return &c
-}
-
 type SchedulerCurrentState string
 
 const (
@@ -58,11 +53,6 @@ func PossibleSchedulerCurrentStateValues() []SchedulerCurrentState {
 		SchedulerCurrentStateQueued,
 		SchedulerCurrentStateScheduled,
 	}
-}
-
-// ToPtr returns a *SchedulerCurrentState pointing to the current value.
-func (c SchedulerCurrentState) ToPtr() *SchedulerCurrentState {
-	return &c
 }
 
 // SparkBatchJobResultType - The Spark batch job result.
@@ -85,11 +75,6 @@ func PossibleSparkBatchJobResultTypeValues() []SparkBatchJobResultType {
 	}
 }
 
-// ToPtr returns a *SparkBatchJobResultType pointing to the current value.
-func (c SparkBatchJobResultType) ToPtr() *SparkBatchJobResultType {
-	return &c
-}
-
 type SparkErrorSource string
 
 const (
@@ -109,11 +94,6 @@ func PossibleSparkErrorSourceValues() []SparkErrorSource {
 	}
 }
 
-// ToPtr returns a *SparkErrorSource pointing to the current value.
-func (c SparkErrorSource) ToPtr() *SparkErrorSource {
-	return &c
-}
-
 // SparkJobType - The job type.
 type SparkJobType string
 
@@ -128,11 +108,6 @@ func PossibleSparkJobTypeValues() []SparkJobType {
 		SparkJobTypeSparkBatch,
 		SparkJobTypeSparkSession,
 	}
-}
-
-// ToPtr returns a *SparkJobType pointing to the current value.
-func (c SparkJobType) ToPtr() *SparkJobType {
-	return &c
 }
 
 type SparkSessionResultType string
@@ -154,11 +129,6 @@ func PossibleSparkSessionResultTypeValues() []SparkSessionResultType {
 	}
 }
 
-// ToPtr returns a *SparkSessionResultType pointing to the current value.
-func (c SparkSessionResultType) ToPtr() *SparkSessionResultType {
-	return &c
-}
-
 type SparkStatementLanguageType string
 
 const (
@@ -176,9 +146,4 @@ func PossibleSparkStatementLanguageTypeValues() []SparkStatementLanguageType {
 		SparkStatementLanguageTypeSQL,
 		SparkStatementLanguageTypeSpark,
 	}
-}
-
-// ToPtr returns a *SparkStatementLanguageType pointing to the current value.
-func (c SparkStatementLanguageType) ToPtr() *SparkStatementLanguageType {
-	return &c
 }
