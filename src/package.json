@@ -44,12 +44,11 @@
   "readme": "https://github.com/Azure/autorest.go/blob/track2/readme.md",
   "devDependencies": {
     "@types/js-yaml": "3.12.1",
-    "@types/node": "12.7.2",
+    "@types/node": "17.0.23",
     "typescript": "~4.4.3",
     "@typescript-eslint/eslint-plugin": "~2.6.0",
     "@typescript-eslint/parser": "~2.6.0",
     "@microsoft.azure/autorest.testserver": "3.3.5",
-    "@autorest/autorest": "~3.0.6173",
     "eslint": "~6.6.0",
     "@autorest/extension-base": "~3.4.4",
     "@azure-tools/codegen": "~2.9.1",
