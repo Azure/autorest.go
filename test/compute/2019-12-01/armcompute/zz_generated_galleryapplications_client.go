@@ -71,9 +71,9 @@ func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryApplicationsClientCreateOrUpdateResponse]("GalleryApplicationsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryApplicationsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientCreateOrUpdateResponse]("GalleryApplicationsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -137,9 +137,9 @@ func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryApplicationsClientDeleteResponse]("GalleryApplicationsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryApplicationsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientDeleteResponse]("GalleryApplicationsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -335,9 +335,9 @@ func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryApplicationsClientUpdateResponse]("GalleryApplicationsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryApplicationsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientUpdateResponse]("GalleryApplicationsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

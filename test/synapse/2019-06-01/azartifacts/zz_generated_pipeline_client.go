@@ -47,9 +47,9 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[pipelineClientCreateOrUpdatePipelineResponse]("pipelineClient.CreateOrUpdatePipeline", resp, client.pl, nil)
+		return runtime.NewPoller[pipelineClientCreateOrUpdatePipelineResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[pipelineClientCreateOrUpdatePipelineResponse]("pipelineClient.CreateOrUpdatePipeline", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[pipelineClientCreateOrUpdatePipelineResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -161,9 +161,9 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[pipelineClientDeletePipelineResponse]("pipelineClient.DeletePipeline", resp, client.pl, nil)
+		return runtime.NewPoller[pipelineClientDeletePipelineResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[pipelineClientDeletePipelineResponse]("pipelineClient.DeletePipeline", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[pipelineClientDeletePipelineResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -318,9 +318,9 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[pipelineClientRenamePipelineResponse]("pipelineClient.RenamePipeline", resp, client.pl, nil)
+		return runtime.NewPoller[pipelineClientRenamePipelineResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[pipelineClientRenamePipelineResponse]("pipelineClient.RenamePipeline", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[pipelineClientRenamePipelineResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

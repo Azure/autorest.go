@@ -70,9 +70,9 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientCreateOrUpdateResponse]("DisksClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DisksClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientCreateOrUpdateResponse]("DisksClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DisksClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -132,9 +132,9 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientDeleteResponse]("DisksClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DisksClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientDeleteResponse]("DisksClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DisksClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -251,9 +251,11 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientGrantAccessResponse]("DisksClient.GrantAccess", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[DisksClientGrantAccessResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientGrantAccessResponse]("DisksClient.GrantAccess", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DisksClientGrantAccessResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -435,9 +437,11 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientRevokeAccessResponse]("DisksClient.RevokeAccess", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[DisksClientRevokeAccessResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientRevokeAccessResponse]("DisksClient.RevokeAccess", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DisksClientRevokeAccessResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -497,9 +501,9 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientUpdateResponse]("DisksClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DisksClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientUpdateResponse]("DisksClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DisksClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -68,9 +68,9 @@ func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, de
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[StorageAccountsClientCreateOrUpdateResponse]("StorageAccountsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[StorageAccountsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[StorageAccountsClientCreateOrUpdateResponse]("StorageAccountsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[StorageAccountsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +134,9 @@ func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[StorageAccountsClientDeleteResponse]("StorageAccountsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[StorageAccountsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[StorageAccountsClientDeleteResponse]("StorageAccountsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[StorageAccountsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

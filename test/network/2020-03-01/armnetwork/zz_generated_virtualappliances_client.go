@@ -68,9 +68,11 @@ func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualAppliancesClientCreateOrUpdateResponse]("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualAppliancesClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualAppliancesClientCreateOrUpdateResponse]("VirtualAppliancesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualAppliancesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualAppliancesClientDeleteResponse]("VirtualAppliancesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualAppliancesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualAppliancesClientDeleteResponse]("VirtualAppliancesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualAppliancesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

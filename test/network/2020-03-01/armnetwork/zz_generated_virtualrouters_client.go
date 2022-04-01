@@ -68,9 +68,11 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualRoutersClientCreateOrUpdateResponse]("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualRoutersClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualRoutersClientCreateOrUpdateResponse]("VirtualRoutersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualRoutersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualRoutersClientDeleteResponse]("VirtualRoutersClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualRoutersClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualRoutersClientDeleteResponse]("VirtualRoutersClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualRoutersClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -68,9 +68,11 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNServerConfigurationsClientCreateOrUpdateResponse]("VPNServerConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNServerConfigurationsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsClientCreateOrUpdateResponse]("VPNServerConfigurationsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNServerConfigurationsClientDeleteResponse]("VPNServerConfigurationsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNServerConfigurationsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsClientDeleteResponse]("VPNServerConfigurationsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

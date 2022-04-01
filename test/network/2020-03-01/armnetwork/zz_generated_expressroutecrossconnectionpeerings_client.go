@@ -69,9 +69,11 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCrossConnectionPeeringsClientDeleteResponse]("ExpressRouteCrossConnectionPeeringsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCrossConnectionPeeringsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionPeeringsClientDeleteResponse]("ExpressRouteCrossConnectionPeeringsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionPeeringsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

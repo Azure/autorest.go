@@ -67,9 +67,11 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse]("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse]("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -126,9 +128,11 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityB
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse]("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse]("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -189,9 +193,11 @@ func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateLinkServicesClientCreateOrUpdateResponse]("PrivateLinkServicesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateLinkServicesClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientCreateOrUpdateResponse]("PrivateLinkServicesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -250,9 +256,11 @@ func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateLinkServicesClientDeleteResponse]("PrivateLinkServicesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateLinkServicesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientDeleteResponse]("PrivateLinkServicesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -312,9 +320,11 @@ func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ct
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateLinkServicesClientDeletePrivateEndpointConnectionResponse]("PrivateLinkServicesClient.DeletePrivateEndpointConnection", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateLinkServicesClientDeletePrivateEndpointConnectionResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientDeletePrivateEndpointConnectionResponse]("PrivateLinkServicesClient.DeletePrivateEndpointConnection", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateLinkServicesClientDeletePrivateEndpointConnectionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -69,9 +69,11 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PacketCapturesClientCreateResponse]("PacketCapturesClient.Create", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PacketCapturesClientCreateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PacketCapturesClientCreateResponse]("PacketCapturesClient.Create", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PacketCapturesClientCreateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PacketCapturesClientDeleteResponse]("PacketCapturesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PacketCapturesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PacketCapturesClientDeleteResponse]("PacketCapturesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PacketCapturesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -261,9 +265,11 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PacketCapturesClientGetStatusResponse]("PacketCapturesClient.GetStatus", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PacketCapturesClientGetStatusResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PacketCapturesClientGetStatusResponse]("PacketCapturesClient.GetStatus", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PacketCapturesClientGetStatusResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -389,9 +395,11 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PacketCapturesClientStopResponse]("PacketCapturesClient.Stop", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PacketCapturesClientStopResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PacketCapturesClientStopResponse]("PacketCapturesClient.Stop", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PacketCapturesClientStopResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

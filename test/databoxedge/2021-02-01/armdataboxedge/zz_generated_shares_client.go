@@ -68,9 +68,9 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SharesClientCreateOrUpdateResponse]("SharesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SharesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SharesClientCreateOrUpdateResponse]("SharesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SharesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -133,9 +133,9 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SharesClientDeleteResponse]("SharesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SharesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SharesClientDeleteResponse]("SharesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SharesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -327,9 +327,9 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SharesClientRefreshResponse]("SharesClient.Refresh", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SharesClientRefreshResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SharesClientRefreshResponse]("SharesClient.Refresh", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SharesClientRefreshResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

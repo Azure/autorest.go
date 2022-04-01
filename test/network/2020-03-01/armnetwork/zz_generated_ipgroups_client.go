@@ -68,9 +68,11 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[IPGroupsClientCreateOrUpdateResponse]("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[IPGroupsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[IPGroupsClientCreateOrUpdateResponse]("IPGroupsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[IPGroupsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +130,11 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[IPGroupsClientDeleteResponse]("IPGroupsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[IPGroupsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[IPGroupsClientDeleteResponse]("IPGroupsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[IPGroupsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

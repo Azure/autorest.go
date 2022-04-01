@@ -68,9 +68,11 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkTapsClientCreateOrUpdateResponse]("VirtualNetworkTapsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkTapsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkTapsClientCreateOrUpdateResponse]("VirtualNetworkTapsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkTapsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkTapsClientDeleteResponse]("VirtualNetworkTapsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkTapsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkTapsClientDeleteResponse]("VirtualNetworkTapsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkTapsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

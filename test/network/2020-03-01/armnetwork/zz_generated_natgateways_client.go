@@ -68,9 +68,11 @@ func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[NatGatewaysClientCreateOrUpdateResponse]("NatGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[NatGatewaysClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[NatGatewaysClientCreateOrUpdateResponse]("NatGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[NatGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +130,11 @@ func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[NatGatewaysClientDeleteResponse]("NatGatewaysClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[NatGatewaysClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[NatGatewaysClientDeleteResponse]("NatGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[NatGatewaysClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

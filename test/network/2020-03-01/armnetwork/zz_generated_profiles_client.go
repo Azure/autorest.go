@@ -122,9 +122,11 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ProfilesClientDeleteResponse]("ProfilesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ProfilesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ProfilesClientDeleteResponse]("ProfilesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ProfilesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

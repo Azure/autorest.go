@@ -46,9 +46,9 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[notebookClientCreateOrUpdateNotebookResponse]("notebookClient.CreateOrUpdateNotebook", resp, client.pl, nil)
+		return runtime.NewPoller[notebookClientCreateOrUpdateNotebookResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[notebookClientCreateOrUpdateNotebookResponse]("notebookClient.CreateOrUpdateNotebook", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[notebookClientCreateOrUpdateNotebookResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,9 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[notebookClientDeleteNotebookResponse]("notebookClient.DeleteNotebook", resp, client.pl, nil)
+		return runtime.NewPoller[notebookClientDeleteNotebookResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[notebookClientDeleteNotebookResponse]("notebookClient.DeleteNotebook", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[notebookClientDeleteNotebookResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -313,9 +313,9 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[notebookClientRenameNotebookResponse]("notebookClient.RenameNotebook", resp, client.pl, nil)
+		return runtime.NewPoller[notebookClientRenameNotebookResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[notebookClientRenameNotebookResponse]("notebookClient.RenameNotebook", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[notebookClientRenameNotebookResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

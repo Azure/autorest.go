@@ -182,9 +182,9 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -246,9 +246,9 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse]("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

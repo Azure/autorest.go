@@ -69,9 +69,11 @@ func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Con
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualHubRouteTableV2SClientCreateOrUpdateResponse]("VirtualHubRouteTableV2SClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualHubRouteTableV2SClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualHubRouteTableV2SClientCreateOrUpdateResponse]("VirtualHubRouteTableV2SClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualHubRouteTableV2SClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualHubRouteTableV2SClientDeleteResponse]("VirtualHubRouteTableV2SClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualHubRouteTableV2SClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualHubRouteTableV2SClientDeleteResponse]("VirtualHubRouteTableV2SClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualHubRouteTableV2SClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

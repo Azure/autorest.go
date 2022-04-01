@@ -1311,6 +1311,8 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   const clientName = op.language.go!.clientName;
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
+  } else {
+    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   }
   let text = '';
   if (hasDescription(op.language.go!)) {
@@ -1327,35 +1329,87 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   let pollerType = 'nil';
   let pollerTypeParam = `[${getResponseEnvelopeName(op)}]`;
   if (isPageableOperation(op)) {
-    // pager doesn't neet it as the type is inferred from the pager param
-    pollerTypeParam = '';
+    // for paged LROs, we construct a pager and pass it to the LRO ctor.
+    pollerTypeParam = `[*runtime.Pager${pollerTypeParam}]`;
     pollerType = '&pager';
     text += '\tpager := ';
     text += emitPagerDefinition(op, imports);
   }
-  const packageName = isARM ? 'armruntime' : 'runtime';
+
   text += '\tif options == nil || options.ResumeToken == "" {\n';
+  // creating the poller from response branch
+
   let opName = op.language.go!.name;
   opName = info.protocolNaming.internalMethod;
   text += `\t\tresp, err := client.${opName}(${getCreateRequestParameters(op)})\n`;
   text += `\t\tif err != nil {\n`;
   text += `\t\t\treturn ${zeroResp}, err\n`;
   text += `\t\t}\n`;
-  if (isARM) {
-    // LRO operation might have a special configuration set in x-ms-long-running-operation-options
-    // which indicates a specific url to perform the final Get operation on
-    let finalState = '';
-    if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
-      finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
+
+  const packageName = isARM ? 'armruntime' : 'runtime';
+
+  let finalStateVia = '';
+  // LRO operation might have a special configuration set in x-ms-long-running-operation-options
+  // which indicates a specific url to perform the final Get operation on
+  if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
+    finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
+    switch (finalStateVia) {
+      case "azure-async-operation":
+        finalStateVia = `${packageName}.FinalStateViaAzureAsyncOp`;
+        break;
+      case "location":
+        finalStateVia = `${packageName}.FinalStateViaLocation`;
+        break;
+      case "original-uri":
+        finalStateVia = `${packageName}.FinalStateViaOriginalURI`;
+        break;
+      case "operation-location":
+        finalStateVia = `${packageName}.FinalStateViaOpLocation`;
+        break;
+      default:
+        throw new Error(`unhandled final-state-via value ${finalStateVia}`);
     }
-    text += `\t\treturn ${packageName}.NewPoller${pollerTypeParam}("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.pl, ${pollerType})\n`;
+  }
+
+  text += `\t\treturn ${packageName}.NewPoller`;
+  if (finalStateVia === '' && pollerType === 'nil') {
+    // the generic type param is redundant when it's also specified in the
+    // options struct so we only include it when there's no options.
+    text += pollerTypeParam;
+  }
+  text += '(resp, client.pl, ';
+  if (finalStateVia === '' && pollerType === 'nil') {
+    // no options
+    text += 'nil)\n';
   } else {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    text += `\t\treturn runtime.NewPoller${pollerTypeParam}("${clientName}.${op.language.go!.name}", resp, client.pl, ${pollerType})\n`;
+    // at least one option
+    text += `&${packageName}.NewPollerOptions${pollerTypeParam}{\n`;
+    if (finalStateVia !== '') {
+      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
+    }
+    if (pollerType !== 'nil') {
+      text += `\t\t\tResponse: ${pollerType},\n`;
+    }
+    text += '\t\t})\n';
   }
   text += '\t} else {\n';
-  text += `\t\treturn ${packageName}.NewPollerFromResumeToken${pollerTypeParam}("${clientName}.${op.language.go!.name}", options.ResumeToken, client.pl, ${pollerType})\n`;
+
+  // creating the poller from resume token branch
+
+  text += `\t\treturn ${packageName}.NewPollerFromResumeToken`;
+  if (pollerType === 'nil') {
+    text += pollerTypeParam;
+  }
+  text += '(options.ResumeToken, client.pl, ';
+  if (pollerType === 'nil') {
+    text += 'nil)\n';
+  } else {
+    text += `&${packageName}.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
+    text += `\t\t\tResponse: ${pollerType},\n`;
+    text  += '\t\t})\n';
+  }
   text += '\t}\n';
+
   text += '}\n\n';
   return text;
 }

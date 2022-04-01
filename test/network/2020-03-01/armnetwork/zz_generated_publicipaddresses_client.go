@@ -68,9 +68,11 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PublicIPAddressesClientCreateOrUpdateResponse]("PublicIPAddressesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PublicIPAddressesClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PublicIPAddressesClientCreateOrUpdateResponse]("PublicIPAddressesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PublicIPAddressesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PublicIPAddressesClientDeleteResponse]("PublicIPAddressesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PublicIPAddressesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PublicIPAddressesClientDeleteResponse]("PublicIPAddressesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PublicIPAddressesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -46,9 +46,9 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[datasetClientCreateOrUpdateDatasetResponse]("datasetClient.CreateOrUpdateDataset", resp, client.pl, nil)
+		return runtime.NewPoller[datasetClientCreateOrUpdateDatasetResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[datasetClientCreateOrUpdateDatasetResponse]("datasetClient.CreateOrUpdateDataset", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[datasetClientCreateOrUpdateDatasetResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,9 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[datasetClientDeleteDatasetResponse]("datasetClient.DeleteDataset", resp, client.pl, nil)
+		return runtime.NewPoller[datasetClientDeleteDatasetResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[datasetClientDeleteDatasetResponse]("datasetClient.DeleteDataset", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[datasetClientDeleteDatasetResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -258,9 +258,9 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[datasetClientRenameDatasetResponse]("datasetClient.RenameDataset", resp, client.pl, nil)
+		return runtime.NewPoller[datasetClientRenameDatasetResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[datasetClientRenameDatasetResponse]("datasetClient.RenameDataset", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[datasetClientRenameDatasetResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

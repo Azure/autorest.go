@@ -68,9 +68,11 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualWansClientCreateOrUpdateResponse]("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualWansClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualWansClientCreateOrUpdateResponse]("VirtualWansClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualWansClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +130,11 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualWansClientDeleteResponse]("VirtualWansClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualWansClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualWansClientDeleteResponse]("VirtualWansClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualWansClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

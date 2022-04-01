@@ -69,9 +69,11 @@ func (client *WatchersClient) BeginCheckConnectivity(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientCheckConnectivityResponse]("WatchersClient.CheckConnectivity", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientCheckConnectivityResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientCheckConnectivityResponse]("WatchersClient.CheckConnectivity", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientCheckConnectivityResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -186,9 +188,11 @@ func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientDeleteResponse]("WatchersClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientDeleteResponse]("WatchersClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -304,9 +308,11 @@ func (client *WatchersClient) BeginGetAzureReachabilityReport(ctx context.Contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetAzureReachabilityReportResponse]("WatchersClient.GetAzureReachabilityReport", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetAzureReachabilityReportResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetAzureReachabilityReportResponse]("WatchersClient.GetAzureReachabilityReport", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetAzureReachabilityReportResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -367,9 +373,11 @@ func (client *WatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetFlowLogStatusResponse]("WatchersClient.GetFlowLogStatus", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetFlowLogStatusResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetFlowLogStatusResponse]("WatchersClient.GetFlowLogStatus", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetFlowLogStatusResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -433,9 +441,11 @@ func (client *WatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetNetworkConfigurationDiagnosticResponse]("WatchersClient.GetNetworkConfigurationDiagnostic", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetNetworkConfigurationDiagnosticResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetNetworkConfigurationDiagnosticResponse]("WatchersClient.GetNetworkConfigurationDiagnostic", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetNetworkConfigurationDiagnosticResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -499,9 +509,11 @@ func (client *WatchersClient) BeginGetNextHop(ctx context.Context, resourceGroup
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetNextHopResponse]("WatchersClient.GetNextHop", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetNextHopResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetNextHopResponse]("WatchersClient.GetNextHop", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetNextHopResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -617,9 +629,11 @@ func (client *WatchersClient) BeginGetTroubleshooting(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetTroubleshootingResponse]("WatchersClient.GetTroubleshooting", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetTroubleshootingResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetTroubleshootingResponse]("WatchersClient.GetTroubleshooting", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetTroubleshootingResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -679,9 +693,11 @@ func (client *WatchersClient) BeginGetTroubleshootingResult(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetTroubleshootingResultResponse]("WatchersClient.GetTroubleshootingResult", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetTroubleshootingResultResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetTroubleshootingResultResponse]("WatchersClient.GetTroubleshootingResult", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetTroubleshootingResultResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -741,9 +757,11 @@ func (client *WatchersClient) BeginGetVMSecurityRules(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientGetVMSecurityRulesResponse]("WatchersClient.GetVMSecurityRules", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientGetVMSecurityRulesResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientGetVMSecurityRulesResponse]("WatchersClient.GetVMSecurityRules", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientGetVMSecurityRulesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -913,9 +931,11 @@ func (client *WatchersClient) BeginListAvailableProviders(ctx context.Context, r
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientListAvailableProvidersResponse]("WatchersClient.ListAvailableProviders", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientListAvailableProvidersResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientListAvailableProvidersResponse]("WatchersClient.ListAvailableProviders", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientListAvailableProvidersResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -976,9 +996,11 @@ func (client *WatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientSetFlowLogConfigurationResponse]("WatchersClient.SetFlowLogConfiguration", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientSetFlowLogConfigurationResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientSetFlowLogConfigurationResponse]("WatchersClient.SetFlowLogConfiguration", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientSetFlowLogConfigurationResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1094,9 +1116,11 @@ func (client *WatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WatchersClientVerifyIPFlowResponse]("WatchersClient.VerifyIPFlow", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WatchersClientVerifyIPFlowResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WatchersClientVerifyIPFlowResponse]("WatchersClient.VerifyIPFlow", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WatchersClientVerifyIPFlowResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

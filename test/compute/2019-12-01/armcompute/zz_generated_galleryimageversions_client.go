@@ -72,9 +72,9 @@ func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryImageVersionsClientCreateOrUpdateResponse]("GalleryImageVersionsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryImageVersionsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryImageVersionsClientCreateOrUpdateResponse]("GalleryImageVersionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryImageVersionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -143,9 +143,9 @@ func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryImageVersionsClientDeleteResponse]("GalleryImageVersionsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryImageVersionsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryImageVersionsClientDeleteResponse]("GalleryImageVersionsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryImageVersionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -360,9 +360,9 @@ func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryImageVersionsClientUpdateResponse]("GalleryImageVersionsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryImageVersionsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryImageVersionsClientUpdateResponse]("GalleryImageVersionsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryImageVersionsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

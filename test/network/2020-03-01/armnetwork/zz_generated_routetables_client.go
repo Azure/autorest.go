@@ -68,9 +68,11 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[RouteTablesClientCreateOrUpdateResponse]("RouteTablesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[RouteTablesClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[RouteTablesClientCreateOrUpdateResponse]("RouteTablesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[RouteTablesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +130,11 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[RouteTablesClientDeleteResponse]("RouteTablesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[RouteTablesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[RouteTablesClientDeleteResponse]("RouteTablesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[RouteTablesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

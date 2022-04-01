@@ -68,9 +68,9 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[RolesClientCreateOrUpdateResponse]("RolesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[RolesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[RolesClientCreateOrUpdateResponse]("RolesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[RolesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -133,9 +133,9 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[RolesClientDeleteResponse]("RolesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[RolesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[RolesClientDeleteResponse]("RolesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[RolesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

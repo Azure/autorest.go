@@ -69,9 +69,11 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[FirewallPolicyRuleGroupsClientCreateOrUpdateResponse]("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[FirewallPolicyRuleGroupsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[FirewallPolicyRuleGroupsClientCreateOrUpdateResponse]("FirewallPolicyRuleGroupsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[FirewallPolicyRuleGroupsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[FirewallPolicyRuleGroupsClientDeleteResponse]("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[FirewallPolicyRuleGroupsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[FirewallPolicyRuleGroupsClientDeleteResponse]("FirewallPolicyRuleGroupsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[FirewallPolicyRuleGroupsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

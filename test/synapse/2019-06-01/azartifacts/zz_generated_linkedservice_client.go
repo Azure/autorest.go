@@ -46,9 +46,9 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[linkedServiceClientCreateOrUpdateLinkedServiceResponse]("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl, nil)
+		return runtime.NewPoller[linkedServiceClientCreateOrUpdateLinkedServiceResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[linkedServiceClientCreateOrUpdateLinkedServiceResponse]("linkedServiceClient.CreateOrUpdateLinkedService", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[linkedServiceClientCreateOrUpdateLinkedServiceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,9 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[linkedServiceClientDeleteLinkedServiceResponse]("linkedServiceClient.DeleteLinkedService", resp, client.pl, nil)
+		return runtime.NewPoller[linkedServiceClientDeleteLinkedServiceResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[linkedServiceClientDeleteLinkedServiceResponse]("linkedServiceClient.DeleteLinkedService", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[linkedServiceClientDeleteLinkedServiceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -259,9 +259,9 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[linkedServiceClientRenameLinkedServiceResponse]("linkedServiceClient.RenameLinkedService", resp, client.pl, nil)
+		return runtime.NewPoller[linkedServiceClientRenameLinkedServiceResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[linkedServiceClientRenameLinkedServiceResponse]("linkedServiceClient.RenameLinkedService", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[linkedServiceClientRenameLinkedServiceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

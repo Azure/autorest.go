@@ -69,9 +69,11 @@ func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Con
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteConnectionsClientCreateOrUpdateResponse]("ExpressRouteConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteConnectionsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteConnectionsClientCreateOrUpdateResponse]("ExpressRouteConnectionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteConnectionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteConnectionsClientDeleteResponse]("ExpressRouteConnectionsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteConnectionsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteConnectionsClientDeleteResponse]("ExpressRouteConnectionsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteConnectionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

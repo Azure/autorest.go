@@ -68,9 +68,11 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[AzureFirewallsClientCreateOrUpdateResponse]("AzureFirewallsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[AzureFirewallsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[AzureFirewallsClientCreateOrUpdateResponse]("AzureFirewallsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[AzureFirewallsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[AzureFirewallsClientDeleteResponse]("AzureFirewallsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[AzureFirewallsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[AzureFirewallsClientDeleteResponse]("AzureFirewallsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[AzureFirewallsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -367,9 +371,11 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[AzureFirewallsClientUpdateTagsResponse]("AzureFirewallsClient.UpdateTags", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[AzureFirewallsClientUpdateTagsResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[AzureFirewallsClientUpdateTagsResponse]("AzureFirewallsClient.UpdateTags", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[AzureFirewallsClientUpdateTagsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

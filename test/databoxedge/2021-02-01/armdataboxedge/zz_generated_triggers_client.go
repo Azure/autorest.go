@@ -68,9 +68,9 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[TriggersClientCreateOrUpdateResponse]("TriggersClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[TriggersClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[TriggersClientCreateOrUpdateResponse]("TriggersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[TriggersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -133,9 +133,9 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[TriggersClientDeleteResponse]("TriggersClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[TriggersClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[TriggersClientDeleteResponse]("TriggersClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[TriggersClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

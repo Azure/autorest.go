@@ -69,9 +69,11 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SubnetsClientCreateOrUpdateResponse]("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[SubnetsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[SubnetsClientCreateOrUpdateResponse]("SubnetsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SubnetsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +136,11 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SubnetsClientDeleteResponse]("SubnetsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[SubnetsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[SubnetsClientDeleteResponse]("SubnetsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SubnetsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -332,9 +336,11 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SubnetsClientPrepareNetworkPoliciesResponse]("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[SubnetsClientPrepareNetworkPoliciesResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[SubnetsClientPrepareNetworkPoliciesResponse]("SubnetsClient.PrepareNetworkPolicies", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SubnetsClientPrepareNetworkPoliciesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -399,9 +405,11 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SubnetsClientUnprepareNetworkPoliciesResponse]("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[SubnetsClientUnprepareNetworkPoliciesResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[SubnetsClientUnprepareNetworkPoliciesResponse]("SubnetsClient.UnprepareNetworkPolicies", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SubnetsClientUnprepareNetworkPoliciesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

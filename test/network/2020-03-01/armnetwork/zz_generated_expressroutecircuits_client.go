@@ -68,9 +68,11 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitsClientCreateOrUpdateResponse]("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientCreateOrUpdateResponse]("ExpressRouteCircuitsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitsClientDeleteResponse]("ExpressRouteCircuitsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientDeleteResponse]("ExpressRouteCircuitsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -488,9 +492,11 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitsClientListArpTableResponse]("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitsClientListArpTableResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientListArpTableResponse]("ExpressRouteCircuitsClient.ListArpTable", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientListArpTableResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -560,9 +566,11 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitsClientListRoutesTableResponse]("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitsClientListRoutesTableResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientListRoutesTableResponse]("ExpressRouteCircuitsClient.ListRoutesTable", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientListRoutesTableResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -632,9 +640,11 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitsClientListRoutesTableSummaryResponse]("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitsClientListRoutesTableSummaryResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientListRoutesTableSummaryResponse]("ExpressRouteCircuitsClient.ListRoutesTableSummary", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitsClientListRoutesTableSummaryResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

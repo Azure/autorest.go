@@ -69,9 +69,11 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[FlowLogsClientCreateOrUpdateResponse]("FlowLogsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[FlowLogsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[FlowLogsClientCreateOrUpdateResponse]("FlowLogsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[FlowLogsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +136,11 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[FlowLogsClientDeleteResponse]("FlowLogsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[FlowLogsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[FlowLogsClientDeleteResponse]("FlowLogsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[FlowLogsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

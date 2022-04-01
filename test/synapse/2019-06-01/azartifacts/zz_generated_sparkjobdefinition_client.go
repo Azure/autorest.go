@@ -46,9 +46,9 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse]("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", resp, client.pl, nil)
+		return runtime.NewPoller[sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse]("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,11 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sparkJobDefinitionClientDebugSparkJobDefinitionResponse]("sparkJobDefinitionClient.DebugSparkJobDefinition", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[sparkJobDefinitionClientDebugSparkJobDefinitionResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientDebugSparkJobDefinitionResponse]("sparkJobDefinitionClient.DebugSparkJobDefinition", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientDebugSparkJobDefinitionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -149,9 +151,9 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sparkJobDefinitionClientDeleteSparkJobDefinitionResponse]("sparkJobDefinitionClient.DeleteSparkJobDefinition", resp, client.pl, nil)
+		return runtime.NewPoller[sparkJobDefinitionClientDeleteSparkJobDefinitionResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientDeleteSparkJobDefinitionResponse]("sparkJobDefinitionClient.DeleteSparkJobDefinition", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientDeleteSparkJobDefinitionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -201,9 +203,11 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sparkJobDefinitionClientExecuteSparkJobDefinitionResponse]("sparkJobDefinitionClient.ExecuteSparkJobDefinition", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[sparkJobDefinitionClientExecuteSparkJobDefinitionResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientExecuteSparkJobDefinitionResponse]("sparkJobDefinitionClient.ExecuteSparkJobDefinition", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientExecuteSparkJobDefinitionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -359,9 +363,9 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sparkJobDefinitionClientRenameSparkJobDefinitionResponse]("sparkJobDefinitionClient.RenameSparkJobDefinition", resp, client.pl, nil)
+		return runtime.NewPoller[sparkJobDefinitionClientRenameSparkJobDefinitionResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientRenameSparkJobDefinitionResponse]("sparkJobDefinitionClient.RenameSparkJobDefinition", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sparkJobDefinitionClientRenameSparkJobDefinitionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

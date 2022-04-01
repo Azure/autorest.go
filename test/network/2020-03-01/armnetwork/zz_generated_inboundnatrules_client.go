@@ -69,9 +69,11 @@ func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InboundNatRulesClientCreateOrUpdateResponse]("InboundNatRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InboundNatRulesClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InboundNatRulesClientCreateOrUpdateResponse]("InboundNatRulesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InboundNatRulesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InboundNatRulesClientDeleteResponse]("InboundNatRulesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InboundNatRulesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InboundNatRulesClientDeleteResponse]("InboundNatRulesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InboundNatRulesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

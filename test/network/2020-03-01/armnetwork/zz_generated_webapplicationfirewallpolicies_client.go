@@ -124,9 +124,11 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[WebApplicationFirewallPoliciesClientDeleteResponse]("WebApplicationFirewallPoliciesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[WebApplicationFirewallPoliciesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[WebApplicationFirewallPoliciesClientDeleteResponse]("WebApplicationFirewallPoliciesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[WebApplicationFirewallPoliciesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

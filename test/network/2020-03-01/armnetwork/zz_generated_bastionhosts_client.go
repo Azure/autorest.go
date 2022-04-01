@@ -68,9 +68,11 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[BastionHostsClientCreateOrUpdateResponse]("BastionHostsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[BastionHostsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[BastionHostsClientCreateOrUpdateResponse]("BastionHostsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[BastionHostsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[BastionHostsClientDeleteResponse]("BastionHostsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[BastionHostsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[BastionHostsClientDeleteResponse]("BastionHostsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[BastionHostsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -68,9 +68,11 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientCreateOrUpdateResponse]("VirtualNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientCreateOrUpdateResponse]("VirtualNetworkGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientDeleteResponse]("VirtualNetworkGatewaysClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientDeleteResponse]("VirtualNetworkGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -192,9 +196,11 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsResponse]("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsResponse]("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -256,9 +262,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGenerateVPNProfileResponse]("VirtualNetworkGatewaysClient.GenerateVPNProfile", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGenerateVPNProfileResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGenerateVPNProfileResponse]("VirtualNetworkGatewaysClient.GenerateVPNProfile", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGenerateVPNProfileResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -320,9 +328,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse]("VirtualNetworkGatewaysClient.Generatevpnclientpackage", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse]("VirtualNetworkGatewaysClient.Generatevpnclientpackage", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGeneratevpnclientpackageResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -440,9 +450,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse]("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse]("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetAdvertisedRoutesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -503,9 +515,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGetBgpPeerStatusResponse]("VirtualNetworkGatewaysClient.GetBgpPeerStatus", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGetBgpPeerStatusResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetBgpPeerStatusResponse]("VirtualNetworkGatewaysClient.GetBgpPeerStatus", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetBgpPeerStatusResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -568,9 +582,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGetLearnedRoutesResponse]("VirtualNetworkGatewaysClient.GetLearnedRoutes", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGetLearnedRoutesResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetLearnedRoutesResponse]("VirtualNetworkGatewaysClient.GetLearnedRoutes", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetLearnedRoutesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -631,9 +647,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx con
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse]("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse]("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetVPNProfilePackageURLResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -694,9 +712,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse]("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse]("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetVpnclientConnectionHealthResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -758,9 +778,11 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse]("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse]("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientGetVpnclientIPSecParametersResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -954,9 +976,11 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientResetResponse]("VirtualNetworkGatewaysClient.Reset", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientResetResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientResetResponse]("VirtualNetworkGatewaysClient.Reset", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientResetResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1019,9 +1043,11 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx con
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientResetVPNClientSharedKeyResponse]("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientResetVPNClientSharedKeyResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientResetVPNClientSharedKeyResponse]("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientResetVPNClientSharedKeyResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1083,9 +1109,11 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse]("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse]("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientSetVpnclientIPSecParametersResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1145,9 +1173,11 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientStartPacketCaptureResponse]("VirtualNetworkGatewaysClient.StartPacketCapture", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientStartPacketCaptureResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientStartPacketCaptureResponse]("VirtualNetworkGatewaysClient.StartPacketCapture", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientStartPacketCaptureResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1210,9 +1240,11 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientStopPacketCaptureResponse]("VirtualNetworkGatewaysClient.StopPacketCapture", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientStopPacketCaptureResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientStopPacketCaptureResponse]("VirtualNetworkGatewaysClient.StopPacketCapture", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientStopPacketCaptureResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1328,9 +1360,11 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewaysClientUpdateTagsResponse]("VirtualNetworkGatewaysClient.UpdateTags", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewaysClientUpdateTagsResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientUpdateTagsResponse]("VirtualNetworkGatewaysClient.UpdateTags", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewaysClientUpdateTagsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

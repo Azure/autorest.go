@@ -69,9 +69,11 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateDNSZoneGroupsClientCreateOrUpdateResponse]("PrivateDNSZoneGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateDNSZoneGroupsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateDNSZoneGroupsClientCreateOrUpdateResponse]("PrivateDNSZoneGroupsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateDNSZoneGroupsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateDNSZoneGroupsClientDeleteResponse]("PrivateDNSZoneGroupsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateDNSZoneGroupsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateDNSZoneGroupsClientDeleteResponse]("PrivateDNSZoneGroupsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateDNSZoneGroupsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

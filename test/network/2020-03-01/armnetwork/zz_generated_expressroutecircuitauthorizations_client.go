@@ -69,9 +69,11 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx c
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResponse]("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResponse]("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitAuthorizationsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCircuitAuthorizationsClientDeleteResponse]("ExpressRouteCircuitAuthorizationsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCircuitAuthorizationsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitAuthorizationsClientDeleteResponse]("ExpressRouteCircuitAuthorizationsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCircuitAuthorizationsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -68,9 +68,11 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNGatewaysClientCreateOrUpdateResponse]("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNGatewaysClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNGatewaysClientCreateOrUpdateResponse]("VPNGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +130,11 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNGatewaysClientDeleteResponse]("VPNGatewaysClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNGatewaysClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNGatewaysClientDeleteResponse]("VPNGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNGatewaysClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -365,9 +369,11 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNGatewaysClientResetResponse]("VPNGatewaysClient.Reset", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNGatewaysClientResetResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNGatewaysClientResetResponse]("VPNGatewaysClient.Reset", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNGatewaysClientResetResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

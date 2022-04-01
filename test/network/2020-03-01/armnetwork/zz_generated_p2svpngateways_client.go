@@ -68,9 +68,11 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[P2SVPNGatewaysClientCreateOrUpdateResponse]("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[P2SVPNGatewaysClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientCreateOrUpdateResponse]("P2SVPNGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[P2SVPNGatewaysClientDeleteResponse]("P2SVPNGatewaysClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[P2SVPNGatewaysClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientDeleteResponse]("P2SVPNGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -192,9 +196,11 @@ func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse]("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse]("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientDisconnectP2SVPNConnectionsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -255,9 +261,11 @@ func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[P2SVPNGatewaysClientGenerateVPNProfileResponse]("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[P2SVPNGatewaysClientGenerateVPNProfileResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGenerateVPNProfileResponse]("P2SVPNGatewaysClient.GenerateVPNProfile", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGenerateVPNProfileResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -372,9 +380,11 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGetP2SVPNConnectionHealthResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -436,9 +446,11 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse]("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

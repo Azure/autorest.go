@@ -68,9 +68,11 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DdosProtectionPlansClientCreateOrUpdateResponse]("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[DdosProtectionPlansClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[DdosProtectionPlansClientCreateOrUpdateResponse]("DdosProtectionPlansClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DdosProtectionPlansClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DdosProtectionPlansClientDeleteResponse]("DdosProtectionPlansClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[DdosProtectionPlansClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[DdosProtectionPlansClientDeleteResponse]("DdosProtectionPlansClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DdosProtectionPlansClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

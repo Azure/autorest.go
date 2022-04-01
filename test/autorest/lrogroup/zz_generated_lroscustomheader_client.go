@@ -47,9 +47,9 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROsCustomHeaderClientPost202Retry200Response]("LROsCustomHeaderClient.Post202Retry200", "", resp, client.pl, nil)
+		return armruntime.NewPoller[LROsCustomHeaderClientPost202Retry200Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPost202Retry200Response]("LROsCustomHeaderClient.Post202Retry200", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPost202Retry200Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -98,9 +98,9 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.pl, nil)
+		return armruntime.NewPoller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPostAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PostAsyncRetrySucceeded", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPostAsyncRetrySucceededResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -149,9 +149,9 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROsCustomHeaderClientPut201CreatingSucceeded200Response]("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.pl, nil)
+		return armruntime.NewPoller[LROsCustomHeaderClientPut201CreatingSucceeded200Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPut201CreatingSucceeded200Response]("LROsCustomHeaderClient.Put201CreatingSucceeded200", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPut201CreatingSucceeded200Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -200,9 +200,9 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.pl, nil)
+		return armruntime.NewPoller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPutAsyncRetrySucceededResponse]("LROsCustomHeaderClient.PutAsyncRetrySucceeded", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[LROsCustomHeaderClientPutAsyncRetrySucceededResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

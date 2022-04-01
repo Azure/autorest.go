@@ -68,9 +68,11 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateEndpointsClientCreateOrUpdateResponse]("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateEndpointsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateEndpointsClientCreateOrUpdateResponse]("PrivateEndpointsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateEndpointsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[PrivateEndpointsClientDeleteResponse]("PrivateEndpointsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[PrivateEndpointsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[PrivateEndpointsClientDeleteResponse]("PrivateEndpointsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[PrivateEndpointsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

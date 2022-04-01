@@ -85,9 +85,9 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse]("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl, nil)
+		return runtime.NewPoller[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse]("dataFlowDebugSessionClient.CreateDataFlowDebugSession", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -167,9 +167,9 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[dataFlowDebugSessionClientExecuteCommandResponse]("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl, nil)
+		return runtime.NewPoller[dataFlowDebugSessionClientExecuteCommandResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[dataFlowDebugSessionClientExecuteCommandResponse]("dataFlowDebugSessionClient.ExecuteCommand", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[dataFlowDebugSessionClientExecuteCommandResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

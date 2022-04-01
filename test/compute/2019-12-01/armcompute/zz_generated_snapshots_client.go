@@ -70,9 +70,9 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SnapshotsClientCreateOrUpdateResponse]("SnapshotsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SnapshotsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SnapshotsClientCreateOrUpdateResponse]("SnapshotsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SnapshotsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -132,9 +132,9 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SnapshotsClientDeleteResponse]("SnapshotsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SnapshotsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SnapshotsClientDeleteResponse]("SnapshotsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SnapshotsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -252,9 +252,11 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SnapshotsClientGrantAccessResponse]("SnapshotsClient.GrantAccess", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[SnapshotsClientGrantAccessResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[SnapshotsClientGrantAccessResponse]("SnapshotsClient.GrantAccess", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SnapshotsClientGrantAccessResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -437,9 +439,11 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SnapshotsClientRevokeAccessResponse]("SnapshotsClient.RevokeAccess", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[SnapshotsClientRevokeAccessResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[SnapshotsClientRevokeAccessResponse]("SnapshotsClient.RevokeAccess", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SnapshotsClientRevokeAccessResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -499,9 +503,9 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SnapshotsClientUpdateResponse]("SnapshotsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SnapshotsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SnapshotsClientUpdateResponse]("SnapshotsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SnapshotsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
