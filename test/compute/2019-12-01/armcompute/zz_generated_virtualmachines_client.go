@@ -70,9 +70,11 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientCaptureResponse]("VirtualMachinesClient.Capture", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualMachinesClientCaptureResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientCaptureResponse]("VirtualMachinesClient.Capture", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientCaptureResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -136,9 +138,9 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientConvertToManagedDisksResponse]("VirtualMachinesClient.ConvertToManagedDisks", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientConvertToManagedDisksResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientConvertToManagedDisksResponse]("VirtualMachinesClient.ConvertToManagedDisks", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientConvertToManagedDisksResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -202,9 +204,9 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientCreateOrUpdateResponse]("VirtualMachinesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientCreateOrUpdateResponse]("VirtualMachinesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -265,9 +267,9 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientDeallocateResponse]("VirtualMachinesClient.Deallocate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientDeallocateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientDeallocateResponse]("VirtualMachinesClient.Deallocate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientDeallocateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -326,9 +328,9 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientDeleteResponse]("VirtualMachinesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientDeleteResponse]("VirtualMachinesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -804,9 +806,9 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientPerformMaintenanceResponse]("VirtualMachinesClient.PerformMaintenance", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientPerformMaintenanceResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientPerformMaintenanceResponse]("VirtualMachinesClient.PerformMaintenance", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientPerformMaintenanceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -866,9 +868,9 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientPowerOffResponse]("VirtualMachinesClient.PowerOff", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientPowerOffResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientPowerOffResponse]("VirtualMachinesClient.PowerOff", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientPowerOffResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -930,9 +932,9 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientReapplyResponse]("VirtualMachinesClient.Reapply", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientReapplyResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientReapplyResponse]("VirtualMachinesClient.Reapply", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientReapplyResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -991,9 +993,9 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientRedeployResponse]("VirtualMachinesClient.Redeploy", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientRedeployResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientRedeployResponse]("VirtualMachinesClient.Redeploy", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientRedeployResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1051,9 +1053,9 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientReimageResponse]("VirtualMachinesClient.Reimage", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientReimageResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientReimageResponse]("VirtualMachinesClient.Reimage", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientReimageResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1114,9 +1116,9 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientRestartResponse]("VirtualMachinesClient.Restart", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientRestartResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientRestartResponse]("VirtualMachinesClient.Restart", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientRestartResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1175,9 +1177,11 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientRunCommandResponse]("VirtualMachinesClient.RunCommand", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualMachinesClientRunCommandResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientRunCommandResponse]("VirtualMachinesClient.RunCommand", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientRunCommandResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1283,9 +1287,9 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientStartResponse]("VirtualMachinesClient.Start", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientStartResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientStartResponse]("VirtualMachinesClient.Start", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientStartResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1344,9 +1348,9 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachinesClientUpdateResponse]("VirtualMachinesClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachinesClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientUpdateResponse]("VirtualMachinesClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachinesClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

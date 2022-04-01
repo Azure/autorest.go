@@ -70,9 +70,9 @@ func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DiskEncryptionSetsClientCreateOrUpdateResponse]("DiskEncryptionSetsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DiskEncryptionSetsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DiskEncryptionSetsClientCreateOrUpdateResponse]("DiskEncryptionSetsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DiskEncryptionSetsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -133,9 +133,9 @@ func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DiskEncryptionSetsClientDeleteResponse]("DiskEncryptionSetsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DiskEncryptionSetsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DiskEncryptionSetsClientDeleteResponse]("DiskEncryptionSetsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DiskEncryptionSetsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -376,9 +376,9 @@ func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DiskEncryptionSetsClientUpdateResponse]("DiskEncryptionSetsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DiskEncryptionSetsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DiskEncryptionSetsClientUpdateResponse]("DiskEncryptionSetsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DiskEncryptionSetsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

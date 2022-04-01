@@ -68,9 +68,9 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[StorageAccountCredentialsClientCreateOrUpdateResponse]("StorageAccountCredentialsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[StorageAccountCredentialsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[StorageAccountCredentialsClientCreateOrUpdateResponse]("StorageAccountCredentialsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[StorageAccountCredentialsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +134,9 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[StorageAccountCredentialsClientDeleteResponse]("StorageAccountCredentialsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[StorageAccountCredentialsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[StorageAccountCredentialsClientDeleteResponse]("StorageAccountCredentialsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[StorageAccountCredentialsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

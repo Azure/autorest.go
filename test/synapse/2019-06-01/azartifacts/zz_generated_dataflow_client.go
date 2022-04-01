@@ -46,9 +46,9 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[dataFlowClientCreateOrUpdateDataFlowResponse]("dataFlowClient.CreateOrUpdateDataFlow", resp, client.pl, nil)
+		return runtime.NewPoller[dataFlowClientCreateOrUpdateDataFlowResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[dataFlowClientCreateOrUpdateDataFlowResponse]("dataFlowClient.CreateOrUpdateDataFlow", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[dataFlowClientCreateOrUpdateDataFlowResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,9 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[dataFlowClientDeleteDataFlowResponse]("dataFlowClient.DeleteDataFlow", resp, client.pl, nil)
+		return runtime.NewPoller[dataFlowClientDeleteDataFlowResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[dataFlowClientDeleteDataFlowResponse]("dataFlowClient.DeleteDataFlow", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[dataFlowClientDeleteDataFlowResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -258,9 +258,9 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[dataFlowClientRenameDataFlowResponse]("dataFlowClient.RenameDataFlow", resp, client.pl, nil)
+		return runtime.NewPoller[dataFlowClientRenameDataFlowResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[dataFlowClientRenameDataFlowResponse]("dataFlowClient.RenameDataFlow", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[dataFlowClientRenameDataFlowResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

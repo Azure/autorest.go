@@ -68,9 +68,9 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ImagesClientCreateOrUpdateResponse]("ImagesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ImagesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ImagesClientCreateOrUpdateResponse]("ImagesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ImagesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +128,9 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ImagesClientDeleteResponse]("ImagesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ImagesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ImagesClientDeleteResponse]("ImagesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ImagesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -369,9 +369,9 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ImagesClientUpdateResponse]("ImagesClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ImagesClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ImagesClientUpdateResponse]("ImagesClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ImagesClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -465,9 +465,13 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller("PagingClient.GetMultiplePagesLRO", "", resp, client.pl, &pager)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+			Response: &pager,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", options.ResumeToken, client.pl, &pager)
+		return armruntime.NewPollerFromResumeToken(options.ResumeToken, client.pl, &armruntime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+			Response: &pager,
+		})
 	}
 }
 

@@ -68,9 +68,9 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[MonitoringConfigClientCreateOrUpdateResponse]("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[MonitoringConfigClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[MonitoringConfigClientCreateOrUpdateResponse]("MonitoringConfigClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[MonitoringConfigClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +134,9 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[MonitoringConfigClientDeleteResponse]("MonitoringConfigClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[MonitoringConfigClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[MonitoringConfigClientDeleteResponse]("MonitoringConfigClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[MonitoringConfigClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -69,9 +69,11 @@ func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InterfaceTapConfigurationsClientCreateOrUpdateResponse]("InterfaceTapConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfaceTapConfigurationsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfaceTapConfigurationsClientCreateOrUpdateResponse]("InterfaceTapConfigurationsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InterfaceTapConfigurationsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InterfaceTapConfigurationsClientDeleteResponse]("InterfaceTapConfigurationsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfaceTapConfigurationsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfaceTapConfigurationsClientDeleteResponse]("InterfaceTapConfigurationsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InterfaceTapConfigurationsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

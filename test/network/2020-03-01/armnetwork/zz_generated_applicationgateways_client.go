@@ -67,9 +67,11 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationGatewaysClientBackendHealthResponse]("ApplicationGatewaysClient.BackendHealth", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationGatewaysClientBackendHealthResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthResponse]("ApplicationGatewaysClient.BackendHealth", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -133,9 +135,11 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationGatewaysClientBackendHealthOnDemandResponse]("ApplicationGatewaysClient.BackendHealthOnDemand", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationGatewaysClientBackendHealthOnDemandResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthOnDemandResponse]("ApplicationGatewaysClient.BackendHealthOnDemand", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientBackendHealthOnDemandResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -199,9 +203,11 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationGatewaysClientCreateOrUpdateResponse]("ApplicationGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationGatewaysClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientCreateOrUpdateResponse]("ApplicationGatewaysClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -260,9 +266,11 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationGatewaysClientDeleteResponse]("ApplicationGatewaysClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationGatewaysClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientDeleteResponse]("ApplicationGatewaysClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -839,9 +847,11 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationGatewaysClientStartResponse]("ApplicationGatewaysClient.Start", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationGatewaysClientStartResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientStartResponse]("ApplicationGatewaysClient.Start", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientStartResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -900,9 +910,11 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationGatewaysClientStopResponse]("ApplicationGatewaysClient.Stop", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationGatewaysClientStopResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientStopResponse]("ApplicationGatewaysClient.Stop", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationGatewaysClientStopResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

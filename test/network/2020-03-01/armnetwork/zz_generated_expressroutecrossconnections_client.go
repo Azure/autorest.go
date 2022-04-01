@@ -68,9 +68,11 @@ func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse]("ExpressRouteCrossConnectionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -247,9 +249,11 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientListArpTableResponse]("ExpressRouteCrossConnectionsClient.ListArpTable", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCrossConnectionsClientListArpTableResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListArpTableResponse]("ExpressRouteCrossConnectionsClient.ListArpTable", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListArpTableResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -384,9 +388,11 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx conte
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientListRoutesTableResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTable", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCrossConnectionsClientListRoutesTableResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListRoutesTableResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTable", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListRoutesTableResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -457,9 +463,11 @@ func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ct
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse]("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ExpressRouteCrossConnectionsClientListRoutesTableSummaryResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

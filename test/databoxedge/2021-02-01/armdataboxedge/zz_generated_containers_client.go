@@ -69,9 +69,9 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainersClientCreateOrUpdateResponse]("ContainersClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ContainersClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse]("ContainersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -139,9 +139,9 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainersClientDeleteResponse]("ContainersClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ContainersClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainersClientDeleteResponse]("ContainersClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ContainersClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -348,9 +348,9 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainersClientRefreshResponse]("ContainersClient.Refresh", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ContainersClientRefreshResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainersClientRefreshResponse]("ContainersClient.Refresh", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ContainersClientRefreshResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

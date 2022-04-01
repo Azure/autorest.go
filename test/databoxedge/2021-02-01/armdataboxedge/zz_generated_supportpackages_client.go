@@ -67,9 +67,9 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse]("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl, nil)
+		return armruntime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse]("SupportPackagesClient.TriggerSupportPackage", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

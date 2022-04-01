@@ -68,9 +68,11 @@ func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationSecurityGroupsClientCreateOrUpdateResponse]("ApplicationSecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationSecurityGroupsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationSecurityGroupsClientCreateOrUpdateResponse]("ApplicationSecurityGroupsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationSecurityGroupsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ApplicationSecurityGroupsClientDeleteResponse]("ApplicationSecurityGroupsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ApplicationSecurityGroupsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ApplicationSecurityGroupsClientDeleteResponse]("ApplicationSecurityGroupsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ApplicationSecurityGroupsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

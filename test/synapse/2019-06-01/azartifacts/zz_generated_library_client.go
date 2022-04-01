@@ -89,9 +89,9 @@ func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[libraryClientCreateResponse]("libraryClient.Create", resp, client.pl, nil)
+		return runtime.NewPoller[libraryClientCreateResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[libraryClientCreateResponse]("libraryClient.Create", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[libraryClientCreateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -140,9 +140,9 @@ func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[libraryClientDeleteResponse]("libraryClient.Delete", resp, client.pl, nil)
+		return runtime.NewPoller[libraryClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[libraryClientDeleteResponse]("libraryClient.Delete", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[libraryClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -191,9 +191,9 @@ func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[libraryClientFlushResponse]("libraryClient.Flush", resp, client.pl, nil)
+		return runtime.NewPoller[libraryClientFlushResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[libraryClientFlushResponse]("libraryClient.Flush", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[libraryClientFlushResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

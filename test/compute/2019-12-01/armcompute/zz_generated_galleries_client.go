@@ -69,9 +69,9 @@ func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleriesClientCreateOrUpdateResponse]("GalleriesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleriesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleriesClientCreateOrUpdateResponse]("GalleriesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleriesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +129,9 @@ func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleriesClientDeleteResponse]("GalleriesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleriesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleriesClientDeleteResponse]("GalleriesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleriesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -368,9 +368,9 @@ func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleriesClientUpdateResponse]("GalleriesClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleriesClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleriesClientUpdateResponse]("GalleriesClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleriesClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

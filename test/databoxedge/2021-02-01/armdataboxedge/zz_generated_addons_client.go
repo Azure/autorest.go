@@ -69,9 +69,9 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[AddonsClientCreateOrUpdateResponse]("AddonsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[AddonsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[AddonsClientCreateOrUpdateResponse]("AddonsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[AddonsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -139,9 +139,9 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[AddonsClientDeleteResponse]("AddonsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[AddonsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[AddonsClientDeleteResponse]("AddonsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[AddonsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

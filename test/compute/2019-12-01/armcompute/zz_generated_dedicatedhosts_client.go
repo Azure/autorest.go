@@ -69,9 +69,9 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DedicatedHostsClientCreateOrUpdateResponse]("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DedicatedHostsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientCreateOrUpdateResponse]("DedicatedHostsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +135,9 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DedicatedHostsClientDeleteResponse]("DedicatedHostsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DedicatedHostsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientDeleteResponse]("DedicatedHostsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -334,9 +334,9 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DedicatedHostsClientUpdateResponse]("DedicatedHostsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DedicatedHostsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientUpdateResponse]("DedicatedHostsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DedicatedHostsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

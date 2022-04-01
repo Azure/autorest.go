@@ -121,9 +121,11 @@ func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ManagementClientDeleteBastionShareableLinkResponse]("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ManagementClientDeleteBastionShareableLinkResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ManagementClientDeleteBastionShareableLinkResponse]("ManagementClient.DeleteBastionShareableLink", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ManagementClientDeleteBastionShareableLinkResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -254,9 +256,11 @@ func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpn
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse]("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -335,9 +339,14 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl, &pager)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+			Response:      &pager,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken("ManagementClient.GetActiveSessions", options.ResumeToken, client.pl, &pager)
+		return armruntime.NewPollerFromResumeToken(options.ResumeToken, client.pl, &armruntime.NewPollerFromResumeTokenOptions[*runtime.Pager[ManagementClientGetActiveSessionsResponse]]{
+			Response: &pager,
+		})
 	}
 }
 
@@ -495,9 +504,14 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl, &pager)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+			Response:      &pager,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken("ManagementClient.PutBastionShareableLink", options.ResumeToken, client.pl, &pager)
+		return armruntime.NewPollerFromResumeToken(options.ResumeToken, client.pl, &armruntime.NewPollerFromResumeTokenOptions[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]]{
+			Response: &pager,
+		})
 	}
 }
 

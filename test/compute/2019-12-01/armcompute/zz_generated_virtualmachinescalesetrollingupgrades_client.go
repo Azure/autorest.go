@@ -67,9 +67,9 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginCancel(ctx conte
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientCancelResponse]("VirtualMachineScaleSetRollingUpgradesClient.Cancel", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientCancelResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientCancelResponse]("VirtualMachineScaleSetRollingUpgradesClient.Cancel", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientCancelResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -185,9 +185,9 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartExtensionUp
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradeResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -249,9 +249,9 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) BeginStartOSUpgrade(c
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse]("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradeResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

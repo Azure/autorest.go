@@ -69,9 +69,9 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainerServicesClientCreateOrUpdateResponse]("ContainerServicesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ContainerServicesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainerServicesClientCreateOrUpdateResponse]("ContainerServicesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ContainerServicesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +134,9 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainerServicesClientDeleteResponse]("ContainerServicesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[ContainerServicesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainerServicesClientDeleteResponse]("ContainerServicesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ContainerServicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -69,9 +69,9 @@ func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineExtensionsClientCreateOrUpdateResponse]("VirtualMachineExtensionsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachineExtensionsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineExtensionsClientCreateOrUpdateResponse]("VirtualMachineExtensionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachineExtensionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +135,9 @@ func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, r
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineExtensionsClientDeleteResponse]("VirtualMachineExtensionsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachineExtensionsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineExtensionsClientDeleteResponse]("VirtualMachineExtensionsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachineExtensionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -324,9 +324,9 @@ func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, r
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineExtensionsClientUpdateResponse]("VirtualMachineExtensionsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[VirtualMachineExtensionsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineExtensionsClientUpdateResponse]("VirtualMachineExtensionsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualMachineExtensionsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

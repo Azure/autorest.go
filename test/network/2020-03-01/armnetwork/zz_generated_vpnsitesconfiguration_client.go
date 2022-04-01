@@ -68,9 +68,11 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNSitesConfigurationClientDownloadResponse]("VPNSitesConfigurationClient.Download", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNSitesConfigurationClientDownloadResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNSitesConfigurationClientDownloadResponse]("VPNSitesConfigurationClient.Download", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNSitesConfigurationClientDownloadResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

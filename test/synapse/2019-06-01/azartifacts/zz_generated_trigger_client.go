@@ -46,9 +46,9 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[triggerClientCreateOrUpdateTriggerResponse]("triggerClient.CreateOrUpdateTrigger", resp, client.pl, nil)
+		return runtime.NewPoller[triggerClientCreateOrUpdateTriggerResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[triggerClientCreateOrUpdateTriggerResponse]("triggerClient.CreateOrUpdateTrigger", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[triggerClientCreateOrUpdateTriggerResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,9 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[triggerClientDeleteTriggerResponse]("triggerClient.DeleteTrigger", resp, client.pl, nil)
+		return runtime.NewPoller[triggerClientDeleteTriggerResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[triggerClientDeleteTriggerResponse]("triggerClient.DeleteTrigger", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[triggerClientDeleteTriggerResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -304,9 +304,9 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[triggerClientStartTriggerResponse]("triggerClient.StartTrigger", resp, client.pl, nil)
+		return runtime.NewPoller[triggerClientStartTriggerResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[triggerClientStartTriggerResponse]("triggerClient.StartTrigger", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[triggerClientStartTriggerResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -356,9 +356,9 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[triggerClientStopTriggerResponse]("triggerClient.StopTrigger", resp, client.pl, nil)
+		return runtime.NewPoller[triggerClientStopTriggerResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[triggerClientStopTriggerResponse]("triggerClient.StopTrigger", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[triggerClientStopTriggerResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -408,9 +408,9 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[triggerClientSubscribeTriggerToEventsResponse]("triggerClient.SubscribeTriggerToEvents", resp, client.pl, nil)
+		return runtime.NewPoller[triggerClientSubscribeTriggerToEventsResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[triggerClientSubscribeTriggerToEventsResponse]("triggerClient.SubscribeTriggerToEvents", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[triggerClientSubscribeTriggerToEventsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -460,9 +460,9 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[triggerClientUnsubscribeTriggerFromEventsResponse]("triggerClient.UnsubscribeTriggerFromEvents", resp, client.pl, nil)
+		return runtime.NewPoller[triggerClientUnsubscribeTriggerFromEventsResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[triggerClientUnsubscribeTriggerFromEventsResponse]("triggerClient.UnsubscribeTriggerFromEvents", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[triggerClientUnsubscribeTriggerFromEventsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

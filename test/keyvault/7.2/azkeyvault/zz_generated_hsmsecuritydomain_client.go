@@ -45,9 +45,11 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[HSMSecurityDomainClientDownloadResponse]("HSMSecurityDomainClient.Download", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[HSMSecurityDomainClientDownloadResponse]{
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientDownloadResponse]("HSMSecurityDomainClient.Download", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientDownloadResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -184,9 +186,11 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[HSMSecurityDomainClientUploadResponse]("HSMSecurityDomainClient.Upload", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[HSMSecurityDomainClientUploadResponse]{
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientUploadResponse]("HSMSecurityDomainClient.Upload", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[HSMSecurityDomainClientUploadResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

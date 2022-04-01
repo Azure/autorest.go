@@ -68,9 +68,11 @@ func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InterfacesClientCreateOrUpdateResponse]("InterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientCreateOrUpdateResponse]("InterfacesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InterfacesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,9 +130,11 @@ func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupNa
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InterfacesClientDeleteResponse]("InterfacesClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientDeleteResponse]("InterfacesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InterfacesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -247,9 +251,11 @@ func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InterfacesClientGetEffectiveRouteTableResponse]("InterfacesClient.GetEffectiveRouteTable", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientGetEffectiveRouteTableResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientGetEffectiveRouteTableResponse]("InterfacesClient.GetEffectiveRouteTable", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InterfacesClientGetEffectiveRouteTableResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -573,9 +579,11 @@ func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]("InterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]("InterfacesClient.ListEffectiveNetworkSecurityGroups", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[InterfacesClientListEffectiveNetworkSecurityGroupsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

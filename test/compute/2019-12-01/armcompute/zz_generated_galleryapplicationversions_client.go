@@ -72,9 +72,9 @@ func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryApplicationVersionsClientCreateOrUpdateResponse]("GalleryApplicationVersionsClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryApplicationVersionsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryApplicationVersionsClientCreateOrUpdateResponse]("GalleryApplicationVersionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationVersionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -143,9 +143,9 @@ func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryApplicationVersionsClientDeleteResponse]("GalleryApplicationVersionsClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryApplicationVersionsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryApplicationVersionsClientDeleteResponse]("GalleryApplicationVersionsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationVersionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -361,9 +361,9 @@ func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleryApplicationVersionsClientUpdateResponse]("GalleryApplicationVersionsClient.Update", "", resp, client.pl, nil)
+		return armruntime.NewPoller[GalleryApplicationVersionsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleryApplicationVersionsClientUpdateResponse]("GalleryApplicationVersionsClient.Update", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[GalleryApplicationVersionsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

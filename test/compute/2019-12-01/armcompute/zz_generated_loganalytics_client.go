@@ -68,9 +68,11 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LogAnalyticsClientExportRequestRateByIntervalResponse]("LogAnalyticsClient.ExportRequestRateByInterval", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[LogAnalyticsClientExportRequestRateByIntervalResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[LogAnalyticsClientExportRequestRateByIntervalResponse]("LogAnalyticsClient.ExportRequestRateByInterval", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[LogAnalyticsClientExportRequestRateByIntervalResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -127,9 +129,11 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LogAnalyticsClientExportThrottledRequestsResponse]("LogAnalyticsClient.ExportThrottledRequests", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[LogAnalyticsClientExportThrottledRequestsResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[LogAnalyticsClientExportThrottledRequestsResponse]("LogAnalyticsClient.ExportThrottledRequests", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[LogAnalyticsClientExportThrottledRequestsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

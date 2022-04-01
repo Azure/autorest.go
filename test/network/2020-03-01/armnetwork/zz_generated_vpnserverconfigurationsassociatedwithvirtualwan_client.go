@@ -67,9 +67,11 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse]("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

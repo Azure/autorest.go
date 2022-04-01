@@ -46,9 +46,9 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sqlScriptClientCreateOrUpdateSQLScriptResponse]("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.pl, nil)
+		return runtime.NewPoller[sqlScriptClientCreateOrUpdateSQLScriptResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[sqlScriptClientCreateOrUpdateSQLScriptResponse]("sqlScriptClient.CreateOrUpdateSQLScript", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sqlScriptClientCreateOrUpdateSQLScriptResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -101,9 +101,9 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sqlScriptClientDeleteSQLScriptResponse]("sqlScriptClient.DeleteSQLScript", resp, client.pl, nil)
+		return runtime.NewPoller[sqlScriptClientDeleteSQLScriptResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[sqlScriptClientDeleteSQLScriptResponse]("sqlScriptClient.DeleteSQLScript", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sqlScriptClientDeleteSQLScriptResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -258,9 +258,9 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[sqlScriptClientRenameSQLScriptResponse]("sqlScriptClient.RenameSQLScript", resp, client.pl, nil)
+		return runtime.NewPoller[sqlScriptClientRenameSQLScriptResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[sqlScriptClientRenameSQLScriptResponse]("sqlScriptClient.RenameSQLScript", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[sqlScriptClientRenameSQLScriptResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

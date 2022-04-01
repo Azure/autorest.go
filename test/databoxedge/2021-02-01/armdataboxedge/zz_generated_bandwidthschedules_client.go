@@ -68,9 +68,9 @@ func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[BandwidthSchedulesClientCreateOrUpdateResponse]("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[BandwidthSchedulesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[BandwidthSchedulesClientCreateOrUpdateResponse]("BandwidthSchedulesClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[BandwidthSchedulesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -134,9 +134,9 @@ func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceN
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[BandwidthSchedulesClientDeleteResponse]("BandwidthSchedulesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[BandwidthSchedulesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[BandwidthSchedulesClientDeleteResponse]("BandwidthSchedulesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[BandwidthSchedulesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

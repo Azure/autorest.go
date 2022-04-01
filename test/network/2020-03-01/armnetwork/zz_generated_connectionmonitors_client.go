@@ -69,9 +69,11 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ConnectionMonitorsClientCreateOrUpdateResponse]("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ConnectionMonitorsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientCreateOrUpdateResponse]("ConnectionMonitorsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -135,9 +137,11 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ConnectionMonitorsClientDeleteResponse]("ConnectionMonitorsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ConnectionMonitorsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientDeleteResponse]("ConnectionMonitorsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -323,9 +327,11 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ConnectionMonitorsClientQueryResponse]("ConnectionMonitorsClient.Query", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ConnectionMonitorsClientQueryResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientQueryResponse]("ConnectionMonitorsClient.Query", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientQueryResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -389,9 +395,11 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ConnectionMonitorsClientStartResponse]("ConnectionMonitorsClient.Start", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ConnectionMonitorsClientStartResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientStartResponse]("ConnectionMonitorsClient.Start", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientStartResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -455,9 +463,11 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ConnectionMonitorsClientStopResponse]("ConnectionMonitorsClient.Stop", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[ConnectionMonitorsClientStopResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientStopResponse]("ConnectionMonitorsClient.Stop", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[ConnectionMonitorsClientStopResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

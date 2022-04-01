@@ -123,9 +123,9 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientCreateOrUpdateSecuritySettingsResponse]("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DevicesClientCreateOrUpdateSecuritySettingsResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientCreateOrUpdateSecuritySettingsResponse]("DevicesClient.CreateOrUpdateSecuritySettings", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DevicesClientCreateOrUpdateSecuritySettingsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -183,9 +183,9 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientDeleteResponse]("DevicesClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DevicesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientDeleteResponse]("DevicesClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DevicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -244,9 +244,9 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientDownloadUpdatesResponse]("DevicesClient.DownloadUpdates", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DevicesClientDownloadUpdatesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientDownloadUpdatesResponse]("DevicesClient.DownloadUpdates", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DevicesClientDownloadUpdatesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -585,9 +585,9 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientInstallUpdatesResponse]("DevicesClient.InstallUpdates", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DevicesClientInstallUpdatesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientInstallUpdatesResponse]("DevicesClient.InstallUpdates", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DevicesClientInstallUpdatesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -775,9 +775,9 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientScanForUpdatesResponse]("DevicesClient.ScanForUpdates", "", resp, client.pl, nil)
+		return armruntime.NewPoller[DevicesClientScanForUpdatesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientScanForUpdatesResponse]("DevicesClient.ScanForUpdates", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[DevicesClientScanForUpdatesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

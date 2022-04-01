@@ -2,7 +2,7 @@ module azalias
 
 go 1.18
 
-require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220330183203-27ad5f44019c
+require github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220401193339-cf00edc55f3c
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/internal v0.9.1 // indirect

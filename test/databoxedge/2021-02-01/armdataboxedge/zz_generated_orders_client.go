@@ -67,9 +67,9 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[OrdersClientCreateOrUpdateResponse]("OrdersClient.CreateOrUpdate", "", resp, client.pl, nil)
+		return armruntime.NewPoller[OrdersClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[OrdersClientCreateOrUpdateResponse]("OrdersClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[OrdersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -127,9 +127,9 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[OrdersClientDeleteResponse]("OrdersClient.Delete", "", resp, client.pl, nil)
+		return armruntime.NewPoller[OrdersClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[OrdersClientDeleteResponse]("OrdersClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[OrdersClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

@@ -68,9 +68,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse]("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse]("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,9 +131,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientDeleteResponse]("VirtualNetworkGatewayConnectionsClient.Delete", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientDeleteResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientDeleteResponse]("VirtualNetworkGatewayConnectionsClient.Delete", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -371,9 +375,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx co
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse]("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse]("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientResetSharedKeyResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -438,9 +444,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx cont
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse]("VirtualNetworkGatewayConnectionsClient.SetSharedKey", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse]("VirtualNetworkGatewayConnectionsClient.SetSharedKey", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientSetSharedKeyResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -501,9 +509,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ct
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse]("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse]("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientStartPacketCaptureResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -566,9 +576,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse]("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", "location", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse]{
+			FinalStateVia: armruntime.FinalStateViaLocation,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse]("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientStopPacketCaptureResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -628,9 +640,11 @@ func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx contex
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse]("VirtualNetworkGatewayConnectionsClient.UpdateTags", "azure-async-operation", resp, client.pl, nil)
+		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse]{
+			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse]("VirtualNetworkGatewayConnectionsClient.UpdateTags", options.ResumeToken, client.pl, nil)
+		return armruntime.NewPollerFromResumeToken[VirtualNetworkGatewayConnectionsClientUpdateTagsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

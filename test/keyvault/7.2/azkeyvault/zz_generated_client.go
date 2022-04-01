@@ -879,9 +879,11 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ClientFullBackupResponse]("Client.FullBackup", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[ClientFullBackupResponse]{
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ClientFullBackupResponse]("Client.FullBackup", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ClientFullBackupResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -982,9 +984,11 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ClientFullRestoreOperationResponse]("Client.FullRestoreOperation", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[ClientFullRestoreOperationResponse]{
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ClientFullRestoreOperationResponse]("Client.FullRestoreOperation", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ClientFullRestoreOperationResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -3537,9 +3541,11 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[ClientSelectiveKeyRestoreOperationResponse]("Client.SelectiveKeyRestoreOperation", resp, client.pl, nil)
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[ClientSelectiveKeyRestoreOperationResponse]{
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
+		})
 	} else {
-		return runtime.NewPollerFromResumeToken[ClientSelectiveKeyRestoreOperationResponse]("Client.SelectiveKeyRestoreOperation", options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ClientSelectiveKeyRestoreOperationResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
