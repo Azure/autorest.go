@@ -39,6 +39,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (<boolean>session.model.language.go!.azureARM) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud');
     }
 
     // TODO: split client and client ctor generation out of this
@@ -199,7 +200,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const doc of values(paramDocs)) {
       clientText += `${doc}\n`;
     }
-    clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
+    if (<boolean>session.model.language.go!.azureARM) {
+      clientText += `func ${clientCtor}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
+    } else {
+      clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
+    }
     if (isARM) {
       // data-plane doesn't take client options
       clientText += '\tif options == nil {\n';
@@ -207,9 +212,13 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\t}\n';
     }
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += '\tep := options.Endpoint\n'
-      clientText += '\tif len(ep) == 0 {\n';
-      clientText += '\t\tep = arm.AzurePublicCloud\n';
+      clientText += '\tep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint\n'
+      clientText += '\tif c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {\n';
+      clientText += '\t\tep = c.Endpoint\n';
+      clientText += '\t}\n';
+      clientText += "\tpl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)\n"
+      clientText += "\tif err != nil {\n"
+      clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';
     }
     let parameterizedURL = '';
@@ -301,8 +310,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     // create or add pipeline based on arm/vanilla/data-plane
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += `\t\t${group.language.go!.hostParamName}: string(ep),\n`;
-      clientText += `\t\tpl: armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options),\n`;
+      clientText += `\t\t${group.language.go!.hostParamName}: ep,\n`;
+      clientText += `pl: pl,\n`;
     } else if (isARM) {
       let clientOpts = 'options'
       if (optionsType != 'azcore.ClientOptions') {
@@ -328,7 +337,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
       clientText += '\t}\n';
     }
-    clientText += '\treturn client\n';
+    if (<boolean>session.model.language.go!.azureARM) {
+      clientText += '\treturn client, nil\n';
+    } else {
+      clientText += '\treturn client\n';
+    }
     clientText += '}\n\n';
 
     // generate operations

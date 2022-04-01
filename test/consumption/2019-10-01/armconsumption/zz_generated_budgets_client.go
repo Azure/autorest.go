@@ -14,6 +14,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -31,19 +32,23 @@ type BudgetsClient struct {
 // NewBudgetsClient creates a new instance of BudgetsClient with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *BudgetsClient {
+func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*BudgetsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := options.Endpoint
-	if len(ep) == 0 {
-		ep = arm.AzurePublicCloud
+	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
+		ep = c.Endpoint
+	}
+	pl, err := armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options)
+	if err != nil {
+		return nil, err
 	}
 	client := &BudgetsClient{
-		host: string(ep),
-		pl:   armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options),
+		host: ep,
+		pl:   pl,
 	}
-	return client
+	return client, nil
 }
 
 // CreateOrUpdate - The operation to create or update a budget. You can optionally provide an eTag if desired as a form of
