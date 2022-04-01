@@ -1400,7 +1400,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   if (pollerType === 'nil') {
     text += pollerTypeParam;
   }
-  text += '(options.ResumeToken, client.pl, '
+  text += '(options.ResumeToken, client.pl, ';
   if (pollerType === 'nil') {
     text += 'nil)\n';
   } else {
