@@ -26,6 +26,11 @@ steps:
       rush rebuild -v
     displayName: 'Build Generator Sources'
 
+  - task: GoTool@0
+    inputs:
+      version: '1.18'
+    displayName: "Select Go Version"
+
   - script: |
       rush regenerate
       rush modtidy 2>&1
@@ -33,11 +38,6 @@ steps:
       git diff --staged -w 1>&2
     displayName: 'Regenerate Autorest Tests'
     failOnStderr: true
-
-  - task: GoTool@0
-    inputs:
-      version: '1.18'
-    displayName: "Select Go Version"
 
   - script: |
       set -e
