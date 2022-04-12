@@ -242,7 +242,7 @@ namespace AutoRest.Go
                     "autorest", "client", "date", "err", "req", "resp", "result", "sender", "to", "validation", "m", "v", "k", "objectMap",
 
                     // reserved method names
-                    "Send"
+                    "Send", "Version", "UserAgent"
 
                 });
         }
