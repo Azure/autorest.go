@@ -49,7 +49,7 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 	return client, nil
 }
 
-// List - Lists the events by billingAccountId and billingProfileId for given start and end date.
+// NewListPager - Lists the events by billingAccountId and billingProfileId for given start and end date.
 // If the operation fails it returns an *azcore.ResponseError type.
 // startDate - Start date
 // endDate - End date
@@ -57,7 +57,7 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 // options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
-func (client *EventsClient) List(startDate string, endDate string, scope string, options *EventsClientListOptions) *runtime.Pager[EventsClientListResponse] {
+func (client *EventsClient) NewListPager(startDate string, endDate string, scope string, options *EventsClientListOptions) *runtime.Pager[EventsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[EventsClientListResponse]{
 		More: func(page EventsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

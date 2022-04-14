@@ -191,11 +191,11 @@ func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (da
 	return result, nil
 }
 
-// GetDataFlowsByWorkspace - Lists data flows.
+// NewGetDataFlowsByWorkspacePager - Lists data flows.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - dataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
 // method.
-func (client *dataFlowClient) GetDataFlowsByWorkspace(options *dataFlowClientGetDataFlowsByWorkspaceOptions) *runtime.Pager[dataFlowClientGetDataFlowsByWorkspaceResponse] {
+func (client *dataFlowClient) NewGetDataFlowsByWorkspacePager(options *dataFlowClientGetDataFlowsByWorkspaceOptions) *runtime.Pager[dataFlowClientGetDataFlowsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[dataFlowClientGetDataFlowsByWorkspaceResponse]{
 		More: func(page dataFlowClientGetDataFlowsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

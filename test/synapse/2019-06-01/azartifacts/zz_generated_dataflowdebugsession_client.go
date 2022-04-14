@@ -204,11 +204,11 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
-// QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
+// NewQueryDataFlowDebugSessionsByWorkspacePager - Query all active data flow debug sessions.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 // dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace method.
-func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *runtime.Pager[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse] {
+func (client *dataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspacePager(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *runtime.Pager[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse]{
 		More: func(page dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

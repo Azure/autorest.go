@@ -192,11 +192,11 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 	return result, nil
 }
 
-// GetLinkedServicesByWorkspace - Lists linked services.
+// NewGetLinkedServicesByWorkspacePager - Lists linked services.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - linkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
 // method.
-func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[linkedServiceClientGetLinkedServicesByWorkspaceResponse] {
+func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[linkedServiceClientGetLinkedServicesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[linkedServiceClientGetLinkedServicesByWorkspaceResponse]{
 		More: func(page linkedServiceClientGetLinkedServicesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

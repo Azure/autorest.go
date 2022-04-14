@@ -239,10 +239,10 @@ func (client *DiskEncryptionSetsClient) getHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// List - Lists all the disk encryption sets under a subscription.
+// NewListPager - Lists all the disk encryption sets under a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
-func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsClientListOptions) *runtime.Pager[DiskEncryptionSetsClientListResponse] {
+func (client *DiskEncryptionSetsClient) NewListPager(options *DiskEncryptionSetsClientListOptions) *runtime.Pager[DiskEncryptionSetsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[DiskEncryptionSetsClientListResponse]{
 		More: func(page DiskEncryptionSetsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -297,12 +297,12 @@ func (client *DiskEncryptionSetsClient) listHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// ListByResourceGroup - Lists all the disk encryption sets under a resource group.
+// NewListByResourceGroupPager - Lists all the disk encryption sets under a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
 // method.
-func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsClientListByResourceGroupOptions) *runtime.Pager[DiskEncryptionSetsClientListByResourceGroupResponse] {
+func (client *DiskEncryptionSetsClient) NewListByResourceGroupPager(resourceGroupName string, options *DiskEncryptionSetsClientListByResourceGroupOptions) *runtime.Pager[DiskEncryptionSetsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PageProcessor[DiskEncryptionSetsClientListByResourceGroupResponse]{
 		More: func(page DiskEncryptionSetsClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

@@ -168,7 +168,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 	return result, nil
 }
 
-// List - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
+// NewListPager - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
 // Creator makes it possible to develop applications based on your private indoor map data using Azure Maps API and SDK. This
 // [https://docs.microsoft.com/azure/azure-maps/creator-indoor-maps] article
 // introduces concepts and tools that apply to Azure Maps Creator.
@@ -188,7 +188,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - clientListOptions contains the optional parameters for the client.List method.
-func (client *client) List(options *clientListOptions) *runtime.Pager[clientListResponse] {
+func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[clientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[clientListResponse]{
 		More: func(page clientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

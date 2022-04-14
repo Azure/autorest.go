@@ -191,11 +191,11 @@ func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (no
 	return result, nil
 }
 
-// GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
+// NewGetNotebookSummaryByWorkSpacePager - Lists a summary of Notebooks.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - notebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
 // method.
-func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *notebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[notebookClientGetNotebookSummaryByWorkSpaceResponse] {
+func (client *notebookClient) NewGetNotebookSummaryByWorkSpacePager(options *notebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[notebookClientGetNotebookSummaryByWorkSpaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[notebookClientGetNotebookSummaryByWorkSpaceResponse]{
 		More: func(page notebookClientGetNotebookSummaryByWorkSpaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -246,11 +246,11 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 	return result, nil
 }
 
-// GetNotebooksByWorkspace - Lists Notebooks.
+// NewGetNotebooksByWorkspacePager - Lists Notebooks.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - notebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
 // method.
-func (client *notebookClient) GetNotebooksByWorkspace(options *notebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[notebookClientGetNotebooksByWorkspaceResponse] {
+func (client *notebookClient) NewGetNotebooksByWorkspacePager(options *notebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[notebookClientGetNotebooksByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[notebookClientGetNotebooksByWorkspaceResponse]{
 		More: func(page notebookClientGetNotebooksByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

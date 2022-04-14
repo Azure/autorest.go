@@ -36,7 +36,7 @@ func httpClientWithCookieJar() policy.Transporter {
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePages(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePages(nil)
+	pager := client.NewGetMultiplePagesPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -56,7 +56,7 @@ func TestGetMultiplePages(t *testing.T) {
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
 func TestGetMultiplePagesFailure(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesFailure(nil)
+	pager := client.NewGetMultiplePagesFailurePager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -79,7 +79,7 @@ func TestGetMultiplePagesFailure(t *testing.T) {
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
 func TestGetMultiplePagesFailureURI(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesFailureURI(nil)
+	pager := client.NewGetMultiplePagesFailureURIPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -99,7 +99,7 @@ func TestGetMultiplePagesFailureURI(t *testing.T) {
 // GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
 func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesFragmentNextLink("1.6", "test_user", nil)
+	pager := client.NewGetMultiplePagesFragmentNextLinkPager("1.6", "test_user", nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -116,7 +116,7 @@ func TestGetMultiplePagesFragmentNextLink(t *testing.T) {
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with parameters grouped
 func TestGetMultiplePagesFragmentWithGroupingNextLink(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesFragmentWithGroupingNextLink(CustomParameterGroup{
+	pager := client.NewGetMultiplePagesFragmentWithGroupingNextLinkPager(CustomParameterGroup{
 		APIVersion: "1.6",
 		Tenant:     "test_user",
 	}, nil)
@@ -163,7 +163,7 @@ func TestGetMultiplePagesLro(t *testing.T) {
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response including a nextLink that has 10 pages
 func TestGetMultiplePagesRetryFirst(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesRetryFirst(nil)
+	pager := client.NewGetMultiplePagesRetryFirstPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -180,7 +180,7 @@ func TestGetMultiplePagesRetryFirst(t *testing.T) {
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails first with 500. The client should retry and finish all 10 pages eventually.
 func TestGetMultiplePagesRetrySecond(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesRetrySecond(nil)
+	pager := client.NewGetMultiplePagesRetrySecondPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -197,7 +197,7 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesWithOffset(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetMultiplePagesWithOffset(PagingClientGetMultiplePagesWithOffsetOptions{})
+	pager := client.NewGetMultiplePagesWithOffsetPager(PagingClientGetMultiplePagesWithOffsetOptions{})
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -214,7 +214,7 @@ func TestGetMultiplePagesWithOffset(t *testing.T) {
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
 func TestGetNoItemNamePages(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetNoItemNamePages(nil)
+	pager := client.NewGetNoItemNamePagesPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -231,7 +231,7 @@ func TestGetNoItemNamePages(t *testing.T) {
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 func TestGetNullNextLinkNamePages(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetNullNextLinkNamePages(nil)
+	pager := client.NewGetNullNextLinkNamePagesPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -251,7 +251,7 @@ func TestGetNullNextLinkNamePages(t *testing.T) {
 // GetOdataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 func TestGetOdataMultiplePages(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetODataMultiplePages(nil)
+	pager := client.NewGetODataMultiplePagesPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -268,7 +268,7 @@ func TestGetOdataMultiplePages(t *testing.T) {
 // GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden by x-ms-client-name 'indexes'.
 func TestGetPagingModelWithItemNameWithXMSClientName(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetPagingModelWithItemNameWithXMSClientName(nil)
+	pager := client.NewGetPagingModelWithItemNameWithXMSClientNamePager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -285,7 +285,7 @@ func TestGetPagingModelWithItemNameWithXMSClientName(t *testing.T) {
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
 func TestGetSinglePages(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetSinglePages(nil)
+	pager := client.NewGetSinglePagesPager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -302,7 +302,7 @@ func TestGetSinglePages(t *testing.T) {
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
 func TestGetSinglePagesFailure(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetSinglePagesFailure(nil)
+	pager := client.NewGetSinglePagesFailurePager(nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())
@@ -322,7 +322,7 @@ func TestGetSinglePagesFailure(t *testing.T) {
 // GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next operation nextOperationWithQueryParams. Returns a ProductResult
 func TestGetWithQueryParams(t *testing.T) {
 	client := newPagingClient()
-	pager := client.GetWithQueryParams(100, nil)
+	pager := client.NewGetWithQueryParamsPager(100, nil)
 	count := 0
 	for pager.More() {
 		page, err := pager.NextPage(context.Background())

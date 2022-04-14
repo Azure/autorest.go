@@ -370,11 +370,12 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
+// NewListContainersSegmentPager - The List Containers Segment operation returns a list of the containers under the specified
+// account
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - serviceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
 // method.
-func (client *serviceClient) ListContainersSegment(comp Enum5, options *serviceClientListContainersSegmentOptions) *runtime.Pager[serviceClientListContainersSegmentResponse] {
+func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *serviceClientListContainersSegmentOptions) *runtime.Pager[serviceClientListContainersSegmentResponse] {
 	return runtime.NewPager(runtime.PageProcessor[serviceClientListContainersSegmentResponse]{
 		More: func(page serviceClientListContainersSegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0

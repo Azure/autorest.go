@@ -187,13 +187,13 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 	return result, nil
 }
 
-// ListForScope - Gets role assignments for a scope.
+// NewListForScopePager - Gets role assignments for a scope.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.
 // options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
 // method.
-func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsClientListForScopeOptions) *runtime.Pager[RoleAssignmentsClientListForScopeResponse] {
+func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, scope string, options *RoleAssignmentsClientListForScopeOptions) *runtime.Pager[RoleAssignmentsClientListForScopeResponse] {
 	return runtime.NewPager(runtime.PageProcessor[RoleAssignmentsClientListForScopeResponse]{
 		More: func(page RoleAssignmentsClientListForScopeResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

@@ -319,11 +319,11 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 	return result, nil
 }
 
-// List - Gets all public IP addresses in a resource group.
+// NewListPager - Gets all public IP addresses in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.List method.
-func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesClientListOptions) *runtime.Pager[PublicIPAddressesClientListResponse] {
+func (client *PublicIPAddressesClient) NewListPager(resourceGroupName string, options *PublicIPAddressesClientListOptions) *runtime.Pager[PublicIPAddressesClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PublicIPAddressesClientListResponse]{
 		More: func(page PublicIPAddressesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -382,11 +382,11 @@ func (client *PublicIPAddressesClient) listHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// ListAll - Gets all the public IP addresses in a subscription.
+// NewListAllPager - Gets all the public IP addresses in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.ListAll
 // method.
-func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesClientListAllOptions) *runtime.Pager[PublicIPAddressesClientListAllResponse] {
+func (client *PublicIPAddressesClient) NewListAllPager(options *PublicIPAddressesClientListAllOptions) *runtime.Pager[PublicIPAddressesClientListAllResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PublicIPAddressesClientListAllResponse]{
 		More: func(page PublicIPAddressesClientListAllResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -441,14 +441,14 @@ func (client *PublicIPAddressesClient) listAllHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// ListVirtualMachineScaleSetPublicIPAddresses - Gets information about all public IP addresses on a virtual machine scale
-// set level.
+// NewListVirtualMachineScaleSetPublicIPAddressesPager - Gets information about all public IP addresses on a virtual machine
+// scale set level.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // options - PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions contains the optional parameters for
 // the PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses method.
-func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse] {
+func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetPublicIPAddressesPager(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse]{
 		More: func(page PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -511,8 +511,8 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 	return result, nil
 }
 
-// ListVirtualMachineScaleSetVMPublicIPAddresses - Gets information about all public IP addresses in a virtual machine IP
-// configuration in a virtual machine scale set.
+// NewListVirtualMachineScaleSetVMPublicIPAddressesPager - Gets information about all public IP addresses in a virtual machine
+// IP configuration in a virtual machine scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
@@ -521,7 +521,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 // ipConfigurationName - The IP configuration name.
 // options - PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions contains the optional parameters
 // for the PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses method.
-func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse] {
+func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetVMPublicIPAddressesPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse]{
 		More: func(page PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

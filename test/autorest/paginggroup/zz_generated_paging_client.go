@@ -39,11 +39,11 @@ func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
 	return client
 }
 
-// DuplicateParams - Define filter as a query param for all calls. However, the returned next link will also include the filter
-// as part of it. Make sure you don't end up duplicating the filter param in the url sent.
+// NewDuplicateParamsPager - Define filter as a query param for all calls. However, the returned next link will also include
+// the filter as part of it. Make sure you don't end up duplicating the filter param in the url sent.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientDuplicateParamsOptions contains the optional parameters for the PagingClient.DuplicateParams method.
-func (client *PagingClient) DuplicateParams(options *PagingClientDuplicateParamsOptions) *runtime.Pager[PagingClientDuplicateParamsResponse] {
+func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplicateParamsOptions) *runtime.Pager[PagingClientDuplicateParamsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientDuplicateParamsResponse]{
 		More: func(page PagingClientDuplicateParamsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -96,12 +96,12 @@ func (client *PagingClient) duplicateParamsHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// FirstResponseEmpty - A paging operation whose first response's items list is empty, but still returns a next link. Second
-// (and final) call, will give you an items list of 1.
+// NewFirstResponseEmptyPager - A paging operation whose first response's items list is empty, but still returns a next link.
+// Second (and final) call, will give you an items list of 1.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty
 // method.
-func (client *PagingClient) FirstResponseEmpty(options *PagingClientFirstResponseEmptyOptions) *runtime.Pager[PagingClientFirstResponseEmptyResponse] {
+func (client *PagingClient) NewFirstResponseEmptyPager(options *PagingClientFirstResponseEmptyOptions) *runtime.Pager[PagingClientFirstResponseEmptyResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientFirstResponseEmptyResponse]{
 		More: func(page PagingClientFirstResponseEmptyResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -149,10 +149,10 @@ func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
+// NewGetMultiplePagesPager - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
-func (client *PagingClient) GetMultiplePages(options *PagingClientGetMultiplePagesOptions) *runtime.Pager[PagingClientGetMultiplePagesResponse] {
+func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMultiplePagesOptions) *runtime.Pager[PagingClientGetMultiplePagesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesResponse]{
 		More: func(page PagingClientGetMultiplePagesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -209,11 +209,11 @@ func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
+// NewGetMultiplePagesFailurePager - A paging operation that receives a 400 on the second call
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure
 // method.
-func (client *PagingClient) GetMultiplePagesFailure(options *PagingClientGetMultiplePagesFailureOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureResponse] {
+func (client *PagingClient) NewGetMultiplePagesFailurePager(options *PagingClientGetMultiplePagesFailureOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFailureResponse]{
 		More: func(page PagingClientGetMultiplePagesFailureResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -261,11 +261,11 @@ func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Res
 	return result, nil
 }
 
-// GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
+// NewGetMultiplePagesFailureURIPager - A paging operation that receives an invalid nextLink
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
 // method.
-func (client *PagingClient) GetMultiplePagesFailureURI(options *PagingClientGetMultiplePagesFailureURIOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureURIResponse] {
+func (client *PagingClient) NewGetMultiplePagesFailureURIPager(options *PagingClientGetMultiplePagesFailureURIOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureURIResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFailureURIResponse]{
 		More: func(page PagingClientGetMultiplePagesFailureURIResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -313,13 +313,13 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.
 	return result, nil
 }
 
-// GetMultiplePagesFragmentNextLink - A paging operation that doesn't return a full URL, just a fragment
+// NewGetMultiplePagesFragmentNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
 // If the operation fails it returns an *azcore.ResponseError type.
 // apiVersion - Sets the api version to use.
 // tenant - Sets the tenant to use.
 // options - PagingClientGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentNextLink
 // method.
-func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string, options *PagingClientGetMultiplePagesFragmentNextLinkOptions) *runtime.Pager[PagingClientGetMultiplePagesFragmentNextLinkResponse] {
+func (client *PagingClient) NewGetMultiplePagesFragmentNextLinkPager(apiVersion string, tenant string, options *PagingClientGetMultiplePagesFragmentNextLinkOptions) *runtime.Pager[PagingClientGetMultiplePagesFragmentNextLinkResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFragmentNextLinkResponse]{
 		More: func(page PagingClientGetMultiplePagesFragmentNextLinkResponse) bool {
 			return page.ODataNextLink != nil && len(*page.ODataNextLink) > 0
@@ -374,14 +374,14 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 	return result, nil
 }
 
-// GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with
-// parameters grouped
+// NewGetMultiplePagesFragmentWithGroupingNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
+// with parameters grouped
 // If the operation fails it returns an *azcore.ResponseError type.
 // CustomParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
 // options - PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
-func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup, options *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions) *runtime.Pager[PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse] {
+func (client *PagingClient) NewGetMultiplePagesFragmentWithGroupingNextLinkPager(customParameterGroup CustomParameterGroup, options *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions) *runtime.Pager[PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse]{
 		More: func(page PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse) bool {
 			return page.ODataNextLink != nil && len(*page.ODataNextLink) > 0
@@ -521,12 +521,12 @@ func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Respons
 	return result, nil
 }
 
-// GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response
-// including a nextLink that has 10 pages
+// NewGetMultiplePagesRetryFirstPager - A paging operation that fails on the first call with 500 and then retries and then
+// get a response including a nextLink that has 10 pages
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
 // method.
-func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingClientGetMultiplePagesRetryFirstOptions) *runtime.Pager[PagingClientGetMultiplePagesRetryFirstResponse] {
+func (client *PagingClient) NewGetMultiplePagesRetryFirstPager(options *PagingClientGetMultiplePagesRetryFirstOptions) *runtime.Pager[PagingClientGetMultiplePagesRetryFirstResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesRetryFirstResponse]{
 		More: func(page PagingClientGetMultiplePagesRetryFirstResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -574,12 +574,12 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.
 	return result, nil
 }
 
-// GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails
-// first with 500. The client should retry and finish all 10 pages eventually.
+// NewGetMultiplePagesRetrySecondPager - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call
+// fails first with 500. The client should retry and finish all 10 pages eventually.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
 // method.
-func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingClientGetMultiplePagesRetrySecondOptions) *runtime.Pager[PagingClientGetMultiplePagesRetrySecondResponse] {
+func (client *PagingClient) NewGetMultiplePagesRetrySecondPager(options *PagingClientGetMultiplePagesRetrySecondOptions) *runtime.Pager[PagingClientGetMultiplePagesRetrySecondResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesRetrySecondResponse]{
 		More: func(page PagingClientGetMultiplePagesRetrySecondResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -627,11 +627,11 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http
 	return result, nil
 }
 
-// GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
+// NewGetMultiplePagesWithOffsetPager - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.GetMultiplePagesWithOffset
 // method.
-func (client *PagingClient) GetMultiplePagesWithOffset(options PagingClientGetMultiplePagesWithOffsetOptions) *runtime.Pager[PagingClientGetMultiplePagesWithOffsetResponse] {
+func (client *PagingClient) NewGetMultiplePagesWithOffsetPager(options PagingClientGetMultiplePagesWithOffsetOptions) *runtime.Pager[PagingClientGetMultiplePagesWithOffsetResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesWithOffsetResponse]{
 		More: func(page PagingClientGetMultiplePagesWithOffsetResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -689,11 +689,11 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.
 	return result, nil
 }
 
-// GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
+// NewGetNoItemNamePagesPager - A paging operation that must return result of the default 'value' node.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages
 // method.
-func (client *PagingClient) GetNoItemNamePages(options *PagingClientGetNoItemNamePagesOptions) *runtime.Pager[PagingClientGetNoItemNamePagesResponse] {
+func (client *PagingClient) NewGetNoItemNamePagesPager(options *PagingClientGetNoItemNamePagesOptions) *runtime.Pager[PagingClientGetNoItemNamePagesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetNoItemNamePagesResponse]{
 		More: func(page PagingClientGetNoItemNamePagesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -741,11 +741,11 @@ func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
+// NewGetNullNextLinkNamePagesPager - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
 // method.
-func (client *PagingClient) GetNullNextLinkNamePages(options *PagingClientGetNullNextLinkNamePagesOptions) *runtime.Pager[PagingClientGetNullNextLinkNamePagesResponse] {
+func (client *PagingClient) NewGetNullNextLinkNamePagesPager(options *PagingClientGetNullNextLinkNamePagesOptions) *runtime.Pager[PagingClientGetNullNextLinkNamePagesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetNullNextLinkNamePagesResponse]{
 		More: func(page PagingClientGetNullNextLinkNamePagesResponse) bool {
 			return false
@@ -787,11 +787,11 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Re
 	return result, nil
 }
 
-// GetODataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
+// NewGetODataMultiplePagesPager - A paging operation that includes a nextLink in odata format that has 10 pages
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages
 // method.
-func (client *PagingClient) GetODataMultiplePages(options *PagingClientGetODataMultiplePagesOptions) *runtime.Pager[PagingClientGetODataMultiplePagesResponse] {
+func (client *PagingClient) NewGetODataMultiplePagesPager(options *PagingClientGetODataMultiplePagesOptions) *runtime.Pager[PagingClientGetODataMultiplePagesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetODataMultiplePagesResponse]{
 		More: func(page PagingClientGetODataMultiplePagesResponse) bool {
 			return page.ODataNextLink != nil && len(*page.ODataNextLink) > 0
@@ -848,12 +848,12 @@ func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden
-// by x-ms-client-name 'indexes'.
+// NewGetPagingModelWithItemNameWithXMSClientNamePager - A paging operation that returns a paging model whose item name is
+// is overriden by x-ms-client-name 'indexes'.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
 // method.
-func (client *PagingClient) GetPagingModelWithItemNameWithXMSClientName(options *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) *runtime.Pager[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse] {
+func (client *PagingClient) NewGetPagingModelWithItemNameWithXMSClientNamePager(options *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) *runtime.Pager[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]{
 		More: func(page PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -901,10 +901,10 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleRes
 	return result, nil
 }
 
-// GetSinglePages - A paging operation that finishes on the first call without a nextlink
+// NewGetSinglePagesPager - A paging operation that finishes on the first call without a nextlink
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
-func (client *PagingClient) GetSinglePages(options *PagingClientGetSinglePagesOptions) *runtime.Pager[PagingClientGetSinglePagesResponse] {
+func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSinglePagesOptions) *runtime.Pager[PagingClientGetSinglePagesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetSinglePagesResponse]{
 		More: func(page PagingClientGetSinglePagesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -952,11 +952,11 @@ func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (P
 	return result, nil
 }
 
-// GetSinglePagesFailure - A paging operation that receives a 400 on the first call
+// NewGetSinglePagesFailurePager - A paging operation that receives a 400 on the first call
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - PagingClientGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure
 // method.
-func (client *PagingClient) GetSinglePagesFailure(options *PagingClientGetSinglePagesFailureOptions) *runtime.Pager[PagingClientGetSinglePagesFailureResponse] {
+func (client *PagingClient) NewGetSinglePagesFailurePager(options *PagingClientGetSinglePagesFailureOptions) *runtime.Pager[PagingClientGetSinglePagesFailureResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetSinglePagesFailureResponse]{
 		More: func(page PagingClientGetSinglePagesFailureResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1004,13 +1004,13 @@ func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// GetWithQueryParams - A paging operation that includes a next operation. It has a different query parameter from it's next
-// operation nextOperationWithQueryParams. Returns a ProductResult
+// NewGetWithQueryParamsPager - A paging operation that includes a next operation. It has a different query parameter from
+// it's next operation nextOperationWithQueryParams. Returns a ProductResult
 // If the operation fails it returns an *azcore.ResponseError type.
 // requiredQueryParameter - A required integer query parameter. Put in value '100' to pass test.
 // options - PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams
 // method.
-func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, options *PagingClientGetWithQueryParamsOptions) *runtime.Pager[PagingClientGetWithQueryParamsResponse] {
+func (client *PagingClient) NewGetWithQueryParamsPager(requiredQueryParameter int32, options *PagingClientGetWithQueryParamsOptions) *runtime.Pager[PagingClientGetWithQueryParamsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[PagingClientGetWithQueryParamsResponse]{
 		More: func(page PagingClientGetWithQueryParamsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

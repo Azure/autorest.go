@@ -596,11 +596,14 @@ function generateOperation(op: Operation, imports: ImportManager, isARM: boolean
   const params = getAPIParametersSig(op, imports);
   const returns = generateReturnsInfo(op, 'op', isARM);
   const clientName = op.language.go!.clientName;
+  let opName = op.language.go!.name;
+  if(isPageableOperation(op) && !isLROOperation(op)) {
+    opName = `New${opName}Pager`;
+  }
   let text = '';
   if (hasDescription(op.language.go!)) {
-    text += `${comment(`${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+    text += `${comment(`${opName} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
   }
-  let opName = op.language.go!.name;
   if (isLROOperation(op)) {
     opName = info.protocolNaming.internalMethod;
   } else {

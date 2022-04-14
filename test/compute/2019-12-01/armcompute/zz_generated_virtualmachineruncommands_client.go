@@ -111,12 +111,12 @@ func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Resp
 	return result, nil
 }
 
-// List - Lists all available run commands for a subscription in a location.
+// NewListPager - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns an *azcore.ResponseError type.
 // location - The location upon which run commands is queried.
 // options - VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
 // method.
-func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsClientListOptions) *runtime.Pager[VirtualMachineRunCommandsClientListResponse] {
+func (client *VirtualMachineRunCommandsClient) NewListPager(location string, options *VirtualMachineRunCommandsClientListOptions) *runtime.Pager[VirtualMachineRunCommandsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[VirtualMachineRunCommandsClientListResponse]{
 		More: func(page VirtualMachineRunCommandsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

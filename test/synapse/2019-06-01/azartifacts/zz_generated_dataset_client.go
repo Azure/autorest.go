@@ -191,11 +191,11 @@ func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (data
 	return result, nil
 }
 
-// GetDatasetsByWorkspace - Lists datasets.
+// NewGetDatasetsByWorkspacePager - Lists datasets.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - datasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
 // method.
-func (client *datasetClient) GetDatasetsByWorkspace(options *datasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[datasetClientGetDatasetsByWorkspaceResponse] {
+func (client *datasetClient) NewGetDatasetsByWorkspacePager(options *datasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[datasetClientGetDatasetsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[datasetClientGetDatasetsByWorkspaceResponse]{
 		More: func(page datasetClientGetDatasetsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
