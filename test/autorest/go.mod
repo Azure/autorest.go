@@ -3,7 +3,7 @@ module generatortests
 go 1.18
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v0.22.1-0.20220401193339-cf00edc55f3c
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v0.23.1
 	github.com/google/go-cmp v0.5.4
 	github.com/stretchr/testify v1.7.0
 )
