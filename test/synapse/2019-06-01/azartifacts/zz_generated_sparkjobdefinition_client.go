@@ -296,11 +296,11 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp
 	return result, nil
 }
 
-// GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
+// NewGetSparkJobDefinitionsByWorkspacePager - Lists spark job definitions.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace
 // method.
-func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) *runtime.Pager[sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse] {
+func (client *sparkJobDefinitionClient) NewGetSparkJobDefinitionsByWorkspacePager(options *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) *runtime.Pager[sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse]{
 		More: func(page sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

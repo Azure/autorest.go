@@ -238,11 +238,11 @@ func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (trig
 	return result, nil
 }
 
-// GetTriggersByWorkspace - Lists triggers.
+// NewGetTriggersByWorkspacePager - Lists triggers.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - triggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
 // method.
-func (client *triggerClient) GetTriggersByWorkspace(options *triggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[triggerClientGetTriggersByWorkspaceResponse] {
+func (client *triggerClient) NewGetTriggersByWorkspacePager(options *triggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[triggerClientGetTriggersByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[triggerClientGetTriggersByWorkspaceResponse]{
 		More: func(page triggerClientGetTriggersByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

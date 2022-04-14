@@ -242,12 +242,12 @@ func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// List - Gets a list of container services in the specified subscription. The operation returns properties of each container
-// service including state, orchestrator, number of masters and agents, and FQDNs of
+// NewListPager - Gets a list of container services in the specified subscription. The operation returns properties of each
+// container service including state, orchestrator, number of masters and agents, and FQDNs of
 // masters and agents.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
-func (client *ContainerServicesClient) List(options *ContainerServicesClientListOptions) *runtime.Pager[ContainerServicesClientListResponse] {
+func (client *ContainerServicesClient) NewListPager(options *ContainerServicesClientListOptions) *runtime.Pager[ContainerServicesClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ContainerServicesClientListResponse]{
 		More: func(page ContainerServicesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -302,14 +302,14 @@ func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation
+// NewListByResourceGroupPager - Gets a list of container services in the specified subscription and resource group. The operation
 // returns properties of each container service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
 // method.
-func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) *runtime.Pager[ContainerServicesClientListByResourceGroupResponse] {
+func (client *ContainerServicesClient) NewListByResourceGroupPager(resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) *runtime.Pager[ContainerServicesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ContainerServicesClientListByResourceGroupResponse]{
 		More: func(page ContainerServicesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

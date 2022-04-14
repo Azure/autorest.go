@@ -54,12 +54,12 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 	return client, nil
 }
 
-// List - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development.
+// NewListPager - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development.
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
-func (client *ForecastsClient) List(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
+func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ForecastsClientListResponse]{
 		More: func(page ForecastsClientListResponse) bool {
 			return false

@@ -738,11 +738,11 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// ListBlobFlatSegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
+// NewListBlobFlatSegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
 // method.
-func (client *containerClient) ListBlobFlatSegment(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *runtime.Pager[containerClientListBlobFlatSegmentResponse] {
+func (client *containerClient) NewListBlobFlatSegmentPager(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *runtime.Pager[containerClientListBlobFlatSegmentResponse] {
 	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobFlatSegmentResponse]{
 		More: func(page containerClientListBlobFlatSegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
@@ -831,14 +831,14 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 	return result, nil
 }
 
-// ListBlobHierarchySegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
+// NewListBlobHierarchySegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
 // If the operation fails it returns an *azcore.ResponseError type.
 // delimiter - When the request includes this parameter, the operation returns a BlobPrefix element in the response body that
 // acts as a placeholder for all blobs whose names begin with the same substring up to the
 // appearance of the delimiter character. The delimiter may be a single character or a string.
 // options - containerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
 // method.
-func (client *containerClient) ListBlobHierarchySegment(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *runtime.Pager[containerClientListBlobHierarchySegmentResponse] {
+func (client *containerClient) NewListBlobHierarchySegmentPager(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *runtime.Pager[containerClientListBlobHierarchySegmentResponse] {
 	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobHierarchySegmentResponse]{
 		More: func(page containerClientListBlobHierarchySegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0

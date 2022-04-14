@@ -251,11 +251,11 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (pi
 	return result, nil
 }
 
-// GetPipelinesByWorkspace - Lists pipelines.
+// NewGetPipelinesByWorkspacePager - Lists pipelines.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - pipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
 // method.
-func (client *pipelineClient) GetPipelinesByWorkspace(options *pipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[pipelineClientGetPipelinesByWorkspaceResponse] {
+func (client *pipelineClient) NewGetPipelinesByWorkspacePager(options *pipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[pipelineClientGetPipelinesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[pipelineClientGetPipelinesByWorkspaceResponse]{
 		More: func(page pipelineClientGetPipelinesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

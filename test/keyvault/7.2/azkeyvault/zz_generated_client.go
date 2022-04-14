@@ -1179,12 +1179,12 @@ func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified
-// key vault. This operation requires the certificates/manageissuers/getissuers permission.
+// NewGetCertificateIssuersPager - The GetCertificateIssuers operation returns the set of certificate issuer resources in
+// the specified key vault. This operation requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
-func (client *Client) GetCertificateIssuers(vaultBaseURL string, options *ClientGetCertificateIssuersOptions) *runtime.Pager[ClientGetCertificateIssuersResponse] {
+func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options *ClientGetCertificateIssuersOptions) *runtime.Pager[ClientGetCertificateIssuersResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificateIssuersResponse]{
 		More: func(page ClientGetCertificateIssuersResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1341,13 +1341,13 @@ func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key
-// vault. This operation requires the certificates/list permission.
+// NewGetCertificateVersionsPager - The GetCertificateVersions operation returns the versions of a certificate in the specified
+// key vault. This operation requires the certificates/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
-func (client *Client) GetCertificateVersions(vaultBaseURL string, certificateName string, options *ClientGetCertificateVersionsOptions) *runtime.Pager[ClientGetCertificateVersionsResponse] {
+func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certificateName string, options *ClientGetCertificateVersionsOptions) *runtime.Pager[ClientGetCertificateVersionsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificateVersionsResponse]{
 		More: func(page ClientGetCertificateVersionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1407,12 +1407,12 @@ func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This
-// operation requires the certificates/list permission.
+// NewGetCertificatesPager - The GetCertificates operation returns the set of certificates resources in the specified key
+// vault. This operation requires the certificates/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
-func (client *Client) GetCertificates(vaultBaseURL string, options *ClientGetCertificatesOptions) *runtime.Pager[ClientGetCertificatesResponse] {
+func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *ClientGetCertificatesOptions) *runtime.Pager[ClientGetCertificatesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificatesResponse]{
 		More: func(page ClientGetCertificatesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1522,14 +1522,14 @@ func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// GetDeletedCertificates - The GetDeletedCertificates operation retrieves the certificates in the current vault which are
-// in a deleted state and ready for recovery or purging. This operation includes deletion-specific
+// NewGetDeletedCertificatesPager - The GetDeletedCertificates operation retrieves the certificates in the current vault which
+// are in a deleted state and ready for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete
 // enabled vaults.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
-func (client *Client) GetDeletedCertificates(vaultBaseURL string, options *ClientGetDeletedCertificatesOptions) *runtime.Pager[ClientGetDeletedCertificatesResponse] {
+func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, options *ClientGetDeletedCertificatesOptions) *runtime.Pager[ClientGetDeletedCertificatesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedCertificatesResponse]{
 		More: func(page ClientGetDeletedCertificatesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1639,15 +1639,15 @@ func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGe
 	return result, nil
 }
 
-// GetDeletedKeys - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part
-// of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys
+// NewGetDeletedKeysPager - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public
+// part of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys
 // operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return
 // an error if invoked on a non soft-delete enabled vault. This operation
 // requires the keys/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
-func (client *Client) GetDeletedKeys(vaultBaseURL string, options *ClientGetDeletedKeysOptions) *runtime.Pager[ClientGetDeletedKeysResponse] {
+func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *ClientGetDeletedKeysOptions) *runtime.Pager[ClientGetDeletedKeysResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedKeysResponse]{
 		More: func(page ClientGetDeletedKeysResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1759,14 +1759,14 @@ func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted
-// for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
+// NewGetDeletedSasDefinitionsPager - The Get Deleted Sas Definitions operation returns the SAS definitions that have been
+// deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions
 // method.
-func (client *Client) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *ClientGetDeletedSasDefinitionsOptions) *runtime.Pager[ClientGetDeletedSasDefinitionsResponse] {
+func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, storageAccountName string, options *ClientGetDeletedSasDefinitionsOptions) *runtime.Pager[ClientGetDeletedSasDefinitionsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedSasDefinitionsResponse]{
 		More: func(page ClientGetDeletedSasDefinitionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1876,12 +1876,12 @@ func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (Clien
 	return result, nil
 }
 
-// GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for
-// soft-delete. This operation requires the secrets/list permission.
+// NewGetDeletedSecretsPager - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled
+// for soft-delete. This operation requires the secrets/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
-func (client *Client) GetDeletedSecrets(vaultBaseURL string, options *ClientGetDeletedSecretsOptions) *runtime.Pager[ClientGetDeletedSecretsResponse] {
+func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *ClientGetDeletedSecretsOptions) *runtime.Pager[ClientGetDeletedSecretsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedSecretsResponse]{
 		More: func(page ClientGetDeletedSecretsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -1988,13 +1988,13 @@ func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted
-// for a vault enabled for soft-delete. This operation requires the storage/list permission.
+// NewGetDeletedStorageAccountsPager - The Get Deleted Storage Accounts operation returns the storage accounts that have been
+// deleted for a vault enabled for soft-delete. This operation requires the storage/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
 // method.
-func (client *Client) GetDeletedStorageAccounts(vaultBaseURL string, options *ClientGetDeletedStorageAccountsOptions) *runtime.Pager[ClientGetDeletedStorageAccountsResponse] {
+func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, options *ClientGetDeletedStorageAccountsOptions) *runtime.Pager[ClientGetDeletedStorageAccountsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedStorageAccountsResponse]{
 		More: func(page ClientGetDeletedStorageAccountsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -2106,13 +2106,13 @@ func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyRes
 	return result, nil
 }
 
-// GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the
-// keys/list permission.
+// NewGetKeyVersionsPager - The full key identifier, attributes, and tags are provided in the response. This operation requires
+// the keys/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // options - ClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
-func (client *Client) GetKeyVersions(vaultBaseURL string, keyName string, options *ClientGetKeyVersionsOptions) *runtime.Pager[ClientGetKeyVersionsResponse] {
+func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string, options *ClientGetKeyVersionsOptions) *runtime.Pager[ClientGetKeyVersionsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetKeyVersionsResponse]{
 		More: func(page ClientGetKeyVersionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -2172,14 +2172,14 @@ func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientG
 	return result, nil
 }
 
-// GetKeys - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored
-// key. The LIST operation is applicable to all key types, however only the base key
+// NewGetKeysPager - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part
+// of a stored key. The LIST operation is applicable to all key types, however only the base key
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response.
 // This operation requires the keys/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
-func (client *Client) GetKeys(vaultBaseURL string, options *ClientGetKeysOptions) *runtime.Pager[ClientGetKeysResponse] {
+func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKeysOptions) *runtime.Pager[ClientGetKeysResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetKeysResponse]{
 		More: func(page ClientGetKeysResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -2290,13 +2290,13 @@ func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (Clien
 	return result, nil
 }
 
-// GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas
+// NewGetSasDefinitionsPager - List storage SAS definitions for the given storage account. This operation requires the storage/listsas
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
-func (client *Client) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *ClientGetSasDefinitionsOptions) *runtime.Pager[ClientGetSasDefinitionsResponse] {
+func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAccountName string, options *ClientGetSasDefinitionsOptions) *runtime.Pager[ClientGetSasDefinitionsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetSasDefinitionsResponse]{
 		More: func(page ClientGetSasDefinitionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -2412,13 +2412,13 @@ func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSec
 	return result, nil
 }
 
-// GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for
-// the secrets. This operations requires the secrets/list permission.
+// NewGetSecretVersionsPager - The full secret identifier and attributes are provided in the response. No values are returned
+// for the secrets. This operations requires the secrets/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
-func (client *Client) GetSecretVersions(vaultBaseURL string, secretName string, options *ClientGetSecretVersionsOptions) *runtime.Pager[ClientGetSecretVersionsResponse] {
+func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName string, options *ClientGetSecretVersionsOptions) *runtime.Pager[ClientGetSecretVersionsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetSecretVersionsResponse]{
 		More: func(page ClientGetSecretVersionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -2478,13 +2478,13 @@ func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// GetSecrets - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and
-// its attributes are provided in the response. Individual secret versions are not listed in the
+// NewGetSecretsPager - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier
+// and its attributes are provided in the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
-func (client *Client) GetSecrets(vaultBaseURL string, options *ClientGetSecretsOptions) *runtime.Pager[ClientGetSecretsResponse] {
+func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGetSecretsOptions) *runtime.Pager[ClientGetSecretsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetSecretsResponse]{
 		More: func(page ClientGetSecretsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -2589,12 +2589,12 @@ func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (Clie
 	return result, nil
 }
 
-// GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list
+// NewGetStorageAccountsPager - List storage accounts managed by the specified key vault. This operation requires the storage/list
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
-func (client *Client) GetStorageAccounts(vaultBaseURL string, options *ClientGetStorageAccountsOptions) *runtime.Pager[ClientGetStorageAccountsResponse] {
+func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *ClientGetStorageAccountsOptions) *runtime.Pager[ClientGetStorageAccountsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ClientGetStorageAccountsResponse]{
 		More: func(page ClientGetStorageAccountsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

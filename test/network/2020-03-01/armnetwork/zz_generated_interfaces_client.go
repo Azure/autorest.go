@@ -446,11 +446,11 @@ func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleR
 	return result, nil
 }
 
-// List - Gets all network interfaces in a resource group.
+// NewListPager - Gets all network interfaces in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - InterfacesClientListOptions contains the optional parameters for the InterfacesClient.List method.
-func (client *InterfacesClient) List(resourceGroupName string, options *InterfacesClientListOptions) *runtime.Pager[InterfacesClientListResponse] {
+func (client *InterfacesClient) NewListPager(resourceGroupName string, options *InterfacesClientListOptions) *runtime.Pager[InterfacesClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListResponse]{
 		More: func(page InterfacesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -509,10 +509,10 @@ func (client *InterfacesClient) listHandleResponse(resp *http.Response) (Interfa
 	return result, nil
 }
 
-// ListAll - Gets all network interfaces in a subscription.
+// NewListAllPager - Gets all network interfaces in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - InterfacesClientListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
-func (client *InterfacesClient) ListAll(options *InterfacesClientListAllOptions) *runtime.Pager[InterfacesClientListAllResponse] {
+func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAllOptions) *runtime.Pager[InterfacesClientListAllResponse] {
 	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListAllResponse]{
 		More: func(page InterfacesClientListAllResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -630,8 +630,8 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(
 	return req, nil
 }
 
-// ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine
-// scale set.
+// NewListVirtualMachineScaleSetIPConfigurationsPager - Get the specified network interface ip configuration in a virtual
+// machine scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
@@ -639,7 +639,7 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetIPConfigurations
 // method.
-func (client *InterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse] {
+func (client *InterfacesClient) NewListVirtualMachineScaleSetIPConfigurationsPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse] {
 	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -713,13 +713,13 @@ func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandle
 	return result, nil
 }
 
-// ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
+// NewListVirtualMachineScaleSetNetworkInterfacesPager - Gets all network interfaces in a virtual machine scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // options - InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces
 // method.
-func (client *InterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse] {
+func (client *InterfacesClient) NewListVirtualMachineScaleSetNetworkInterfacesPager(resourceGroupName string, virtualMachineScaleSetName string, options *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -782,15 +782,15 @@ func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandl
 	return result, nil
 }
 
-// ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a
-// virtual machine scale set.
+// NewListVirtualMachineScaleSetVMNetworkInterfacesPager - Gets information about all network interfaces in a virtual machine
+// in a virtual machine scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // options - InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the
 // InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces method.
-func (client *InterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse] {
+func (client *InterfacesClient) NewListVirtualMachineScaleSetVMNetworkInterfacesPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse] {
 	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

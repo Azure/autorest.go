@@ -191,11 +191,11 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// GetSQLScriptsByWorkspace - Lists sql scripts.
+// NewGetSQLScriptsByWorkspacePager - Lists sql scripts.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - sqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
 // method.
-func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *sqlScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[sqlScriptClientGetSQLScriptsByWorkspaceResponse] {
+func (client *sqlScriptClient) NewGetSQLScriptsByWorkspacePager(options *sqlScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[sqlScriptClientGetSQLScriptsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PageProcessor[sqlScriptClientGetSQLScriptsByWorkspaceResponse]{
 		More: func(page sqlScriptClientGetSQLScriptsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0

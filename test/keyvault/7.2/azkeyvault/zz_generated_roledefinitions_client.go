@@ -188,12 +188,12 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 	return result, nil
 }
 
-// List - Get all role definitions that are applicable at scope and above.
+// NewListPager - Get all role definitions that are applicable at scope and above.
 // If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition.
 // options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
-func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *runtime.Pager[RoleDefinitionsClientListResponse] {
+func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *runtime.Pager[RoleDefinitionsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[RoleDefinitionsClientListResponse]{
 		More: func(page RoleDefinitionsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
