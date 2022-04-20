@@ -17,4 +17,9 @@ directive:
   - rename-model:
       from: 'Sku'
       to: 'SkuType'
+  - from: source-file-go
+    where: $
+    transform: >-
+      return $.
+        replaceAll(/\sif deviceName == "" \{\s+return nil, errors\.New\("parameter deviceName cannot be empty"\)\s+\}\s/g, ``);
 ```
