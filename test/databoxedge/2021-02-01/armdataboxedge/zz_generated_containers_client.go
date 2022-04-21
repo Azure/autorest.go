@@ -95,9 +95,6 @@ func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName s
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if storageAccountName == "" {
 		return nil, errors.New("parameter storageAccountName cannot be empty")
@@ -165,9 +162,6 @@ func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName 
 // deleteCreateRequest creates the Delete request.
 func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if storageAccountName == "" {
 		return nil, errors.New("parameter storageAccountName cannot be empty")
@@ -221,9 +215,6 @@ func (client *ContainersClient) Get(ctx context.Context, deviceName string, stor
 // getCreateRequest creates the Get request.
 func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if storageAccountName == "" {
 		return nil, errors.New("parameter storageAccountName cannot be empty")
@@ -299,9 +290,6 @@ func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, 
 // listByStorageAccountCreateRequest creates the ListByStorageAccount request.
 func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *ContainersClientListByStorageAccountOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if storageAccountName == "" {
 		return nil, errors.New("parameter storageAccountName cannot be empty")
@@ -374,9 +362,6 @@ func (client *ContainersClient) refresh(ctx context.Context, deviceName string, 
 // refreshCreateRequest creates the Refresh request.
 func (client *ContainersClient) refreshCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}/refresh"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if storageAccountName == "" {
 		return nil, errors.New("parameter storageAccountName cannot be empty")

@@ -94,9 +94,6 @@ func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, devi
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -160,9 +157,6 @@ func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, dev
 // deleteCreateRequest creates the Delete request.
 func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -211,9 +205,6 @@ func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName stri
 // getCreateRequest creates the Get request.
 func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -284,9 +275,6 @@ func (client *BandwidthSchedulesClient) NewListByDataBoxEdgeDevicePager(deviceNa
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
 func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

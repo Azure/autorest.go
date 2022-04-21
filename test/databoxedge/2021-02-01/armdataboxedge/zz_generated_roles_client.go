@@ -94,9 +94,6 @@ func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -159,9 +156,6 @@ func (client *RolesClient) deleteOperation(ctx context.Context, deviceName strin
 // deleteCreateRequest creates the Delete request.
 func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -210,9 +204,6 @@ func (client *RolesClient) Get(ctx context.Context, deviceName string, name stri
 // getCreateRequest creates the Get request.
 func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if name == "" {
 		return nil, errors.New("parameter name cannot be empty")
@@ -283,9 +274,6 @@ func (client *RolesClient) NewListByDataBoxEdgeDevicePager(deviceName string, re
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
 func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *RolesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles"
-	if deviceName == "" {
-		return nil, errors.New("parameter deviceName cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{deviceName}", url.PathEscape(deviceName))
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
