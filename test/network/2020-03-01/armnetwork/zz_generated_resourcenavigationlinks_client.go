@@ -57,6 +57,7 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 
 // List - Gets a list of resource navigation links for a subnet.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.

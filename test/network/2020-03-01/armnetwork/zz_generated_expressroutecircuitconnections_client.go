@@ -57,6 +57,7 @@ func NewExpressRouteCircuitConnectionsClient(subscriptionID string, credential a
 
 // BeginCreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -81,6 +82,7 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx cont
 
 // CreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *ExpressRouteCircuitConnectionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, options)
 	if err != nil {
@@ -132,6 +134,7 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateCreateRequest(
 
 // BeginDelete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -154,6 +157,7 @@ func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Cont
 
 // Delete - Deletes the specified Express Route Circuit Connection from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *ExpressRouteCircuitConnectionsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -205,6 +209,7 @@ func (client *ExpressRouteCircuitConnectionsClient) deleteCreateRequest(ctx cont
 
 // Get - Gets the specified Express Route Circuit Connection from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -271,6 +276,7 @@ func (client *ExpressRouteCircuitConnectionsClient) getHandleResponse(resp *http
 
 // NewListPager - Gets all global reach connections associated with a private peering in an express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // peeringName - The name of the peering.

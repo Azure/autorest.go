@@ -37,6 +37,7 @@ func NewLROSADsClient(options *azcore.ClientOptions) *LROSADsClient {
 
 // BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDelete202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginDelete202NonRetry400
 // method.
 func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsClientBeginDelete202NonRetry400Options) (*armruntime.Poller[LROSADsClientDelete202NonRetry400Response], error) {
@@ -53,6 +54,7 @@ func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 
 // Delete202NonRetry400 - Long running delete request, service returns a 202 with a location header
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) delete202NonRetry400(ctx context.Context, options *LROSADsClientBeginDelete202NonRetry400Options) (*http.Response, error) {
 	req, err := client.delete202NonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -82,6 +84,7 @@ func (client *LROSADsClient) delete202NonRetry400CreateRequest(ctx context.Conte
 // BeginDelete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a
 // reponse with an invalid 'Location' and 'Retry-After' headers
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDelete202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDelete202RetryInvalidHeader
 // method.
 func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDelete202RetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientDelete202RetryInvalidHeaderResponse], error) {
@@ -99,6 +102,7 @@ func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 // Delete202RetryInvalidHeader - Long running delete request, service returns a 202 to the initial request receing a reponse
 // with an invalid 'Location' and 'Retry-After' headers
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) delete202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDelete202RetryInvalidHeaderOptions) (*http.Response, error) {
 	req, err := client.delete202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -127,6 +131,7 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderCreateRequest(ctx contex
 
 // BeginDelete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDelete204SucceededOptions contains the optional parameters for the LROSADsClient.BeginDelete204Succeeded
 // method.
 func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsClientBeginDelete204SucceededOptions) (*armruntime.Poller[LROSADsClientDelete204SucceededResponse], error) {
@@ -143,6 +148,7 @@ func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, option
 
 // Delete204Succeeded - Long running delete request, service returns a 204 to the initial request, indicating success.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) delete204Succeeded(ctx context.Context, options *LROSADsClientBeginDelete204SucceededOptions) (*http.Response, error) {
 	req, err := client.delete204SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -172,6 +178,7 @@ func (client *LROSADsClient) delete204SucceededCreateRequest(ctx context.Context
 // BeginDeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetry400
 // method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetry400Options) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetry400Response], error) {
@@ -189,6 +196,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 // DeleteAsyncRelativeRetry400 - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) deleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetry400Options) (*http.Response, error) {
 	req, err := client.deleteAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -218,6 +226,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400CreateRequest(ctx contex
 // BeginDeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request.
 // The endpoint indicated in the Azure-AsyncOperation header is invalid
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader
 // method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse], error) {
@@ -235,6 +244,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 // DeleteAsyncRelativeRetryInvalidHeader - Long running delete request, service returns a 202 to the initial request. The
 // endpoint indicated in the Azure-AsyncOperation header is invalid
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -264,6 +274,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 // BeginDeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the
 // LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse], error) {
@@ -281,6 +292,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 // DeleteAsyncRelativeRetryInvalidJSONPolling - Long running delete request, service returns a 202 to the initial request.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -310,6 +322,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 // BeginDeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll
 // the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus
 // method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse], error) {
@@ -327,6 +340,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 // DeleteAsyncRelativeRetryNoStatus - Long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
@@ -355,6 +369,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 
 // BeginDeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteNonRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteNonRetry400
 // method.
 func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsClientBeginDeleteNonRetry400Options) (*armruntime.Poller[LROSADsClientDeleteNonRetry400Response], error) {
@@ -371,6 +386,7 @@ func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options
 
 // DeleteNonRetry400 - Long running delete request, service returns a 400 with an error body
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) deleteNonRetry400(ctx context.Context, options *LROSADsClientBeginDeleteNonRetry400Options) (*http.Response, error) {
 	req, err := client.deleteNonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -399,6 +415,7 @@ func (client *LROSADsClient) deleteNonRetry400CreateRequest(ctx context.Context,
 
 // BeginPost202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPost202NoLocationOptions contains the optional parameters for the LROSADsClient.BeginPost202NoLocation
 // method.
 func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsClientBeginPost202NoLocationOptions) (*armruntime.Poller[LROSADsClientPost202NoLocationResponse], error) {
@@ -415,6 +432,7 @@ func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options
 
 // Post202NoLocation - Long running post request, service returns a 202 to the initial request, without a location header.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) post202NoLocation(ctx context.Context, options *LROSADsClientBeginPost202NoLocationOptions) (*http.Response, error) {
 	req, err := client.post202NoLocationCreateRequest(ctx, options)
 	if err != nil {
@@ -446,6 +464,7 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 
 // BeginPost202NonRetry400 - Long running post request, service returns a 202 with a location header
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPost202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginPost202NonRetry400
 // method.
 func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsClientBeginPost202NonRetry400Options) (*armruntime.Poller[LROSADsClientPost202NonRetry400Response], error) {
@@ -462,6 +481,7 @@ func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, option
 
 // Post202NonRetry400 - Long running post request, service returns a 202 with a location header
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) post202NonRetry400(ctx context.Context, options *LROSADsClientBeginPost202NonRetry400Options) (*http.Response, error) {
 	req, err := client.post202NonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -494,6 +514,7 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 // BeginPost202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid
 // 'Location' and 'Retry-After' headers.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPost202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPost202RetryInvalidHeader
 // method.
 func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPost202RetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientPost202RetryInvalidHeaderResponse], error) {
@@ -511,6 +532,7 @@ func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 // Post202RetryInvalidHeader - Long running post request, service returns a 202 to the initial request, with invalid 'Location'
 // and 'Retry-After' headers.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) post202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPost202RetryInvalidHeaderOptions) (*http.Response, error) {
 	req, err := client.post202RetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -543,6 +565,7 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 // BeginPostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetry400
 // method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetry400Options) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetry400Response], error) {
@@ -560,6 +583,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 // PostAsyncRelativeRetry400 - Long running post request, service returns a 202 to the initial request Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) postAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetry400Options) (*http.Response, error) {
 	req, err := client.postAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -593,6 +617,7 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 // an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader
 // method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse], error) {
@@ -611,6 +636,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 // entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is
 // invalid.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*http.Response, error) {
 	req, err := client.postAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -645,6 +671,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 // for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling
 // method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse], error) {
@@ -663,6 +690,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 // an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*http.Response, error) {
 	req, err := client.postAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -696,6 +724,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 // entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryNoPayload
 // method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse], error) {
@@ -714,6 +743,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) postAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions) (*http.Response, error) {
 	req, err := client.postAsyncRelativeRetryNoPayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -745,6 +775,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 
 // BeginPostNonRetry400 - Long running post request, service returns a 400 with no error body
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPostNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPostNonRetry400
 // method.
 func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsClientBeginPostNonRetry400Options) (*armruntime.Poller[LROSADsClientPostNonRetry400Response], error) {
@@ -761,6 +792,7 @@ func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *
 
 // PostNonRetry400 - Long running post request, service returns a 400 with no error body
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) postNonRetry400(ctx context.Context, options *LROSADsClientBeginPostNonRetry400Options) (*http.Response, error) {
 	req, err := client.postNonRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -793,6 +825,7 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 // BeginPut200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is
 // not a valid json
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPut200InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPut200InvalidJSON
 // method.
 func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*armruntime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
@@ -810,6 +843,7 @@ func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options
 // Put200InvalidJSON - Long running put request, service returns a 200 to the initial request, with an entity that is not
 // a valid json
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*http.Response, error) {
 	req, err := client.put200InvalidJSONCreateRequest(ctx, options)
 	if err != nil {
@@ -842,6 +876,7 @@ func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context,
 // BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll
 // the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetry400
 // method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
@@ -859,6 +894,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 // PutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetry400CreateRequest(ctx, options)
 	if err != nil {
@@ -891,6 +927,7 @@ func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.C
 // BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with
 // an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader
 // method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
@@ -908,6 +945,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 // PutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with an entity
 // that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -942,6 +980,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 // for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling
 // method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
@@ -960,6 +999,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 // an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
 	if err != nil {
@@ -993,6 +1033,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatus
 // method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
@@ -1011,6 +1052,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
 	if err != nil {
@@ -1044,6 +1086,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 // an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload
 // method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
@@ -1062,6 +1105,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 // entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -1094,6 +1138,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 // BeginPutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with
 // no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions contains the optional parameters for the LROSADsClient.BeginPutError201NoProvisioningStatePayload
 // method.
 func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*armruntime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
@@ -1111,6 +1156,7 @@ func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 // PutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with no
 // payload
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*http.Response, error) {
 	req, err := client.putError201NoProvisioningStatePayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -1143,6 +1189,7 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(
 // BeginPutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating'
 // and 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400
 // method.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*armruntime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
@@ -1160,6 +1207,7 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 // PutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating' and
 // 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*http.Response, error) {
 	req, err := client.putNonRetry201Creating400CreateRequest(ctx, options)
 	if err != nil {
@@ -1192,6 +1240,7 @@ func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.
 // BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState'
 // = 'Creating' and 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON
 // method.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*armruntime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
@@ -1209,6 +1258,7 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 // PutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating'
 // and 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*http.Response, error) {
 	req, err := client.putNonRetry201Creating400InvalidJSONCreateRequest(ctx, options)
 	if err != nil {
@@ -1240,6 +1290,7 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(c
 
 // BeginPutNonRetry400 - Long running put request, service returns a 400 to the initial request
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - LROSADsClientBeginPutNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry400
 // method.
 func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*armruntime.Poller[LROSADsClientPutNonRetry400Response], error) {
@@ -1256,6 +1307,7 @@ func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *L
 
 // PutNonRetry400 - Long running put request, service returns a 400 to the initial request
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 func (client *LROSADsClient) putNonRetry400(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*http.Response, error) {
 	req, err := client.putNonRetry400CreateRequest(ctx, options)
 	if err != nil {

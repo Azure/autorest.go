@@ -57,6 +57,7 @@ func NewSnapshotsClient(subscriptionID string, credential azcore.TokenCredential
 
 // BeginCreateOrUpdate - Creates or updates a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -78,6 +79,7 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 
 // CreateOrUpdate - Creates or updates a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 func (client *SnapshotsClient) createOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
@@ -121,6 +123,7 @@ func (client *SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, 
 
 // BeginDelete - Deletes a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -140,6 +143,7 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 
 // Delete - Deletes a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 func (client *SnapshotsClient) deleteOperation(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -182,6 +186,7 @@ func (client *SnapshotsClient) deleteCreateRequest(ctx context.Context, resource
 
 // Get - Gets information about a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -239,6 +244,7 @@ func (client *SnapshotsClient) getHandleResponse(resp *http.Response) (Snapshots
 
 // BeginGrantAccess - Grants access to a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -262,6 +268,7 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 
 // GrantAccess - Grants access to a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 func (client *SnapshotsClient) grantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsClientBeginGrantAccessOptions) (*http.Response, error) {
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, snapshotName, grantAccessData, options)
 	if err != nil {
@@ -305,6 +312,7 @@ func (client *SnapshotsClient) grantAccessCreateRequest(ctx context.Context, res
 
 // NewListPager - Lists snapshots under a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // options - SnapshotsClientListOptions contains the optional parameters for the SnapshotsClient.List method.
 func (client *SnapshotsClient) NewListPager(options *SnapshotsClientListOptions) *runtime.Pager[SnapshotsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[SnapshotsClientListResponse]{
@@ -363,6 +371,7 @@ func (client *SnapshotsClient) listHandleResponse(resp *http.Response) (Snapshot
 
 // NewListByResourceGroupPager - Lists snapshots under a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // options - SnapshotsClientListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.ListByResourceGroup
 // method.
@@ -427,6 +436,7 @@ func (client *SnapshotsClient) listByResourceGroupHandleResponse(resp *http.Resp
 
 // BeginRevokeAccess - Revokes access to a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -449,6 +459,7 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 
 // RevokeAccess - Revokes access to a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 func (client *SnapshotsClient) revokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginRevokeAccessOptions) (*http.Response, error) {
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -491,6 +502,7 @@ func (client *SnapshotsClient) revokeAccessCreateRequest(ctx context.Context, re
 
 // BeginUpdate - Updates (patches) a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -511,6 +523,7 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 
 // Update - Updates (patches) a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-11-01
 func (client *SnapshotsClient) update(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {

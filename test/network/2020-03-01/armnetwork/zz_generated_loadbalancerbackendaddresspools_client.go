@@ -57,6 +57,7 @@ func NewLoadBalancerBackendAddressPoolsClient(subscriptionID string, credential 
 
 // Get - Gets load balancer backend address pool.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // backendAddressPoolName - The name of the backend address pool.
@@ -118,6 +119,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *htt
 
 // NewListPager - Gets all the load balancer backed address pools.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerBackendAddressPoolsClientListOptions contains the optional parameters for the LoadBalancerBackendAddressPoolsClient.List

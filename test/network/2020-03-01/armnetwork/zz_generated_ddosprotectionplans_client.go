@@ -57,6 +57,7 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 
 // BeginCreateOrUpdate - Creates or updates a DDoS protection plan.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // parameters - Parameters supplied to the create or update operation.
@@ -78,6 +79,7 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
@@ -121,6 +123,7 @@ func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context
 
 // BeginDelete - Deletes the specified DDoS protection plan.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // options - DdosProtectionPlansClientBeginDeleteOptions contains the optional parameters for the DdosProtectionPlansClient.BeginDelete
@@ -141,6 +144,7 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 
 // Delete - Deletes the specified DDoS protection plan.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
@@ -184,6 +188,7 @@ func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context
 
 // Get - Gets information about the specified DDoS protection plan.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // options - DdosProtectionPlansClientGetOptions contains the optional parameters for the DdosProtectionPlansClient.Get method.
@@ -239,6 +244,7 @@ func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) 
 
 // NewListPager - Gets all DDoS protection plans in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // options - DdosProtectionPlansClientListOptions contains the optional parameters for the DdosProtectionPlansClient.List
 // method.
 func (client *DdosProtectionPlansClient) NewListPager(options *DdosProtectionPlansClientListOptions) *runtime.Pager[DdosProtectionPlansClientListResponse] {
@@ -298,6 +304,7 @@ func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response)
 
 // NewListByResourceGroupPager - Gets all the DDoS protection plans in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - DdosProtectionPlansClientListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.ListByResourceGroup
 // method.
@@ -362,6 +369,7 @@ func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp 
 
 // UpdateTags - Update a DDoS protection plan tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // parameters - Parameters supplied to the update DDoS protection plan resource tags.

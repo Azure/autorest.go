@@ -36,6 +36,7 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientReques
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2015-07-01-preview
 // options - XMSClientRequestIDClientGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (XMSClientRequestIDClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -64,6 +65,7 @@ func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, op
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2015-07-01-preview
 // xmsClientRequestID - This should appear as a method parameter, use value '9C4D50EE-2D56-4CD3-8152-34347DC9F2B0'
 // options - XMSClientRequestIDClientParamGetOptions contains the optional parameters for the XMSClientRequestIDClient.ParamGet
 // method.

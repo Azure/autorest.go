@@ -54,6 +54,7 @@ func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.Cli
 // GetByManagementGroup - Provides the aggregate cost of a management group and all child management groups by current billing
 // period.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-10-01
 // managementGroupID - Azure Management Group ID.
 // options - AggregatedCostClientGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
 // method.
@@ -105,6 +106,7 @@ func (client *AggregatedCostClient) getByManagementGroupHandleResponse(resp *htt
 // GetForBillingPeriodByManagementGroup - Provides the aggregate cost of a management group and all child management groups
 // by specified billing period
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-10-01
 // managementGroupID - Azure Management Group ID.
 // billingPeriodName - Billing Period Name.
 // options - AggregatedCostClientGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup

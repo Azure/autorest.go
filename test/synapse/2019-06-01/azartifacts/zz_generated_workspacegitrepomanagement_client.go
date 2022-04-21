@@ -33,6 +33,7 @@ func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *
 
 // GetGitHubAccessToken - Get the GitHub access token.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // options - workspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the workspaceGitRepoManagementClient.GetGitHubAccessToken
 // method.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *workspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (workspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {

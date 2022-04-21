@@ -36,6 +36,7 @@ func NewBoolClient(options *azcore.ClientOptions) *BoolClient {
 
 // GetFalse - Get false Boolean value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - BoolClientGetFalseOptions contains the optional parameters for the BoolClient.GetFalse method.
 func (client *BoolClient) GetFalse(ctx context.Context, options *BoolClientGetFalseOptions) (BoolClientGetFalseResponse, error) {
 	req, err := client.getFalseCreateRequest(ctx, options)
@@ -74,6 +75,7 @@ func (client *BoolClient) getFalseHandleResponse(resp *http.Response) (BoolClien
 
 // GetInvalid - Get invalid Boolean value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - BoolClientGetInvalidOptions contains the optional parameters for the BoolClient.GetInvalid method.
 func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolClientGetInvalidOptions) (BoolClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
@@ -112,6 +114,7 @@ func (client *BoolClient) getInvalidHandleResponse(resp *http.Response) (BoolCli
 
 // GetNull - Get null Boolean value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - BoolClientGetNullOptions contains the optional parameters for the BoolClient.GetNull method.
 func (client *BoolClient) GetNull(ctx context.Context, options *BoolClientGetNullOptions) (BoolClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -150,6 +153,7 @@ func (client *BoolClient) getNullHandleResponse(resp *http.Response) (BoolClient
 
 // GetTrue - Get true Boolean value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - BoolClientGetTrueOptions contains the optional parameters for the BoolClient.GetTrue method.
 func (client *BoolClient) GetTrue(ctx context.Context, options *BoolClientGetTrueOptions) (BoolClientGetTrueResponse, error) {
 	req, err := client.getTrueCreateRequest(ctx, options)
@@ -188,6 +192,7 @@ func (client *BoolClient) getTrueHandleResponse(resp *http.Response) (BoolClient
 
 // PutFalse - Set Boolean value false
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - BoolClientPutFalseOptions contains the optional parameters for the BoolClient.PutFalse method.
 func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFalseOptions) (BoolClientPutFalseResponse, error) {
 	req, err := client.putFalseCreateRequest(ctx, options)
@@ -217,6 +222,7 @@ func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *Bo
 
 // PutTrue - Set Boolean value true
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // options - BoolClientPutTrueOptions contains the optional parameters for the BoolClient.PutTrue method.
 func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTrueOptions) (BoolClientPutTrueResponse, error) {
 	req, err := client.putTrueCreateRequest(ctx, options)

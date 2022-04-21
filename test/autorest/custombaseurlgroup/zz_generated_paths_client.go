@@ -48,6 +48,7 @@ func NewPathsClient(options *PathsClientOptions) *PathsClient {
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 1.0.0
 // accountName - Account Name
 // options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {

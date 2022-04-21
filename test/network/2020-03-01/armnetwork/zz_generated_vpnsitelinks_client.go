@@ -57,6 +57,7 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 
 // Get - Retrieves the details of a VPN site link.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
 // vpnSiteLinkName - The name of the VpnSiteLink being retrieved.
@@ -117,6 +118,7 @@ func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSit
 
 // NewListByVPNSitePager - Lists all the vpnSiteLinks in a resource group for a vpn site.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
 // options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite

@@ -58,6 +58,7 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-10-01
 // options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
 func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ForecastsClientListResponse]{

@@ -36,6 +36,7 @@ func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
 
 // BeginCreateOrUpdateTrigger - Creates or updates a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // trigger - Trigger resource definition.
 // options - triggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the triggerClient.BeginCreateOrUpdateTrigger
@@ -54,6 +55,7 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *triggerClientBeginCreateOrUpdateTriggerOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
@@ -92,6 +94,7 @@ func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 
 // BeginDeleteTrigger - Deletes a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientBeginDeleteTriggerOptions contains the optional parameters for the triggerClient.BeginDeleteTrigger
 // method.
@@ -109,6 +112,7 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 
 // DeleteTrigger - Deletes a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName string, options *triggerClientBeginDeleteTriggerOptions) (*http.Response, error) {
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -144,6 +148,7 @@ func (client *triggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the triggerClient.GetEventSubscriptionStatus
 // method.
@@ -191,6 +196,7 @@ func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *http
 
 // GetTrigger - Gets a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientGetTriggerOptions contains the optional parameters for the triggerClient.GetTrigger method.
 func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, options *triggerClientGetTriggerOptions) (triggerClientGetTriggerResponse, error) {
@@ -240,6 +246,7 @@ func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (trig
 
 // NewGetTriggersByWorkspacePager - Lists triggers.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // options - triggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
 // method.
 func (client *triggerClient) NewGetTriggersByWorkspacePager(options *triggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[triggerClientGetTriggersByWorkspaceResponse] {
@@ -295,6 +302,7 @@ func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Res
 
 // BeginStartTrigger - Starts a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientBeginStartTriggerOptions contains the optional parameters for the triggerClient.BeginStartTrigger
 // method.
@@ -312,6 +320,7 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 
 // StartTrigger - Starts a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *triggerClient) startTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStartTriggerOptions) (*http.Response, error) {
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -347,6 +356,7 @@ func (client *triggerClient) startTriggerCreateRequest(ctx context.Context, trig
 
 // BeginStopTrigger - Stops a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientBeginStopTriggerOptions contains the optional parameters for the triggerClient.BeginStopTrigger
 // method.
@@ -364,6 +374,7 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 
 // StopTrigger - Stops a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStopTriggerOptions) (*http.Response, error) {
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -399,6 +410,7 @@ func (client *triggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 
 // BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the triggerClient.BeginSubscribeTriggerToEvents
 // method.
@@ -416,6 +428,7 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *triggerClientBeginSubscribeTriggerToEventsOptions) (*http.Response, error) {
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -451,6 +464,7 @@ func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 
 // BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // options - triggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the triggerClient.BeginUnsubscribeTriggerFromEvents
 // method.
@@ -468,6 +482,7 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *triggerClientBeginUnsubscribeTriggerFromEventsOptions) (*http.Response, error) {
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {

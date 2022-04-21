@@ -69,6 +69,7 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2.0
 // options - clientCreateOptions contains the optional parameters for the client.Create method.
 func (client *client) Create(ctx context.Context, options *clientCreateOptions) (clientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
@@ -129,6 +130,7 @@ func (client *client) createHandleResponse(resp *http.Response) (clientCreateRes
 
 // GetScript - Retrieve the configuration script identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2.0
 // options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
 func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (clientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, props, options)
@@ -187,6 +189,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2.0
 // options - clientListOptions contains the optional parameters for the client.List method.
 func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[clientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[clientListResponse]{
@@ -246,6 +249,7 @@ func (client *client) listHandleResponse(resp *http.Response) (clientListRespons
 
 // PolicyAssignment -
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2.0
 // options - clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
 func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (clientPolicyAssignmentResponse, error) {
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)

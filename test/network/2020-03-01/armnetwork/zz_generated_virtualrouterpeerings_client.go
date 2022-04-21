@@ -57,6 +57,7 @@ func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.Tok
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router Peering.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the Virtual Router Peering.
@@ -79,6 +80,7 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *VirtualRouterPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateCreateRequest(ctx conte
 
 // BeginDelete - Deletes the specified peering from a Virtual Router.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the peering.
@@ -147,6 +150,7 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 
 // Delete - Deletes the specified peering from a Virtual Router.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *VirtualRouterPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -194,6 +198,7 @@ func (client *VirtualRouterPeeringsClient) deleteCreateRequest(ctx context.Conte
 
 // Get - Gets the specified Virtual Router Peering.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the Virtual Router Peering.
@@ -255,6 +260,7 @@ func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *http.Response
 
 // NewListPager - Lists all Virtual Router Peerings in a Virtual Router resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRouterPeeringsClientListOptions contains the optional parameters for the VirtualRouterPeeringsClient.List

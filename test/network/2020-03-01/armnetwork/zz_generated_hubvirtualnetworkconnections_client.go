@@ -57,6 +57,7 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // connectionName - The name of the vpn connection.
@@ -118,6 +119,7 @@ func (client *HubVirtualNetworkConnectionsClient) getHandleResponse(resp *http.R
 
 // NewListPager - Retrieves the details of all HubVirtualNetworkConnections.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // options - HubVirtualNetworkConnectionsClientListOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.List

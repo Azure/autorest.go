@@ -57,6 +57,7 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 
 // BeginCreateOrUpdate - Creates or updates the specified Bastion Host.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // parameters - Parameters supplied to the create or update Bastion Host operation.
@@ -78,6 +79,7 @@ func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resou
 
 // CreateOrUpdate - Creates or updates the specified Bastion Host.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *BastionHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
@@ -121,6 +123,7 @@ func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Contex
 
 // BeginDelete - Deletes the specified Bastion Host.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // options - BastionHostsClientBeginDeleteOptions contains the optional parameters for the BastionHostsClient.BeginDelete
@@ -141,6 +144,7 @@ func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroup
 
 // Delete - Deletes the specified Bastion Host.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *BastionHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -184,6 +188,7 @@ func (client *BastionHostsClient) deleteCreateRequest(ctx context.Context, resou
 
 // Get - Gets the specified Bastion Host.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // options - BastionHostsClientGetOptions contains the optional parameters for the BastionHostsClient.Get method.
@@ -239,6 +244,7 @@ func (client *BastionHostsClient) getHandleResponse(resp *http.Response) (Bastio
 
 // NewListPager - Lists all Bastion Hosts in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.List method.
 func (client *BastionHostsClient) NewListPager(options *BastionHostsClientListOptions) *runtime.Pager[BastionHostsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[BastionHostsClientListResponse]{
@@ -297,6 +303,7 @@ func (client *BastionHostsClient) listHandleResponse(resp *http.Response) (Basti
 
 // NewListByResourceGroupPager - Lists all Bastion Hosts in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup
 // method.

@@ -56,6 +56,7 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 
 // BeginCreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -76,6 +77,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 
 // CreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2021-02-01
 func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
@@ -120,6 +122,7 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 
 // BeginDelete - deletes a new metric configuration for a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -139,6 +142,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 
 // Delete - deletes a new metric configuration for a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2021-02-01
 func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -183,6 +187,7 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 
 // Get - Gets a metric configuration of a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -240,6 +245,7 @@ func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (Mo
 
 // NewListPager - Lists metric configurations in a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.

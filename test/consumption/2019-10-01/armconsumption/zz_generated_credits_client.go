@@ -51,6 +51,7 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 
 // Get - The credit summary by billingAccountId and billingProfileId.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-10-01
 // scope - The scope associated with credits operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.

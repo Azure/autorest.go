@@ -57,6 +57,7 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 
 // BeginCreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to create or Update a virtual wan vpn gateway.
@@ -78,6 +79,7 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
@@ -121,6 +123,7 @@ func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 
 // BeginDelete - Deletes a virtual wan vpn gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientBeginDeleteOptions contains the optional parameters for the VPNGatewaysClient.BeginDelete method.
@@ -140,6 +143,7 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // Delete - Deletes a virtual wan vpn gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *VPNGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -183,6 +187,7 @@ func (client *VPNGatewaysClient) deleteCreateRequest(ctx context.Context, resour
 
 // Get - Retrieves the details of a virtual wan vpn gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientGetOptions contains the optional parameters for the VPNGatewaysClient.Get method.
@@ -238,6 +243,7 @@ func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGate
 
 // NewListPager - Lists all the VpnGateways in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // options - VPNGatewaysClientListOptions contains the optional parameters for the VPNGatewaysClient.List method.
 func (client *VPNGatewaysClient) NewListPager(options *VPNGatewaysClientListOptions) *runtime.Pager[VPNGatewaysClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[VPNGatewaysClientListResponse]{
@@ -296,6 +302,7 @@ func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGat
 
 // NewListByResourceGroupPager - Lists all the VpnGateways in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // options - VPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup
 // method.
@@ -360,6 +367,7 @@ func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Re
 
 // BeginReset - Resets the primary of the vpn gateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientBeginResetOptions contains the optional parameters for the VPNGatewaysClient.BeginReset method.
@@ -379,6 +387,7 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 
 // Reset - Resets the primary of the vpn gateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *VPNGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (*http.Response, error) {
 	req, err := client.resetCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -422,6 +431,7 @@ func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourc
 
 // UpdateTags - Updates virtual wan vpn gateway tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to update a virtual wan vpn gateway tags.

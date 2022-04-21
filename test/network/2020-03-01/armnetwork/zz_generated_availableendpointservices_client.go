@@ -57,6 +57,7 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 
 // NewListPager - List what values of endpoint services are available for use.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // location - The location to check available endpoint services.
 // options - AvailableEndpointServicesClientListOptions contains the optional parameters for the AvailableEndpointServicesClient.List
 // method.

@@ -37,6 +37,7 @@ func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClie
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // runID - The pipeline run identifier.
 // options - pipelineRunClientCancelPipelineRunOptions contains the optional parameters for the pipelineRunClient.CancelPipelineRun
 // method.
@@ -78,6 +79,7 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 
 // GetPipelineRun - Get a pipeline run by its run ID.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // runID - The pipeline run identifier.
 // options - pipelineRunClientGetPipelineRunOptions contains the optional parameters for the pipelineRunClient.GetPipelineRun
 // method.
@@ -125,6 +127,7 @@ func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Respons
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // pipelineName - The pipeline name.
 // runID - The pipeline run identifier.
 // filterParameters - Parameters to filter the activity runs.
@@ -178,6 +181,7 @@ func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Resp
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // filterParameters - Parameters to filter the pipeline run.
 // options - pipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the pipelineRunClient.QueryPipelineRunsByWorkspace
 // method.

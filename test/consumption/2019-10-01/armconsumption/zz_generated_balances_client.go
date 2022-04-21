@@ -54,6 +54,7 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 // GetByBillingAccount - Gets the balances for a scope by billingAccountId. Balances are available via this API only for May
 // 1, 2014 or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-10-01
 // billingAccountID - BillingAccount ID
 // options - BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
 // method.
@@ -102,6 +103,7 @@ func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Respo
 // GetForBillingPeriodByBillingAccount - Gets the balances for a scope by billing period and billingAccountId. Balances are
 // available via this API only for May 1, 2014 or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-10-01
 // billingAccountID - BillingAccount ID
 // billingPeriodName - Billing Period Name.
 // options - BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount

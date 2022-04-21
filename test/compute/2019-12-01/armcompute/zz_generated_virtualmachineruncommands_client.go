@@ -57,6 +57,7 @@ func NewVirtualMachineRunCommandsClient(subscriptionID string, credential azcore
 
 // Get - Gets specific run command for a subscription in a location.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-12-01
 // location - The location upon which run commands is queried.
 // commandID - The command id.
 // options - VirtualMachineRunCommandsClientGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get
@@ -113,6 +114,7 @@ func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Resp
 
 // NewListPager - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-12-01
 // location - The location upon which run commands is queried.
 // options - VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
 // method.

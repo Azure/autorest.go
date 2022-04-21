@@ -57,6 +57,7 @@ func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.Toke
 
 // BeginCreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // privateDNSZoneGroupName - The name of the private dns zone group.
@@ -79,6 +80,7 @@ func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Contex
 
 // CreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *PrivateDNSZoneGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateCreateRequest(ctx contex
 
 // BeginDelete - Deletes the specified private dns zone group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // privateDNSZoneGroupName - The name of the private dns zone group.
@@ -147,6 +150,7 @@ func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resou
 
 // Delete - Deletes the specified private dns zone group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 func (client *PrivateDNSZoneGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
@@ -194,6 +198,7 @@ func (client *PrivateDNSZoneGroupsClient) deleteCreateRequest(ctx context.Contex
 
 // Get - Gets the private dns zone group resource by specified private dns zone group name.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // privateDNSZoneGroupName - The name of the private dns zone group.
@@ -255,6 +260,7 @@ func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *http.Response)
 
 // NewListPager - Gets all private dns zone groups in a private endpoint.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-03-01
 // privateEndpointName - The name of the private endpoint.
 // resourceGroupName - The name of the resource group.
 // options - PrivateDNSZoneGroupsClientListOptions contains the optional parameters for the PrivateDNSZoneGroupsClient.List

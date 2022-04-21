@@ -36,6 +36,7 @@ func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
 // dataset - Dataset resource definition.
 // options - datasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the datasetClient.BeginCreateOrUpdateDataset
@@ -54,6 +55,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -92,6 +94,7 @@ func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 
 // BeginDeleteDataset - Deletes a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
 // options - datasetClientBeginDeleteDatasetOptions contains the optional parameters for the datasetClient.BeginDeleteDataset
 // method.
@@ -109,6 +112,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 
 // DeleteDataset - Deletes a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (*http.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -144,6 +148,7 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 
 // GetDataset - Gets a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
 // options - datasetClientGetDatasetOptions contains the optional parameters for the datasetClient.GetDataset method.
 func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *datasetClientGetDatasetOptions) (datasetClientGetDatasetResponse, error) {
@@ -193,6 +198,7 @@ func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (data
 
 // NewGetDatasetsByWorkspacePager - Lists datasets.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // options - datasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
 // method.
 func (client *datasetClient) NewGetDatasetsByWorkspacePager(options *datasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[datasetClientGetDatasetsByWorkspaceResponse] {
@@ -248,6 +254,7 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Res
 
 // BeginRenameDataset - Renames a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
 // request - proposed new name.
 // options - datasetClientBeginRenameDatasetOptions contains the optional parameters for the datasetClient.BeginRenameDataset
@@ -266,6 +273,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 
 // RenameDataset - Renames a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2019-06-01-preview
 func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (*http.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
