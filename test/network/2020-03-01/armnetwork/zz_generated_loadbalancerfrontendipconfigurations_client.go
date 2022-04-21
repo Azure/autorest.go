@@ -57,7 +57,7 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 
 // Get - Gets load balancer frontend IP configuration.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // frontendIPConfigurationName - The name of the frontend IP configuration.
@@ -119,7 +119,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleResponse(resp
 
 // NewListPager - Gets all the load balancer frontend IP configurations.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerFrontendIPConfigurationsClientListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.List

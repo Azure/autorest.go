@@ -36,7 +36,7 @@ func NewAPIVersionDefaultClient(options *azcore.ClientOptions) *APIVersionDefaul
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 // method.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse, error) {
@@ -70,7 +70,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalValidOptions) (APIVersionDefaultClientGetMethodGlobalValidResponse, error) {
@@ -104,7 +104,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetPathGlobalValidOptions) (APIVersionDefaultClientGetPathGlobalValidResponse, error) {
@@ -138,7 +138,7 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetSwaggerGlobalValidOptions) (APIVersionDefaultClientGetSwaggerGlobalValidResponse, error) {

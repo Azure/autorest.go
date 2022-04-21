@@ -58,7 +58,7 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 // Get - Gets the price sheet for a scope by subscriptionId. Price sheet is available via this API only for May 1, 2014 or
 // later.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-10-01
+// Generated from API version 2019-10-01
 // options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
 func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (PriceSheetClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -114,7 +114,7 @@ func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceShe
 // GetByBillingPeriod - Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via
 // this API only for May 1, 2014 or later.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-10-01
+// Generated from API version 2019-10-01
 // billingPeriodName - Billing Period Name.
 // options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
 // method.

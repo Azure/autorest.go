@@ -57,7 +57,7 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 
 // CreateOrUpdate - Create or update an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Create Availability Set operation.
@@ -115,7 +115,7 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Re
 
 // Delete - Delete an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
@@ -161,7 +161,7 @@ func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, r
 
 // Get - Retrieves information about an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
@@ -217,7 +217,7 @@ func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (Av
 
 // NewListPager - Lists all availability sets in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
 func (client *AvailabilitySetsClient) NewListPager(resourceGroupName string, options *AvailabilitySetsClientListOptions) *runtime.Pager[AvailabilitySetsClientListResponse] {
@@ -282,7 +282,7 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (A
 // NewListAvailableSizesPager - Lists all available virtual machine sizes that can be used to create a new virtual machine
 // in an existing availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
@@ -346,7 +346,7 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *htt
 
 // NewListBySubscriptionPager - Lists all availability sets in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
 // method.
 func (client *AvailabilitySetsClient) NewListBySubscriptionPager(options *AvailabilitySetsClientListBySubscriptionOptions) *runtime.Pager[AvailabilitySetsClientListBySubscriptionResponse] {
@@ -409,7 +409,7 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *htt
 
 // Update - Update an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Update Availability Set operation.

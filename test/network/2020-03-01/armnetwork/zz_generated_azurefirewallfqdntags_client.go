@@ -57,7 +57,7 @@ func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.Tok
 
 // NewListAllPager - Gets all the Azure Firewall FQDN Tags in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - AzureFirewallFqdnTagsClientListAllOptions contains the optional parameters for the AzureFirewallFqdnTagsClient.ListAll
 // method.
 func (client *AzureFirewallFqdnTagsClient) NewListAllPager(options *AzureFirewallFqdnTagsClientListAllOptions) *runtime.Pager[AzureFirewallFqdnTagsClientListAllResponse] {

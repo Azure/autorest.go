@@ -57,7 +57,7 @@ func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.To
 
 // Get - Retrieves the details of a vpn site link connection.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.

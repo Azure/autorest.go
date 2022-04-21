@@ -36,7 +36,7 @@ func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) *Polymorphicre
 
 // GetValid - Get complex types that are polymorphic and have recursive references
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2016-02-29
+// Generated from API version 2016-02-29
 // options - PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
 // method.
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (PolymorphicrecursiveClientGetValidResponse, error) {
@@ -76,7 +76,7 @@ func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Resp
 
 // PutValid - Put complex types that are polymorphic and have recursive references
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2016-02-29
+// Generated from API version 2016-02-29
 // complexBody - Please put a salmon that looks like this: { "fishtype": "salmon", "species": "king", "length": 1, "age":
 // 1, "location": "alaska", "iswild": true, "siblings": [ { "fishtype": "shark", "species":
 // "predator", "length": 20, "age": 6, "siblings": [ { "fishtype": "salmon", "species": "coho", "length": 2, "age": 2, "location":

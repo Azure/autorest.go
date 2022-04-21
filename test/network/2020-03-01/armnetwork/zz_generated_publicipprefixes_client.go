@@ -57,7 +57,7 @@ func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // parameters - Parameters supplied to the create or update public IP prefix operation.
@@ -79,7 +79,7 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
@@ -123,7 +123,7 @@ func (client *PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Co
 
 // BeginDelete - Deletes the specified public IP prefix.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the PublicIpPrefix.
 // options - PublicIPPrefixesClientBeginDeleteOptions contains the optional parameters for the PublicIPPrefixesClient.BeginDelete
@@ -144,7 +144,7 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 
 // Delete - Deletes the specified public IP prefix.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PublicIPPrefixesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -188,7 +188,7 @@ func (client *PublicIPPrefixesClient) deleteCreateRequest(ctx context.Context, r
 
 // Get - Gets the specified public IP prefix in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // options - PublicIPPrefixesClientGetOptions contains the optional parameters for the PublicIPPrefixesClient.Get method.
@@ -247,7 +247,7 @@ func (client *PublicIPPrefixesClient) getHandleResponse(resp *http.Response) (Pu
 
 // NewListPager - Gets all public IP prefixes in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - PublicIPPrefixesClientListOptions contains the optional parameters for the PublicIPPrefixesClient.List method.
 func (client *PublicIPPrefixesClient) NewListPager(resourceGroupName string, options *PublicIPPrefixesClientListOptions) *runtime.Pager[PublicIPPrefixesClientListResponse] {
@@ -311,7 +311,7 @@ func (client *PublicIPPrefixesClient) listHandleResponse(resp *http.Response) (P
 
 // NewListAllPager - Gets all the public IP prefixes in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - PublicIPPrefixesClientListAllOptions contains the optional parameters for the PublicIPPrefixesClient.ListAll
 // method.
 func (client *PublicIPPrefixesClient) NewListAllPager(options *PublicIPPrefixesClientListAllOptions) *runtime.Pager[PublicIPPrefixesClientListAllResponse] {
@@ -371,7 +371,7 @@ func (client *PublicIPPrefixesClient) listAllHandleResponse(resp *http.Response)
 
 // UpdateTags - Updates public IP prefix tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // parameters - Parameters supplied to update public IP prefix tags.

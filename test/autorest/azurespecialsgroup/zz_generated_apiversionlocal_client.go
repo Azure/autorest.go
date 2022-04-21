@@ -36,7 +36,7 @@ func NewAPIVersionLocalClient(options *azcore.ClientOptions) *APIVersionLocalCli
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionLocalClientGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalNull
 // method.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalClientGetMethodLocalNullOptions) (APIVersionLocalClientGetMethodLocalNullResponse, error) {
@@ -72,7 +72,7 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionLocalClientGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalValid
 // method.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalClientGetMethodLocalValidOptions) (APIVersionLocalClientGetMethodLocalValidResponse, error) {
@@ -106,7 +106,7 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionLocalClientGetPathLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetPathLocalValid
 // method.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalClientGetPathLocalValidOptions) (APIVersionLocalClientGetPathLocalValidResponse, error) {
@@ -140,7 +140,7 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - APIVersionLocalClientGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetSwaggerLocalValid
 // method.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalClientGetSwaggerLocalValidOptions) (APIVersionLocalClientGetSwaggerLocalValidResponse, error) {

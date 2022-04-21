@@ -37,7 +37,7 @@ func NewDateClient(options *azcore.ClientOptions) *DateClient {
 
 // GetInvalidDate - Get invalid date value
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - DateClientGetInvalidDateOptions contains the optional parameters for the DateClient.GetInvalidDate method.
 func (client *DateClient) GetInvalidDate(ctx context.Context, options *DateClientGetInvalidDateOptions) (DateClientGetInvalidDateResponse, error) {
 	req, err := client.getInvalidDateCreateRequest(ctx, options)
@@ -78,7 +78,7 @@ func (client *DateClient) getInvalidDateHandleResponse(resp *http.Response) (Dat
 
 // GetMaxDate - Get max date value 9999-12-31
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - DateClientGetMaxDateOptions contains the optional parameters for the DateClient.GetMaxDate method.
 func (client *DateClient) GetMaxDate(ctx context.Context, options *DateClientGetMaxDateOptions) (DateClientGetMaxDateResponse, error) {
 	req, err := client.getMaxDateCreateRequest(ctx, options)
@@ -119,7 +119,7 @@ func (client *DateClient) getMaxDateHandleResponse(resp *http.Response) (DateCli
 
 // GetMinDate - Get min date value 0000-01-01
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - DateClientGetMinDateOptions contains the optional parameters for the DateClient.GetMinDate method.
 func (client *DateClient) GetMinDate(ctx context.Context, options *DateClientGetMinDateOptions) (DateClientGetMinDateResponse, error) {
 	req, err := client.getMinDateCreateRequest(ctx, options)
@@ -160,7 +160,7 @@ func (client *DateClient) getMinDateHandleResponse(resp *http.Response) (DateCli
 
 // GetNull - Get null date value
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - DateClientGetNullOptions contains the optional parameters for the DateClient.GetNull method.
 func (client *DateClient) GetNull(ctx context.Context, options *DateClientGetNullOptions) (DateClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -201,7 +201,7 @@ func (client *DateClient) getNullHandleResponse(resp *http.Response) (DateClient
 
 // GetOverflowDate - Get overflow date value
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - DateClientGetOverflowDateOptions contains the optional parameters for the DateClient.GetOverflowDate method.
 func (client *DateClient) GetOverflowDate(ctx context.Context, options *DateClientGetOverflowDateOptions) (DateClientGetOverflowDateResponse, error) {
 	req, err := client.getOverflowDateCreateRequest(ctx, options)
@@ -242,7 +242,7 @@ func (client *DateClient) getOverflowDateHandleResponse(resp *http.Response) (Da
 
 // GetUnderflowDate - Get underflow date value
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - DateClientGetUnderflowDateOptions contains the optional parameters for the DateClient.GetUnderflowDate method.
 func (client *DateClient) GetUnderflowDate(ctx context.Context, options *DateClientGetUnderflowDateOptions) (DateClientGetUnderflowDateResponse, error) {
 	req, err := client.getUnderflowDateCreateRequest(ctx, options)
@@ -283,7 +283,7 @@ func (client *DateClient) getUnderflowDateHandleResponse(resp *http.Response) (D
 
 // PutMaxDate - Put max date value 9999-12-31
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // dateBody - date body
 // options - DateClientPutMaxDateOptions contains the optional parameters for the DateClient.PutMaxDate method.
 func (client *DateClient) PutMaxDate(ctx context.Context, dateBody time.Time, options *DateClientPutMaxDateOptions) (DateClientPutMaxDateResponse, error) {
@@ -314,7 +314,7 @@ func (client *DateClient) putMaxDateCreateRequest(ctx context.Context, dateBody 
 
 // PutMinDate - Put min date value 0000-01-01
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // dateBody - date body
 // options - DateClientPutMinDateOptions contains the optional parameters for the DateClient.PutMinDate method.
 func (client *DateClient) PutMinDate(ctx context.Context, dateBody time.Time, options *DateClientPutMinDateOptions) (DateClientPutMinDateResponse, error) {

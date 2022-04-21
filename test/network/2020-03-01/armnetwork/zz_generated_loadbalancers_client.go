@@ -57,7 +57,7 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Creates or updates a load balancer.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // parameters - Parameters supplied to the create or update load balancer operation.
@@ -79,7 +79,7 @@ func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Creates or updates a load balancer.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *LoadBalancersClient) createOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {
@@ -123,7 +123,7 @@ func (client *LoadBalancersClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // BeginDelete - Deletes the specified load balancer.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancersClientBeginDeleteOptions contains the optional parameters for the LoadBalancersClient.BeginDelete
@@ -144,7 +144,7 @@ func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified load balancer.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *LoadBalancersClient) deleteOperation(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
@@ -188,7 +188,7 @@ func (client *LoadBalancersClient) deleteCreateRequest(ctx context.Context, reso
 
 // Get - Gets the specified load balancer.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancersClientGetOptions contains the optional parameters for the LoadBalancersClient.Get method.
@@ -247,7 +247,7 @@ func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadB
 
 // NewListPager - Gets all the load balancers in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.List method.
 func (client *LoadBalancersClient) NewListPager(resourceGroupName string, options *LoadBalancersClientListOptions) *runtime.Pager[LoadBalancersClientListResponse] {
@@ -311,7 +311,7 @@ func (client *LoadBalancersClient) listHandleResponse(resp *http.Response) (Load
 
 // NewListAllPager - Gets all the load balancers in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - LoadBalancersClientListAllOptions contains the optional parameters for the LoadBalancersClient.ListAll method.
 func (client *LoadBalancersClient) NewListAllPager(options *LoadBalancersClientListAllOptions) *runtime.Pager[LoadBalancersClientListAllResponse] {
 	return runtime.NewPager(runtime.PageProcessor[LoadBalancersClientListAllResponse]{
@@ -370,7 +370,7 @@ func (client *LoadBalancersClient) listAllHandleResponse(resp *http.Response) (L
 
 // UpdateTags - Updates a load balancer tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // parameters - Parameters supplied to update load balancer tags.

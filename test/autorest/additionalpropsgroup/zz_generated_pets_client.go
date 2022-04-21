@@ -36,7 +36,7 @@ func NewPetsClient(options *azcore.ClientOptions) *PetsClient {
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - PetsClientCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties
 // method.
 func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties, options *PetsClientCreateAPInPropertiesOptions) (PetsClientCreateAPInPropertiesResponse, error) {
@@ -76,7 +76,7 @@ func (client *PetsClient) createAPInPropertiesHandleResponse(resp *http.Response
 
 // CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - PetsClientCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
 // method.
 func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsClientCreateAPInPropertiesWithAPStringOptions) (PetsClientCreateAPInPropertiesWithAPStringResponse, error) {
@@ -116,7 +116,7 @@ func (client *PetsClient) createAPInPropertiesWithAPStringHandleResponse(resp *h
 
 // CreateAPObject - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - PetsClientCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
 func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject, options *PetsClientCreateAPObjectOptions) (PetsClientCreateAPObjectResponse, error) {
 	req, err := client.createAPObjectCreateRequest(ctx, createParameters, options)
@@ -155,7 +155,7 @@ func (client *PetsClient) createAPObjectHandleResponse(resp *http.Response) (Pet
 
 // CreateAPString - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - PetsClientCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
 func (client *PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString, options *PetsClientCreateAPStringOptions) (PetsClientCreateAPStringResponse, error) {
 	req, err := client.createAPStringCreateRequest(ctx, createParameters, options)
@@ -194,7 +194,7 @@ func (client *PetsClient) createAPStringHandleResponse(resp *http.Response) (Pet
 
 // CreateAPTrue - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - PetsClientCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
 func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue, options *PetsClientCreateAPTrueOptions) (PetsClientCreateAPTrueResponse, error) {
 	req, err := client.createAPTrueCreateRequest(ctx, createParameters, options)
@@ -233,7 +233,7 @@ func (client *PetsClient) createAPTrueHandleResponse(resp *http.Response) (PetsC
 
 // CreateCatAPTrue - Create a CatAPTrue which contains more properties than what is defined.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - PetsClientCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
 func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue, options *PetsClientCreateCatAPTrueOptions) (PetsClientCreateCatAPTrueResponse, error) {
 	req, err := client.createCatAPTrueCreateRequest(ctx, createParameters, options)

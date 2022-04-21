@@ -39,7 +39,7 @@ func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderC
 // requests. Long running post request, service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsCustomHeaderClientBeginPost202Retry200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPost202Retry200
 // method.
 func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (*armruntime.Poller[LROsCustomHeaderClientPost202Retry200Response], error) {
@@ -58,7 +58,7 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 // Long running post request, service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsCustomHeaderClient) post202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (*http.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -92,7 +92,7 @@ func (client *LROsCustomHeaderClient) post202Retry200CreateRequest(ctx context.C
 // for all requests. Long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded
 // method.
 func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (*armruntime.Poller[LROsCustomHeaderClientPostAsyncRetrySucceededResponse], error) {
@@ -111,7 +111,7 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 // all requests. Long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsCustomHeaderClient) postAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -145,7 +145,7 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 // for all requests. Long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPut201CreatingSucceeded200
 // method.
 func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*armruntime.Poller[LROsCustomHeaderClientPut201CreatingSucceeded200Response], error) {
@@ -164,7 +164,7 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 // all requests. Long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
@@ -198,7 +198,7 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 // for all requests. Long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded
 // method.
 func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*armruntime.Poller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse], error) {
@@ -217,7 +217,7 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 // requests. Long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {

@@ -43,7 +43,7 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.C
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId
 // to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the
 // SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse, error) {
@@ -82,7 +82,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null,
 // and client-side validation should prevent you from making this call
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
 // method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (SubscriptionInCredentialsClientPostMethodGlobalNullResponse, error) {
@@ -118,7 +118,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
 // method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalValidResponse, error) {
@@ -154,7 +154,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
 // method.
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (SubscriptionInCredentialsClientPostPathGlobalValidResponse, error) {
@@ -190,7 +190,7 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2015-07-01-preview
+// Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
 // method.
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse, error) {

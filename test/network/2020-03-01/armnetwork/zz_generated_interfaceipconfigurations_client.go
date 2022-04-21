@@ -57,7 +57,7 @@ func NewInterfaceIPConfigurationsClient(subscriptionID string, credential azcore
 
 // Get - Gets the specified network interface ip configuration.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the ip configuration name.
@@ -119,7 +119,7 @@ func (client *InterfaceIPConfigurationsClient) getHandleResponse(resp *http.Resp
 
 // NewListPager - Get all ip configurations in a network interface.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfaceIPConfigurationsClientListOptions contains the optional parameters for the InterfaceIPConfigurationsClient.List

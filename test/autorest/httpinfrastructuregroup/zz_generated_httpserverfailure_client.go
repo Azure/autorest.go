@@ -36,7 +36,7 @@ func NewHTTPServerFailureClient(options *azcore.ClientOptions) *HTTPServerFailur
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
 // method.
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (HTTPServerFailureClientDelete505Response, error) {
@@ -67,7 +67,7 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 
 // Get501 - Return 501 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
 // method.
 func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureClientGet501Options) (HTTPServerFailureClientGet501Response, error) {
@@ -97,7 +97,7 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 }
 
 // Head501 - Return 501 status code - should be represented in the client as an error
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
 // method.
 func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureClientHead501Options) (HTTPServerFailureClientHead501Response, error) {
@@ -129,7 +129,7 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 
 // Post505 - Return 505 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
 // method.
 func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailureClientPost505Options) (HTTPServerFailureClientPost505Response, error) {

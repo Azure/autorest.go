@@ -35,7 +35,7 @@ func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
 
 // Create - Creates a role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 7.2
+// Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to create.
 // roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
@@ -88,7 +88,7 @@ func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (
 
 // Delete - Deletes a role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 7.2
+// Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to delete.
 // roleAssignmentName - The name of the role assignment to delete.
@@ -140,7 +140,7 @@ func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (
 
 // Get - Get the specified role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 7.2
+// Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment.
 // roleAssignmentName - The name of the role assignment to get.
@@ -192,7 +192,7 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 
 // NewListForScopePager - Gets role assignments for a scope.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 7.2
+// Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.
 // options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope

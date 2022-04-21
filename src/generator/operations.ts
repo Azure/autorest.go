@@ -595,7 +595,7 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   apiVersions.forEach((val) => {
     versions.push(val.version);
   })
-  return `// Uses API version ${versions.join(',')}\n`;
+  return `// Generated from API version ${versions.join(',')}\n`;
 }
 
 function generateOperation(op: Operation, imports: ImportManager, isARM: boolean): string {

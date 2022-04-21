@@ -33,7 +33,7 @@ func newDataFlowDebugSessionClient(endpoint string, pl runtime.Pipeline) *dataFl
 
 // AddDataFlow - Add a data flow into debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 // request - Data flow debug session definition with debug content.
 // options - dataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the dataFlowDebugSessionClient.AddDataFlow
 // method.
@@ -77,7 +77,7 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.R
 
 // BeginCreateDataFlowDebugSession - Creates a data flow debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 // request - Data flow debug session definition
 // options - dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 // method.
@@ -95,7 +95,7 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*http.Response, error) {
 	req, err := client.createDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
@@ -127,7 +127,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 // request - Data flow debug session definition for deletion
 // options - dataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.DeleteDataFlowDebugSession
 // method.
@@ -162,7 +162,7 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 
 // BeginExecuteCommand - Execute a data flow debug command.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 // request - Data flow debug command definition.
 // options - dataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginExecuteCommand
 // method.
@@ -180,7 +180,7 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 
 // ExecuteCommand - Execute a data flow debug command.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *dataFlowDebugSessionClientBeginExecuteCommandOptions) (*http.Response, error) {
 	req, err := client.executeCommandCreateRequest(ctx, request, options)
 	if err != nil {
@@ -212,7 +212,7 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 
 // NewQueryDataFlowDebugSessionsByWorkspacePager - Query all active data flow debug sessions.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-06-01-preview
+// Generated from API version 2019-06-01-preview
 // options - dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 // dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace method.
 func (client *dataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspacePager(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *runtime.Pager[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse] {

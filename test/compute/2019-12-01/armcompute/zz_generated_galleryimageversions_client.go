@@ -57,7 +57,7 @@ func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.Toke
 
 // BeginCreateOrUpdate - Create or update a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version is to be created.
@@ -81,7 +81,7 @@ func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Contex
 
 // CreateOrUpdate - Create or update a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 func (client *GalleryImageVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *GalleryImageVersionsClient) createOrUpdateCreateRequest(ctx contex
 
 // BeginDelete - Delete a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
@@ -154,7 +154,7 @@ func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resou
 
 // Delete - Delete a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 func (client *GalleryImageVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
@@ -206,7 +206,7 @@ func (client *GalleryImageVersionsClient) deleteCreateRequest(ctx context.Contex
 
 // Get - Retrieves information about a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
@@ -276,7 +276,7 @@ func (client *GalleryImageVersionsClient) getHandleResponse(resp *http.Response)
 
 // NewListByGalleryImagePager - List gallery Image Versions in a gallery Image Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed.
@@ -351,7 +351,7 @@ func (client *GalleryImageVersionsClient) listByGalleryImageHandleResponse(resp 
 
 // BeginUpdate - Update a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version is to be updated.
@@ -375,7 +375,7 @@ func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resou
 
 // Update - Update a gallery Image Version.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 func (client *GalleryImageVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {

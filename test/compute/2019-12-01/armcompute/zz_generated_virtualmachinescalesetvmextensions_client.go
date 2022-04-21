@@ -57,7 +57,7 @@ func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credenti
 
 // BeginCreateOrUpdate - The operation to create or update the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -79,7 +79,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateCreateRequ
 
 // BeginDelete - The operation to delete the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -152,7 +152,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 
 // Delete - The operation to delete the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -204,7 +204,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteCreateRequest(ctx 
 
 // Get - The operation to get the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -274,7 +274,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleResponse(resp *
 
 // List - The operation to get all extensions of an instance in Virtual Machine Scaleset.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -339,7 +339,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleResponse(resp 
 
 // BeginUpdate - The operation to update the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -361,7 +361,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 
 // Update - The operation to update the VMSS VM extension.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-12-01
+// Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {

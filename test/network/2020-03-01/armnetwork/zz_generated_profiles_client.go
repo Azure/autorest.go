@@ -57,7 +57,7 @@ func NewProfilesClient(subscriptionID string, credential azcore.TokenCredential,
 
 // CreateOrUpdate - Creates or updates a network profile.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to the create or update network profile operation.
@@ -114,7 +114,7 @@ func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) 
 
 // BeginDelete - Deletes the specified network profile.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the NetworkProfile.
 // options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
@@ -134,7 +134,7 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes the specified network profile.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -178,7 +178,7 @@ func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceG
 
 // Get - Gets the specified network profile in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the public IP prefix.
 // options - ProfilesClientGetOptions contains the optional parameters for the ProfilesClient.Get method.
@@ -237,7 +237,7 @@ func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesCl
 
 // NewListPager - Gets all network profiles in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
 func (client *ProfilesClient) NewListPager(resourceGroupName string, options *ProfilesClientListOptions) *runtime.Pager[ProfilesClientListResponse] {
@@ -301,7 +301,7 @@ func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesC
 
 // NewListAllPager - Gets all the network profiles in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
 func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOptions) *runtime.Pager[ProfilesClientListAllResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ProfilesClientListAllResponse]{
@@ -360,7 +360,7 @@ func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (Profil
 
 // UpdateTags - Updates network profile tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to update network profile tags.

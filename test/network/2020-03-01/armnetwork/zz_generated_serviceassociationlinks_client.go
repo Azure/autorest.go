@@ -57,7 +57,7 @@ func NewServiceAssociationLinksClient(subscriptionID string, credential azcore.T
 
 // List - Gets a list of service association links for a subnet.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.

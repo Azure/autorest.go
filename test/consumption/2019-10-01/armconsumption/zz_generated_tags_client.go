@@ -51,7 +51,7 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 
 // Get - Get all available tag keys for the defined scope
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2019-10-01
+// Generated from API version 2019-10-01
 // scope - The scope associated with tags operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope,
 // '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 // resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,

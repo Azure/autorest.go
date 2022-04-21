@@ -38,7 +38,7 @@ func NewLROsClient(options *azcore.ClientOptions) *LROsClient {
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this
 // value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDelete202NoRetry204Options contains the optional parameters for the LROsClient.BeginDelete202NoRetry204
 // method.
 func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options *LROsClientBeginDelete202NoRetry204Options) (*armruntime.Poller[LROsClientDelete202NoRetry204Response], error) {
@@ -56,7 +56,7 @@ func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options 
 // Delete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value
 // until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROsClientBeginDelete202NoRetry204Options) (*http.Response, error) {
 	req, err := client.delete202NoRetry204CreateRequest(ctx, options)
 	if err != nil {
@@ -86,7 +86,7 @@ func (client *LROsClient) delete202NoRetry204CreateRequest(ctx context.Context, 
 // BeginDelete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value
 // until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDelete202Retry200Options contains the optional parameters for the LROsClient.BeginDelete202Retry200
 // method.
 func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *LROsClientBeginDelete202Retry200Options) (*armruntime.Poller[LROsClientDelete202Retry200Response], error) {
@@ -104,7 +104,7 @@ func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *L
 // Delete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value
 // until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsClientBeginDelete202Retry200Options) (*http.Response, error) {
 	req, err := client.delete202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *LROsClient) delete202Retry200CreateRequest(ctx context.Context, op
 
 // BeginDelete204Succeeded - Long running delete succeeds and returns right away
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDelete204SucceededOptions contains the optional parameters for the LROsClient.BeginDelete204Succeeded
 // method.
 func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *LROsClientBeginDelete204SucceededOptions) (*armruntime.Poller[LROsClientDelete204SucceededResponse], error) {
@@ -150,7 +150,7 @@ func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *
 
 // Delete204Succeeded - Long running delete succeeds and returns right away
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsClientBeginDelete204SucceededOptions) (*http.Response, error) {
 	req, err := client.delete204SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -180,7 +180,7 @@ func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, o
 // BeginDeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial
 // request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteAsyncNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, options *LROsClientBeginDeleteAsyncNoHeaderInRetryOptions) (*armruntime.Poller[LROsClientDeleteAsyncNoHeaderInRetryResponse], error) {
@@ -198,7 +198,7 @@ func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, o
 // DeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial
 // request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, options *LROsClientBeginDeleteAsyncNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
@@ -228,7 +228,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Co
 // BeginDeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncNoRetrySucceeded
 // method.
 func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, options *LROsClientBeginDeleteAsyncNoRetrySucceededOptions) (*armruntime.Poller[LROsClientDeleteAsyncNoRetrySucceededResponse], error) {
@@ -246,7 +246,7 @@ func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, 
 // DeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, options *LROsClientBeginDeleteAsyncNoRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncNoRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -276,7 +276,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.C
 // BeginDeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncRetryFailed
 // method.
 func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, options *LROsClientBeginDeleteAsyncRetryFailedOptions) (*armruntime.Poller[LROsClientDeleteAsyncRetryFailedResponse], error) {
@@ -294,7 +294,7 @@ func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, optio
 // DeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint indicated
 // in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *LROsClientBeginDeleteAsyncRetryFailedOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRetryFailedCreateRequest(ctx, options)
 	if err != nil {
@@ -324,7 +324,7 @@ func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Contex
 // BeginDeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncRetrySucceeded
 // method.
 func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, options *LROsClientBeginDeleteAsyncRetrySucceededOptions) (*armruntime.Poller[LROsClientDeleteAsyncRetrySucceededResponse], error) {
@@ -342,7 +342,7 @@ func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, op
 // DeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options *LROsClientBeginDeleteAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -372,7 +372,7 @@ func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Con
 // BeginDeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteAsyncRetrycanceledOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncRetrycanceled
 // method.
 func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, options *LROsClientBeginDeleteAsyncRetrycanceledOptions) (*armruntime.Poller[LROsClientDeleteAsyncRetrycanceledResponse], error) {
@@ -390,7 +390,7 @@ func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, opt
 // DeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options *LROsClientBeginDeleteAsyncRetrycanceledOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRetrycanceledCreateRequest(ctx, options)
 	if err != nil {
@@ -420,7 +420,7 @@ func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Cont
 // BeginDeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent
 // calls to operation status do not contain location header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginDeleteNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, options *LROsClientBeginDeleteNoHeaderInRetryOptions) (*armruntime.Poller[LROsClientDeleteNoHeaderInRetryResponse], error) {
@@ -438,7 +438,7 @@ func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, option
 // DeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent
 // calls to operation status do not contain location header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LROsClientBeginDeleteNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.deleteNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
@@ -470,7 +470,7 @@ func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context
 // with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the LROsClient.BeginDeleteProvisioning202Accepted200Succeeded
 // method.
 func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LROsClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*armruntime.Poller[LROsClientDeleteProvisioning202Accepted200SucceededResponse], error) {
@@ -490,7 +490,7 @@ func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 // with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LROsClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*http.Response, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -522,7 +522,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200SucceededCreateRequest
 // with
 // ProvisioningState=’Failed’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteProvisioning202DeletingFailed200Options contains the optional parameters for the LROsClient.BeginDeleteProvisioning202DeletingFailed200
 // method.
 func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx context.Context, options *LROsClientBeginDeleteProvisioning202DeletingFailed200Options) (*armruntime.Poller[LROsClientDeleteProvisioning202DeletingFailed200Response], error) {
@@ -541,7 +541,7 @@ func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 // an entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Context, options *LROsClientBeginDeleteProvisioning202DeletingFailed200Options) (*http.Response, error) {
 	req, err := client.deleteProvisioning202DeletingFailed200CreateRequest(ctx, options)
 	if err != nil {
@@ -573,7 +573,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200CreateRequest(ct
 // with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginDeleteProvisioning202Deletingcanceled200Options contains the optional parameters for the LROsClient.BeginDeleteProvisioning202Deletingcanceled200
 // method.
 func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx context.Context, options *LROsClientBeginDeleteProvisioning202Deletingcanceled200Options) (*armruntime.Poller[LROsClientDeleteProvisioning202Deletingcanceled200Response], error) {
@@ -592,7 +592,7 @@ func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 // an entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.Context, options *LROsClientBeginDeleteProvisioning202Deletingcanceled200Options) (*http.Response, error) {
 	req, err := client.deleteProvisioning202Deletingcanceled200CreateRequest(ctx, options)
 	if err != nil {
@@ -622,7 +622,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200CreateRequest(
 // BeginPatch200SucceededIgnoreHeaders - Long running put request, service returns a 200 to the initial request with location
 // header. We should not have any subsequent calls after receiving this first response.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROsClient.BeginPatch200SucceededIgnoreHeaders
 // method.
 func (client *LROsClient) BeginPatch200SucceededIgnoreHeaders(ctx context.Context, options *LROsClientBeginPatch200SucceededIgnoreHeadersOptions) (*armruntime.Poller[LROsClientPatch200SucceededIgnoreHeadersResponse], error) {
@@ -640,7 +640,7 @@ func (client *LROsClient) BeginPatch200SucceededIgnoreHeaders(ctx context.Contex
 // Patch200SucceededIgnoreHeaders - Long running put request, service returns a 200 to the initial request with location header.
 // We should not have any subsequent calls after receiving this first response.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) patch200SucceededIgnoreHeaders(ctx context.Context, options *LROsClientBeginPatch200SucceededIgnoreHeadersOptions) (*http.Response, error) {
 	req, err := client.patch200SucceededIgnoreHeadersCreateRequest(ctx, options)
 	if err != nil {
@@ -673,7 +673,7 @@ func (client *LROsClient) patch200SucceededIgnoreHeadersCreateRequest(ctx contex
 // BeginPatch201RetryWithAsyncHeader - Long running patch request, service returns a 201 to the initial request with async
 // header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPatch201RetryWithAsyncHeaderOptions contains the optional parameters for the LROsClient.BeginPatch201RetryWithAsyncHeader
 // method.
 func (client *LROsClient) BeginPatch201RetryWithAsyncHeader(ctx context.Context, options *LROsClientBeginPatch201RetryWithAsyncHeaderOptions) (*armruntime.Poller[LROsClientPatch201RetryWithAsyncHeaderResponse], error) {
@@ -692,7 +692,7 @@ func (client *LROsClient) BeginPatch201RetryWithAsyncHeader(ctx context.Context,
 
 // Patch201RetryWithAsyncHeader - Long running patch request, service returns a 201 to the initial request with async header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) patch201RetryWithAsyncHeader(ctx context.Context, options *LROsClientBeginPatch201RetryWithAsyncHeaderOptions) (*http.Response, error) {
 	req, err := client.patch201RetryWithAsyncHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -725,7 +725,7 @@ func (client *LROsClient) patch201RetryWithAsyncHeaderCreateRequest(ctx context.
 // BeginPatch202RetryWithAsyncAndLocationHeader - Long running patch request, service returns a 202 to the initial request
 // with async and location header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions contains the optional parameters for the LROsClient.BeginPatch202RetryWithAsyncAndLocationHeader
 // method.
 func (client *LROsClient) BeginPatch202RetryWithAsyncAndLocationHeader(ctx context.Context, options *LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions) (*armruntime.Poller[LROsClientPatch202RetryWithAsyncAndLocationHeaderResponse], error) {
@@ -743,7 +743,7 @@ func (client *LROsClient) BeginPatch202RetryWithAsyncAndLocationHeader(ctx conte
 // Patch202RetryWithAsyncAndLocationHeader - Long running patch request, service returns a 202 to the initial request with
 // async and location header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) patch202RetryWithAsyncAndLocationHeader(ctx context.Context, options *LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions) (*http.Response, error) {
 	req, err := client.patch202RetryWithAsyncAndLocationHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -776,7 +776,7 @@ func (client *LROsClient) patch202RetryWithAsyncAndLocationHeaderCreateRequest(c
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header.
 // Poll returns a 200 with a response body after success.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPost200WithPayloadOptions contains the optional parameters for the LROsClient.BeginPost200WithPayload
 // method.
 func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *LROsClientBeginPost200WithPayloadOptions) (*armruntime.Poller[LROsClientPost200WithPayloadResponse], error) {
@@ -794,7 +794,7 @@ func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *
 // Post200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header. Poll
 // returns a 200 with a response body after success.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsClientBeginPost200WithPayloadOptions) (*http.Response, error) {
 	req, err := client.post200WithPayloadCreateRequest(ctx, options)
 	if err != nil {
@@ -824,7 +824,7 @@ func (client *LROsClient) post200WithPayloadCreateRequest(ctx context.Context, o
 // BeginPost202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with
 // body [{ 'id': '100', 'name': 'foo' }].
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPost202ListOptions contains the optional parameters for the LROsClient.BeginPost202List method.
 func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsClientBeginPost202ListOptions) (*armruntime.Poller[LROsClientPost202ListResponse], error) {
 	if options == nil || options.ResumeToken == "" {
@@ -841,7 +841,7 @@ func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsCli
 // Post202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with body
 // [{ 'id': '100', 'name': 'foo' }].
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) post202List(ctx context.Context, options *LROsClientBeginPost202ListOptions) (*http.Response, error) {
 	req, err := client.post202ListCreateRequest(ctx, options)
 	if err != nil {
@@ -871,7 +871,7 @@ func (client *LROsClient) post202ListCreateRequest(ctx context.Context, options 
 // BeginPost202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header,
 // 204 with noresponse body after success
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPost202NoRetry204Options contains the optional parameters for the LROsClient.BeginPost202NoRetry204
 // method.
 func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *LROsClientBeginPost202NoRetry204Options) (*armruntime.Poller[LROsClientPost202NoRetry204Response], error) {
@@ -889,7 +889,7 @@ func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *L
 // Post202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header, 204
 // with noresponse body after success
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsClientBeginPost202NoRetry204Options) (*http.Response, error) {
 	req, err := client.post202NoRetry204CreateRequest(ctx, options)
 	if err != nil {
@@ -922,7 +922,7 @@ func (client *LROsClient) post202NoRetry204CreateRequest(ctx context.Context, op
 // BeginPost202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After'
 // headers, Polls return a 200 with a response body after success
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPost202Retry200Options contains the optional parameters for the LROsClient.BeginPost202Retry200
 // method.
 func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LROsClientBeginPost202Retry200Options) (*armruntime.Poller[LROsClientPost202Retry200Response], error) {
@@ -940,7 +940,7 @@ func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LRO
 // Post202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After'
 // headers, Polls return a 200 with a response body after success
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsClientBeginPost202Retry200Options) (*http.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -974,7 +974,7 @@ func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, opti
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPostAsyncNoRetrySucceeded
 // method.
 func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, options *LROsClientBeginPostAsyncNoRetrySucceededOptions) (*armruntime.Poller[LROsClientPostAsyncNoRetrySucceededResponse], error) {
@@ -993,7 +993,7 @@ func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, op
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options *LROsClientBeginPostAsyncNoRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncNoRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -1027,7 +1027,7 @@ func (client *LROsClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Con
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginPostAsyncRetryFailed
 // method.
 func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options *LROsClientBeginPostAsyncRetryFailedOptions) (*armruntime.Poller[LROsClientPostAsyncRetryFailedResponse], error) {
@@ -1046,7 +1046,7 @@ func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LROsClientBeginPostAsyncRetryFailedOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetryFailedCreateRequest(ctx, options)
 	if err != nil {
@@ -1080,7 +1080,7 @@ func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context,
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPostAsyncRetrySucceeded
 // method.
 func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsClientBeginPostAsyncRetrySucceededOptions) (*armruntime.Poller[LROsClientPostAsyncRetrySucceededResponse], error) {
@@ -1099,7 +1099,7 @@ func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, opti
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *LROsClientBeginPostAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -1133,7 +1133,7 @@ func (client *LROsClient) postAsyncRetrySucceededCreateRequest(ctx context.Conte
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostAsyncRetrycanceledOptions contains the optional parameters for the LROsClient.BeginPostAsyncRetrycanceled
 // method.
 func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, options *LROsClientBeginPostAsyncRetrycanceledOptions) (*armruntime.Poller[LROsClientPostAsyncRetrycanceledResponse], error) {
@@ -1152,7 +1152,7 @@ func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, optio
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *LROsClientBeginPostAsyncRetrycanceledOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetrycanceledCreateRequest(ctx, options)
 	if err != nil {
@@ -1185,7 +1185,7 @@ func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Contex
 // BeginPostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with
 // both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetOptions contains the optional parameters for the LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGet
 // method.
 func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.Context, options *LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*armruntime.Poller[LROsClientPostDoubleHeadersFinalAzureHeaderGetResponse], error) {
@@ -1205,7 +1205,7 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 // PostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with both
 // Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Context, options *LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*http.Response, error) {
 	req, err := client.postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx, options)
 	if err != nil {
@@ -1237,7 +1237,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx 
 // object
 // if you support initial Autorest behavior.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions contains the optional parameters for the LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGetDefault
 // method.
 func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context, options *LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*armruntime.Poller[LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultResponse], error) {
@@ -1256,7 +1256,7 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 // both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 // if you support initial Autorest behavior.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context, options *LROsClientBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*http.Response, error) {
 	req, err := client.postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx, options)
 	if err != nil {
@@ -1286,7 +1286,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultCreateReque
 // BeginPostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both
 // Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPostDoubleHeadersFinalLocationGetOptions contains the optional parameters for the LROsClient.BeginPostDoubleHeadersFinalLocationGet
 // method.
 func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Context, options *LROsClientBeginPostDoubleHeadersFinalLocationGetOptions) (*armruntime.Poller[LROsClientPostDoubleHeadersFinalLocationGetResponse], error) {
@@ -1306,7 +1306,7 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 // PostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both Location
 // and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context, options *LROsClientBeginPostDoubleHeadersFinalLocationGetOptions) (*http.Response, error) {
 	req, err := client.postDoubleHeadersFinalLocationGetCreateRequest(ctx, options)
 	if err != nil {
@@ -1337,7 +1337,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGetCreateRequest(ctx con
 // that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut200Acceptedcanceled200Options contains the optional parameters for the LROsClient.BeginPut200Acceptedcanceled200
 // method.
 func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, options *LROsClientBeginPut200Acceptedcanceled200Options) (*armruntime.Poller[LROsClientPut200Acceptedcanceled200Response], error) {
@@ -1356,7 +1356,7 @@ func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, op
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, options *LROsClientBeginPut200Acceptedcanceled200Options) (*http.Response, error) {
 	req, err := client.put200Acceptedcanceled200CreateRequest(ctx, options)
 	if err != nil {
@@ -1389,7 +1389,7 @@ func (client *LROsClient) put200Acceptedcanceled200CreateRequest(ctx context.Con
 // BeginPut200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut200SucceededOptions contains the optional parameters for the LROsClient.BeginPut200Succeeded
 // method.
 func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, options *LROsClientBeginPut200SucceededOptions) (*armruntime.Poller[LROsClientPut200SucceededResponse], error) {
@@ -1407,7 +1407,7 @@ func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, options *LRO
 // Put200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put200Succeeded(ctx context.Context, options *LROsClientBeginPut200SucceededOptions) (*http.Response, error) {
 	req, err := client.put200SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -1440,7 +1440,7 @@ func (client *LROsClient) put200SucceededCreateRequest(ctx context.Context, opti
 // BeginPut200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that
 // does not contain ProvisioningState=’Succeeded’.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut200SucceededNoStateOptions contains the optional parameters for the LROsClient.BeginPut200SucceededNoState
 // method.
 func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, options *LROsClientBeginPut200SucceededNoStateOptions) (*armruntime.Poller[LROsClientPut200SucceededNoStateResponse], error) {
@@ -1458,7 +1458,7 @@ func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, optio
 // Put200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that does
 // not contain ProvisioningState=’Succeeded’.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put200SucceededNoState(ctx context.Context, options *LROsClientBeginPut200SucceededNoStateOptions) (*http.Response, error) {
 	req, err := client.put200SucceededNoStateCreateRequest(ctx, options)
 	if err != nil {
@@ -1492,7 +1492,7 @@ func (client *LROsClient) put200SucceededNoStateCreateRequest(ctx context.Contex
 // that contains ProvisioningState=’Updating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut200UpdatingSucceeded204Options contains the optional parameters for the LROsClient.BeginPut200UpdatingSucceeded204
 // method.
 func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, options *LROsClientBeginPut200UpdatingSucceeded204Options) (*armruntime.Poller[LROsClientPut200UpdatingSucceeded204Response], error) {
@@ -1511,7 +1511,7 @@ func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, o
 // contains ProvisioningState=’Updating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, options *LROsClientBeginPut200UpdatingSucceeded204Options) (*http.Response, error) {
 	req, err := client.put200UpdatingSucceeded204CreateRequest(ctx, options)
 	if err != nil {
@@ -1545,7 +1545,7 @@ func (client *LROsClient) put200UpdatingSucceeded204CreateRequest(ctx context.Co
 // contains ProvisioningState=’Created’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut201CreatingFailed200Options contains the optional parameters for the LROsClient.BeginPut201CreatingFailed200
 // method.
 func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, options *LROsClientBeginPut201CreatingFailed200Options) (*armruntime.Poller[LROsClientPut201CreatingFailed200Response], error) {
@@ -1564,7 +1564,7 @@ func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, opti
 // ProvisioningState=’Created’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put201CreatingFailed200(ctx context.Context, options *LROsClientBeginPut201CreatingFailed200Options) (*http.Response, error) {
 	req, err := client.put201CreatingFailed200CreateRequest(ctx, options)
 	if err != nil {
@@ -1598,7 +1598,7 @@ func (client *LROsClient) put201CreatingFailed200CreateRequest(ctx context.Conte
 // that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsClient.BeginPut201CreatingSucceeded200
 // method.
 func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsClientBeginPut201CreatingSucceeded200Options) (*armruntime.Poller[LROsClientPut201CreatingSucceeded200Response], error) {
@@ -1617,7 +1617,7 @@ func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, o
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, options *LROsClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
@@ -1650,7 +1650,7 @@ func (client *LROsClient) put201CreatingSucceeded200CreateRequest(ctx context.Co
 // BeginPut201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut201SucceededOptions contains the optional parameters for the LROsClient.BeginPut201Succeeded
 // method.
 func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, options *LROsClientBeginPut201SucceededOptions) (*armruntime.Poller[LROsClientPut201SucceededResponse], error) {
@@ -1668,7 +1668,7 @@ func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, options *LRO
 // Put201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put201Succeeded(ctx context.Context, options *LROsClientBeginPut201SucceededOptions) (*http.Response, error) {
 	req, err := client.put201SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -1701,7 +1701,7 @@ func (client *LROsClient) put201SucceededCreateRequest(ctx context.Context, opti
 // BeginPut202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that
 // points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPut202Retry200Options contains the optional parameters for the LROsClient.BeginPut202Retry200
 // method.
 func (client *LROsClient) BeginPut202Retry200(ctx context.Context, options *LROsClientBeginPut202Retry200Options) (*armruntime.Poller[LROsClientPut202Retry200Response], error) {
@@ -1719,7 +1719,7 @@ func (client *LROsClient) BeginPut202Retry200(ctx context.Context, options *LROs
 // Put202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that points
 // to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) put202Retry200(ctx context.Context, options *LROsClientBeginPut202Retry200Options) (*http.Response, error) {
 	req, err := client.put202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -1752,7 +1752,7 @@ func (client *LROsClient) put202Retry200CreateRequest(ctx context.Context, optio
 // BeginPutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation
 // header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, options *LROsClientBeginPutAsyncNoHeaderInRetryOptions) (*armruntime.Poller[LROsClientPutAsyncNoHeaderInRetryResponse], error) {
@@ -1770,7 +1770,7 @@ func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, opti
 // PutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation
 // header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, options *LROsClientBeginPutAsyncNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.putAsyncNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
@@ -1804,7 +1804,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Conte
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoRetrySucceeded
 // method.
 func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, options *LROsClientBeginPutAsyncNoRetrySucceededOptions) (*armruntime.Poller[LROsClientPutAsyncNoRetrySucceededResponse], error) {
@@ -1823,7 +1823,7 @@ func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, opt
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, options *LROsClientBeginPutAsyncNoRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncNoRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -1857,7 +1857,7 @@ func (client *LROsClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Cont
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncNoRetrycanceledOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoRetrycanceled
 // method.
 func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, options *LROsClientBeginPutAsyncNoRetrycanceledOptions) (*armruntime.Poller[LROsClientPutAsyncNoRetrycanceledResponse], error) {
@@ -1876,7 +1876,7 @@ func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, opti
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, options *LROsClientBeginPutAsyncNoRetrycanceledOptions) (*http.Response, error) {
 	req, err := client.putAsyncNoRetrycanceledCreateRequest(ctx, options)
 	if err != nil {
@@ -1908,7 +1908,7 @@ func (client *LROsClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Conte
 
 // BeginPutAsyncNonResource - Long running put request with non resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncNonResourceOptions contains the optional parameters for the LROsClient.BeginPutAsyncNonResource
 // method.
 func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options *LROsClientBeginPutAsyncNonResourceOptions) (*armruntime.Poller[LROsClientPutAsyncNonResourceResponse], error) {
@@ -1925,7 +1925,7 @@ func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options 
 
 // PutAsyncNonResource - Long running put request with non resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncNonResource(ctx context.Context, options *LROsClientBeginPutAsyncNonResourceOptions) (*http.Response, error) {
 	req, err := client.putAsyncNonResourceCreateRequest(ctx, options)
 	if err != nil {
@@ -1959,7 +1959,7 @@ func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, 
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginPutAsyncRetryFailed
 // method.
 func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, options *LROsClientBeginPutAsyncRetryFailedOptions) (*armruntime.Poller[LROsClientPutAsyncRetryFailedResponse], error) {
@@ -1978,7 +1978,7 @@ func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, options 
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, options *LROsClientBeginPutAsyncRetryFailedOptions) (*http.Response, error) {
 	req, err := client.putAsyncRetryFailedCreateRequest(ctx, options)
 	if err != nil {
@@ -2012,7 +2012,7 @@ func (client *LROsClient) putAsyncRetryFailedCreateRequest(ctx context.Context, 
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPutAsyncRetrySucceeded
 // method.
 func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsClientBeginPutAsyncRetrySucceededOptions) (*armruntime.Poller[LROsClientPutAsyncRetrySucceededResponse], error) {
@@ -2031,7 +2031,7 @@ func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, optio
 // ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, options *LROsClientBeginPutAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -2063,7 +2063,7 @@ func (client *LROsClient) putAsyncRetrySucceededCreateRequest(ctx context.Contex
 
 // BeginPutAsyncSubResource - Long running put request with sub resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutAsyncSubResourceOptions contains the optional parameters for the LROsClient.BeginPutAsyncSubResource
 // method.
 func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, options *LROsClientBeginPutAsyncSubResourceOptions) (*armruntime.Poller[LROsClientPutAsyncSubResourceResponse], error) {
@@ -2080,7 +2080,7 @@ func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, options 
 
 // PutAsyncSubResource - Long running put request with sub resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putAsyncSubResource(ctx context.Context, options *LROsClientBeginPutAsyncSubResourceOptions) (*http.Response, error) {
 	req, err := client.putAsyncSubResourceCreateRequest(ctx, options)
 	if err != nil {
@@ -2113,7 +2113,7 @@ func (client *LROsClient) putAsyncSubResourceCreateRequest(ctx context.Context, 
 // BeginPutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header.
 // Subsequent calls to operation status do not contain location header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginPutNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, options *LROsClientBeginPutNoHeaderInRetryOptions) (*armruntime.Poller[LROsClientPutNoHeaderInRetryResponse], error) {
@@ -2131,7 +2131,7 @@ func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, options *
 // PutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header. Subsequent
 // calls to operation status do not contain location header.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, options *LROsClientBeginPutNoHeaderInRetryOptions) (*http.Response, error) {
 	req, err := client.putNoHeaderInRetryCreateRequest(ctx, options)
 	if err != nil {
@@ -2163,7 +2163,7 @@ func (client *LROsClient) putNoHeaderInRetryCreateRequest(ctx context.Context, o
 
 // BeginPutNonResource - Long running put request with non resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutNonResourceOptions contains the optional parameters for the LROsClient.BeginPutNonResource
 // method.
 func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROsClientBeginPutNonResourceOptions) (*armruntime.Poller[LROsClientPutNonResourceResponse], error) {
@@ -2180,7 +2180,7 @@ func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROs
 
 // PutNonResource - Long running put request with non resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putNonResource(ctx context.Context, options *LROsClientBeginPutNonResourceOptions) (*http.Response, error) {
 	req, err := client.putNonResourceCreateRequest(ctx, options)
 	if err != nil {
@@ -2212,7 +2212,7 @@ func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, optio
 
 // BeginPutSubResource - Long running put request with sub resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - LROsClientBeginPutSubResourceOptions contains the optional parameters for the LROsClient.BeginPutSubResource
 // method.
 func (client *LROsClient) BeginPutSubResource(ctx context.Context, options *LROsClientBeginPutSubResourceOptions) (*armruntime.Poller[LROsClientPutSubResourceResponse], error) {
@@ -2229,7 +2229,7 @@ func (client *LROsClient) BeginPutSubResource(ctx context.Context, options *LROs
 
 // PutSubResource - Long running put request with sub resource.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 func (client *LROsClient) putSubResource(ctx context.Context, options *LROsClientBeginPutSubResourceOptions) (*http.Response, error) {
 	req, err := client.putSubResourceCreateRequest(ctx, options)
 	if err != nil {

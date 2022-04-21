@@ -57,7 +57,7 @@ func NewApplicationGatewaysClient(subscriptionID string, credential azcore.Token
 
 // BeginBackendHealth - Gets the backend health of the specified application gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginBackendHealthOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealth
@@ -78,7 +78,7 @@ func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context,
 
 // BackendHealth - Gets the backend health of the specified application gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ApplicationGatewaysClient) backendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginBackendHealthOptions) (*http.Response, error) {
 	req, err := client.backendHealthCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -126,7 +126,7 @@ func (client *ApplicationGatewaysClient) backendHealthCreateRequest(ctx context.
 // BeginBackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified
 // application gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // probeRequest - Request body for on-demand test probe operation.
@@ -149,7 +149,7 @@ func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.
 // BackendHealthOnDemand - Gets the backend health for given combination of backend pool and http setting of the specified
 // application gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ApplicationGatewaysClient) backendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysClientBeginBackendHealthOnDemandOptions) (*http.Response, error) {
 	req, err := client.backendHealthOnDemandCreateRequest(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
 	if err != nil {
@@ -196,7 +196,7 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandCreateRequest(ctx 
 
 // BeginCreateOrUpdate - Creates or updates the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // parameters - Parameters supplied to the create or update application gateway operation.
@@ -218,7 +218,7 @@ func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Creates or updates the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ApplicationGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)
 	if err != nil {
@@ -262,7 +262,7 @@ func (client *ApplicationGatewaysClient) createOrUpdateCreateRequest(ctx context
 
 // BeginDelete - Deletes the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginDeleteOptions contains the optional parameters for the ApplicationGatewaysClient.BeginDelete
@@ -283,7 +283,7 @@ func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resour
 
 // Delete - Deletes the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ApplicationGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -327,7 +327,7 @@ func (client *ApplicationGatewaysClient) deleteCreateRequest(ctx context.Context
 
 // Get - Gets the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientGetOptions contains the optional parameters for the ApplicationGatewaysClient.Get method.
@@ -383,7 +383,7 @@ func (client *ApplicationGatewaysClient) getHandleResponse(resp *http.Response) 
 
 // GetSSLPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // predefinedPolicyName - Name of Ssl predefined policy.
 // options - ApplicationGatewaysClientGetSSLPredefinedPolicyOptions contains the optional parameters for the ApplicationGatewaysClient.GetSSLPredefinedPolicy
 // method.
@@ -435,7 +435,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(re
 
 // NewListPager - Lists all application gateways in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ApplicationGatewaysClientListOptions contains the optional parameters for the ApplicationGatewaysClient.List
 // method.
@@ -500,7 +500,7 @@ func (client *ApplicationGatewaysClient) listHandleResponse(resp *http.Response)
 
 // NewListAllPager - Gets all the application gateways in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAllOptions contains the optional parameters for the ApplicationGatewaysClient.ListAll
 // method.
 func (client *ApplicationGatewaysClient) NewListAllPager(options *ApplicationGatewaysClientListAllOptions) *runtime.Pager[ApplicationGatewaysClientListAllResponse] {
@@ -560,7 +560,7 @@ func (client *ApplicationGatewaysClient) listAllHandleResponse(resp *http.Respon
 
 // ListAvailableRequestHeaders - Lists all available request headers.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableRequestHeadersOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableRequestHeaders
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysClientListAvailableRequestHeadersOptions) (ApplicationGatewaysClientListAvailableRequestHeadersResponse, error) {
@@ -607,7 +607,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleRespon
 
 // ListAvailableResponseHeaders - Lists all available response headers.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableResponseHeadersOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableResponseHeaders
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysClientListAvailableResponseHeadersOptions) (ApplicationGatewaysClientListAvailableResponseHeadersResponse, error) {
@@ -654,7 +654,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleRespo
 
 // ListAvailableSSLOptions - Lists available Ssl options for configuring Ssl policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableSSLOptionsOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLOptions
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysClientListAvailableSSLOptionsOptions) (ApplicationGatewaysClientListAvailableSSLOptionsResponse, error) {
@@ -701,7 +701,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(r
 
 // NewListAvailableSSLPredefinedPoliciesPager - Lists all SSL predefined policies for configuring Ssl policy.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies
 // method.
 func (client *ApplicationGatewaysClient) NewListAvailableSSLPredefinedPoliciesPager(options *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions) *runtime.Pager[ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesResponse] {
@@ -761,7 +761,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandl
 
 // ListAvailableServerVariables - Lists all available server variables.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableServerVariables
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysClientListAvailableServerVariablesOptions) (ApplicationGatewaysClientListAvailableServerVariablesResponse, error) {
@@ -808,7 +808,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleRespo
 
 // ListAvailableWafRuleSets - Lists all available web application firewall rule sets.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableWafRuleSetsOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableWafRuleSets
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysClientListAvailableWafRuleSetsOptions) (ApplicationGatewaysClientListAvailableWafRuleSetsResponse, error) {
@@ -855,7 +855,7 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleResponse(
 
 // BeginStart - Starts the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginStartOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStart
@@ -876,7 +876,7 @@ func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourc
 
 // Start - Starts the specified application gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ApplicationGatewaysClient) start(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -920,7 +920,7 @@ func (client *ApplicationGatewaysClient) startCreateRequest(ctx context.Context,
 
 // BeginStop - Stops the specified application gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // options - ApplicationGatewaysClientBeginStopOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStop
@@ -941,7 +941,7 @@ func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resource
 
 // Stop - Stops the specified application gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ApplicationGatewaysClient) stop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysClientBeginStopOptions) (*http.Response, error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -985,7 +985,7 @@ func (client *ApplicationGatewaysClient) stopCreateRequest(ctx context.Context, 
 
 // UpdateTags - Updates the specified application gateway tags.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // parameters - Parameters supplied to update application gateway tags.

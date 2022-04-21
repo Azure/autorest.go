@@ -57,7 +57,7 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 
 // Get - Gets the specified load balancer outbound rule.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // outboundRuleName - The name of the outbound rule.
@@ -119,7 +119,7 @@ func (client *LoadBalancerOutboundRulesClient) getHandleResponse(resp *http.Resp
 
 // NewListPager - Gets all the outbound rules in a load balancer.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerOutboundRulesClientListOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.List

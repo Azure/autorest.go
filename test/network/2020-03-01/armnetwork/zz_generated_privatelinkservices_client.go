@@ -57,7 +57,7 @@ func NewPrivateLinkServicesClient(subscriptionID string, credential azcore.Token
 
 // BeginCheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // location - The location of the domain name.
 // parameters - The request body of CheckPrivateLinkService API call.
 // options - PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions contains the optional parameters for the
@@ -78,7 +78,7 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(
 
 // CheckPrivateLinkServiceVisibility - Checks whether the subscription is visible to private link service.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityOptions) (*http.Response, error) {
 	req, err := client.checkPrivateLinkServiceVisibilityCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -119,7 +119,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityCreate
 // BeginCheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service
 // in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
 // parameters - The request body of CheckPrivateLinkService API call.
@@ -142,7 +142,7 @@ func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityB
 // CheckPrivateLinkServiceVisibilityByResourceGroup - Checks whether the subscription is visible to private link service in
 // the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesClientBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (*http.Response, error) {
 	req, err := client.checkPrivateLinkServiceVisibilityByResourceGroupCreateRequest(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
@@ -186,7 +186,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 
 // BeginCreateOrUpdate - Creates or updates an private link service in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // parameters - Parameters supplied to the create or update private link service operation.
@@ -208,7 +208,7 @@ func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Creates or updates an private link service in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PrivateLinkServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceName, parameters, options)
 	if err != nil {
@@ -252,7 +252,7 @@ func (client *PrivateLinkServicesClient) createOrUpdateCreateRequest(ctx context
 
 // BeginDelete - Deletes the specified private link service.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // options - PrivateLinkServicesClientBeginDeleteOptions contains the optional parameters for the PrivateLinkServicesClient.BeginDelete
@@ -273,7 +273,7 @@ func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resour
 
 // Delete - Deletes the specified private link service.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PrivateLinkServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -317,7 +317,7 @@ func (client *PrivateLinkServicesClient) deleteCreateRequest(ctx context.Context
 
 // BeginDeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // peConnectionName - The name of the private end point connection.
@@ -339,7 +339,7 @@ func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ct
 
 // DeletePrivateEndpointConnection - Delete private end point connection for a private link service in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *PrivateLinkServicesClient) deletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesClientBeginDeletePrivateEndpointConnectionOptions) (*http.Response, error) {
 	req, err := client.deletePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
 	if err != nil {
@@ -387,7 +387,7 @@ func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionCreateRe
 
 // Get - Gets the specified private link service by resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // options - PrivateLinkServicesClientGetOptions contains the optional parameters for the PrivateLinkServicesClient.Get method.
@@ -447,7 +447,7 @@ func (client *PrivateLinkServicesClient) getHandleResponse(resp *http.Response) 
 // GetPrivateEndpointConnection - Get the specific private end point connection by specific private link service in the resource
 // group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // peConnectionName - The name of the private end point connection.
@@ -512,7 +512,7 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleRespo
 
 // NewListPager - Gets all private link services in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - PrivateLinkServicesClientListOptions contains the optional parameters for the PrivateLinkServicesClient.List
 // method.
@@ -578,7 +578,7 @@ func (client *PrivateLinkServicesClient) listHandleResponse(resp *http.Response)
 // NewListAutoApprovedPrivateLinkServicesPager - Returns all of the private link service ids that can be linked to a Private
 // Endpoint with auto approved in this subscription in this region.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // location - The location of the domain name.
 // options - PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesOptions contains the optional parameters for the
 // PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServices method.
@@ -644,7 +644,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 // NewListAutoApprovedPrivateLinkServicesByResourceGroupPager - Returns all of the private link service ids that can be linked
 // to a Private Endpoint with auto approved in this subscription in this region.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
 // options - PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupOptions contains the optional parameters
@@ -714,7 +714,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 
 // NewListBySubscriptionPager - Gets all private link service in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // options - PrivateLinkServicesClientListBySubscriptionOptions contains the optional parameters for the PrivateLinkServicesClient.ListBySubscription
 // method.
 func (client *PrivateLinkServicesClient) NewListBySubscriptionPager(options *PrivateLinkServicesClientListBySubscriptionOptions) *runtime.Pager[PrivateLinkServicesClientListBySubscriptionResponse] {
@@ -774,7 +774,7 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleResponse(resp *
 
 // NewListPrivateEndpointConnectionsPager - Gets all private end point connections for a specific private link service.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // options - PrivateLinkServicesClientListPrivateEndpointConnectionsOptions contains the optional parameters for the PrivateLinkServicesClient.ListPrivateEndpointConnections
@@ -844,7 +844,7 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleRes
 
 // UpdatePrivateEndpointConnection - Approve or reject private end point connection for a private link service in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // peConnectionName - The name of the private end point connection.

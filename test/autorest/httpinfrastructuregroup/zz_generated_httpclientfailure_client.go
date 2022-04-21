@@ -36,7 +36,7 @@ func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailur
 
 // Delete400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400
 // method.
 func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureClientDelete400Options) (HTTPClientFailureClientDelete400Response, error) {
@@ -67,7 +67,7 @@ func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Contex
 
 // Delete407 - Return 407 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407
 // method.
 func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *HTTPClientFailureClientDelete407Options) (HTTPClientFailureClientDelete407Response, error) {
@@ -98,7 +98,7 @@ func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Contex
 
 // Delete417 - Return 417 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417
 // method.
 func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *HTTPClientFailureClientDelete417Options) (HTTPClientFailureClientDelete417Response, error) {
@@ -129,7 +129,7 @@ func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Contex
 
 // Get400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400
 // method.
 func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTPClientFailureClientGet400Options) (HTTPClientFailureClientGet400Response, error) {
@@ -160,7 +160,7 @@ func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, 
 
 // Get402 - Return 402 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402
 // method.
 func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTPClientFailureClientGet402Options) (HTTPClientFailureClientGet402Response, error) {
@@ -191,7 +191,7 @@ func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, 
 
 // Get403 - Return 403 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403
 // method.
 func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTPClientFailureClientGet403Options) (HTTPClientFailureClientGet403Response, error) {
@@ -222,7 +222,7 @@ func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, 
 
 // Get411 - Return 411 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411
 // method.
 func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTPClientFailureClientGet411Options) (HTTPClientFailureClientGet411Response, error) {
@@ -253,7 +253,7 @@ func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, 
 
 // Get412 - Return 412 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412
 // method.
 func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTPClientFailureClientGet412Options) (HTTPClientFailureClientGet412Response, error) {
@@ -284,7 +284,7 @@ func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, 
 
 // Get416 - Return 416 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416
 // method.
 func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTPClientFailureClientGet416Options) (HTTPClientFailureClientGet416Response, error) {
@@ -314,7 +314,7 @@ func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, 
 }
 
 // Head400 - Return 400 status code - should be represented in the client as an error
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400
 // method.
 func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTTPClientFailureClientHead400Options) (HTTPClientFailureClientHead400Response, error) {
@@ -345,7 +345,7 @@ func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context,
 }
 
 // Head401 - Return 401 status code - should be represented in the client as an error
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401
 // method.
 func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTTPClientFailureClientHead401Options) (HTTPClientFailureClientHead401Response, error) {
@@ -376,7 +376,7 @@ func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context,
 }
 
 // Head410 - Return 410 status code - should be represented in the client as an error
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410
 // method.
 func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTTPClientFailureClientHead410Options) (HTTPClientFailureClientHead410Response, error) {
@@ -407,7 +407,7 @@ func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context,
 }
 
 // Head429 - Return 429 status code - should be represented in the client as an error
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429
 // method.
 func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTTPClientFailureClientHead429Options) (HTTPClientFailureClientHead429Response, error) {
@@ -439,7 +439,7 @@ func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context,
 
 // Options400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400
 // method.
 func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *HTTPClientFailureClientOptions400Options) (HTTPClientFailureClientOptions400Response, error) {
@@ -470,7 +470,7 @@ func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Conte
 
 // Options403 - Return 403 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403
 // method.
 func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *HTTPClientFailureClientOptions403Options) (HTTPClientFailureClientOptions403Response, error) {
@@ -501,7 +501,7 @@ func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Conte
 
 // Options412 - Return 412 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412
 // method.
 func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *HTTPClientFailureClientOptions412Options) (HTTPClientFailureClientOptions412Response, error) {
@@ -532,7 +532,7 @@ func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Conte
 
 // Patch400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400
 // method.
 func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HTTPClientFailureClientPatch400Options) (HTTPClientFailureClientPatch400Response, error) {
@@ -563,7 +563,7 @@ func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context
 
 // Patch405 - Return 405 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405
 // method.
 func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HTTPClientFailureClientPatch405Options) (HTTPClientFailureClientPatch405Response, error) {
@@ -594,7 +594,7 @@ func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context
 
 // Patch414 - Return 414 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414
 // method.
 func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HTTPClientFailureClientPatch414Options) (HTTPClientFailureClientPatch414Response, error) {
@@ -625,7 +625,7 @@ func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context
 
 // Post400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPost400Options contains the optional parameters for the HTTPClientFailureClient.Post400
 // method.
 func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTTPClientFailureClientPost400Options) (HTTPClientFailureClientPost400Response, error) {
@@ -656,7 +656,7 @@ func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context,
 
 // Post406 - Return 406 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPost406Options contains the optional parameters for the HTTPClientFailureClient.Post406
 // method.
 func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTTPClientFailureClientPost406Options) (HTTPClientFailureClientPost406Response, error) {
@@ -687,7 +687,7 @@ func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context,
 
 // Post415 - Return 415 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPost415Options contains the optional parameters for the HTTPClientFailureClient.Post415
 // method.
 func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTTPClientFailureClientPost415Options) (HTTPClientFailureClientPost415Response, error) {
@@ -718,7 +718,7 @@ func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context,
 
 // Put400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPut400Options contains the optional parameters for the HTTPClientFailureClient.Put400
 // method.
 func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTPClientFailureClientPut400Options) (HTTPClientFailureClientPut400Response, error) {
@@ -749,7 +749,7 @@ func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, 
 
 // Put404 - Return 404 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPut404Options contains the optional parameters for the HTTPClientFailureClient.Put404
 // method.
 func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTPClientFailureClientPut404Options) (HTTPClientFailureClientPut404Response, error) {
@@ -780,7 +780,7 @@ func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, 
 
 // Put409 - Return 409 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPut409Options contains the optional parameters for the HTTPClientFailureClient.Put409
 // method.
 func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTPClientFailureClientPut409Options) (HTTPClientFailureClientPut409Response, error) {
@@ -811,7 +811,7 @@ func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, 
 
 // Put413 - Return 413 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - HTTPClientFailureClientPut413Options contains the optional parameters for the HTTPClientFailureClient.Put413
 // method.
 func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTPClientFailureClientPut413Options) (HTTPClientFailureClientPut413Response, error) {

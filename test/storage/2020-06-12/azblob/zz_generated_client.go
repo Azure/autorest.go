@@ -44,7 +44,7 @@ func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, p
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
 // blob with zero length and full metadata.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
 // options - clientAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -112,7 +112,7 @@ func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (clien
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) AcquireLease(ctx context.Context, comp Enum16, options *clientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientAcquireLeaseResponse, error) {
@@ -209,7 +209,7 @@ func (client *client) acquireLeaseHandleResponse(resp *http.Response) (clientAcq
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) BreakLease(ctx context.Context, comp Enum16, options *clientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientBreakLeaseResponse, error) {
@@ -308,7 +308,7 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreak
 
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // leaseID - Specifies the current lease ID on the resource.
 // proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 // lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
@@ -406,7 +406,7 @@ func (client *client) changeLeaseHandleResponse(resp *http.Response) (clientChan
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response
 // until the copy is complete.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
@@ -561,7 +561,7 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopy
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientCreateSnapshotOptions contains the optional parameters for the client.CreateSnapshot method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
@@ -694,7 +694,7 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientC
 // All other operations on a soft-deleted blob or snapshot causes the service to
 // return an HTTP status code of 404 (ResourceNotFound).
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientDeleteOptions contains the optional parameters for the client.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -786,7 +786,7 @@ func (client *client) deleteHandleResponse(resp *http.Response) (clientDeleteRes
 
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy
 // method.
 func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientDeleteImmutabilityPolicyOptions) (clientDeleteImmutabilityPolicyResponse, error) {
@@ -849,7 +849,7 @@ func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You
 // can also call Download to read a snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientDownloadOptions contains the optional parameters for the client.Download method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -1143,7 +1143,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientGetAccessControlOptions contains the optional parameters for the client.GetAccessControl method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -1243,7 +1243,7 @@ func (client *client) getAccessControlHandleResponse(resp *http.Response) (clien
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
 func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *clientGetAccountInfoOptions) (clientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
@@ -1306,7 +1306,7 @@ func (client *client) getAccountInfoHandleResponse(resp *http.Response) (clientG
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties
 // for the blob. It does not return the content of the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientGetPropertiesOptions contains the optional parameters for the client.GetProperties method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -1620,7 +1620,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 
 // GetTags - The Get Tags operation enables users to get the tags associated with a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientGetTagsOptions contains the optional parameters for the client.GetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -1698,7 +1698,7 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsR
 
 // Query - The Query operation enables users to select/project on blob data by providing simple query expressions.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientQueryOptions contains the optional parameters for the client.Query method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -1925,7 +1925,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // leaseID - Specifies the current lease ID on the resource.
 // options - clientReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2019,7 +2019,7 @@ func (client *client) releaseLeaseHandleResponse(resp *http.Response) (clientRel
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 // If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 // otherwise, the existing properties will be preserved.
@@ -2162,7 +2162,7 @@ func (client *client) renameHandleResponse(resp *http.Response) (clientRenameRes
 
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // leaseID - Specifies the current lease ID on the resource.
 // options - clientRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2255,7 +2255,7 @@ func (client *client) renewLeaseHandleResponse(resp *http.Response) (clientRenew
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientSetAccessControlOptions contains the optional parameters for the client.SetAccessControl method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2352,7 +2352,7 @@ func (client *client) setAccessControlHandleResponse(resp *http.Response) (clien
 
 // SetExpiry - Sets the time a blob will expire and be deleted.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // expiryOptions - Required. Indicates mode of the expiry time
 // options - clientSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
 func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *clientSetExpiryOptions) (clientSetExpiryResponse, error) {
@@ -2428,7 +2428,7 @@ func (client *client) setExpiryHandleResponse(resp *http.Response) (clientSetExp
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientSetHTTPHeadersOptions contains the optional parameters for the client.SetHTTPHeaders method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -2545,7 +2545,7 @@ func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (clientS
 
 // SetImmutabilityPolicy - The Set Immutability Policy operation sets the immutability policy on the blob
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientSetImmutabilityPolicyResponse, error) {
@@ -2626,7 +2626,7 @@ func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // legalHold - Specified if a legal hold should be set on the blob.
 // options - clientSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
 func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *clientSetLegalHoldOptions) (clientSetLegalHoldResponse, error) {
@@ -2697,7 +2697,7 @@ func (client *client) setLegalHoldHandleResponse(resp *http.Response) (clientSet
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value
 // pairs
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientSetMetadataOptions contains the optional parameters for the client.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -2823,7 +2823,7 @@ func (client *client) setMetadataHandleResponse(resp *http.Response) (clientSetM
 
 // SetTags - The Set Tags operation enables users to set tags on a blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientSetTagsOptions contains the optional parameters for the client.SetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -2907,7 +2907,7 @@ func (client *client) setTagsHandleResponse(resp *http.Response) (clientSetTagsR
 // premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive
 // storage type. This operation does not update the blob's ETag.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // tier - Indicates the tier to be set on the blob.
 // options - clientSetTierOptions contains the optional parameters for the client.SetTier method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -2980,7 +2980,7 @@ func (client *client) setTierHandleResponse(resp *http.Response) (clientSetTierR
 
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
@@ -3126,7 +3126,7 @@ func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (clien
 
 // Undelete - Undelete a blob that was previously soft deleted
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - clientUndeleteOptions contains the optional parameters for the client.Undelete method.
 func (client *client) Undelete(ctx context.Context, comp Enum14, options *clientUndeleteOptions) (clientUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, comp, options)

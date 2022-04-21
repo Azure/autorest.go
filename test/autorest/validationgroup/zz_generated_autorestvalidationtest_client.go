@@ -43,7 +43,7 @@ func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.Clie
 
 // GetWithConstantInPath -
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 // method.
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (AutoRestValidationTestClientGetWithConstantInPathResponse, error) {
@@ -74,7 +74,7 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(c
 
 // PostWithConstantInBody -
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // options - AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
 // method.
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
@@ -118,7 +118,7 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
 // options - AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
@@ -175,7 +175,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp 
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 1.0.0
+// Generated from API version 1.0.0
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
 // options - AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters

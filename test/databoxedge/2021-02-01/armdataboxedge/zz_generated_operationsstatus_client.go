@@ -56,7 +56,7 @@ func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCre
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The job name.
 // resourceGroupName - The resource group name.

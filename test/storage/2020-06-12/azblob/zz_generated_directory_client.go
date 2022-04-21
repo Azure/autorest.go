@@ -45,7 +45,7 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - directoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
 // DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -165,7 +165,7 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (direct
 
 // Delete - Deletes the directory
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
 // non-empty, an error occurs.
 // options - directoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
@@ -251,7 +251,7 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (direct
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - directoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -356,7 +356,7 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 // If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 // otherwise, the existing properties will be preserved.
@@ -505,7 +505,7 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (direct
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-06-12
+// Generated from API version 2020-06-12
 // options - directoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.

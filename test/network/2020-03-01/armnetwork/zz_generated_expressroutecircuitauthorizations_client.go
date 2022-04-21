@@ -57,7 +57,7 @@ func NewExpressRouteCircuitAuthorizationsClient(subscriptionID string, credentia
 
 // BeginCreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
@@ -80,7 +80,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx c
 
 // CreateOrUpdate - Creates or updates an authorization in the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateCreateReque
 
 // BeginDelete - Deletes the specified authorization from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
@@ -150,7 +150,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.C
 
 // Delete - Deletes the specified authorization from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 func (client *ExpressRouteCircuitAuthorizationsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -198,7 +198,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) deleteCreateRequest(ctx c
 
 // Get - Gets the specified authorization from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
@@ -260,7 +260,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleResponse(resp *h
 
 // NewListPager - Gets all authorizations in an express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2020-03-01
+// Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // options - ExpressRouteCircuitAuthorizationsClientListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.List

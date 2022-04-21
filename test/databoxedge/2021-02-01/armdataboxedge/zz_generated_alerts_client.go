@@ -56,7 +56,7 @@ func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // Get - Gets an alert by name.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The alert name.
 // resourceGroupName - The resource group name.
@@ -114,7 +114,7 @@ func (client *AlertsClient) getHandleResponse(resp *http.Response) (AlertsClient
 
 // NewListByDataBoxEdgeDevicePager - Gets all the alerts for a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice

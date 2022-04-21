@@ -50,7 +50,7 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 
 // NewListPager - List all the supported operations.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // options - OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
 func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[OperationsClientListResponse]{

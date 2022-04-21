@@ -57,7 +57,7 @@ func NewDiagnosticSettingsClient(subscriptionID string, credential azcore.TokenC
 // GetDiagnosticProactiveLogCollectionSettings - Gets the proactive log collection settings of the specified Data Box Edge/Data
 // Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for
@@ -112,7 +112,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 // GetDiagnosticRemoteSupportSettings - Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box
 // Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
@@ -167,7 +167,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 // BeginUpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data
 // Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // proactiveLogCollectionSettings - The proactive log collection settings.
@@ -188,7 +188,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 // UpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data
 // Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*http.Response, error) {
 	req, err := client.updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
@@ -230,7 +230,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 // BeginUpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box
 // Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // diagnosticRemoteSupportSettings - The diagnostic remote support settings.
@@ -251,7 +251,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 // UpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway
 // device.
 // If the operation fails it returns an *azcore.ResponseError type.
-// Uses API version 2021-02-01
+// Generated from API version 2021-02-01
 func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*http.Response, error) {
 	req, err := client.updateDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {
