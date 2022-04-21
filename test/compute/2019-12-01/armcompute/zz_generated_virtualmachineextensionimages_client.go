@@ -58,6 +58,7 @@ func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential az
 
 // Get - Gets a virtual machine extension image.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
 // method.
@@ -121,6 +122,7 @@ func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.
 
 // ListTypes - Gets a list of virtual machine extension image types.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
 // method.
@@ -176,6 +178,7 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp 
 
 // ListVersions - Gets a list of virtual machine extension image versions.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions
 // method.

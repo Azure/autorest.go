@@ -39,6 +39,7 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 
 // DoSomething - Asks pet to do something
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 0.0.0
 // whatAction - what action the pet should do
 // options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (PetClientDoSomethingResponse, error) {
@@ -82,6 +83,7 @@ func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClie
 
 // GetPetByID - Gets pets by id.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 0.0.0
 // petID - pet id
 // options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
 func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (PetClientGetPetByIDResponse, error) {
@@ -126,6 +128,7 @@ func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClien
 // HasModelsParam - Ensure you can correctly deserialize the returned PetActionError and deserialization doesn't conflict
 // with the input param name 'models'
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 0.0.0
 // options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
 func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientHasModelsParamOptions) (PetClientHasModelsParamResponse, error) {
 	req, err := client.hasModelsParamCreateRequest(ctx, options)

@@ -36,6 +36,7 @@ func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
 
 // Delete200 - Delete simple boolean value true returns 200
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
 func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessClientDelete200Options) (HTTPSuccessClientDelete200Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
@@ -65,6 +66,7 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
 func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessClientDelete202Options) (HTTPSuccessClientDelete202Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
@@ -94,6 +96,7 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
 func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessClientDelete204Options) (HTTPSuccessClientDelete204Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
@@ -123,6 +126,7 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 
 // Get200 - Get 200 success
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
 func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessClientGet200Options) (HTTPSuccessClientGet200Response, error) {
 	req, err := client.get200CreateRequest(ctx, options)
@@ -160,6 +164,7 @@ func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTP
 }
 
 // Head200 - Return 200 status code if successful
+// Uses API version 1.0.0
 // options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
@@ -189,6 +194,7 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 }
 
 // Head204 - Return 204 status code if successful
+// Uses API version 1.0.0
 // options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
@@ -218,6 +224,7 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 }
 
 // Head404 - Return 404 status code
+// Uses API version 1.0.0
 // options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
@@ -248,6 +255,7 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 
 // Options200 - Options 200 success
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
 func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessClientOptions200Options) (HTTPSuccessClientOptions200Response, error) {
 	req, err := client.options200CreateRequest(ctx, options)
@@ -286,6 +294,7 @@ func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (
 
 // Patch200 - Patch true Boolean value in request returning 200
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
 func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessClientPatch200Options) (HTTPSuccessClientPatch200Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
@@ -315,6 +324,7 @@ func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, opti
 
 // Patch202 - Patch true Boolean value in request returns 202
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
 func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessClientPatch202Options) (HTTPSuccessClientPatch202Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
@@ -344,6 +354,7 @@ func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, opti
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
 func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessClientPatch204Options) (HTTPSuccessClientPatch204Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
@@ -373,6 +384,7 @@ func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, opti
 
 // Post200 - Post bollean value true in request that returns a 200
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
 func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessClientPost200Options) (HTTPSuccessClientPost200Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
@@ -402,6 +414,7 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
 func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessClientPost201Options) (HTTPSuccessClientPost201Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
@@ -431,6 +444,7 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
 func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessClientPost202Options) (HTTPSuccessClientPost202Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
@@ -460,6 +474,7 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
 func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessClientPost204Options) (HTTPSuccessClientPost204Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
@@ -489,6 +504,7 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 
 // Put200 - Put boolean value true returning 200 success
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
 func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessClientPut200Options) (HTTPSuccessClientPut200Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
@@ -518,6 +534,7 @@ func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, option
 
 // Put201 - Put true Boolean value in request returns 201
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
 func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessClientPut201Options) (HTTPSuccessClientPut201Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
@@ -547,6 +564,7 @@ func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, option
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
 func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessClientPut202Options) (HTTPSuccessClientPut202Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
@@ -576,6 +594,7 @@ func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, option
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - HTTPSuccessClientPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
 func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessClientPut204Options) (HTTPSuccessClientPut204Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)

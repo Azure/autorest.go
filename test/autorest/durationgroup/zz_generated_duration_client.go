@@ -36,6 +36,7 @@ func NewDurationClient(options *azcore.ClientOptions) *DurationClient {
 
 // GetInvalid - Get an invalid duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - DurationClientGetInvalidOptions contains the optional parameters for the DurationClient.GetInvalid method.
 func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationClientGetInvalidOptions) (DurationClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
@@ -74,6 +75,7 @@ func (client *DurationClient) getInvalidHandleResponse(resp *http.Response) (Dur
 
 // GetNull - Get null duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
 func (client *DurationClient) GetNull(ctx context.Context, options *DurationClientGetNullOptions) (DurationClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -112,6 +114,7 @@ func (client *DurationClient) getNullHandleResponse(resp *http.Response) (Durati
 
 // GetPositiveDuration - Get a positive duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - DurationClientGetPositiveDurationOptions contains the optional parameters for the DurationClient.GetPositiveDuration
 // method.
 func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *DurationClientGetPositiveDurationOptions) (DurationClientGetPositiveDurationResponse, error) {
@@ -151,6 +154,7 @@ func (client *DurationClient) getPositiveDurationHandleResponse(resp *http.Respo
 
 // PutPositiveDuration - Put a positive duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // durationBody - duration body
 // options - DurationClientPutPositiveDurationOptions contains the optional parameters for the DurationClient.PutPositiveDuration
 // method.

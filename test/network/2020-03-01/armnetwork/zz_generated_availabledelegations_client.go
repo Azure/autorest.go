@@ -57,6 +57,7 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 
 // NewListPager - Gets all of the available subnet delegations for this subscription in this region.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // location - The location of the subnet.
 // options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
 // method.

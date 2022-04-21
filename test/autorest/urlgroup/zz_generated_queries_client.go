@@ -40,6 +40,7 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringCSVEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringCSVEmpty
 // method.
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesClientArrayStringCSVEmptyOptions) (QueriesClientArrayStringCSVEmptyResponse, error) {
@@ -75,6 +76,7 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringCSVNullOptions contains the optional parameters for the QueriesClient.ArrayStringCSVNull
 // method.
 func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesClientArrayStringCSVNullOptions) (QueriesClientArrayStringCSVNullResponse, error) {
@@ -111,6 +113,7 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringCSVValidOptions contains the optional parameters for the QueriesClient.ArrayStringCSVValid
 // method.
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesClientArrayStringCSVValidOptions) (QueriesClientArrayStringCSVValidResponse, error) {
@@ -147,6 +150,7 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello',
 // 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringNoCollectionFormatEmpty
 // method.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesClientArrayStringNoCollectionFormatEmptyOptions) (QueriesClientArrayStringNoCollectionFormatEmptyResponse, error) {
@@ -183,6 +187,7 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringPipesValidOptions contains the optional parameters for the QueriesClient.ArrayStringPipesValid
 // method.
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesClientArrayStringPipesValidOptions) (QueriesClientArrayStringPipesValidResponse, error) {
@@ -219,6 +224,7 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringSsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringSsvValid
 // method.
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesClientArrayStringSsvValidOptions) (QueriesClientArrayStringSsvValidResponse, error) {
@@ -255,6 +261,7 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientArrayStringTsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringTsvValid
 // method.
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesClientArrayStringTsvValidOptions) (QueriesClientArrayStringTsvValidResponse, error) {
@@ -290,6 +297,7 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 
 // ByteEmpty - Get '' as byte array
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
 func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClientByteEmptyOptions) (QueriesClientByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
@@ -322,6 +330,7 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
 func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesClientByteMultiByteOptions) (QueriesClientByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
@@ -356,6 +365,7 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 
 // ByteNull - Get null as byte array (no query parameters in uri)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
 func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClientByteNullOptions) (QueriesClientByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, options)
@@ -390,6 +400,7 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 
 // DateNull - Get null as date - this should result in no query parameters in uri
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
 func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClientDateNullOptions) (QueriesClientDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, options)
@@ -424,6 +435,7 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
 func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesClientDateTimeNullOptions) (QueriesClientDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
@@ -458,6 +470,7 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
 func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesClientDateTimeValidOptions) (QueriesClientDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
@@ -490,6 +503,7 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 
 // DateValid - Get '2012-01-01' as date
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
 func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClientDateValidOptions) (QueriesClientDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
@@ -522,6 +536,7 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDoubleDecimalNegativeOptions contains the optional parameters for the QueriesClient.DoubleDecimalNegative
 // method.
 func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesClientDoubleDecimalNegativeOptions) (QueriesClientDoubleDecimalNegativeResponse, error) {
@@ -555,6 +570,7 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDoubleDecimalPositiveOptions contains the optional parameters for the QueriesClient.DoubleDecimalPositive
 // method.
 func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesClientDoubleDecimalPositiveOptions) (QueriesClientDoubleDecimalPositiveResponse, error) {
@@ -588,6 +604,7 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 
 // DoubleNull - Get null numeric value (no query parameter)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
 func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesClientDoubleNullOptions) (QueriesClientDoubleNullResponse, error) {
 	req, err := client.doubleNullCreateRequest(ctx, options)
@@ -622,6 +639,7 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 
 // EnumNull - Get null (no query parameter in url)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
 func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClientEnumNullOptions) (QueriesClientEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, options)
@@ -656,6 +674,7 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 
 // EnumValid - Get using uri with query parameter 'green color'
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
 func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClientEnumValidOptions) (QueriesClientEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, options)
@@ -690,6 +709,7 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 
 // FloatNull - Get null numeric value (no query parameter)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
 func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClientFloatNullOptions) (QueriesClientFloatNullResponse, error) {
 	req, err := client.floatNullCreateRequest(ctx, options)
@@ -724,6 +744,7 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientFloatScientificNegativeOptions contains the optional parameters for the QueriesClient.FloatScientificNegative
 // method.
 func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesClientFloatScientificNegativeOptions) (QueriesClientFloatScientificNegativeResponse, error) {
@@ -757,6 +778,7 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientFloatScientificPositiveOptions contains the optional parameters for the QueriesClient.FloatScientificPositive
 // method.
 func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesClientFloatScientificPositiveOptions) (QueriesClientFloatScientificPositiveResponse, error) {
@@ -790,6 +812,7 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 
 // GetBooleanFalse - Get false Boolean value on path
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
 func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesClientGetBooleanFalseOptions) (QueriesClientGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
@@ -822,6 +845,7 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
 func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesClientGetBooleanNullOptions) (QueriesClientGetBooleanNullResponse, error) {
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
@@ -856,6 +880,7 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 
 // GetBooleanTrue - Get true Boolean value on path
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
 func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesClientGetBooleanTrueOptions) (QueriesClientGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
@@ -888,6 +913,7 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetIntNegativeOneMillionOptions contains the optional parameters for the QueriesClient.GetIntNegativeOneMillion
 // method.
 func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesClientGetIntNegativeOneMillionOptions) (QueriesClientGetIntNegativeOneMillionResponse, error) {
@@ -921,6 +947,7 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 
 // GetIntNull - Get null integer value (no query parameter)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
 func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesClientGetIntNullOptions) (QueriesClientGetIntNullResponse, error) {
 	req, err := client.getIntNullCreateRequest(ctx, options)
@@ -955,6 +982,7 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 
 // GetIntOneMillion - Get '1000000' integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetIntOneMillionOptions contains the optional parameters for the QueriesClient.GetIntOneMillion
 // method.
 func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesClientGetIntOneMillionOptions) (QueriesClientGetIntOneMillionResponse, error) {
@@ -988,6 +1016,7 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
 func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesClientGetLongNullOptions) (QueriesClientGetLongNullResponse, error) {
 	req, err := client.getLongNullCreateRequest(ctx, options)
@@ -1022,6 +1051,7 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetNegativeTenBillionOptions contains the optional parameters for the QueriesClient.GetNegativeTenBillion
 // method.
 func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesClientGetNegativeTenBillionOptions) (QueriesClientGetNegativeTenBillionResponse, error) {
@@ -1055,6 +1085,7 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
 func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesClientGetTenBillionOptions) (QueriesClientGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
@@ -1087,6 +1118,7 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 
 // StringEmpty - Get ''
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
 func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesClientStringEmptyOptions) (QueriesClientStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
@@ -1119,6 +1151,7 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 
 // StringNull - Get null (no query parameter in url)
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
 func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesClientStringNullOptions) (QueriesClientStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, options)
@@ -1153,6 +1186,7 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientStringURLEncodedOptions contains the optional parameters for the QueriesClient.StringURLEncoded
 // method.
 func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesClientStringURLEncodedOptions) (QueriesClientStringURLEncodedResponse, error) {
@@ -1186,6 +1220,7 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // options - QueriesClientStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
 func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesClientStringUnicodeOptions) (QueriesClientStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)

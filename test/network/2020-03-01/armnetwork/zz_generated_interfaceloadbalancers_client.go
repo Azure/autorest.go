@@ -57,6 +57,7 @@ func NewInterfaceLoadBalancersClient(subscriptionID string, credential azcore.To
 
 // NewListPager - List all load balancers in a network interface.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfaceLoadBalancersClientListOptions contains the optional parameters for the InterfaceLoadBalancersClient.List

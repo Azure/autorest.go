@@ -56,6 +56,7 @@ func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCreden
 
 // NewListPager - List all the available Skus and information related to them.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // options - AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.List method.
 func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientListOptions) *runtime.Pager[AvailableSKUsClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[AvailableSKUsClientListResponse]{

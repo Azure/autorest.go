@@ -51,6 +51,7 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 
 // List - Lists the charges based for the defined scope.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-10-01
 // scope - The scope associated with charges operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
 // for Department scope, and
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount

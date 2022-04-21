@@ -57,6 +57,7 @@ func NewFirewallPolicyRuleGroupsClient(subscriptionID string, credential azcore.
 
 // BeginCreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
@@ -79,6 +80,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 
 // CreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *FirewallPolicyRuleGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters, options)
 	if err != nil {
@@ -126,6 +128,7 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateCreateRequest(ctx co
 
 // BeginDelete - Deletes the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
@@ -147,6 +150,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 
 // Delete - Deletes the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *FirewallPolicyRuleGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
@@ -194,6 +198,7 @@ func (client *FirewallPolicyRuleGroupsClient) deleteCreateRequest(ctx context.Co
 
 // Get - Gets the specified FirewallPolicyRuleGroup.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
@@ -255,6 +260,7 @@ func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *http.Respo
 
 // NewListPager - Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // options - FirewallPolicyRuleGroupsClientListOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.List

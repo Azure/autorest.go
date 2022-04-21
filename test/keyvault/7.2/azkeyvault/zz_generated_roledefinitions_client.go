@@ -35,6 +35,7 @@ func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
 
 // CreateOrUpdate - Creates or updates a custom role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
 // roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
@@ -88,6 +89,7 @@ func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Res
 
 // Delete - Deletes a custom role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition to delete. Managed HSM only supports '/'.
 // roleDefinitionName - The name (GUID) of the role definition to delete.
@@ -139,6 +141,7 @@ func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (
 
 // Get - Get the specified role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition to get. Managed HSM only supports '/'.
 // roleDefinitionName - The name of the role definition to get.
@@ -190,6 +193,7 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 
 // NewListPager - Get all role definitions that are applicable at scope and above.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition.
 // options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.

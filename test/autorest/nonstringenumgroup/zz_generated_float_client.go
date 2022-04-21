@@ -36,6 +36,7 @@ func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
 
 // Get - Get a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2.0-preview
 // options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
 func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -74,6 +75,7 @@ func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGe
 
 // Put - Put a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2.0-preview
 // options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
 func (client *FloatClient) Put(ctx context.Context, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)

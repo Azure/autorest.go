@@ -57,6 +57,7 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 
 // Get - Get the specified default network security rule.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // defaultSecurityRuleName - The name of the default security rule.
@@ -118,6 +119,7 @@ func (client *DefaultSecurityRulesClient) getHandleResponse(resp *http.Response)
 
 // NewListPager - Gets all default security rules in a network security group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // options - DefaultSecurityRulesClientListOptions contains the optional parameters for the DefaultSecurityRulesClient.List

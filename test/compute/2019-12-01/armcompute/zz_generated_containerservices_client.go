@@ -58,6 +58,7 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 // BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters,
 // and agents.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // parameters - Parameters supplied to the Create or Update a Container Service operation.
@@ -78,6 +79,7 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 // CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and
 // agents.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
@@ -124,6 +126,7 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
 // same resource group and can be deleted individually.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
@@ -145,6 +148,7 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
 // same resource group and can be deleted individually.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -189,6 +193,7 @@ func (client *ContainerServicesClient) deleteCreateRequest(ctx context.Context, 
 // returns the properties including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // options - ContainerServicesClientGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
@@ -246,6 +251,7 @@ func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (C
 // container service including state, orchestrator, number of masters and agents, and FQDNs of
 // masters and agents.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 // options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
 func (client *ContainerServicesClient) NewListPager(options *ContainerServicesClientListOptions) *runtime.Pager[ContainerServicesClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[ContainerServicesClientListResponse]{
@@ -306,6 +312,7 @@ func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (
 // returns properties of each container service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2017-01-31
 // resourceGroupName - The name of the resource group.
 // options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
 // method.

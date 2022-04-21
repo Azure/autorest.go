@@ -46,6 +46,7 @@ func newBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName strin
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // batchID - Identifier for the batch job.
 // options - batchClientCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob
 // method.
@@ -77,6 +78,7 @@ func (client *batchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 
 // CreateSparkBatchJob - Create new spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sparkBatchJobOptions - Livy compatible batch job request payload.
 // options - batchClientCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob
 // method.
@@ -122,6 +124,7 @@ func (client *batchClient) createSparkBatchJobHandleResponse(resp *http.Response
 
 // GetSparkBatchJob - Gets a single spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // batchID - Identifier for the batch job.
 // options - batchClientGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
 func (client *batchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *batchClientGetSparkBatchJobOptions) (batchClientGetSparkBatchJobResponse, error) {
@@ -167,6 +170,7 @@ func (client *batchClient) getSparkBatchJobHandleResponse(resp *http.Response) (
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // options - batchClientGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
 func (client *batchClient) GetSparkBatchJobs(ctx context.Context, options *batchClientGetSparkBatchJobsOptions) (batchClientGetSparkBatchJobsResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)

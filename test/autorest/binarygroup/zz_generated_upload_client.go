@@ -37,6 +37,7 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 
 // Binary - Uploading binary file
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // fileParam - Non-empty binary file
 // options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
@@ -66,6 +67,7 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 
 // File - Uploading json file
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 1.0.0
 // fileParam - JSON file with payload { "more": "cowbell" }
 // options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {

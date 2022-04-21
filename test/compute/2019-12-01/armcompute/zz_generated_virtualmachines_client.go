@@ -59,6 +59,7 @@ func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCred
 // BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create
 // similar VMs.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Capture Virtual Machine operation.
@@ -81,6 +82,7 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 // Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar
 // VMs.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (*http.Response, error) {
 	req, err := client.captureCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -128,6 +130,7 @@ func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, r
 // For Linux, please refer to Convert a virtual machine from
 // unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginConvertToManagedDisksOptions contains the optional parameters for the VirtualMachinesClient.BeginConvertToManagedDisks
@@ -150,6 +153,7 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 // For Linux, please refer to Convert a virtual machine from
 // unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*http.Response, error) {
 	req, err := client.convertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -193,6 +197,7 @@ func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx cont
 // BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only
 // during virtual machine creation.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Create Virtual Machine operation.
@@ -213,6 +218,7 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 // CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during
 // virtual machine creation.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -257,6 +263,7 @@ func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Con
 // BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute
 // resources that this virtual machine uses.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginDeallocateOptions contains the optional parameters for the VirtualMachinesClient.BeginDeallocate
@@ -276,6 +283,7 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 // Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources
 // that this virtual machine uses.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeallocateOptions) (*http.Response, error) {
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -318,6 +326,7 @@ func (client *VirtualMachinesClient) deallocateCreateRequest(ctx context.Context
 
 // BeginDelete - The operation to delete a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginDeleteOptions contains the optional parameters for the VirtualMachinesClient.BeginDelete
@@ -336,6 +345,7 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 
 // Delete - The operation to delete a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -382,6 +392,7 @@ func (client *VirtualMachinesClient) deleteCreateRequest(ctx context.Context, re
 // please refer to How to create an image of a virtual machine or VHD
 // [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image].
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientGeneralizeOptions contains the optional parameters for the VirtualMachinesClient.Generalize
@@ -428,6 +439,7 @@ func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context
 
 // Get - Retrieves information about the model view or the instance view of a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientGetOptions contains the optional parameters for the VirtualMachinesClient.Get method.
@@ -486,6 +498,7 @@ func (client *VirtualMachinesClient) getHandleResponse(resp *http.Response) (Vir
 
 // InstanceView - Retrieves information about the run-time state of a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientInstanceViewOptions contains the optional parameters for the VirtualMachinesClient.InstanceView
@@ -543,6 +556,7 @@ func (client *VirtualMachinesClient) instanceViewHandleResponse(resp *http.Respo
 // NewListPager - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response
 // to get the next page of virtual machines.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualMachinesClientListOptions contains the optional parameters for the VirtualMachinesClient.List method.
 func (client *VirtualMachinesClient) NewListPager(resourceGroupName string, options *VirtualMachinesClientListOptions) *runtime.Pager[VirtualMachinesClientListResponse] {
@@ -607,6 +621,7 @@ func (client *VirtualMachinesClient) listHandleResponse(resp *http.Response) (Vi
 // NewListAllPager - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response
 // to get the next page of virtual machines.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // options - VirtualMachinesClientListAllOptions contains the optional parameters for the VirtualMachinesClient.ListAll method.
 func (client *VirtualMachinesClient) NewListAllPager(options *VirtualMachinesClientListAllOptions) *runtime.Pager[VirtualMachinesClientListAllResponse] {
 	return runtime.NewPager(runtime.PageProcessor[VirtualMachinesClientListAllResponse]{
@@ -668,6 +683,7 @@ func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) 
 
 // NewListAvailableSizesPager - Lists all available virtual machine sizes to which the specified virtual machine can be resized.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
@@ -731,6 +747,7 @@ func (client *VirtualMachinesClient) listAvailableSizesHandleResponse(resp *http
 
 // NewListByLocationPager - Gets all the virtual machines under the specified subscription for the specified location.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // location - The location for which virtual machines under the subscription are queried.
 // options - VirtualMachinesClientListByLocationOptions contains the optional parameters for the VirtualMachinesClient.ListByLocation
 // method.
@@ -796,6 +813,7 @@ func (client *VirtualMachinesClient) listByLocationHandleResponse(resp *http.Res
 // BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
 // the self-service phase of planned maintenance.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachinesClient.BeginPerformMaintenance
@@ -815,6 +833,7 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 // PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
 // the self-service phase of planned maintenance.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (*http.Response, error) {
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -858,6 +877,7 @@ func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context
 // BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same
 // provisioned resources. You are still charged for this virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginPowerOffOptions contains the optional parameters for the VirtualMachinesClient.BeginPowerOff
@@ -877,6 +897,7 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 // PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned
 // resources. You are still charged for this virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPowerOffOptions) (*http.Response, error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -922,6 +943,7 @@ func (client *VirtualMachinesClient) powerOffCreateRequest(ctx context.Context, 
 
 // BeginReapply - The operation to reapply a virtual machine's state.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginReapplyOptions contains the optional parameters for the VirtualMachinesClient.BeginReapply
@@ -940,6 +962,7 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 
 // Reapply - The operation to reapply a virtual machine's state.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (*http.Response, error) {
 	req, err := client.reapplyCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -983,6 +1006,7 @@ func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, r
 
 // BeginRedeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginRedeployOptions contains the optional parameters for the VirtualMachinesClient.BeginRedeploy
@@ -1001,6 +1025,7 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 
 // Redeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (*http.Response, error) {
 	req, err := client.redeployCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1043,6 +1068,7 @@ func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, 
 
 // BeginReimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginReimageOptions contains the optional parameters for the VirtualMachinesClient.BeginReimage
@@ -1061,6 +1087,7 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 
 // Reimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) reimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReimageOptions) (*http.Response, error) {
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1106,6 +1133,7 @@ func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, r
 
 // BeginRestart - The operation to restart a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginRestartOptions contains the optional parameters for the VirtualMachinesClient.BeginRestart
@@ -1124,6 +1152,7 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 
 // Restart - The operation to restart a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (*http.Response, error) {
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1166,6 +1195,7 @@ func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, r
 
 // BeginRunCommand - Run command on the VM.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Run command operation.
@@ -1187,6 +1217,7 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 
 // RunCommand - Run command on the VM.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (*http.Response, error) {
 	req, err := client.runCommandCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -1231,6 +1262,7 @@ func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes
 // of calling the API
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientSimulateEvictionOptions contains the optional parameters for the VirtualMachinesClient.SimulateEviction
@@ -1277,6 +1309,7 @@ func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.C
 
 // BeginStart - The operation to start a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // options - VirtualMachinesClientBeginStartOptions contains the optional parameters for the VirtualMachinesClient.BeginStart
@@ -1295,6 +1328,7 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 
 // Start - The operation to start a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1337,6 +1371,7 @@ func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, res
 
 // BeginUpdate - The operation to update a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Update Virtual Machine operation.
@@ -1356,6 +1391,7 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 
 // Update - The operation to update a virtual machine.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {

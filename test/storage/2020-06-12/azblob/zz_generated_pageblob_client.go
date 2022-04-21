@@ -40,6 +40,7 @@ func newPageBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *pag
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // contentLength - The length of the request.
 // options - pageBlobClientClearPagesOptions contains the optional parameters for the pageBlobClient.ClearPages method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -186,6 +187,7 @@ func (client *pageBlobClient) clearPagesHandleResponse(resp *http.Response) (pag
 // be read or copied from as usual. This API is supported since REST version
 // 2016-05-31.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
@@ -283,6 +285,7 @@ func (client *pageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 
 // Create - The Create operation creates a new page blob.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // contentLength - The length of the request.
 // blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 // to a 512-byte boundary.
@@ -458,6 +461,7 @@ func (client *pageBlobClient) createHandleResponse(resp *http.Response) (pageBlo
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page
 // blob
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // options - pageBlobClientGetPageRangesOptions contains the optional parameters for the pageBlobClient.GetPageRanges method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -565,6 +569,7 @@ func (client *pageBlobClient) getPageRangesHandleResponse(resp *http.Response) (
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were
 // changed between target blob and previous snapshot.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // options - pageBlobClientGetPageRangesDiffOptions contains the optional parameters for the pageBlobClient.GetPageRangesDiff
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -678,6 +683,7 @@ func (client *pageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 
 // Resize - Resize the Blob
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 // to a 512-byte boundary.
 // options - pageBlobClientResizeOptions contains the optional parameters for the pageBlobClient.Resize method.
@@ -792,6 +798,7 @@ func (client *pageBlobClient) resizeHandleResponse(resp *http.Response) (pageBlo
 
 // UpdateSequenceNumber - Update the sequence number of the blob
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // sequenceNumberAction - Required if the x-ms-blob-sequence-number header is set for the request. This property applies to
 // page blobs only. This property indicates how the service should modify the blob's sequence number
 // options - pageBlobClientUpdateSequenceNumberOptions contains the optional parameters for the pageBlobClient.UpdateSequenceNumber
@@ -896,6 +903,7 @@ func (client *pageBlobClient) updateSequenceNumberHandleResponse(resp *http.Resp
 
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // contentLength - The length of the request.
 // body - Initial data
 // options - pageBlobClientUploadPagesOptions contains the optional parameters for the pageBlobClient.UploadPages method.
@@ -1059,6 +1067,7 @@ func (client *pageBlobClient) uploadPagesHandleResponse(resp *http.Response) (pa
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from
 // a URL
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // sourceURL - Specify a URL to the copy source.
 // sourceRange - Bytes of source data in the specified range. The length of this range should match the ContentLength header
 // and x-ms-range/Range destination range header.

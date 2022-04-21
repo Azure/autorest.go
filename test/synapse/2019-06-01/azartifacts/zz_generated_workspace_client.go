@@ -33,6 +33,7 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 
 // Get - Get Workspace
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // options - workspaceClientGetOptions contains the optional parameters for the workspaceClient.Get method.
 func (client *workspaceClient) Get(ctx context.Context, options *workspaceClientGetOptions) (workspaceClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)

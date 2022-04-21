@@ -36,6 +36,7 @@ func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2015-07-01-preview
 // fooClientRequestID - The fooRequestId
 // options - HeaderClientCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
 // method.
@@ -76,6 +77,7 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Respon
 }
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
+// Uses API version 2015-07-01-preview
 // fooClientRequestID - The fooRequestId
 // options - HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
 // method.
@@ -118,6 +120,7 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of
 // the request, via a parameter group
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2015-07-01-preview
 // HeaderClientCustomNamedRequestIDParamGroupingParameters - HeaderClientCustomNamedRequestIDParamGroupingParameters contains
 // a group of parameters for the HeaderClient.CustomNamedRequestIDParamGrouping method.
 // options - HeaderClientCustomNamedRequestIDParamGroupingOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDParamGrouping

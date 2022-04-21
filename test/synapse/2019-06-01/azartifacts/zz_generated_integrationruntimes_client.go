@@ -36,6 +36,7 @@ func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integra
 
 // Get - Get Integration Runtime
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // integrationRuntimeName - The Integration Runtime name
 // options - integrationRuntimesClientGetOptions contains the optional parameters for the integrationRuntimesClient.Get method.
 func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *integrationRuntimesClientGetOptions) (integrationRuntimesClientGetResponse, error) {
@@ -82,6 +83,7 @@ func (client *integrationRuntimesClient) getHandleResponse(resp *http.Response) 
 
 // List - List Integration Runtimes
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // options - integrationRuntimesClientListOptions contains the optional parameters for the integrationRuntimesClient.List
 // method.
 func (client *integrationRuntimesClient) List(ctx context.Context, options *integrationRuntimesClientListOptions) (integrationRuntimesClientListResponse, error) {

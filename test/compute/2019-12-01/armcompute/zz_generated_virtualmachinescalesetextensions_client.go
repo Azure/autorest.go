@@ -57,6 +57,7 @@ func NewVirtualMachineScaleSetExtensionsClient(subscriptionID string, credential
 
 // BeginCreateOrUpdate - The operation to create or update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set where the extension should be create or updated.
 // vmssExtensionName - The name of the VM scale set extension.
@@ -77,6 +78,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginCreateOrUpdate(ctx co
 
 // CreateOrUpdate - The operation to create or update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtension, options *VirtualMachineScaleSetExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {
@@ -124,6 +126,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) createOrUpdateCreateReques
 
 // BeginDelete - The operation to delete the extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set where the extension should be deleted.
 // vmssExtensionName - The name of the VM scale set extension.
@@ -143,6 +146,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginDelete(ctx context.Co
 
 // Delete - The operation to delete the extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachineScaleSetExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, options *VirtualMachineScaleSetExtensionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, options)
 	if err != nil {
@@ -189,6 +193,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) deleteCreateRequest(ctx co
 
 // Get - The operation to get the extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set containing the extension.
 // vmssExtensionName - The name of the VM scale set extension.
@@ -253,6 +258,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) getHandleResponse(resp *ht
 
 // NewListPager - Gets a list of all extensions in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set containing the extension.
 // options - VirtualMachineScaleSetExtensionsClientListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.List
@@ -322,6 +328,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) listHandleResponse(resp *h
 
 // BeginUpdate - The operation to update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set where the extension should be updated.
 // vmssExtensionName - The name of the VM scale set extension.
@@ -342,6 +349,7 @@ func (client *VirtualMachineScaleSetExtensionsClient) BeginUpdate(ctx context.Co
 
 // Update - The operation to update an extension.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *VirtualMachineScaleSetExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmssExtensionName string, extensionParameters VirtualMachineScaleSetExtensionUpdate, options *VirtualMachineScaleSetExtensionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, vmssExtensionName, extensionParameters, options)
 	if err != nil {

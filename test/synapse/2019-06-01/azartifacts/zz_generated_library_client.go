@@ -40,6 +40,7 @@ func newLibraryClient(endpoint string, pl runtime.Pipeline) *libraryClient {
 // Append - Append the content to the library resource created using the create operation. The maximum content size is 4MiB.
 // Content larger than 4MiB must be appended in 4MiB chunks
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // content - Library file chunk.
 // options - libraryClientAppendOptions contains the optional parameters for the libraryClient.Append method.
@@ -81,6 +82,7 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 
 // BeginCreate - Creates a library with the library name.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginCreateOptions contains the optional parameters for the libraryClient.BeginCreate method.
 func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (*runtime.Poller[libraryClientCreateResponse], error) {
@@ -97,6 +99,7 @@ func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string
 
 // Create - Creates a library with the library name.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 func (client *libraryClient) create(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (*http.Response, error) {
 	req, err := client.createCreateRequest(ctx, libraryName, options)
 	if err != nil {
@@ -132,6 +135,7 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 
 // BeginDelete - Delete Library
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginDeleteOptions contains the optional parameters for the libraryClient.BeginDelete method.
 func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (*runtime.Poller[libraryClientDeleteResponse], error) {
@@ -148,6 +152,7 @@ func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string
 
 // Delete - Delete Library
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 func (client *libraryClient) deleteOperation(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, libraryName, options)
 	if err != nil {
@@ -183,6 +188,7 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 
 // BeginFlush - Flush Library
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginFlushOptions contains the optional parameters for the libraryClient.BeginFlush method.
 func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (*runtime.Poller[libraryClientFlushResponse], error) {
@@ -199,6 +205,7 @@ func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string,
 
 // Flush - Flush Library
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 func (client *libraryClient) flush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (*http.Response, error) {
 	req, err := client.flushCreateRequest(ctx, libraryName, options)
 	if err != nil {
@@ -234,6 +241,7 @@ func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName
 
 // Get - Get Library
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientGetOptions contains the optional parameters for the libraryClient.Get method.
 func (client *libraryClient) Get(ctx context.Context, libraryName string, options *libraryClientGetOptions) (libraryClientGetResponse, error) {
@@ -280,6 +288,7 @@ func (client *libraryClient) getHandleResponse(resp *http.Response) (libraryClie
 
 // GetOperationResult - Get Operation result for Library
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // operationID - operation id for which status is requested
 // options - libraryClientGetOperationResultOptions contains the optional parameters for the libraryClient.GetOperationResult
 // method.
@@ -340,6 +349,7 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 
 // NewListPager - Lists Library.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // options - libraryClientListOptions contains the optional parameters for the libraryClient.List method.
 func (client *libraryClient) NewListPager(options *libraryClientListOptions) *runtime.Pager[libraryClientListResponse] {
 	return runtime.NewPager(runtime.PageProcessor[libraryClientListResponse]{

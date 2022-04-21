@@ -56,6 +56,7 @@ func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, 
 
 // CreateOrUpdate - Creates or updates a Data Box Edge/Data Box Gateway resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // dataBoxEdgeDevice - The resource object.
@@ -109,6 +110,7 @@ func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (
 
 // BeginCreateOrUpdateSecuritySettings - Updates the security settings on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // securitySettings - The security settings.
@@ -128,6 +130,7 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 
 // CreateOrUpdateSecuritySettings - Updates the security settings on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateSecuritySettingsCreateRequest(ctx, deviceName, resourceGroupName, securitySettings, options)
 	if err != nil {
@@ -168,6 +171,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 
 // BeginDelete - Deletes the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
@@ -185,6 +189,7 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 
 // Delete - Deletes the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -225,6 +230,7 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 
 // BeginDownloadUpdates - Downloads the updates on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
@@ -243,6 +249,7 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 
 // DownloadUpdates - Downloads the updates on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*http.Response, error) {
 	req, err := client.downloadUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -283,6 +290,7 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 
 // GenerateCertificate - Generates certificate for activation key.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate
@@ -336,6 +344,7 @@ func (client *DevicesClient) generateCertificateHandleResponse(resp *http.Respon
 
 // Get - Gets the properties of the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetOptions contains the optional parameters for the DevicesClient.Get method.
@@ -388,6 +397,7 @@ func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesClie
 
 // GetExtendedInformation - Gets additional information for the specified Azure Stack Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation
@@ -441,6 +451,7 @@ func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Res
 
 // GetNetworkSettings - Gets the network settings of the specified Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings
@@ -495,6 +506,7 @@ func (client *DevicesClient) getNetworkSettingsHandleResponse(resp *http.Respons
 // GetUpdateSummary - Gets information about the availability of updates based on the last scan of the device. It also gets
 // information about any ongoing download or install jobs on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary
@@ -548,6 +560,7 @@ func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response)
 
 // BeginInstallUpdates - Installs the updates on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
@@ -566,6 +579,7 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 
 // InstallUpdates - Installs the updates on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *DevicesClient) installUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*http.Response, error) {
 	req, err := client.installUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -606,6 +620,7 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 
 // NewListByResourceGroupPager - Gets all the Data Box Edge/Data Box Gateway devices in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // resourceGroupName - The resource group name.
 // options - DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup
 // method.
@@ -673,6 +688,7 @@ func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Respon
 
 // NewListBySubscriptionPager - Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // options - DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription
 // method.
 func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientListBySubscriptionOptions) *runtime.Pager[DevicesClientListBySubscriptionResponse] {
@@ -735,6 +751,7 @@ func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Respons
 
 // BeginScanForUpdates - Scans for updates on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
@@ -753,6 +770,7 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 
 // ScanForUpdates - Scans for updates on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*http.Response, error) {
 	req, err := client.scanForUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -793,6 +811,7 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 
 // Update - Modifies a Data Box Edge/Data Box Gateway resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The resource parameters.
@@ -846,6 +865,7 @@ func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesC
 
 // UpdateExtendedInformation - Gets additional information for the specified Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The patch object.
@@ -900,6 +920,7 @@ func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.
 
 // UploadCertificate - Uploads registration certificate for the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The upload certificate request.

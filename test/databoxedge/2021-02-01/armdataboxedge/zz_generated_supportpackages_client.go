@@ -56,6 +56,7 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginTriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // triggerSupportPackageRequest - The trigger support package request object
@@ -75,6 +76,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 
 // TriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {

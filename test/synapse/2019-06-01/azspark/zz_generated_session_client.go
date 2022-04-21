@@ -46,6 +46,7 @@ func newSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName str
 
 // CancelSparkSession - Cancels a running spark session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // options - sessionClientCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession
 // method.
@@ -77,6 +78,7 @@ func (client *sessionClient) cancelSparkSessionCreateRequest(ctx context.Context
 
 // CancelSparkStatement - Kill a statement within a session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
 // options - sessionClientCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement
@@ -120,6 +122,7 @@ func (client *sessionClient) cancelSparkStatementHandleResponse(resp *http.Respo
 
 // CreateSparkSession - Create new spark session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sparkSessionOptions - Livy compatible batch job request payload.
 // options - sessionClientCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession
 // method.
@@ -165,6 +168,7 @@ func (client *sessionClient) createSparkSessionHandleResponse(resp *http.Respons
 
 // CreateSparkStatement - Create statement within a spark session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // sparkStatementOptions - Livy compatible batch job request payload.
 // options - sessionClientCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement
@@ -207,6 +211,7 @@ func (client *sessionClient) createSparkStatementHandleResponse(resp *http.Respo
 
 // GetSparkSession - Gets a single spark session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // options - sessionClientGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
 func (client *sessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *sessionClientGetSparkSessionOptions) (sessionClientGetSparkSessionResponse, error) {
@@ -252,6 +257,7 @@ func (client *sessionClient) getSparkSessionHandleResponse(resp *http.Response) 
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // options - sessionClientGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions
 // method.
 func (client *sessionClient) GetSparkSessions(ctx context.Context, options *sessionClientGetSparkSessionsOptions) (sessionClientGetSparkSessionsResponse, error) {
@@ -302,6 +308,7 @@ func (client *sessionClient) getSparkSessionsHandleResponse(resp *http.Response)
 
 // GetSparkStatement - Gets a single statement within a spark session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
 // options - sessionClientGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement
@@ -345,6 +352,7 @@ func (client *sessionClient) getSparkStatementHandleResponse(resp *http.Response
 
 // GetSparkStatements - Gets a list of statements within a spark session.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // options - sessionClientGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements
 // method.
@@ -386,6 +394,7 @@ func (client *sessionClient) getSparkStatementsHandleResponse(resp *http.Respons
 
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-11-01-preview
 // sessionID - Identifier for the session.
 // options - sessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
 // method.

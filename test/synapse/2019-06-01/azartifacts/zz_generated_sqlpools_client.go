@@ -36,6 +36,7 @@ func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
 
 // Get - Get Sql Pool
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // sqlPoolName - The Sql Pool name
 // options - sqlPoolsClientGetOptions contains the optional parameters for the sqlPoolsClient.Get method.
 func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *sqlPoolsClientGetOptions) (sqlPoolsClientGetResponse, error) {
@@ -82,6 +83,7 @@ func (client *sqlPoolsClient) getHandleResponse(resp *http.Response) (sqlPoolsCl
 
 // List - List Sql Pools
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // options - sqlPoolsClientListOptions contains the optional parameters for the sqlPoolsClient.List method.
 func (client *sqlPoolsClient) List(ctx context.Context, options *sqlPoolsClientListOptions) (sqlPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)

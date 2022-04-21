@@ -57,6 +57,7 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 
 // BeginCreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // parameters - Parameters supplied to the create or update local network gateway operation.
@@ -78,6 +79,7 @@ func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 
 // CreateOrUpdate - Creates or updates a local network gateway in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *LocalNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -121,6 +123,7 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateCreateRequest(ctx contex
 
 // BeginDelete - Deletes the specified local network gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // options - LocalNetworkGatewaysClientBeginDeleteOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginDelete
@@ -141,6 +144,7 @@ func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resou
 
 // Delete - Deletes the specified local network gateway.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *LocalNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
@@ -184,6 +188,7 @@ func (client *LocalNetworkGatewaysClient) deleteCreateRequest(ctx context.Contex
 
 // Get - Gets the specified local network gateway in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // options - LocalNetworkGatewaysClientGetOptions contains the optional parameters for the LocalNetworkGatewaysClient.Get
@@ -240,6 +245,7 @@ func (client *LocalNetworkGatewaysClient) getHandleResponse(resp *http.Response)
 
 // NewListPager - Gets all the local network gateways in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - LocalNetworkGatewaysClientListOptions contains the optional parameters for the LocalNetworkGatewaysClient.List
 // method.
@@ -304,6 +310,7 @@ func (client *LocalNetworkGatewaysClient) listHandleResponse(resp *http.Response
 
 // UpdateTags - Updates a local network gateway tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // parameters - Parameters supplied to update local network gateway tags.

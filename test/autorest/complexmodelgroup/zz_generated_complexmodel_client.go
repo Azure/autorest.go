@@ -39,6 +39,7 @@ func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
 
 // Create - Resets products.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2014-04-01-preview
 // subscriptionID - Subscription ID.
 // resourceGroupName - Resource Group ID.
 // bodyParameter - body Parameter
@@ -93,6 +94,7 @@ func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (Com
 // the display name and other details about each product, and lists the products in
 // the proper display order.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2014-04-01-preview
 // resourceGroupName - Resource Group ID.
 // options - ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
@@ -140,6 +142,7 @@ func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (Compl
 
 // Update - Resets products.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2014-04-01-preview
 // subscriptionID - Subscription ID.
 // resourceGroupName - Resource Group ID.
 // bodyParameter - body Parameter

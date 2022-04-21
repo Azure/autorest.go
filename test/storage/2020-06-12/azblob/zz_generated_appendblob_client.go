@@ -42,6 +42,7 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 // Block operation is permitted only if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // contentLength - The length of the request.
 // body - Initial data
 // options - appendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
@@ -203,6 +204,7 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 // the contents are read from a source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // sourceURL - Specify a URL to the copy source.
 // contentLength - The length of the request.
 // options - appendBlobClientAppendBlockFromURLOptions contains the optional parameters for the appendBlobClient.AppendBlockFromURL
@@ -381,6 +383,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 
 // Create - The Create Append Blob operation creates a new append blob.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // contentLength - The length of the request.
 // options - appendBlobClientCreateOptions contains the optional parameters for the appendBlobClient.Create method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
@@ -547,6 +550,7 @@ func (client *appendBlobClient) createHandleResponse(resp *http.Response) (appen
 // Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version
 // or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-06-12
 // options - appendBlobClientSealOptions contains the optional parameters for the appendBlobClient.Seal method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.

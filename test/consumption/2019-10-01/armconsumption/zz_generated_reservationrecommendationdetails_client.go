@@ -51,6 +51,7 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 
 // Get - Details of a reservation recommendation for what-if analysis of reserved instances.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-10-01
 // billingScope - The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/'
 // for subscription scope,
 // '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}'

@@ -36,6 +36,7 @@ func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsCl
 
 // Get - Get Big Data Pool
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // bigDataPoolName - The Big Data Pool name
 // options - bigDataPoolsClientGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
 func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *bigDataPoolsClientGetOptions) (bigDataPoolsClientGetResponse, error) {
@@ -82,6 +83,7 @@ func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (bigDat
 
 // List - List Big Data Pools
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // options - bigDataPoolsClientListOptions contains the optional parameters for the bigDataPoolsClient.List method.
 func (client *bigDataPoolsClient) List(ctx context.Context, options *bigDataPoolsClientListOptions) (bigDataPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)

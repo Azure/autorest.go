@@ -57,6 +57,7 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 
 // NewListPager - Gets all of the available subnet delegations for this resource group in this region.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
 // options - AvailableResourceGroupDelegationsClientListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.List

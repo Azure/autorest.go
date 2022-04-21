@@ -57,6 +57,7 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 
 // CheckIPAddressAvailability - Checks whether a private IP address is available for use.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // ipAddress - The private IP address to be verified.
@@ -115,6 +116,7 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(re
 
 // BeginCreateOrUpdate - Creates or updates a virtual network in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to the create or update virtual network operation.
@@ -136,6 +138,7 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 
 // CreateOrUpdate - Creates or updates a virtual network in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
@@ -179,6 +182,7 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 
 // BeginDelete - Deletes the specified virtual network.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientBeginDeleteOptions contains the optional parameters for the VirtualNetworksClient.BeginDelete
@@ -199,6 +203,7 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 
 // Delete - Deletes the specified virtual network.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -242,6 +247,7 @@ func (client *VirtualNetworksClient) deleteCreateRequest(ctx context.Context, re
 
 // Get - Gets the specified virtual network by resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientGetOptions contains the optional parameters for the VirtualNetworksClient.Get method.
@@ -300,6 +306,7 @@ func (client *VirtualNetworksClient) getHandleResponse(resp *http.Response) (Vir
 
 // NewListPager - Gets all virtual networks in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualNetworksClientListOptions contains the optional parameters for the VirtualNetworksClient.List method.
 func (client *VirtualNetworksClient) NewListPager(resourceGroupName string, options *VirtualNetworksClientListOptions) *runtime.Pager[VirtualNetworksClientListResponse] {
@@ -363,6 +370,7 @@ func (client *VirtualNetworksClient) listHandleResponse(resp *http.Response) (Vi
 
 // NewListAllPager - Gets all virtual networks in a subscription.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // options - VirtualNetworksClientListAllOptions contains the optional parameters for the VirtualNetworksClient.ListAll method.
 func (client *VirtualNetworksClient) NewListAllPager(options *VirtualNetworksClientListAllOptions) *runtime.Pager[VirtualNetworksClientListAllResponse] {
 	return runtime.NewPager(runtime.PageProcessor[VirtualNetworksClientListAllResponse]{
@@ -421,6 +429,7 @@ func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) 
 
 // NewListUsagePager - Lists usage stats.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientListUsageOptions contains the optional parameters for the VirtualNetworksClient.ListUsage
@@ -490,6 +499,7 @@ func (client *VirtualNetworksClient) listUsageHandleResponse(resp *http.Response
 
 // UpdateTags - Updates a virtual network tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to update virtual network tags.

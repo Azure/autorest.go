@@ -57,6 +57,7 @@ func NewGalleryApplicationVersionsClient(subscriptionID string, credential azcor
 
 // BeginCreateOrUpdate - Create or update a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version is to be created.
@@ -80,6 +81,7 @@ func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.
 
 // CreateOrUpdate - Create or update a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *GalleryApplicationVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
@@ -131,6 +133,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateCreateRequest(ctx 
 
 // BeginDelete - Delete a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version resides.
@@ -151,6 +154,7 @@ func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context,
 
 // Delete - Delete a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *GalleryApplicationVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
@@ -202,6 +206,7 @@ func (client *GalleryApplicationVersionsClient) deleteCreateRequest(ctx context.
 
 // Get - Retrieves information about a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version resides.
@@ -271,6 +276,7 @@ func (client *GalleryApplicationVersionsClient) getHandleResponse(resp *http.Res
 
 // NewListByGalleryApplicationPager - List gallery Application Versions in a gallery Application Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the Shared Application Gallery Application Definition from which the Application Versions
@@ -346,6 +352,7 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationHandleRe
 
 // BeginUpdate - Update a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version is to be updated.
@@ -369,6 +376,7 @@ func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context,
 
 // Update - Update a gallery Application Version.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-12-01
 func (client *GalleryApplicationVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {

@@ -56,6 +56,7 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 
 // BeginCreateOrUpdate - Creates a new container or updates an existing container on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
@@ -77,6 +78,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 
 // CreateOrUpdate - Creates a new container or updates an existing container on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
@@ -125,6 +127,7 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // BeginDelete - Deletes the container on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
@@ -144,6 +147,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 
 // Delete - Deletes the container on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -192,6 +196,7 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 
 // Get - Gets a container by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container Name
@@ -254,6 +259,7 @@ func (client *ContainersClient) getHandleResponse(resp *http.Response) (Containe
 
 // NewListByStorageAccountPager - Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // storageAccountName - The storage Account name.
 // resourceGroupName - The resource group name.
@@ -325,6 +331,7 @@ func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Re
 
 // BeginRefresh - Refreshes the container metadata with the data from the cloud.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
@@ -344,6 +351,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 
 // Refresh - Refreshes the container metadata with the data from the cloud.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2021-02-01
 func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {

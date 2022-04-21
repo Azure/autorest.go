@@ -57,6 +57,7 @@ func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCr
 
 // Get - Retrieves the specified ExpressRouteLink resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // linkName - The name of the ExpressRouteLink resource.
@@ -117,6 +118,7 @@ func (client *ExpressRouteLinksClient) getHandleResponse(resp *http.Response) (E
 
 // NewListPager - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // options - ExpressRouteLinksClientListOptions contains the optional parameters for the ExpressRouteLinksClient.List method.

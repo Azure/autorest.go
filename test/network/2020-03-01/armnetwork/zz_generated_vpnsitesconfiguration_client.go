@@ -57,6 +57,7 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
 // request - Parameters supplied to download vpn-sites configuration.
@@ -78,6 +79,7 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2020-03-01
 func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*http.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {

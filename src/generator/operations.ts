@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
-import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
+import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
@@ -587,6 +587,17 @@ function emitPagerDefinition(op: Operation, imports: ImportManager): string {
   return text;
 }
 
+function genApiVersionDoc(apiVersions?: ApiVersions): string {
+  if (!apiVersions) {
+    return '';
+  }
+  const versions = new Array<string>();
+  apiVersions.forEach((val) => {
+    versions.push(val.version);
+  })
+  return `// Uses API version ${versions.join(',')}\n`;
+}
+
 function generateOperation(op: Operation, imports: ImportManager, isARM: boolean): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
@@ -603,6 +614,7 @@ function generateOperation(op: Operation, imports: ImportManager, isARM: boolean
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `${comment(`${opName} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+    text += genApiVersionDoc(op.apiVersions);
   }
   if (isLROOperation(op)) {
     opName = info.protocolNaming.internalMethod;
@@ -1320,6 +1332,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
+    text += genApiVersionDoc(op.apiVersions);
   }
   const zeroResp = getZeroReturnValue(op, 'api');
   const methodParams = getMethodParameters(op);

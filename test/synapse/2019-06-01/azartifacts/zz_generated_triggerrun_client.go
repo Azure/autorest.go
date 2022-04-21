@@ -36,6 +36,7 @@ func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
 // options - triggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the triggerRunClient.CancelTriggerInstance
@@ -79,6 +80,7 @@ func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // filterParameters - Parameters to filter the pipeline run.
 // options - triggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the triggerRunClient.QueryTriggerRunsByWorkspace
 // method.
@@ -122,6 +124,7 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
 // If the operation fails it returns an *azcore.ResponseError type.
+// Uses API version 2019-06-01-preview
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
 // options - triggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the triggerRunClient.RerunTriggerInstance
