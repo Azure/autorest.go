@@ -96,14 +96,18 @@ export async function namer(session: Session<CodeModel>) {
   }
 
   // fix stuttering type names
+  const collisions = new Array<string>();
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
     const originalName = details.name;
     details.name = trimPackagePrefix(stutteringPrefix, originalName);
     // if the type was renamed to remove stuttering, check if it collides with an existing type name
     if (details.name !== originalName && structNames.has(details.name)) {
-      throw new Error(`type ${originalName} was renamed to ${details.name} which collides with an existing type name`);
+      collisions.push(`type ${originalName} was renamed to ${details.name} which collides with an existing type name`);
     }
+  }
+  if (collisions.length > 0) {
+    throw new Error(collisions.join('\n'));
   }
 
   // fix property names and other bits
