@@ -212,7 +212,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\t}\n';
     }
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += '\tep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint\n'
+      clientText += '\tep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint\n'
       clientText += '\tif c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {\n';
       clientText += '\t\tep = c.Endpoint\n';
       clientText += '\t}\n';
@@ -1401,7 +1401,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     // at least one option
     text += `&${packageName}.NewPollerOptions${pollerTypeParam}{\n`;
     if (finalStateVia !== '') {
-      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
+      text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;
     }
     if (pollerType !== 'nil') {
       text += `\t\t\tResponse: ${pollerType},\n`;
