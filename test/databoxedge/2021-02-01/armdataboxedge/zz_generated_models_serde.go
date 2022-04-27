@@ -14,9 +14,6 @@ import (
 	"reflect"
 )
 
-// GetAddon implements the AddonClassification interface for type Addon.
-func (a *Addon) GetAddon() *Addon { return a }
-
 // MarshalJSON implements the json.Marshaller interface for type AddonList.
 func (a AddonList) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -107,17 +104,6 @@ func (a *AlertProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetAddon implements the AddonClassification interface for type ArcAddon.
-func (a *ArcAddon) GetAddon() *Addon {
-	return &Addon{
-		Kind:       a.Kind,
-		SystemData: a.SystemData,
-		ID:         a.ID,
-		Name:       a.Name,
-		Type:       a.Type,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type ArcAddon.
 func (a ArcAddon) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -181,17 +167,6 @@ func (b BandwidthSchedulesList) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", b.NextLink)
 	populate(objectMap, "value", b.Value)
 	return json.Marshal(objectMap)
-}
-
-// GetRole implements the RoleClassification interface for type CloudEdgeManagementRole.
-func (c *CloudEdgeManagementRole) GetRole() *Role {
-	return &Role{
-		Kind:       c.Kind,
-		SystemData: c.SystemData,
-		ID:         c.ID,
-		Name:       c.Name,
-		Type:       c.Type,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type CloudEdgeManagementRole.
@@ -387,17 +362,6 @@ func (d DiagnosticRemoteSupportSettingsProperties) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// GetTrigger implements the TriggerClassification interface for type FileEventTrigger.
-func (f *FileEventTrigger) GetTrigger() *Trigger {
-	return &Trigger{
-		SystemData: f.SystemData,
-		Kind:       f.Kind,
-		ID:         f.ID,
-		Name:       f.Name,
-		Type:       f.Type,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type FileEventTrigger.
 func (f FileEventTrigger) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -445,17 +409,6 @@ func (f *FileEventTrigger) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetAddon implements the AddonClassification interface for type IoTAddon.
-func (i *IoTAddon) GetAddon() *Addon {
-	return &Addon{
-		Kind:       i.Kind,
-		SystemData: i.SystemData,
-		ID:         i.ID,
-		Name:       i.Name,
-		Type:       i.Type,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type IoTAddon.
 func (i IoTAddon) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -501,17 +454,6 @@ func (i *IoTAddon) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetRole implements the RoleClassification interface for type IoTRole.
-func (i *IoTRole) GetRole() *Role {
-	return &Role{
-		Kind:       i.Kind,
-		SystemData: i.SystemData,
-		ID:         i.ID,
-		Name:       i.Name,
-		Type:       i.Type,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type IoTRole.
@@ -661,17 +603,6 @@ func (k KubernetesClusterInfo) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetRole implements the RoleClassification interface for type KubernetesRole.
-func (k *KubernetesRole) GetRole() *Role {
-	return &Role{
-		Kind:       k.Kind,
-		SystemData: k.SystemData,
-		ID:         k.ID,
-		Name:       k.Name,
-		Type:       k.Type,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type KubernetesRole.
 func (k KubernetesRole) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -725,17 +656,6 @@ func (k KubernetesRoleStorage) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "endpoints", k.Endpoints)
 	populate(objectMap, "storageClasses", k.StorageClasses)
 	return json.Marshal(objectMap)
-}
-
-// GetRole implements the RoleClassification interface for type MECRole.
-func (m *MECRole) GetRole() *Role {
-	return &Role{
-		Kind:       m.Kind,
-		SystemData: m.SystemData,
-		ID:         m.ID,
-		Name:       m.Name,
-		Type:       m.Type,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type MECRole.
@@ -970,17 +890,6 @@ func (o *OrderStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetTrigger implements the TriggerClassification interface for type PeriodicTimerEventTrigger.
-func (p *PeriodicTimerEventTrigger) GetTrigger() *Trigger {
-	return &Trigger{
-		SystemData: p.SystemData,
-		Kind:       p.Kind,
-		ID:         p.ID,
-		Name:       p.Name,
-		Type:       p.Type,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type PeriodicTimerEventTrigger.
 func (p PeriodicTimerEventTrigger) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -1175,9 +1084,6 @@ func (r ResourceTypeSKU) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "skus", r.SKUs)
 	return json.Marshal(objectMap)
 }
-
-// GetRole implements the RoleClassification interface for type Role.
-func (r *Role) GetRole() *Role { return r }
 
 // MarshalJSON implements the json.Marshaller interface for type RoleList.
 func (r RoleList) MarshalJSON() ([]byte, error) {
@@ -1410,9 +1316,6 @@ func (s *SystemData) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// GetTrigger implements the TriggerClassification interface for type Trigger.
-func (t *Trigger) GetTrigger() *Trigger { return t }
 
 // MarshalJSON implements the json.Marshaller interface for type TriggerList.
 func (t TriggerList) MarshalJSON() ([]byte, error) {

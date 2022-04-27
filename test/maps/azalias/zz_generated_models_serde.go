@@ -14,14 +14,6 @@ import (
 	"reflect"
 )
 
-// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
-func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
-	return &GeoJSONObject{
-		Type: g.Type,
-		ID:   g.ID,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type GeoJSONFeature.
 func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -60,9 +52,6 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
-func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
 
 // MarshalJSON implements the json.Marshaller interface for type GeoJSONObjectNamedCollection.
 func (g GeoJSONObjectNamedCollection) MarshalJSON() ([]byte, error) {

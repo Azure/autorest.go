@@ -299,6 +299,9 @@ type ChargeSummary struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// GetChargeSummary implements the ChargeSummaryClassification interface for type ChargeSummary.
+func (c *ChargeSummary) GetChargeSummary() *ChargeSummary { return c }
+
 // ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
 type ChargesClientListOptions struct {
 	// May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId
@@ -642,6 +645,18 @@ type LegacyChargeSummary struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// GetChargeSummary implements the ChargeSummaryClassification interface for type LegacyChargeSummary.
+func (l *LegacyChargeSummary) GetChargeSummary() *ChargeSummary {
+	return &ChargeSummary{
+		Kind: l.Kind,
+		ID:   l.ID,
+		Name: l.Name,
+		Type: l.Type,
+		Etag: l.Etag,
+		Tags: l.Tags,
+	}
+}
+
 // LegacyChargeSummaryProperties - The properties of legacy charge summary.
 type LegacyChargeSummaryProperties struct {
 	// READ-ONLY; Azure Charges.
@@ -694,6 +709,20 @@ type LegacyReservationRecommendation struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type LegacyReservationRecommendation.
+func (l *LegacyReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
+	return &ReservationRecommendation{
+		Kind:     l.Kind,
+		ID:       l.ID,
+		Name:     l.Name,
+		Type:     l.Type,
+		Etag:     l.Etag,
+		Tags:     l.Tags,
+		Location: l.Location,
+		SKU:      l.SKU,
+	}
 }
 
 // LegacyReservationRecommendationProperties - The properties of the reservation recommendation.
@@ -849,6 +878,18 @@ type LegacyUsageDetail struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetUsageDetail implements the UsageDetailClassification interface for type LegacyUsageDetail.
+func (l *LegacyUsageDetail) GetUsageDetail() *UsageDetail {
+	return &UsageDetail{
+		Kind: l.Kind,
+		ID:   l.ID,
+		Name: l.Name,
+		Type: l.Type,
+		Etag: l.Etag,
+		Tags: l.Tags,
+	}
 }
 
 // LegacyUsageDetailProperties - The properties of the legacy usage detail.
@@ -1311,6 +1352,18 @@ type ModernChargeSummary struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// GetChargeSummary implements the ChargeSummaryClassification interface for type ModernChargeSummary.
+func (m *ModernChargeSummary) GetChargeSummary() *ChargeSummary {
+	return &ChargeSummary{
+		Kind: m.Kind,
+		ID:   m.ID,
+		Name: m.Name,
+		Type: m.Type,
+		Etag: m.Etag,
+		Tags: m.Tags,
+	}
+}
+
 // ModernChargeSummaryProperties - The properties of modern charge summary.
 type ModernChargeSummaryProperties struct {
 	// READ-ONLY; Azure Charges.
@@ -1378,6 +1431,20 @@ type ModernReservationRecommendation struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ModernReservationRecommendation.
+func (m *ModernReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
+	return &ReservationRecommendation{
+		Kind:     m.Kind,
+		ID:       m.ID,
+		Name:     m.Name,
+		Type:     m.Type,
+		Etag:     m.Etag,
+		Tags:     m.Tags,
+		Location: m.Location,
+		SKU:      m.SKU,
+	}
 }
 
 // ModernReservationRecommendationProperties - The properties of the reservation recommendation.
@@ -1551,6 +1618,18 @@ type ModernUsageDetail struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetUsageDetail implements the UsageDetailClassification interface for type ModernUsageDetail.
+func (m *ModernUsageDetail) GetUsageDetail() *UsageDetail {
+	return &UsageDetail{
+		Kind: m.Kind,
+		ID:   m.ID,
+		Name: m.Name,
+		Type: m.Type,
+		Etag: m.Etag,
+		Tags: m.Tags,
+	}
 }
 
 // ModernUsageDetailProperties - The properties of the usage detail.
@@ -2068,6 +2147,11 @@ type ReservationRecommendation struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
+// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ReservationRecommendation.
+func (r *ReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
+	return r
+}
+
 // ReservationRecommendationDetailsCalculatedSavingsProperties - Details of estimated savings.
 type ReservationRecommendationDetailsCalculatedSavingsProperties struct {
 	// The number of reserved units used to calculate savings. Always 1 for virtual machines.
@@ -2549,6 +2633,9 @@ type UsageDetail struct {
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
+
+// GetUsageDetail implements the UsageDetailClassification interface for type UsageDetail.
+func (u *UsageDetail) GetUsageDetail() *UsageDetail { return u }
 
 // UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.List method.
 type UsageDetailsClientListOptions struct {

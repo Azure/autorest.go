@@ -14,15 +14,6 @@ import (
 	"reflect"
 )
 
-// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type AnimalNotFound.
-func (a *AnimalNotFound) GetNotFoundErrorBase() *NotFoundErrorBase {
-	return &NotFoundErrorBase{
-		Reason:       a.Reason,
-		WhatNotFound: a.WhatNotFound,
-		SomeBaseProp: a.SomeBaseProp,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type AnimalNotFound.
 func (a AnimalNotFound) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -62,15 +53,6 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type LinkNotFound.
-func (l *LinkNotFound) GetNotFoundErrorBase() *NotFoundErrorBase {
-	return &NotFoundErrorBase{
-		Reason:       l.Reason,
-		WhatNotFound: l.WhatNotFound,
-		SomeBaseProp: l.SomeBaseProp,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type LinkNotFound.
 func (l LinkNotFound) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -108,31 +90,6 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type NotFoundErrorBase.
-func (n *NotFoundErrorBase) GetNotFoundErrorBase() *NotFoundErrorBase { return n }
-
-// GetPetActionError implements the PetActionErrorClassification interface for type PetActionError.
-func (p *PetActionError) GetPetActionError() *PetActionError { return p }
-
-// GetPetActionError implements the PetActionErrorClassification interface for type PetHungryOrThirstyError.
-func (p *PetHungryOrThirstyError) GetPetActionError() *PetActionError {
-	return &PetActionError{
-		ErrorType:      p.ErrorType,
-		ErrorMessage:   p.ErrorMessage,
-		ActionResponse: p.ActionResponse,
-	}
-}
-
-// GetPetSadError implements the PetSadErrorClassification interface for type PetHungryOrThirstyError.
-func (p *PetHungryOrThirstyError) GetPetSadError() *PetSadError {
-	return &PetSadError{
-		Reason:         p.Reason,
-		ErrorType:      p.ErrorType,
-		ErrorMessage:   p.ErrorMessage,
-		ActionResponse: p.ActionResponse,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PetHungryOrThirstyError.
@@ -177,18 +134,6 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// GetPetActionError implements the PetActionErrorClassification interface for type PetSadError.
-func (p *PetSadError) GetPetActionError() *PetActionError {
-	return &PetActionError{
-		ErrorType:      p.ErrorType,
-		ErrorMessage:   p.ErrorMessage,
-		ActionResponse: p.ActionResponse,
-	}
-}
-
-// GetPetSadError implements the PetSadErrorClassification interface for type PetSadError.
-func (p *PetSadError) GetPetSadError() *PetSadError { return p }
 
 // MarshalJSON implements the json.Marshaller interface for type PetSadError.
 func (p PetSadError) MarshalJSON() ([]byte, error) {

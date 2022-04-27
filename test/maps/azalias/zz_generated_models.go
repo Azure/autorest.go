@@ -53,6 +53,14 @@ type GeoJSONFeature struct {
 	Properties interface{} `json:"properties,omitempty"`
 }
 
+// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
+func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
+	return &GeoJSONObject{
+		Type: g.Type,
+		ID:   g.ID,
+	}
+}
+
 type GeoJSONFeatureData struct {
 	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
 	// an empty value.
@@ -84,6 +92,9 @@ type GeoJSONObject struct {
 	// Identifier for the feature.
 	ID *string `json:"id,omitempty"`
 }
+
+// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
+func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
 
 // GeoJSONObjectNamedCollection - A named collection of GeoJSON object
 type GeoJSONObjectNamedCollection struct {

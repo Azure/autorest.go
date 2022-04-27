@@ -119,9 +119,6 @@ func (b BudgetsListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetChargeSummary implements the ChargeSummaryClassification interface for type ChargeSummary.
-func (c *ChargeSummary) GetChargeSummary() *ChargeSummary { return c }
-
 // MarshalJSON implements the json.Marshaller interface for type ChargeSummary.
 func (c ChargeSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -315,18 +312,6 @@ func (f ForecastsListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetChargeSummary implements the ChargeSummaryClassification interface for type LegacyChargeSummary.
-func (l *LegacyChargeSummary) GetChargeSummary() *ChargeSummary {
-	return &ChargeSummary{
-		Kind: l.Kind,
-		ID:   l.ID,
-		Name: l.Name,
-		Type: l.Type,
-		Etag: l.Etag,
-		Tags: l.Tags,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type LegacyChargeSummary.
 func (l LegacyChargeSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -376,20 +361,6 @@ func (l *LegacyChargeSummary) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type LegacyReservationRecommendation.
-func (l *LegacyReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
-	return &ReservationRecommendation{
-		Kind:     l.Kind,
-		ID:       l.ID,
-		Name:     l.Name,
-		Type:     l.Type,
-		Etag:     l.Etag,
-		Tags:     l.Tags,
-		Location: l.Location,
-		SKU:      l.SKU,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LegacyReservationRecommendation.
@@ -646,18 +617,6 @@ func (l *LegacyReservationTransactionProperties) UnmarshalJSON(data []byte) erro
 		}
 	}
 	return nil
-}
-
-// GetUsageDetail implements the UsageDetailClassification interface for type LegacyUsageDetail.
-func (l *LegacyUsageDetail) GetUsageDetail() *UsageDetail {
-	return &UsageDetail{
-		Kind: l.Kind,
-		ID:   l.ID,
-		Name: l.Name,
-		Type: l.Type,
-		Etag: l.Etag,
-		Tags: l.Tags,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LegacyUsageDetail.
@@ -1211,18 +1170,6 @@ func (m MarketplacesListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetChargeSummary implements the ChargeSummaryClassification interface for type ModernChargeSummary.
-func (m *ModernChargeSummary) GetChargeSummary() *ChargeSummary {
-	return &ChargeSummary{
-		Kind: m.Kind,
-		ID:   m.ID,
-		Name: m.Name,
-		Type: m.Type,
-		Etag: m.Etag,
-		Tags: m.Tags,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type ModernChargeSummary.
 func (m ModernChargeSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -1272,20 +1219,6 @@ func (m *ModernChargeSummary) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ModernReservationRecommendation.
-func (m *ModernReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
-	return &ReservationRecommendation{
-		Kind:     m.Kind,
-		ID:       m.ID,
-		Name:     m.Name,
-		Type:     m.Type,
-		Etag:     m.Etag,
-		Tags:     m.Tags,
-		Location: m.Location,
-		SKU:      m.SKU,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ModernReservationRecommendation.
@@ -1566,18 +1499,6 @@ func (m ModernReservationTransactionsListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", m.NextLink)
 	populate(objectMap, "value", m.Value)
 	return json.Marshal(objectMap)
-}
-
-// GetUsageDetail implements the UsageDetailClassification interface for type ModernUsageDetail.
-func (m *ModernUsageDetail) GetUsageDetail() *UsageDetail {
-	return &UsageDetail{
-		Kind: m.Kind,
-		ID:   m.ID,
-		Name: m.Name,
-		Type: m.Type,
-		Etag: m.Etag,
-		Tags: m.Tags,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ModernUsageDetail.
@@ -2048,11 +1969,6 @@ func (r ReservationDetailsListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ReservationRecommendation.
-func (r *ReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
-	return r
-}
-
 // MarshalJSON implements the json.Marshaller interface for type ReservationRecommendation.
 func (r ReservationRecommendation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -2315,9 +2231,6 @@ func (t TagProperties) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "tags", t.Tags)
 	return json.Marshal(objectMap)
 }
-
-// GetUsageDetail implements the UsageDetailClassification interface for type UsageDetail.
-func (u *UsageDetail) GetUsageDetail() *UsageDetail { return u }
 
 // MarshalJSON implements the json.Marshaller interface for type UsageDetail.
 func (u UsageDetail) MarshalJSON() ([]byte, error) {

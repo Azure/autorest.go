@@ -31,8 +31,8 @@ export async function generateResponses(session: Session<CodeModel>): Promise<st
   for (const struct of values(structs)) {
     text += struct.discriminator();
     text += struct.text();
-    struct.Methods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
-    for (const method of values(struct.Methods)) {
+    struct.SerDeMethods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
+    for (const method of values(struct.SerDeMethods)) {
       if (method.desc.length > 0) {
         text += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
@@ -77,5 +77,5 @@ function generateUnmarshallerForResponeEnvelope(structDef: StructDef, imports: I
     throw new Error(`unhandled case for response envelope ${structDef.Language.name}`);
   }
   unmarshaller += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
+  structDef.SerDeMethods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${structDef.Language.name}.`, text: unmarshaller });
 }

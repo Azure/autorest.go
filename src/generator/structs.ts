@@ -22,6 +22,7 @@ export class StructDef {
   readonly Language: Language;
   readonly Properties?: Property[];
   readonly Parameters?: Parameter[];
+  readonly SerDeMethods: StructMethod[];
   readonly Methods: StructMethod[];
   readonly ComposedOf: string[];
   HasJSONMarshaller: boolean;
@@ -38,6 +39,7 @@ export class StructDef {
     if (this.Parameters) {
       this.Parameters.sort((a: Parameter, b: Parameter) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     }
+    this.SerDeMethods = new Array<StructMethod>();
     this.Methods = new Array<StructMethod>();
     this.ComposedOf = new Array<string>();
     this.HasJSONMarshaller = false;
