@@ -59,28 +59,6 @@ func (c Cat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetFish implements the FishClassification interface for type Cookiecuttershark.
-func (c *Cookiecuttershark) GetFish() *Fish {
-	return &Fish{
-		Fishtype: c.Fishtype,
-		Species:  c.Species,
-		Length:   c.Length,
-		Siblings: c.Siblings,
-	}
-}
-
-// GetShark implements the SharkClassification interface for type Cookiecuttershark.
-func (c *Cookiecuttershark) GetShark() *Shark {
-	return &Shark{
-		Age:      c.Age,
-		Birthday: c.Birthday,
-		Fishtype: c.Fishtype,
-		Species:  c.Species,
-		Length:   c.Length,
-		Siblings: c.Siblings,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type Cookiecuttershark.
 func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -228,9 +206,6 @@ func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetDotFish implements the DotFishClassification interface for type DotFish.
-func (d *DotFish) GetDotFish() *DotFish { return d }
-
 // MarshalJSON implements the json.Marshaller interface for type DotFishMarket.
 func (d DotFishMarket) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -268,14 +243,6 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetDotFish implements the DotFishClassification interface for type DotSalmon.
-func (d *DotSalmon) GetDotFish() *DotFish {
-	return &DotFish{
-		FishType: d.FishType,
-		Species:  d.Species,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DotSalmon.
@@ -317,9 +284,6 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetFish implements the FishClassification interface for type Fish.
-func (f *Fish) GetFish() *Fish { return f }
-
 // MarshalJSON implements the json.Marshaller interface for type Fish.
 func (f Fish) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -357,28 +321,6 @@ func (f *Fish) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetFish implements the FishClassification interface for type Goblinshark.
-func (g *Goblinshark) GetFish() *Fish {
-	return &Fish{
-		Fishtype: g.Fishtype,
-		Species:  g.Species,
-		Length:   g.Length,
-		Siblings: g.Siblings,
-	}
-}
-
-// GetShark implements the SharkClassification interface for type Goblinshark.
-func (g *Goblinshark) GetShark() *Shark {
-	return &Shark{
-		Age:      g.Age,
-		Birthday: g.Birthday,
-		Fishtype: g.Fishtype,
-		Species:  g.Species,
-		Length:   g.Length,
-		Siblings: g.Siblings,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Goblinshark.
@@ -436,18 +378,6 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GetMyBaseType implements the MyBaseTypeClassification interface for type MyBaseType.
-func (m *MyBaseType) GetMyBaseType() *MyBaseType { return m }
-
-// GetMyBaseType implements the MyBaseTypeClassification interface for type MyDerivedType.
-func (m *MyDerivedType) GetMyBaseType() *MyBaseType {
-	return &MyBaseType{
-		Kind:   m.Kind,
-		PropB1: m.PropB1,
-		Helper: m.Helper,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -486,19 +416,6 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// GetFish implements the FishClassification interface for type Salmon.
-func (s *Salmon) GetFish() *Fish {
-	return &Fish{
-		Fishtype: s.Fishtype,
-		Species:  s.Species,
-		Length:   s.Length,
-		Siblings: s.Siblings,
-	}
-}
-
-// GetSalmon implements the SalmonClassification interface for type Salmon.
-func (s *Salmon) GetSalmon() *Salmon { return s }
 
 // MarshalJSON implements the json.Marshaller interface for type Salmon.
 func (s Salmon) MarshalJSON() ([]byte, error) {
@@ -545,28 +462,6 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// GetFish implements the FishClassification interface for type Sawshark.
-func (s *Sawshark) GetFish() *Fish {
-	return &Fish{
-		Fishtype: s.Fishtype,
-		Species:  s.Species,
-		Length:   s.Length,
-		Siblings: s.Siblings,
-	}
-}
-
-// GetShark implements the SharkClassification interface for type Sawshark.
-func (s *Sawshark) GetShark() *Shark {
-	return &Shark{
-		Age:      s.Age,
-		Birthday: s.Birthday,
-		Fishtype: s.Fishtype,
-		Species:  s.Species,
-		Length:   s.Length,
-		Siblings: s.Siblings,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
@@ -619,19 +514,6 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// GetFish implements the FishClassification interface for type Shark.
-func (s *Shark) GetFish() *Fish {
-	return &Fish{
-		Fishtype: s.Fishtype,
-		Species:  s.Species,
-		Length:   s.Length,
-		Siblings: s.Siblings,
-	}
-}
-
-// GetShark implements the SharkClassification interface for type Shark.
-func (s *Shark) GetShark() *Shark { return s }
 
 // MarshalJSON implements the json.Marshaller interface for type Shark.
 func (s Shark) MarshalJSON() ([]byte, error) {
@@ -689,28 +571,6 @@ func (s Siamese) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "id", s.ID)
 	populate(objectMap, "name", s.Name)
 	return json.Marshal(objectMap)
-}
-
-// GetFish implements the FishClassification interface for type SmartSalmon.
-func (s *SmartSalmon) GetFish() *Fish {
-	return &Fish{
-		Fishtype: s.Fishtype,
-		Species:  s.Species,
-		Length:   s.Length,
-		Siblings: s.Siblings,
-	}
-}
-
-// GetSalmon implements the SalmonClassification interface for type SmartSalmon.
-func (s *SmartSalmon) GetSalmon() *Salmon {
-	return &Salmon{
-		Location: s.Location,
-		Iswild:   s.Iswild,
-		Fishtype: s.Fishtype,
-		Species:  s.Species,
-		Length:   s.Length,
-		Siblings: s.Siblings,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SmartSalmon.

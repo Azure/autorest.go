@@ -1282,6 +1282,15 @@ type ApplicationRuleCondition struct {
 	TargetFqdns []*string `json:"targetFqdns,omitempty"`
 }
 
+// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type ApplicationRuleCondition.
+func (a *ApplicationRuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
+	return &FirewallPolicyRuleCondition{
+		Name:              a.Name,
+		Description:       a.Description,
+		RuleConditionType: a.RuleConditionType,
+	}
+}
+
 // ApplicationSecurityGroup - An application security group in a resource group.
 type ApplicationSecurityGroup struct {
 	// Resource ID.
@@ -4814,6 +4823,15 @@ type FirewallPolicyFilterRule struct {
 	RuleConditions []FirewallPolicyRuleConditionClassification `json:"ruleConditions,omitempty"`
 }
 
+// GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyFilterRule.
+func (f *FirewallPolicyFilterRule) GetFirewallPolicyRule() *FirewallPolicyRule {
+	return &FirewallPolicyRule{
+		RuleType: f.RuleType,
+		Name:     f.Name,
+		Priority: f.Priority,
+	}
+}
+
 // FirewallPolicyFilterRuleAction - Properties of the FirewallPolicyFilterRuleAction.
 type FirewallPolicyFilterRuleAction struct {
 	// The type of action.
@@ -4851,6 +4869,15 @@ type FirewallPolicyNatRule struct {
 
 	// The translated port for this NAT rule.
 	TranslatedPort *string `json:"translatedPort,omitempty"`
+}
+
+// GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyNatRule.
+func (f *FirewallPolicyNatRule) GetFirewallPolicyRule() *FirewallPolicyRule {
+	return &FirewallPolicyRule{
+		RuleType: f.RuleType,
+		Name:     f.Name,
+		Priority: f.Priority,
+	}
 }
 
 // FirewallPolicyNatRuleAction - Properties of the FirewallPolicyNatRuleAction.
@@ -4901,6 +4928,9 @@ type FirewallPolicyRule struct {
 	Priority *int32 `json:"priority,omitempty"`
 }
 
+// GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyRule.
+func (f *FirewallPolicyRule) GetFirewallPolicyRule() *FirewallPolicyRule { return f }
+
 // FirewallPolicyRuleConditionClassification provides polymorphic access to related types.
 // Call the interface's GetFirewallPolicyRuleCondition() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -4920,6 +4950,11 @@ type FirewallPolicyRuleCondition struct {
 
 	// Name of the rule condition.
 	Name *string `json:"name,omitempty"`
+}
+
+// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type FirewallPolicyRuleCondition.
+func (f *FirewallPolicyRuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
+	return f
 }
 
 // FirewallPolicyRuleConditionApplicationProtocol - Properties of the application rule protocol.
@@ -6953,6 +6988,15 @@ type NatRuleCondition struct {
 	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
 }
 
+// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type NatRuleCondition.
+func (n *NatRuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
+	return &FirewallPolicyRuleCondition{
+		Name:              n.Name,
+		Description:       n.Description,
+		RuleConditionType: n.RuleConditionType,
+	}
+}
+
 // NextHopParameters - Parameters that define the source and destination endpoint.
 type NextHopParameters struct {
 	// REQUIRED; The destination IP address.
@@ -8866,6 +8910,15 @@ type RuleCondition struct {
 
 	// List of source IpGroups for this rule.
 	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
+}
+
+// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type RuleCondition.
+func (r *RuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
+	return &FirewallPolicyRuleCondition{
+		Name:              r.Name,
+		Description:       r.Description,
+		RuleConditionType: r.RuleConditionType,
+	}
 }
 
 // SecurityGroup - NetworkSecurityGroup resource.

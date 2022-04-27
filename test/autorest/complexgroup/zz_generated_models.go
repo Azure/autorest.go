@@ -109,6 +109,28 @@ type Cookiecuttershark struct {
 	Species  *string              `json:"species,omitempty"`
 }
 
+// GetFish implements the FishClassification interface for type Cookiecuttershark.
+func (c *Cookiecuttershark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: c.Fishtype,
+		Species:  c.Species,
+		Length:   c.Length,
+		Siblings: c.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Cookiecuttershark.
+func (c *Cookiecuttershark) GetShark() *Shark {
+	return &Shark{
+		Age:      c.Age,
+		Birthday: c.Birthday,
+		Fishtype: c.Fishtype,
+		Species:  c.Species,
+		Length:   c.Length,
+		Siblings: c.Siblings,
+	}
+}
+
 type DateWrapper struct {
 	Field *time.Time `json:"field,omitempty"`
 	Leap  *time.Time `json:"leap,omitempty"`
@@ -180,6 +202,9 @@ type DotFish struct {
 	Species  *string `json:"species,omitempty"`
 }
 
+// GetDotFish implements the DotFishClassification interface for type DotFish.
+func (d *DotFish) GetDotFish() *DotFish { return d }
+
 type DotFishMarket struct {
 	Fishes       []DotFishClassification `json:"fishes,omitempty"`
 	Salmons      []*DotSalmon            `json:"salmons,omitempty"`
@@ -193,6 +218,14 @@ type DotSalmon struct {
 	Iswild   *bool   `json:"iswild,omitempty"`
 	Location *string `json:"location,omitempty"`
 	Species  *string `json:"species,omitempty"`
+}
+
+// GetDotFish implements the DotFishClassification interface for type DotSalmon.
+func (d *DotSalmon) GetDotFish() *DotFish {
+	return &DotFish{
+		FishType: d.FishType,
+		Species:  d.Species,
+	}
 }
 
 type DoubleWrapper struct {
@@ -228,6 +261,9 @@ type Fish struct {
 	Species  *string              `json:"species,omitempty"`
 }
 
+// GetFish implements the FishClassification interface for type Fish.
+func (f *Fish) GetFish() *Fish { return f }
+
 // FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
 type FlattencomplexClientGetValidOptions struct {
 	// placeholder for future optional parameters
@@ -254,6 +290,28 @@ type Goblinshark struct {
 	Jawsize  *int32               `json:"jawsize,omitempty"`
 	Siblings []FishClassification `json:"siblings,omitempty"`
 	Species  *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type Goblinshark.
+func (g *Goblinshark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: g.Fishtype,
+		Species:  g.Species,
+		Length:   g.Length,
+		Siblings: g.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Goblinshark.
+func (g *Goblinshark) GetShark() *Shark {
+	return &Shark{
+		Age:      g.Age,
+		Birthday: g.Birthday,
+		Fishtype: g.Fishtype,
+		Species:  g.Species,
+		Length:   g.Length,
+		Siblings: g.Siblings,
+	}
 }
 
 // InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
@@ -296,12 +354,24 @@ type MyBaseType struct {
 	PropB1 *string           `json:"propB1,omitempty"`
 }
 
+// GetMyBaseType implements the MyBaseTypeClassification interface for type MyBaseType.
+func (m *MyBaseType) GetMyBaseType() *MyBaseType { return m }
+
 type MyDerivedType struct {
 	// REQUIRED
 	Kind   *MyKind           `json:"kind,omitempty"`
 	Helper *MyBaseHelperType `json:"helper,omitempty"`
 	PropB1 *string           `json:"propB1,omitempty"`
 	PropD1 *string           `json:"propD1,omitempty"`
+}
+
+// GetMyBaseType implements the MyBaseTypeClassification interface for type MyDerivedType.
+func (m *MyDerivedType) GetMyBaseType() *MyBaseType {
+	return &MyBaseType{
+		Kind:   m.Kind,
+		PropB1: m.PropB1,
+		Helper: m.Helper,
+	}
 }
 
 type Pet struct {
@@ -519,6 +589,19 @@ type Salmon struct {
 	Species  *string              `json:"species,omitempty"`
 }
 
+// GetFish implements the FishClassification interface for type Salmon.
+func (s *Salmon) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
+}
+
+// GetSalmon implements the SalmonClassification interface for type Salmon.
+func (s *Salmon) GetSalmon() *Salmon { return s }
+
 type Sawshark struct {
 	// REQUIRED
 	Birthday *time.Time `json:"birthday,omitempty"`
@@ -532,6 +615,28 @@ type Sawshark struct {
 	Picture  []byte               `json:"picture,omitempty"`
 	Siblings []FishClassification `json:"siblings,omitempty"`
 	Species  *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type Sawshark.
+func (s *Sawshark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Sawshark.
+func (s *Sawshark) GetShark() *Shark {
+	return &Shark{
+		Age:      s.Age,
+		Birthday: s.Birthday,
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
 }
 
 // SharkClassification provides polymorphic access to related types.
@@ -558,6 +663,19 @@ type Shark struct {
 	Species  *string              `json:"species,omitempty"`
 }
 
+// GetFish implements the FishClassification interface for type Shark.
+func (s *Shark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Shark.
+func (s *Shark) GetShark() *Shark { return s }
+
 type Siamese struct {
 	Breed *string `json:"breed,omitempty"`
 	Color *string `json:"color,omitempty"`
@@ -580,6 +698,28 @@ type SmartSalmon struct {
 	Location             *string              `json:"location,omitempty"`
 	Siblings             []FishClassification `json:"siblings,omitempty"`
 	Species              *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type SmartSalmon.
+func (s *SmartSalmon) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
+}
+
+// GetSalmon implements the SalmonClassification interface for type SmartSalmon.
+func (s *SmartSalmon) GetSalmon() *Salmon {
+	return &Salmon{
+		Location: s.Location,
+		Iswild:   s.Iswild,
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
 }
 
 type StringWrapper struct {

@@ -42,8 +42,17 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   for (const struct of values(structs)) {
     modelText += struct.discriminator();
     modelText += struct.text();
+
     struct.Methods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
     for (const method of values(struct.Methods)) {
+      if (method.desc.length > 0) {
+        modelText += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
+      }
+      modelText += method.text;
+    }
+
+    struct.SerDeMethods.sort((a: StructMethod, b: StructMethod) => { return sortAscending(a.name, b.name) });
+    for (const method of values(struct.SerDeMethods)) {
       if (method.desc.length > 0) {
         serdeTextBody += `${comment(method.desc, '// ', undefined, commentLength)}\n`;
       }
@@ -297,7 +306,7 @@ if (!obj.discriminatorValue && (!structDef.Properties || structDef.Properties.le
   marshaller += generateJSONMarshallerBody(obj, structDef, imports);
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
-  structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
+  structDef.SerDeMethods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
 }
 
 function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager): string {
@@ -373,7 +382,7 @@ function generateJSONUnmarshaller(imports: ImportManager, structDef: StructDef) 
   unmarshaller += '\t}\n';
   unmarshaller += generateJSONUnmarshallerBody(structDef, imports);
   unmarshaller += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
+  structDef.SerDeMethods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
 function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManager): string {
@@ -481,7 +490,7 @@ function generateXMLMarshaller(structDef: StructDef, imports: ImportManager) {
   }
   text += '\treturn e.EncodeElement(aux, start)\n';
   text += '}\n\n';
-  structDef.Methods.push({ name: 'MarshalXML', desc: desc, text: text });
+  structDef.SerDeMethods.push({ name: 'MarshalXML', desc: desc, text: text });
 }
 
 function generateXMLUnmarshaller(structDef: StructDef, imports: ImportManager) {
@@ -513,7 +522,7 @@ function generateXMLUnmarshaller(structDef: StructDef, imports: ImportManager) {
   }
   text += '\treturn nil\n';
   text += '}\n\n';
-  structDef.Methods.push({ name: 'UnmarshalXML', desc: desc, text: text });
+  structDef.SerDeMethods.push({ name: 'UnmarshalXML', desc: desc, text: text });
 }
 
 // generates an alias type used by custom XML marshaller/unmarshaller

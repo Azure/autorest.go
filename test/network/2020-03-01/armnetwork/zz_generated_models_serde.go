@@ -329,15 +329,6 @@ func (a ApplicationGatewayWebApplicationFirewallConfiguration) MarshalJSON() ([]
 	return json.Marshal(objectMap)
 }
 
-// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type ApplicationRuleCondition.
-func (a *ApplicationRuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
-	return &FirewallPolicyRuleCondition{
-		Name:              a.Name,
-		Description:       a.Description,
-		RuleConditionType: a.RuleConditionType,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type ApplicationRuleCondition.
 func (a ApplicationRuleCondition) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -1656,15 +1647,6 @@ func (f FirewallPolicy) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyFilterRule.
-func (f *FirewallPolicyFilterRule) GetFirewallPolicyRule() *FirewallPolicyRule {
-	return &FirewallPolicyRule{
-		RuleType: f.RuleType,
-		Name:     f.Name,
-		Priority: f.Priority,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyFilterRule.
 func (f FirewallPolicyFilterRule) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -1714,15 +1696,6 @@ func (f FirewallPolicyListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", f.NextLink)
 	populate(objectMap, "value", f.Value)
 	return json.Marshal(objectMap)
-}
-
-// GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyNatRule.
-func (f *FirewallPolicyNatRule) GetFirewallPolicyRule() *FirewallPolicyRule {
-	return &FirewallPolicyRule{
-		RuleType: f.RuleType,
-		Name:     f.Name,
-		Priority: f.Priority,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyNatRule.
@@ -1786,14 +1759,6 @@ func (f FirewallPolicyPropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "ruleGroups", f.RuleGroups)
 	populate(objectMap, "threatIntelMode", f.ThreatIntelMode)
 	return json.Marshal(objectMap)
-}
-
-// GetFirewallPolicyRule implements the FirewallPolicyRuleClassification interface for type FirewallPolicyRule.
-func (f *FirewallPolicyRule) GetFirewallPolicyRule() *FirewallPolicyRule { return f }
-
-// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type FirewallPolicyRuleCondition.
-func (f *FirewallPolicyRuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
-	return f
 }
 
 // MarshalJSON implements the json.Marshaller interface for type FirewallPolicyRuleGroupListResult.
@@ -2422,15 +2387,6 @@ func (n NatGatewayPropertiesFormat) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type NatRuleCondition.
-func (n *NatRuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
-	return &FirewallPolicyRuleCondition{
-		Name:              n.Name,
-		Description:       n.Description,
-		RuleConditionType: n.RuleConditionType,
-	}
-}
-
 // MarshalJSON implements the json.Marshaller interface for type NatRuleCondition.
 func (n NatRuleCondition) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -3034,15 +2990,6 @@ func (r RouteTablePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "routes", r.Routes)
 	populate(objectMap, "subnets", r.Subnets)
 	return json.Marshal(objectMap)
-}
-
-// GetFirewallPolicyRuleCondition implements the FirewallPolicyRuleConditionClassification interface for type RuleCondition.
-func (r *RuleCondition) GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition {
-	return &FirewallPolicyRuleCondition{
-		Name:              r.Name,
-		Description:       r.Description,
-		RuleConditionType: r.RuleConditionType,
-	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RuleCondition.
