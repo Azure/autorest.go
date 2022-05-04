@@ -9,12 +9,15 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
 	"github.com/stretchr/testify/require"
 )
 
 func newBinaryGroupClient() *UploadClient {
-	return NewUploadClient(nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewUploadClient(pl)
 }
 
 func TestBinary(t *testing.T) {

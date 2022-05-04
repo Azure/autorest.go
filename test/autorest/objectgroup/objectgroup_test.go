@@ -7,12 +7,15 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newObjectTypeClient() *ObjectTypeClient {
-	return NewObjectTypeClient(nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewObjectTypeClient(pl)
 }
 
 func TestGet(t *testing.T) {

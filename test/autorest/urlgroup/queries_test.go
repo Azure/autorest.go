@@ -7,12 +7,15 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func newQueriesClient() *QueriesClient {
-	return NewQueriesClient(nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewQueriesClient(pl)
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format

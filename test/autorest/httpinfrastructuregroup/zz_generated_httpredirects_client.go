@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type HTTPRedirectsClient struct {
 }
 
 // NewHTTPRedirectsClient creates a new instance of HTTPRedirectsClient with the specified values.
-// options - pass nil to accept the default values.
-func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewHTTPRedirectsClient(pl runtime.Pipeline) *HTTPRedirectsClient {
 	client := &HTTPRedirectsClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type HeaderClient struct {
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
-// options - pass nil to accept the default values.
-func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
 	client := &HeaderClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

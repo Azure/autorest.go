@@ -10,7 +10,6 @@ package lrogroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,13 +23,10 @@ type LROSADsClient struct {
 }
 
 // NewLROSADsClient creates a new instance of LROSADsClient with the specified values.
-// options - pass nil to accept the default values.
-func NewLROSADsClient(options *azcore.ClientOptions) *LROSADsClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewLROSADsClient(pl runtime.Pipeline) *LROSADsClient {
 	client := &LROSADsClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

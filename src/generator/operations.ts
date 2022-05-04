@@ -25,7 +25,7 @@ export class OperationGroupContent {
 
 // Creates the content for all <operation>.go files
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
-  const isARM = session.model.language.go!.openApiType === 'arm';
+  const azureARM = <boolean>session.model.language.go!.azureARM;
   const forceExports = <boolean>session.model.language.go!.exportClients;
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
@@ -36,7 +36,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     imports.add('net/http');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/policy');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud');
@@ -48,12 +48,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let clientText = '';
     let clientName = group.language.go!.clientName;
     const clientCtor = group.language.go!.clientCtorName;
-    if (isARM || forceExports) {
+    if (azureARM || forceExports) {
       clientText += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
       clientText += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     }
     clientText += `type ${clientName} struct {\n`;
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       group.language.go!.hostParamName = 'host';
       clientText += `\t${group.language.go!.hostParamName} string\n`;
     } else if (group.language.go!.complexHostParams) {
@@ -71,10 +71,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += `\t${group.language.go!.hostParamName} string\n`;
     }
 
-    // check for any optional host params for ARM variants.  this
-    // will be used to determine if an options struct is needed.
+    // check for any optional host params
     const optionalParams = new Array<Parameter>();
-    if (isARM && group.language.go!.hostParams) {
+    if (group.language.go!.hostParams) {
       // client parameterized host
       const hostParams = <Array<Parameter>>group.language.go!.hostParams;
       for (const param of values(hostParams)) {
@@ -98,33 +97,27 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         if (clientParam.clientDefaultValue || clientParam.required === false) {
           optionalParams.push(clientParam);
         }
-        let clientLiteral = `${clientParam.language.go!.name}: `;
-        // for client-side default values, the parameters are declared as pointer-to-type
-        // however the fields on the client type are not.  so when creating the client struct
-        // literal we need to dereference the optional value as it will never be nil at that point.
-        if (clientParam.clientDefaultValue) {
-          clientLiteral += '*';
+        if (!clientParam.clientDefaultValue) {
+          clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
         }
-        clientLiteral += clientParam.language.go!.name;
-        clientLiterals.push(clientLiteral);
       }
     }
     clientText += '\tpl runtime.Pipeline\n';
     clientText += '}\n\n';
 
     let optionsType = 'azcore.ClientOptions';
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       optionsType = 'arm.ClientOptions';
     }
 
     // if there are any optional client params, create a client options struct and put them there.
     // note that we don't do this for data-plane as it takes a pipeline, not an options struct.
-    if (isARM && optionalParams.length > 0) {
+    if (azureARM && optionalParams.length > 0) {
       optionsType = `${clientName}Options`;
       clientText += `// ${optionsType} contains the optional parameters for ${clientCtor}.\n`;
       clientText += `type ${optionsType} struct {\n`;
       let optionsPkg = 'azcore';
-      if (<boolean>session.model.language.go!.azureARM) {
+      if (azureARM) {
         optionsPkg = 'arm';
       }
       clientText += `\t${optionsPkg}.ClientOptions\n`;
@@ -151,7 +144,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 
     const methodParams = new Array<string>();
     const paramDocs = new Array<string>();
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       // AzureARM is the simplest case, no parametertized host etc
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       emitClientParams();
@@ -169,7 +162,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         // client parameterized host
         const hostParams = <Array<Parameter>>group.language.go!.hostParams;
         for (const param of values(hostParams)) {
-          if (isARM && (param.clientDefaultValue || param.required === false)) {
+          if (azureARM && (param.clientDefaultValue || param.required === false)) {
             // skip adding optional param to constructor sig for ARM variants
             continue;
           }
@@ -185,7 +178,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       emitClientParams();
 
       // add the final param
-      if (isARM) {
+      if (azureARM) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
         methodParams.push(`options *${optionsType}`);
         paramDocs.push('// options - pass nil to accept the default values.');
@@ -200,18 +193,18 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     for (const doc of values(paramDocs)) {
       clientText += `${doc}\n`;
     }
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       clientText += `func ${clientCtor}(${methodParams.join(', ')}) (*${clientName}, error) {\n`;
     } else {
       clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
     }
-    if (isARM) {
+    if (azureARM) {
       // data-plane doesn't take client options
       clientText += '\tif options == nil {\n';
       clientText += `\t\toptions = &${optionsType}{}\n`;
       clientText += '\t}\n';
     }
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       clientText += '\tep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint\n'
       clientText += '\tif c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {\n';
       clientText += '\t\tep = c.Endpoint\n';
@@ -248,12 +241,13 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         clientText += `\thostURL := "${uriTemplate}"\n`;
         const hostParams = <Array<Parameter>>group.language.go!.hostParams;
         for (const hostParam of values(hostParams)) {
+          hostParam.language.go!.complexHostParam = true;
           // dereference optional params
           let pointer = '';
           let paramName = hostParam.language.go!.name;
           if (hostParam.clientDefaultValue) {
             pointer = '*';
-            if (isARM) {
+            if (azureARM) {
               paramName = `options.${capitalize(hostParam.language.go!.name)}`;
             }
             clientText += `\tif ${paramName} == nil {\n`;
@@ -279,26 +273,16 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         parameterizedURL = 'hostURL';
       }
     }
-    // populate any default values.  this only applies to non-ARM
-    // scenarios as they don't generate an options struct.
-    if (!isARM) {
-      for (const optionalParam of values(optionalParams)) {
-        if (optionalParam.clientDefaultValue) {
-          clientText += `\tif ${optionalParam.language.go!.name} == nil {\n`;
-          clientText += `\t\t${optionalParam.language.go!.name}Default := ${getClientDefaultValue(optionalParam)}\n`;
-          clientText += `\t\t${optionalParam.language.go!.name} = &${optionalParam.language.go!.name}Default\n`;
-          clientText += '\t}\n';
-        }
-      }
-    }
     // construct client literal
     clientText += `\tclient := &${clientName}{\n`;
     // populate any default values
-    if (isARM) {
-      for (const optionalParam of values(optionalParams)) {
-        if (optionalParam.clientDefaultValue) {
-          clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam)},\n`;
-        }
+    for (const optionalParam of values(optionalParams)) {
+      if (optionalParam.language.go!.complexHostParam) {
+        // this is a complex host param, it won't be in the client
+        continue;
+      }
+      if (optionalParam.clientDefaultValue) {
+        clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam)},\n`;
       }
     }
     if (parameterizedURL !== '') {
@@ -309,10 +293,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += `\t\t${clientLiteral},\n`;
     }
     // create or add pipeline based on arm/vanilla/data-plane
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       clientText += `\t\t${group.language.go!.hostParamName}: ep,\n`;
       clientText += `pl: pl,\n`;
-    } else if (isARM) {
+    } else if (azureARM) {
       let clientOpts = 'options'
       if (optionsType != 'azcore.ClientOptions') {
         // optionsType is a generated type which embeds azcore.ClientOptions
@@ -325,19 +309,19 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     clientText += '\t}\n';
     // propagate optional params
     for (const optionalParam of values(optionalParams)) {
-      if (optionalParam.clientDefaultValue && !isARM) {
-        // in the non-ARM case, these were handled earlier
+      if (!optionalParam.clientDefaultValue || optionalParam.language.go!.complexHostParam) {
+        // no default value or complex host param
         continue;
       }
       let paramName = optionalParam.language.go!.name;
-      if (isARM) {
+      if (azureARM) {
         paramName = `options.${capitalize(optionalParam.language.go!.name)}`;
       }
       clientText += `\tif ${paramName} != nil {\n`;
       clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
       clientText += '\t}\n';
     }
-    if (<boolean>session.model.language.go!.azureARM) {
+    if (azureARM) {
       clientText += '\treturn client, nil\n';
     } else {
       clientText += '\treturn client\n';
@@ -348,6 +332,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
+      // TODO: this can be removed and use azureARM once LROs have been unified
+      const isARM = session.model.language.go!.openApiType === 'arm';
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       if (isLROOperation(op)) {

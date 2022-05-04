@@ -11,7 +11,6 @@ package morecustombaseurigroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -27,26 +26,18 @@ type PathsClient struct {
 	pl             runtime.Pipeline
 }
 
-// PathsClientOptions contains the optional parameters for NewPathsClient.
-type PathsClientOptions struct {
-	azcore.ClientOptions
-	DnsSuffix *string
-}
-
 // NewPathsClient creates a new instance of PathsClient with the specified values.
+// dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
 // subscriptionID - The subscription id with value 'test12'.
-// options - pass nil to accept the default values.
-func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsClient {
-	if options == nil {
-		options = &PathsClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{
 		dnsSuffix:      "host",
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions),
+		pl:             pl,
 	}
-	if options.DnsSuffix != nil {
-		client.dnsSuffix = *options.DnsSuffix
+	if dnsSuffix != nil {
+		client.dnsSuffix = *dnsSuffix
 	}
 	return client
 }

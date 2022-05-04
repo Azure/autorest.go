@@ -7,11 +7,14 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
 func newAPIVersionLocalClient() *APIVersionLocalClient {
-	return NewAPIVersionLocalClient(nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewAPIVersionLocalClient(pl)
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed

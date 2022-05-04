@@ -7,14 +7,15 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func newPathsClient() *PathsClient {
-	return NewPathsClient(&PathsClientOptions{
-		Host: to.Ptr(":3000"),
-	})
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewPathsClient(to.Ptr(":3000"), pl)
 }
 
 func TestGetEmpty(t *testing.T) {

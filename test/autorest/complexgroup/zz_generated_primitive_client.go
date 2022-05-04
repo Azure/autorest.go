@@ -10,7 +10,6 @@ package complexgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type PrimitiveClient struct {
 }
 
 // NewPrimitiveClient creates a new instance of PrimitiveClient with the specified values.
-// options - pass nil to accept the default values.
-func NewPrimitiveClient(options *azcore.ClientOptions) *PrimitiveClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewPrimitiveClient(pl runtime.Pipeline) *PrimitiveClient {
 	client := &PrimitiveClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

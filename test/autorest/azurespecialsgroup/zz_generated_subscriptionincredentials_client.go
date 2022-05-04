@@ -11,7 +11,6 @@ package azurespecialsgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -28,14 +27,11 @@ type SubscriptionInCredentialsClient struct {
 
 // NewSubscriptionInCredentialsClient creates a new instance of SubscriptionInCredentialsClient with the specified values.
 // subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
-// options - pass nil to accept the default values.
-func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.ClientOptions) *SubscriptionInCredentialsClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeline) *SubscriptionInCredentialsClient {
 	client := &SubscriptionInCredentialsClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl:             pl,
 	}
 	return client
 }

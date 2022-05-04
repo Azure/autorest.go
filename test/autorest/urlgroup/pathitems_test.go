@@ -7,12 +7,15 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/stretchr/testify/require"
 )
 
 func TestGetAllWithValues(t *testing.T) {
-	grp := NewPathItemsClient("globalStringPath", to.Ptr("globalStringQuery"), nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	grp := NewPathItemsClient("globalStringPath", to.Ptr("globalStringQuery"), pl)
 	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetAllWithValuesOptions{
 		LocalStringQuery:    to.Ptr("localStringQuery"),
 		PathItemStringQuery: to.Ptr("pathItemStringQuery"),
@@ -22,7 +25,8 @@ func TestGetAllWithValues(t *testing.T) {
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
-	grp := NewPathItemsClient("globalStringPath", nil, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	grp := NewPathItemsClient("globalStringPath", nil, pl)
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetGlobalAndLocalQueryNullOptions{
 		PathItemStringQuery: to.Ptr("pathItemStringQuery"),
 	})
@@ -31,7 +35,8 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
-	grp := NewPathItemsClient("globalStringPath", nil, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	grp := NewPathItemsClient("globalStringPath", nil, pl)
 	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsClientGetGlobalQueryNullOptions{
 		LocalStringQuery:    to.Ptr("localStringQuery"),
 		PathItemStringQuery: to.Ptr("pathItemStringQuery"),
@@ -41,7 +46,8 @@ func TestGetGlobalQueryNull(t *testing.T) {
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
-	grp := NewPathItemsClient("globalStringPath", to.Ptr("globalStringQuery"), nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	grp := NewPathItemsClient("globalStringPath", to.Ptr("globalStringQuery"), pl)
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	require.NoError(t, err)
 	require.Zero(t, result)

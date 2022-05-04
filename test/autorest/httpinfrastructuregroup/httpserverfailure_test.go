@@ -7,11 +7,14 @@ import (
 	"context"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
 func newHTTPServerFailureClient() *HTTPServerFailureClient {
-	return NewHTTPServerFailureClient(nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewHTTPServerFailureClient(pl)
 }
 
 func TestHTTPServerFailureDelete505(t *testing.T) {

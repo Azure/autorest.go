@@ -8,12 +8,15 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 func newDatetimerfc1123Client() *Datetimerfc1123Client {
-	return NewDatetimerfc1123Client(nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewDatetimerfc1123Client(pl)
 }
 
 func TestGetInvalid(t *testing.T) {

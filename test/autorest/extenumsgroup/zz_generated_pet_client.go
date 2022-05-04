@@ -11,7 +11,6 @@ package extenumsgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,13 +25,10 @@ type PetClient struct {
 }
 
 // NewPetClient creates a new instance of PetClient with the specified values.
-// options - pass nil to accept the default values.
-func NewPetClient(options *azcore.ClientOptions) *PetClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewPetClient(pl runtime.Pipeline) *PetClient {
 	client := &PetClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

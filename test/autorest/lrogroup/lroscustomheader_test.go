@@ -20,7 +20,8 @@ func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	return NewLROsCustomHeaderClient(&options)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options)
+	return NewLROsCustomHeaderClient(pl)
 }
 
 func ctxWithHTTPHeader() context.Context {
