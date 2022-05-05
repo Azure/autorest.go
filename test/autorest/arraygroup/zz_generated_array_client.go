@@ -10,7 +10,6 @@ package arraygroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -24,13 +23,10 @@ type ArrayClient struct {
 }
 
 // NewArrayClient creates a new instance of ArrayClient with the specified values.
-// options - pass nil to accept the default values.
-func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewArrayClient(pl runtime.Pipeline) *ArrayClient {
 	client := &ArrayClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

@@ -8,12 +8,14 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
 func newSubscriptionInCredentialsClient() *SubscriptionInCredentialsClient {
-	return NewSubscriptionInCredentialsClient("1234-5678-9012-3456", nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	return NewSubscriptionInCredentialsClient("1234-5678-9012-3456", pl)
 }
 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed

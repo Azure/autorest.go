@@ -11,7 +11,6 @@ package optionalgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -34,16 +33,13 @@ type ImplicitClient struct {
 // requiredGlobalPath - number of items to skip
 // requiredGlobalQuery - number of items to skip
 // optionalGlobalQuery - number of items to skip
-// options - pass nil to accept the default values.
-func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, options *azcore.ClientOptions) *ImplicitClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, pl runtime.Pipeline) *ImplicitClient {
 	client := &ImplicitClient{
 		requiredGlobalPath:  requiredGlobalPath,
 		requiredGlobalQuery: requiredGlobalQuery,
 		optionalGlobalQuery: optionalGlobalQuery,
-		pl:                  runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl:                  pl,
 	}
 	return client
 }

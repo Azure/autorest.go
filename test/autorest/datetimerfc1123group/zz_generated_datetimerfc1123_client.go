@@ -10,7 +10,6 @@ package datetimerfc1123group
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -24,13 +23,10 @@ type Datetimerfc1123Client struct {
 }
 
 // NewDatetimerfc1123Client creates a new instance of Datetimerfc1123Client with the specified values.
-// options - pass nil to accept the default values.
-func NewDatetimerfc1123Client(options *azcore.ClientOptions) *Datetimerfc1123Client {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewDatetimerfc1123Client(pl runtime.Pipeline) *Datetimerfc1123Client {
 	client := &Datetimerfc1123Client{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

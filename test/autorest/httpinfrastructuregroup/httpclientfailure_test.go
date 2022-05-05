@@ -9,15 +9,17 @@ import (
 	"time"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/stretchr/testify/require"
 )
 
 func newHTTPClientFailureClient() *HTTPClientFailureClient {
-	return NewHTTPClientFailureClient(&policy.ClientOptions{
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &policy.ClientOptions{
 		Retry: policy.RetryOptions{
 			MaxRetryDelay: 2 * time.Second,
 		},
 	})
+	return NewHTTPClientFailureClient(pl)
 }
 
 func TestHTTPClientFailureDelete400(t *testing.T) {

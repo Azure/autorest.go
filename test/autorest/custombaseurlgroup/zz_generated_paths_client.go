@@ -10,7 +10,6 @@ package custombaseurlgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -24,24 +23,16 @@ type PathsClient struct {
 	pl   runtime.Pipeline
 }
 
-// PathsClientOptions contains the optional parameters for NewPathsClient.
-type PathsClientOptions struct {
-	azcore.ClientOptions
-	Host *string
-}
-
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-// options - pass nil to accept the default values.
-func NewPathsClient(options *PathsClientOptions) *PathsClient {
-	if options == nil {
-		options = &PathsClientOptions{}
-	}
+// host - A string value that is used as a global part of the parameterized host
+// pl - the pipeline used for sending requests and handling responses.
+func NewPathsClient(host *string, pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{
 		host: "host",
-		pl:   runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions),
+		pl:   pl,
 	}
-	if options.Host != nil {
-		client.host = *options.Host
+	if host != nil {
+		client.host = *host
 	}
 	return client
 }

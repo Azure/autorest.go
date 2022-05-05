@@ -11,7 +11,6 @@ package paginggroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -28,13 +27,10 @@ type PagingClient struct {
 }
 
 // NewPagingClient creates a new instance of PagingClient with the specified values.
-// options - pass nil to accept the default values.
-func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewPagingClient(pl runtime.Pipeline) *PagingClient {
 	client := &PagingClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

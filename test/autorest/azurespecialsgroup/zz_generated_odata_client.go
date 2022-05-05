@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -24,13 +23,10 @@ type ODataClient struct {
 }
 
 // NewODataClient creates a new instance of ODataClient with the specified values.
-// options - pass nil to accept the default values.
-func NewODataClient(options *azcore.ClientOptions) *ODataClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewODataClient(pl runtime.Pipeline) *ODataClient {
 	client := &ODataClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

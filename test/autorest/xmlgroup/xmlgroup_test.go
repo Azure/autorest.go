@@ -10,6 +10,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
@@ -24,11 +25,12 @@ func toTimePtr(layout string, value string) *time.Time {
 }
 
 func newXMLClient() *XMLClient {
-	return NewXMLClient(&azcore.ClientOptions{
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{
 		Logging: policy.LogOptions{
 			IncludeBody: true,
 		},
 	})
+	return NewXMLClient(pl)
 }
 
 func TestGetACLs(t *testing.T) {

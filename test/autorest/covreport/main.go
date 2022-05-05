@@ -9,16 +9,20 @@ import (
 	"generatortests/azurereportgroup"
 	"generatortests/reportgroup"
 	"sort"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
 // generate autorest test server coverage report
 func main() {
-	vanillaClient := reportgroup.NewAutoRestReportServiceClient(nil)
+	pl := runtime.NewPipeline("covreport", "v0.1.0", runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	vanillaClient := reportgroup.NewAutoRestReportServiceClient(pl)
 	vanillaReport, err := vanillaClient.GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)
 	}
-	azureClient := azurereportgroup.NewAutoRestReportServiceForAzureClient(nil)
+	azureClient := azurereportgroup.NewAutoRestReportServiceForAzureClient(pl)
 	azureReport, err := azureClient.GetReport(context.Background(), nil)
 	if err != nil {
 		panic(err)

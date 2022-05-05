@@ -10,7 +10,6 @@ package azurereportgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type AutoRestReportServiceForAzureClient struct {
 }
 
 // NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-// options - pass nil to accept the default values.
-func NewAutoRestReportServiceForAzureClient(options *azcore.ClientOptions) *AutoRestReportServiceForAzureClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewAutoRestReportServiceForAzureClient(pl runtime.Pipeline) *AutoRestReportServiceForAzureClient {
 	client := &AutoRestReportServiceForAzureClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

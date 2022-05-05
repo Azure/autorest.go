@@ -10,7 +10,6 @@ package complexgroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type PolymorphismClient struct {
 }
 
 // NewPolymorphismClient creates a new instance of PolymorphismClient with the specified values.
-// options - pass nil to accept the default values.
-func NewPolymorphismClient(options *azcore.ClientOptions) *PolymorphismClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewPolymorphismClient(pl runtime.Pipeline) *PolymorphismClient {
 	client := &PolymorphismClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

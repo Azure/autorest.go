@@ -10,7 +10,6 @@ package formdatagroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -24,13 +23,10 @@ type FormdataClient struct {
 }
 
 // NewFormdataClient creates a new instance of FormdataClient with the specified values.
-// options - pass nil to accept the default values.
-func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewFormdataClient(pl runtime.Pipeline) *FormdataClient {
 	client := &FormdataClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

@@ -10,7 +10,6 @@ package dategroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -24,13 +23,10 @@ type DateClient struct {
 }
 
 // NewDateClient creates a new instance of DateClient with the specified values.
-// options - pass nil to accept the default values.
-func NewDateClient(options *azcore.ClientOptions) *DateClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewDateClient(pl runtime.Pipeline) *DateClient {
 	client := &DateClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

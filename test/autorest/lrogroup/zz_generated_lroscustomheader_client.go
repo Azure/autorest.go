@@ -10,7 +10,6 @@ package lrogroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,13 +23,10 @@ type LROsCustomHeaderClient struct {
 }
 
 // NewLROsCustomHeaderClient creates a new instance of LROsCustomHeaderClient with the specified values.
-// options - pass nil to accept the default values.
-func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewLROsCustomHeaderClient(pl runtime.Pipeline) *LROsCustomHeaderClient {
 	client := &LROsCustomHeaderClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

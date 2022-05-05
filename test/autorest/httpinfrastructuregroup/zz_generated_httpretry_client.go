@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type HTTPRetryClient struct {
 }
 
 // NewHTTPRetryClient creates a new instance of HTTPRetryClient with the specified values.
-// options - pass nil to accept the default values.
-func NewHTTPRetryClient(options *azcore.ClientOptions) *HTTPRetryClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewHTTPRetryClient(pl runtime.Pipeline) *HTTPRetryClient {
 	client := &HTTPRetryClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

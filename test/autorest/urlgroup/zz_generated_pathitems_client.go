@@ -11,7 +11,6 @@ package urlgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -30,15 +29,12 @@ type PathItemsClient struct {
 // NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
 // globalStringPath - A string value 'globalItemStringPath' that appears in the path
 // globalStringQuery - should contain value null
-// options - pass nil to accept the default values.
-func NewPathItemsClient(globalStringPath string, globalStringQuery *string, options *azcore.ClientOptions) *PathItemsClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl runtime.Pipeline) *PathItemsClient {
 	client := &PathItemsClient{
 		globalStringPath:  globalStringPath,
 		globalStringQuery: globalStringQuery,
-		pl:                runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl:                pl,
 	}
 	return client
 }

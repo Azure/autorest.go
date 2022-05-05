@@ -37,19 +37,17 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 		geography = &defaultValue
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
-	if clientVersion == nil {
-		clientVersionDefault := "2.0"
-		clientVersion = &clientVersionDefault
-	}
-	if clientIndex == nil {
-		clientIndexDefault := int32(567)
-		clientIndex = &clientIndexDefault
-	}
 	client := &client{
+		clientVersion: "2.0",
+		clientIndex:   int32(567),
 		endpoint:      hostURL,
-		clientVersion: *clientVersion,
-		clientIndex:   *clientIndex,
 		pl:            pl,
+	}
+	if clientVersion != nil {
+		client.clientVersion = *clientVersion
+	}
+	if clientIndex != nil {
+		client.clientIndex = *clientIndex
 	}
 	return client
 }

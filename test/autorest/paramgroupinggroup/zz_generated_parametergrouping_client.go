@@ -11,7 +11,6 @@ package paramgroupinggroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -27,13 +26,10 @@ type ParameterGroupingClient struct {
 }
 
 // NewParameterGroupingClient creates a new instance of ParameterGroupingClient with the specified values.
-// options - pass nil to accept the default values.
-func NewParameterGroupingClient(options *azcore.ClientOptions) *ParameterGroupingClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewParameterGroupingClient(pl runtime.Pipeline) *ParameterGroupingClient {
 	client := &ParameterGroupingClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

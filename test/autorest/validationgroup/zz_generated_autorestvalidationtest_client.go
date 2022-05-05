@@ -11,7 +11,6 @@ package validationgroup
 import (
 	"context"
 	"errors"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,14 +28,11 @@ type AutoRestValidationTestClient struct {
 
 // NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
 // subscriptionID - Subscription ID.
-// options - pass nil to accept the default values.
-func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.ClientOptions) *AutoRestValidationTestClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewAutoRestValidationTestClient(subscriptionID string, pl runtime.Pipeline) *AutoRestValidationTestClient {
 	client := &AutoRestValidationTestClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl:             pl,
 	}
 	return client
 }

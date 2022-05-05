@@ -10,7 +10,6 @@ package bytegroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type ByteClient struct {
 }
 
 // NewByteClient creates a new instance of ByteClient with the specified values.
-// options - pass nil to accept the default values.
-func NewByteClient(options *azcore.ClientOptions) *ByteClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewByteClient(pl runtime.Pipeline) *ByteClient {
 	client := &ByteClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

@@ -10,7 +10,6 @@ package lrogroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,13 +23,10 @@ type LRORetrysClient struct {
 }
 
 // NewLRORetrysClient creates a new instance of LRORetrysClient with the specified values.
-// options - pass nil to accept the default values.
-func NewLRORetrysClient(options *azcore.ClientOptions) *LRORetrysClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewLRORetrysClient(pl runtime.Pipeline) *LRORetrysClient {
 	client := &LRORetrysClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }

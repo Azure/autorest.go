@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +22,10 @@ type HTTPClientFailureClient struct {
 }
 
 // NewHTTPClientFailureClient creates a new instance of HTTPClientFailureClient with the specified values.
-// options - pass nil to accept the default values.
-func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailureClient {
-	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
+// pl - the pipeline used for sending requests and handling responses.
+func NewHTTPClientFailureClient(pl runtime.Pipeline) *HTTPClientFailureClient {
 	client := &HTTPClientFailureClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
+		pl: pl,
 	}
 	return client
 }
