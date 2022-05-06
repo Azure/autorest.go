@@ -10,6 +10,7 @@ package azalias
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
@@ -28,26 +29,26 @@ func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "featureType":
-			err = unpopulate(val, &g.FeatureType)
+			err = unpopulate(val, "FeatureType", &g.FeatureType)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &g.ID)
+			err = unpopulate(val, "ID", &g.ID)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &g.Properties)
+			err = unpopulate(val, "Properties", &g.Properties)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &g.Type)
+			err = unpopulate(val, "Type", &g.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", g, err)
 		}
 	}
 	return nil
@@ -65,20 +66,20 @@ func (g GeoJSONObjectNamedCollection) MarshalJSON() ([]byte, error) {
 func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "collectionName":
-			err = unpopulate(val, &g.CollectionName)
+			err = unpopulate(val, "CollectionName", &g.CollectionName)
 			delete(rawMsg, key)
 		case "objects":
 			g.Objects, err = unmarshalGeoJSONObjectClassificationMap(val)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", g, err)
 		}
 	}
 	return nil
@@ -115,26 +116,26 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "aliases":
-			err = unpopulate(val, &s.Aliases)
+			err = unpopulate(val, "Aliases", &s.Aliases)
 			delete(rawMsg, key)
 		case "description":
-			err = unpopulate(val, &s.Description)
+			err = unpopulate(val, "Description", &s.Description)
 			delete(rawMsg, key)
 		case "interval":
-			err = unpopulate(val, &s.Interval)
+			err = unpopulate(val, "Interval", &s.Interval)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeRFC3339(val, &s.StartTime)
+			err = unpopulateTimeRFC3339(val, "StartTime", &s.StartTime)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -150,9 +151,12 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

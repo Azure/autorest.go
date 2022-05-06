@@ -92,11 +92,15 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
     serdeTextBody += '}\n\n';
   }
   if (needsJSONUnpopulate) {
-    serdeTextBody += 'func unpopulate(data json.RawMessage, v interface{}) error {\n';
+    serdeImports.add('fmt');
+    serdeTextBody += 'func unpopulate(data json.RawMessage, fn string, v interface{}) error {\n';
     serdeTextBody += '\tif data == nil {\n';
     serdeTextBody += '\t\treturn nil\n';
     serdeTextBody += '\t}\n';
-    serdeTextBody += '\treturn json.Unmarshal(data, v)\n';
+    serdeTextBody += '\tif err := json.Unmarshal(data, v); err != nil {\n';
+    serdeTextBody += '\t\treturn fmt.Errorf("struct field %s: %v", fn, err)\n';
+    serdeTextBody += '\t}\n';
+    serdeTextBody += '\treturn nil\n';
     serdeTextBody += '}\n\n';
   }
   let serdeText = '';
@@ -373,12 +377,13 @@ function generateJSONUnmarshaller(imports: ImportManager, structDef: StructDef) 
     return;
   }
   imports.add('encoding/json');
+  imports.add('fmt');
   const typeName = structDef.Language.name;
   const receiver = structDef.receiverName();
   let unmarshaller = `func (${receiver} *${typeName}) UnmarshalJSON(data []byte) error {\n`;
   unmarshaller += '\tvar rawMsg map[string]json.RawMessage\n';
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
-  unmarshaller += '\t\treturn err\n';
+  unmarshaller += `\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
   unmarshaller += '\t}\n';
   unmarshaller += generateJSONUnmarshallerBody(structDef, imports);
   unmarshaller += '}\n\n';
@@ -429,11 +434,11 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
     } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
       unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
     } else if (prop.schema.language.go!.internalTimeType) {
-      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, &${receiver}.${prop.language.go!.name})\n`;
+      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
     } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
       imports.add('time');
       unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
-      unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';
+      unmarshalBody += `\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &aux)\n`;
       unmarshalBody += '\t\t\tfor _, au := range aux {\n';
       unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (*time.Time)(au))\n`;
       unmarshalBody += '\t\t\t}\n';
@@ -445,7 +450,7 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
       unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
     } else {
-      unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
+      unmarshalBody += `\t\t\t\terr = unpopulate(val, "${prop.language.go!.name}", &${receiver}.${prop.language.go!.name})\n`;
     }
     unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
   }
@@ -455,7 +460,7 @@ function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManag
   }
   unmarshalBody += '\t\t}\n';
   unmarshalBody += '\t\tif err != nil {\n';
-  unmarshalBody += '\t\t\treturn err\n';
+  unmarshalBody += `\t\t\treturn fmt.Errorf("unmarshalling type %T: %v", ${receiver}, err)\n`;
   unmarshalBody += '\t\t}\n';
   unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   unmarshalBody += '\treturn nil\n';

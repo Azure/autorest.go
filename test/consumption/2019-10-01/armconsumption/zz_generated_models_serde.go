@@ -10,6 +10,7 @@ package armconsumption
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
@@ -92,20 +93,20 @@ func (b BudgetTimePeriod) MarshalJSON() ([]byte, error) {
 func (b *BudgetTimePeriod) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "endDate":
-			err = unpopulateTimeRFC3339(val, &b.EndDate)
+			err = unpopulateTimeRFC3339(val, "EndDate", &b.EndDate)
 			delete(rawMsg, key)
 		case "startDate":
-			err = unpopulateTimeRFC3339(val, &b.StartDate)
+			err = unpopulateTimeRFC3339(val, "StartDate", &b.StartDate)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", b, err)
 		}
 	}
 	return nil
@@ -142,7 +143,7 @@ func (c ChargesListResult) MarshalJSON() ([]byte, error) {
 func (c *ChargesListResult) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -152,7 +153,7 @@ func (c *ChargesListResult) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
 		}
 	}
 	return nil
@@ -197,65 +198,65 @@ func (e EventProperties) MarshalJSON() ([]byte, error) {
 func (e *EventProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", e, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "adjustments":
-			err = unpopulate(val, &e.Adjustments)
+			err = unpopulate(val, "Adjustments", &e.Adjustments)
 			delete(rawMsg, key)
 		case "adjustmentsInBillingCurrency":
-			err = unpopulate(val, &e.AdjustmentsInBillingCurrency)
+			err = unpopulate(val, "AdjustmentsInBillingCurrency", &e.AdjustmentsInBillingCurrency)
 			delete(rawMsg, key)
 		case "billingCurrency":
-			err = unpopulate(val, &e.BillingCurrency)
+			err = unpopulate(val, "BillingCurrency", &e.BillingCurrency)
 			delete(rawMsg, key)
 		case "charges":
-			err = unpopulate(val, &e.Charges)
+			err = unpopulate(val, "Charges", &e.Charges)
 			delete(rawMsg, key)
 		case "chargesInBillingCurrency":
-			err = unpopulate(val, &e.ChargesInBillingCurrency)
+			err = unpopulate(val, "ChargesInBillingCurrency", &e.ChargesInBillingCurrency)
 			delete(rawMsg, key)
 		case "closedBalance":
-			err = unpopulate(val, &e.ClosedBalance)
+			err = unpopulate(val, "ClosedBalance", &e.ClosedBalance)
 			delete(rawMsg, key)
 		case "closedBalanceInBillingCurrency":
-			err = unpopulate(val, &e.ClosedBalanceInBillingCurrency)
+			err = unpopulate(val, "ClosedBalanceInBillingCurrency", &e.ClosedBalanceInBillingCurrency)
 			delete(rawMsg, key)
 		case "creditCurrency":
-			err = unpopulate(val, &e.CreditCurrency)
+			err = unpopulate(val, "CreditCurrency", &e.CreditCurrency)
 			delete(rawMsg, key)
 		case "creditExpired":
-			err = unpopulate(val, &e.CreditExpired)
+			err = unpopulate(val, "CreditExpired", &e.CreditExpired)
 			delete(rawMsg, key)
 		case "creditExpiredInBillingCurrency":
-			err = unpopulate(val, &e.CreditExpiredInBillingCurrency)
+			err = unpopulate(val, "CreditExpiredInBillingCurrency", &e.CreditExpiredInBillingCurrency)
 			delete(rawMsg, key)
 		case "description":
-			err = unpopulate(val, &e.Description)
+			err = unpopulate(val, "Description", &e.Description)
 			delete(rawMsg, key)
 		case "eventType":
-			err = unpopulate(val, &e.EventType)
+			err = unpopulate(val, "EventType", &e.EventType)
 			delete(rawMsg, key)
 		case "invoiceNumber":
-			err = unpopulate(val, &e.InvoiceNumber)
+			err = unpopulate(val, "InvoiceNumber", &e.InvoiceNumber)
 			delete(rawMsg, key)
 		case "newCredit":
-			err = unpopulate(val, &e.NewCredit)
+			err = unpopulate(val, "NewCredit", &e.NewCredit)
 			delete(rawMsg, key)
 		case "newCreditInBillingCurrency":
-			err = unpopulate(val, &e.NewCreditInBillingCurrency)
+			err = unpopulate(val, "NewCreditInBillingCurrency", &e.NewCreditInBillingCurrency)
 			delete(rawMsg, key)
 		case "reseller":
-			err = unpopulate(val, &e.Reseller)
+			err = unpopulate(val, "Reseller", &e.Reseller)
 			delete(rawMsg, key)
 		case "transactionDate":
-			err = unpopulateTimeRFC3339(val, &e.TransactionDate)
+			err = unpopulateTimeRFC3339(val, "TransactionDate", &e.TransactionDate)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", e, err)
 		}
 	}
 	return nil
@@ -329,35 +330,35 @@ func (l LegacyChargeSummary) MarshalJSON() ([]byte, error) {
 func (l *LegacyChargeSummary) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "etag":
-			err = unpopulate(val, &l.Etag)
+			err = unpopulate(val, "Etag", &l.Etag)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &l.ID)
+			err = unpopulate(val, "ID", &l.ID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &l.Kind)
+			err = unpopulate(val, "Kind", &l.Kind)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &l.Name)
+			err = unpopulate(val, "Name", &l.Name)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &l.Properties)
+			err = unpopulate(val, "Properties", &l.Properties)
 			delete(rawMsg, key)
 		case "tags":
-			err = unpopulate(val, &l.Tags)
+			err = unpopulate(val, "Tags", &l.Tags)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &l.Type)
+			err = unpopulate(val, "Type", &l.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -382,41 +383,41 @@ func (l LegacyReservationRecommendation) MarshalJSON() ([]byte, error) {
 func (l *LegacyReservationRecommendation) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "etag":
-			err = unpopulate(val, &l.Etag)
+			err = unpopulate(val, "Etag", &l.Etag)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &l.ID)
+			err = unpopulate(val, "ID", &l.ID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &l.Kind)
+			err = unpopulate(val, "Kind", &l.Kind)
 			delete(rawMsg, key)
 		case "location":
-			err = unpopulate(val, &l.Location)
+			err = unpopulate(val, "Location", &l.Location)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &l.Name)
+			err = unpopulate(val, "Name", &l.Name)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &l.Properties)
+			err = unpopulate(val, "Properties", &l.Properties)
 			delete(rawMsg, key)
 		case "sku":
-			err = unpopulate(val, &l.SKU)
+			err = unpopulate(val, "SKU", &l.SKU)
 			delete(rawMsg, key)
 		case "tags":
-			err = unpopulate(val, &l.Tags)
+			err = unpopulate(val, "Tags", &l.Tags)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &l.Type)
+			err = unpopulate(val, "Type", &l.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -447,59 +448,59 @@ func (l LegacyReservationRecommendationProperties) MarshalJSON() ([]byte, error)
 func (l *LegacyReservationRecommendationProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "costWithNoReservedInstances":
-			err = unpopulate(val, &l.CostWithNoReservedInstances)
+			err = unpopulate(val, "CostWithNoReservedInstances", &l.CostWithNoReservedInstances)
 			delete(rawMsg, key)
 		case "firstUsageDate":
-			err = unpopulateTimeRFC3339(val, &l.FirstUsageDate)
+			err = unpopulateTimeRFC3339(val, "FirstUsageDate", &l.FirstUsageDate)
 			delete(rawMsg, key)
 		case "instanceFlexibilityGroup":
-			err = unpopulate(val, &l.InstanceFlexibilityGroup)
+			err = unpopulate(val, "InstanceFlexibilityGroup", &l.InstanceFlexibilityGroup)
 			delete(rawMsg, key)
 		case "instanceFlexibilityRatio":
-			err = unpopulate(val, &l.InstanceFlexibilityRatio)
+			err = unpopulate(val, "InstanceFlexibilityRatio", &l.InstanceFlexibilityRatio)
 			delete(rawMsg, key)
 		case "lookBackPeriod":
-			err = unpopulate(val, &l.LookBackPeriod)
+			err = unpopulate(val, "LookBackPeriod", &l.LookBackPeriod)
 			delete(rawMsg, key)
 		case "meterId":
-			err = unpopulate(val, &l.MeterID)
+			err = unpopulate(val, "MeterID", &l.MeterID)
 			delete(rawMsg, key)
 		case "netSavings":
-			err = unpopulate(val, &l.NetSavings)
+			err = unpopulate(val, "NetSavings", &l.NetSavings)
 			delete(rawMsg, key)
 		case "normalizedSize":
-			err = unpopulate(val, &l.NormalizedSize)
+			err = unpopulate(val, "NormalizedSize", &l.NormalizedSize)
 			delete(rawMsg, key)
 		case "recommendedQuantity":
-			err = unpopulate(val, &l.RecommendedQuantity)
+			err = unpopulate(val, "RecommendedQuantity", &l.RecommendedQuantity)
 			delete(rawMsg, key)
 		case "recommendedQuantityNormalized":
-			err = unpopulate(val, &l.RecommendedQuantityNormalized)
+			err = unpopulate(val, "RecommendedQuantityNormalized", &l.RecommendedQuantityNormalized)
 			delete(rawMsg, key)
 		case "resourceType":
-			err = unpopulate(val, &l.ResourceType)
+			err = unpopulate(val, "ResourceType", &l.ResourceType)
 			delete(rawMsg, key)
 		case "skuProperties":
-			err = unpopulate(val, &l.SKUProperties)
+			err = unpopulate(val, "SKUProperties", &l.SKUProperties)
 			delete(rawMsg, key)
 		case "scope":
-			err = unpopulate(val, &l.Scope)
+			err = unpopulate(val, "Scope", &l.Scope)
 			delete(rawMsg, key)
 		case "term":
-			err = unpopulate(val, &l.Term)
+			err = unpopulate(val, "Term", &l.Term)
 			delete(rawMsg, key)
 		case "totalCostWithReservedInstances":
-			err = unpopulate(val, &l.TotalCostWithReservedInstances)
+			err = unpopulate(val, "TotalCostWithReservedInstances", &l.TotalCostWithReservedInstances)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -546,74 +547,74 @@ func (l LegacyReservationTransactionProperties) MarshalJSON() ([]byte, error) {
 func (l *LegacyReservationTransactionProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "accountName":
-			err = unpopulate(val, &l.AccountName)
+			err = unpopulate(val, "AccountName", &l.AccountName)
 			delete(rawMsg, key)
 		case "accountOwnerEmail":
-			err = unpopulate(val, &l.AccountOwnerEmail)
+			err = unpopulate(val, "AccountOwnerEmail", &l.AccountOwnerEmail)
 			delete(rawMsg, key)
 		case "amount":
-			err = unpopulate(val, &l.Amount)
+			err = unpopulate(val, "Amount", &l.Amount)
 			delete(rawMsg, key)
 		case "armSkuName":
-			err = unpopulate(val, &l.ArmSKUName)
+			err = unpopulate(val, "ArmSKUName", &l.ArmSKUName)
 			delete(rawMsg, key)
 		case "billingFrequency":
-			err = unpopulate(val, &l.BillingFrequency)
+			err = unpopulate(val, "BillingFrequency", &l.BillingFrequency)
 			delete(rawMsg, key)
 		case "costCenter":
-			err = unpopulate(val, &l.CostCenter)
+			err = unpopulate(val, "CostCenter", &l.CostCenter)
 			delete(rawMsg, key)
 		case "currency":
-			err = unpopulate(val, &l.Currency)
+			err = unpopulate(val, "Currency", &l.Currency)
 			delete(rawMsg, key)
 		case "currentEnrollment":
-			err = unpopulate(val, &l.CurrentEnrollment)
+			err = unpopulate(val, "CurrentEnrollment", &l.CurrentEnrollment)
 			delete(rawMsg, key)
 		case "departmentName":
-			err = unpopulate(val, &l.DepartmentName)
+			err = unpopulate(val, "DepartmentName", &l.DepartmentName)
 			delete(rawMsg, key)
 		case "description":
-			err = unpopulate(val, &l.Description)
+			err = unpopulate(val, "Description", &l.Description)
 			delete(rawMsg, key)
 		case "eventDate":
-			err = unpopulateTimeRFC3339(val, &l.EventDate)
+			err = unpopulateTimeRFC3339(val, "EventDate", &l.EventDate)
 			delete(rawMsg, key)
 		case "eventType":
-			err = unpopulate(val, &l.EventType)
+			err = unpopulate(val, "EventType", &l.EventType)
 			delete(rawMsg, key)
 		case "purchasingEnrollment":
-			err = unpopulate(val, &l.PurchasingEnrollment)
+			err = unpopulate(val, "PurchasingEnrollment", &l.PurchasingEnrollment)
 			delete(rawMsg, key)
 		case "purchasingSubscriptionGuid":
-			err = unpopulate(val, &l.PurchasingSubscriptionGUID)
+			err = unpopulate(val, "PurchasingSubscriptionGUID", &l.PurchasingSubscriptionGUID)
 			delete(rawMsg, key)
 		case "purchasingSubscriptionName":
-			err = unpopulate(val, &l.PurchasingSubscriptionName)
+			err = unpopulate(val, "PurchasingSubscriptionName", &l.PurchasingSubscriptionName)
 			delete(rawMsg, key)
 		case "quantity":
-			err = unpopulate(val, &l.Quantity)
+			err = unpopulate(val, "Quantity", &l.Quantity)
 			delete(rawMsg, key)
 		case "region":
-			err = unpopulate(val, &l.Region)
+			err = unpopulate(val, "Region", &l.Region)
 			delete(rawMsg, key)
 		case "reservationOrderId":
-			err = unpopulate(val, &l.ReservationOrderID)
+			err = unpopulate(val, "ReservationOrderID", &l.ReservationOrderID)
 			delete(rawMsg, key)
 		case "reservationOrderName":
-			err = unpopulate(val, &l.ReservationOrderName)
+			err = unpopulate(val, "ReservationOrderName", &l.ReservationOrderName)
 			delete(rawMsg, key)
 		case "term":
-			err = unpopulate(val, &l.Term)
+			err = unpopulate(val, "Term", &l.Term)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -636,35 +637,35 @@ func (l LegacyUsageDetail) MarshalJSON() ([]byte, error) {
 func (l *LegacyUsageDetail) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "etag":
-			err = unpopulate(val, &l.Etag)
+			err = unpopulate(val, "Etag", &l.Etag)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &l.ID)
+			err = unpopulate(val, "ID", &l.ID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &l.Kind)
+			err = unpopulate(val, "Kind", &l.Kind)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &l.Name)
+			err = unpopulate(val, "Name", &l.Name)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &l.Properties)
+			err = unpopulate(val, "Properties", &l.Properties)
 			delete(rawMsg, key)
 		case "tags":
-			err = unpopulate(val, &l.Tags)
+			err = unpopulate(val, "Tags", &l.Tags)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &l.Type)
+			err = unpopulate(val, "Type", &l.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -722,140 +723,140 @@ func (l LegacyUsageDetailProperties) MarshalJSON() ([]byte, error) {
 func (l *LegacyUsageDetailProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "accountName":
-			err = unpopulate(val, &l.AccountName)
+			err = unpopulate(val, "AccountName", &l.AccountName)
 			delete(rawMsg, key)
 		case "accountOwnerId":
-			err = unpopulate(val, &l.AccountOwnerID)
+			err = unpopulate(val, "AccountOwnerID", &l.AccountOwnerID)
 			delete(rawMsg, key)
 		case "additionalInfo":
-			err = unpopulate(val, &l.AdditionalInfo)
+			err = unpopulate(val, "AdditionalInfo", &l.AdditionalInfo)
 			delete(rawMsg, key)
 		case "billingAccountId":
-			err = unpopulate(val, &l.BillingAccountID)
+			err = unpopulate(val, "BillingAccountID", &l.BillingAccountID)
 			delete(rawMsg, key)
 		case "billingAccountName":
-			err = unpopulate(val, &l.BillingAccountName)
+			err = unpopulate(val, "BillingAccountName", &l.BillingAccountName)
 			delete(rawMsg, key)
 		case "billingCurrency":
-			err = unpopulate(val, &l.BillingCurrency)
+			err = unpopulate(val, "BillingCurrency", &l.BillingCurrency)
 			delete(rawMsg, key)
 		case "billingPeriodEndDate":
-			err = unpopulateTimeRFC3339(val, &l.BillingPeriodEndDate)
+			err = unpopulateTimeRFC3339(val, "BillingPeriodEndDate", &l.BillingPeriodEndDate)
 			delete(rawMsg, key)
 		case "billingPeriodStartDate":
-			err = unpopulateTimeRFC3339(val, &l.BillingPeriodStartDate)
+			err = unpopulateTimeRFC3339(val, "BillingPeriodStartDate", &l.BillingPeriodStartDate)
 			delete(rawMsg, key)
 		case "billingProfileId":
-			err = unpopulate(val, &l.BillingProfileID)
+			err = unpopulate(val, "BillingProfileID", &l.BillingProfileID)
 			delete(rawMsg, key)
 		case "billingProfileName":
-			err = unpopulate(val, &l.BillingProfileName)
+			err = unpopulate(val, "BillingProfileName", &l.BillingProfileName)
 			delete(rawMsg, key)
 		case "chargeType":
-			err = unpopulate(val, &l.ChargeType)
+			err = unpopulate(val, "ChargeType", &l.ChargeType)
 			delete(rawMsg, key)
 		case "consumedService":
-			err = unpopulate(val, &l.ConsumedService)
+			err = unpopulate(val, "ConsumedService", &l.ConsumedService)
 			delete(rawMsg, key)
 		case "cost":
-			err = unpopulate(val, &l.Cost)
+			err = unpopulate(val, "Cost", &l.Cost)
 			delete(rawMsg, key)
 		case "costCenter":
-			err = unpopulate(val, &l.CostCenter)
+			err = unpopulate(val, "CostCenter", &l.CostCenter)
 			delete(rawMsg, key)
 		case "date":
-			err = unpopulateTimeRFC3339(val, &l.Date)
+			err = unpopulateTimeRFC3339(val, "Date", &l.Date)
 			delete(rawMsg, key)
 		case "effectivePrice":
-			err = unpopulate(val, &l.EffectivePrice)
+			err = unpopulate(val, "EffectivePrice", &l.EffectivePrice)
 			delete(rawMsg, key)
 		case "frequency":
-			err = unpopulate(val, &l.Frequency)
+			err = unpopulate(val, "Frequency", &l.Frequency)
 			delete(rawMsg, key)
 		case "invoiceSection":
-			err = unpopulate(val, &l.InvoiceSection)
+			err = unpopulate(val, "InvoiceSection", &l.InvoiceSection)
 			delete(rawMsg, key)
 		case "isAzureCreditEligible":
-			err = unpopulate(val, &l.IsAzureCreditEligible)
+			err = unpopulate(val, "IsAzureCreditEligible", &l.IsAzureCreditEligible)
 			delete(rawMsg, key)
 		case "meterDetails":
-			err = unpopulate(val, &l.MeterDetails)
+			err = unpopulate(val, "MeterDetails", &l.MeterDetails)
 			delete(rawMsg, key)
 		case "meterId":
-			err = unpopulate(val, &l.MeterID)
+			err = unpopulate(val, "MeterID", &l.MeterID)
 			delete(rawMsg, key)
 		case "offerId":
-			err = unpopulate(val, &l.OfferID)
+			err = unpopulate(val, "OfferID", &l.OfferID)
 			delete(rawMsg, key)
 		case "partNumber":
-			err = unpopulate(val, &l.PartNumber)
+			err = unpopulate(val, "PartNumber", &l.PartNumber)
 			delete(rawMsg, key)
 		case "planName":
-			err = unpopulate(val, &l.PlanName)
+			err = unpopulate(val, "PlanName", &l.PlanName)
 			delete(rawMsg, key)
 		case "product":
-			err = unpopulate(val, &l.Product)
+			err = unpopulate(val, "Product", &l.Product)
 			delete(rawMsg, key)
 		case "productOrderId":
-			err = unpopulate(val, &l.ProductOrderID)
+			err = unpopulate(val, "ProductOrderID", &l.ProductOrderID)
 			delete(rawMsg, key)
 		case "productOrderName":
-			err = unpopulate(val, &l.ProductOrderName)
+			err = unpopulate(val, "ProductOrderName", &l.ProductOrderName)
 			delete(rawMsg, key)
 		case "publisherName":
-			err = unpopulate(val, &l.PublisherName)
+			err = unpopulate(val, "PublisherName", &l.PublisherName)
 			delete(rawMsg, key)
 		case "publisherType":
-			err = unpopulate(val, &l.PublisherType)
+			err = unpopulate(val, "PublisherType", &l.PublisherType)
 			delete(rawMsg, key)
 		case "quantity":
-			err = unpopulate(val, &l.Quantity)
+			err = unpopulate(val, "Quantity", &l.Quantity)
 			delete(rawMsg, key)
 		case "reservationId":
-			err = unpopulate(val, &l.ReservationID)
+			err = unpopulate(val, "ReservationID", &l.ReservationID)
 			delete(rawMsg, key)
 		case "reservationName":
-			err = unpopulate(val, &l.ReservationName)
+			err = unpopulate(val, "ReservationName", &l.ReservationName)
 			delete(rawMsg, key)
 		case "resourceGroup":
-			err = unpopulate(val, &l.ResourceGroup)
+			err = unpopulate(val, "ResourceGroup", &l.ResourceGroup)
 			delete(rawMsg, key)
 		case "resourceId":
-			err = unpopulate(val, &l.ResourceID)
+			err = unpopulate(val, "ResourceID", &l.ResourceID)
 			delete(rawMsg, key)
 		case "resourceLocation":
-			err = unpopulate(val, &l.ResourceLocation)
+			err = unpopulate(val, "ResourceLocation", &l.ResourceLocation)
 			delete(rawMsg, key)
 		case "resourceName":
-			err = unpopulate(val, &l.ResourceName)
+			err = unpopulate(val, "ResourceName", &l.ResourceName)
 			delete(rawMsg, key)
 		case "serviceInfo1":
-			err = unpopulate(val, &l.ServiceInfo1)
+			err = unpopulate(val, "ServiceInfo1", &l.ServiceInfo1)
 			delete(rawMsg, key)
 		case "serviceInfo2":
-			err = unpopulate(val, &l.ServiceInfo2)
+			err = unpopulate(val, "ServiceInfo2", &l.ServiceInfo2)
 			delete(rawMsg, key)
 		case "subscriptionId":
-			err = unpopulate(val, &l.SubscriptionID)
+			err = unpopulate(val, "SubscriptionID", &l.SubscriptionID)
 			delete(rawMsg, key)
 		case "subscriptionName":
-			err = unpopulate(val, &l.SubscriptionName)
+			err = unpopulate(val, "SubscriptionName", &l.SubscriptionName)
 			delete(rawMsg, key)
 		case "term":
-			err = unpopulate(val, &l.Term)
+			err = unpopulate(val, "Term", &l.Term)
 			delete(rawMsg, key)
 		case "unitPrice":
-			err = unpopulate(val, &l.UnitPrice)
+			err = unpopulate(val, "UnitPrice", &l.UnitPrice)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -882,47 +883,47 @@ func (l LotProperties) MarshalJSON() ([]byte, error) {
 func (l *LotProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "billingCurrency":
-			err = unpopulate(val, &l.BillingCurrency)
+			err = unpopulate(val, "BillingCurrency", &l.BillingCurrency)
 			delete(rawMsg, key)
 		case "closedBalance":
-			err = unpopulate(val, &l.ClosedBalance)
+			err = unpopulate(val, "ClosedBalance", &l.ClosedBalance)
 			delete(rawMsg, key)
 		case "closedBalanceInBillingCurrency":
-			err = unpopulate(val, &l.ClosedBalanceInBillingCurrency)
+			err = unpopulate(val, "ClosedBalanceInBillingCurrency", &l.ClosedBalanceInBillingCurrency)
 			delete(rawMsg, key)
 		case "creditCurrency":
-			err = unpopulate(val, &l.CreditCurrency)
+			err = unpopulate(val, "CreditCurrency", &l.CreditCurrency)
 			delete(rawMsg, key)
 		case "expirationDate":
-			err = unpopulateTimeRFC3339(val, &l.ExpirationDate)
+			err = unpopulateTimeRFC3339(val, "ExpirationDate", &l.ExpirationDate)
 			delete(rawMsg, key)
 		case "originalAmount":
-			err = unpopulate(val, &l.OriginalAmount)
+			err = unpopulate(val, "OriginalAmount", &l.OriginalAmount)
 			delete(rawMsg, key)
 		case "originalAmountInBillingCurrency":
-			err = unpopulate(val, &l.OriginalAmountInBillingCurrency)
+			err = unpopulate(val, "OriginalAmountInBillingCurrency", &l.OriginalAmountInBillingCurrency)
 			delete(rawMsg, key)
 		case "poNumber":
-			err = unpopulate(val, &l.PoNumber)
+			err = unpopulate(val, "PoNumber", &l.PoNumber)
 			delete(rawMsg, key)
 		case "reseller":
-			err = unpopulate(val, &l.Reseller)
+			err = unpopulate(val, "Reseller", &l.Reseller)
 			delete(rawMsg, key)
 		case "source":
-			err = unpopulate(val, &l.Source)
+			err = unpopulate(val, "Source", &l.Source)
 			delete(rawMsg, key)
 		case "startDate":
-			err = unpopulateTimeRFC3339(val, &l.StartDate)
+			err = unpopulateTimeRFC3339(val, "StartDate", &l.StartDate)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -968,44 +969,44 @@ func (m ManagementGroupAggregatedCostProperties) MarshalJSON() ([]byte, error) {
 func (m *ManagementGroupAggregatedCostProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "azureCharges":
-			err = unpopulate(val, &m.AzureCharges)
+			err = unpopulate(val, "AzureCharges", &m.AzureCharges)
 			delete(rawMsg, key)
 		case "billingPeriodId":
-			err = unpopulate(val, &m.BillingPeriodID)
+			err = unpopulate(val, "BillingPeriodID", &m.BillingPeriodID)
 			delete(rawMsg, key)
 		case "chargesBilledSeparately":
-			err = unpopulate(val, &m.ChargesBilledSeparately)
+			err = unpopulate(val, "ChargesBilledSeparately", &m.ChargesBilledSeparately)
 			delete(rawMsg, key)
 		case "children":
-			err = unpopulate(val, &m.Children)
+			err = unpopulate(val, "Children", &m.Children)
 			delete(rawMsg, key)
 		case "currency":
-			err = unpopulate(val, &m.Currency)
+			err = unpopulate(val, "Currency", &m.Currency)
 			delete(rawMsg, key)
 		case "excludedSubscriptions":
-			err = unpopulate(val, &m.ExcludedSubscriptions)
+			err = unpopulate(val, "ExcludedSubscriptions", &m.ExcludedSubscriptions)
 			delete(rawMsg, key)
 		case "includedSubscriptions":
-			err = unpopulate(val, &m.IncludedSubscriptions)
+			err = unpopulate(val, "IncludedSubscriptions", &m.IncludedSubscriptions)
 			delete(rawMsg, key)
 		case "marketplaceCharges":
-			err = unpopulate(val, &m.MarketplaceCharges)
+			err = unpopulate(val, "MarketplaceCharges", &m.MarketplaceCharges)
 			delete(rawMsg, key)
 		case "usageEnd":
-			err = unpopulateTimeRFC3339(val, &m.UsageEnd)
+			err = unpopulateTimeRFC3339(val, "UsageEnd", &m.UsageEnd)
 			delete(rawMsg, key)
 		case "usageStart":
-			err = unpopulateTimeRFC3339(val, &m.UsageStart)
+			err = unpopulateTimeRFC3339(val, "UsageStart", &m.UsageStart)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1071,92 +1072,92 @@ func (m MarketplaceProperties) MarshalJSON() ([]byte, error) {
 func (m *MarketplaceProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "accountName":
-			err = unpopulate(val, &m.AccountName)
+			err = unpopulate(val, "AccountName", &m.AccountName)
 			delete(rawMsg, key)
 		case "additionalInfo":
-			err = unpopulate(val, &m.AdditionalInfo)
+			err = unpopulate(val, "AdditionalInfo", &m.AdditionalInfo)
 			delete(rawMsg, key)
 		case "additionalProperties":
-			err = unpopulate(val, &m.AdditionalProperties)
+			err = unpopulate(val, "AdditionalProperties", &m.AdditionalProperties)
 			delete(rawMsg, key)
 		case "billingPeriodId":
-			err = unpopulate(val, &m.BillingPeriodID)
+			err = unpopulate(val, "BillingPeriodID", &m.BillingPeriodID)
 			delete(rawMsg, key)
 		case "consumedQuantity":
-			err = unpopulate(val, &m.ConsumedQuantity)
+			err = unpopulate(val, "ConsumedQuantity", &m.ConsumedQuantity)
 			delete(rawMsg, key)
 		case "consumedService":
-			err = unpopulate(val, &m.ConsumedService)
+			err = unpopulate(val, "ConsumedService", &m.ConsumedService)
 			delete(rawMsg, key)
 		case "costCenter":
-			err = unpopulate(val, &m.CostCenter)
+			err = unpopulate(val, "CostCenter", &m.CostCenter)
 			delete(rawMsg, key)
 		case "currency":
-			err = unpopulate(val, &m.Currency)
+			err = unpopulate(val, "Currency", &m.Currency)
 			delete(rawMsg, key)
 		case "departmentName":
-			err = unpopulate(val, &m.DepartmentName)
+			err = unpopulate(val, "DepartmentName", &m.DepartmentName)
 			delete(rawMsg, key)
 		case "instanceId":
-			err = unpopulate(val, &m.InstanceID)
+			err = unpopulate(val, "InstanceID", &m.InstanceID)
 			delete(rawMsg, key)
 		case "instanceName":
-			err = unpopulate(val, &m.InstanceName)
+			err = unpopulate(val, "InstanceName", &m.InstanceName)
 			delete(rawMsg, key)
 		case "isEstimated":
-			err = unpopulate(val, &m.IsEstimated)
+			err = unpopulate(val, "IsEstimated", &m.IsEstimated)
 			delete(rawMsg, key)
 		case "isRecurringCharge":
-			err = unpopulate(val, &m.IsRecurringCharge)
+			err = unpopulate(val, "IsRecurringCharge", &m.IsRecurringCharge)
 			delete(rawMsg, key)
 		case "meterId":
-			err = unpopulate(val, &m.MeterID)
+			err = unpopulate(val, "MeterID", &m.MeterID)
 			delete(rawMsg, key)
 		case "offerName":
-			err = unpopulate(val, &m.OfferName)
+			err = unpopulate(val, "OfferName", &m.OfferName)
 			delete(rawMsg, key)
 		case "orderNumber":
-			err = unpopulate(val, &m.OrderNumber)
+			err = unpopulate(val, "OrderNumber", &m.OrderNumber)
 			delete(rawMsg, key)
 		case "planName":
-			err = unpopulate(val, &m.PlanName)
+			err = unpopulate(val, "PlanName", &m.PlanName)
 			delete(rawMsg, key)
 		case "pretaxCost":
-			err = unpopulate(val, &m.PretaxCost)
+			err = unpopulate(val, "PretaxCost", &m.PretaxCost)
 			delete(rawMsg, key)
 		case "publisherName":
-			err = unpopulate(val, &m.PublisherName)
+			err = unpopulate(val, "PublisherName", &m.PublisherName)
 			delete(rawMsg, key)
 		case "resourceGroup":
-			err = unpopulate(val, &m.ResourceGroup)
+			err = unpopulate(val, "ResourceGroup", &m.ResourceGroup)
 			delete(rawMsg, key)
 		case "resourceRate":
-			err = unpopulate(val, &m.ResourceRate)
+			err = unpopulate(val, "ResourceRate", &m.ResourceRate)
 			delete(rawMsg, key)
 		case "subscriptionGuid":
-			err = unpopulate(val, &m.SubscriptionGUID)
+			err = unpopulate(val, "SubscriptionGUID", &m.SubscriptionGUID)
 			delete(rawMsg, key)
 		case "subscriptionName":
-			err = unpopulate(val, &m.SubscriptionName)
+			err = unpopulate(val, "SubscriptionName", &m.SubscriptionName)
 			delete(rawMsg, key)
 		case "unitOfMeasure":
-			err = unpopulate(val, &m.UnitOfMeasure)
+			err = unpopulate(val, "UnitOfMeasure", &m.UnitOfMeasure)
 			delete(rawMsg, key)
 		case "usageEnd":
-			err = unpopulateTimeRFC3339(val, &m.UsageEnd)
+			err = unpopulateTimeRFC3339(val, "UsageEnd", &m.UsageEnd)
 			delete(rawMsg, key)
 		case "usageStart":
-			err = unpopulateTimeRFC3339(val, &m.UsageStart)
+			err = unpopulateTimeRFC3339(val, "UsageStart", &m.UsageStart)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1187,35 +1188,35 @@ func (m ModernChargeSummary) MarshalJSON() ([]byte, error) {
 func (m *ModernChargeSummary) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "etag":
-			err = unpopulate(val, &m.Etag)
+			err = unpopulate(val, "Etag", &m.Etag)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &m.ID)
+			err = unpopulate(val, "ID", &m.ID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &m.Kind)
+			err = unpopulate(val, "Kind", &m.Kind)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &m.Name)
+			err = unpopulate(val, "Name", &m.Name)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &m.Properties)
+			err = unpopulate(val, "Properties", &m.Properties)
 			delete(rawMsg, key)
 		case "tags":
-			err = unpopulate(val, &m.Tags)
+			err = unpopulate(val, "Tags", &m.Tags)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &m.Type)
+			err = unpopulate(val, "Type", &m.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1241,44 +1242,44 @@ func (m ModernReservationRecommendation) MarshalJSON() ([]byte, error) {
 func (m *ModernReservationRecommendation) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "eTag":
-			err = unpopulate(val, &m.ETag)
+			err = unpopulate(val, "ETag", &m.ETag)
 			delete(rawMsg, key)
 		case "etag":
-			err = unpopulate(val, &m.Etag)
+			err = unpopulate(val, "Etag", &m.Etag)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &m.ID)
+			err = unpopulate(val, "ID", &m.ID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &m.Kind)
+			err = unpopulate(val, "Kind", &m.Kind)
 			delete(rawMsg, key)
 		case "location":
-			err = unpopulate(val, &m.Location)
+			err = unpopulate(val, "Location", &m.Location)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &m.Name)
+			err = unpopulate(val, "Name", &m.Name)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &m.Properties)
+			err = unpopulate(val, "Properties", &m.Properties)
 			delete(rawMsg, key)
 		case "sku":
-			err = unpopulate(val, &m.SKU)
+			err = unpopulate(val, "SKU", &m.SKU)
 			delete(rawMsg, key)
 		case "tags":
-			err = unpopulate(val, &m.Tags)
+			err = unpopulate(val, "Tags", &m.Tags)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &m.Type)
+			err = unpopulate(val, "Type", &m.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1312,68 +1313,68 @@ func (m ModernReservationRecommendationProperties) MarshalJSON() ([]byte, error)
 func (m *ModernReservationRecommendationProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "costWithNoReservedInstances":
-			err = unpopulate(val, &m.CostWithNoReservedInstances)
+			err = unpopulate(val, "CostWithNoReservedInstances", &m.CostWithNoReservedInstances)
 			delete(rawMsg, key)
 		case "firstUsageDate":
-			err = unpopulateTimeRFC3339(val, &m.FirstUsageDate)
+			err = unpopulateTimeRFC3339(val, "FirstUsageDate", &m.FirstUsageDate)
 			delete(rawMsg, key)
 		case "instanceFlexibilityGroup":
-			err = unpopulate(val, &m.InstanceFlexibilityGroup)
+			err = unpopulate(val, "InstanceFlexibilityGroup", &m.InstanceFlexibilityGroup)
 			delete(rawMsg, key)
 		case "instanceFlexibilityRatio":
-			err = unpopulate(val, &m.InstanceFlexibilityRatio)
+			err = unpopulate(val, "InstanceFlexibilityRatio", &m.InstanceFlexibilityRatio)
 			delete(rawMsg, key)
 		case "location":
-			err = unpopulate(val, &m.Location)
+			err = unpopulate(val, "Location", &m.Location)
 			delete(rawMsg, key)
 		case "lookBackPeriod":
-			err = unpopulate(val, &m.LookBackPeriod)
+			err = unpopulate(val, "LookBackPeriod", &m.LookBackPeriod)
 			delete(rawMsg, key)
 		case "meterId":
-			err = unpopulate(val, &m.MeterID)
+			err = unpopulate(val, "MeterID", &m.MeterID)
 			delete(rawMsg, key)
 		case "netSavings":
-			err = unpopulate(val, &m.NetSavings)
+			err = unpopulate(val, "NetSavings", &m.NetSavings)
 			delete(rawMsg, key)
 		case "normalizedSize":
-			err = unpopulate(val, &m.NormalizedSize)
+			err = unpopulate(val, "NormalizedSize", &m.NormalizedSize)
 			delete(rawMsg, key)
 		case "recommendedQuantity":
-			err = unpopulate(val, &m.RecommendedQuantity)
+			err = unpopulate(val, "RecommendedQuantity", &m.RecommendedQuantity)
 			delete(rawMsg, key)
 		case "recommendedQuantityNormalized":
-			err = unpopulate(val, &m.RecommendedQuantityNormalized)
+			err = unpopulate(val, "RecommendedQuantityNormalized", &m.RecommendedQuantityNormalized)
 			delete(rawMsg, key)
 		case "resourceType":
-			err = unpopulate(val, &m.ResourceType)
+			err = unpopulate(val, "ResourceType", &m.ResourceType)
 			delete(rawMsg, key)
 		case "skuName":
-			err = unpopulate(val, &m.SKUName)
+			err = unpopulate(val, "SKUName", &m.SKUName)
 			delete(rawMsg, key)
 		case "skuProperties":
-			err = unpopulate(val, &m.SKUProperties)
+			err = unpopulate(val, "SKUProperties", &m.SKUProperties)
 			delete(rawMsg, key)
 		case "scope":
-			err = unpopulate(val, &m.Scope)
+			err = unpopulate(val, "Scope", &m.Scope)
 			delete(rawMsg, key)
 		case "subscriptionId":
-			err = unpopulate(val, &m.SubscriptionID)
+			err = unpopulate(val, "SubscriptionID", &m.SubscriptionID)
 			delete(rawMsg, key)
 		case "term":
-			err = unpopulate(val, &m.Term)
+			err = unpopulate(val, "Term", &m.Term)
 			delete(rawMsg, key)
 		case "totalCostWithReservedInstances":
-			err = unpopulate(val, &m.TotalCostWithReservedInstances)
+			err = unpopulate(val, "TotalCostWithReservedInstances", &m.TotalCostWithReservedInstances)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1420,74 +1421,74 @@ func (m ModernReservationTransactionProperties) MarshalJSON() ([]byte, error) {
 func (m *ModernReservationTransactionProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "amount":
-			err = unpopulate(val, &m.Amount)
+			err = unpopulate(val, "Amount", &m.Amount)
 			delete(rawMsg, key)
 		case "armSkuName":
-			err = unpopulate(val, &m.ArmSKUName)
+			err = unpopulate(val, "ArmSKUName", &m.ArmSKUName)
 			delete(rawMsg, key)
 		case "billingFrequency":
-			err = unpopulate(val, &m.BillingFrequency)
+			err = unpopulate(val, "BillingFrequency", &m.BillingFrequency)
 			delete(rawMsg, key)
 		case "billingProfileId":
-			err = unpopulate(val, &m.BillingProfileID)
+			err = unpopulate(val, "BillingProfileID", &m.BillingProfileID)
 			delete(rawMsg, key)
 		case "billingProfileName":
-			err = unpopulate(val, &m.BillingProfileName)
+			err = unpopulate(val, "BillingProfileName", &m.BillingProfileName)
 			delete(rawMsg, key)
 		case "currency":
-			err = unpopulate(val, &m.Currency)
+			err = unpopulate(val, "Currency", &m.Currency)
 			delete(rawMsg, key)
 		case "description":
-			err = unpopulate(val, &m.Description)
+			err = unpopulate(val, "Description", &m.Description)
 			delete(rawMsg, key)
 		case "eventDate":
-			err = unpopulateTimeRFC3339(val, &m.EventDate)
+			err = unpopulateTimeRFC3339(val, "EventDate", &m.EventDate)
 			delete(rawMsg, key)
 		case "eventType":
-			err = unpopulate(val, &m.EventType)
+			err = unpopulate(val, "EventType", &m.EventType)
 			delete(rawMsg, key)
 		case "invoice":
-			err = unpopulate(val, &m.Invoice)
+			err = unpopulate(val, "Invoice", &m.Invoice)
 			delete(rawMsg, key)
 		case "invoiceId":
-			err = unpopulate(val, &m.InvoiceID)
+			err = unpopulate(val, "InvoiceID", &m.InvoiceID)
 			delete(rawMsg, key)
 		case "invoiceSectionId":
-			err = unpopulate(val, &m.InvoiceSectionID)
+			err = unpopulate(val, "InvoiceSectionID", &m.InvoiceSectionID)
 			delete(rawMsg, key)
 		case "invoiceSectionName":
-			err = unpopulate(val, &m.InvoiceSectionName)
+			err = unpopulate(val, "InvoiceSectionName", &m.InvoiceSectionName)
 			delete(rawMsg, key)
 		case "purchasingSubscriptionGuid":
-			err = unpopulate(val, &m.PurchasingSubscriptionGUID)
+			err = unpopulate(val, "PurchasingSubscriptionGUID", &m.PurchasingSubscriptionGUID)
 			delete(rawMsg, key)
 		case "purchasingSubscriptionName":
-			err = unpopulate(val, &m.PurchasingSubscriptionName)
+			err = unpopulate(val, "PurchasingSubscriptionName", &m.PurchasingSubscriptionName)
 			delete(rawMsg, key)
 		case "quantity":
-			err = unpopulate(val, &m.Quantity)
+			err = unpopulate(val, "Quantity", &m.Quantity)
 			delete(rawMsg, key)
 		case "region":
-			err = unpopulate(val, &m.Region)
+			err = unpopulate(val, "Region", &m.Region)
 			delete(rawMsg, key)
 		case "reservationOrderId":
-			err = unpopulate(val, &m.ReservationOrderID)
+			err = unpopulate(val, "ReservationOrderID", &m.ReservationOrderID)
 			delete(rawMsg, key)
 		case "reservationOrderName":
-			err = unpopulate(val, &m.ReservationOrderName)
+			err = unpopulate(val, "ReservationOrderName", &m.ReservationOrderName)
 			delete(rawMsg, key)
 		case "term":
-			err = unpopulate(val, &m.Term)
+			err = unpopulate(val, "Term", &m.Term)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1518,35 +1519,35 @@ func (m ModernUsageDetail) MarshalJSON() ([]byte, error) {
 func (m *ModernUsageDetail) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "etag":
-			err = unpopulate(val, &m.Etag)
+			err = unpopulate(val, "Etag", &m.Etag)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &m.ID)
+			err = unpopulate(val, "ID", &m.ID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &m.Kind)
+			err = unpopulate(val, "Kind", &m.Kind)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &m.Name)
+			err = unpopulate(val, "Name", &m.Name)
 			delete(rawMsg, key)
 		case "properties":
-			err = unpopulate(val, &m.Properties)
+			err = unpopulate(val, "Properties", &m.Properties)
 			delete(rawMsg, key)
 		case "tags":
-			err = unpopulate(val, &m.Tags)
+			err = unpopulate(val, "Tags", &m.Tags)
 			delete(rawMsg, key)
 		case "type":
-			err = unpopulate(val, &m.Type)
+			err = unpopulate(val, "Type", &m.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1628,212 +1629,212 @@ func (m ModernUsageDetailProperties) MarshalJSON() ([]byte, error) {
 func (m *ModernUsageDetailProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "additionalInfo":
-			err = unpopulate(val, &m.AdditionalInfo)
+			err = unpopulate(val, "AdditionalInfo", &m.AdditionalInfo)
 			delete(rawMsg, key)
 		case "billingAccountId":
-			err = unpopulate(val, &m.BillingAccountID)
+			err = unpopulate(val, "BillingAccountID", &m.BillingAccountID)
 			delete(rawMsg, key)
 		case "billingAccountName":
-			err = unpopulate(val, &m.BillingAccountName)
+			err = unpopulate(val, "BillingAccountName", &m.BillingAccountName)
 			delete(rawMsg, key)
 		case "billingCurrencyCode":
-			err = unpopulate(val, &m.BillingCurrencyCode)
+			err = unpopulate(val, "BillingCurrencyCode", &m.BillingCurrencyCode)
 			delete(rawMsg, key)
 		case "billingPeriodEndDate":
-			err = unpopulateTimeRFC3339(val, &m.BillingPeriodEndDate)
+			err = unpopulateTimeRFC3339(val, "BillingPeriodEndDate", &m.BillingPeriodEndDate)
 			delete(rawMsg, key)
 		case "billingPeriodStartDate":
-			err = unpopulateTimeRFC3339(val, &m.BillingPeriodStartDate)
+			err = unpopulateTimeRFC3339(val, "BillingPeriodStartDate", &m.BillingPeriodStartDate)
 			delete(rawMsg, key)
 		case "billingProfileId":
-			err = unpopulate(val, &m.BillingProfileID)
+			err = unpopulate(val, "BillingProfileID", &m.BillingProfileID)
 			delete(rawMsg, key)
 		case "billingProfileName":
-			err = unpopulate(val, &m.BillingProfileName)
+			err = unpopulate(val, "BillingProfileName", &m.BillingProfileName)
 			delete(rawMsg, key)
 		case "chargeType":
-			err = unpopulate(val, &m.ChargeType)
+			err = unpopulate(val, "ChargeType", &m.ChargeType)
 			delete(rawMsg, key)
 		case "consumedService":
-			err = unpopulate(val, &m.ConsumedService)
+			err = unpopulate(val, "ConsumedService", &m.ConsumedService)
 			delete(rawMsg, key)
 		case "costCenter":
-			err = unpopulate(val, &m.CostCenter)
+			err = unpopulate(val, "CostCenter", &m.CostCenter)
 			delete(rawMsg, key)
 		case "costInBillingCurrency":
-			err = unpopulate(val, &m.CostInBillingCurrency)
+			err = unpopulate(val, "CostInBillingCurrency", &m.CostInBillingCurrency)
 			delete(rawMsg, key)
 		case "costInPricingCurrency":
-			err = unpopulate(val, &m.CostInPricingCurrency)
+			err = unpopulate(val, "CostInPricingCurrency", &m.CostInPricingCurrency)
 			delete(rawMsg, key)
 		case "costInUSD":
-			err = unpopulate(val, &m.CostInUSD)
+			err = unpopulate(val, "CostInUSD", &m.CostInUSD)
 			delete(rawMsg, key)
 		case "customerName":
-			err = unpopulate(val, &m.CustomerName)
+			err = unpopulate(val, "CustomerName", &m.CustomerName)
 			delete(rawMsg, key)
 		case "customerTenantId":
-			err = unpopulate(val, &m.CustomerTenantID)
+			err = unpopulate(val, "CustomerTenantID", &m.CustomerTenantID)
 			delete(rawMsg, key)
 		case "date":
-			err = unpopulateTimeRFC3339(val, &m.Date)
+			err = unpopulateTimeRFC3339(val, "Date", &m.Date)
 			delete(rawMsg, key)
 		case "exchangeRate":
-			err = unpopulate(val, &m.ExchangeRate)
+			err = unpopulate(val, "ExchangeRate", &m.ExchangeRate)
 			delete(rawMsg, key)
 		case "exchangeRateDate":
-			err = unpopulateTimeRFC3339(val, &m.ExchangeRateDate)
+			err = unpopulateTimeRFC3339(val, "ExchangeRateDate", &m.ExchangeRateDate)
 			delete(rawMsg, key)
 		case "exchangeRatePricingToBilling":
-			err = unpopulate(val, &m.ExchangeRatePricingToBilling)
+			err = unpopulate(val, "ExchangeRatePricingToBilling", &m.ExchangeRatePricingToBilling)
 			delete(rawMsg, key)
 		case "frequency":
-			err = unpopulate(val, &m.Frequency)
+			err = unpopulate(val, "Frequency", &m.Frequency)
 			delete(rawMsg, key)
 		case "instanceName":
-			err = unpopulate(val, &m.InstanceName)
+			err = unpopulate(val, "InstanceName", &m.InstanceName)
 			delete(rawMsg, key)
 		case "invoiceId":
-			err = unpopulate(val, &m.InvoiceID)
+			err = unpopulate(val, "InvoiceID", &m.InvoiceID)
 			delete(rawMsg, key)
 		case "invoiceSectionId":
-			err = unpopulate(val, &m.InvoiceSectionID)
+			err = unpopulate(val, "InvoiceSectionID", &m.InvoiceSectionID)
 			delete(rawMsg, key)
 		case "invoiceSectionName":
-			err = unpopulate(val, &m.InvoiceSectionName)
+			err = unpopulate(val, "InvoiceSectionName", &m.InvoiceSectionName)
 			delete(rawMsg, key)
 		case "isAzureCreditEligible":
-			err = unpopulate(val, &m.IsAzureCreditEligible)
+			err = unpopulate(val, "IsAzureCreditEligible", &m.IsAzureCreditEligible)
 			delete(rawMsg, key)
 		case "marketPrice":
-			err = unpopulate(val, &m.MarketPrice)
+			err = unpopulate(val, "MarketPrice", &m.MarketPrice)
 			delete(rawMsg, key)
 		case "meterCategory":
-			err = unpopulate(val, &m.MeterCategory)
+			err = unpopulate(val, "MeterCategory", &m.MeterCategory)
 			delete(rawMsg, key)
 		case "meterId":
-			err = unpopulate(val, &m.MeterID)
+			err = unpopulate(val, "MeterID", &m.MeterID)
 			delete(rawMsg, key)
 		case "meterName":
-			err = unpopulate(val, &m.MeterName)
+			err = unpopulate(val, "MeterName", &m.MeterName)
 			delete(rawMsg, key)
 		case "meterRegion":
-			err = unpopulate(val, &m.MeterRegion)
+			err = unpopulate(val, "MeterRegion", &m.MeterRegion)
 			delete(rawMsg, key)
 		case "meterSubCategory":
-			err = unpopulate(val, &m.MeterSubCategory)
+			err = unpopulate(val, "MeterSubCategory", &m.MeterSubCategory)
 			delete(rawMsg, key)
 		case "partnerEarnedCreditApplied":
-			err = unpopulate(val, &m.PartnerEarnedCreditApplied)
+			err = unpopulate(val, "PartnerEarnedCreditApplied", &m.PartnerEarnedCreditApplied)
 			delete(rawMsg, key)
 		case "partnerEarnedCreditRate":
-			err = unpopulate(val, &m.PartnerEarnedCreditRate)
+			err = unpopulate(val, "PartnerEarnedCreditRate", &m.PartnerEarnedCreditRate)
 			delete(rawMsg, key)
 		case "partnerName":
-			err = unpopulate(val, &m.PartnerName)
+			err = unpopulate(val, "PartnerName", &m.PartnerName)
 			delete(rawMsg, key)
 		case "partnerTenantId":
-			err = unpopulate(val, &m.PartnerTenantID)
+			err = unpopulate(val, "PartnerTenantID", &m.PartnerTenantID)
 			delete(rawMsg, key)
 		case "payGPrice":
-			err = unpopulate(val, &m.PayGPrice)
+			err = unpopulate(val, "PayGPrice", &m.PayGPrice)
 			delete(rawMsg, key)
 		case "paygCostInBillingCurrency":
-			err = unpopulate(val, &m.PaygCostInBillingCurrency)
+			err = unpopulate(val, "PaygCostInBillingCurrency", &m.PaygCostInBillingCurrency)
 			delete(rawMsg, key)
 		case "paygCostInUSD":
-			err = unpopulate(val, &m.PaygCostInUSD)
+			err = unpopulate(val, "PaygCostInUSD", &m.PaygCostInUSD)
 			delete(rawMsg, key)
 		case "previousInvoiceId":
-			err = unpopulate(val, &m.PreviousInvoiceID)
+			err = unpopulate(val, "PreviousInvoiceID", &m.PreviousInvoiceID)
 			delete(rawMsg, key)
 		case "pricingCurrencyCode":
-			err = unpopulate(val, &m.PricingCurrencyCode)
+			err = unpopulate(val, "PricingCurrencyCode", &m.PricingCurrencyCode)
 			delete(rawMsg, key)
 		case "product":
-			err = unpopulate(val, &m.Product)
+			err = unpopulate(val, "Product", &m.Product)
 			delete(rawMsg, key)
 		case "productIdentifier":
-			err = unpopulate(val, &m.ProductIdentifier)
+			err = unpopulate(val, "ProductIdentifier", &m.ProductIdentifier)
 			delete(rawMsg, key)
 		case "productOrderId":
-			err = unpopulate(val, &m.ProductOrderID)
+			err = unpopulate(val, "ProductOrderID", &m.ProductOrderID)
 			delete(rawMsg, key)
 		case "productOrderName":
-			err = unpopulate(val, &m.ProductOrderName)
+			err = unpopulate(val, "ProductOrderName", &m.ProductOrderName)
 			delete(rawMsg, key)
 		case "publisherId":
-			err = unpopulate(val, &m.PublisherID)
+			err = unpopulate(val, "PublisherID", &m.PublisherID)
 			delete(rawMsg, key)
 		case "publisherName":
-			err = unpopulate(val, &m.PublisherName)
+			err = unpopulate(val, "PublisherName", &m.PublisherName)
 			delete(rawMsg, key)
 		case "publisherType":
-			err = unpopulate(val, &m.PublisherType)
+			err = unpopulate(val, "PublisherType", &m.PublisherType)
 			delete(rawMsg, key)
 		case "quantity":
-			err = unpopulate(val, &m.Quantity)
+			err = unpopulate(val, "Quantity", &m.Quantity)
 			delete(rawMsg, key)
 		case "resellerMpnId":
-			err = unpopulate(val, &m.ResellerMpnID)
+			err = unpopulate(val, "ResellerMpnID", &m.ResellerMpnID)
 			delete(rawMsg, key)
 		case "resellerName":
-			err = unpopulate(val, &m.ResellerName)
+			err = unpopulate(val, "ResellerName", &m.ResellerName)
 			delete(rawMsg, key)
 		case "reservationId":
-			err = unpopulate(val, &m.ReservationID)
+			err = unpopulate(val, "ReservationID", &m.ReservationID)
 			delete(rawMsg, key)
 		case "reservationName":
-			err = unpopulate(val, &m.ReservationName)
+			err = unpopulate(val, "ReservationName", &m.ReservationName)
 			delete(rawMsg, key)
 		case "resourceGroup":
-			err = unpopulate(val, &m.ResourceGroup)
+			err = unpopulate(val, "ResourceGroup", &m.ResourceGroup)
 			delete(rawMsg, key)
 		case "resourceLocation":
-			err = unpopulate(val, &m.ResourceLocation)
+			err = unpopulate(val, "ResourceLocation", &m.ResourceLocation)
 			delete(rawMsg, key)
 		case "resourceLocationNormalized":
-			err = unpopulate(val, &m.ResourceLocationNormalized)
+			err = unpopulate(val, "ResourceLocationNormalized", &m.ResourceLocationNormalized)
 			delete(rawMsg, key)
 		case "serviceFamily":
-			err = unpopulate(val, &m.ServiceFamily)
+			err = unpopulate(val, "ServiceFamily", &m.ServiceFamily)
 			delete(rawMsg, key)
 		case "serviceInfo1":
-			err = unpopulate(val, &m.ServiceInfo1)
+			err = unpopulate(val, "ServiceInfo1", &m.ServiceInfo1)
 			delete(rawMsg, key)
 		case "serviceInfo2":
-			err = unpopulate(val, &m.ServiceInfo2)
+			err = unpopulate(val, "ServiceInfo2", &m.ServiceInfo2)
 			delete(rawMsg, key)
 		case "servicePeriodEndDate":
-			err = unpopulateTimeRFC3339(val, &m.ServicePeriodEndDate)
+			err = unpopulateTimeRFC3339(val, "ServicePeriodEndDate", &m.ServicePeriodEndDate)
 			delete(rawMsg, key)
 		case "servicePeriodStartDate":
-			err = unpopulateTimeRFC3339(val, &m.ServicePeriodStartDate)
+			err = unpopulateTimeRFC3339(val, "ServicePeriodStartDate", &m.ServicePeriodStartDate)
 			delete(rawMsg, key)
 		case "subscriptionGuid":
-			err = unpopulate(val, &m.SubscriptionGUID)
+			err = unpopulate(val, "SubscriptionGUID", &m.SubscriptionGUID)
 			delete(rawMsg, key)
 		case "subscriptionName":
-			err = unpopulate(val, &m.SubscriptionName)
+			err = unpopulate(val, "SubscriptionName", &m.SubscriptionName)
 			delete(rawMsg, key)
 		case "term":
-			err = unpopulate(val, &m.Term)
+			err = unpopulate(val, "Term", &m.Term)
 			delete(rawMsg, key)
 		case "unitOfMeasure":
-			err = unpopulate(val, &m.UnitOfMeasure)
+			err = unpopulate(val, "UnitOfMeasure", &m.UnitOfMeasure)
 			delete(rawMsg, key)
 		case "unitPrice":
-			err = unpopulate(val, &m.UnitPrice)
+			err = unpopulate(val, "UnitPrice", &m.UnitPrice)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -1915,47 +1916,47 @@ func (r ReservationDetailProperties) MarshalJSON() ([]byte, error) {
 func (r *ReservationDetailProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "instanceFlexibilityGroup":
-			err = unpopulate(val, &r.InstanceFlexibilityGroup)
+			err = unpopulate(val, "InstanceFlexibilityGroup", &r.InstanceFlexibilityGroup)
 			delete(rawMsg, key)
 		case "instanceFlexibilityRatio":
-			err = unpopulate(val, &r.InstanceFlexibilityRatio)
+			err = unpopulate(val, "InstanceFlexibilityRatio", &r.InstanceFlexibilityRatio)
 			delete(rawMsg, key)
 		case "instanceId":
-			err = unpopulate(val, &r.InstanceID)
+			err = unpopulate(val, "InstanceID", &r.InstanceID)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &r.Kind)
+			err = unpopulate(val, "Kind", &r.Kind)
 			delete(rawMsg, key)
 		case "reservationId":
-			err = unpopulate(val, &r.ReservationID)
+			err = unpopulate(val, "ReservationID", &r.ReservationID)
 			delete(rawMsg, key)
 		case "reservationOrderId":
-			err = unpopulate(val, &r.ReservationOrderID)
+			err = unpopulate(val, "ReservationOrderID", &r.ReservationOrderID)
 			delete(rawMsg, key)
 		case "reservedHours":
-			err = unpopulate(val, &r.ReservedHours)
+			err = unpopulate(val, "ReservedHours", &r.ReservedHours)
 			delete(rawMsg, key)
 		case "skuName":
-			err = unpopulate(val, &r.SKUName)
+			err = unpopulate(val, "SKUName", &r.SKUName)
 			delete(rawMsg, key)
 		case "totalReservedQuantity":
-			err = unpopulate(val, &r.TotalReservedQuantity)
+			err = unpopulate(val, "TotalReservedQuantity", &r.TotalReservedQuantity)
 			delete(rawMsg, key)
 		case "usageDate":
-			err = unpopulateTimeRFC3339(val, &r.UsageDate)
+			err = unpopulateTimeRFC3339(val, "UsageDate", &r.UsageDate)
 			delete(rawMsg, key)
 		case "usedHours":
-			err = unpopulate(val, &r.UsedHours)
+			err = unpopulate(val, "UsedHours", &r.UsedHours)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", r, err)
 		}
 	}
 	return nil
@@ -2047,26 +2048,26 @@ func (r ReservationRecommendationsListResult) MarshalJSON() ([]byte, error) {
 func (r *ReservationRecommendationsListResult) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "nextLink":
-			err = unpopulate(val, &r.NextLink)
+			err = unpopulate(val, "NextLink", &r.NextLink)
 			delete(rawMsg, key)
 		case "previousLink":
-			err = unpopulate(val, &r.PreviousLink)
+			err = unpopulate(val, "PreviousLink", &r.PreviousLink)
 			delete(rawMsg, key)
 		case "totalCost":
-			err = unpopulate(val, &r.TotalCost)
+			err = unpopulate(val, "TotalCost", &r.TotalCost)
 			delete(rawMsg, key)
 		case "value":
 			r.Value, err = unmarshalReservationRecommendationClassificationArray(val)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", r, err)
 		}
 	}
 	return nil
@@ -2117,59 +2118,59 @@ func (r ReservationSummaryProperties) MarshalJSON() ([]byte, error) {
 func (r *ReservationSummaryProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "avgUtilizationPercentage":
-			err = unpopulate(val, &r.AvgUtilizationPercentage)
+			err = unpopulate(val, "AvgUtilizationPercentage", &r.AvgUtilizationPercentage)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &r.Kind)
+			err = unpopulate(val, "Kind", &r.Kind)
 			delete(rawMsg, key)
 		case "maxUtilizationPercentage":
-			err = unpopulate(val, &r.MaxUtilizationPercentage)
+			err = unpopulate(val, "MaxUtilizationPercentage", &r.MaxUtilizationPercentage)
 			delete(rawMsg, key)
 		case "minUtilizationPercentage":
-			err = unpopulate(val, &r.MinUtilizationPercentage)
+			err = unpopulate(val, "MinUtilizationPercentage", &r.MinUtilizationPercentage)
 			delete(rawMsg, key)
 		case "purchasedQuantity":
-			err = unpopulate(val, &r.PurchasedQuantity)
+			err = unpopulate(val, "PurchasedQuantity", &r.PurchasedQuantity)
 			delete(rawMsg, key)
 		case "remainingQuantity":
-			err = unpopulate(val, &r.RemainingQuantity)
+			err = unpopulate(val, "RemainingQuantity", &r.RemainingQuantity)
 			delete(rawMsg, key)
 		case "reservationId":
-			err = unpopulate(val, &r.ReservationID)
+			err = unpopulate(val, "ReservationID", &r.ReservationID)
 			delete(rawMsg, key)
 		case "reservationOrderId":
-			err = unpopulate(val, &r.ReservationOrderID)
+			err = unpopulate(val, "ReservationOrderID", &r.ReservationOrderID)
 			delete(rawMsg, key)
 		case "reservedHours":
-			err = unpopulate(val, &r.ReservedHours)
+			err = unpopulate(val, "ReservedHours", &r.ReservedHours)
 			delete(rawMsg, key)
 		case "skuName":
-			err = unpopulate(val, &r.SKUName)
+			err = unpopulate(val, "SKUName", &r.SKUName)
 			delete(rawMsg, key)
 		case "totalReservedQuantity":
-			err = unpopulate(val, &r.TotalReservedQuantity)
+			err = unpopulate(val, "TotalReservedQuantity", &r.TotalReservedQuantity)
 			delete(rawMsg, key)
 		case "usageDate":
-			err = unpopulateTimeRFC3339(val, &r.UsageDate)
+			err = unpopulateTimeRFC3339(val, "UsageDate", &r.UsageDate)
 			delete(rawMsg, key)
 		case "usedHours":
-			err = unpopulate(val, &r.UsedHours)
+			err = unpopulate(val, "UsedHours", &r.UsedHours)
 			delete(rawMsg, key)
 		case "usedQuantity":
-			err = unpopulate(val, &r.UsedQuantity)
+			err = unpopulate(val, "UsedQuantity", &r.UsedQuantity)
 			delete(rawMsg, key)
 		case "utilizedPercentage":
-			err = unpopulate(val, &r.UtilizedPercentage)
+			err = unpopulate(val, "UtilizedPercentage", &r.UtilizedPercentage)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", r, err)
 		}
 	}
 	return nil
@@ -2256,20 +2257,20 @@ func (u UsageDetailsListResult) MarshalJSON() ([]byte, error) {
 func (u *UsageDetailsListResult) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", u, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "nextLink":
-			err = unpopulate(val, &u.NextLink)
+			err = unpopulate(val, "NextLink", &u.NextLink)
 			delete(rawMsg, key)
 		case "value":
 			u.Value, err = unmarshalUsageDetailClassificationArray(val)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", u, err)
 		}
 	}
 	return nil
@@ -2285,9 +2286,12 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

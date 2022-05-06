@@ -10,6 +10,7 @@ package additionalpropsgroup
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
@@ -33,22 +34,22 @@ func (c CatAPTrue) MarshalJSON() ([]byte, error) {
 func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "friendly":
-			err = unpopulate(val, &c.Friendly)
+			err = unpopulate(val, "Friendly", &c.Friendly)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &c.ID)
+			err = unpopulate(val, "ID", &c.ID)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &c.Name)
+			err = unpopulate(val, "Name", &c.Name)
 			delete(rawMsg, key)
 		case "status":
-			err = unpopulate(val, &c.Status)
+			err = unpopulate(val, "Status", &c.Status)
 			delete(rawMsg, key)
 		default:
 			if c.AdditionalProperties == nil {
@@ -62,7 +63,7 @@ func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
 		}
 	}
 	return nil
@@ -98,25 +99,25 @@ func (p PetAPInPropertiesWithAPString) MarshalJSON() ([]byte, error) {
 func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "additionalProperties":
-			err = unpopulate(val, &p.AdditionalProperties1)
+			err = unpopulate(val, "AdditionalProperties1", &p.AdditionalProperties1)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &p.ID)
+			err = unpopulate(val, "ID", &p.ID)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &p.Name)
+			err = unpopulate(val, "Name", &p.Name)
 			delete(rawMsg, key)
 		case "@odata.location":
-			err = unpopulate(val, &p.ODataLocation)
+			err = unpopulate(val, "ODataLocation", &p.ODataLocation)
 			delete(rawMsg, key)
 		case "status":
-			err = unpopulate(val, &p.Status)
+			err = unpopulate(val, "Status", &p.Status)
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
@@ -130,7 +131,7 @@ func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -154,19 +155,19 @@ func (p PetAPObject) MarshalJSON() ([]byte, error) {
 func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "id":
-			err = unpopulate(val, &p.ID)
+			err = unpopulate(val, "ID", &p.ID)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &p.Name)
+			err = unpopulate(val, "Name", &p.Name)
 			delete(rawMsg, key)
 		case "status":
-			err = unpopulate(val, &p.Status)
+			err = unpopulate(val, "Status", &p.Status)
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
@@ -180,7 +181,7 @@ func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -204,19 +205,19 @@ func (p PetAPString) MarshalJSON() ([]byte, error) {
 func (p *PetAPString) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "id":
-			err = unpopulate(val, &p.ID)
+			err = unpopulate(val, "ID", &p.ID)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &p.Name)
+			err = unpopulate(val, "Name", &p.Name)
 			delete(rawMsg, key)
 		case "status":
-			err = unpopulate(val, &p.Status)
+			err = unpopulate(val, "Status", &p.Status)
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
@@ -230,7 +231,7 @@ func (p *PetAPString) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -254,19 +255,19 @@ func (p PetAPTrue) MarshalJSON() ([]byte, error) {
 func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "id":
-			err = unpopulate(val, &p.ID)
+			err = unpopulate(val, "ID", &p.ID)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &p.Name)
+			err = unpopulate(val, "Name", &p.Name)
 			delete(rawMsg, key)
 		case "status":
-			err = unpopulate(val, &p.Status)
+			err = unpopulate(val, "Status", &p.Status)
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
@@ -280,7 +281,7 @@ func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -296,9 +297,12 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

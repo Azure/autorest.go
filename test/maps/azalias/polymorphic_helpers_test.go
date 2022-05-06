@@ -29,12 +29,12 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			},
 		},
 		expected: GeoJSONObjectNamedCollection{
-			CollectionName: stringPtr("all"),
+			CollectionName: to.Ptr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
 					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
-					ID:          stringPtr("id/feature"),
-					FeatureType: stringPtr("some type"),
+					ID:          to.Ptr("id/feature"),
+					FeatureType: to.Ptr("some type"),
 				},
 				"object": &GeoJSONObject{},
 			},
@@ -42,23 +42,23 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 	}, {
 		name: "round trip",
 		input: GeoJSONObjectNamedCollection{
-			CollectionName: stringPtr("all"),
+			CollectionName: to.Ptr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
 					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
-					ID:          stringPtr("id/feature"),
-					FeatureType: stringPtr("some type"),
+					ID:          to.Ptr("id/feature"),
+					FeatureType: to.Ptr("some type"),
 				},
 				"object": &GeoJSONObject{},
 			},
 		},
 		expected: GeoJSONObjectNamedCollection{
-			CollectionName: stringPtr("all"),
+			CollectionName: to.Ptr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
 					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
-					ID:          stringPtr("id/feature"),
-					FeatureType: stringPtr("some type"),
+					ID:          to.Ptr("id/feature"),
+					FeatureType: to.Ptr("some type"),
 				},
 				"object": &GeoJSONObject{},
 			},
@@ -66,11 +66,11 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 	}, {
 		name: "empty map",
 		input: GeoJSONObjectNamedCollection{
-			CollectionName: stringPtr("all"),
+			CollectionName: to.Ptr("all"),
 			Objects:        map[string]GeoJSONObjectClassification{},
 		},
 		expected: GeoJSONObjectNamedCollection{
-			CollectionName: stringPtr("all"),
+			CollectionName: to.Ptr("all"),
 			Objects:        map[string]GeoJSONObjectClassification{},
 		},
 	}} {
@@ -93,10 +93,10 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 
 func TestInterfaceRoundTrip(t *testing.T) {
 	props1 := ScheduleCreateOrUpdateProperties{
-		Aliases:     []*string{stringPtr("foo")},
-		Description: stringPtr("funky"),
+		Aliases:     []*string{to.Ptr("foo")},
+		Description: to.Ptr("funky"),
 		Interval:    false,
-		StartTime:   timePtr(time.Now().UTC()),
+		StartTime:   to.Ptr(time.Now().UTC()),
 	}
 	b, err := json.Marshal(props1)
 	if err != nil {
@@ -134,8 +134,8 @@ func TestInterfaceRoundTrip(t *testing.T) {
 
 func TestInterfaceNil(t *testing.T) {
 	props1 := ScheduleCreateOrUpdateProperties{
-		Description: stringPtr("funky"),
-		StartTime:   timePtr(time.Now().UTC()),
+		Description: to.Ptr("funky"),
+		StartTime:   to.Ptr(time.Now().UTC()),
 	}
 	b, err := json.Marshal(props1)
 	if err != nil {
@@ -158,12 +158,4 @@ func TestInterfaceNil(t *testing.T) {
 	if props2.Aliases != nil {
 		t.Fatal("expected nil Aliases")
 	}
-}
-
-func stringPtr(s string) *string {
-	return &s
-}
-
-func timePtr(t time.Time) *time.Time {
-	return &t
 }

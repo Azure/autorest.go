@@ -68,6 +68,7 @@ function generateRFC1123Helper(preamble: string, needsPopulate: boolean): string
   imports.add('time');
   if (needsPopulate) {
     imports.add('encoding/json');
+    imports.add('fmt');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     imports.add('reflect');
   }
@@ -119,13 +120,13 @@ func populateTimeRFC1123(m map[string]interface{}, k string, t *time.Time) {
 	m[k] = (*timeRFC1123)(t)
 }
 
-func unpopulateTimeRFC1123(data json.RawMessage, t **time.Time) error {
+func unpopulateTimeRFC1123(data json.RawMessage, fn string, t **time.Time) error {
 	if data == nil || strings.EqualFold(string(data), "null") {
 		return nil
 	}
 	var aux timeRFC1123
 	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
+		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	*t = (*time.Time)(&aux)
 	return nil
@@ -142,6 +143,7 @@ function generateRFC3339Helper(preamble: string, needsPopulate: boolean): string
   imports.add('time');
   if (needsPopulate) {
     imports.add('encoding/json');
+    imports.add('fmt');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
     imports.add('reflect');
   }
@@ -208,13 +210,13 @@ func populateTimeRFC3339(m map[string]interface{}, k string, t *time.Time) {
 	m[k] = (*timeRFC3339)(t)
 }
 
-func unpopulateTimeRFC3339(data json.RawMessage, t **time.Time) error {
+func unpopulateTimeRFC3339(data json.RawMessage, fn string, t **time.Time) error {
 	if data == nil || strings.EqualFold(string(data), "null") {
 		return nil
 	}
 	var aux timeRFC3339
 	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
+		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	*t = (*time.Time)(&aux)
 	return nil
@@ -272,13 +274,13 @@ func populateTimeUnix(m map[string]interface{}, k string, t *time.Time) {
 	m[k] = (*timeUnix)(t)
 }
 
-func unpopulateTimeUnix(data json.RawMessage, t **time.Time) error {
+func unpopulateTimeUnix(data json.RawMessage, fn string, t **time.Time) error {
 	if data == nil || strings.EqualFold(string(data), "null") {
 		return nil
 	}
 	var aux timeUnix
 	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
+		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	*t = (*time.Time)(&aux)
 	return nil
@@ -334,13 +336,13 @@ func populateDateType(m map[string]interface{}, k string, t *time.Time) {
 	m[k] = (*dateType)(t)
 }
 
-func unpopulateDateType(data json.RawMessage, t **time.Time) error {
+func unpopulateDateType(data json.RawMessage, fn string, t **time.Time) error {
 	if data == nil || strings.EqualFold(string(data), "null") {
 		return nil
 	}
 	var aux dateType
 	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
+		return fmt.Errorf("struct field %s: %v", fn, err)
 	}
 	*t = (*time.Time)(&aux)
 	return nil

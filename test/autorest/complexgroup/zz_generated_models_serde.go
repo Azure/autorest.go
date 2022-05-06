@@ -10,6 +10,7 @@ package complexgroup
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"reflect"
@@ -33,7 +34,7 @@ func (b ByteWrapper) MarshalJSON() ([]byte, error) {
 func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -43,7 +44,7 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", b, err)
 		}
 	}
 	return nil
@@ -75,32 +76,32 @@ func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 func (c *Cookiecuttershark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "age":
-			err = unpopulate(val, &c.Age)
+			err = unpopulate(val, "Age", &c.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateTimeRFC3339(val, &c.Birthday)
+			err = unpopulateTimeRFC3339(val, "Birthday", &c.Birthday)
 			delete(rawMsg, key)
 		case "fishtype":
-			err = unpopulate(val, &c.Fishtype)
+			err = unpopulate(val, "Fishtype", &c.Fishtype)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &c.Length)
+			err = unpopulate(val, "Length", &c.Length)
 			delete(rawMsg, key)
 		case "siblings":
 			c.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &c.Species)
+			err = unpopulate(val, "Species", &c.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
 		}
 	}
 	return nil
@@ -118,20 +119,20 @@ func (d DateWrapper) MarshalJSON() ([]byte, error) {
 func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "field":
-			err = unpopulateDateType(val, &d.Field)
+			err = unpopulateDateType(val, "Field", &d.Field)
 			delete(rawMsg, key)
 		case "leap":
-			err = unpopulateDateType(val, &d.Leap)
+			err = unpopulateDateType(val, "Leap", &d.Leap)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
 		}
 	}
 	return nil
@@ -149,20 +150,20 @@ func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
 func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "field":
-			err = unpopulateTimeRFC3339(val, &d.Field)
+			err = unpopulateTimeRFC3339(val, "Field", &d.Field)
 			delete(rawMsg, key)
 		case "now":
-			err = unpopulateTimeRFC3339(val, &d.Now)
+			err = unpopulateTimeRFC3339(val, "Now", &d.Now)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
 		}
 	}
 	return nil
@@ -180,20 +181,20 @@ func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
 func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "field":
-			err = unpopulateTimeRFC1123(val, &d.Field)
+			err = unpopulateTimeRFC1123(val, "Field", &d.Field)
 			delete(rawMsg, key)
 		case "now":
-			err = unpopulateTimeRFC1123(val, &d.Now)
+			err = unpopulateTimeRFC1123(val, "Now", &d.Now)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
 		}
 	}
 	return nil
@@ -220,7 +221,7 @@ func (d DotFishMarket) MarshalJSON() ([]byte, error) {
 func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
 		var err error
@@ -229,17 +230,17 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 			d.Fishes, err = unmarshalDotFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "salmons":
-			err = unpopulate(val, &d.Salmons)
+			err = unpopulate(val, "Salmons", &d.Salmons)
 			delete(rawMsg, key)
 		case "sampleFish":
 			d.SampleFish, err = unmarshalDotFishClassification(val)
 			delete(rawMsg, key)
 		case "sampleSalmon":
-			err = unpopulate(val, &d.SampleSalmon)
+			err = unpopulate(val, "SampleSalmon", &d.SampleSalmon)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
 		}
 	}
 	return nil
@@ -259,26 +260,26 @@ func (d DotSalmon) MarshalJSON() ([]byte, error) {
 func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "fish.type":
-			err = unpopulate(val, &d.FishType)
+			err = unpopulate(val, "FishType", &d.FishType)
 			delete(rawMsg, key)
 		case "iswild":
-			err = unpopulate(val, &d.Iswild)
+			err = unpopulate(val, "Iswild", &d.Iswild)
 			delete(rawMsg, key)
 		case "location":
-			err = unpopulate(val, &d.Location)
+			err = unpopulate(val, "Location", &d.Location)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &d.Species)
+			err = unpopulate(val, "Species", &d.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
 		}
 	}
 	return nil
@@ -298,26 +299,26 @@ func (f Fish) MarshalJSON() ([]byte, error) {
 func (f *Fish) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "fishtype":
-			err = unpopulate(val, &f.Fishtype)
+			err = unpopulate(val, "Fishtype", &f.Fishtype)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &f.Length)
+			err = unpopulate(val, "Length", &f.Length)
 			delete(rawMsg, key)
 		case "siblings":
 			f.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &f.Species)
+			err = unpopulate(val, "Species", &f.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
 		}
 	}
 	return nil
@@ -341,38 +342,38 @@ func (g Goblinshark) MarshalJSON() ([]byte, error) {
 func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", g, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "age":
-			err = unpopulate(val, &g.Age)
+			err = unpopulate(val, "Age", &g.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateTimeRFC3339(val, &g.Birthday)
+			err = unpopulateTimeRFC3339(val, "Birthday", &g.Birthday)
 			delete(rawMsg, key)
 		case "color":
-			err = unpopulate(val, &g.Color)
+			err = unpopulate(val, "Color", &g.Color)
 			delete(rawMsg, key)
 		case "fishtype":
-			err = unpopulate(val, &g.Fishtype)
+			err = unpopulate(val, "Fishtype", &g.Fishtype)
 			delete(rawMsg, key)
 		case "jawsize":
-			err = unpopulate(val, &g.Jawsize)
+			err = unpopulate(val, "Jawsize", &g.Jawsize)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &g.Length)
+			err = unpopulate(val, "Length", &g.Length)
 			delete(rawMsg, key)
 		case "siblings":
 			g.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &g.Species)
+			err = unpopulate(val, "Species", &g.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", g, err)
 		}
 	}
 	return nil
@@ -392,26 +393,26 @@ func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", m, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "helper":
-			err = unpopulate(val, &m.Helper)
+			err = unpopulate(val, "Helper", &m.Helper)
 			delete(rawMsg, key)
 		case "kind":
-			err = unpopulate(val, &m.Kind)
+			err = unpopulate(val, "Kind", &m.Kind)
 			delete(rawMsg, key)
 		case "propB1":
-			err = unpopulate(val, &m.PropB1)
+			err = unpopulate(val, "PropB1", &m.PropB1)
 			delete(rawMsg, key)
 		case "propD1":
-			err = unpopulate(val, &m.PropD1)
+			err = unpopulate(val, "PropD1", &m.PropD1)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", m, err)
 		}
 	}
 	return nil
@@ -433,32 +434,32 @@ func (s Salmon) MarshalJSON() ([]byte, error) {
 func (s *Salmon) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "fishtype":
-			err = unpopulate(val, &s.Fishtype)
+			err = unpopulate(val, "Fishtype", &s.Fishtype)
 			delete(rawMsg, key)
 		case "iswild":
-			err = unpopulate(val, &s.Iswild)
+			err = unpopulate(val, "Iswild", &s.Iswild)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &s.Length)
+			err = unpopulate(val, "Length", &s.Length)
 			delete(rawMsg, key)
 		case "location":
-			err = unpopulate(val, &s.Location)
+			err = unpopulate(val, "Location", &s.Location)
 			delete(rawMsg, key)
 		case "siblings":
 			s.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &s.Species)
+			err = unpopulate(val, "Species", &s.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -481,22 +482,22 @@ func (s Sawshark) MarshalJSON() ([]byte, error) {
 func (s *Sawshark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "age":
-			err = unpopulate(val, &s.Age)
+			err = unpopulate(val, "Age", &s.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateTimeRFC3339(val, &s.Birthday)
+			err = unpopulateTimeRFC3339(val, "Birthday", &s.Birthday)
 			delete(rawMsg, key)
 		case "fishtype":
-			err = unpopulate(val, &s.Fishtype)
+			err = unpopulate(val, "Fishtype", &s.Fishtype)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &s.Length)
+			err = unpopulate(val, "Length", &s.Length)
 			delete(rawMsg, key)
 		case "picture":
 			err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
@@ -505,11 +506,11 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 			s.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &s.Species)
+			err = unpopulate(val, "Species", &s.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -531,32 +532,32 @@ func (s Shark) MarshalJSON() ([]byte, error) {
 func (s *Shark) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "age":
-			err = unpopulate(val, &s.Age)
+			err = unpopulate(val, "Age", &s.Age)
 			delete(rawMsg, key)
 		case "birthday":
-			err = unpopulateTimeRFC3339(val, &s.Birthday)
+			err = unpopulateTimeRFC3339(val, "Birthday", &s.Birthday)
 			delete(rawMsg, key)
 		case "fishtype":
-			err = unpopulate(val, &s.Fishtype)
+			err = unpopulate(val, "Fishtype", &s.Fishtype)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &s.Length)
+			err = unpopulate(val, "Length", &s.Length)
 			delete(rawMsg, key)
 		case "siblings":
 			s.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &s.Species)
+			err = unpopulate(val, "Species", &s.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -595,31 +596,31 @@ func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "college_degree":
-			err = unpopulate(val, &s.CollegeDegree)
+			err = unpopulate(val, "CollegeDegree", &s.CollegeDegree)
 			delete(rawMsg, key)
 		case "fishtype":
-			err = unpopulate(val, &s.Fishtype)
+			err = unpopulate(val, "Fishtype", &s.Fishtype)
 			delete(rawMsg, key)
 		case "iswild":
-			err = unpopulate(val, &s.Iswild)
+			err = unpopulate(val, "Iswild", &s.Iswild)
 			delete(rawMsg, key)
 		case "length":
-			err = unpopulate(val, &s.Length)
+			err = unpopulate(val, "Length", &s.Length)
 			delete(rawMsg, key)
 		case "location":
-			err = unpopulate(val, &s.Location)
+			err = unpopulate(val, "Location", &s.Location)
 			delete(rawMsg, key)
 		case "siblings":
 			s.Siblings, err = unmarshalFishClassificationArray(val)
 			delete(rawMsg, key)
 		case "species":
-			err = unpopulate(val, &s.Species)
+			err = unpopulate(val, "Species", &s.Species)
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
@@ -633,7 +634,7 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -659,9 +660,12 @@ func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.B
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }
