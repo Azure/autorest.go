@@ -3,6 +3,8 @@ package azalias
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestPolicyAssignmentProperties(t *testing.T) {
@@ -47,4 +49,12 @@ func TestPolicyAssignmentProperties(t *testing.T) {
 	if string(b) != payload {
 		t.Fatalf("got %s", string(b))
 	}
+}
+
+func TestUnmarshalFail(t *testing.T) {
+	const data = `{"id": 123}`
+	var geo GeoJSONFeature
+	err := json.Unmarshal([]byte(data), &geo)
+	require.Error(t, err)
+	require.Equal(t, "unmarshalling type *azalias.GeoJSONFeature: struct field ID: json: cannot unmarshal number into Go value of type string", err.Error())
 }

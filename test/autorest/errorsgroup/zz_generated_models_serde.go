@@ -10,6 +10,7 @@ package errorsgroup
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
@@ -28,26 +29,26 @@ func (a AnimalNotFound) MarshalJSON() ([]byte, error) {
 func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "name":
-			err = unpopulate(val, &a.Name)
+			err = unpopulate(val, "Name", &a.Name)
 			delete(rawMsg, key)
 		case "reason":
-			err = unpopulate(val, &a.Reason)
+			err = unpopulate(val, "Reason", &a.Reason)
 			delete(rawMsg, key)
 		case "someBaseProp":
-			err = unpopulate(val, &a.SomeBaseProp)
+			err = unpopulate(val, "SomeBaseProp", &a.SomeBaseProp)
 			delete(rawMsg, key)
 		case "whatNotFound":
-			err = unpopulate(val, &a.WhatNotFound)
+			err = unpopulate(val, "WhatNotFound", &a.WhatNotFound)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
 		}
 	}
 	return nil
@@ -67,26 +68,26 @@ func (l LinkNotFound) MarshalJSON() ([]byte, error) {
 func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", l, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "reason":
-			err = unpopulate(val, &l.Reason)
+			err = unpopulate(val, "Reason", &l.Reason)
 			delete(rawMsg, key)
 		case "someBaseProp":
-			err = unpopulate(val, &l.SomeBaseProp)
+			err = unpopulate(val, "SomeBaseProp", &l.SomeBaseProp)
 			delete(rawMsg, key)
 		case "whatNotFound":
-			err = unpopulate(val, &l.WhatNotFound)
+			err = unpopulate(val, "WhatNotFound", &l.WhatNotFound)
 			delete(rawMsg, key)
 		case "whatSubAddress":
-			err = unpopulate(val, &l.WhatSubAddress)
+			err = unpopulate(val, "WhatSubAddress", &l.WhatSubAddress)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", l, err)
 		}
 	}
 	return nil
@@ -107,29 +108,29 @@ func (p PetHungryOrThirstyError) MarshalJSON() ([]byte, error) {
 func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "actionResponse":
-			err = unpopulate(val, &p.ActionResponse)
+			err = unpopulate(val, "ActionResponse", &p.ActionResponse)
 			delete(rawMsg, key)
 		case "errorMessage":
-			err = unpopulate(val, &p.ErrorMessage)
+			err = unpopulate(val, "ErrorMessage", &p.ErrorMessage)
 			delete(rawMsg, key)
 		case "errorType":
-			err = unpopulate(val, &p.ErrorType)
+			err = unpopulate(val, "ErrorType", &p.ErrorType)
 			delete(rawMsg, key)
 		case "hungryOrThirsty":
-			err = unpopulate(val, &p.HungryOrThirsty)
+			err = unpopulate(val, "HungryOrThirsty", &p.HungryOrThirsty)
 			delete(rawMsg, key)
 		case "reason":
-			err = unpopulate(val, &p.Reason)
+			err = unpopulate(val, "Reason", &p.Reason)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -149,26 +150,26 @@ func (p PetSadError) MarshalJSON() ([]byte, error) {
 func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "actionResponse":
-			err = unpopulate(val, &p.ActionResponse)
+			err = unpopulate(val, "ActionResponse", &p.ActionResponse)
 			delete(rawMsg, key)
 		case "errorMessage":
-			err = unpopulate(val, &p.ErrorMessage)
+			err = unpopulate(val, "ErrorMessage", &p.ErrorMessage)
 			delete(rawMsg, key)
 		case "errorType":
-			err = unpopulate(val, &p.ErrorType)
+			err = unpopulate(val, "ErrorType", &p.ErrorType)
 			delete(rawMsg, key)
 		case "reason":
-			err = unpopulate(val, &p.Reason)
+			err = unpopulate(val, "Reason", &p.Reason)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -184,9 +185,12 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

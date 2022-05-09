@@ -10,6 +10,7 @@ package armnetwork
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
@@ -348,41 +349,41 @@ func (a ApplicationRuleCondition) MarshalJSON() ([]byte, error) {
 func (a *ApplicationRuleCondition) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "description":
-			err = unpopulate(val, &a.Description)
+			err = unpopulate(val, "Description", &a.Description)
 			delete(rawMsg, key)
 		case "destinationAddresses":
-			err = unpopulate(val, &a.DestinationAddresses)
+			err = unpopulate(val, "DestinationAddresses", &a.DestinationAddresses)
 			delete(rawMsg, key)
 		case "fqdnTags":
-			err = unpopulate(val, &a.FqdnTags)
+			err = unpopulate(val, "FqdnTags", &a.FqdnTags)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &a.Name)
+			err = unpopulate(val, "Name", &a.Name)
 			delete(rawMsg, key)
 		case "protocols":
-			err = unpopulate(val, &a.Protocols)
+			err = unpopulate(val, "Protocols", &a.Protocols)
 			delete(rawMsg, key)
 		case "ruleConditionType":
-			err = unpopulate(val, &a.RuleConditionType)
+			err = unpopulate(val, "RuleConditionType", &a.RuleConditionType)
 			delete(rawMsg, key)
 		case "sourceAddresses":
-			err = unpopulate(val, &a.SourceAddresses)
+			err = unpopulate(val, "SourceAddresses", &a.SourceAddresses)
 			delete(rawMsg, key)
 		case "sourceIpGroups":
-			err = unpopulate(val, &a.SourceIPGroups)
+			err = unpopulate(val, "SourceIPGroups", &a.SourceIPGroups)
 			delete(rawMsg, key)
 		case "targetFqdns":
-			err = unpopulate(val, &a.TargetFqdns)
+			err = unpopulate(val, "TargetFqdns", &a.TargetFqdns)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
 		}
 	}
 	return nil
@@ -669,20 +670,20 @@ func (a AzureReachabilityReportLatencyInfo) MarshalJSON() ([]byte, error) {
 func (a *AzureReachabilityReportLatencyInfo) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "score":
-			err = unpopulate(val, &a.Score)
+			err = unpopulate(val, "Score", &a.Score)
 			delete(rawMsg, key)
 		case "timeStamp":
-			err = unpopulateTimeRFC3339(val, &a.TimeStamp)
+			err = unpopulateTimeRFC3339(val, "TimeStamp", &a.TimeStamp)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
 		}
 	}
 	return nil
@@ -703,29 +704,29 @@ func (a AzureReachabilityReportParameters) MarshalJSON() ([]byte, error) {
 func (a *AzureReachabilityReportParameters) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "azureLocations":
-			err = unpopulate(val, &a.AzureLocations)
+			err = unpopulate(val, "AzureLocations", &a.AzureLocations)
 			delete(rawMsg, key)
 		case "endTime":
-			err = unpopulateTimeRFC3339(val, &a.EndTime)
+			err = unpopulateTimeRFC3339(val, "EndTime", &a.EndTime)
 			delete(rawMsg, key)
 		case "providerLocation":
-			err = unpopulate(val, &a.ProviderLocation)
+			err = unpopulate(val, "ProviderLocation", &a.ProviderLocation)
 			delete(rawMsg, key)
 		case "providers":
-			err = unpopulate(val, &a.Providers)
+			err = unpopulate(val, "Providers", &a.Providers)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeRFC3339(val, &a.StartTime)
+			err = unpopulateTimeRFC3339(val, "StartTime", &a.StartTime)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
 		}
 	}
 	return nil
@@ -981,53 +982,53 @@ func (c ConnectionMonitorResultProperties) MarshalJSON() ([]byte, error) {
 func (c *ConnectionMonitorResultProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "autoStart":
-			err = unpopulate(val, &c.AutoStart)
+			err = unpopulate(val, "AutoStart", &c.AutoStart)
 			delete(rawMsg, key)
 		case "connectionMonitorType":
-			err = unpopulate(val, &c.ConnectionMonitorType)
+			err = unpopulate(val, "ConnectionMonitorType", &c.ConnectionMonitorType)
 			delete(rawMsg, key)
 		case "destination":
-			err = unpopulate(val, &c.Destination)
+			err = unpopulate(val, "Destination", &c.Destination)
 			delete(rawMsg, key)
 		case "endpoints":
-			err = unpopulate(val, &c.Endpoints)
+			err = unpopulate(val, "Endpoints", &c.Endpoints)
 			delete(rawMsg, key)
 		case "monitoringIntervalInSeconds":
-			err = unpopulate(val, &c.MonitoringIntervalInSeconds)
+			err = unpopulate(val, "MonitoringIntervalInSeconds", &c.MonitoringIntervalInSeconds)
 			delete(rawMsg, key)
 		case "monitoringStatus":
-			err = unpopulate(val, &c.MonitoringStatus)
+			err = unpopulate(val, "MonitoringStatus", &c.MonitoringStatus)
 			delete(rawMsg, key)
 		case "notes":
-			err = unpopulate(val, &c.Notes)
+			err = unpopulate(val, "Notes", &c.Notes)
 			delete(rawMsg, key)
 		case "outputs":
-			err = unpopulate(val, &c.Outputs)
+			err = unpopulate(val, "Outputs", &c.Outputs)
 			delete(rawMsg, key)
 		case "provisioningState":
-			err = unpopulate(val, &c.ProvisioningState)
+			err = unpopulate(val, "ProvisioningState", &c.ProvisioningState)
 			delete(rawMsg, key)
 		case "source":
-			err = unpopulate(val, &c.Source)
+			err = unpopulate(val, "Source", &c.Source)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeRFC3339(val, &c.StartTime)
+			err = unpopulateTimeRFC3339(val, "StartTime", &c.StartTime)
 			delete(rawMsg, key)
 		case "testConfigurations":
-			err = unpopulate(val, &c.TestConfigurations)
+			err = unpopulate(val, "TestConfigurations", &c.TestConfigurations)
 			delete(rawMsg, key)
 		case "testGroups":
-			err = unpopulate(val, &c.TestGroups)
+			err = unpopulate(val, "TestGroups", &c.TestGroups)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
 		}
 	}
 	return nil
@@ -1064,44 +1065,44 @@ func (c ConnectionStateSnapshot) MarshalJSON() ([]byte, error) {
 func (c *ConnectionStateSnapshot) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", c, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "avgLatencyInMs":
-			err = unpopulate(val, &c.AvgLatencyInMs)
+			err = unpopulate(val, "AvgLatencyInMs", &c.AvgLatencyInMs)
 			delete(rawMsg, key)
 		case "connectionState":
-			err = unpopulate(val, &c.ConnectionState)
+			err = unpopulate(val, "ConnectionState", &c.ConnectionState)
 			delete(rawMsg, key)
 		case "endTime":
-			err = unpopulateTimeRFC3339(val, &c.EndTime)
+			err = unpopulateTimeRFC3339(val, "EndTime", &c.EndTime)
 			delete(rawMsg, key)
 		case "evaluationState":
-			err = unpopulate(val, &c.EvaluationState)
+			err = unpopulate(val, "EvaluationState", &c.EvaluationState)
 			delete(rawMsg, key)
 		case "hops":
-			err = unpopulate(val, &c.Hops)
+			err = unpopulate(val, "Hops", &c.Hops)
 			delete(rawMsg, key)
 		case "maxLatencyInMs":
-			err = unpopulate(val, &c.MaxLatencyInMs)
+			err = unpopulate(val, "MaxLatencyInMs", &c.MaxLatencyInMs)
 			delete(rawMsg, key)
 		case "minLatencyInMs":
-			err = unpopulate(val, &c.MinLatencyInMs)
+			err = unpopulate(val, "MinLatencyInMs", &c.MinLatencyInMs)
 			delete(rawMsg, key)
 		case "probesFailed":
-			err = unpopulate(val, &c.ProbesFailed)
+			err = unpopulate(val, "ProbesFailed", &c.ProbesFailed)
 			delete(rawMsg, key)
 		case "probesSent":
-			err = unpopulate(val, &c.ProbesSent)
+			err = unpopulate(val, "ProbesSent", &c.ProbesSent)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeRFC3339(val, &c.StartTime)
+			err = unpopulateTimeRFC3339(val, "StartTime", &c.StartTime)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", c, err)
 		}
 	}
 	return nil
@@ -1662,29 +1663,29 @@ func (f FirewallPolicyFilterRule) MarshalJSON() ([]byte, error) {
 func (f *FirewallPolicyFilterRule) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "action":
-			err = unpopulate(val, &f.Action)
+			err = unpopulate(val, "Action", &f.Action)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &f.Name)
+			err = unpopulate(val, "Name", &f.Name)
 			delete(rawMsg, key)
 		case "priority":
-			err = unpopulate(val, &f.Priority)
+			err = unpopulate(val, "Priority", &f.Priority)
 			delete(rawMsg, key)
 		case "ruleConditions":
 			f.RuleConditions, err = unmarshalFirewallPolicyRuleConditionClassificationArray(val)
 			delete(rawMsg, key)
 		case "ruleType":
-			err = unpopulate(val, &f.RuleType)
+			err = unpopulate(val, "RuleType", &f.RuleType)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
 		}
 	}
 	return nil
@@ -1715,35 +1716,35 @@ func (f FirewallPolicyNatRule) MarshalJSON() ([]byte, error) {
 func (f *FirewallPolicyNatRule) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "action":
-			err = unpopulate(val, &f.Action)
+			err = unpopulate(val, "Action", &f.Action)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &f.Name)
+			err = unpopulate(val, "Name", &f.Name)
 			delete(rawMsg, key)
 		case "priority":
-			err = unpopulate(val, &f.Priority)
+			err = unpopulate(val, "Priority", &f.Priority)
 			delete(rawMsg, key)
 		case "ruleCondition":
 			f.RuleCondition, err = unmarshalFirewallPolicyRuleConditionClassification(val)
 			delete(rawMsg, key)
 		case "ruleType":
-			err = unpopulate(val, &f.RuleType)
+			err = unpopulate(val, "RuleType", &f.RuleType)
 			delete(rawMsg, key)
 		case "translatedAddress":
-			err = unpopulate(val, &f.TranslatedAddress)
+			err = unpopulate(val, "TranslatedAddress", &f.TranslatedAddress)
 			delete(rawMsg, key)
 		case "translatedPort":
-			err = unpopulate(val, &f.TranslatedPort)
+			err = unpopulate(val, "TranslatedPort", &f.TranslatedPort)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
 		}
 	}
 	return nil
@@ -1782,23 +1783,23 @@ func (f FirewallPolicyRuleGroupProperties) MarshalJSON() ([]byte, error) {
 func (f *FirewallPolicyRuleGroupProperties) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", f, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "priority":
-			err = unpopulate(val, &f.Priority)
+			err = unpopulate(val, "Priority", &f.Priority)
 			delete(rawMsg, key)
 		case "provisioningState":
-			err = unpopulate(val, &f.ProvisioningState)
+			err = unpopulate(val, "ProvisioningState", &f.ProvisioningState)
 			delete(rawMsg, key)
 		case "rules":
 			f.Rules, err = unmarshalFirewallPolicyRuleClassificationArray(val)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", f, err)
 		}
 	}
 	return nil
@@ -2405,38 +2406,38 @@ func (n NatRuleCondition) MarshalJSON() ([]byte, error) {
 func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", n, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "description":
-			err = unpopulate(val, &n.Description)
+			err = unpopulate(val, "Description", &n.Description)
 			delete(rawMsg, key)
 		case "destinationAddresses":
-			err = unpopulate(val, &n.DestinationAddresses)
+			err = unpopulate(val, "DestinationAddresses", &n.DestinationAddresses)
 			delete(rawMsg, key)
 		case "destinationPorts":
-			err = unpopulate(val, &n.DestinationPorts)
+			err = unpopulate(val, "DestinationPorts", &n.DestinationPorts)
 			delete(rawMsg, key)
 		case "ipProtocols":
-			err = unpopulate(val, &n.IPProtocols)
+			err = unpopulate(val, "IPProtocols", &n.IPProtocols)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &n.Name)
+			err = unpopulate(val, "Name", &n.Name)
 			delete(rawMsg, key)
 		case "ruleConditionType":
-			err = unpopulate(val, &n.RuleConditionType)
+			err = unpopulate(val, "RuleConditionType", &n.RuleConditionType)
 			delete(rawMsg, key)
 		case "sourceAddresses":
-			err = unpopulate(val, &n.SourceAddresses)
+			err = unpopulate(val, "SourceAddresses", &n.SourceAddresses)
 			delete(rawMsg, key)
 		case "sourceIpGroups":
-			err = unpopulate(val, &n.SourceIPGroups)
+			err = unpopulate(val, "SourceIPGroups", &n.SourceIPGroups)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", n, err)
 		}
 	}
 	return nil
@@ -2546,32 +2547,32 @@ func (p PacketCaptureQueryStatusResult) MarshalJSON() ([]byte, error) {
 func (p *PacketCaptureQueryStatusResult) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "captureStartTime":
-			err = unpopulateTimeRFC3339(val, &p.CaptureStartTime)
+			err = unpopulateTimeRFC3339(val, "CaptureStartTime", &p.CaptureStartTime)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &p.ID)
+			err = unpopulate(val, "ID", &p.ID)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &p.Name)
+			err = unpopulate(val, "Name", &p.Name)
 			delete(rawMsg, key)
 		case "packetCaptureError":
-			err = unpopulate(val, &p.PacketCaptureError)
+			err = unpopulate(val, "PacketCaptureError", &p.PacketCaptureError)
 			delete(rawMsg, key)
 		case "packetCaptureStatus":
-			err = unpopulate(val, &p.PacketCaptureStatus)
+			err = unpopulate(val, "PacketCaptureStatus", &p.PacketCaptureStatus)
 			delete(rawMsg, key)
 		case "stopReason":
-			err = unpopulate(val, &p.StopReason)
+			err = unpopulate(val, "StopReason", &p.StopReason)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
@@ -3011,41 +3012,41 @@ func (r RuleCondition) MarshalJSON() ([]byte, error) {
 func (r *RuleCondition) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", r, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "description":
-			err = unpopulate(val, &r.Description)
+			err = unpopulate(val, "Description", &r.Description)
 			delete(rawMsg, key)
 		case "destinationAddresses":
-			err = unpopulate(val, &r.DestinationAddresses)
+			err = unpopulate(val, "DestinationAddresses", &r.DestinationAddresses)
 			delete(rawMsg, key)
 		case "destinationIpGroups":
-			err = unpopulate(val, &r.DestinationIPGroups)
+			err = unpopulate(val, "DestinationIPGroups", &r.DestinationIPGroups)
 			delete(rawMsg, key)
 		case "destinationPorts":
-			err = unpopulate(val, &r.DestinationPorts)
+			err = unpopulate(val, "DestinationPorts", &r.DestinationPorts)
 			delete(rawMsg, key)
 		case "ipProtocols":
-			err = unpopulate(val, &r.IPProtocols)
+			err = unpopulate(val, "IPProtocols", &r.IPProtocols)
 			delete(rawMsg, key)
 		case "name":
-			err = unpopulate(val, &r.Name)
+			err = unpopulate(val, "Name", &r.Name)
 			delete(rawMsg, key)
 		case "ruleConditionType":
-			err = unpopulate(val, &r.RuleConditionType)
+			err = unpopulate(val, "RuleConditionType", &r.RuleConditionType)
 			delete(rawMsg, key)
 		case "sourceAddresses":
-			err = unpopulate(val, &r.SourceAddresses)
+			err = unpopulate(val, "SourceAddresses", &r.SourceAddresses)
 			delete(rawMsg, key)
 		case "sourceIpGroups":
-			err = unpopulate(val, &r.SourceIPGroups)
+			err = unpopulate(val, "SourceIPGroups", &r.SourceIPGroups)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", r, err)
 		}
 	}
 	return nil
@@ -3337,26 +3338,26 @@ func (t Topology) MarshalJSON() ([]byte, error) {
 func (t *Topology) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", t, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "createdDateTime":
-			err = unpopulateTimeRFC3339(val, &t.CreatedDateTime)
+			err = unpopulateTimeRFC3339(val, "CreatedDateTime", &t.CreatedDateTime)
 			delete(rawMsg, key)
 		case "id":
-			err = unpopulate(val, &t.ID)
+			err = unpopulate(val, "ID", &t.ID)
 			delete(rawMsg, key)
 		case "lastModified":
-			err = unpopulateTimeRFC3339(val, &t.LastModified)
+			err = unpopulateTimeRFC3339(val, "LastModified", &t.LastModified)
 			delete(rawMsg, key)
 		case "resources":
-			err = unpopulate(val, &t.Resources)
+			err = unpopulate(val, "Resources", &t.Resources)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", t, err)
 		}
 	}
 	return nil
@@ -3405,26 +3406,26 @@ func (t TroubleshootingResult) MarshalJSON() ([]byte, error) {
 func (t *TroubleshootingResult) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", t, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "code":
-			err = unpopulate(val, &t.Code)
+			err = unpopulate(val, "Code", &t.Code)
 			delete(rawMsg, key)
 		case "endTime":
-			err = unpopulateTimeRFC3339(val, &t.EndTime)
+			err = unpopulateTimeRFC3339(val, "EndTime", &t.EndTime)
 			delete(rawMsg, key)
 		case "results":
-			err = unpopulate(val, &t.Results)
+			err = unpopulate(val, "Results", &t.Results)
 			delete(rawMsg, key)
 		case "startTime":
-			err = unpopulateTimeRFC3339(val, &t.StartTime)
+			err = unpopulateTimeRFC3339(val, "StartTime", &t.StartTime)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", t, err)
 		}
 	}
 	return nil
@@ -4108,9 +4109,12 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }

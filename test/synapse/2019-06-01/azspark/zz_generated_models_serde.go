@@ -10,6 +10,7 @@ package azspark
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
 )
@@ -88,41 +89,41 @@ func (b BatchJobState) MarshalJSON() ([]byte, error) {
 func (b *BatchJobState) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", b, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "currentState":
-			err = unpopulate(val, &b.CurrentState)
+			err = unpopulate(val, "CurrentState", &b.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			err = unpopulateTimeRFC3339(val, &b.DeadAt)
+			err = unpopulateTimeRFC3339(val, "DeadAt", &b.DeadAt)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
-			err = unpopulate(val, &b.JobCreationRequest)
+			err = unpopulate(val, "JobCreationRequest", &b.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			err = unpopulateTimeRFC3339(val, &b.NotStartedAt)
+			err = unpopulateTimeRFC3339(val, "NotStartedAt", &b.NotStartedAt)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			err = unpopulateTimeRFC3339(val, &b.RecoveringAt)
+			err = unpopulateTimeRFC3339(val, "RecoveringAt", &b.RecoveringAt)
 			delete(rawMsg, key)
 		case "runningAt":
-			err = unpopulateTimeRFC3339(val, &b.RunningAt)
+			err = unpopulateTimeRFC3339(val, "RunningAt", &b.RunningAt)
 			delete(rawMsg, key)
 		case "startingAt":
-			err = unpopulateTimeRFC3339(val, &b.StartingAt)
+			err = unpopulateTimeRFC3339(val, "StartingAt", &b.StartingAt)
 			delete(rawMsg, key)
 		case "successAt":
-			err = unpopulateTimeRFC3339(val, &b.SuccessAt)
+			err = unpopulateTimeRFC3339(val, "SuccessAt", &b.SuccessAt)
 			delete(rawMsg, key)
 		case "killedAt":
-			err = unpopulateTimeRFC3339(val, &b.TerminatedAt)
+			err = unpopulateTimeRFC3339(val, "TerminatedAt", &b.TerminatedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", b, err)
 		}
 	}
 	return nil
@@ -163,29 +164,29 @@ func (s Scheduler) MarshalJSON() ([]byte, error) {
 func (s *Scheduler) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "cancellationRequestedAt":
-			err = unpopulateTimeRFC3339(val, &s.CancellationRequestedAt)
+			err = unpopulateTimeRFC3339(val, "CancellationRequestedAt", &s.CancellationRequestedAt)
 			delete(rawMsg, key)
 		case "currentState":
-			err = unpopulate(val, &s.CurrentState)
+			err = unpopulate(val, "CurrentState", &s.CurrentState)
 			delete(rawMsg, key)
 		case "endedAt":
-			err = unpopulateTimeRFC3339(val, &s.EndedAt)
+			err = unpopulateTimeRFC3339(val, "EndedAt", &s.EndedAt)
 			delete(rawMsg, key)
 		case "scheduledAt":
-			err = unpopulateTimeRFC3339(val, &s.ScheduledAt)
+			err = unpopulateTimeRFC3339(val, "ScheduledAt", &s.ScheduledAt)
 			delete(rawMsg, key)
 		case "submittedAt":
-			err = unpopulateTimeRFC3339(val, &s.SubmittedAt)
+			err = unpopulateTimeRFC3339(val, "SubmittedAt", &s.SubmittedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -207,32 +208,32 @@ func (s ServicePlugin) MarshalJSON() ([]byte, error) {
 func (s *ServicePlugin) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "cleanupStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.CleanupStartedAt)
+			err = unpopulateTimeRFC3339(val, "CleanupStartedAt", &s.CleanupStartedAt)
 			delete(rawMsg, key)
 		case "currentState":
-			err = unpopulate(val, &s.CurrentState)
+			err = unpopulate(val, "CurrentState", &s.CurrentState)
 			delete(rawMsg, key)
 		case "monitoringStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.MonitoringStartedAt)
+			err = unpopulateTimeRFC3339(val, "MonitoringStartedAt", &s.MonitoringStartedAt)
 			delete(rawMsg, key)
 		case "preparationStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.PreparationStartedAt)
+			err = unpopulateTimeRFC3339(val, "PreparationStartedAt", &s.PreparationStartedAt)
 			delete(rawMsg, key)
 		case "resourceAcquisitionStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.ResourceAcquisitionStartedAt)
+			err = unpopulateTimeRFC3339(val, "ResourceAcquisitionStartedAt", &s.ResourceAcquisitionStartedAt)
 			delete(rawMsg, key)
 		case "submissionStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.SubmissionStartedAt)
+			err = unpopulateTimeRFC3339(val, "SubmissionStartedAt", &s.SubmissionStartedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -314,47 +315,47 @@ func (s SessionState) MarshalJSON() ([]byte, error) {
 func (s *SessionState) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
 		case "busyAt":
-			err = unpopulateTimeRFC3339(val, &s.BusyAt)
+			err = unpopulateTimeRFC3339(val, "BusyAt", &s.BusyAt)
 			delete(rawMsg, key)
 		case "currentState":
-			err = unpopulate(val, &s.CurrentState)
+			err = unpopulate(val, "CurrentState", &s.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			err = unpopulateTimeRFC3339(val, &s.DeadAt)
+			err = unpopulateTimeRFC3339(val, "DeadAt", &s.DeadAt)
 			delete(rawMsg, key)
 		case "errorAt":
-			err = unpopulateTimeRFC3339(val, &s.ErrorAt)
+			err = unpopulateTimeRFC3339(val, "ErrorAt", &s.ErrorAt)
 			delete(rawMsg, key)
 		case "idleAt":
-			err = unpopulateTimeRFC3339(val, &s.IdleAt)
+			err = unpopulateTimeRFC3339(val, "IdleAt", &s.IdleAt)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
-			err = unpopulate(val, &s.JobCreationRequest)
+			err = unpopulate(val, "JobCreationRequest", &s.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.NotStartedAt)
+			err = unpopulateTimeRFC3339(val, "NotStartedAt", &s.NotStartedAt)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			err = unpopulateTimeRFC3339(val, &s.RecoveringAt)
+			err = unpopulateTimeRFC3339(val, "RecoveringAt", &s.RecoveringAt)
 			delete(rawMsg, key)
 		case "shuttingDownAt":
-			err = unpopulateTimeRFC3339(val, &s.ShuttingDownAt)
+			err = unpopulateTimeRFC3339(val, "ShuttingDownAt", &s.ShuttingDownAt)
 			delete(rawMsg, key)
 		case "startingAt":
-			err = unpopulateTimeRFC3339(val, &s.StartingAt)
+			err = unpopulateTimeRFC3339(val, "StartingAt", &s.StartingAt)
 			delete(rawMsg, key)
 		case "killedAt":
-			err = unpopulateTimeRFC3339(val, &s.TerminatedAt)
+			err = unpopulateTimeRFC3339(val, "TerminatedAt", &s.TerminatedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return err
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
 		}
 	}
 	return nil
@@ -390,9 +391,12 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
 	if data == nil {
 		return nil
 	}
-	return json.Unmarshal(data, v)
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
+	return nil
 }
