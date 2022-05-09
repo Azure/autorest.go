@@ -9,10 +9,7 @@
 package aztables
 
 import (
-	"encoding/json"
 	"encoding/xml"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"reflect"
 	"time"
 )
 
@@ -49,14 +46,6 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type EntityQueryResponse.
-func (e EntityQueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", e.ODataMetadata)
-	populate(objectMap, "value", e.Value)
-	return json.Marshal(objectMap)
-}
-
 // MarshalXML implements the xml.Marshaller interface for type GeoReplication.
 func (g GeoReplication) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias GeoReplication
@@ -86,14 +75,6 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type QueryResponse.
-func (q QueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", q.ODataMetadata)
-	populate(objectMap, "value", q.Value)
-	return json.Marshal(objectMap)
-}
-
 // MarshalXML implements the xml.Marshaller interface for type ServiceProperties.
 func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "StorageServiceProperties"
@@ -108,14 +89,4 @@ func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		aux.Cors = &s.Cors
 	}
 	return e.EncodeElement(aux, start)
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
 }

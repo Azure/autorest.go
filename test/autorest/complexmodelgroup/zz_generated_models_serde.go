@@ -14,24 +14,10 @@ import (
 	"reflect"
 )
 
-// MarshalJSON implements the json.Marshaller interface for type CatalogArray.
-func (c CatalogArray) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "productArray", c.ProductArray)
-	return json.Marshal(objectMap)
-}
-
 // MarshalJSON implements the json.Marshaller interface for type CatalogArrayOfDictionary.
 func (c CatalogArrayOfDictionary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "productArrayOfDictionary", c.ProductArrayOfDictionary)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type CatalogDictionary.
-func (c CatalogDictionary) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "productDictionary", c.ProductDictionary)
 	return json.Marshal(objectMap)
 }
 

@@ -85,23 +85,6 @@ func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ListResponse.
-func (l ListResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "aliases", l.Aliases)
-	populate(objectMap, "nextLink", l.NextLink)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type PolicyAssignmentProperties.
-func (p PolicyAssignmentProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "displayName", p.DisplayName)
-	populate(objectMap, "metadata", p.Metadata)
-	populate(objectMap, "parameters", p.Parameters)
-	return json.Marshal(objectMap)
-}
-
 // MarshalJSON implements the json.Marshaller interface for type ScheduleCreateOrUpdateProperties.
 func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
