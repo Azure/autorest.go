@@ -86,6 +86,9 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return HeaderClientCustomNamedRequestIDHeadResponse{}, err
 	}
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotFound) {
+		return HeaderClientCustomNamedRequestIDHeadResponse{}, runtime.NewResponseError(resp)
+	}
 	return client.customNamedRequestIDHeadHandleResponse(resp)
 }
 
@@ -107,9 +110,7 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 	if val := resp.Header.Get("foo-request-id"); val != "" {
 		result.FooRequestID = &val
 	}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
-	}
+	result.Success = resp.StatusCode >= 200 && resp.StatusCode < 300
 	return result, nil
 }
 

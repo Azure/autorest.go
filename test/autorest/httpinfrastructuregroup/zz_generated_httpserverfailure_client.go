@@ -105,11 +105,10 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailureClientHead501Response{}, err
 	}
-	result := HTTPServerFailureClientHead501Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		return HTTPServerFailureClientHead501Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPServerFailureClientHead501Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head501CreateRequest creates the Head501 request.
