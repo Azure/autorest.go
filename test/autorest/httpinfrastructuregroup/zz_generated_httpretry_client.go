@@ -102,11 +102,10 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryCl
 	if err != nil {
 		return HTTPRetryClientHead408Response{}, err
 	}
-	result := HTTPRetryClientHead408Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return HTTPRetryClientHead408Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPRetryClientHead408Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head408CreateRequest creates the Head408 request.

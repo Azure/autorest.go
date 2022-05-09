@@ -34,10 +34,8 @@ func TestHTTPServerFailureGet501(t *testing.T) {
 func TestHTTPServerFailureHead501(t *testing.T) {
 	client := newHTTPServerFailureClient()
 	result, err := client.Head501(context.Background(), nil)
-	require.NoError(t, err)
-	if result.Success {
-		t.Fatal("unexpected success")
-	}
+	require.Error(t, err)
+	require.False(t, result.Success)
 }
 
 func TestHTTPServerFailurePost505(t *testing.T) {

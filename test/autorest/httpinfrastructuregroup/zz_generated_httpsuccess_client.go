@@ -171,11 +171,10 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead200Response{}, err
 	}
-	result := HTTPSuccessClientHead200Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return HTTPSuccessClientHead200Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPSuccessClientHead200Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head200CreateRequest creates the Head200 request.
@@ -201,11 +200,10 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead204Response{}, err
 	}
-	result := HTTPSuccessClientHead204Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
+		return HTTPSuccessClientHead204Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPSuccessClientHead204Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head204CreateRequest creates the Head204 request.
@@ -231,11 +229,10 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessClientHead404Response{}, err
 	}
-	result := HTTPSuccessClientHead404Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusNoContent, http.StatusNotFound) {
+		return HTTPSuccessClientHead404Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPSuccessClientHead404Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head404CreateRequest creates the Head404 request.

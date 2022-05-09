@@ -630,20 +630,13 @@ function generateOperation(op: Operation, imports: ImportManager, isARM: boolean
   text += `\tif err != nil {\n`;
   text += `\t\treturn ${zeroResp}, err\n`;
   text += `\t}\n`;
+  text += `\tif !runtime.HasStatusCode(resp, ${formatStatusCodes(statusCodes)}) {\n`;
+  text += `\t\treturn ${zeroResp}, runtime.NewResponseError(resp)\n`;
+  text += '\t}\n';
   // HAB with headers response is handled in protocol responder
   if (op.language.go!.headAsBoolean && !responseHasHeaders(op)) {
-    text += `\tresult := ${getResponseEnvelopeName(op)}{}\n`;
-    text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
-    text += '\t\tresult.Success = true\n';
-    text += '\t}\n';
-    text += '\treturn result, nil\n';
+    text += `\treturn ${getResponseEnvelopeName(op)}{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil\n`;
   } else {
-    // for complex HAB the status code check isn't applicable
-    if (!op.language.go!.headAsBoolean) {
-      text += `\tif !runtime.HasStatusCode(resp, ${formatStatusCodes(statusCodes)}) {\n`;
-      text += `\t\treturn ${zeroResp}, runtime.NewResponseError(resp)\n`;
-      text += '\t}\n';
-    }
     if (isLROOperation(op)) {
       text += '\t return resp, nil\n';
     } else if (needsResponseHandler(op)) {
@@ -1131,9 +1124,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager, isARM: bo
     addHeaders(respEnv.properties);
     const schemaResponse = getSchemaResponse(op);
     if (op.language.go!.headAsBoolean === true) {
-      text += '\tif resp.StatusCode >= 200 && resp.StatusCode < 300 {\n';
-      text += '\t\tresult.Success = true\n';
-      text += '\t}\n';
+      text += '\tresult.Success = resp.StatusCode >= 200 && resp.StatusCode < 300\n';
     } else if (schemaResponse) {
       // when unmarshalling a wrapped XML array or discriminated type, unmarshal into the response envelope
       let target = `result.${getResultFieldName(op)}`

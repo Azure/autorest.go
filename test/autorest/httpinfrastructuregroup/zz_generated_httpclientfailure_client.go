@@ -322,11 +322,10 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead400Response{}, err
 	}
-	result := HTTPClientFailureClientHead400Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		return HTTPClientFailureClientHead400Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPClientFailureClientHead400Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head400CreateRequest creates the Head400 request.
@@ -353,11 +352,10 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead401Response{}, err
 	}
-	result := HTTPClientFailureClientHead401Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		return HTTPClientFailureClientHead401Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPClientFailureClientHead401Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head401CreateRequest creates the Head401 request.
@@ -384,11 +382,10 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead410Response{}, err
 	}
-	result := HTTPClientFailureClientHead410Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		return HTTPClientFailureClientHead410Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPClientFailureClientHead410Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head410CreateRequest creates the Head410 request.
@@ -415,11 +412,10 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPClientFailureClientHead429Response{}, err
 	}
-	result := HTTPClientFailureClientHead429Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
+		return HTTPClientFailureClientHead429Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPClientFailureClientHead429Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head429CreateRequest creates the Head429 request.

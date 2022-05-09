@@ -204,6 +204,9 @@ func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead300Response{}, err
 	}
+	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusMultipleChoices) {
+		return HTTPRedirectsClientHead300Response{}, runtime.NewResponseError(resp)
+	}
 	return client.head300HandleResponse(resp)
 }
 
@@ -224,9 +227,7 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (H
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
-	}
+	result.Success = resp.StatusCode >= 200 && resp.StatusCode < 300
 	return result, nil
 }
 
@@ -242,11 +243,10 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead301Response{}, err
 	}
-	result := HTTPRedirectsClientHead301Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return HTTPRedirectsClientHead301Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPRedirectsClientHead301Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head301CreateRequest creates the Head301 request.
@@ -272,11 +272,10 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead302Response{}, err
 	}
-	result := HTTPRedirectsClientHead302Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return HTTPRedirectsClientHead302Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPRedirectsClientHead302Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head302CreateRequest creates the Head302 request.
@@ -302,11 +301,10 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsClientHead307Response{}, err
 	}
-	result := HTTPRedirectsClientHead307Response{}
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		result.Success = true
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return HTTPRedirectsClientHead307Response{}, runtime.NewResponseError(resp)
 	}
-	return result, nil
+	return HTTPRedirectsClientHead307Response{Success: resp.StatusCode >= 200 && resp.StatusCode < 300}, nil
 }
 
 // head307CreateRequest creates the Head307 request.

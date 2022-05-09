@@ -88,37 +88,29 @@ func TestHTTPClientFailureGet416(t *testing.T) {
 func TestHTTPClientFailureHead400(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head400(context.Background(), nil)
-	require.NoError(t, err)
-	if result.Success {
-		t.Fatal("Expected a false result")
-	}
+	require.Error(t, err)
+	require.False(t, result.Success)
 }
 
 func TestHTTPClientFailureHead401(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head401(context.Background(), nil)
-	require.NoError(t, err)
-	if result.Success {
-		t.Fatal("Expected a false result")
-	}
+	require.Error(t, err)
+	require.False(t, result.Success)
 }
 
 func TestHTTPClientFailureHead410(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head410(context.Background(), nil)
-	require.NoError(t, err)
-	if result.Success {
-		t.Fatal("Expected a false result")
-	}
+	require.Error(t, err)
+	require.False(t, result.Success)
 }
 
 func TestHTTPClientFailureHead429(t *testing.T) {
 	client := newHTTPClientFailureClient()
 	result, err := client.Head429(context.Background(), nil)
-	require.NoError(t, err)
-	if result.Success {
-		t.Fatal("Expected a false result")
-	}
+	require.Error(t, err)
+	require.False(t, result.Success)
 }
 
 func TestHTTPClientFailureOptions400(t *testing.T) {
