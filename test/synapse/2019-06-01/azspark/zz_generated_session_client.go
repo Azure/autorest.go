@@ -107,7 +107,7 @@ func (client *sessionClient) cancelSparkStatementCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -153,7 +153,7 @@ func (client *sessionClient) createSparkSessionCreateRequest(ctx context.Context
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, sparkSessionOptions)
 }
 
@@ -196,7 +196,7 @@ func (client *sessionClient) createSparkStatementCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, sparkStatementOptions)
 }
 
@@ -242,7 +242,7 @@ func (client *sessionClient) getSparkSessionCreateRequest(ctx context.Context, s
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -293,7 +293,7 @@ func (client *sessionClient) getSparkSessionsCreateRequest(ctx context.Context, 
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -337,7 +337,7 @@ func (client *sessionClient) getSparkStatementCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -379,7 +379,7 @@ func (client *sessionClient) getSparkStatementsCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

@@ -74,12 +74,12 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
-		req.Raw().Header.Set("header-one", *firstParameterGroup.HeaderOne)
+		req.Raw().Header["header-one"] = []string{*firstParameterGroup.HeaderOne}
 	}
 	if parameterGroupingClientPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingClientPostMultiParamGroupsSecondParamGroup.HeaderTwo != nil {
-		req.Raw().Header.Set("header-two", *parameterGroupingClientPostMultiParamGroupsSecondParamGroup.HeaderTwo)
+		req.Raw().Header["header-two"] = []string{*parameterGroupingClientPostMultiParamGroupsSecondParamGroup.HeaderTwo}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -118,9 +118,9 @@ func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Con
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if parameterGroupingClientPostOptionalParameters != nil && parameterGroupingClientPostOptionalParameters.CustomHeader != nil {
-		req.Raw().Header.Set("customHeader", *parameterGroupingClientPostOptionalParameters.CustomHeader)
+		req.Raw().Header["customHeader"] = []string{*parameterGroupingClientPostOptionalParameters.CustomHeader}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -163,9 +163,9 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if parameterGroupingClientPostRequiredParameters.CustomHeader != nil {
-		req.Raw().Header.Set("customHeader", *parameterGroupingClientPostRequiredParameters.CustomHeader)
+		req.Raw().Header["customHeader"] = []string{*parameterGroupingClientPostRequiredParameters.CustomHeader}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, parameterGroupingClientPostRequiredParameters.Body)
 }
 
@@ -206,7 +206,7 @@ func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx contex
 		reqQP.Set("accept", *parameterGroupingClientPostReservedWordsParameters.Accept)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -245,8 +245,8 @@ func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateReque
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
-		req.Raw().Header.Set("header-one", *firstParameterGroup.HeaderOne)
+		req.Raw().Header["header-one"] = []string{*firstParameterGroup.HeaderOne}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

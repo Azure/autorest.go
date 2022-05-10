@@ -71,7 +71,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2015-07-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -107,7 +107,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -143,7 +143,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -179,7 +179,7 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -215,6 +215,6 @@ func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateReque
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

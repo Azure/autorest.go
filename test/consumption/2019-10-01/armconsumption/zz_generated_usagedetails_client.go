@@ -125,7 +125,7 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 		reqQP.Set("metric", string(*options.Metric))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

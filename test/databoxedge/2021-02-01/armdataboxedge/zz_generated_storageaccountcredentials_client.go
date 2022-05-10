@@ -116,7 +116,7 @@ func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx c
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, storageAccountCredential)
 }
 
@@ -181,7 +181,7 @@ func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.C
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -231,7 +231,7 @@ func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Cont
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -298,7 +298,7 @@ func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequ
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

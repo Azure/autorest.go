@@ -117,7 +117,7 @@ func (client *VPNServerConfigurationsClient) createOrUpdateCreateRequest(ctx con
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, vpnServerConfigurationParameters)
 }
 
@@ -182,7 +182,7 @@ func (client *VPNServerConfigurationsClient) deleteCreateRequest(ctx context.Con
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -230,7 +230,7 @@ func (client *VPNServerConfigurationsClient) getCreateRequest(ctx context.Contex
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -290,7 +290,7 @@ func (client *VPNServerConfigurationsClient) listCreateRequest(ctx context.Conte
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -355,7 +355,7 @@ func (client *VPNServerConfigurationsClient) listByResourceGroupCreateRequest(ct
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -413,7 +413,7 @@ func (client *VPNServerConfigurationsClient) updateTagsCreateRequest(ctx context
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2020-03-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, vpnServerConfigurationParameters)
 }
 

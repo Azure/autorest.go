@@ -90,7 +90,7 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, options *
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

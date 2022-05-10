@@ -78,49 +78,49 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, resource
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.DirectoryProperties != nil {
-		req.Raw().Header.Set("x-ms-properties", *options.DirectoryProperties)
+		req.Raw().Header["x-ms-properties"] = []string{*options.DirectoryProperties}
 	}
 	if options != nil && options.PosixPermissions != nil {
-		req.Raw().Header.Set("x-ms-permissions", *options.PosixPermissions)
+		req.Raw().Header["x-ms-permissions"] = []string{*options.PosixPermissions}
 	}
 	if options != nil && options.PosixUmask != nil {
-		req.Raw().Header.Set("x-ms-umask", *options.PosixUmask)
+		req.Raw().Header["x-ms-umask"] = []string{*options.PosixUmask}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.CacheControl != nil {
-		req.Raw().Header.Set("x-ms-cache-control", *directoryHTTPHeaders.CacheControl)
+		req.Raw().Header["x-ms-cache-control"] = []string{*directoryHTTPHeaders.CacheControl}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentType != nil {
-		req.Raw().Header.Set("x-ms-content-type", *directoryHTTPHeaders.ContentType)
+		req.Raw().Header["x-ms-content-type"] = []string{*directoryHTTPHeaders.ContentType}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentEncoding != nil {
-		req.Raw().Header.Set("x-ms-content-encoding", *directoryHTTPHeaders.ContentEncoding)
+		req.Raw().Header["x-ms-content-encoding"] = []string{*directoryHTTPHeaders.ContentEncoding}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentLanguage != nil {
-		req.Raw().Header.Set("x-ms-content-language", *directoryHTTPHeaders.ContentLanguage)
+		req.Raw().Header["x-ms-content-language"] = []string{*directoryHTTPHeaders.ContentLanguage}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentDisposition != nil {
-		req.Raw().Header.Set("x-ms-content-disposition", *directoryHTTPHeaders.ContentDisposition)
+		req.Raw().Header["x-ms-content-disposition"] = []string{*directoryHTTPHeaders.ContentDisposition}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *modifiedAccessConditions.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
 	}
-	req.Raw().Header.Set("x-ms-version", string(client.version))
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -202,25 +202,25 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *modifiedAccessConditions.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
 	}
-	req.Raw().Header.Set("x-ms-version", string(client.version))
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -287,25 +287,25 @@ func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *modifiedAccessConditions.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header.Set("x-ms-version", string(client.version))
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -398,66 +398,66 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 		reqQP.Set("mode", string(*client.pathRenameMode))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("x-ms-rename-source", renameSource)
+	req.Raw().Header["x-ms-rename-source"] = []string{renameSource}
 	if options != nil && options.DirectoryProperties != nil {
-		req.Raw().Header.Set("x-ms-properties", *options.DirectoryProperties)
+		req.Raw().Header["x-ms-properties"] = []string{*options.DirectoryProperties}
 	}
 	if options != nil && options.PosixPermissions != nil {
-		req.Raw().Header.Set("x-ms-permissions", *options.PosixPermissions)
+		req.Raw().Header["x-ms-permissions"] = []string{*options.PosixPermissions}
 	}
 	if options != nil && options.PosixUmask != nil {
-		req.Raw().Header.Set("x-ms-umask", *options.PosixUmask)
+		req.Raw().Header["x-ms-umask"] = []string{*options.PosixUmask}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.CacheControl != nil {
-		req.Raw().Header.Set("x-ms-cache-control", *directoryHTTPHeaders.CacheControl)
+		req.Raw().Header["x-ms-cache-control"] = []string{*directoryHTTPHeaders.CacheControl}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentType != nil {
-		req.Raw().Header.Set("x-ms-content-type", *directoryHTTPHeaders.ContentType)
+		req.Raw().Header["x-ms-content-type"] = []string{*directoryHTTPHeaders.ContentType}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentEncoding != nil {
-		req.Raw().Header.Set("x-ms-content-encoding", *directoryHTTPHeaders.ContentEncoding)
+		req.Raw().Header["x-ms-content-encoding"] = []string{*directoryHTTPHeaders.ContentEncoding}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentLanguage != nil {
-		req.Raw().Header.Set("x-ms-content-language", *directoryHTTPHeaders.ContentLanguage)
+		req.Raw().Header["x-ms-content-language"] = []string{*directoryHTTPHeaders.ContentLanguage}
 	}
 	if directoryHTTPHeaders != nil && directoryHTTPHeaders.ContentDisposition != nil {
-		req.Raw().Header.Set("x-ms-content-disposition", *directoryHTTPHeaders.ContentDisposition)
+		req.Raw().Header["x-ms-content-disposition"] = []string{*directoryHTTPHeaders.ContentDisposition}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	if options != nil && options.SourceLeaseID != nil {
-		req.Raw().Header.Set("x-ms-source-lease-id", *options.SourceLeaseID)
+		req.Raw().Header["x-ms-source-lease-id"] = []string{*options.SourceLeaseID}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *modifiedAccessConditions.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
 	}
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfModifiedSince != nil {
-		req.Raw().Header.Set("x-ms-source-if-modified-since", sourceModifiedAccessConditions.SourceIfModifiedSince.Format(time.RFC1123))
+		req.Raw().Header["x-ms-source-if-modified-since"] = []string{sourceModifiedAccessConditions.SourceIfModifiedSince.Format(time.RFC1123)}
 	}
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfUnmodifiedSince != nil {
-		req.Raw().Header.Set("x-ms-source-if-unmodified-since", sourceModifiedAccessConditions.SourceIfUnmodifiedSince.Format(time.RFC1123))
+		req.Raw().Header["x-ms-source-if-unmodified-since"] = []string{sourceModifiedAccessConditions.SourceIfUnmodifiedSince.Format(time.RFC1123)}
 	}
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfMatch != nil {
-		req.Raw().Header.Set("x-ms-source-if-match", *sourceModifiedAccessConditions.SourceIfMatch)
+		req.Raw().Header["x-ms-source-if-match"] = []string{*sourceModifiedAccessConditions.SourceIfMatch}
 	}
 	if sourceModifiedAccessConditions != nil && sourceModifiedAccessConditions.SourceIfNoneMatch != nil {
-		req.Raw().Header.Set("x-ms-source-if-none-match", *sourceModifiedAccessConditions.SourceIfNoneMatch)
+		req.Raw().Header["x-ms-source-if-none-match"] = []string{*sourceModifiedAccessConditions.SourceIfNoneMatch}
 	}
-	req.Raw().Header.Set("x-ms-version", string(client.version))
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
 	if options != nil && options.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -538,37 +538,37 @@ func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
 	}
 	if options != nil && options.Owner != nil {
-		req.Raw().Header.Set("x-ms-owner", *options.Owner)
+		req.Raw().Header["x-ms-owner"] = []string{*options.Owner}
 	}
 	if options != nil && options.Group != nil {
-		req.Raw().Header.Set("x-ms-group", *options.Group)
+		req.Raw().Header["x-ms-group"] = []string{*options.Group}
 	}
 	if options != nil && options.PosixPermissions != nil {
-		req.Raw().Header.Set("x-ms-permissions", *options.PosixPermissions)
+		req.Raw().Header["x-ms-permissions"] = []string{*options.PosixPermissions}
 	}
 	if options != nil && options.PosixACL != nil {
-		req.Raw().Header.Set("x-ms-acl", *options.PosixACL)
+		req.Raw().Header["x-ms-acl"] = []string{*options.PosixACL}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *modifiedAccessConditions.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *modifiedAccessConditions.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header.Set("If-Unmodified-Since", modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123))
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
 	}
 	if options != nil && options.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *options.RequestID)
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
 	}
-	req.Raw().Header.Set("x-ms-version", string(client.version))
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 

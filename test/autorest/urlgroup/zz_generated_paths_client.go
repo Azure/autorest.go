@@ -63,7 +63,7 @@ func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arra
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -95,7 +95,7 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -126,7 +126,7 @@ func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -158,7 +158,7 @@ func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, byteP
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -190,7 +190,7 @@ func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath [
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -222,7 +222,7 @@ func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath t
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -254,7 +254,7 @@ func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTi
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -285,7 +285,7 @@ func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -316,7 +316,7 @@ func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -348,7 +348,7 @@ func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -380,7 +380,7 @@ func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -415,7 +415,7 @@ func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath U
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -450,7 +450,7 @@ func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -482,7 +482,7 @@ func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -514,7 +514,7 @@ func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -545,7 +545,7 @@ func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -576,7 +576,7 @@ func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -608,7 +608,7 @@ func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -639,7 +639,7 @@ func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -671,7 +671,7 @@ func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -702,7 +702,7 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -733,7 +733,7 @@ func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -768,7 +768,7 @@ func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPa
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -799,7 +799,7 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -831,7 +831,7 @@ func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -862,7 +862,7 @@ func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -894,6 +894,6 @@ func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTim
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

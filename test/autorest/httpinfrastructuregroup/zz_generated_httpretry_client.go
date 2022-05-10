@@ -56,7 +56,7 @@ func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
@@ -86,7 +86,7 @@ func (client *HTTPRetryClient) get502CreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -115,7 +115,7 @@ func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -145,7 +145,7 @@ func (client *HTTPRetryClient) options502CreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -184,7 +184,7 @@ func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
@@ -214,7 +214,7 @@ func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
@@ -244,7 +244,7 @@ func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
@@ -274,7 +274,7 @@ func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
@@ -304,6 +304,6 @@ func (client *HTTPRetryClient) put504CreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, true)
 }

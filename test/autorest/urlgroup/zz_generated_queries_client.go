@@ -66,7 +66,7 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -102,7 +102,7 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -139,7 +139,7 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -176,7 +176,7 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, ","))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -213,7 +213,7 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, "|"))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -250,7 +250,7 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, " "))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -287,7 +287,7 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 		reqQP.Set("arrayQuery", strings.Join(options.ArrayQuery, "\t"))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -320,7 +320,7 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("byteQuery", "")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -355,7 +355,7 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(options.ByteQuery))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -390,7 +390,7 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 		reqQP.Set("byteQuery", base64.StdEncoding.EncodeToString(options.ByteQuery))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -425,7 +425,7 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 		reqQP.Set("dateQuery", options.DateQuery.Format("2006-01-02"))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -460,7 +460,7 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 		reqQP.Set("dateTimeQuery", options.DateTimeQuery.Format(time.RFC3339Nano))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -493,7 +493,7 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("dateTimeQuery", "2012-01-01T01:01:01Z")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -526,7 +526,7 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("dateQuery", "2012-01-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -560,7 +560,7 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("doubleQuery", "-9999999.999")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -594,7 +594,7 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("doubleQuery", "9999999.999")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -629,7 +629,7 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 		reqQP.Set("doubleQuery", strconv.FormatFloat(*options.DoubleQuery, 'f', -1, 64))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -664,7 +664,7 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 		reqQP.Set("enumQuery", string(*options.EnumQuery))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -699,7 +699,7 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 		reqQP.Set("enumQuery", string(*options.EnumQuery))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -734,7 +734,7 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 		reqQP.Set("floatQuery", strconv.FormatFloat(float64(*options.FloatQuery), 'f', -1, 32))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -768,7 +768,7 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("floatQuery", "-1.034e-20")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -802,7 +802,7 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("floatQuery", "103400000000000000000")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -835,7 +835,7 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("boolQuery", "false")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -870,7 +870,7 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 		reqQP.Set("boolQuery", strconv.FormatBool(*options.BoolQuery))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -903,7 +903,7 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("boolQuery", "true")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -937,7 +937,7 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("intQuery", "-1000000")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -972,7 +972,7 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 		reqQP.Set("intQuery", strconv.FormatInt(int64(*options.IntQuery), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1006,7 +1006,7 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("intQuery", "1000000")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1041,7 +1041,7 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 		reqQP.Set("longQuery", strconv.FormatInt(*options.LongQuery, 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1075,7 +1075,7 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("longQuery", "-10000000000")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1108,7 +1108,7 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("longQuery", "10000000000")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1141,7 +1141,7 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("stringQuery", "")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1176,7 +1176,7 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 		reqQP.Set("stringQuery", *options.StringQuery)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1210,7 +1210,7 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("stringQuery", "begin!*'();:@ &=+$,/?#[]end")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1243,6 +1243,6 @@ func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, opt
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("stringQuery", "啊齄丂狛狜隣郎隣兀﨩")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

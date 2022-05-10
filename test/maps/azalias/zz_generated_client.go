@@ -104,13 +104,13 @@ func (client *client) createCreateRequest(ctx context.Context, options *clientCr
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("client-index", strconv.FormatInt(int64(client.clientIndex), 10))
+	req.Raw().Header["client-index"] = []string{strconv.FormatInt(int64(client.clientIndex), 10)}
 	assignedIDDefault := float32(8989)
 	if options != nil && options.AssignedID != nil {
 		assignedIDDefault = *options.AssignedID
 	}
-	req.Raw().Header.Set("assigned-id", strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -152,7 +152,7 @@ func (client *client) getScriptCreateRequest(ctx context.Context, props GeoJSONO
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "text/powershell")
+	req.Raw().Header["Accept"] = []string{"text/powershell"}
 	return req, runtime.MarshalAsJSON(req, props)
 }
 
@@ -232,7 +232,7 @@ func (client *client) listCreateRequest(ctx context.Context, options *clientList
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -271,7 +271,7 @@ func (client *client) policyAssignmentCreateRequest(ctx context.Context, props S
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, props)
 }
 

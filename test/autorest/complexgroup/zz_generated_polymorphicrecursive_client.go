@@ -57,7 +57,7 @@ func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -104,6 +104,6 @@ func (client *PolymorphicrecursiveClient) putValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }

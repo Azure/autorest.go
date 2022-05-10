@@ -57,7 +57,7 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header.Set("Accept", "image/png, application/json")
+	req.Raw().Header["Accept"] = []string{"image/png, application/json"}
 	return req, nil
 }
 
@@ -88,7 +88,7 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *Fi
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header.Set("Accept", "image/png, application/json")
+	req.Raw().Header["Accept"] = []string{"image/png, application/json"}
 	return req, nil
 }
 
@@ -119,6 +119,6 @@ func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, option
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header.Set("Accept", "image/png, application/json")
+	req.Raw().Header["Accept"] = []string{"image/png, application/json"}
 	return req, nil
 }

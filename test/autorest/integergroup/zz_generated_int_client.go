@@ -57,7 +57,7 @@ func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *I
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -96,7 +96,7 @@ func (client *IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -137,7 +137,7 @@ func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntC
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -176,7 +176,7 @@ func (client *IntClient) getNullUnixTimeCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -217,7 +217,7 @@ func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -256,7 +256,7 @@ func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -295,7 +295,7 @@ func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -334,7 +334,7 @@ func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -373,7 +373,7 @@ func (client *IntClient) getUnixTimeCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -415,7 +415,7 @@ func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int3
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
@@ -446,7 +446,7 @@ func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int6
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
@@ -477,7 +477,7 @@ func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int3
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
@@ -508,7 +508,7 @@ func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int6
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
@@ -539,7 +539,7 @@ func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBo
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := timeUnix(intBody)
 	return req, runtime.MarshalAsJSON(req, aux)
 }

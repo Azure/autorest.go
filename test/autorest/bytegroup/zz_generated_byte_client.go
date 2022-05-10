@@ -56,7 +56,7 @@ func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *By
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -95,7 +95,7 @@ func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -134,7 +134,7 @@ func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -173,7 +173,7 @@ func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *Byt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -213,6 +213,6 @@ func (client *ByteClient) putNonASCIICreateRequest(ctx context.Context, byteBody
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsByteArray(req, byteBody, runtime.Base64StdFormat)
 }

@@ -58,7 +58,7 @@ func (client *Datetimerfc1123Client) getInvalidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -99,7 +99,7 @@ func (client *Datetimerfc1123Client) getNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -141,7 +141,7 @@ func (client *Datetimerfc1123Client) getOverflowCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -183,7 +183,7 @@ func (client *Datetimerfc1123Client) getUTCLowercaseMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -225,7 +225,7 @@ func (client *Datetimerfc1123Client) getUTCMinDateTimeCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -267,7 +267,7 @@ func (client *Datetimerfc1123Client) getUTCUppercaseMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -309,7 +309,7 @@ func (client *Datetimerfc1123Client) getUnderflowCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -352,7 +352,7 @@ func (client *Datetimerfc1123Client) putUTCMaxDateTimeCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := timeRFC1123(datetimeBody)
 	return req, runtime.MarshalAsJSON(req, aux)
 }
@@ -385,7 +385,7 @@ func (client *Datetimerfc1123Client) putUTCMinDateTimeCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := timeRFC1123(datetimeBody)
 	return req, runtime.MarshalAsJSON(req, aux)
 }

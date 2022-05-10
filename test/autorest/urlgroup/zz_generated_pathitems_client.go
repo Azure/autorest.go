@@ -93,7 +93,7 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -151,7 +151,7 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -209,7 +209,7 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -267,6 +267,6 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 		reqQP.Set("localStringQuery", *options.LocalStringQuery)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

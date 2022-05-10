@@ -87,7 +87,7 @@ func (client *BalancesClient) getByBillingAccountCreateRequest(ctx context.Conte
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -141,7 +141,7 @@ func (client *BalancesClient) getForBillingPeriodByBillingAccountCreateRequest(c
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

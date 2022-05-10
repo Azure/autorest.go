@@ -64,7 +64,7 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -102,7 +102,7 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -141,6 +141,6 @@ func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Cont
 		}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

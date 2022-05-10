@@ -56,7 +56,7 @@ func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -98,6 +98,6 @@ func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, comp
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }

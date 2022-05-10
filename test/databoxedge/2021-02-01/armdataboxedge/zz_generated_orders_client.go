@@ -111,7 +111,7 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, order)
 }
 
@@ -170,7 +170,7 @@ func (client *OrdersClient) deleteCreateRequest(ctx context.Context, deviceName 
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -214,7 +214,7 @@ func (client *OrdersClient) getCreateRequest(ctx context.Context, deviceName str
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -281,7 +281,7 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -334,7 +334,7 @@ func (client *OrdersClient) listDCAccessCodeCreateRequest(ctx context.Context, d
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

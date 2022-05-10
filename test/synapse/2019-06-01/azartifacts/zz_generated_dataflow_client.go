@@ -86,9 +86,9 @@ func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *options.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, dataFlow)
 }
 
@@ -142,7 +142,7 @@ func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -181,9 +181,9 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *options.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -239,7 +239,7 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.C
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -303,6 +303,6 @@ func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, d
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, request)
 }

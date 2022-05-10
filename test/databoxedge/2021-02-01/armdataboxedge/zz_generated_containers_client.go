@@ -121,7 +121,7 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, containerParam)
 }
 
@@ -190,7 +190,7 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -244,7 +244,7 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -316,7 +316,7 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -394,6 +394,6 @@ func (client *ContainersClient) refreshCreateRequest(ctx context.Context, device
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

@@ -87,9 +87,9 @@ func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfMatch != nil {
-		req.Raw().Header.Set("If-Match", *options.IfMatch)
+		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, pipeline)
 }
 
@@ -137,7 +137,7 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 		reqQP.Set("startActivityName", *options.StartActivityName)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Parameters != nil {
 		return req, runtime.MarshalAsJSON(req, options.Parameters)
 	}
@@ -203,7 +203,7 @@ func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -242,9 +242,9 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.IfNoneMatch != nil {
-		req.Raw().Header.Set("If-None-Match", *options.IfNoneMatch)
+		req.Raw().Header["If-None-Match"] = []string{*options.IfNoneMatch}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -300,7 +300,7 @@ func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -364,6 +364,6 @@ func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, request)
 }

@@ -61,7 +61,7 @@ func (client *XMLClient) getACLsCreateRequest(ctx context.Context, options *XMLC
 	reqQP.Set("comp", "acl")
 	reqQP.Set("restype", "container")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -100,7 +100,7 @@ func (client *XMLClient) getBytesCreateRequest(ctx context.Context, options *XML
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -140,7 +140,7 @@ func (client *XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -180,7 +180,7 @@ func (client *XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -220,7 +220,7 @@ func (client *XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -259,7 +259,7 @@ func (client *XMLClient) getEmptyListCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -298,7 +298,7 @@ func (client *XMLClient) getEmptyRootListCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -338,7 +338,7 @@ func (client *XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -415,7 +415,7 @@ func (client *XMLClient) getRootListCreateRequest(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -455,7 +455,7 @@ func (client *XMLClient) getRootListSingleItemCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -499,7 +499,7 @@ func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, 
 	reqQP.Set("comp", "properties")
 	reqQP.Set("restype", "service")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -538,7 +538,7 @@ func (client *XMLClient) getSimpleCreateRequest(ctx context.Context, options *XM
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -577,7 +577,7 @@ func (client *XMLClient) getURICreateRequest(ctx context.Context, options *XMLCl
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -616,7 +616,7 @@ func (client *XMLClient) getWrappedListsCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -656,7 +656,7 @@ func (client *XMLClient) getXMsTextCreateRequest(ctx context.Context, options *X
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -724,7 +724,7 @@ func (client *XMLClient) jsonOutputCreateRequest(ctx context.Context, options *X
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -767,7 +767,7 @@ func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, options *XM
 	reqQP.Set("comp", "list")
 	reqQP.Set("restype", "container")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -809,7 +809,7 @@ func (client *XMLClient) listContainersCreateRequest(ctx context.Context, option
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", "list")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, nil
 }
 
@@ -885,7 +885,7 @@ func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow M
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, runtime.MarshalAsXML(req, slideshow)
 }
 
@@ -1198,7 +1198,7 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, runtime.MarshalAsXML(req, slideshow)
 }
 
@@ -1228,7 +1228,7 @@ func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWit
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, runtime.MarshalAsXML(req, model)
 }
 
@@ -1258,6 +1258,6 @@ func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrapp
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/xml")
+	req.Raw().Header["Accept"] = []string{"application/xml"}
 	return req, runtime.MarshalAsXML(req, wrappedLists)
 }

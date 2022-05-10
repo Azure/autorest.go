@@ -62,7 +62,7 @@ func (client *dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.C
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
@@ -121,7 +121,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
@@ -156,7 +156,7 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
@@ -206,7 +206,7 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
@@ -253,7 +253,7 @@ func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceC
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2019-06-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

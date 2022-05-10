@@ -96,7 +96,7 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Body)
 	}
@@ -153,7 +153,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("apiVersion", "1.0.0")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Body != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Body)
 	}
@@ -210,7 +210,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("apiVersion", "1.0.0")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

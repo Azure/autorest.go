@@ -58,7 +58,7 @@ func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -98,7 +98,7 @@ func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -138,7 +138,7 @@ func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -177,7 +177,7 @@ func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -217,7 +217,7 @@ func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -257,7 +257,7 @@ func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -297,7 +297,7 @@ func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -337,7 +337,7 @@ func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -377,7 +377,7 @@ func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -417,7 +417,7 @@ func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -457,7 +457,7 @@ func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -497,7 +497,7 @@ func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -538,7 +538,7 @@ func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -579,7 +579,7 @@ func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -619,7 +619,7 @@ func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -660,7 +660,7 @@ func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -700,7 +700,7 @@ func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -746,7 +746,7 @@ func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -792,7 +792,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -838,7 +838,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -885,7 +885,7 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -932,7 +932,7 @@ func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -977,7 +977,7 @@ func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1023,7 +1023,7 @@ func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1064,7 +1064,7 @@ func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1105,7 +1105,7 @@ func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1145,7 +1145,7 @@ func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1186,7 +1186,7 @@ func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1226,7 +1226,7 @@ func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1266,7 +1266,7 @@ func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1306,7 +1306,7 @@ func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1346,7 +1346,7 @@ func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1385,7 +1385,7 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1425,7 +1425,7 @@ func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1465,7 +1465,7 @@ func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1505,7 +1505,7 @@ func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1545,7 +1545,7 @@ func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1585,7 +1585,7 @@ func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1625,7 +1625,7 @@ func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1665,7 +1665,7 @@ func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1704,7 +1704,7 @@ func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1744,7 +1744,7 @@ func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1784,7 +1784,7 @@ func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1823,7 +1823,7 @@ func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1862,7 +1862,7 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1901,7 +1901,7 @@ func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1940,7 +1940,7 @@ func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1980,7 +1980,7 @@ func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -2020,7 +2020,7 @@ func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -2060,7 +2060,7 @@ func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -2100,7 +2100,7 @@ func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2131,7 +2131,7 @@ func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2162,7 +2162,7 @@ func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, a
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2194,7 +2194,7 @@ func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2226,7 +2226,7 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := map[string]*timeRFC1123{}
 	for k, v := range arrayBody {
 		aux[k] = (*timeRFC1123)(v)
@@ -2261,7 +2261,7 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := map[string]*timeRFC3339{}
 	for k, v := range arrayBody {
 		aux[k] = (*timeRFC3339)(v)
@@ -2295,7 +2295,7 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	aux := map[string]*dateType{}
 	for k, v := range arrayBody {
 		aux[k] = (*dateType)(v)
@@ -2331,7 +2331,7 @@ func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2362,7 +2362,7 @@ func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2393,7 +2393,7 @@ func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2423,7 +2423,7 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, array
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2454,7 +2454,7 @@ func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2485,7 +2485,7 @@ func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2515,7 +2515,7 @@ func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, a
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
@@ -2546,6 +2546,6 @@ func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }

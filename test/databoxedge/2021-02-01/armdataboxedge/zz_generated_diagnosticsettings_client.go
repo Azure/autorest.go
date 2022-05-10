@@ -96,7 +96,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -151,7 +151,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreate
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -223,7 +223,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, proactiveLogCollectionSettings)
 }
 
@@ -286,6 +286,6 @@ func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettingsCre
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2021-02-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, diagnosticRemoteSupportSettings)
 }

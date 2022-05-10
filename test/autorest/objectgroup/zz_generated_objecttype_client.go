@@ -56,7 +56,7 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -96,6 +96,6 @@ func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, putObject)
 }

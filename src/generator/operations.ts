@@ -766,7 +766,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     const emitQueryParam = function (qp: Parameter, setter: string): string {
       let qpText = '';
       if (qp.clientDefaultValue && qp.implementation === ImplementationLocation.Method) {
-        qpText = emitClientSideDefault(qp, '\treqQP.Set', imports);
+        qpText = emitClientSideDefault(qp, (name, val) => { return `\treqQP.Set(${name}, ${val})` }, imports);
       } else if (qp.required === true) {
         qpText = `\t${setter}\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
@@ -854,14 +854,16 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   headerParam.forEach(header => {
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (headerParam.clientDefaultValue && headerParam.implementation === ImplementationLocation.Method) {
-        return emitClientSideDefault(headerParam, `${prefix}req.Raw().Header.Set`, imports);
+        return emitClientSideDefault(headerParam, (name, val) => {
+          return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
+        }, imports);
       } else if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
-        headerText += `${prefix}\treq.Raw().Header.Set("${header.schema.language.go!.headerCollectionPrefix}"+k, v)\n`;
+        headerText += `${prefix}\treq.Raw().Header["${header.schema.language.go!.headerCollectionPrefix}"+k] = []string{v}\n`;
         headerText += `${prefix}}\n`;
         return headerText;
       } else {
-        return `${prefix}req.Raw().Header.Set("${headerParam.language.go!.serializedName}", ${formatParamValue(headerParam, imports)})\n`;
+        return `${prefix}req.Raw().Header["${headerParam.language.go!.serializedName}"] = []string{${formatParamValue(headerParam, imports)}}\n`;
       }
     }
     if (header.required || header.clientDefaultValue) {
@@ -987,13 +989,13 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   return text;
 }
 
-function emitClientSideDefault(param: Parameter, setter: string, imports: ImportManager): string {
+function emitClientSideDefault(param: Parameter, setterFormat: (name: string, val: string) => string, imports: ImportManager): string {
   const defaultVar = uncapitalize(param.language.go!.name) + 'Default';
   let text = `\t${defaultVar} := ${getClientDefaultValue(param)}\n`;
   text += `\tif options != nil && options.${capitalize(param.language.go!.name)} != nil {\n`;
   text += `\t\t${defaultVar} = *options.${capitalize(param.language.go!.name)}\n`;
   text += '}\n';
-  text += `${setter}("${param.language.go!.serializedName}", ${formatValue(defaultVar, param.schema, imports)})\n`;
+  text += setterFormat(`"${param.language.go!.serializedName}"`, formatValue(defaultVar, param.schema, imports)) + '\n';
   return text;
 }
 

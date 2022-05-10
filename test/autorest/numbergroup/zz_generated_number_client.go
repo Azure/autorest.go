@@ -56,7 +56,7 @@ func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -96,7 +96,7 @@ func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -136,7 +136,7 @@ func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -175,7 +175,7 @@ func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -215,7 +215,7 @@ func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -255,7 +255,7 @@ func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -294,7 +294,7 @@ func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -334,7 +334,7 @@ func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -373,7 +373,7 @@ func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -412,7 +412,7 @@ func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -451,7 +451,7 @@ func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *N
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -490,7 +490,7 @@ func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -529,7 +529,7 @@ func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -568,7 +568,7 @@ func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -608,7 +608,7 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
@@ -639,7 +639,7 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, -99999999.99)
 }
 
@@ -670,7 +670,7 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, 99999999.99)
 }
 
@@ -701,7 +701,7 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
@@ -732,7 +732,7 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, -99999999.99)
 }
 
@@ -763,7 +763,7 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, 99999999.99)
 }
 
@@ -794,7 +794,7 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
@@ -825,7 +825,7 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
@@ -856,7 +856,7 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
@@ -887,6 +887,6 @@ func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numb
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }

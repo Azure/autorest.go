@@ -56,7 +56,7 @@ func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -95,7 +95,7 @@ func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -134,7 +134,7 @@ func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -173,7 +173,7 @@ func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -213,7 +213,7 @@ func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -252,7 +252,7 @@ func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -291,7 +291,7 @@ func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -330,7 +330,7 @@ func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -369,7 +369,7 @@ func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -408,7 +408,7 @@ func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -447,7 +447,7 @@ func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -487,7 +487,7 @@ func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -518,7 +518,7 @@ func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -549,7 +549,7 @@ func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -580,7 +580,7 @@ func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, com
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -612,7 +612,7 @@ func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -643,7 +643,7 @@ func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, compl
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -674,7 +674,7 @@ func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, com
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -705,7 +705,7 @@ func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, comple
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -736,7 +736,7 @@ func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexB
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -767,7 +767,7 @@ func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -798,6 +798,6 @@ func (client *PrimitiveClient) putStringCreateRequest(ctx context.Context, compl
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }

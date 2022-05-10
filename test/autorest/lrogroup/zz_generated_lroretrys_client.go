@@ -75,7 +75,7 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -123,7 +123,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -175,7 +175,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -223,7 +223,7 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
@@ -276,7 +276,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
@@ -329,7 +329,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
@@ -382,7 +382,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}

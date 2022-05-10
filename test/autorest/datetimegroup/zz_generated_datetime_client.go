@@ -57,7 +57,7 @@ func (client *DatetimeClient) getInvalidCreateRequest(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -99,7 +99,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetLowercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -141,7 +141,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -183,7 +183,7 @@ func (client *DatetimeClient) getLocalNegativeOffsetUppercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -225,7 +225,7 @@ func (client *DatetimeClient) getLocalNoOffsetMinDateTimeCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -267,7 +267,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetLowercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -309,7 +309,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -351,7 +351,7 @@ func (client *DatetimeClient) getLocalPositiveOffsetUppercaseMaxDateTimeCreateRe
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -392,7 +392,7 @@ func (client *DatetimeClient) getNullCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -433,7 +433,7 @@ func (client *DatetimeClient) getOverflowCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -475,7 +475,7 @@ func (client *DatetimeClient) getUTCLowercaseMaxDateTimeCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -517,7 +517,7 @@ func (client *DatetimeClient) getUTCMinDateTimeCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -559,7 +559,7 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTimeCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -602,7 +602,7 @@ func (client *DatetimeClient) getUTCUppercaseMaxDateTime7DigitsCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -643,7 +643,7 @@ func (client *DatetimeClient) getUnderflowCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -686,7 +686,7 @@ func (client *DatetimeClient) putLocalNegativeOffsetMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
@@ -718,7 +718,7 @@ func (client *DatetimeClient) putLocalNegativeOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
@@ -750,7 +750,7 @@ func (client *DatetimeClient) putLocalPositiveOffsetMaxDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
@@ -782,7 +782,7 @@ func (client *DatetimeClient) putLocalPositiveOffsetMinDateTimeCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
@@ -814,7 +814,7 @@ func (client *DatetimeClient) putUTCMaxDateTimeCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
@@ -847,7 +847,7 @@ func (client *DatetimeClient) putUTCMaxDateTime7DigitsCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
 
@@ -879,6 +879,6 @@ func (client *DatetimeClient) putUTCMinDateTimeCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, datetimeBody)
 }
