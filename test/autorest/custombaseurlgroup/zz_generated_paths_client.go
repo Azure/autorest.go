@@ -67,6 +67,6 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountNam
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

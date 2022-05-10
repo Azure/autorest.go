@@ -73,7 +73,7 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
@@ -125,7 +125,7 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -177,7 +177,7 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -241,7 +241,7 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 	}
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

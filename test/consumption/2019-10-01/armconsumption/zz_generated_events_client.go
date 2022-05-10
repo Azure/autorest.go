@@ -99,7 +99,7 @@ func (client *EventsClient) listCreateRequest(ctx context.Context, startDate str
 	reqQP.Set("startDate", startDate)
 	reqQP.Set("endDate", endDate)
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

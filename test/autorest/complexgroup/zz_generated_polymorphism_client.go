@@ -57,7 +57,7 @@ func (client *PolymorphismClient) getComplicatedCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -99,7 +99,7 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -141,7 +141,7 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorCreateRequest(c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -181,7 +181,7 @@ func (client *PolymorphismClient) getDotSyntaxCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -220,7 +220,7 @@ func (client *PolymorphismClient) getValidCreateRequest(ctx context.Context, opt
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -260,7 +260,7 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -291,7 +291,7 @@ func (client *PolymorphismClient) putMissingDiscriminatorCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -336,7 +336,7 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }
 
@@ -373,6 +373,6 @@ func (client *PolymorphismClient) putValidMissingRequiredCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }

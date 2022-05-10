@@ -88,6 +88,6 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 		reqQP.Set("keyVersion", *options.KeyVersion)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

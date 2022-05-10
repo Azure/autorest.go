@@ -87,7 +87,7 @@ func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("x-ms-client-request-id", xmsClientRequestID)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["x-ms-client-request-id"] = []string{xmsClientRequestID}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

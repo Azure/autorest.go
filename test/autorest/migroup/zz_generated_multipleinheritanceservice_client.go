@@ -57,7 +57,7 @@ func (client *MultipleInheritanceServiceClient) getCatCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -97,7 +97,7 @@ func (client *MultipleInheritanceServiceClient) getFelineCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -137,7 +137,7 @@ func (client *MultipleInheritanceServiceClient) getHorseCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -177,7 +177,7 @@ func (client *MultipleInheritanceServiceClient) getKittenCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -217,7 +217,7 @@ func (client *MultipleInheritanceServiceClient) getPetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -258,7 +258,7 @@ func (client *MultipleInheritanceServiceClient) putCatCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, cat)
 }
 
@@ -299,7 +299,7 @@ func (client *MultipleInheritanceServiceClient) putFelineCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, feline)
 }
 
@@ -340,7 +340,7 @@ func (client *MultipleInheritanceServiceClient) putHorseCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, horse)
 }
 
@@ -381,7 +381,7 @@ func (client *MultipleInheritanceServiceClient) putKittenCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, kitten)
 }
 
@@ -422,7 +422,7 @@ func (client *MultipleInheritanceServiceClient) putPetCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, pet)
 }
 

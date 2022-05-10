@@ -56,7 +56,7 @@ func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *B
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -95,7 +95,7 @@ func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -134,7 +134,7 @@ func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -173,7 +173,7 @@ func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *Ba
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -212,7 +212,7 @@ func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *B
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -255,6 +255,6 @@ func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBod
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2016-02-29")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, complexBody)
 }

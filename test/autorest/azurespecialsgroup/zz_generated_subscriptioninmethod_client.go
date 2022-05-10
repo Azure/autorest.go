@@ -66,7 +66,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -103,7 +103,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -140,7 +140,7 @@ func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -177,6 +177,6 @@ func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

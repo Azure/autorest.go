@@ -62,9 +62,9 @@ func (client *ExplicitClient) postOptionalArrayHeaderCreateRequest(ctx context.C
 		return nil, err
 	}
 	if options != nil && options.HeaderParameter != nil {
-		req.Raw().Header.Set("headerParameter", strings.Join(options.HeaderParameter, ","))
+		req.Raw().Header["headerParameter"] = []string{strings.Join(options.HeaderParameter, ",")}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -95,7 +95,7 @@ func (client *ExplicitClient) postOptionalArrayParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, options.BodyParameter)
 	}
@@ -129,7 +129,7 @@ func (client *ExplicitClient) postOptionalArrayPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
@@ -163,7 +163,7 @@ func (client *ExplicitClient) postOptionalClassParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
@@ -197,7 +197,7 @@ func (client *ExplicitClient) postOptionalClassPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
@@ -232,9 +232,9 @@ func (client *ExplicitClient) postOptionalIntegerHeaderCreateRequest(ctx context
 		return nil, err
 	}
 	if options != nil && options.HeaderParameter != nil {
-		req.Raw().Header.Set("headerParameter", strconv.FormatInt(int64(*options.HeaderParameter), 10))
+		req.Raw().Header["headerParameter"] = []string{strconv.FormatInt(int64(*options.HeaderParameter), 10)}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -265,7 +265,7 @@ func (client *ExplicitClient) postOptionalIntegerParameterCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
@@ -299,7 +299,7 @@ func (client *ExplicitClient) postOptionalIntegerPropertyCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
@@ -334,9 +334,9 @@ func (client *ExplicitClient) postOptionalStringHeaderCreateRequest(ctx context.
 		return nil, err
 	}
 	if options != nil && options.BodyParameter != nil {
-		req.Raw().Header.Set("bodyParameter", *options.BodyParameter)
+		req.Raw().Header["bodyParameter"] = []string{*options.BodyParameter}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -367,7 +367,7 @@ func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		body := streaming.NopCloser(strings.NewReader(*options.BodyParameter))
 		return req, req.SetBody(body, "application/json")
@@ -402,7 +402,7 @@ func (client *ExplicitClient) postOptionalStringPropertyCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, runtime.MarshalAsJSON(req, *options.BodyParameter)
 	}
@@ -437,8 +437,8 @@ func (client *ExplicitClient) postRequiredArrayHeaderCreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("headerParameter", strings.Join(headerParameter, ","))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["headerParameter"] = []string{strings.Join(headerParameter, ",")}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -470,7 +470,7 @@ func (client *ExplicitClient) postRequiredArrayParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -502,7 +502,7 @@ func (client *ExplicitClient) postRequiredArrayPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -534,7 +534,7 @@ func (client *ExplicitClient) postRequiredClassParameterCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -566,7 +566,7 @@ func (client *ExplicitClient) postRequiredClassPropertyCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -598,8 +598,8 @@ func (client *ExplicitClient) postRequiredIntegerHeaderCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("headerParameter", strconv.FormatInt(int64(headerParameter), 10))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["headerParameter"] = []string{strconv.FormatInt(int64(headerParameter), 10)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -631,7 +631,7 @@ func (client *ExplicitClient) postRequiredIntegerParameterCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -663,7 +663,7 @@ func (client *ExplicitClient) postRequiredIntegerPropertyCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -695,8 +695,8 @@ func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("headerParameter", headerParameter)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["headerParameter"] = []string{headerParameter}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -728,7 +728,7 @@ func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	body := streaming.NopCloser(strings.NewReader(bodyParameter))
 	return req, req.SetBody(body, "application/json")
 }
@@ -761,7 +761,7 @@ func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -792,7 +792,7 @@ func (client *ExplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, req.SetBody(options.BodyParameter, "application/octet-stream")
 	}
@@ -826,6 +826,6 @@ func (client *ExplicitClient) putRequiredBinaryBodyCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, req.SetBody(bodyParameter, "application/octet-stream")
 }

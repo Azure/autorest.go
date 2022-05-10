@@ -73,7 +73,7 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2014-04-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
@@ -123,7 +123,7 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2014-04-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -176,7 +176,7 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("api-version", "2014-04-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 

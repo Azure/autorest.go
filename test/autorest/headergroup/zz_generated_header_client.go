@@ -59,7 +59,7 @@ func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -91,9 +91,9 @@ func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", strconv.FormatBool(value))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{strconv.FormatBool(value)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -125,9 +125,9 @@ func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", base64.StdEncoding.EncodeToString(value))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{base64.StdEncoding.EncodeToString(value)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -160,9 +160,9 @@ func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", value.Format("2006-01-02"))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{value.Format("2006-01-02")}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -195,9 +195,9 @@ func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scen
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", value.Format(time.RFC3339Nano))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{value.Format(time.RFC3339Nano)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -230,11 +230,11 @@ func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header["scenario"] = []string{scenario}
 	if options != nil && options.Value != nil {
-		req.Raw().Header.Set("value", options.Value.Format(time.RFC1123))
+		req.Raw().Header["value"] = []string{options.Value.Format(time.RFC1123)}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -267,9 +267,9 @@ func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenar
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", strconv.FormatFloat(value, 'f', -1, 64))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{strconv.FormatFloat(value, 'f', -1, 64)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -301,9 +301,9 @@ func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scen
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", value)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{value}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -335,11 +335,11 @@ func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header["scenario"] = []string{scenario}
 	if options != nil && options.Value != nil {
-		req.Raw().Header.Set("value", string(*options.Value))
+		req.Raw().Header["value"] = []string{string(*options.Value)}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -370,8 +370,8 @@ func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, u
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("User-Agent", userAgent)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["User-Agent"] = []string{userAgent}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -404,9 +404,9 @@ func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenari
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", strconv.FormatFloat(float64(value), 'f', -1, 32))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{strconv.FormatFloat(float64(value), 'f', -1, 32)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -439,9 +439,9 @@ func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scena
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", strconv.FormatInt(int64(value), 10))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{strconv.FormatInt(int64(value), 10)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -474,9 +474,9 @@ func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("value", strconv.FormatInt(value, 10))
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["value"] = []string{strconv.FormatInt(value, 10)}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -508,8 +508,8 @@ func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Content-Type", contentType)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Content-Type"] = []string{contentType}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -541,11 +541,11 @@ func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenar
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
+	req.Raw().Header["scenario"] = []string{scenario}
 	if options != nil && options.Value != nil {
-		req.Raw().Header.Set("value", *options.Value)
+		req.Raw().Header["value"] = []string{*options.Value}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -576,8 +576,8 @@ func (client *HeaderClient) responseBoolCreateRequest(ctx context.Context, scena
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -621,8 +621,8 @@ func (client *HeaderClient) responseByteCreateRequest(ctx context.Context, scena
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -666,8 +666,8 @@ func (client *HeaderClient) responseDateCreateRequest(ctx context.Context, scena
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -711,8 +711,8 @@ func (client *HeaderClient) responseDatetimeCreateRequest(ctx context.Context, s
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -758,8 +758,8 @@ func (client *HeaderClient) responseDatetimeRFC1123CreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -803,8 +803,8 @@ func (client *HeaderClient) responseDoubleCreateRequest(ctx context.Context, sce
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -848,8 +848,8 @@ func (client *HeaderClient) responseDurationCreateRequest(ctx context.Context, s
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -889,8 +889,8 @@ func (client *HeaderClient) responseEnumCreateRequest(ctx context.Context, scena
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -930,7 +930,7 @@ func (client *HeaderClient) responseExistingKeyCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -970,8 +970,8 @@ func (client *HeaderClient) responseFloatCreateRequest(ctx context.Context, scen
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1016,8 +1016,8 @@ func (client *HeaderClient) responseIntegerCreateRequest(ctx context.Context, sc
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1062,8 +1062,8 @@ func (client *HeaderClient) responseLongCreateRequest(ctx context.Context, scena
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1107,7 +1107,7 @@ func (client *HeaderClient) responseProtectedKeyCreateRequest(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1147,8 +1147,8 @@ func (client *HeaderClient) responseStringCreateRequest(ctx context.Context, sce
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("scenario", scenario)
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["scenario"] = []string{scenario}
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

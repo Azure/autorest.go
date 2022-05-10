@@ -60,7 +60,7 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header.Set("Accept", "application/octet-stream, application/json")
+	req.Raw().Header["Accept"] = []string{"application/octet-stream, application/json"}
 	if err := runtime.SetMultipartFormData(req, map[string]interface{}{
 		"fileContent": fileContent,
 		"fileName":    fileName,
@@ -99,7 +99,7 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header.Set("Accept", "application/octet-stream, application/json")
+	req.Raw().Header["Accept"] = []string{"application/octet-stream, application/json"}
 	return req, req.SetBody(fileContent, "application/octet-stream")
 }
 
@@ -131,7 +131,7 @@ func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, file
 		return nil, err
 	}
 	runtime.SkipBodyDownload(req)
-	req.Raw().Header.Set("Accept", "application/octet-stream, application/json")
+	req.Raw().Header["Accept"] = []string{"application/octet-stream, application/json"}
 	if err := runtime.SetMultipartFormData(req, map[string]interface{}{
 		"fileContent": fileContent,
 	}); err != nil {

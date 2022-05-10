@@ -56,7 +56,7 @@ func (client *IntClient) getCreateRequest(ctx context.Context, options *IntClien
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -95,7 +95,7 @@ func (client *IntClient) putCreateRequest(ctx context.Context, options *IntClien
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Input != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Input)
 	}

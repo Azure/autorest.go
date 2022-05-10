@@ -58,7 +58,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidCr
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -112,7 +112,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidCr
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -165,7 +165,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidCr
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -218,7 +218,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -258,7 +258,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -298,7 +298,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneC
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -338,7 +338,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -379,7 +379,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -419,7 +419,7 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -460,7 +460,7 @@ func (client *MultipleResponsesClient) get200ModelA200NoneCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -500,7 +500,7 @@ func (client *MultipleResponsesClient) get200ModelA200ValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -540,7 +540,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -599,7 +599,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -659,7 +659,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -718,7 +718,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -777,7 +777,7 @@ func (client *MultipleResponsesClient) get200ModelA202ValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -817,7 +817,7 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -857,7 +857,7 @@ func (client *MultipleResponsesClient) get200ModelA400NoneCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -897,7 +897,7 @@ func (client *MultipleResponsesClient) get200ModelA400ValidCreateRequest(ctx con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -937,7 +937,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -968,7 +968,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -999,7 +999,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1150,7 +1150,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1190,7 +1190,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1230,7 +1230,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -1261,7 +1261,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

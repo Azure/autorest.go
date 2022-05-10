@@ -109,7 +109,7 @@ func (client *batchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, sparkBatchJobOptions)
 }
 
@@ -155,7 +155,7 @@ func (client *batchClient) getSparkBatchJobCreateRequest(ctx context.Context, ba
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -205,7 +205,7 @@ func (client *batchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 		reqQP.Set("detailed", strconv.FormatBool(*options.Detailed))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

@@ -76,7 +76,7 @@ func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Co
 		reqQP.Set("optional-global-query", strconv.FormatInt(int64(*client.optionalGlobalQuery), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -111,7 +111,7 @@ func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -145,7 +145,7 @@ func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Co
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("required-global-query", client.requiredGlobalQuery)
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -180,7 +180,7 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -211,7 +211,7 @@ func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		return req, req.SetBody(options.BodyParameter, "application/octet-stream")
 	}
@@ -245,7 +245,7 @@ func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.BodyParameter != nil {
 		body := streaming.NopCloser(strings.NewReader(*options.BodyParameter))
 		return req, req.SetBody(body, "application/json")
@@ -281,9 +281,9 @@ func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context
 		return nil, err
 	}
 	if options != nil && options.QueryParameter != nil {
-		req.Raw().Header.Set("queryParameter", *options.QueryParameter)
+		req.Raw().Header["queryParameter"] = []string{*options.QueryParameter}
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -319,6 +319,6 @@ func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context,
 		reqQP.Set("queryParameter", *options.QueryParameter)
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }

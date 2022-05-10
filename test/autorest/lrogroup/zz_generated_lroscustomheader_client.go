@@ -77,7 +77,7 @@ func (client *LROsCustomHeaderClient) post202Retry200CreateRequest(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
@@ -130,7 +130,7 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
@@ -183,7 +183,7 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
@@ -236,7 +236,7 @@ func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx co
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Product != nil {
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}

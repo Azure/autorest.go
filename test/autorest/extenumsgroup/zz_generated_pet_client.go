@@ -59,7 +59,7 @@ func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetCl
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.PetParam != nil {
 		return req, runtime.MarshalAsJSON(req, *options.PetParam)
 	}
@@ -106,7 +106,7 @@ func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID stri
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 

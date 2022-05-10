@@ -57,7 +57,7 @@ func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, createParameters)
 }
 
@@ -97,7 +97,7 @@ func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, createParameters)
 }
 
@@ -136,7 +136,7 @@ func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, creat
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, createParameters)
 }
 
@@ -175,7 +175,7 @@ func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, creat
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, createParameters)
 }
 
@@ -214,7 +214,7 @@ func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createP
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, createParameters)
 }
 
@@ -253,7 +253,7 @@ func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, crea
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, runtime.MarshalAsJSON(req, createParameters)
 }
 

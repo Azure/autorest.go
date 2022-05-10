@@ -60,7 +60,7 @@ func (client *SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -96,7 +96,7 @@ func (client *SkipURLEncodingClient) getMethodQueryNullCreateRequest(ctx context
 		unencodedParams = append(unencodedParams, "q1="+*options.Q1)
 	}
 	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -131,7 +131,7 @@ func (client *SkipURLEncodingClient) getMethodQueryValidCreateRequest(ctx contex
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+q1)
 	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -166,7 +166,7 @@ func (client *SkipURLEncodingClient) getPathQueryValidCreateRequest(ctx context.
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+q1)
 	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -199,7 +199,7 @@ func (client *SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -231,7 +231,7 @@ func (client *SkipURLEncodingClient) getSwaggerPathValidCreateRequest(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
 
@@ -265,6 +265,6 @@ func (client *SkipURLEncodingClient) getSwaggerQueryValidCreateRequest(ctx conte
 	unencodedParams := []string{}
 	unencodedParams = append(unencodedParams, "q1="+"value1&q2=value2&q3=value3")
 	req.Raw().URL.RawQuery = strings.Join(unencodedParams, "&")
-	req.Raw().Header.Set("Accept", "application/json")
+	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
