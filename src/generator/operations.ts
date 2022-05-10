@@ -859,7 +859,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         }, imports);
       } else if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
-        headerText += `${prefix}\treq.Raw().Header["${header.schema.language.go!.headerCollectionPrefix}"+k] = []string{v})\n`;
+        headerText += `${prefix}\treq.Raw().Header["${header.schema.language.go!.headerCollectionPrefix}"+k] = []string{v}\n`;
         headerText += `${prefix}}\n`;
         return headerText;
       } else {

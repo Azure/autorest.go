@@ -23,8 +23,8 @@ import (
 
 type containerClient struct {
 	endpoint string
-	version Enum2
-	pl runtime.Pipeline
+	version  Enum2
+	pl       runtime.Pipeline
 }
 
 // newContainerClient creates a new instance of containerClient with the specified values.
@@ -34,8 +34,8 @@ type containerClient struct {
 func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *containerClient {
 	client := &containerClient{
 		endpoint: endpoint,
-		version: version,
-		pl: pl,
+		version:  version,
+		pl:       pl,
 	}
 	return client
 }
@@ -347,7 +347,7 @@ func (client *containerClient) createCreateRequest(ctx context.Context, restype 
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if options != nil && options.Access != nil {
@@ -751,7 +751,7 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 // Generated from API version 2020-06-12
 // options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
 // method.
-func (client *containerClient) NewListBlobFlatSegmentPager(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) (*runtime.Pager[containerClientListBlobFlatSegmentResponse]) {
+func (client *containerClient) NewListBlobFlatSegmentPager(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *runtime.Pager[containerClientListBlobFlatSegmentResponse] {
 	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobFlatSegmentResponse]{
 		More: func(page containerClientListBlobFlatSegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
@@ -848,7 +848,7 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 // appearance of the delimiter character. The delimiter may be a single character or a string.
 // options - containerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
 // method.
-func (client *containerClient) NewListBlobHierarchySegmentPager(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) (*runtime.Pager[containerClientListBlobHierarchySegmentResponse]) {
+func (client *containerClient) NewListBlobHierarchySegmentPager(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *runtime.Pager[containerClientListBlobHierarchySegmentResponse] {
 	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobHierarchySegmentResponse]{
 		More: func(page containerClientListBlobHierarchySegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
@@ -1296,7 +1296,7 @@ func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context,
 	}
 	req.Raw().Header["Accept"] = []string{"application/xml"}
 	type wrapper struct {
-		XMLName xml.Name `xml:"SignedIdentifiers"`
+		XMLName      xml.Name             `xml:"SignedIdentifiers"`
 		ContainerACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
 	if options != nil && options.ContainerACL != nil {
@@ -1376,7 +1376,7 @@ func (client *containerClient) setMetadataCreateRequest(ctx context.Context, res
 	}
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
@@ -1483,4 +1483,3 @@ func (client *containerClient) submitBatchHandleResponse(resp *http.Response) (c
 	}
 	return result, nil
 }
-

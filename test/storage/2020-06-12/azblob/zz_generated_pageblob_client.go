@@ -21,8 +21,8 @@ import (
 
 type pageBlobClient struct {
 	endpoint string
-	version Enum2
-	pl runtime.Pipeline
+	version  Enum2
+	pl       runtime.Pipeline
 }
 
 // newPageBlobClient creates a new instance of pageBlobClient with the specified values.
@@ -32,8 +32,8 @@ type pageBlobClient struct {
 func newPageBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *pageBlobClient {
 	client := &pageBlobClient{
 		endpoint: endpoint,
-		version: version,
-		pl: pl,
+		version:  version,
+		pl:       pl,
 	}
 	return client
 }
@@ -343,7 +343,7 @@ func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLe
 	}
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
@@ -1243,4 +1243,3 @@ func (client *pageBlobClient) uploadPagesFromURLHandleResponse(resp *http.Respon
 	}
 	return result, nil
 }
-

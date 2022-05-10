@@ -20,10 +20,10 @@ import (
 )
 
 type client struct {
-	endpoint string
-	version Enum2
+	endpoint       string
+	version        Enum2
 	pathRenameMode *PathRenameMode
-	pl runtime.Pipeline
+	pl             runtime.Pipeline
 }
 
 // newClient creates a new instance of client with the specified values.
@@ -33,10 +33,10 @@ type client struct {
 // pl - the pipeline used for sending requests and handling responses.
 func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *client {
 	client := &client{
-		endpoint: endpoint,
-		version: version,
+		endpoint:       endpoint,
+		version:        version,
 		pathRenameMode: pathRenameMode,
-		pl: pl,
+		pl:             pl,
 	}
 	return client
 }
@@ -444,7 +444,7 @@ func (client *client) copyFromURLCreateRequest(ctx context.Context, xmsRequiresS
 	req.Raw().Header["x-ms-requires-sync"] = []string{string(xmsRequiresSync)}
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if options != nil && options.Tier != nil {
@@ -596,7 +596,7 @@ func (client *client) createSnapshotCreateRequest(ctx context.Context, comp Enum
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
@@ -2732,7 +2732,7 @@ func (client *client) setMetadataCreateRequest(ctx context.Context, comp Enum12,
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
@@ -3017,7 +3017,7 @@ func (client *client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if options != nil && options.Metadata != nil {
 		for k, v := range options.Metadata {
-			req.Raw().Header["x-ms-meta-"+k] = []string{v})
+			req.Raw().Header["x-ms-meta-"+k] = []string{v}
 		}
 	}
 	if options != nil && options.Tier != nil {
@@ -3184,4 +3184,3 @@ func (client *client) undeleteHandleResponse(resp *http.Response) (clientUndelet
 	}
 	return result, nil
 }
-
