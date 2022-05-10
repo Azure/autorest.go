@@ -207,16 +207,6 @@ func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DotFishMarket.
-func (d DotFishMarket) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "fishes", d.Fishes)
-	populate(objectMap, "salmons", d.Salmons)
-	populate(objectMap, "sampleFish", d.SampleFish)
-	populate(objectMap, "sampleSalmon", d.SampleSalmon)
-	return json.Marshal(objectMap)
-}
-
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotFishMarket.
 func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -244,16 +234,6 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type DotSalmon.
-func (d DotSalmon) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	objectMap["fish.type"] = "DotSalmon"
-	populate(objectMap, "iswild", d.Iswild)
-	populate(objectMap, "location", d.Location)
-	populate(objectMap, "species", d.Species)
-	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type DotSalmon.
@@ -377,16 +357,6 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
-func (m MyDerivedType) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "helper", m.Helper)
-	objectMap["kind"] = MyKindKind1
-	populate(objectMap, "propB1", m.PropB1)
-	populate(objectMap, "propD1", m.PropD1)
-	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type MyDerivedType.

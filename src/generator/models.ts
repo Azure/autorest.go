@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { ByteArraySchema, CodeModel, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaContext, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isArraySchema, isDictionarySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
@@ -216,6 +216,10 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
   } else if (obj.language.go!.hasArrayMap ||
     obj.language.go!.needsPatchMarshaller) {
     needsM = true;
+  }
+  if (!values(obj.usage).any((u) => { return u === SchemaContext.Input})) {
+    // output-only types don't need a custom marshaller
+    needsM = false;
   }
   return {
     M: needsM,

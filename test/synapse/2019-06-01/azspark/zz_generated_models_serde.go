@@ -15,39 +15,6 @@ import (
 	"reflect"
 )
 
-// MarshalJSON implements the json.Marshaller interface for type BatchJob.
-func (b BatchJob) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "appId", b.AppID)
-	populate(objectMap, "appInfo", b.AppInfo)
-	populate(objectMap, "artifactId", b.ArtifactID)
-	populate(objectMap, "errorInfo", b.Errors)
-	populate(objectMap, "id", b.ID)
-	populate(objectMap, "jobType", b.JobType)
-	populate(objectMap, "livyInfo", b.LivyInfo)
-	populate(objectMap, "log", b.LogLines)
-	populate(objectMap, "name", b.Name)
-	populate(objectMap, "pluginInfo", b.Plugin)
-	populate(objectMap, "result", b.Result)
-	populate(objectMap, "schedulerInfo", b.Scheduler)
-	populate(objectMap, "sparkPoolName", b.SparkPoolName)
-	populate(objectMap, "state", b.State)
-	populate(objectMap, "submitterId", b.SubmitterID)
-	populate(objectMap, "submitterName", b.SubmitterName)
-	populate(objectMap, "tags", b.Tags)
-	populate(objectMap, "workspaceName", b.WorkspaceName)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type BatchJobCollection.
-func (b BatchJobCollection) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "from", b.From)
-	populate(objectMap, "sessions", b.Sessions)
-	populate(objectMap, "total", b.Total)
-	return json.Marshal(objectMap)
-}
-
 // MarshalJSON implements the json.Marshaller interface for type BatchJobOptions.
 func (b BatchJobOptions) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -67,21 +34,6 @@ func (b BatchJobOptions) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", b.Name)
 	populate(objectMap, "pyFiles", b.PythonFiles)
 	populate(objectMap, "tags", b.Tags)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type BatchJobState.
-func (b BatchJobState) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "currentState", b.CurrentState)
-	populateTimeRFC3339(objectMap, "deadAt", b.DeadAt)
-	populate(objectMap, "jobCreationRequest", b.JobCreationRequest)
-	populateTimeRFC3339(objectMap, "notStartedAt", b.NotStartedAt)
-	populateTimeRFC3339(objectMap, "recoveringAt", b.RecoveringAt)
-	populateTimeRFC3339(objectMap, "runningAt", b.RunningAt)
-	populateTimeRFC3339(objectMap, "startingAt", b.StartingAt)
-	populateTimeRFC3339(objectMap, "successAt", b.SuccessAt)
-	populateTimeRFC3339(objectMap, "killedAt", b.TerminatedAt)
 	return json.Marshal(objectMap)
 }
 
@@ -129,37 +81,6 @@ func (b *BatchJobState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Request.
-func (r Request) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "archives", r.Archives)
-	populate(objectMap, "args", r.Arguments)
-	populate(objectMap, "className", r.ClassName)
-	populate(objectMap, "conf", r.Configuration)
-	populate(objectMap, "driverCores", r.DriverCores)
-	populate(objectMap, "driverMemory", r.DriverMemory)
-	populate(objectMap, "executorCores", r.ExecutorCores)
-	populate(objectMap, "numExecutors", r.ExecutorCount)
-	populate(objectMap, "executorMemory", r.ExecutorMemory)
-	populate(objectMap, "file", r.File)
-	populate(objectMap, "files", r.Files)
-	populate(objectMap, "jars", r.Jars)
-	populate(objectMap, "name", r.Name)
-	populate(objectMap, "pyFiles", r.PythonFiles)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Scheduler.
-func (s Scheduler) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populateTimeRFC3339(objectMap, "cancellationRequestedAt", s.CancellationRequestedAt)
-	populate(objectMap, "currentState", s.CurrentState)
-	populateTimeRFC3339(objectMap, "endedAt", s.EndedAt)
-	populateTimeRFC3339(objectMap, "scheduledAt", s.ScheduledAt)
-	populateTimeRFC3339(objectMap, "submittedAt", s.SubmittedAt)
-	return json.Marshal(objectMap)
-}
-
 // UnmarshalJSON implements the json.Unmarshaller interface for type Scheduler.
 func (s *Scheduler) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -190,18 +111,6 @@ func (s *Scheduler) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ServicePlugin.
-func (s ServicePlugin) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populateTimeRFC3339(objectMap, "cleanupStartedAt", s.CleanupStartedAt)
-	populate(objectMap, "currentState", s.CurrentState)
-	populateTimeRFC3339(objectMap, "monitoringStartedAt", s.MonitoringStartedAt)
-	populateTimeRFC3339(objectMap, "preparationStartedAt", s.PreparationStartedAt)
-	populateTimeRFC3339(objectMap, "resourceAcquisitionStartedAt", s.ResourceAcquisitionStartedAt)
-	populateTimeRFC3339(objectMap, "submissionStartedAt", s.SubmissionStartedAt)
-	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type ServicePlugin.
@@ -239,39 +148,6 @@ func (s *ServicePlugin) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Session.
-func (s Session) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "appId", s.AppID)
-	populate(objectMap, "appInfo", s.AppInfo)
-	populate(objectMap, "artifactId", s.ArtifactID)
-	populate(objectMap, "errorInfo", s.Errors)
-	populate(objectMap, "id", s.ID)
-	populate(objectMap, "jobType", s.JobType)
-	populate(objectMap, "livyInfo", s.LivyInfo)
-	populate(objectMap, "log", s.LogLines)
-	populate(objectMap, "name", s.Name)
-	populate(objectMap, "pluginInfo", s.Plugin)
-	populate(objectMap, "result", s.Result)
-	populate(objectMap, "schedulerInfo", s.Scheduler)
-	populate(objectMap, "sparkPoolName", s.SparkPoolName)
-	populate(objectMap, "state", s.State)
-	populate(objectMap, "submitterId", s.SubmitterID)
-	populate(objectMap, "submitterName", s.SubmitterName)
-	populate(objectMap, "tags", s.Tags)
-	populate(objectMap, "workspaceName", s.WorkspaceName)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type SessionCollection.
-func (s SessionCollection) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "from", s.From)
-	populate(objectMap, "sessions", s.Sessions)
-	populate(objectMap, "total", s.Total)
-	return json.Marshal(objectMap)
-}
-
 // MarshalJSON implements the json.Marshaller interface for type SessionOptions.
 func (s SessionOptions) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
@@ -291,23 +167,6 @@ func (s SessionOptions) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "name", s.Name)
 	populate(objectMap, "pyFiles", s.PythonFiles)
 	populate(objectMap, "tags", s.Tags)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type SessionState.
-func (s SessionState) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populateTimeRFC3339(objectMap, "busyAt", s.BusyAt)
-	populate(objectMap, "currentState", s.CurrentState)
-	populateTimeRFC3339(objectMap, "deadAt", s.DeadAt)
-	populateTimeRFC3339(objectMap, "errorAt", s.ErrorAt)
-	populateTimeRFC3339(objectMap, "idleAt", s.IdleAt)
-	populate(objectMap, "jobCreationRequest", s.JobCreationRequest)
-	populateTimeRFC3339(objectMap, "notStartedAt", s.NotStartedAt)
-	populateTimeRFC3339(objectMap, "recoveringAt", s.RecoveringAt)
-	populateTimeRFC3339(objectMap, "shuttingDownAt", s.ShuttingDownAt)
-	populateTimeRFC3339(objectMap, "startingAt", s.StartingAt)
-	populateTimeRFC3339(objectMap, "killedAt", s.TerminatedAt)
 	return json.Marshal(objectMap)
 }
 
@@ -359,26 +218,6 @@ func (s *SessionState) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type StatementCollection.
-func (s StatementCollection) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "statements", s.Statements)
-	populate(objectMap, "total_statements", s.Total)
-	return json.Marshal(objectMap)
-}
-
-// MarshalJSON implements the json.Marshaller interface for type StatementOutput.
-func (s StatementOutput) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "data", &s.Data)
-	populate(objectMap, "ename", s.ErrorName)
-	populate(objectMap, "evalue", s.ErrorValue)
-	populate(objectMap, "execution_count", s.ExecutionCount)
-	populate(objectMap, "status", s.Status)
-	populate(objectMap, "traceback", s.Traceback)
-	return json.Marshal(objectMap)
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {
