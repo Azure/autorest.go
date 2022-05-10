@@ -855,7 +855,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     const emitHeaderSet = function (headerParam: Parameter, prefix: string): string {
       if (headerParam.clientDefaultValue && headerParam.implementation === ImplementationLocation.Method) {
         return emitClientSideDefault(headerParam, (name, val) => {
-          return `${prefix}req.Raw().Header[${name}] = ${val}`;
+          return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
         }, imports);
       } else if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;

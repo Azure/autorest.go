@@ -109,7 +109,7 @@ func (client *client) createCreateRequest(ctx context.Context, options *clientCr
 	if options != nil && options.AssignedID != nil {
 		assignedIDDefault = *options.AssignedID
 	}
-	req.Raw().Header["assigned-id"] = strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)
+	req.Raw().Header["assigned-id"] = []string{strconv.FormatFloat(float64(assignedIDDefault), 'f', -1, 32)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
 }
