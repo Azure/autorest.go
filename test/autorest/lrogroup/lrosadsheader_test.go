@@ -31,7 +31,7 @@ func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -48,7 +48,7 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	rt, err := poller.ResumeToken()
 	require.Error(t, err)
 	require.Empty(t, rt)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -62,7 +62,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetry400(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -82,7 +82,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -96,7 +96,7 @@ func TestLROSADSBeginDeleteAsyncRelativeRetryNoStatus(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -122,7 +122,7 @@ func TestLROSADSBeginPost202NonRetry400(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -142,7 +142,7 @@ func TestLROSADSBeginPostAsyncRelativeRetry400(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -162,7 +162,7 @@ func TestLROSADSBeginPostAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -176,7 +176,7 @@ func TestLROSADSBeginPostAsyncRelativeRetryNoPayload(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -202,7 +202,7 @@ func TestLROSADSBeginPutAsyncRelativeRetry400(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -222,7 +222,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryInvalidJSONPolling(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -236,7 +236,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatus(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -250,7 +250,7 @@ func TestLROSADSBeginPutAsyncRelativeRetryNoStatusPayload(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -264,7 +264,7 @@ func TestLROSADSBeginPutError201NoProvisioningStatePayload(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -278,7 +278,7 @@ func TestLROSADSBeginPutNonRetry201Creating400(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -292,7 +292,7 @@ func TestLROSADSBeginPutNonRetry201Creating400InvalidJSON(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 

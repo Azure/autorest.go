@@ -39,7 +39,7 @@ func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenC
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -123,7 +123,7 @@ func (client *LoadBalancerProbesClient) getHandleResponse(resp *http.Response) (
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerProbesClientListOptions contains the optional parameters for the LoadBalancerProbesClient.List method.
 func (client *LoadBalancerProbesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesClientListOptions) *runtime.Pager[LoadBalancerProbesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[LoadBalancerProbesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[LoadBalancerProbesClientListResponse]{
 		More: func(page LoadBalancerProbesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

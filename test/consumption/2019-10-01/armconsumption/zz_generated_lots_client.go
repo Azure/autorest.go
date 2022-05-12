@@ -34,7 +34,7 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -57,7 +57,7 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 // options - LotsClientListOptions contains the optional parameters for the LotsClient.List method.
 func (client *LotsClient) NewListPager(scope string, options *LotsClientListOptions) *runtime.Pager[LotsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[LotsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[LotsClientListResponse]{
 		More: func(page LotsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

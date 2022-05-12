@@ -39,7 +39,7 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -63,7 +63,7 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 // options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
 // method.
 func (client *AvailablePrivateEndpointTypesClient) NewListPager(location string, options *AvailablePrivateEndpointTypesClientListOptions) *runtime.Pager[AvailablePrivateEndpointTypesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailablePrivateEndpointTypesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailablePrivateEndpointTypesClientListResponse]{
 		More: func(page AvailablePrivateEndpointTypesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -130,7 +130,7 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http
 // options - AvailablePrivateEndpointTypesClientListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.ListByResourceGroup
 // method.
 func (client *AvailablePrivateEndpointTypesClient) NewListByResourceGroupPager(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesClientListByResourceGroupOptions) *runtime.Pager[AvailablePrivateEndpointTypesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailablePrivateEndpointTypesClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailablePrivateEndpointTypesClientListByResourceGroupResponse]{
 		More: func(page AvailablePrivateEndpointTypesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

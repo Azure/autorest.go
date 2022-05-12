@@ -39,7 +39,7 @@ func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCr
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -123,7 +123,7 @@ func (client *ExpressRouteLinksClient) getHandleResponse(resp *http.Response) (E
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // options - ExpressRouteLinksClientListOptions contains the optional parameters for the ExpressRouteLinksClient.List method.
 func (client *ExpressRouteLinksClient) NewListPager(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksClientListOptions) *runtime.Pager[ExpressRouteLinksClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ExpressRouteLinksClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ExpressRouteLinksClientListResponse]{
 		More: func(page ExpressRouteLinksClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

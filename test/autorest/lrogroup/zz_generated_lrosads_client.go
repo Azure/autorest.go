@@ -10,7 +10,6 @@ package lrogroup
 
 import (
 	"context"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,15 +35,15 @@ func NewLROSADsClient(pl runtime.Pipeline) *LROSADsClient {
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDelete202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginDelete202NonRetry400
 // method.
-func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsClientBeginDelete202NonRetry400Options) (*armruntime.Poller[LROSADsClientDelete202NonRetry400Response], error) {
+func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsClientBeginDelete202NonRetry400Options) (*runtime.Poller[LROSADsClientDelete202NonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete202NonRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDelete202NonRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDelete202NonRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDelete202NonRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDelete202NonRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -83,15 +82,15 @@ func (client *LROSADsClient) delete202NonRetry400CreateRequest(ctx context.Conte
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDelete202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDelete202RetryInvalidHeader
 // method.
-func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDelete202RetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientDelete202RetryInvalidHeaderResponse], error) {
+func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDelete202RetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientDelete202RetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete202RetryInvalidHeader(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDelete202RetryInvalidHeaderResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDelete202RetryInvalidHeaderResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDelete202RetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDelete202RetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -130,15 +129,15 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderCreateRequest(ctx contex
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDelete204SucceededOptions contains the optional parameters for the LROSADsClient.BeginDelete204Succeeded
 // method.
-func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsClientBeginDelete204SucceededOptions) (*armruntime.Poller[LROSADsClientDelete204SucceededResponse], error) {
+func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsClientBeginDelete204SucceededOptions) (*runtime.Poller[LROSADsClientDelete204SucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete204Succeeded(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDelete204SucceededResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDelete204SucceededResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDelete204SucceededResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDelete204SucceededResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -177,15 +176,15 @@ func (client *LROSADsClient) delete204SucceededCreateRequest(ctx context.Context
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetry400
 // method.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetry400Options) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetry400Response], error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDeleteAsyncRelativeRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDeleteAsyncRelativeRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -225,15 +224,15 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400CreateRequest(ctx contex
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader
 // method.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse], error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetryInvalidHeader(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -273,15 +272,15 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the
 // LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling method.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse], error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -321,15 +320,15 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus
 // method.
-func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions) (*armruntime.Poller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse], error) {
+func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetryNoStatus(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -368,15 +367,15 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginDeleteNonRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteNonRetry400
 // method.
-func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsClientBeginDeleteNonRetry400Options) (*armruntime.Poller[LROSADsClientDeleteNonRetry400Response], error) {
+func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsClientBeginDeleteNonRetry400Options) (*runtime.Poller[LROSADsClientDeleteNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteNonRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientDeleteNonRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientDeleteNonRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientDeleteNonRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientDeleteNonRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -414,15 +413,15 @@ func (client *LROSADsClient) deleteNonRetry400CreateRequest(ctx context.Context,
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPost202NoLocationOptions contains the optional parameters for the LROSADsClient.BeginPost202NoLocation
 // method.
-func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsClientBeginPost202NoLocationOptions) (*armruntime.Poller[LROSADsClientPost202NoLocationResponse], error) {
+func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsClientBeginPost202NoLocationOptions) (*runtime.Poller[LROSADsClientPost202NoLocationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202NoLocation(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPost202NoLocationResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPost202NoLocationResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPost202NoLocationResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPost202NoLocationResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -463,15 +462,15 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPost202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginPost202NonRetry400
 // method.
-func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsClientBeginPost202NonRetry400Options) (*armruntime.Poller[LROSADsClientPost202NonRetry400Response], error) {
+func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsClientBeginPost202NonRetry400Options) (*runtime.Poller[LROSADsClientPost202NonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202NonRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPost202NonRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPost202NonRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPost202NonRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPost202NonRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -513,15 +512,15 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPost202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPost202RetryInvalidHeader
 // method.
-func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPost202RetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientPost202RetryInvalidHeaderResponse], error) {
+func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPost202RetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPost202RetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202RetryInvalidHeader(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPost202RetryInvalidHeaderResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPost202RetryInvalidHeaderResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPost202RetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPost202RetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -564,15 +563,15 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetry400
 // method.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetry400Options) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetry400Response], error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPostAsyncRelativeRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPostAsyncRelativeRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -616,15 +615,15 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader
 // method.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse], error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetryInvalidHeader(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -670,15 +669,15 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling
 // method.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse], error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -723,15 +722,15 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryNoPayload
 // method.
-func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions) (*armruntime.Poller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse], error) {
+func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetryNoPayload(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -774,15 +773,15 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPostNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPostNonRetry400
 // method.
-func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsClientBeginPostNonRetry400Options) (*armruntime.Poller[LROSADsClientPostNonRetry400Response], error) {
+func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsClientBeginPostNonRetry400Options) (*runtime.Poller[LROSADsClientPostNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postNonRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPostNonRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPostNonRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPostNonRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPostNonRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -824,15 +823,15 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPut200InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPut200InvalidJSON
 // method.
-func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*armruntime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
+func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*runtime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.put200InvalidJSON(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPut200InvalidJSONResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPut200InvalidJSONResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPut200InvalidJSONResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPut200InvalidJSONResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -875,15 +874,15 @@ func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context,
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetry400
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutAsyncRelativeRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutAsyncRelativeRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -926,15 +925,15 @@ func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.C
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -979,15 +978,15 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1032,15 +1031,15 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatus
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryNoStatus(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryNoStatusResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryNoStatusResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1085,15 +1084,15 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*armruntime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1137,15 +1136,15 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions contains the optional parameters for the LROSADsClient.BeginPutError201NoProvisioningStatePayload
 // method.
-func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*armruntime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
+func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*runtime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putError201NoProvisioningStatePayload(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutError201NoProvisioningStatePayloadResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutError201NoProvisioningStatePayloadResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutError201NoProvisioningStatePayloadResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutError201NoProvisioningStatePayloadResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1188,15 +1187,15 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400
 // method.
-func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*armruntime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
+func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putNonRetry201Creating400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutNonRetry201Creating400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutNonRetry201Creating400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutNonRetry201Creating400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutNonRetry201Creating400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1239,15 +1238,15 @@ func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON
 // method.
-func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*armruntime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
+func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1289,15 +1288,15 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(c
 // Generated from API version 1.0.0
 // options - LROSADsClientBeginPutNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry400
 // method.
-func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*armruntime.Poller[LROSADsClientPutNonRetry400Response], error) {
+func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*runtime.Poller[LROSADsClientPutNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putNonRetry400(ctx, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[LROSADsClientPutNonRetry400Response](resp, client.pl, nil)
+		return runtime.NewPoller[LROSADsClientPutNonRetry400Response](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[LROSADsClientPutNonRetry400Response](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LROSADsClientPutNonRetry400Response](options.ResumeToken, client.pl, nil)
 	}
 }
 

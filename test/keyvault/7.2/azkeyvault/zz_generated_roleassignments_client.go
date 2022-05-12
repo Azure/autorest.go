@@ -198,7 +198,7 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 // options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
 // method.
 func (client *RoleAssignmentsClient) NewListForScopePager(vaultBaseURL string, scope string, options *RoleAssignmentsClientListForScopeOptions) *runtime.Pager[RoleAssignmentsClientListForScopeResponse] {
-	return runtime.NewPager(runtime.PageProcessor[RoleAssignmentsClientListForScopeResponse]{
+	return runtime.NewPager(runtime.PagingHandler[RoleAssignmentsClientListForScopeResponse]{
 		More: func(page RoleAssignmentsClientListForScopeResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

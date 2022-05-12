@@ -39,7 +39,7 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -64,15 +64,15 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 // parameters - Parameters supplied to the Create or Update a Container Service operation.
 // options - ContainerServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
 // method.
-func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ContainerServicesClientCreateOrUpdateResponse], error) {
+func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*runtime.Poller[ContainerServicesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainerServicesClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainerServicesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainerServicesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainerServicesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -131,15 +131,15 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
 // method.
-func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*armruntime.Poller[ContainerServicesClientDeleteResponse], error) {
+func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*runtime.Poller[ContainerServicesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainerServicesClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainerServicesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainerServicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainerServicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -254,7 +254,7 @@ func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (C
 // Generated from API version 2017-01-31
 // options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
 func (client *ContainerServicesClient) NewListPager(options *ContainerServicesClientListOptions) *runtime.Pager[ContainerServicesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ContainerServicesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ContainerServicesClientListResponse]{
 		More: func(page ContainerServicesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -317,7 +317,7 @@ func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (
 // options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
 // method.
 func (client *ContainerServicesClient) NewListByResourceGroupPager(resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) *runtime.Pager[ContainerServicesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ContainerServicesClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ContainerServicesClientListByResourceGroupResponse]{
 		More: func(page ContainerServicesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

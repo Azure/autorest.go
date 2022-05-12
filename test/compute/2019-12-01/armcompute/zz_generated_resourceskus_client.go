@@ -39,7 +39,7 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -60,7 +60,7 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 // Generated from API version 2019-04-01
 // options - ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.List method.
 func (client *ResourceSKUsClient) NewListPager(options *ResourceSKUsClientListOptions) *runtime.Pager[ResourceSKUsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ResourceSKUsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ResourceSKUsClientListResponse]{
 		More: func(page ResourceSKUsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

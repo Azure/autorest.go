@@ -39,7 +39,7 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -65,15 +65,15 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 // disk - Disk object supplied in the body of the Put disk operation.
 // options - DisksClientBeginCreateOrUpdateOptions contains the optional parameters for the DisksClient.BeginCreateOrUpdate
 // method.
-func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*armruntime.Poller[DisksClientCreateOrUpdateResponse], error) {
+func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*runtime.Poller[DisksClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, diskName, disk, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DisksClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -129,15 +129,15 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
 // characters.
 // options - DisksClientBeginDeleteOptions contains the optional parameters for the DisksClient.BeginDelete method.
-func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*armruntime.Poller[DisksClientDeleteResponse], error) {
+func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*runtime.Poller[DisksClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, diskName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DisksClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -251,17 +251,17 @@ func (client *DisksClient) getHandleResponse(resp *http.Response) (DisksClientGe
 // characters.
 // grantAccessData - Access data object supplied in the body of the get disk access operation.
 // options - DisksClientBeginGrantAccessOptions contains the optional parameters for the DisksClient.BeginGrantAccess method.
-func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*armruntime.Poller[DisksClientGrantAccessResponse], error) {
+func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*runtime.Poller[DisksClientGrantAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.grantAccess(ctx, resourceGroupName, diskName, grantAccessData, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[DisksClientGrantAccessResponse]{
-			FinalStateVia: armruntime.FinalStateViaLocation,
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[DisksClientGrantAccessResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientGrantAccessResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientGrantAccessResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -314,7 +314,7 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 // Generated from API version 2019-11-01
 // options - DisksClientListOptions contains the optional parameters for the DisksClient.List method.
 func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtime.Pager[DisksClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[DisksClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[DisksClientListResponse]{
 		More: func(page DisksClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -375,7 +375,7 @@ func (client *DisksClient) listHandleResponse(resp *http.Response) (DisksClientL
 // options - DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup
 // method.
 func (client *DisksClient) NewListByResourceGroupPager(resourceGroupName string, options *DisksClientListByResourceGroupOptions) *runtime.Pager[DisksClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[DisksClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[DisksClientListByResourceGroupResponse]{
 		More: func(page DisksClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -441,17 +441,17 @@ func (client *DisksClient) listByResourceGroupHandleResponse(resp *http.Response
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
 // characters.
 // options - DisksClientBeginRevokeAccessOptions contains the optional parameters for the DisksClient.BeginRevokeAccess method.
-func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*armruntime.Poller[DisksClientRevokeAccessResponse], error) {
+func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*runtime.Poller[DisksClientRevokeAccessResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.revokeAccess(ctx, resourceGroupName, diskName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[DisksClientRevokeAccessResponse]{
-			FinalStateVia: armruntime.FinalStateViaLocation,
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[DisksClientRevokeAccessResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientRevokeAccessResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientRevokeAccessResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -507,15 +507,15 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 // characters.
 // disk - Disk object supplied in the body of the Patch disk operation.
 // options - DisksClientBeginUpdateOptions contains the optional parameters for the DisksClient.BeginUpdate method.
-func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*armruntime.Poller[DisksClientUpdateResponse], error) {
+func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*runtime.Poller[DisksClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, diskName, disk, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DisksClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DisksClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DisksClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DisksClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

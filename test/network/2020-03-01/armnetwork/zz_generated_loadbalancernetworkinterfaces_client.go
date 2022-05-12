@@ -39,7 +39,7 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -63,7 +63,7 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 // options - LoadBalancerNetworkInterfacesClientListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.List
 // method.
 func (client *LoadBalancerNetworkInterfacesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesClientListOptions) *runtime.Pager[LoadBalancerNetworkInterfacesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[LoadBalancerNetworkInterfacesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[LoadBalancerNetworkInterfacesClientListResponse]{
 		More: func(page LoadBalancerNetworkInterfacesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

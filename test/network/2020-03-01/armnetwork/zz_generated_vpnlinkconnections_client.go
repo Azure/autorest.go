@@ -39,7 +39,7 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -64,7 +64,7 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 // options - VPNLinkConnectionsClientListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnectionsClient.ListByVPNConnection
 // method.
 func (client *VPNLinkConnectionsClient) NewListByVPNConnectionPager(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsClientListByVPNConnectionOptions) *runtime.Pager[VPNLinkConnectionsClientListByVPNConnectionResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VPNLinkConnectionsClientListByVPNConnectionResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VPNLinkConnectionsClientListByVPNConnectionResponse]{
 		More: func(page VPNLinkConnectionsClientListByVPNConnectionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

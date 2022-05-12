@@ -34,7 +34,7 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -59,7 +59,7 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 // options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
 func (client *EventsClient) NewListPager(startDate string, endDate string, scope string, options *EventsClientListOptions) *runtime.Pager[EventsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[EventsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[EventsClientListResponse]{
 		More: func(page EventsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

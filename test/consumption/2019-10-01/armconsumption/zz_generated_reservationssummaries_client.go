@@ -36,7 +36,7 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -62,7 +62,7 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 // options - ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.List
 // method.
 func (client *ReservationsSummariesClient) NewListPager(scope string, grain Datagrain, options *ReservationsSummariesClientListOptions) *runtime.Pager[ReservationsSummariesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ReservationsSummariesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ReservationsSummariesClientListResponse]{
 		More: func(page ReservationsSummariesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -137,7 +137,7 @@ func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Respons
 // options - ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
 // method.
 func (client *ReservationsSummariesClient) NewListByReservationOrderPager(reservationOrderID string, grain Datagrain, options *ReservationsSummariesClientListByReservationOrderOptions) *runtime.Pager[ReservationsSummariesClientListByReservationOrderResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ReservationsSummariesClientListByReservationOrderResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ReservationsSummariesClientListByReservationOrderResponse]{
 		More: func(page ReservationsSummariesClientListByReservationOrderResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -204,7 +204,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(
 // options - ReservationsSummariesClientListByReservationOrderAndReservationOptions contains the optional parameters for the
 // ReservationsSummariesClient.ListByReservationOrderAndReservation method.
 func (client *ReservationsSummariesClient) NewListByReservationOrderAndReservationPager(reservationOrderID string, reservationID string, grain Datagrain, options *ReservationsSummariesClientListByReservationOrderAndReservationOptions) *runtime.Pager[ReservationsSummariesClientListByReservationOrderAndReservationResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ReservationsSummariesClientListByReservationOrderAndReservationResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ReservationsSummariesClientListByReservationOrderAndReservationResponse]{
 		More: func(page ReservationsSummariesClientListByReservationOrderAndReservationResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

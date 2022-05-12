@@ -39,7 +39,7 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -64,15 +64,15 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 // gallery - Parameters supplied to the create or update Shared Image Gallery operation.
 // options - GalleriesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleriesClient.BeginCreateOrUpdate
 // method.
-func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[GalleriesClientCreateOrUpdateResponse], error) {
+func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*runtime.Poller[GalleriesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, gallery, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleriesClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[GalleriesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleriesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[GalleriesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -126,15 +126,15 @@ func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, 
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery to be deleted.
 // options - GalleriesClientBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
-func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*armruntime.Poller[GalleriesClientDeleteResponse], error) {
+func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*runtime.Poller[GalleriesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleriesClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[GalleriesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleriesClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[GalleriesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -243,7 +243,7 @@ func (client *GalleriesClient) getHandleResponse(resp *http.Response) (Galleries
 // Generated from API version 2019-12-01
 // options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
 func (client *GalleriesClient) NewListPager(options *GalleriesClientListOptions) *runtime.Pager[GalleriesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[GalleriesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[GalleriesClientListResponse]{
 		More: func(page GalleriesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -304,7 +304,7 @@ func (client *GalleriesClient) listHandleResponse(resp *http.Response) (Gallerie
 // options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup
 // method.
 func (client *GalleriesClient) NewListByResourceGroupPager(resourceGroupName string, options *GalleriesClientListByResourceGroupOptions) *runtime.Pager[GalleriesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[GalleriesClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[GalleriesClientListByResourceGroupResponse]{
 		More: func(page GalleriesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -370,15 +370,15 @@ func (client *GalleriesClient) listByResourceGroupHandleResponse(resp *http.Resp
 // allowed in the middle. The maximum length is 80 characters.
 // gallery - Parameters supplied to the update Shared Image Gallery operation.
 // options - GalleriesClientBeginUpdateOptions contains the optional parameters for the GalleriesClient.BeginUpdate method.
-func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*armruntime.Poller[GalleriesClientUpdateResponse], error) {
+func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*runtime.Poller[GalleriesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, galleryName, gallery, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[GalleriesClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[GalleriesClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[GalleriesClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[GalleriesClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

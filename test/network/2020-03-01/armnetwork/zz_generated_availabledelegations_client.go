@@ -39,7 +39,7 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -62,7 +62,7 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 // options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
 // method.
 func (client *AvailableDelegationsClient) NewListPager(location string, options *AvailableDelegationsClientListOptions) *runtime.Pager[AvailableDelegationsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailableDelegationsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailableDelegationsClientListResponse]{
 		More: func(page AvailableDelegationsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

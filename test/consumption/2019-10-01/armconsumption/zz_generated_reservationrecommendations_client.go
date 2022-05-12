@@ -34,7 +34,7 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -61,7 +61,7 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 // options - ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.List
 // method.
 func (client *ReservationRecommendationsClient) NewListPager(scope string, options *ReservationRecommendationsClientListOptions) *runtime.Pager[ReservationRecommendationsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ReservationRecommendationsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ReservationRecommendationsClientListResponse]{
 		More: func(page ReservationRecommendationsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

@@ -35,7 +35,7 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -72,7 +72,7 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 // options - UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.List method.
 func (client *UsageDetailsClient) NewListPager(scope string, options *UsageDetailsClientListOptions) *runtime.Pager[UsageDetailsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[UsageDetailsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[UsageDetailsClientListResponse]{
 		More: func(page UsageDetailsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

@@ -39,7 +39,7 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -62,7 +62,7 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 // options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
 // method.
 func (client *AvailableServiceAliasesClient) NewListPager(location string, options *AvailableServiceAliasesClientListOptions) *runtime.Pager[AvailableServiceAliasesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailableServiceAliasesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailableServiceAliasesClientListResponse]{
 		More: func(page AvailableServiceAliasesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -128,7 +128,7 @@ func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Respo
 // options - AvailableServiceAliasesClientListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.ListByResourceGroup
 // method.
 func (client *AvailableServiceAliasesClient) NewListByResourceGroupPager(resourceGroupName string, location string, options *AvailableServiceAliasesClientListByResourceGroupOptions) *runtime.Pager[AvailableServiceAliasesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailableServiceAliasesClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailableServiceAliasesClientListByResourceGroupResponse]{
 		More: func(page AvailableServiceAliasesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

@@ -33,7 +33,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	result, err := poller.PollUntilDone(context.Background(), time.Second)
+	result, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
@@ -48,7 +48,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -62,7 +62,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.Ptr("100"),
@@ -85,7 +85,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -99,7 +99,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -113,7 +113,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.Ptr("100"),
@@ -136,7 +136,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	if r := cmp.Diff(res.Product, Product{
 		ID:   to.Ptr("100"),

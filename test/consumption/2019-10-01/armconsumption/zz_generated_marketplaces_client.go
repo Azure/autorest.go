@@ -35,7 +35,7 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -65,7 +65,7 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 // '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
 // options - MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.List method.
 func (client *MarketplacesClient) NewListPager(scope string, options *MarketplacesClientListOptions) *runtime.Pager[MarketplacesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[MarketplacesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[MarketplacesClientListResponse]{
 		More: func(page MarketplacesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

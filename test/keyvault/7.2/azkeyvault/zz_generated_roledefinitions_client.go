@@ -198,7 +198,7 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 // scope - The scope of the role definition.
 // options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
 func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *runtime.Pager[RoleDefinitionsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[RoleDefinitionsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[RoleDefinitionsClientListResponse]{
 		More: func(page RoleDefinitionsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

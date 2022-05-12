@@ -39,7 +39,7 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -124,7 +124,7 @@ func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSit
 // options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
 // method.
 func (client *VPNSiteLinksClient) NewListByVPNSitePager(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) *runtime.Pager[VPNSiteLinksClientListByVPNSiteResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VPNSiteLinksClientListByVPNSiteResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VPNSiteLinksClientListByVPNSiteResponse]{
 		More: func(page VPNSiteLinksClientListByVPNSiteResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

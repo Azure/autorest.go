@@ -39,7 +39,7 @@ func NewImagesClient(subscriptionID string, credential azcore.TokenCredential, o
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -63,15 +63,15 @@ func NewImagesClient(subscriptionID string, credential azcore.TokenCredential, o
 // parameters - Parameters supplied to the Create Image operation.
 // options - ImagesClientBeginCreateOrUpdateOptions contains the optional parameters for the ImagesClient.BeginCreateOrUpdate
 // method.
-func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ImagesClientCreateOrUpdateResponse], error) {
+func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesClientBeginCreateOrUpdateOptions) (*runtime.Poller[ImagesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, imageName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ImagesClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ImagesClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ImagesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ImagesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -125,15 +125,15 @@ func (client *ImagesClient) createOrUpdateCreateRequest(ctx context.Context, res
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // options - ImagesClientBeginDeleteOptions contains the optional parameters for the ImagesClient.BeginDelete method.
-func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesClientBeginDeleteOptions) (*armruntime.Poller[ImagesClientDeleteResponse], error) {
+func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesClientBeginDeleteOptions) (*runtime.Poller[ImagesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, imageName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ImagesClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ImagesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ImagesClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ImagesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -245,7 +245,7 @@ func (client *ImagesClient) getHandleResponse(resp *http.Response) (ImagesClient
 // Generated from API version 2019-12-01
 // options - ImagesClientListOptions contains the optional parameters for the ImagesClient.List method.
 func (client *ImagesClient) NewListPager(options *ImagesClientListOptions) *runtime.Pager[ImagesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ImagesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ImagesClientListResponse]{
 		More: func(page ImagesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -306,7 +306,7 @@ func (client *ImagesClient) listHandleResponse(resp *http.Response) (ImagesClien
 // options - ImagesClientListByResourceGroupOptions contains the optional parameters for the ImagesClient.ListByResourceGroup
 // method.
 func (client *ImagesClient) NewListByResourceGroupPager(resourceGroupName string, options *ImagesClientListByResourceGroupOptions) *runtime.Pager[ImagesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ImagesClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ImagesClientListByResourceGroupResponse]{
 		More: func(page ImagesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -371,15 +371,15 @@ func (client *ImagesClient) listByResourceGroupHandleResponse(resp *http.Respons
 // imageName - The name of the image.
 // parameters - Parameters supplied to the Update Image operation.
 // options - ImagesClientBeginUpdateOptions contains the optional parameters for the ImagesClient.BeginUpdate method.
-func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesClientBeginUpdateOptions) (*armruntime.Poller[ImagesClientUpdateResponse], error) {
+func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesClientBeginUpdateOptions) (*runtime.Poller[ImagesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, imageName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ImagesClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ImagesClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ImagesClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ImagesClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

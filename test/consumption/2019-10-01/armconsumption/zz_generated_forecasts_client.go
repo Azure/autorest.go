@@ -38,7 +38,7 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -61,7 +61,7 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // Generated from API version 2019-10-01
 // options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
 func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ForecastsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ForecastsClientListResponse]{
 		More: func(page ForecastsClientListResponse) bool {
 			return false
 		},

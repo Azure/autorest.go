@@ -36,7 +36,7 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -58,7 +58,7 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 // options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List
 // method.
 func (client *ReservationTransactionsClient) NewListPager(billingAccountID string, options *ReservationTransactionsClientListOptions) *runtime.Pager[ReservationTransactionsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ReservationTransactionsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ReservationTransactionsClientListResponse]{
 		More: func(page ReservationTransactionsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -123,7 +123,7 @@ func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Respo
 // options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
 // method.
 func (client *ReservationTransactionsClient) NewListByBillingProfilePager(billingAccountID string, billingProfileID string, options *ReservationTransactionsClientListByBillingProfileOptions) *runtime.Pager[ReservationTransactionsClientListByBillingProfileResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ReservationTransactionsClientListByBillingProfileResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ReservationTransactionsClientListByBillingProfileResponse]{
 		More: func(page ReservationTransactionsClientListByBillingProfileResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

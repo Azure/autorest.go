@@ -263,7 +263,7 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (pi
 // options - pipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
 // method.
 func (client *pipelineClient) NewGetPipelinesByWorkspacePager(options *pipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[pipelineClientGetPipelinesByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[pipelineClientGetPipelinesByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[pipelineClientGetPipelinesByWorkspaceResponse]{
 		More: func(page pipelineClientGetPipelinesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

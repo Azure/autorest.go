@@ -190,7 +190,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 // Generated from API version 2.0
 // options - clientListOptions contains the optional parameters for the client.List method.
 func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[clientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[clientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[clientListResponse]{
 		More: func(page clientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

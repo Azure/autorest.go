@@ -36,7 +36,7 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -230,7 +230,7 @@ func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClie
 // for invoiceSection scope.
 // options - BudgetsClientListOptions contains the optional parameters for the BudgetsClient.List method.
 func (client *BudgetsClient) NewListPager(scope string, options *BudgetsClientListOptions) *runtime.Pager[BudgetsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[BudgetsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[BudgetsClientListResponse]{
 		More: func(page BudgetsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
