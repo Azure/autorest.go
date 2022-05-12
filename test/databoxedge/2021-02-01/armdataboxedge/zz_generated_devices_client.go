@@ -38,7 +38,7 @@ func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, 
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -116,15 +116,15 @@ func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (
 // securitySettings - The security settings.
 // options - DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
 // method.
-func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*armruntime.Poller[DevicesClientCreateOrUpdateSecuritySettingsResponse], error) {
+func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*runtime.Poller[DevicesClientCreateOrUpdateSecuritySettingsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientCreateOrUpdateSecuritySettingsResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DevicesClientCreateOrUpdateSecuritySettingsResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientCreateOrUpdateSecuritySettingsResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DevicesClientCreateOrUpdateSecuritySettingsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -175,15 +175,15 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
-func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*armruntime.Poller[DevicesClientDeleteResponse], error) {
+func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*runtime.Poller[DevicesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DevicesClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DevicesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -235,15 +235,15 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
 // method.
-func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*armruntime.Poller[DevicesClientDownloadUpdatesResponse], error) {
+func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*runtime.Poller[DevicesClientDownloadUpdatesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.downloadUpdates(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientDownloadUpdatesResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DevicesClientDownloadUpdatesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientDownloadUpdatesResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DevicesClientDownloadUpdatesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -565,15 +565,15 @@ func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response)
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
 // method.
-func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*armruntime.Poller[DevicesClientInstallUpdatesResponse], error) {
+func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*runtime.Poller[DevicesClientInstallUpdatesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.installUpdates(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientInstallUpdatesResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DevicesClientInstallUpdatesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientInstallUpdatesResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DevicesClientInstallUpdatesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -625,7 +625,7 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 // options - DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup
 // method.
 func (client *DevicesClient) NewListByResourceGroupPager(resourceGroupName string, options *DevicesClientListByResourceGroupOptions) *runtime.Pager[DevicesClientListByResourceGroupResponse] {
-	return runtime.NewPager(runtime.PageProcessor[DevicesClientListByResourceGroupResponse]{
+	return runtime.NewPager(runtime.PagingHandler[DevicesClientListByResourceGroupResponse]{
 		More: func(page DevicesClientListByResourceGroupResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -692,7 +692,7 @@ func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Respon
 // options - DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription
 // method.
 func (client *DevicesClient) NewListBySubscriptionPager(options *DevicesClientListBySubscriptionOptions) *runtime.Pager[DevicesClientListBySubscriptionResponse] {
-	return runtime.NewPager(runtime.PageProcessor[DevicesClientListBySubscriptionResponse]{
+	return runtime.NewPager(runtime.PagingHandler[DevicesClientListBySubscriptionResponse]{
 		More: func(page DevicesClientListBySubscriptionResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -756,15 +756,15 @@ func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Respons
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
 // method.
-func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*armruntime.Poller[DevicesClientScanForUpdatesResponse], error) {
+func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*runtime.Poller[DevicesClientScanForUpdatesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.scanForUpdates(ctx, deviceName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[DevicesClientScanForUpdatesResponse](resp, client.pl, nil)
+		return runtime.NewPoller[DevicesClientScanForUpdatesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[DevicesClientScanForUpdatesResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[DevicesClientScanForUpdatesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

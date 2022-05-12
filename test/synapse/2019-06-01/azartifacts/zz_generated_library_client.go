@@ -352,7 +352,7 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 // Generated from API version 2019-06-01-preview
 // options - libraryClientListOptions contains the optional parameters for the libraryClient.List method.
 func (client *libraryClient) NewListPager(options *libraryClientListOptions) *runtime.Pager[libraryClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[libraryClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[libraryClientListResponse]{
 		More: func(page libraryClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

@@ -38,7 +38,7 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -62,15 +62,15 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 // triggerSupportPackageRequest - The trigger support package request object
 // options - SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
 // method.
-func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*armruntime.Poller[SupportPackagesClientTriggerSupportPackageResponse], error) {
+func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*runtime.Poller[SupportPackagesClientTriggerSupportPackageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse](resp, client.pl, nil)
+		return runtime.NewPoller[SupportPackagesClientTriggerSupportPackageResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[SupportPackagesClientTriggerSupportPackageResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

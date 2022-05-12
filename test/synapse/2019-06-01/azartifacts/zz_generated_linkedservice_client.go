@@ -203,7 +203,7 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 // options - linkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
 // method.
 func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[linkedServiceClientGetLinkedServicesByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[linkedServiceClientGetLinkedServicesByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[linkedServiceClientGetLinkedServicesByWorkspaceResponse]{
 		More: func(page linkedServiceClientGetLinkedServicesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

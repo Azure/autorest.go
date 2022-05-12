@@ -58,7 +58,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -72,7 +72,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -82,7 +82,7 @@ func TestLROBeginDelete204Succeeded(t *testing.T) {
 	require.NoError(t, err)
 	_, err = poller.ResumeToken()
 	require.Error(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -96,7 +96,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -110,7 +110,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -124,7 +124,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
@@ -147,7 +147,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -161,7 +161,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
@@ -184,7 +184,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -198,7 +198,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -212,7 +212,7 @@ func TestLROBeginDeleteProvisioning202DeletingFailed200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -226,7 +226,7 @@ func TestLROBeginDeleteProvisioning202Deletingcanceled200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 }
 
@@ -234,7 +234,7 @@ func TestLROBeginPatch201RetryWithAsyncHeader(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPatch201RetryWithAsyncHeader(context.Background(), nil)
 	require.NoError(t, err)
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	res, err := resp.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("/lro/patch/201/retry/onlyAsyncHeader"),
@@ -250,7 +250,7 @@ func TestLROBeginPatch202RetryWithAsyncAndLocationHeader(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPatch202RetryWithAsyncAndLocationHeader(context.Background(), nil)
 	require.NoError(t, err)
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	res, err := resp.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("/lro/patch/202/retry/asyncAndLocationHeader"),
@@ -271,7 +271,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, SKU{
 		ID:   to.Ptr("1"),
@@ -289,7 +289,7 @@ func TestLROBeginPost202List(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, []*Product{{
 		ID:   to.Ptr("100"),
@@ -307,7 +307,7 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -321,7 +321,7 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 }
 
@@ -335,7 +335,7 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -356,7 +356,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
@@ -379,7 +379,7 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -400,7 +400,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
@@ -423,7 +423,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID: to.Ptr("100"),
@@ -440,7 +440,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -458,7 +458,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -476,7 +476,7 @@ func TestLROBeginPut200Acceptedcanceled200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -492,7 +492,7 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 	require.NoError(t, err)
 	_, err = poller.ResumeToken()
 	require.Error(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -509,7 +509,7 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 	require.NoError(t, err)
 	_, err = poller.ResumeToken()
 	require.Error(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -528,7 +528,7 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -549,7 +549,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	_, err = poller.PollUntilDone(context.Background(), time.Second)
+	_, err = poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	var respErr *azcore.ResponseError
 	if !errors.As(err, &respErr) {
@@ -569,7 +569,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -584,7 +584,7 @@ func TestLROBeginPut201Succeeded(t *testing.T) {
 	op := newLROSClient()
 	resp, err := op.BeginPut201Succeeded(context.Background(), nil)
 	require.NoError(t, err)
-	res, err := resp.PollUntilDone(context.Background(), time.Second)
+	res, err := resp.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -605,7 +605,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -623,7 +623,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -644,7 +644,7 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -665,7 +665,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
@@ -688,7 +688,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, SKU{
 		ID:   to.Ptr("100"),
@@ -706,7 +706,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	res, err := poller.PollUntilDone(context.Background(), time.Second)
+	res, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.Error(t, err)
 	if !reflect.ValueOf(res).IsZero() {
 		t.Fatal("expected a nil response from the polling operation")
@@ -729,7 +729,7 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -750,7 +750,7 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, SubProduct{
 		ID: to.Ptr("100"),
@@ -770,7 +770,7 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, Product{
 		ID:   to.Ptr("100"),
@@ -791,7 +791,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, SKU{
 		ID:   to.Ptr("100"),
@@ -809,7 +809,7 @@ func TestLROBeginPutSubResource(t *testing.T) {
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
-	pollResp, err := poller.PollUntilDone(context.Background(), time.Second)
+	pollResp, err := poller.PollUntilDone(context.Background(), &runtime.PollUntilDoneOptions{Frequency: time.Second})
 	require.NoError(t, err)
 	require.Equal(t, SubProduct{
 		ID: to.Ptr("100"),

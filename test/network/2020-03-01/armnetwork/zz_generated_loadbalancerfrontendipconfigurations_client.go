@@ -39,7 +39,7 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -125,7 +125,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleResponse(resp
 // options - LoadBalancerFrontendIPConfigurationsClientListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.List
 // method.
 func (client *LoadBalancerFrontendIPConfigurationsClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsClientListOptions) *runtime.Pager[LoadBalancerFrontendIPConfigurationsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[LoadBalancerFrontendIPConfigurationsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[LoadBalancerFrontendIPConfigurationsClientListResponse]{
 		More: func(page LoadBalancerFrontendIPConfigurationsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

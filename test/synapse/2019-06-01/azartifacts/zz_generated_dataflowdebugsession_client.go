@@ -216,7 +216,7 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 // options - dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 // dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace method.
 func (client *dataFlowDebugSessionClient) NewQueryDataFlowDebugSessionsByWorkspacePager(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *runtime.Pager[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse]{
 		More: func(page dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

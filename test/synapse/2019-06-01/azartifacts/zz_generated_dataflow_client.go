@@ -202,7 +202,7 @@ func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (da
 // options - dataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
 // method.
 func (client *dataFlowClient) NewGetDataFlowsByWorkspacePager(options *dataFlowClientGetDataFlowsByWorkspaceOptions) *runtime.Pager[dataFlowClientGetDataFlowsByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[dataFlowClientGetDataFlowsByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[dataFlowClientGetDataFlowsByWorkspaceResponse]{
 		More: func(page dataFlowClientGetDataFlowsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

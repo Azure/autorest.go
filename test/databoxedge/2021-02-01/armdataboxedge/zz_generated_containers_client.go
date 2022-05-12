@@ -38,7 +38,7 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -64,15 +64,15 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 // containerParam - The container properties.
 // options - ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
 // method.
-func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*armruntime.Poller[ContainersClientCreateOrUpdateResponse], error) {
+func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*runtime.Poller[ContainersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainersClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainersClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainersClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -133,15 +133,15 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
-func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*armruntime.Poller[ContainersClientDeleteResponse], error) {
+func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*runtime.Poller[ContainersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainersClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainersClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainersClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainersClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -266,7 +266,7 @@ func (client *ContainersClient) getHandleResponse(resp *http.Response) (Containe
 // options - ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
 // method.
 func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersClientListByStorageAccountOptions) *runtime.Pager[ContainersClientListByStorageAccountResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ContainersClientListByStorageAccountResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ContainersClientListByStorageAccountResponse]{
 		More: func(page ContainersClientListByStorageAccountResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -337,15 +337,15 @@ func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Re
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
-func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*armruntime.Poller[ContainersClientRefreshResponse], error) {
+func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*runtime.Poller[ContainersClientRefreshResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[ContainersClientRefreshResponse](resp, client.pl, nil)
+		return runtime.NewPoller[ContainersClientRefreshResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[ContainersClientRefreshResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[ContainersClientRefreshResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

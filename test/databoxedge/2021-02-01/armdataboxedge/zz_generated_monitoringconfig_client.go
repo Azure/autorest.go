@@ -38,7 +38,7 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -63,15 +63,15 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 // monitoringMetricConfiguration - The metric configuration.
 // options - MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
 // method.
-func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*armruntime.Poller[MonitoringConfigClientCreateOrUpdateResponse], error) {
+func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*runtime.Poller[MonitoringConfigClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[MonitoringConfigClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[MonitoringConfigClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[MonitoringConfigClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[MonitoringConfigClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -128,15 +128,15 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 // resourceGroupName - The resource group name.
 // options - MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
 // method.
-func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*armruntime.Poller[MonitoringConfigClientDeleteResponse], error) {
+func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*runtime.Poller[MonitoringConfigClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[MonitoringConfigClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[MonitoringConfigClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[MonitoringConfigClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[MonitoringConfigClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -251,7 +251,7 @@ func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (Mo
 // resourceGroupName - The resource group name.
 // options - MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
 func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientListOptions) *runtime.Pager[MonitoringConfigClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[MonitoringConfigClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[MonitoringConfigClientListResponse]{
 		More: func(page MonitoringConfigClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

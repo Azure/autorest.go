@@ -202,7 +202,7 @@ func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (data
 // options - datasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
 // method.
 func (client *datasetClient) NewGetDatasetsByWorkspacePager(options *datasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[datasetClientGetDatasetsByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[datasetClientGetDatasetsByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[datasetClientGetDatasetsByWorkspaceResponse]{
 		More: func(page datasetClientGetDatasetsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

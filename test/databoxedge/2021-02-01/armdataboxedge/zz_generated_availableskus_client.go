@@ -38,7 +38,7 @@ func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCreden
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -59,7 +59,7 @@ func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCreden
 // Generated from API version 2021-02-01
 // options - AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.List method.
 func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientListOptions) *runtime.Pager[AvailableSKUsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailableSKUsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailableSKUsClientListResponse]{
 		More: func(page AvailableSKUsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

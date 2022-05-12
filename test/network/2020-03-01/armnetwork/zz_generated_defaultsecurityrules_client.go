@@ -39,7 +39,7 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -125,7 +125,7 @@ func (client *DefaultSecurityRulesClient) getHandleResponse(resp *http.Response)
 // options - DefaultSecurityRulesClientListOptions contains the optional parameters for the DefaultSecurityRulesClient.List
 // method.
 func (client *DefaultSecurityRulesClient) NewListPager(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesClientListOptions) *runtime.Pager[DefaultSecurityRulesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[DefaultSecurityRulesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[DefaultSecurityRulesClientListResponse]{
 		More: func(page DefaultSecurityRulesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

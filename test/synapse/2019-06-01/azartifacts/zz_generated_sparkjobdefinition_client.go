@@ -311,7 +311,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp
 // options - sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace
 // method.
 func (client *sparkJobDefinitionClient) NewGetSparkJobDefinitionsByWorkspacePager(options *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) *runtime.Pager[sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse]{
 		More: func(page sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

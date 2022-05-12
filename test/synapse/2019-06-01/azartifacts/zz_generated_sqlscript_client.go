@@ -202,7 +202,7 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (
 // options - sqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
 // method.
 func (client *sqlScriptClient) NewGetSQLScriptsByWorkspacePager(options *sqlScriptClientGetSQLScriptsByWorkspaceOptions) *runtime.Pager[sqlScriptClientGetSQLScriptsByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[sqlScriptClientGetSQLScriptsByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[sqlScriptClientGetSQLScriptsByWorkspaceResponse]{
 		More: func(page sqlScriptClientGetSQLScriptsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

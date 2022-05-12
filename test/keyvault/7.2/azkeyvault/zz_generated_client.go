@@ -1210,7 +1210,7 @@ func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (C
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
 func (client *Client) NewGetCertificateIssuersPager(vaultBaseURL string, options *ClientGetCertificateIssuersOptions) *runtime.Pager[ClientGetCertificateIssuersResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificateIssuersResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetCertificateIssuersResponse]{
 		More: func(page ClientGetCertificateIssuersResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1376,7 +1376,7 @@ func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (C
 // certificateName - The name of the certificate.
 // options - ClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
 func (client *Client) NewGetCertificateVersionsPager(vaultBaseURL string, certificateName string, options *ClientGetCertificateVersionsOptions) *runtime.Pager[ClientGetCertificateVersionsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificateVersionsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetCertificateVersionsResponse]{
 		More: func(page ClientGetCertificateVersionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1442,7 +1442,7 @@ func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) 
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
 func (client *Client) NewGetCertificatesPager(vaultBaseURL string, options *ClientGetCertificatesOptions) *runtime.Pager[ClientGetCertificatesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetCertificatesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetCertificatesResponse]{
 		More: func(page ClientGetCertificatesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1561,7 +1561,7 @@ func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
 func (client *Client) NewGetDeletedCertificatesPager(vaultBaseURL string, options *ClientGetDeletedCertificatesOptions) *runtime.Pager[ClientGetDeletedCertificatesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedCertificatesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetDeletedCertificatesResponse]{
 		More: func(page ClientGetDeletedCertificatesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1681,7 +1681,7 @@ func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGe
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
 func (client *Client) NewGetDeletedKeysPager(vaultBaseURL string, options *ClientGetDeletedKeysOptions) *runtime.Pager[ClientGetDeletedKeysResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedKeysResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetDeletedKeysResponse]{
 		More: func(page ClientGetDeletedKeysResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1802,7 +1802,7 @@ func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response)
 // options - ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions
 // method.
 func (client *Client) NewGetDeletedSasDefinitionsPager(vaultBaseURL string, storageAccountName string, options *ClientGetDeletedSasDefinitionsOptions) *runtime.Pager[ClientGetDeletedSasDefinitionsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedSasDefinitionsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetDeletedSasDefinitionsResponse]{
 		More: func(page ClientGetDeletedSasDefinitionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1919,7 +1919,7 @@ func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (Clien
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
 func (client *Client) NewGetDeletedSecretsPager(vaultBaseURL string, options *ClientGetDeletedSecretsOptions) *runtime.Pager[ClientGetDeletedSecretsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedSecretsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetDeletedSecretsResponse]{
 		More: func(page ClientGetDeletedSecretsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2034,7 +2034,7 @@ func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response
 // options - ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
 // method.
 func (client *Client) NewGetDeletedStorageAccountsPager(vaultBaseURL string, options *ClientGetDeletedStorageAccountsOptions) *runtime.Pager[ClientGetDeletedStorageAccountsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetDeletedStorageAccountsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetDeletedStorageAccountsResponse]{
 		More: func(page ClientGetDeletedStorageAccountsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2154,7 +2154,7 @@ func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyRes
 // keyName - The name of the key.
 // options - ClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
 func (client *Client) NewGetKeyVersionsPager(vaultBaseURL string, keyName string, options *ClientGetKeyVersionsOptions) *runtime.Pager[ClientGetKeyVersionsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetKeyVersionsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetKeyVersionsResponse]{
 		More: func(page ClientGetKeyVersionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2222,7 +2222,7 @@ func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientG
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
 func (client *Client) NewGetKeysPager(vaultBaseURL string, options *ClientGetKeysOptions) *runtime.Pager[ClientGetKeysResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetKeysResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetKeysResponse]{
 		More: func(page ClientGetKeysResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2341,7 +2341,7 @@ func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (Clien
 // storageAccountName - The name of the storage account.
 // options - ClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
 func (client *Client) NewGetSasDefinitionsPager(vaultBaseURL string, storageAccountName string, options *ClientGetSasDefinitionsOptions) *runtime.Pager[ClientGetSasDefinitionsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetSasDefinitionsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetSasDefinitionsResponse]{
 		More: func(page ClientGetSasDefinitionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2465,7 +2465,7 @@ func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSec
 // secretName - The name of the secret.
 // options - ClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
 func (client *Client) NewGetSecretVersionsPager(vaultBaseURL string, secretName string, options *ClientGetSecretVersionsOptions) *runtime.Pager[ClientGetSecretVersionsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetSecretVersionsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetSecretVersionsResponse]{
 		More: func(page ClientGetSecretVersionsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2532,7 +2532,7 @@ func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (Clie
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
 func (client *Client) NewGetSecretsPager(vaultBaseURL string, options *ClientGetSecretsOptions) *runtime.Pager[ClientGetSecretsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetSecretsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetSecretsResponse]{
 		More: func(page ClientGetSecretsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -2644,7 +2644,7 @@ func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (Clie
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
 func (client *Client) NewGetStorageAccountsPager(vaultBaseURL string, options *ClientGetStorageAccountsOptions) *runtime.Pager[ClientGetStorageAccountsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[ClientGetStorageAccountsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[ClientGetStorageAccountsResponse]{
 		More: func(page ClientGetStorageAccountsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

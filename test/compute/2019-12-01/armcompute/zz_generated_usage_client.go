@@ -39,7 +39,7 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -62,7 +62,7 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 // location - The location for which resource usage is queried.
 // options - UsageClientListOptions contains the optional parameters for the UsageClient.List method.
 func (client *UsageClient) NewListPager(location string, options *UsageClientListOptions) *runtime.Pager[UsageClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[UsageClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[UsageClientListResponse]{
 		More: func(page UsageClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

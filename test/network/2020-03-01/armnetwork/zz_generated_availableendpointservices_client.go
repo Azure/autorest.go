@@ -39,7 +39,7 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -62,7 +62,7 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 // options - AvailableEndpointServicesClientListOptions contains the optional parameters for the AvailableEndpointServicesClient.List
 // method.
 func (client *AvailableEndpointServicesClient) NewListPager(location string, options *AvailableEndpointServicesClientListOptions) *runtime.Pager[AvailableEndpointServicesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[AvailableEndpointServicesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[AvailableEndpointServicesClientListResponse]{
 		More: func(page AvailableEndpointServicesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

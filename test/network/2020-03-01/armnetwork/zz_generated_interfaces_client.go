@@ -39,7 +39,7 @@ func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredentia
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -63,17 +63,17 @@ func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredentia
 // parameters - Parameters supplied to the create or update network interface operation.
 // options - InterfacesClientBeginCreateOrUpdateOptions contains the optional parameters for the InterfacesClient.BeginCreateOrUpdate
 // method.
-func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*armruntime.Poller[InterfacesClientCreateOrUpdateResponse], error) {
+func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*runtime.Poller[InterfacesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientCreateOrUpdateResponse]{
-			FinalStateVia: armruntime.FinalStateViaAzureAsyncOp,
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[InterfacesClientCreateOrUpdateResponse]{
+			FinalStateVia: runtime.FinalStateViaAzureAsyncOp,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[InterfacesClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -127,17 +127,17 @@ func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context,
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginDeleteOptions contains the optional parameters for the InterfacesClient.BeginDelete method.
-func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*armruntime.Poller[InterfacesClientDeleteResponse], error) {
+func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*runtime.Poller[InterfacesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientDeleteResponse]{
-			FinalStateVia: armruntime.FinalStateViaLocation,
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[InterfacesClientDeleteResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[InterfacesClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -251,17 +251,17 @@ func (client *InterfacesClient) getHandleResponse(resp *http.Response) (Interfac
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginGetEffectiveRouteTableOptions contains the optional parameters for the InterfacesClient.BeginGetEffectiveRouteTable
 // method.
-func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*armruntime.Poller[InterfacesClientGetEffectiveRouteTableResponse], error) {
+func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*runtime.Poller[InterfacesClientGetEffectiveRouteTableResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientGetEffectiveRouteTableResponse]{
-			FinalStateVia: armruntime.FinalStateViaLocation,
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[InterfacesClientGetEffectiveRouteTableResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientGetEffectiveRouteTableResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[InterfacesClientGetEffectiveRouteTableResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -461,7 +461,7 @@ func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleR
 // resourceGroupName - The name of the resource group.
 // options - InterfacesClientListOptions contains the optional parameters for the InterfacesClient.List method.
 func (client *InterfacesClient) NewListPager(resourceGroupName string, options *InterfacesClientListOptions) *runtime.Pager[InterfacesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListResponse]{
 		More: func(page InterfacesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -524,7 +524,7 @@ func (client *InterfacesClient) listHandleResponse(resp *http.Response) (Interfa
 // Generated from API version 2020-03-01
 // options - InterfacesClientListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
 func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAllOptions) *runtime.Pager[InterfacesClientListAllResponse] {
-	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListAllResponse]{
+	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListAllResponse]{
 		More: func(page InterfacesClientListAllResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -585,17 +585,17 @@ func (client *InterfacesClient) listAllHandleResponse(resp *http.Response) (Inte
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the InterfacesClient.BeginListEffectiveNetworkSecurityGroups
 // method.
-func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*armruntime.Poller[InterfacesClientListEffectiveNetworkSecurityGroupsResponse], error) {
+func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*runtime.Poller[InterfacesClientListEffectiveNetworkSecurityGroupsResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]{
-			FinalStateVia: armruntime.FinalStateViaLocation,
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[InterfacesClientListEffectiveNetworkSecurityGroupsResponse]{
+			FinalStateVia: runtime.FinalStateViaLocation,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken[InterfacesClientListEffectiveNetworkSecurityGroupsResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[InterfacesClientListEffectiveNetworkSecurityGroupsResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -654,7 +654,7 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(
 // options - InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetIPConfigurations
 // method.
 func (client *InterfacesClient) NewListVirtualMachineScaleSetIPConfigurationsPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *InterfacesClientListVirtualMachineScaleSetIPConfigurationsOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -735,7 +735,7 @@ func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandle
 // options - InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces
 // method.
 func (client *InterfacesClient) NewListVirtualMachineScaleSetNetworkInterfacesPager(resourceGroupName string, virtualMachineScaleSetName string, options *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -807,7 +807,7 @@ func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandl
 // options - InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the
 // InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces method.
 func (client *InterfacesClient) NewListVirtualMachineScaleSetVMNetworkInterfacesPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesOptions) *runtime.Pager[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse]{
 		More: func(page InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

@@ -39,7 +39,7 @@ func NewVirtualMachineRunCommandsClient(subscriptionID string, credential azcore
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -119,7 +119,7 @@ func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Resp
 // options - VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
 // method.
 func (client *VirtualMachineRunCommandsClient) NewListPager(location string, options *VirtualMachineRunCommandsClientListOptions) *runtime.Pager[VirtualMachineRunCommandsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VirtualMachineRunCommandsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VirtualMachineRunCommandsClientListResponse]{
 		More: func(page VirtualMachineRunCommandsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

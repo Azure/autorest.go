@@ -250,7 +250,7 @@ func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (trig
 // options - triggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
 // method.
 func (client *triggerClient) NewGetTriggersByWorkspacePager(options *triggerClientGetTriggersByWorkspaceOptions) *runtime.Pager[triggerClientGetTriggersByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[triggerClientGetTriggersByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[triggerClientGetTriggersByWorkspaceResponse]{
 		More: func(page triggerClientGetTriggersByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

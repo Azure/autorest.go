@@ -39,7 +39,7 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -61,7 +61,7 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 // options - BgpServiceCommunitiesClientListOptions contains the optional parameters for the BgpServiceCommunitiesClient.List
 // method.
 func (client *BgpServiceCommunitiesClient) NewListPager(options *BgpServiceCommunitiesClientListOptions) *runtime.Pager[BgpServiceCommunitiesClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[BgpServiceCommunitiesClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[BgpServiceCommunitiesClientListResponse]{
 		More: func(page BgpServiceCommunitiesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

@@ -205,7 +205,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\t}\n';
     }
     if (azureARM) {
-      clientText += '\tep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint\n'
+      clientText += '\tep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint\n'
       clientText += '\tif c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {\n';
       clientText += '\t\tep = c.Endpoint\n';
       clientText += '\t}\n';
@@ -332,19 +332,17 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
     for (const op of values(group.operations)) {
-      // TODO: this can be removed and use azureARM once LROs have been unified
-      const isARM = session.model.language.go!.openApiType === 'arm';
       // protocol creation can add imports to the list so
       // it must be done before the imports are written out
       if (isLROOperation(op)) {
         // generate Begin method
-        opText += generateLROBeginMethod(op, imports, isARM);
+        opText += generateLROBeginMethod(op, imports);
       }
-      opText += generateOperation(op, imports, isARM);
+      opText += generateOperation(op, imports);
       opText += createProtocolRequest(group, op, imports);
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
-        opText += createProtocolResponse(op, imports, isARM);
+        opText += createProtocolResponse(op, imports);
       }
     }
 
@@ -511,7 +509,7 @@ function emitPagerDefinition(op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const nextLink = op.language.go!.paging.nextLinkName;
   imports.add('context');
-  let text = `runtime.NewPager(runtime.PageProcessor[${getResponseEnvelopeName(op)}]{\n`;
+  let text = `runtime.NewPager(runtime.PagingHandler[${getResponseEnvelopeName(op)}]{\n`;
   text += `\t\tMore: func(page ${getResponseEnvelopeName(op)}) bool {\n`;
   // there is no advancer for single-page pagers
   if (op.language.go!.paging.nextLinkName) {
@@ -584,14 +582,14 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   return `// Generated from API version ${versions.join(',')}\n`;
 }
 
-function generateOperation(op: Operation, imports: ImportManager, isARM: boolean): string {
+function generateOperation(op: Operation, imports: ImportManager): string {
   if (op.language.go!.paging && op.language.go!.paging.isNextOp) {
     // don't generate a public API for the methods used to advance pages
     return '';
   }
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = generateReturnsInfo(op, 'op', isARM);
+  const returns = generateReturnsInfo(op, 'op');
   const clientName = op.language.go!.clientName;
   let opName = op.language.go!.name;
   if(isPageableOperation(op) && !isLROOperation(op)) {
@@ -1094,7 +1092,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   return unmarshallerText;
 }
 
-function createProtocolResponse(op: Operation, imports: ImportManager, isARM: boolean): string {
+function createProtocolResponse(op: Operation, imports: ImportManager): string {
   if (!needsResponseHandler(op)) {
     return '';
   }
@@ -1102,7 +1100,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager, isARM: bo
   const name = info.protocolNaming.responseMethod;
   const clientName = op.language.go!.clientName;
   let text = `${comment(name, '// ')} handles the ${info.name} response.\n`;
-  text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(op, 'handler', isARM).join(', ')}) {\n`;
+  text += `func (client *${clientName}) ${name}(resp *http.Response) (${generateReturnsInfo(op, 'handler').join(', ')}) {\n`;
   const addHeaders = function (props?: Property[]) {
     const headerVals = new Array<Property>();
     for (const prop of values(props)) {
@@ -1261,17 +1259,15 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
 //   api - for the API definition
 //    op - for the operation
 // handler - for the response handler
-function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler', isARM: boolean): string[] {
+function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler'): string[] {
   let returnType = getResponseEnvelopeName(op);
   if (isLROOperation(op)) {
     switch (apiType) {
       case 'api':
-        // this should go away once we can type alias a generic type
-        const packageName = isARM ? 'armruntime' : 'runtime';
         if (isPageableOperation(op)) {
-          returnType = `*${packageName}.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
+          returnType = `*runtime.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
         } else {
-          returnType = `*${packageName}.Poller[${getResponseEnvelopeName(op)}]`;
+          returnType = `*runtime.Poller[${getResponseEnvelopeName(op)}]`;
         }
         break;
       case 'handler':
@@ -1298,16 +1294,12 @@ function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'handler', i
   return [returnType, 'error'];
 }
 
-function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: boolean): string {
+function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
   const info = <OperationNaming>op.language.go!;
   const params = getAPIParametersSig(op, imports);
-  const returns = generateReturnsInfo(op, 'api', isARM);
+  const returns = generateReturnsInfo(op, 'api');
   const clientName = op.language.go!.clientName;
-  if (isARM) {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
-  } else {
-    imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-  }
+  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
   let text = '';
   if (hasDescription(op.language.go!)) {
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
@@ -1341,8 +1333,6 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   text += `\t\t\treturn ${zeroResp}, err\n`;
   text += `\t\t}\n`;
 
-  const packageName = isARM ? 'armruntime' : 'runtime';
-
   let finalStateVia = '';
   // LRO operation might have a special configuration set in x-ms-long-running-operation-options
   // which indicates a specific url to perform the final Get operation on
@@ -1350,23 +1340,23 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     finalStateVia = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     switch (finalStateVia) {
       case "azure-async-operation":
-        finalStateVia = `${packageName}.FinalStateViaAzureAsyncOp`;
+        finalStateVia = `runtime.FinalStateViaAzureAsyncOp`;
         break;
       case "location":
-        finalStateVia = `${packageName}.FinalStateViaLocation`;
+        finalStateVia = `runtime.FinalStateViaLocation`;
         break;
       case "original-uri":
-        finalStateVia = `${packageName}.FinalStateViaOriginalURI`;
+        finalStateVia = `runtime.FinalStateViaOriginalURI`;
         break;
       case "operation-location":
-        finalStateVia = `${packageName}.FinalStateViaOpLocation`;
+        finalStateVia = `runtime.FinalStateViaOpLocation`;
         break;
       default:
         throw new Error(`unhandled final-state-via value ${finalStateVia}`);
     }
   }
 
-  text += `\t\treturn ${packageName}.NewPoller`;
+  text += `\t\treturn runtime.NewPoller`;
   if (finalStateVia === '' && pollerType === 'nil') {
     // the generic type param is redundant when it's also specified in the
     // options struct so we only include it when there's no options.
@@ -1378,7 +1368,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     text += 'nil)\n';
   } else {
     // at least one option
-    text += `&${packageName}.NewPollerOptions${pollerTypeParam}{\n`;
+    text += `&runtime.NewPollerOptions${pollerTypeParam}{\n`;
     if (finalStateVia !== '') {
       text += `\t\t\tFinalStateVia: ${finalStateVia},\n`;  
     }
@@ -1391,7 +1381,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
 
   // creating the poller from resume token branch
 
-  text += `\t\treturn ${packageName}.NewPollerFromResumeToken`;
+  text += `\t\treturn runtime.NewPollerFromResumeToken`;
   if (pollerType === 'nil') {
     text += pollerTypeParam;
   }
@@ -1399,7 +1389,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   if (pollerType === 'nil') {
     text += 'nil)\n';
   } else {
-    text += `&${packageName}.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
+    text += `&runtime.NewPollerFromResumeTokenOptions${pollerTypeParam}{\n`;
     text += `\t\t\tResponse: ${pollerType},\n`;
     text  += '\t\t})\n';
   }

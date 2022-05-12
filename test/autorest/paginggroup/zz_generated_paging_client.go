@@ -11,7 +11,6 @@ package paginggroup
 import (
 	"context"
 	"errors"
-	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -41,7 +40,7 @@ func NewPagingClient(pl runtime.Pipeline) *PagingClient {
 // Generated from API version 1.0.0
 // options - PagingClientDuplicateParamsOptions contains the optional parameters for the PagingClient.DuplicateParams method.
 func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplicateParamsOptions) *runtime.Pager[PagingClientDuplicateParamsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientDuplicateParamsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientDuplicateParamsResponse]{
 		More: func(page PagingClientDuplicateParamsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -100,7 +99,7 @@ func (client *PagingClient) duplicateParamsHandleResponse(resp *http.Response) (
 // options - PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty
 // method.
 func (client *PagingClient) NewFirstResponseEmptyPager(options *PagingClientFirstResponseEmptyOptions) *runtime.Pager[PagingClientFirstResponseEmptyResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientFirstResponseEmptyResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientFirstResponseEmptyResponse]{
 		More: func(page PagingClientFirstResponseEmptyResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -152,7 +151,7 @@ func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
 func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMultiplePagesOptions) *runtime.Pager[PagingClientGetMultiplePagesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesResponse]{
 		More: func(page PagingClientGetMultiplePagesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -214,7 +213,7 @@ func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) 
 // options - PagingClientGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure
 // method.
 func (client *PagingClient) NewGetMultiplePagesFailurePager(options *PagingClientGetMultiplePagesFailureOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFailureResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesFailureResponse]{
 		More: func(page PagingClientGetMultiplePagesFailureResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -267,7 +266,7 @@ func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Res
 // options - PagingClientGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
 // method.
 func (client *PagingClient) NewGetMultiplePagesFailureURIPager(options *PagingClientGetMultiplePagesFailureURIOptions) *runtime.Pager[PagingClientGetMultiplePagesFailureURIResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFailureURIResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesFailureURIResponse]{
 		More: func(page PagingClientGetMultiplePagesFailureURIResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -322,7 +321,7 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.
 // options - PagingClientGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentNextLink
 // method.
 func (client *PagingClient) NewGetMultiplePagesFragmentNextLinkPager(apiVersion string, tenant string, options *PagingClientGetMultiplePagesFragmentNextLinkOptions) *runtime.Pager[PagingClientGetMultiplePagesFragmentNextLinkResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFragmentNextLinkResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesFragmentNextLinkResponse]{
 		More: func(page PagingClientGetMultiplePagesFragmentNextLinkResponse) bool {
 			return page.ODataNextLink != nil && len(*page.ODataNextLink) > 0
 		},
@@ -385,7 +384,7 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 // options - PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
 func (client *PagingClient) NewGetMultiplePagesFragmentWithGroupingNextLinkPager(customParameterGroup CustomParameterGroup, options *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkOptions) *runtime.Pager[PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse]{
 		More: func(page PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse) bool {
 			return page.ODataNextLink != nil && len(*page.ODataNextLink) > 0
 		},
@@ -444,8 +443,8 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 // Generated from API version 1.0.0
 // options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
-func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*armruntime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], error) {
-	pager := runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesLROResponse]{
+func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*runtime.Poller[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]], error) {
+	pager := runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesLROResponse]{
 		More: func(page PagingClientGetMultiplePagesLROResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -469,11 +468,11 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller(resp, client.pl, &armruntime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+		return runtime.NewPoller(resp, client.pl, &runtime.NewPollerOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
 		})
 	} else {
-		return armruntime.NewPollerFromResumeToken(options.ResumeToken, client.pl, &armruntime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
+		return runtime.NewPollerFromResumeToken(options.ResumeToken, client.pl, &runtime.NewPollerFromResumeTokenOptions[*runtime.Pager[PagingClientGetMultiplePagesLROResponse]]{
 			Response: &pager,
 		})
 	}
@@ -533,7 +532,7 @@ func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Respons
 // options - PagingClientGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
 // method.
 func (client *PagingClient) NewGetMultiplePagesRetryFirstPager(options *PagingClientGetMultiplePagesRetryFirstOptions) *runtime.Pager[PagingClientGetMultiplePagesRetryFirstResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesRetryFirstResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesRetryFirstResponse]{
 		More: func(page PagingClientGetMultiplePagesRetryFirstResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -587,7 +586,7 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.
 // options - PagingClientGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
 // method.
 func (client *PagingClient) NewGetMultiplePagesRetrySecondPager(options *PagingClientGetMultiplePagesRetrySecondOptions) *runtime.Pager[PagingClientGetMultiplePagesRetrySecondResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesRetrySecondResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesRetrySecondResponse]{
 		More: func(page PagingClientGetMultiplePagesRetrySecondResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -640,7 +639,7 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http
 // options - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.GetMultiplePagesWithOffset
 // method.
 func (client *PagingClient) NewGetMultiplePagesWithOffsetPager(options PagingClientGetMultiplePagesWithOffsetOptions) *runtime.Pager[PagingClientGetMultiplePagesWithOffsetResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetMultiplePagesWithOffsetResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetMultiplePagesWithOffsetResponse]{
 		More: func(page PagingClientGetMultiplePagesWithOffsetResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -703,7 +702,7 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.
 // options - PagingClientGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages
 // method.
 func (client *PagingClient) NewGetNoItemNamePagesPager(options *PagingClientGetNoItemNamePagesOptions) *runtime.Pager[PagingClientGetNoItemNamePagesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetNoItemNamePagesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetNoItemNamePagesResponse]{
 		More: func(page PagingClientGetNoItemNamePagesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -756,7 +755,7 @@ func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response
 // options - PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
 // method.
 func (client *PagingClient) NewGetNullNextLinkNamePagesPager(options *PagingClientGetNullNextLinkNamePagesOptions) *runtime.Pager[PagingClientGetNullNextLinkNamePagesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetNullNextLinkNamePagesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetNullNextLinkNamePagesResponse]{
 		More: func(page PagingClientGetNullNextLinkNamePagesResponse) bool {
 			return false
 		},
@@ -803,7 +802,7 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Re
 // options - PagingClientGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages
 // method.
 func (client *PagingClient) NewGetODataMultiplePagesPager(options *PagingClientGetODataMultiplePagesOptions) *runtime.Pager[PagingClientGetODataMultiplePagesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetODataMultiplePagesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetODataMultiplePagesResponse]{
 		More: func(page PagingClientGetODataMultiplePagesResponse) bool {
 			return page.ODataNextLink != nil && len(*page.ODataNextLink) > 0
 		},
@@ -866,7 +865,7 @@ func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Respo
 // options - PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
 // method.
 func (client *PagingClient) NewGetPagingModelWithItemNameWithXMSClientNamePager(options *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) *runtime.Pager[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse]{
 		More: func(page PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -918,7 +917,7 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleRes
 // Generated from API version 1.0.0
 // options - PagingClientGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
 func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSinglePagesOptions) *runtime.Pager[PagingClientGetSinglePagesResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetSinglePagesResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetSinglePagesResponse]{
 		More: func(page PagingClientGetSinglePagesResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -971,7 +970,7 @@ func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (P
 // options - PagingClientGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure
 // method.
 func (client *PagingClient) NewGetSinglePagesFailurePager(options *PagingClientGetSinglePagesFailureOptions) *runtime.Pager[PagingClientGetSinglePagesFailureResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetSinglePagesFailureResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetSinglePagesFailureResponse]{
 		More: func(page PagingClientGetSinglePagesFailureResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -1026,7 +1025,7 @@ func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Respo
 // options - PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams
 // method.
 func (client *PagingClient) NewGetWithQueryParamsPager(requiredQueryParameter int32, options *PagingClientGetWithQueryParamsOptions) *runtime.Pager[PagingClientGetWithQueryParamsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[PagingClientGetWithQueryParamsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[PagingClientGetWithQueryParamsResponse]{
 		More: func(page PagingClientGetWithQueryParamsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},

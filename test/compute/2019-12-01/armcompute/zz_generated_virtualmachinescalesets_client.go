@@ -40,7 +40,7 @@ func NewVirtualMachineScaleSetsClient(subscriptionID string, credential azcore.T
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := cloud.AzurePublicCloud.Services[cloud.ResourceManager].Endpoint
+	ep := cloud.AzurePublic.Services[cloud.ResourceManager].Endpoint
 	if c, ok := options.Cloud.Services[cloud.ResourceManager]; ok {
 		ep = c.Endpoint
 	}
@@ -112,15 +112,15 @@ func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupCreate
 // parameters - The scale set object.
 // options - VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientCreateOrUpdateResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientCreateOrUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientCreateOrUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientCreateOrUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -177,15 +177,15 @@ func (client *VirtualMachineScaleSetsClient) createOrUpdateCreateRequest(ctx con
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginDeallocate
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginDeallocateOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientDeallocateResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginDeallocateOptions) (*runtime.Poller[VirtualMachineScaleSetsClientDeallocateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deallocate(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientDeallocateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientDeallocateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientDeallocateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientDeallocateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -244,15 +244,15 @@ func (client *VirtualMachineScaleSetsClient) deallocateCreateRequest(ctx context
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginDelete
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginDeleteOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientDeleteResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginDeleteOptions) (*runtime.Poller[VirtualMachineScaleSetsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -307,15 +307,15 @@ func (client *VirtualMachineScaleSetsClient) deleteCreateRequest(ctx context.Con
 // vmInstanceIDs - A list of virtual machine instance IDs from the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginDeleteInstances
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsClientBeginDeleteInstancesOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientDeleteInstancesResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsClientBeginDeleteInstancesOptions) (*runtime.Poller[VirtualMachineScaleSetsClientDeleteInstancesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteInstances(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientDeleteInstancesResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientDeleteInstancesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientDeleteInstancesResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientDeleteInstancesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -544,7 +544,7 @@ func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleResponse(resp 
 // options - VirtualMachineScaleSetsClientGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSetsClient.GetOSUpgradeHistory
 // method.
 func (client *VirtualMachineScaleSetsClient) NewGetOSUpgradeHistoryPager(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientGetOSUpgradeHistoryOptions) *runtime.Pager[VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse]{
 		More: func(page VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -613,7 +613,7 @@ func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleResponse(r
 // options - VirtualMachineScaleSetsClientListOptions contains the optional parameters for the VirtualMachineScaleSetsClient.List
 // method.
 func (client *VirtualMachineScaleSetsClient) NewListPager(resourceGroupName string, options *VirtualMachineScaleSetsClientListOptions) *runtime.Pager[VirtualMachineScaleSetsClientListResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VirtualMachineScaleSetsClientListResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VirtualMachineScaleSetsClientListResponse]{
 		More: func(page VirtualMachineScaleSetsClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -679,7 +679,7 @@ func (client *VirtualMachineScaleSetsClient) listHandleResponse(resp *http.Respo
 // options - VirtualMachineScaleSetsClientListAllOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ListAll
 // method.
 func (client *VirtualMachineScaleSetsClient) NewListAllPager(options *VirtualMachineScaleSetsClientListAllOptions) *runtime.Pager[VirtualMachineScaleSetsClientListAllResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VirtualMachineScaleSetsClientListAllResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VirtualMachineScaleSetsClientListAllResponse]{
 		More: func(page VirtualMachineScaleSetsClientListAllResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -742,7 +742,7 @@ func (client *VirtualMachineScaleSetsClient) listAllHandleResponse(resp *http.Re
 // options - VirtualMachineScaleSetsClientListSKUsOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ListSKUs
 // method.
 func (client *VirtualMachineScaleSetsClient) NewListSKUsPager(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientListSKUsOptions) *runtime.Pager[VirtualMachineScaleSetsClientListSKUsResponse] {
-	return runtime.NewPager(runtime.PageProcessor[VirtualMachineScaleSetsClientListSKUsResponse]{
+	return runtime.NewPager(runtime.PagingHandler[VirtualMachineScaleSetsClientListSKUsResponse]{
 		More: func(page VirtualMachineScaleSetsClientListSKUsResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -813,15 +813,15 @@ func (client *VirtualMachineScaleSetsClient) listSKUsHandleResponse(resp *http.R
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginPerformMaintenance
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginPerformMaintenanceOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientPerformMaintenanceResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginPerformMaintenanceOptions) (*runtime.Poller[VirtualMachineScaleSetsClientPerformMaintenanceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.performMaintenance(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientPerformMaintenanceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientPerformMaintenanceResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientPerformMaintenanceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientPerformMaintenanceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -882,15 +882,15 @@ func (client *VirtualMachineScaleSetsClient) performMaintenanceCreateRequest(ctx
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginPowerOff
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginPowerOffOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientPowerOffResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginPowerOffOptions) (*runtime.Poller[VirtualMachineScaleSetsClientPowerOffResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.powerOff(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientPowerOffResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientPowerOffResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientPowerOffResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientPowerOffResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -953,15 +953,15 @@ func (client *VirtualMachineScaleSetsClient) powerOffCreateRequest(ctx context.C
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginRedeploy
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginRedeployOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientRedeployResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginRedeployOptions) (*runtime.Poller[VirtualMachineScaleSetsClientRedeployResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.redeploy(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientRedeployResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientRedeployResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientRedeployResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientRedeployResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1021,15 +1021,15 @@ func (client *VirtualMachineScaleSetsClient) redeployCreateRequest(ctx context.C
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginReimage
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginReimageOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientReimageResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginReimageOptions) (*runtime.Poller[VirtualMachineScaleSetsClientReimageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.reimage(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientReimageResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientReimageResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientReimageResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientReimageResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1089,15 +1089,15 @@ func (client *VirtualMachineScaleSetsClient) reimageCreateRequest(ctx context.Co
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginReimageAll
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginReimageAllOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientReimageAllResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginReimageAllOptions) (*runtime.Poller[VirtualMachineScaleSetsClientReimageAllResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.reimageAll(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientReimageAllResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientReimageAllResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientReimageAllResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientReimageAllResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1155,15 +1155,15 @@ func (client *VirtualMachineScaleSetsClient) reimageAllCreateRequest(ctx context
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginRestart
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginRestartOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientRestartResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginRestartOptions) (*runtime.Poller[VirtualMachineScaleSetsClientRestartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.restart(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientRestartResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientRestartResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientRestartResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientRestartResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1221,15 +1221,15 @@ func (client *VirtualMachineScaleSetsClient) restartCreateRequest(ctx context.Co
 // parameters - The input object for SetOrchestrationServiceState API.
 // options - VirtualMachineScaleSetsClientBeginSetOrchestrationServiceStateOptions contains the optional parameters for the
 // VirtualMachineScaleSetsClient.BeginSetOrchestrationServiceState method.
-func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsClientBeginSetOrchestrationServiceStateOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientSetOrchestrationServiceStateResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsClientBeginSetOrchestrationServiceStateOptions) (*runtime.Poller[VirtualMachineScaleSetsClientSetOrchestrationServiceStateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.setOrchestrationServiceState(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientSetOrchestrationServiceStateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientSetOrchestrationServiceStateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientSetOrchestrationServiceStateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientSetOrchestrationServiceStateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1283,15 +1283,15 @@ func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateCreateR
 // vmScaleSetName - The name of the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginStartOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginStart
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginStartOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientStartResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsClientBeginStartOptions) (*runtime.Poller[VirtualMachineScaleSetsClientStartResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.start(ctx, resourceGroupName, vmScaleSetName, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientStartResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientStartResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientStartResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientStartResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1349,15 +1349,15 @@ func (client *VirtualMachineScaleSetsClient) startCreateRequest(ctx context.Cont
 // parameters - The scale set object.
 // options - VirtualMachineScaleSetsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginUpdate
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsClientBeginUpdateOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientUpdateResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsClientBeginUpdateOptions) (*runtime.Poller[VirtualMachineScaleSetsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientUpdateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientUpdateResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientUpdateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientUpdateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -1413,15 +1413,15 @@ func (client *VirtualMachineScaleSetsClient) updateCreateRequest(ctx context.Con
 // vmInstanceIDs - A list of virtual machine instance IDs from the VM scale set.
 // options - VirtualMachineScaleSetsClientBeginUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginUpdateInstances
 // method.
-func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsClientBeginUpdateInstancesOptions) (*armruntime.Poller[VirtualMachineScaleSetsClientUpdateInstancesResponse], error) {
+func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsClientBeginUpdateInstancesOptions) (*runtime.Poller[VirtualMachineScaleSetsClientUpdateInstancesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.updateInstances(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs, options)
 		if err != nil {
 			return nil, err
 		}
-		return armruntime.NewPoller[VirtualMachineScaleSetsClientUpdateInstancesResponse](resp, client.pl, nil)
+		return runtime.NewPoller[VirtualMachineScaleSetsClientUpdateInstancesResponse](resp, client.pl, nil)
 	} else {
-		return armruntime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientUpdateInstancesResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[VirtualMachineScaleSetsClientUpdateInstancesResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

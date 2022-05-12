@@ -752,7 +752,7 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 // options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
 // method.
 func (client *containerClient) NewListBlobFlatSegmentPager(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *runtime.Pager[containerClientListBlobFlatSegmentResponse] {
-	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobFlatSegmentResponse]{
+	return runtime.NewPager(runtime.PagingHandler[containerClientListBlobFlatSegmentResponse]{
 		More: func(page containerClientListBlobFlatSegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
@@ -849,7 +849,7 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 // options - containerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
 // method.
 func (client *containerClient) NewListBlobHierarchySegmentPager(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *runtime.Pager[containerClientListBlobHierarchySegmentResponse] {
-	return runtime.NewPager(runtime.PageProcessor[containerClientListBlobHierarchySegmentResponse]{
+	return runtime.NewPager(runtime.PagingHandler[containerClientListBlobHierarchySegmentResponse]{
 		More: func(page containerClientListBlobHierarchySegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},

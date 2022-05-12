@@ -202,7 +202,7 @@ func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (no
 // options - notebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
 // method.
 func (client *notebookClient) NewGetNotebookSummaryByWorkSpacePager(options *notebookClientGetNotebookSummaryByWorkSpaceOptions) *runtime.Pager[notebookClientGetNotebookSummaryByWorkSpaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[notebookClientGetNotebookSummaryByWorkSpaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[notebookClientGetNotebookSummaryByWorkSpaceResponse]{
 		More: func(page notebookClientGetNotebookSummaryByWorkSpaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
@@ -258,7 +258,7 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 // options - notebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
 // method.
 func (client *notebookClient) NewGetNotebooksByWorkspacePager(options *notebookClientGetNotebooksByWorkspaceOptions) *runtime.Pager[notebookClientGetNotebooksByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PageProcessor[notebookClientGetNotebooksByWorkspaceResponse]{
+	return runtime.NewPager(runtime.PagingHandler[notebookClientGetNotebooksByWorkspaceResponse]{
 		More: func(page notebookClientGetNotebooksByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
