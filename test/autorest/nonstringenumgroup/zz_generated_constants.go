@@ -10,11 +10,6 @@ package nonstringenumgroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "nonstringenumgroup"
-	moduleVersion = "v0.1.0"
-)
-
 // FloatEnum - List of float enums
 type FloatEnum float32
 

@@ -9,8 +9,3 @@
 package durationgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "durationgroup"
-	moduleVersion = "v0.1.0"
-)

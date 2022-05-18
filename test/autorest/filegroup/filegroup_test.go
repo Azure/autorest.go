@@ -5,6 +5,7 @@ package filegroup
 
 import (
 	"context"
+	"generatortests"
 	"io/ioutil"
 	"testing"
 
@@ -14,7 +15,7 @@ import (
 )
 
 func newFilesClient() *FilesClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewFilesClient(pl)
 }
 

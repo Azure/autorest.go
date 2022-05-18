@@ -6,6 +6,7 @@ package lrogroup
 import (
 	"context"
 	"errors"
+	"generatortests"
 	"net/http"
 	"net/http/cookiejar"
 	"reflect"
@@ -23,7 +24,7 @@ func newLROSClient() *LROsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options)
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
 	return NewLROsClient(pl)
 }
 

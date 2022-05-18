@@ -5,6 +5,7 @@ package azurespecialsgroup
 
 import (
 	"context"
+	"generatortests"
 	"net/http"
 	"testing"
 
@@ -14,7 +15,7 @@ import (
 )
 
 func newSubscriptionInMethodClient() *SubscriptionInMethodClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewSubscriptionInMethodClient(pl)
 }
 

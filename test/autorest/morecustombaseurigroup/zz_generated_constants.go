@@ -7,8 +7,3 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package morecustombaseurigroup
-
-const (
-	moduleName    = "morecustombaseurigroup"
-	moduleVersion = "v0.1.0"
-)

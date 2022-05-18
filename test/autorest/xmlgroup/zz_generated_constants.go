@@ -10,11 +10,6 @@ package xmlgroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "xmlgroup"
-	moduleVersion = "v0.1.0"
-)
-
 type AccessTier string
 
 const (

@@ -20,10 +20,13 @@ export async function generateConstants(session: Session<CodeModel>, version: st
   if (session.model.language.go!.host) {
     text += `const host = "${session.model.language.go!.host}"\n\n`;
   }
-  text += `const (\n`;
-  text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
-  text += `\tmoduleVersion = "v${version}"\n`;
-  text += ')\n\n';
+  // data-plane clients must manage their own constants for these values
+  if (<boolean>session.model.language.go!.azureARM) {
+    text += `const (\n`;
+    text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
+    text += `\tmoduleVersion = "v${version}"\n`;
+    text += ')\n\n';
+  }
   for (const enm of values(getEnums(session.model.schemas))) {
     if (enm.desc) {
       text += `${comment(`${enm.name} - ${enm.desc}`, '// ', undefined, commentLength)}\n`;

@@ -5,6 +5,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"generatortests"
 	"net/http"
 	"net/http/cookiejar"
 	"testing"
@@ -20,7 +21,7 @@ func newHTTPRetryClient() *HTTPRetryClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options)
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
 	return NewHTTPRetryClient(pl)
 }
 

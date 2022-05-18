@@ -5,6 +5,7 @@ package arraygroup
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -16,7 +17,7 @@ import (
 )
 
 func newArrayClient() *ArrayClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewArrayClient(pl)
 }
 

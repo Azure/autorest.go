@@ -10,11 +10,6 @@ package mediatypesgroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "mediatypesgroup"
-	moduleVersion = "v0.1.0"
-)
-
 // ContentType - Content type for upload
 type ContentType string
 

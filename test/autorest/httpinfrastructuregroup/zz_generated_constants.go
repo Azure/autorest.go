@@ -9,8 +9,3 @@
 package httpinfrastructuregroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "httpinfrastructuregroup"
-	moduleVersion = "v0.1.0"
-)

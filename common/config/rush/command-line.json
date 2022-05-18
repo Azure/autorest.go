@@ -60,6 +60,12 @@
       "name": "modtidy",
       "summary": "run node .scripts/modtidy.js to perform tidy up all go.mod files",
       "shellCommand": "node .scripts/modtidy.js"
+    },
+    {
+      "commandKind": "global",
+      "name": "buildvet",
+      "summary": "run node .scripts/buildvet.js to build and vet all modules",
+      "shellCommand": "node .scripts/buildvet.js"
     }
   ],
   "parameters": [

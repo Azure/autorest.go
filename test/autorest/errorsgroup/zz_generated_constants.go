@@ -9,8 +9,3 @@
 package errorsgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "errorsgroup"
-	moduleVersion = "v0.1.0"
-)

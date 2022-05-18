@@ -9,8 +9,3 @@
 package reportgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "reportgroup"
-	moduleVersion = "v0.1.0"
-)

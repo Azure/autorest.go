@@ -8,11 +8,6 @@
 
 package azblob
 
-const (
-	moduleName    = "azblob"
-	moduleVersion = "v0.1.0"
-)
-
 type AccessTier string
 
 const (

@@ -9,8 +9,3 @@
 package dategroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "dategroup"
-	moduleVersion = "v0.1.0"
-)

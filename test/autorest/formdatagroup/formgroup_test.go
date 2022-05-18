@@ -5,6 +5,7 @@ package formdatagroup
 
 import (
 	"context"
+	"generatortests"
 	"io"
 	"io/ioutil"
 	"strings"
@@ -17,7 +18,7 @@ import (
 )
 
 func newFormdataClient() *FormdataClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewFormdataClient(pl)
 }
 

@@ -5,6 +5,7 @@ package complexgroup
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -16,7 +17,7 @@ import (
 )
 
 func newPolymorphismClient() *PolymorphismClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewPolymorphismClient(pl)
 }
 

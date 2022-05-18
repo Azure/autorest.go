@@ -10,11 +10,6 @@ package headergroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "headergroup"
-	moduleVersion = "v0.1.0"
-)
-
 type GreyscaleColors string
 
 const (

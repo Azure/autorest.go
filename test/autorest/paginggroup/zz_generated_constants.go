@@ -10,11 +10,6 @@ package paginggroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "paginggroup"
-	moduleVersion = "v0.1.0"
-)
-
 // OperationResultStatus - The status of the request
 type OperationResultStatus string
 

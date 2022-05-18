@@ -5,6 +5,7 @@ package lrogroup
 
 import (
 	"context"
+	"generatortests"
 	"net/http"
 	"testing"
 	"time"
@@ -20,7 +21,7 @@ func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options)
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
 	return NewLROsCustomHeaderClient(pl)
 }
 

@@ -5,6 +5,7 @@ package integergroup
 
 import (
 	"context"
+	"generatortests"
 	"math"
 	"testing"
 	"time"
@@ -16,7 +17,7 @@ import (
 )
 
 func newIntClient() *IntClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewIntClient(pl)
 }
 

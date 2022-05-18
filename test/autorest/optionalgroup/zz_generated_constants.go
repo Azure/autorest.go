@@ -9,8 +9,3 @@
 package optionalgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "optionalgroup"
-	moduleVersion = "v0.1.0"
-)

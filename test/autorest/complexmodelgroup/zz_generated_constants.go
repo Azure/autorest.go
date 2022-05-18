@@ -9,8 +9,3 @@
 package complexmodelgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "complexmodelgroup"
-	moduleVersion = "v0.1.0"
-)

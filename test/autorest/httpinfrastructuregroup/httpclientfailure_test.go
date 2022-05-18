@@ -5,6 +5,7 @@ package httpinfrastructuregroup
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -14,7 +15,7 @@ import (
 )
 
 func newHTTPClientFailureClient() *HTTPClientFailureClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &policy.ClientOptions{
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &policy.ClientOptions{
 		Retry: policy.RetryOptions{
 			MaxRetryDelay: 2 * time.Second,
 		},

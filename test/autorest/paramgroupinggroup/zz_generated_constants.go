@@ -9,8 +9,3 @@
 package paramgroupinggroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "paramgroupinggroup"
-	moduleVersion = "v0.1.0"
-)

@@ -10,11 +10,6 @@ package urlgroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "urlgroup"
-	moduleVersion = "v0.1.0"
-)
-
 type URIColor string
 
 const (

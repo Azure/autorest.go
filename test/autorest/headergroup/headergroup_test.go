@@ -5,6 +5,7 @@ package headergroup
 
 import (
 	"context"
+	"generatortests"
 	"net/http"
 	"testing"
 	"time"
@@ -17,7 +18,7 @@ import (
 )
 
 func newHeaderClient() *HeaderClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewHeaderClient(pl)
 }
 

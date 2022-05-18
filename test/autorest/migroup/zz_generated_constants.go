@@ -9,8 +9,3 @@
 package migroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "migroup"
-	moduleVersion = "v0.1.0"
-)

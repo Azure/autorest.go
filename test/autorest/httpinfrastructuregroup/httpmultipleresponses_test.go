@@ -6,6 +6,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"errors"
+	"generatortests"
 	"reflect"
 	"testing"
 
@@ -18,7 +19,7 @@ import (
 )
 
 func newMultipleResponsesClient() *MultipleResponsesClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewMultipleResponsesClient(pl)
 }
 
