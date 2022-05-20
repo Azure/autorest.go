@@ -5,6 +5,7 @@ package datetimegroup
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -15,7 +16,7 @@ import (
 )
 
 func newDatetimeClient() *DatetimeClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewDatetimeClient(pl)
 }
 

@@ -9,8 +9,3 @@
 package filegroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "filegroup"
-	moduleVersion = "v0.1.0"
-)

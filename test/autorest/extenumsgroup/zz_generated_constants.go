@@ -10,11 +10,6 @@ package extenumsgroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "extenumsgroup"
-	moduleVersion = "v0.1.0"
-)
-
 // DaysOfWeekExtensibleEnum - Type of Pet
 type DaysOfWeekExtensibleEnum string
 

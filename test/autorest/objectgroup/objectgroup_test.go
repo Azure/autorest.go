@@ -5,6 +5,7 @@ package objectgroup
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -14,7 +15,7 @@ import (
 )
 
 func newObjectTypeClient() *ObjectTypeClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewObjectTypeClient(pl)
 }
 

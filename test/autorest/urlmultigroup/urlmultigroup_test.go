@@ -5,6 +5,7 @@ package urlmultigroup
 
 import (
 	"context"
+	"generatortests"
 	"net/url"
 	"testing"
 
@@ -14,7 +15,7 @@ import (
 )
 
 func newQueriesClient() *QueriesClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewQueriesClient(pl)
 }
 

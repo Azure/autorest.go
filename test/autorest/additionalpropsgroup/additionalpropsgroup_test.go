@@ -6,6 +6,7 @@ package additionalpropsgroup
 import (
 	"context"
 	"encoding/base64"
+	"generatortests"
 	"testing"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -16,7 +17,7 @@ import (
 )
 
 func newPetsClient() *PetsClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewPetsClient(pl)
 }
 

@@ -9,8 +9,3 @@
 package bytegroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "bytegroup"
-	moduleVersion = "v0.1.0"
-)

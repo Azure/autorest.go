@@ -9,8 +9,3 @@
 package additionalpropsgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "additionalpropsgroup"
-	moduleVersion = "v0.1.0"
-)

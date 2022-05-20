@@ -9,8 +9,3 @@
 package objectgroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "objectgroup"
-	moduleVersion = "v0.1.0"
-)

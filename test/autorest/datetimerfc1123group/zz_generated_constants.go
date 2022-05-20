@@ -9,8 +9,3 @@
 package datetimerfc1123group
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "datetimerfc1123group"
-	moduleVersion = "v0.1.0"
-)

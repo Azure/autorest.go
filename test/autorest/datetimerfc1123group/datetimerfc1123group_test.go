@@ -5,6 +5,7 @@ package datetimerfc1123group
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -15,7 +16,7 @@ import (
 )
 
 func newDatetimerfc1123Client() *Datetimerfc1123Client {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewDatetimerfc1123Client(pl)
 }
 

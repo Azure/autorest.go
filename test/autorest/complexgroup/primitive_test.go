@@ -6,6 +6,7 @@ package complexgroup
 import (
 	"context"
 	"encoding/json"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -17,7 +18,7 @@ import (
 )
 
 func newPrimitiveClient() *PrimitiveClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{})
 	return NewPrimitiveClient(pl)
 }
 

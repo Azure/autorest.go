@@ -9,8 +9,3 @@
 package numbergroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "numbergroup"
-	moduleVersion = "v0.1.0"
-)

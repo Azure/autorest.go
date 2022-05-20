@@ -9,8 +9,3 @@
 package formdatagroup
 
 const host = "http://localhost:3000"
-
-const (
-	moduleName    = "formdatagroup"
-	moduleVersion = "v0.1.0"
-)

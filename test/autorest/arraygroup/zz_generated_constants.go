@@ -10,11 +10,6 @@ package arraygroup
 
 const host = "http://localhost:3000"
 
-const (
-	moduleName    = "arraygroup"
-	moduleVersion = "v0.1.0"
-)
-
 type Enum0 string
 
 const (

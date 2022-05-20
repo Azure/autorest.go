@@ -5,6 +5,7 @@ package xmlgroup
 
 import (
 	"context"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -25,7 +26,7 @@ func toTimePtr(layout string, value string) *time.Time {
 }
 
 func newXMLClient() *XMLClient {
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &azcore.ClientOptions{
 		Logging: policy.LogOptions{
 			IncludeBody: true,
 		},

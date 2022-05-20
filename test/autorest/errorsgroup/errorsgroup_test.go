@@ -6,6 +6,7 @@ package errorsgroup
 import (
 	"context"
 	"errors"
+	"generatortests"
 	"testing"
 	"time"
 
@@ -19,7 +20,7 @@ import (
 func newPetClient() *PetClient {
 	options := azcore.ClientOptions{}
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options)
+	pl := runtime.NewPipeline(generatortests.ModuleName, generatortests.ModuleVersion, runtime.PipelineOptions{}, &options)
 	return NewPetClient(pl)
 }
 
