@@ -39,17 +39,17 @@ func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
 // Generated from API version 2019-06-01-preview
 // sqlPoolName - The Sql Pool name
 // options - sqlPoolsClientGetOptions contains the optional parameters for the sqlPoolsClient.Get method.
-func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *sqlPoolsClientGetOptions) (sqlPoolsClientGetResponse, error) {
+func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *sqlPoolsClientGetOptions) (SqlPoolsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
-		return sqlPoolsClientGetResponse{}, err
+		return SqlPoolsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return sqlPoolsClientGetResponse{}, err
+		return SqlPoolsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sqlPoolsClientGetResponse{}, runtime.NewResponseError(resp)
+		return SqlPoolsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -73,10 +73,10 @@ func (client *sqlPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName 
 }
 
 // getHandleResponse handles the Get response.
-func (client *sqlPoolsClient) getHandleResponse(resp *http.Response) (sqlPoolsClientGetResponse, error) {
-	result := sqlPoolsClientGetResponse{}
+func (client *sqlPoolsClient) getHandleResponse(resp *http.Response) (SqlPoolsClientGetResponse, error) {
+	result := SqlPoolsClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLPool); err != nil {
-		return sqlPoolsClientGetResponse{}, err
+		return SqlPoolsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -85,17 +85,17 @@ func (client *sqlPoolsClient) getHandleResponse(resp *http.Response) (sqlPoolsCl
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - sqlPoolsClientListOptions contains the optional parameters for the sqlPoolsClient.List method.
-func (client *sqlPoolsClient) List(ctx context.Context, options *sqlPoolsClientListOptions) (sqlPoolsClientListResponse, error) {
+func (client *sqlPoolsClient) List(ctx context.Context, options *sqlPoolsClientListOptions) (SqlPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return sqlPoolsClientListResponse{}, err
+		return SqlPoolsClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return sqlPoolsClientListResponse{}, err
+		return SqlPoolsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sqlPoolsClientListResponse{}, runtime.NewResponseError(resp)
+		return SqlPoolsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -115,10 +115,10 @@ func (client *sqlPoolsClient) listCreateRequest(ctx context.Context, options *sq
 }
 
 // listHandleResponse handles the List response.
-func (client *sqlPoolsClient) listHandleResponse(resp *http.Response) (sqlPoolsClientListResponse, error) {
-	result := sqlPoolsClientListResponse{}
+func (client *sqlPoolsClient) listHandleResponse(resp *http.Response) (SqlPoolsClientListResponse, error) {
+	result := SqlPoolsClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLPoolInfoListResult); err != nil {
-		return sqlPoolsClientListResponse{}, err
+		return SqlPoolsClientListResponse{}, err
 	}
 	return result, nil
 }

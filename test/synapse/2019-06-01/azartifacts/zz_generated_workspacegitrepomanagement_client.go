@@ -36,17 +36,17 @@ func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *
 // Generated from API version 2019-06-01-preview
 // options - workspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the workspaceGitRepoManagementClient.GetGitHubAccessToken
 // method.
-func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *workspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (workspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
+func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *workspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
-		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, runtime.NewResponseError(resp)
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getGitHubAccessTokenHandleResponse(resp)
 }
@@ -69,10 +69,10 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 }
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (workspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
-	result := workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}
+func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
+	result := WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GitHubAccessTokenResponse); err != nil {
-		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
+		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
 	return result, nil
 }

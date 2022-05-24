@@ -54,17 +54,17 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, options *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (blockBlobClientCommitBlockListResponse, error) {
+func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, options *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientCommitBlockListResponse, error) {
 	req, err := client.commitBlockListCreateRequest(ctx, comp, blocks, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return blockBlobClientCommitBlockListResponse{}, err
+		return BlockBlobClientCommitBlockListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return blockBlobClientCommitBlockListResponse{}, err
+		return BlockBlobClientCommitBlockListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientCommitBlockListResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientCommitBlockListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.commitBlockListHandleResponse(resp)
 }
@@ -164,29 +164,29 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 }
 
 // commitBlockListHandleResponse handles the CommitBlockList response.
-func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response) (blockBlobClientCommitBlockListResponse, error) {
-	result := blockBlobClientCommitBlockListResponse{}
+func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response) (BlockBlobClientCommitBlockListResponse, error) {
+	result := BlockBlobClientCommitBlockListResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientCommitBlockListResponse{}, err
+			return BlockBlobClientCommitBlockListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientCommitBlockListResponse{}, err
+			return BlockBlobClientCommitBlockListResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientCommitBlockListResponse{}, err
+			return BlockBlobClientCommitBlockListResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -205,14 +205,14 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientCommitBlockListResponse{}, err
+			return BlockBlobClientCommitBlockListResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return blockBlobClientCommitBlockListResponse{}, err
+			return BlockBlobClientCommitBlockListResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -232,17 +232,17 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 // options - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, options *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (blockBlobClientGetBlockListResponse, error) {
+func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, options *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientGetBlockListResponse, error) {
 	req, err := client.getBlockListCreateRequest(ctx, comp, listType, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return blockBlobClientGetBlockListResponse{}, err
+		return BlockBlobClientGetBlockListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return blockBlobClientGetBlockListResponse{}, err
+		return BlockBlobClientGetBlockListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return blockBlobClientGetBlockListResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientGetBlockListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBlockListHandleResponse(resp)
 }
@@ -278,12 +278,12 @@ func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, co
 }
 
 // getBlockListHandleResponse handles the GetBlockList response.
-func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (blockBlobClientGetBlockListResponse, error) {
-	result := blockBlobClientGetBlockListResponse{}
+func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (BlockBlobClientGetBlockListResponse, error) {
+	result := BlockBlobClientGetBlockListResponse{}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientGetBlockListResponse{}, err
+			return BlockBlobClientGetBlockListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -296,7 +296,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("x-ms-blob-content-length"); val != "" {
 		blobContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return blockBlobClientGetBlockListResponse{}, err
+			return BlockBlobClientGetBlockListResponse{}, err
 		}
 		result.BlobContentLength = &blobContentLength
 	}
@@ -312,12 +312,12 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientGetBlockListResponse{}, err
+			return BlockBlobClientGetBlockListResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.BlockList); err != nil {
-		return blockBlobClientGetBlockListResponse{}, err
+		return BlockBlobClientGetBlockListResponse{}, err
 	}
 	return result, nil
 }
@@ -342,17 +342,17 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, options *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (blockBlobClientPutBlobFromURLResponse, error) {
+func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, options *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientPutBlobFromURLResponse, error) {
 	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return blockBlobClientPutBlobFromURLResponse{}, err
+		return BlockBlobClientPutBlobFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return blockBlobClientPutBlobFromURLResponse{}, err
+		return BlockBlobClientPutBlobFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientPutBlobFromURLResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientPutBlobFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.putBlobFromURLHandleResponse(resp)
 }
@@ -463,22 +463,22 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 }
 
 // putBlobFromURLHandleResponse handles the PutBlobFromURL response.
-func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response) (blockBlobClientPutBlobFromURLResponse, error) {
-	result := blockBlobClientPutBlobFromURLResponse{}
+func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response) (BlockBlobClientPutBlobFromURLResponse, error) {
+	result := BlockBlobClientPutBlobFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientPutBlobFromURLResponse{}, err
+			return BlockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientPutBlobFromURLResponse{}, err
+			return BlockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -497,14 +497,14 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientPutBlobFromURLResponse{}, err
+			return BlockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return blockBlobClientPutBlobFromURLResponse{}, err
+			return BlockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -529,17 +529,17 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (blockBlobClientStageBlockResponse, error) {
+func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockResponse, error) {
 	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
-		return blockBlobClientStageBlockResponse{}, err
+		return BlockBlobClientStageBlockResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return blockBlobClientStageBlockResponse{}, err
+		return BlockBlobClientStageBlockResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientStageBlockResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientStageBlockResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.stageBlockHandleResponse(resp)
 }
@@ -588,12 +588,12 @@ func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp
 }
 
 // stageBlockHandleResponse handles the StageBlock response.
-func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (blockBlobClientStageBlockResponse, error) {
-	result := blockBlobClientStageBlockResponse{}
+func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (BlockBlobClientStageBlockResponse, error) {
+	result := BlockBlobClientStageBlockResponse{}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientStageBlockResponse{}, err
+			return BlockBlobClientStageBlockResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -609,21 +609,21 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (bl
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientStageBlockResponse{}, err
+			return BlockBlobClientStageBlockResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientStageBlockResponse{}, err
+			return BlockBlobClientStageBlockResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return blockBlobClientStageBlockResponse{}, err
+			return BlockBlobClientStageBlockResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -652,17 +652,17 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (bl
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (blockBlobClientStageBlockFromURLResponse, error) {
+func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return blockBlobClientStageBlockFromURLResponse{}, err
+		return BlockBlobClientStageBlockFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return blockBlobClientStageBlockFromURLResponse{}, err
+		return BlockBlobClientStageBlockFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientStageBlockFromURLResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientStageBlockFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.stageBlockFromURLHandleResponse(resp)
 }
@@ -727,19 +727,19 @@ func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 }
 
 // stageBlockFromURLHandleResponse handles the StageBlockFromURL response.
-func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Response) (blockBlobClientStageBlockFromURLResponse, error) {
-	result := blockBlobClientStageBlockFromURLResponse{}
+func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Response) (BlockBlobClientStageBlockFromURLResponse, error) {
+	result := BlockBlobClientStageBlockFromURLResponse{}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientStageBlockFromURLResponse{}, err
+			return BlockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientStageBlockFromURLResponse{}, err
+			return BlockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -755,14 +755,14 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientStageBlockFromURLResponse{}, err
+			return BlockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return blockBlobClientStageBlockFromURLResponse{}, err
+			return BlockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -789,17 +789,17 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (blockBlobClientUploadResponse, error) {
+func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadResponse, error) {
 	req, err := client.uploadCreateRequest(ctx, contentLength, body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return blockBlobClientUploadResponse{}, err
+		return BlockBlobClientUploadResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return blockBlobClientUploadResponse{}, err
+		return BlockBlobClientUploadResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientUploadResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientUploadResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.uploadHandleResponse(resp)
 }
@@ -897,22 +897,22 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 }
 
 // uploadHandleResponse handles the Upload response.
-func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (blockBlobClientUploadResponse, error) {
-	result := blockBlobClientUploadResponse{}
+func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (BlockBlobClientUploadResponse, error) {
+	result := BlockBlobClientUploadResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return blockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -931,14 +931,14 @@ func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (blockB
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return blockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return blockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}

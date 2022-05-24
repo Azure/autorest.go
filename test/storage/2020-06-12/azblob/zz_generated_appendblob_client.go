@@ -52,17 +52,17 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *appendBlobClient) AppendBlock(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (appendBlobClientAppendBlockResponse, error) {
+func (client *appendBlobClient) AppendBlock(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientAppendBlockResponse, error) {
 	req, err := client.appendBlockCreateRequest(ctx, comp, contentLength, body, options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return appendBlobClientAppendBlockResponse{}, err
+		return AppendBlobClientAppendBlockResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return appendBlobClientAppendBlockResponse{}, err
+		return AppendBlobClientAppendBlockResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return appendBlobClientAppendBlockResponse{}, runtime.NewResponseError(resp)
+		return AppendBlobClientAppendBlockResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.appendBlockHandleResponse(resp)
 }
@@ -131,29 +131,29 @@ func (client *appendBlobClient) appendBlockCreateRequest(ctx context.Context, co
 }
 
 // appendBlockHandleResponse handles the AppendBlock response.
-func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (appendBlobClientAppendBlockResponse, error) {
-	result := appendBlobClientAppendBlockResponse{}
+func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (AppendBlobClientAppendBlockResponse, error) {
+	result := AppendBlobClientAppendBlockResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientAppendBlockResponse{}, err
+			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return appendBlobClientAppendBlockResponse{}, err
+			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return appendBlobClientAppendBlockResponse{}, err
+			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -169,7 +169,7 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientAppendBlockResponse{}, err
+			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -180,14 +180,14 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return appendBlobClientAppendBlockResponse{}, err
+			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return appendBlobClientAppendBlockResponse{}, err
+			return AppendBlobClientAppendBlockResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -217,17 +217,17 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, comp Enum38, sourceURL string, contentLength int64, options *appendBlobClientAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (appendBlobClientAppendBlockFromURLResponse, error) {
+func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, comp Enum38, sourceURL string, contentLength int64, options *appendBlobClientAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobClientAppendBlockFromURLResponse, error) {
 	req, err := client.appendBlockFromURLCreateRequest(ctx, comp, sourceURL, contentLength, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return appendBlobClientAppendBlockFromURLResponse{}, err
+		return AppendBlobClientAppendBlockFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return appendBlobClientAppendBlockFromURLResponse{}, err
+		return AppendBlobClientAppendBlockFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return appendBlobClientAppendBlockFromURLResponse{}, runtime.NewResponseError(resp)
+		return AppendBlobClientAppendBlockFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.appendBlockFromURLHandleResponse(resp)
 }
@@ -315,29 +315,29 @@ func (client *appendBlobClient) appendBlockFromURLCreateRequest(ctx context.Cont
 }
 
 // appendBlockFromURLHandleResponse handles the AppendBlockFromURL response.
-func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Response) (appendBlobClientAppendBlockFromURLResponse, error) {
-	result := appendBlobClientAppendBlockFromURLResponse{}
+func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Response) (AppendBlobClientAppendBlockFromURLResponse, error) {
+	result := AppendBlobClientAppendBlockFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientAppendBlockFromURLResponse{}, err
+			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return appendBlobClientAppendBlockFromURLResponse{}, err
+			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return appendBlobClientAppendBlockFromURLResponse{}, err
+			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -350,7 +350,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientAppendBlockFromURLResponse{}, err
+			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -361,7 +361,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return appendBlobClientAppendBlockFromURLResponse{}, err
+			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
@@ -374,7 +374,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return appendBlobClientAppendBlockFromURLResponse{}, err
+			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -391,17 +391,17 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *appendBlobClient) Create(ctx context.Context, contentLength int64, options *appendBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (appendBlobClientCreateResponse, error) {
+func (client *appendBlobClient) Create(ctx context.Context, contentLength int64, options *appendBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, contentLength, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return appendBlobClientCreateResponse{}, err
+		return AppendBlobClientCreateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return appendBlobClientCreateResponse{}, err
+		return AppendBlobClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return appendBlobClientCreateResponse{}, runtime.NewResponseError(resp)
+		return AppendBlobClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -493,22 +493,22 @@ func (client *appendBlobClient) createCreateRequest(ctx context.Context, content
 }
 
 // createHandleResponse handles the Create response.
-func (client *appendBlobClient) createHandleResponse(resp *http.Response) (appendBlobClientCreateResponse, error) {
-	result := appendBlobClientCreateResponse{}
+func (client *appendBlobClient) createHandleResponse(resp *http.Response) (AppendBlobClientCreateResponse, error) {
+	result := AppendBlobClientCreateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientCreateResponse{}, err
+			return AppendBlobClientCreateResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return appendBlobClientCreateResponse{}, err
+			return AppendBlobClientCreateResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -527,14 +527,14 @@ func (client *appendBlobClient) createHandleResponse(resp *http.Response) (appen
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientCreateResponse{}, err
+			return AppendBlobClientCreateResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return appendBlobClientCreateResponse{}, err
+			return AppendBlobClientCreateResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -556,17 +556,17 @@ func (client *appendBlobClient) createHandleResponse(resp *http.Response) (appen
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
 // method.
-func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, options *appendBlobClientSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (appendBlobClientSealResponse, error) {
+func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, options *appendBlobClientSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobClientSealResponse, error) {
 	req, err := client.sealCreateRequest(ctx, comp, options, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
 	if err != nil {
-		return appendBlobClientSealResponse{}, err
+		return AppendBlobClientSealResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return appendBlobClientSealResponse{}, err
+		return AppendBlobClientSealResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return appendBlobClientSealResponse{}, runtime.NewResponseError(resp)
+		return AppendBlobClientSealResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.sealHandleResponse(resp)
 }
@@ -610,15 +610,15 @@ func (client *appendBlobClient) sealCreateRequest(ctx context.Context, comp Enum
 }
 
 // sealHandleResponse handles the Seal response.
-func (client *appendBlobClient) sealHandleResponse(resp *http.Response) (appendBlobClientSealResponse, error) {
-	result := appendBlobClientSealResponse{}
+func (client *appendBlobClient) sealHandleResponse(resp *http.Response) (AppendBlobClientSealResponse, error) {
+	result := AppendBlobClientSealResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientSealResponse{}, err
+			return AppendBlobClientSealResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -634,14 +634,14 @@ func (client *appendBlobClient) sealHandleResponse(resp *http.Response) (appendB
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return appendBlobClientSealResponse{}, err
+			return AppendBlobClientSealResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-blob-sealed"); val != "" {
 		isSealed, err := strconv.ParseBool(val)
 		if err != nil {
-			return appendBlobClientSealResponse{}, err
+			return AppendBlobClientSealResponse{}, err
 		}
 		result.IsSealed = &isSealed
 	}

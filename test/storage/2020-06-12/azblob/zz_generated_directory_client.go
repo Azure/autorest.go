@@ -50,17 +50,17 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) Create(ctx context.Context, resource Enum20, options *directoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (directoryClientCreateResponse, error) {
+func (client *directoryClient) Create(ctx context.Context, resource Enum20, options *directoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, resource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return directoryClientCreateResponse{}, err
+		return DirectoryClientCreateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return directoryClientCreateResponse{}, err
+		return DirectoryClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return directoryClientCreateResponse{}, runtime.NewResponseError(resp)
+		return DirectoryClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -125,15 +125,15 @@ func (client *directoryClient) createCreateRequest(ctx context.Context, resource
 }
 
 // createHandleResponse handles the Create response.
-func (client *directoryClient) createHandleResponse(resp *http.Response) (directoryClientCreateResponse, error) {
-	result := directoryClientCreateResponse{}
+func (client *directoryClient) createHandleResponse(resp *http.Response) (DirectoryClientCreateResponse, error) {
+	result := DirectoryClientCreateResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientCreateResponse{}, err
+			return DirectoryClientCreateResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -149,14 +149,14 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (direct
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return directoryClientCreateResponse{}, err
+			return DirectoryClientCreateResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientCreateResponse{}, err
+			return DirectoryClientCreateResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -171,17 +171,17 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (direct
 // options - directoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *directoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (directoryClientDeleteResponse, error) {
+func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *directoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, recursiveDirectoryDelete, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return directoryClientDeleteResponse{}, err
+		return DirectoryClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return directoryClientDeleteResponse{}, err
+		return DirectoryClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return directoryClientDeleteResponse{}, runtime.NewResponseError(resp)
+		return DirectoryClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -225,8 +225,8 @@ func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiv
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *directoryClient) deleteHandleResponse(resp *http.Response) (directoryClientDeleteResponse, error) {
-	result := directoryClientDeleteResponse{}
+func (client *directoryClient) deleteHandleResponse(resp *http.Response) (DirectoryClientDeleteResponse, error) {
+	result := DirectoryClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
 	}
@@ -242,7 +242,7 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (direct
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientDeleteResponse{}, err
+			return DirectoryClientDeleteResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -256,17 +256,17 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (direct
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum22, options *directoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (directoryClientGetAccessControlResponse, error) {
+func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum22, options *directoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return directoryClientGetAccessControlResponse{}, err
+		return DirectoryClientGetAccessControlResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return directoryClientGetAccessControlResponse{}, err
+		return DirectoryClientGetAccessControlResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return directoryClientGetAccessControlResponse{}, runtime.NewResponseError(resp)
+		return DirectoryClientGetAccessControlResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccessControlHandleResponse(resp)
 }
@@ -310,12 +310,12 @@ func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context
 }
 
 // getAccessControlHandleResponse handles the GetAccessControl response.
-func (client *directoryClient) getAccessControlHandleResponse(resp *http.Response) (directoryClientGetAccessControlResponse, error) {
-	result := directoryClientGetAccessControlResponse{}
+func (client *directoryClient) getAccessControlHandleResponse(resp *http.Response) (DirectoryClientGetAccessControlResponse, error) {
+	result := DirectoryClientGetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientGetAccessControlResponse{}, err
+			return DirectoryClientGetAccessControlResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -325,7 +325,7 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientGetAccessControlResponse{}, err
+			return DirectoryClientGetAccessControlResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -366,17 +366,17 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-func (client *directoryClient) Rename(ctx context.Context, renameSource string, options *directoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (directoryClientRenameResponse, error) {
+func (client *directoryClient) Rename(ctx context.Context, renameSource string, options *directoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (DirectoryClientRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return directoryClientRenameResponse{}, err
+		return DirectoryClientRenameResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return directoryClientRenameResponse{}, err
+		return DirectoryClientRenameResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return directoryClientRenameResponse{}, runtime.NewResponseError(resp)
+		return DirectoryClientRenameResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renameHandleResponse(resp)
 }
@@ -462,8 +462,8 @@ func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSo
 }
 
 // renameHandleResponse handles the Rename response.
-func (client *directoryClient) renameHandleResponse(resp *http.Response) (directoryClientRenameResponse, error) {
-	result := directoryClientRenameResponse{}
+func (client *directoryClient) renameHandleResponse(resp *http.Response) (DirectoryClientRenameResponse, error) {
+	result := DirectoryClientRenameResponse{}
 	if val := resp.Header.Get("x-ms-continuation"); val != "" {
 		result.Marker = &val
 	}
@@ -473,7 +473,7 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (direct
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientRenameResponse{}, err
+			return DirectoryClientRenameResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -489,14 +489,14 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (direct
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return directoryClientRenameResponse{}, err
+			return DirectoryClientRenameResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientRenameResponse{}, err
+			return DirectoryClientRenameResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -510,17 +510,17 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (direct
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum21, options *directoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (directoryClientSetAccessControlResponse, error) {
+func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum21, options *directoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientSetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return directoryClientSetAccessControlResponse{}, err
+		return DirectoryClientSetAccessControlResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return directoryClientSetAccessControlResponse{}, err
+		return DirectoryClientSetAccessControlResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return directoryClientSetAccessControlResponse{}, runtime.NewResponseError(resp)
+		return DirectoryClientSetAccessControlResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setAccessControlHandleResponse(resp)
 }
@@ -573,12 +573,12 @@ func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context
 }
 
 // setAccessControlHandleResponse handles the SetAccessControl response.
-func (client *directoryClient) setAccessControlHandleResponse(resp *http.Response) (directoryClientSetAccessControlResponse, error) {
-	result := directoryClientSetAccessControlResponse{}
+func (client *directoryClient) setAccessControlHandleResponse(resp *http.Response) (DirectoryClientSetAccessControlResponse, error) {
+	result := DirectoryClientSetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientSetAccessControlResponse{}, err
+			return DirectoryClientSetAccessControlResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -588,7 +588,7 @@ func (client *directoryClient) setAccessControlHandleResponse(resp *http.Respons
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return directoryClientSetAccessControlResponse{}, err
+			return DirectoryClientSetAccessControlResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}

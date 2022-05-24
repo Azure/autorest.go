@@ -41,15 +41,15 @@ func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedService
 // linkedService - Linked service resource definition.
 // options - linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
 // method.
-func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*runtime.Poller[linkedServiceClientCreateOrUpdateLinkedServiceResponse], error) {
+func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[linkedServiceClientCreateOrUpdateLinkedServiceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[linkedServiceClientCreateOrUpdateLinkedServiceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientCreateOrUpdateLinkedServiceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -98,15 +98,15 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 // linkedServiceName - The linked service name.
 // options - linkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
 // method.
-func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (*runtime.Poller[linkedServiceClientDeleteLinkedServiceResponse], error) {
+func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientDeleteLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[linkedServiceClientDeleteLinkedServiceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LinkedServiceClientDeleteLinkedServiceResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[linkedServiceClientDeleteLinkedServiceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientDeleteLinkedServiceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -152,17 +152,17 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 // linkedServiceName - The linked service name.
 // options - linkedServiceClientGetLinkedServiceOptions contains the optional parameters for the linkedServiceClient.GetLinkedService
 // method.
-func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientGetLinkedServiceOptions) (linkedServiceClientGetLinkedServiceResponse, error) {
+func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientGetLinkedServiceOptions) (LinkedServiceClientGetLinkedServiceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
-		return linkedServiceClientGetLinkedServiceResponse{}, err
+		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return linkedServiceClientGetLinkedServiceResponse{}, err
+		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return linkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(resp)
+		return LinkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLinkedServiceHandleResponse(resp)
 }
@@ -189,10 +189,10 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 }
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServiceResponse, error) {
-	result := linkedServiceClientGetLinkedServiceResponse{}
+func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (LinkedServiceClientGetLinkedServiceResponse, error) {
+	result := LinkedServiceClientGetLinkedServiceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
-		return linkedServiceClientGetLinkedServiceResponse{}, err
+		return LinkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	return result, nil
 }
@@ -202,12 +202,12 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 // Generated from API version 2019-06-01-preview
 // options - linkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
 // method.
-func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[linkedServiceClientGetLinkedServicesByWorkspaceResponse] {
-	return runtime.NewPager(runtime.PagingHandler[linkedServiceClientGetLinkedServicesByWorkspaceResponse]{
-		More: func(page linkedServiceClientGetLinkedServicesByWorkspaceResponse) bool {
+func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *runtime.Pager[LinkedServiceClientGetLinkedServicesByWorkspaceResponse] {
+	return runtime.NewPager(runtime.PagingHandler[LinkedServiceClientGetLinkedServicesByWorkspaceResponse]{
+		More: func(page LinkedServiceClientGetLinkedServicesByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *linkedServiceClientGetLinkedServicesByWorkspaceResponse) (linkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
+		Fetcher: func(ctx context.Context, page *LinkedServiceClientGetLinkedServicesByWorkspaceResponse) (LinkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -216,14 +216,14 @@ func (client *linkedServiceClient) NewGetLinkedServicesByWorkspacePager(options 
 				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
 			}
 			if err != nil {
-				return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
+				return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 			}
 			resp, err := client.pl.Do(req)
 			if err != nil {
-				return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
+				return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 			}
 			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(resp)
+				return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.getLinkedServicesByWorkspaceHandleResponse(resp)
 		},
@@ -245,10 +245,10 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 }
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
-	result := linkedServiceClientGetLinkedServicesByWorkspaceResponse{}
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (LinkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
+	result := LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
-		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
+		return LinkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
@@ -260,15 +260,15 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(re
 // request - proposed new name.
 // options - linkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
 // method.
-func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (*runtime.Poller[linkedServiceClientRenameLinkedServiceResponse], error) {
+func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (*runtime.Poller[LinkedServiceClientRenameLinkedServiceResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[linkedServiceClientRenameLinkedServiceResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LinkedServiceClientRenameLinkedServiceResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[linkedServiceClientRenameLinkedServiceResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LinkedServiceClientRenameLinkedServiceResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 

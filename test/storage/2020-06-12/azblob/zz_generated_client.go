@@ -48,17 +48,17 @@ func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, p
 // copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
 // options - clientAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *clientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (clientAbortCopyFromURLResponse, error) {
+func (client *client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *clientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (ClientAbortCopyFromURLResponse, error) {
 	req, err := client.abortCopyFromURLCreateRequest(ctx, comp, copyActionAbortConstant, copyID, options, leaseAccessConditions)
 	if err != nil {
-		return clientAbortCopyFromURLResponse{}, err
+		return ClientAbortCopyFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientAbortCopyFromURLResponse{}, err
+		return ClientAbortCopyFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return clientAbortCopyFromURLResponse{}, runtime.NewResponseError(resp)
+		return ClientAbortCopyFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.abortCopyFromURLHandleResponse(resp)
 }
@@ -89,8 +89,8 @@ func (client *client) abortCopyFromURLCreateRequest(ctx context.Context, comp En
 }
 
 // abortCopyFromURLHandleResponse handles the AbortCopyFromURL response.
-func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (clientAbortCopyFromURLResponse, error) {
-	result := clientAbortCopyFromURLResponse{}
+func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (ClientAbortCopyFromURLResponse, error) {
+	result := ClientAbortCopyFromURLResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -103,7 +103,7 @@ func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (clien
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientAbortCopyFromURLResponse{}, err
+			return ClientAbortCopyFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -115,17 +115,17 @@ func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (clien
 // Generated from API version 2020-06-12
 // options - clientAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) AcquireLease(ctx context.Context, comp Enum16, options *clientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientAcquireLeaseResponse, error) {
+func (client *client) AcquireLease(ctx context.Context, comp Enum16, options *clientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, comp, options, modifiedAccessConditions)
 	if err != nil {
-		return clientAcquireLeaseResponse{}, err
+		return ClientAcquireLeaseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientAcquireLeaseResponse{}, err
+		return ClientAcquireLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientAcquireLeaseResponse{}, runtime.NewResponseError(resp)
+		return ClientAcquireLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.acquireLeaseHandleResponse(resp)
 }
@@ -173,15 +173,15 @@ func (client *client) acquireLeaseCreateRequest(ctx context.Context, comp Enum16
 }
 
 // acquireLeaseHandleResponse handles the AcquireLease response.
-func (client *client) acquireLeaseHandleResponse(resp *http.Response) (clientAcquireLeaseResponse, error) {
-	result := clientAcquireLeaseResponse{}
+func (client *client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcquireLeaseResponse, error) {
+	result := ClientAcquireLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientAcquireLeaseResponse{}, err
+			return ClientAcquireLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -200,7 +200,7 @@ func (client *client) acquireLeaseHandleResponse(resp *http.Response) (clientAcq
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientAcquireLeaseResponse{}, err
+			return ClientAcquireLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -212,17 +212,17 @@ func (client *client) acquireLeaseHandleResponse(resp *http.Response) (clientAcq
 // Generated from API version 2020-06-12
 // options - clientBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) BreakLease(ctx context.Context, comp Enum16, options *clientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientBreakLeaseResponse, error) {
+func (client *client) BreakLease(ctx context.Context, comp Enum16, options *clientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientBreakLeaseResponse, error) {
 	req, err := client.breakLeaseCreateRequest(ctx, comp, options, modifiedAccessConditions)
 	if err != nil {
-		return clientBreakLeaseResponse{}, err
+		return ClientBreakLeaseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientBreakLeaseResponse{}, err
+		return ClientBreakLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientBreakLeaseResponse{}, runtime.NewResponseError(resp)
+		return ClientBreakLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.breakLeaseHandleResponse(resp)
 }
@@ -267,15 +267,15 @@ func (client *client) breakLeaseCreateRequest(ctx context.Context, comp Enum16, 
 }
 
 // breakLeaseHandleResponse handles the BreakLease response.
-func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreakLeaseResponse, error) {
-	result := clientBreakLeaseResponse{}
+func (client *client) breakLeaseHandleResponse(resp *http.Response) (ClientBreakLeaseResponse, error) {
+	result := ClientBreakLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientBreakLeaseResponse{}, err
+			return ClientBreakLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -283,7 +283,7 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreak
 		leaseTime32, err := strconv.ParseInt(val, 10, 32)
 		leaseTime := int32(leaseTime32)
 		if err != nil {
-			return clientBreakLeaseResponse{}, err
+			return ClientBreakLeaseResponse{}, err
 		}
 		result.LeaseTime = &leaseTime
 	}
@@ -299,7 +299,7 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreak
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientBreakLeaseResponse{}, err
+			return ClientBreakLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -315,17 +315,17 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreak
 // string formats.
 // options - clientChangeLeaseOptions contains the optional parameters for the client.ChangeLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) ChangeLease(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *clientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientChangeLeaseResponse, error) {
+func (client *client) ChangeLease(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *clientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientChangeLeaseResponse, error) {
 	req, err := client.changeLeaseCreateRequest(ctx, comp, leaseID, proposedLeaseID, options, modifiedAccessConditions)
 	if err != nil {
-		return clientChangeLeaseResponse{}, err
+		return ClientChangeLeaseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientChangeLeaseResponse{}, err
+		return ClientChangeLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientChangeLeaseResponse{}, runtime.NewResponseError(resp)
+		return ClientChangeLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.changeLeaseHandleResponse(resp)
 }
@@ -369,15 +369,15 @@ func (client *client) changeLeaseCreateRequest(ctx context.Context, comp Enum16,
 }
 
 // changeLeaseHandleResponse handles the ChangeLease response.
-func (client *client) changeLeaseHandleResponse(resp *http.Response) (clientChangeLeaseResponse, error) {
-	result := clientChangeLeaseResponse{}
+func (client *client) changeLeaseHandleResponse(resp *http.Response) (ClientChangeLeaseResponse, error) {
+	result := ClientChangeLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientChangeLeaseResponse{}, err
+			return ClientChangeLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -396,7 +396,7 @@ func (client *client) changeLeaseHandleResponse(resp *http.Response) (clientChan
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientChangeLeaseResponse{}, err
+			return ClientChangeLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -415,17 +415,17 @@ func (client *client) changeLeaseHandleResponse(resp *http.Response) (clientChan
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) CopyFromURL(ctx context.Context, xmsRequiresSync Enum29, copySource string, options *clientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (clientCopyFromURLResponse, error) {
+func (client *client) CopyFromURL(ctx context.Context, xmsRequiresSync Enum29, copySource string, options *clientCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCopyFromURLResponse, error) {
 	req, err := client.copyFromURLCreateRequest(ctx, xmsRequiresSync, copySource, options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return clientCopyFromURLResponse{}, err
+		return ClientCopyFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientCopyFromURLResponse{}, err
+		return ClientCopyFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientCopyFromURLResponse{}, runtime.NewResponseError(resp)
+		return ClientCopyFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.copyFromURLHandleResponse(resp)
 }
@@ -505,15 +505,15 @@ func (client *client) copyFromURLCreateRequest(ctx context.Context, xmsRequiresS
 }
 
 // copyFromURLHandleResponse handles the CopyFromURL response.
-func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopyFromURLResponse, error) {
-	result := clientCopyFromURLResponse{}
+func (client *client) copyFromURLHandleResponse(resp *http.Response) (ClientCopyFromURLResponse, error) {
+	result := ClientCopyFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientCopyFromURLResponse{}, err
+			return ClientCopyFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -532,7 +532,7 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopy
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientCopyFromURLResponse{}, err
+			return ClientCopyFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -545,14 +545,14 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopy
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientCopyFromURLResponse{}, err
+			return ClientCopyFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientCopyFromURLResponse{}, err
+			return ClientCopyFromURLResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -567,17 +567,17 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopy
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) CreateSnapshot(ctx context.Context, comp Enum28, options *clientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (clientCreateSnapshotResponse, error) {
+func (client *client) CreateSnapshot(ctx context.Context, comp Enum28, options *clientCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientCreateSnapshotResponse, error) {
 	req, err := client.createSnapshotCreateRequest(ctx, comp, options, cpkInfo, cpkScopeInfo, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return clientCreateSnapshotResponse{}, err
+		return ClientCreateSnapshotResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientCreateSnapshotResponse{}, err
+		return ClientCreateSnapshotResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientCreateSnapshotResponse{}, runtime.NewResponseError(resp)
+		return ClientCreateSnapshotResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createSnapshotHandleResponse(resp)
 }
@@ -638,8 +638,8 @@ func (client *client) createSnapshotCreateRequest(ctx context.Context, comp Enum
 }
 
 // createSnapshotHandleResponse handles the CreateSnapshot response.
-func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientCreateSnapshotResponse, error) {
-	result := clientCreateSnapshotResponse{}
+func (client *client) createSnapshotHandleResponse(resp *http.Response) (ClientCreateSnapshotResponse, error) {
+	result := ClientCreateSnapshotResponse{}
 	if val := resp.Header.Get("x-ms-snapshot"); val != "" {
 		result.Snapshot = &val
 	}
@@ -649,7 +649,7 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientC
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientCreateSnapshotResponse{}, err
+			return ClientCreateSnapshotResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -668,14 +668,14 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientC
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientCreateSnapshotResponse{}, err
+			return ClientCreateSnapshotResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientCreateSnapshotResponse{}, err
+			return ClientCreateSnapshotResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -698,17 +698,17 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientC
 // options - clientDeleteOptions contains the optional parameters for the client.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) Delete(ctx context.Context, options *clientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (clientDeleteResponse, error) {
+func (client *client) Delete(ctx context.Context, options *clientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return clientDeleteResponse{}, err
+		return ClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientDeleteResponse{}, err
+		return ClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientDeleteResponse{}, runtime.NewResponseError(resp)
+		return ClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -763,8 +763,8 @@ func (client *client) deleteCreateRequest(ctx context.Context, options *clientDe
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *client) deleteHandleResponse(resp *http.Response) (clientDeleteResponse, error) {
-	result := clientDeleteResponse{}
+func (client *client) deleteHandleResponse(resp *http.Response) (ClientDeleteResponse, error) {
+	result := ClientDeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -777,7 +777,7 @@ func (client *client) deleteHandleResponse(resp *http.Response) (clientDeleteRes
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDeleteResponse{}, err
+			return ClientDeleteResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -789,17 +789,17 @@ func (client *client) deleteHandleResponse(resp *http.Response) (clientDeleteRes
 // Generated from API version 2020-06-12
 // options - clientDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy
 // method.
-func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientDeleteImmutabilityPolicyOptions) (clientDeleteImmutabilityPolicyResponse, error) {
+func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, comp, options)
 	if err != nil {
-		return clientDeleteImmutabilityPolicyResponse{}, err
+		return ClientDeleteImmutabilityPolicyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientDeleteImmutabilityPolicyResponse{}, err
+		return ClientDeleteImmutabilityPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientDeleteImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
+		return ClientDeleteImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteImmutabilityPolicyHandleResponse(resp)
 }
@@ -825,8 +825,8 @@ func (client *client) deleteImmutabilityPolicyCreateRequest(ctx context.Context,
 }
 
 // deleteImmutabilityPolicyHandleResponse handles the DeleteImmutabilityPolicy response.
-func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response) (clientDeleteImmutabilityPolicyResponse, error) {
-	result := clientDeleteImmutabilityPolicyResponse{}
+func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response) (ClientDeleteImmutabilityPolicyResponse, error) {
+	result := ClientDeleteImmutabilityPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -839,7 +839,7 @@ func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDeleteImmutabilityPolicyResponse{}, err
+			return ClientDeleteImmutabilityPolicyResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -854,17 +854,17 @@ func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) Download(ctx context.Context, options *clientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (clientDownloadResponse, error) {
+func (client *client) Download(ctx context.Context, options *clientDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientDownloadResponse, error) {
 	req, err := client.downloadCreateRequest(ctx, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
-		return clientDownloadResponse{}, err
+		return ClientDownloadResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientDownloadResponse{}, err
+		return ClientDownloadResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusPartialContent) {
-		return clientDownloadResponse{}, runtime.NewResponseError(resp)
+		return ClientDownloadResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.downloadHandleResponse(resp)
 }
@@ -932,12 +932,12 @@ func (client *client) downloadCreateRequest(ctx context.Context, options *client
 }
 
 // downloadHandleResponse handles the Download response.
-func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloadResponse, error) {
-	result := clientDownloadResponse{Body: resp.Body}
+func (client *client) downloadHandleResponse(resp *http.Response) (ClientDownloadResponse, error) {
+	result := ClientDownloadResponse{Body: resp.Body}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -963,7 +963,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
@@ -979,7 +979,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -998,7 +998,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -1008,7 +1008,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.CopyCompletionTime = &copyCompletionTime
 	}
@@ -1051,7 +1051,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("x-ms-is-current-version"); val != "" {
 		isCurrentVersion, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.IsCurrentVersion = &isCurrentVersion
 	}
@@ -1061,7 +1061,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -1069,14 +1069,14 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -1089,35 +1089,35 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("x-ms-blob-content-md5"); val != "" {
 		blobContentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.BlobContentMD5 = blobContentMD5
 	}
 	if val := resp.Header.Get("x-ms-tag-count"); val != "" {
 		tagCount, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.TagCount = &tagCount
 	}
 	if val := resp.Header.Get("x-ms-blob-sealed"); val != "" {
 		isSealed, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.IsSealed = &isSealed
 	}
 	if val := resp.Header.Get("x-ms-last-access-time"); val != "" {
 		lastAccessed, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.LastAccessed = &lastAccessed
 	}
 	if val := resp.Header.Get("x-ms-immutability-policy-until-date"); val != "" {
 		immutabilityPolicyExpiresOn, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.ImmutabilityPolicyExpiresOn = &immutabilityPolicyExpiresOn
 	}
@@ -1127,14 +1127,14 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	if val := resp.Header.Get("x-ms-legal-hold"); val != "" {
 		legalHold, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.LegalHold = &legalHold
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientDownloadResponse{}, err
+			return ClientDownloadResponse{}, err
 		}
 		result.ContentCRC64 = contentCRC64
 	}
@@ -1147,17 +1147,17 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 // options - clientGetAccessControlOptions contains the optional parameters for the client.GetAccessControl method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) GetAccessControl(ctx context.Context, action Enum22, options *clientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (clientGetAccessControlResponse, error) {
+func (client *client) GetAccessControl(ctx context.Context, action Enum22, options *clientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return clientGetAccessControlResponse{}, err
+		return ClientGetAccessControlResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientGetAccessControlResponse{}, err
+		return ClientGetAccessControlResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetAccessControlResponse{}, runtime.NewResponseError(resp)
+		return ClientGetAccessControlResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccessControlHandleResponse(resp)
 }
@@ -1201,12 +1201,12 @@ func (client *client) getAccessControlCreateRequest(ctx context.Context, action 
 }
 
 // getAccessControlHandleResponse handles the GetAccessControl response.
-func (client *client) getAccessControlHandleResponse(resp *http.Response) (clientGetAccessControlResponse, error) {
-	result := clientGetAccessControlResponse{}
+func (client *client) getAccessControlHandleResponse(resp *http.Response) (ClientGetAccessControlResponse, error) {
+	result := ClientGetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetAccessControlResponse{}, err
+			return ClientGetAccessControlResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -1216,7 +1216,7 @@ func (client *client) getAccessControlHandleResponse(resp *http.Response) (clien
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetAccessControlResponse{}, err
+			return ClientGetAccessControlResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -1245,17 +1245,17 @@ func (client *client) getAccessControlHandleResponse(resp *http.Response) (clien
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - clientGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
-func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *clientGetAccountInfoOptions) (clientGetAccountInfoResponse, error) {
+func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *clientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
-		return clientGetAccountInfoResponse{}, err
+		return ClientGetAccountInfoResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientGetAccountInfoResponse{}, err
+		return ClientGetAccountInfoResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
+		return ClientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccountInfoHandleResponse(resp)
 }
@@ -1276,8 +1276,8 @@ func (client *client) getAccountInfoCreateRequest(ctx context.Context, restype E
 }
 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
-func (client *client) getAccountInfoHandleResponse(resp *http.Response) (clientGetAccountInfoResponse, error) {
-	result := clientGetAccountInfoResponse{}
+func (client *client) getAccountInfoHandleResponse(resp *http.Response) (ClientGetAccountInfoResponse, error) {
+	result := ClientGetAccountInfoResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -1290,7 +1290,7 @@ func (client *client) getAccountInfoHandleResponse(resp *http.Response) (clientG
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetAccountInfoResponse{}, err
+			return ClientGetAccountInfoResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -1311,17 +1311,17 @@ func (client *client) getAccountInfoHandleResponse(resp *http.Response) (clientG
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) GetProperties(ctx context.Context, options *clientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (clientGetPropertiesResponse, error) {
+func (client *client) GetProperties(ctx context.Context, options *clientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
-		return clientGetPropertiesResponse{}, err
+		return ClientGetPropertiesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientGetPropertiesResponse{}, err
+		return ClientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetPropertiesResponse{}, runtime.NewResponseError(resp)
+		return ClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
@@ -1379,19 +1379,19 @@ func (client *client) getPropertiesCreateRequest(ctx context.Context, options *c
 }
 
 // getPropertiesHandleResponse handles the GetProperties response.
-func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGetPropertiesResponse, error) {
-	result := clientGetPropertiesResponse{}
+func (client *client) getPropertiesHandleResponse(resp *http.Response) (ClientGetPropertiesResponse, error) {
+	result := ClientGetPropertiesResponse{}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-creation-time"); val != "" {
 		creationTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.CreationTime = &creationTime
 	}
@@ -1420,7 +1420,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.CopyCompletionTime = &copyCompletionTime
 	}
@@ -1442,7 +1442,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-incremental-copy"); val != "" {
 		isIncrementalCopy, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.IsIncrementalCopy = &isIncrementalCopy
 	}
@@ -1461,7 +1461,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
@@ -1474,7 +1474,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -1493,7 +1493,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -1509,7 +1509,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -1520,14 +1520,14 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -1543,7 +1543,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-access-tier-inferred"); val != "" {
 		accessTierInferred, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.AccessTierInferred = &accessTierInferred
 	}
@@ -1553,7 +1553,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-access-tier-change-time"); val != "" {
 		accessTierChangeTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.AccessTierChangeTime = &accessTierChangeTime
 	}
@@ -1563,28 +1563,28 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-is-current-version"); val != "" {
 		isCurrentVersion, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.IsCurrentVersion = &isCurrentVersion
 	}
 	if val := resp.Header.Get("x-ms-tag-count"); val != "" {
 		tagCount, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.TagCount = &tagCount
 	}
 	if val := resp.Header.Get("x-ms-expiry-time"); val != "" {
 		expiresOn, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.ExpiresOn = &expiresOn
 	}
 	if val := resp.Header.Get("x-ms-blob-sealed"); val != "" {
 		isSealed, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.IsSealed = &isSealed
 	}
@@ -1594,14 +1594,14 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-last-access-time"); val != "" {
 		lastAccessed, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.LastAccessed = &lastAccessed
 	}
 	if val := resp.Header.Get("x-ms-immutability-policy-until-date"); val != "" {
 		immutabilityPolicyExpiresOn, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.ImmutabilityPolicyExpiresOn = &immutabilityPolicyExpiresOn
 	}
@@ -1611,7 +1611,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	if val := resp.Header.Get("x-ms-legal-hold"); val != "" {
 		legalHold, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientGetPropertiesResponse{}, err
+			return ClientGetPropertiesResponse{}, err
 		}
 		result.LegalHold = &legalHold
 	}
@@ -1624,17 +1624,17 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 // options - clientGetTagsOptions contains the optional parameters for the client.GetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) GetTags(ctx context.Context, comp Enum42, options *clientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (clientGetTagsResponse, error) {
+func (client *client) GetTags(ctx context.Context, comp Enum42, options *clientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientGetTagsResponse, error) {
 	req, err := client.getTagsCreateRequest(ctx, comp, options, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return clientGetTagsResponse{}, err
+		return ClientGetTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientGetTagsResponse{}, err
+		return ClientGetTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetTagsResponse{}, runtime.NewResponseError(resp)
+		return ClientGetTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getTagsHandleResponse(resp)
 }
@@ -1672,8 +1672,8 @@ func (client *client) getTagsCreateRequest(ctx context.Context, comp Enum42, opt
 }
 
 // getTagsHandleResponse handles the GetTags response.
-func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsResponse, error) {
-	result := clientGetTagsResponse{}
+func (client *client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsResponse, error) {
+	result := ClientGetTagsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -1686,12 +1686,12 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsR
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientGetTagsResponse{}, err
+			return ClientGetTagsResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.Tags); err != nil {
-		return clientGetTagsResponse{}, err
+		return ClientGetTagsResponse{}, err
 	}
 	return result, nil
 }
@@ -1703,17 +1703,17 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsR
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) Query(ctx context.Context, comp Enum40, options *clientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (clientQueryResponse, error) {
+func (client *client) Query(ctx context.Context, comp Enum40, options *clientQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientQueryResponse, error) {
 	req, err := client.queryCreateRequest(ctx, comp, options, leaseAccessConditions, cpkInfo, modifiedAccessConditions)
 	if err != nil {
-		return clientQueryResponse{}, err
+		return ClientQueryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientQueryResponse{}, err
+		return ClientQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusPartialContent) {
-		return clientQueryResponse{}, runtime.NewResponseError(resp)
+		return ClientQueryResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryHandleResponse(resp)
 }
@@ -1773,12 +1773,12 @@ func (client *client) queryCreateRequest(ctx context.Context, comp Enum40, optio
 }
 
 // queryHandleResponse handles the Query response.
-func (client *client) queryHandleResponse(resp *http.Response) (clientQueryResponse, error) {
-	result := clientQueryResponse{Body: resp.Body}
+func (client *client) queryHandleResponse(resp *http.Response) (ClientQueryResponse, error) {
+	result := ClientQueryResponse{Body: resp.Body}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -1793,7 +1793,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
@@ -1809,7 +1809,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -1828,7 +1828,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -1838,7 +1838,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	if val := resp.Header.Get("x-ms-copy-completion-time"); val != "" {
 		copyCompletionTime, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.CopyCompletionTime = &copyCompletionTime
 	}
@@ -1881,7 +1881,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -1889,14 +1889,14 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
 		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.BlobCommittedBlockCount = &blobCommittedBlockCount
 	}
 	if val := resp.Header.Get("x-ms-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -1909,14 +1909,14 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	if val := resp.Header.Get("x-ms-blob-content-md5"); val != "" {
 		blobContentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.BlobContentMD5 = blobContentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		contentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return clientQueryResponse{}, err
+			return ClientQueryResponse{}, err
 		}
 		result.ContentCRC64 = contentCRC64
 	}
@@ -1929,17 +1929,17 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 // leaseID - Specifies the current lease ID on the resource.
 // options - clientReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) ReleaseLease(ctx context.Context, comp Enum16, leaseID string, options *clientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientReleaseLeaseResponse, error) {
+func (client *client) ReleaseLease(ctx context.Context, comp Enum16, leaseID string, options *clientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientReleaseLeaseResponse, error) {
 	req, err := client.releaseLeaseCreateRequest(ctx, comp, leaseID, options, modifiedAccessConditions)
 	if err != nil {
-		return clientReleaseLeaseResponse{}, err
+		return ClientReleaseLeaseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientReleaseLeaseResponse{}, err
+		return ClientReleaseLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientReleaseLeaseResponse{}, runtime.NewResponseError(resp)
+		return ClientReleaseLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.releaseLeaseHandleResponse(resp)
 }
@@ -1982,15 +1982,15 @@ func (client *client) releaseLeaseCreateRequest(ctx context.Context, comp Enum16
 }
 
 // releaseLeaseHandleResponse handles the ReleaseLease response.
-func (client *client) releaseLeaseHandleResponse(resp *http.Response) (clientReleaseLeaseResponse, error) {
-	result := clientReleaseLeaseResponse{}
+func (client *client) releaseLeaseHandleResponse(resp *http.Response) (ClientReleaseLeaseResponse, error) {
+	result := ClientReleaseLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientReleaseLeaseResponse{}, err
+			return ClientReleaseLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -2006,7 +2006,7 @@ func (client *client) releaseLeaseHandleResponse(resp *http.Response) (clientRel
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientReleaseLeaseResponse{}, err
+			return ClientReleaseLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2029,17 +2029,17 @@ func (client *client) releaseLeaseHandleResponse(resp *http.Response) (clientRel
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-func (client *client) Rename(ctx context.Context, renameSource string, options *clientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (clientRenameResponse, error) {
+func (client *client) Rename(ctx context.Context, renameSource string, options *clientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (ClientRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return clientRenameResponse{}, err
+		return ClientRenameResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientRenameResponse{}, err
+		return ClientRenameResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientRenameResponse{}, runtime.NewResponseError(resp)
+		return ClientRenameResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renameHandleResponse(resp)
 }
@@ -2122,15 +2122,15 @@ func (client *client) renameCreateRequest(ctx context.Context, renameSource stri
 }
 
 // renameHandleResponse handles the Rename response.
-func (client *client) renameHandleResponse(resp *http.Response) (clientRenameResponse, error) {
-	result := clientRenameResponse{}
+func (client *client) renameHandleResponse(resp *http.Response) (ClientRenameResponse, error) {
+	result := ClientRenameResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientRenameResponse{}, err
+			return ClientRenameResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -2146,14 +2146,14 @@ func (client *client) renameHandleResponse(resp *http.Response) (clientRenameRes
 	if val := resp.Header.Get("Content-Length"); val != "" {
 		contentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientRenameResponse{}, err
+			return ClientRenameResponse{}, err
 		}
 		result.ContentLength = &contentLength
 	}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientRenameResponse{}, err
+			return ClientRenameResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2166,17 +2166,17 @@ func (client *client) renameHandleResponse(resp *http.Response) (clientRenameRes
 // leaseID - Specifies the current lease ID on the resource.
 // options - clientRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) RenewLease(ctx context.Context, comp Enum16, leaseID string, options *clientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientRenewLeaseResponse, error) {
+func (client *client) RenewLease(ctx context.Context, comp Enum16, leaseID string, options *clientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, comp, leaseID, options, modifiedAccessConditions)
 	if err != nil {
-		return clientRenewLeaseResponse{}, err
+		return ClientRenewLeaseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientRenewLeaseResponse{}, err
+		return ClientRenewLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientRenewLeaseResponse{}, runtime.NewResponseError(resp)
+		return ClientRenewLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renewLeaseHandleResponse(resp)
 }
@@ -2219,15 +2219,15 @@ func (client *client) renewLeaseCreateRequest(ctx context.Context, comp Enum16, 
 }
 
 // renewLeaseHandleResponse handles the RenewLease response.
-func (client *client) renewLeaseHandleResponse(resp *http.Response) (clientRenewLeaseResponse, error) {
-	result := clientRenewLeaseResponse{}
+func (client *client) renewLeaseHandleResponse(resp *http.Response) (ClientRenewLeaseResponse, error) {
+	result := ClientRenewLeaseResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientRenewLeaseResponse{}, err
+			return ClientRenewLeaseResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -2246,7 +2246,7 @@ func (client *client) renewLeaseHandleResponse(resp *http.Response) (clientRenew
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientRenewLeaseResponse{}, err
+			return ClientRenewLeaseResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2259,17 +2259,17 @@ func (client *client) renewLeaseHandleResponse(resp *http.Response) (clientRenew
 // options - clientSetAccessControlOptions contains the optional parameters for the client.SetAccessControl method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetAccessControl(ctx context.Context, action Enum21, options *clientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (clientSetAccessControlResponse, error) {
+func (client *client) SetAccessControl(ctx context.Context, action Enum21, options *clientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return clientSetAccessControlResponse{}, err
+		return ClientSetAccessControlResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetAccessControlResponse{}, err
+		return ClientSetAccessControlResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetAccessControlResponse{}, runtime.NewResponseError(resp)
+		return ClientSetAccessControlResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setAccessControlHandleResponse(resp)
 }
@@ -2322,12 +2322,12 @@ func (client *client) setAccessControlCreateRequest(ctx context.Context, action 
 }
 
 // setAccessControlHandleResponse handles the SetAccessControl response.
-func (client *client) setAccessControlHandleResponse(resp *http.Response) (clientSetAccessControlResponse, error) {
-	result := clientSetAccessControlResponse{}
+func (client *client) setAccessControlHandleResponse(resp *http.Response) (ClientSetAccessControlResponse, error) {
+	result := ClientSetAccessControlResponse{}
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetAccessControlResponse{}, err
+			return ClientSetAccessControlResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2337,7 +2337,7 @@ func (client *client) setAccessControlHandleResponse(resp *http.Response) (clien
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetAccessControlResponse{}, err
+			return ClientSetAccessControlResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -2355,17 +2355,17 @@ func (client *client) setAccessControlHandleResponse(resp *http.Response) (clien
 // Generated from API version 2020-06-12
 // expiryOptions - Required. Indicates mode of the expiry time
 // options - clientSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
-func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *clientSetExpiryOptions) (clientSetExpiryResponse, error) {
+func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *clientSetExpiryOptions) (ClientSetExpiryResponse, error) {
 	req, err := client.setExpiryCreateRequest(ctx, comp, expiryOptions, options)
 	if err != nil {
-		return clientSetExpiryResponse{}, err
+		return ClientSetExpiryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetExpiryResponse{}, err
+		return ClientSetExpiryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetExpiryResponse{}, runtime.NewResponseError(resp)
+		return ClientSetExpiryResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setExpiryHandleResponse(resp)
 }
@@ -2395,15 +2395,15 @@ func (client *client) setExpiryCreateRequest(ctx context.Context, comp Enum24, e
 }
 
 // setExpiryHandleResponse handles the SetExpiry response.
-func (client *client) setExpiryHandleResponse(resp *http.Response) (clientSetExpiryResponse, error) {
-	result := clientSetExpiryResponse{}
+func (client *client) setExpiryHandleResponse(resp *http.Response) (ClientSetExpiryResponse, error) {
+	result := ClientSetExpiryResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetExpiryResponse{}, err
+			return ClientSetExpiryResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -2419,7 +2419,7 @@ func (client *client) setExpiryHandleResponse(resp *http.Response) (clientSetExp
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetExpiryResponse{}, err
+			return ClientSetExpiryResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2433,17 +2433,17 @@ func (client *client) setExpiryHandleResponse(resp *http.Response) (clientSetExp
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetHTTPHeaders(ctx context.Context, comp Enum1, options *clientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (clientSetHTTPHeadersResponse, error) {
+func (client *client) SetHTTPHeaders(ctx context.Context, comp Enum1, options *clientSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetHTTPHeadersResponse, error) {
 	req, err := client.setHTTPHeadersCreateRequest(ctx, comp, options, blobHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return clientSetHTTPHeadersResponse{}, err
+		return ClientSetHTTPHeadersResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetHTTPHeadersResponse{}, err
+		return ClientSetHTTPHeadersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetHTTPHeadersResponse{}, runtime.NewResponseError(resp)
+		return ClientSetHTTPHeadersResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setHTTPHeadersHandleResponse(resp)
 }
@@ -2505,22 +2505,22 @@ func (client *client) setHTTPHeadersCreateRequest(ctx context.Context, comp Enum
 }
 
 // setHTTPHeadersHandleResponse handles the SetHTTPHeaders response.
-func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (clientSetHTTPHeadersResponse, error) {
-	result := clientSetHTTPHeadersResponse{}
+func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientSetHTTPHeadersResponse, error) {
+	result := ClientSetHTTPHeadersResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetHTTPHeadersResponse{}, err
+			return ClientSetHTTPHeadersResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("x-ms-blob-sequence-number"); val != "" {
 		blobSequenceNumber, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return clientSetHTTPHeadersResponse{}, err
+			return ClientSetHTTPHeadersResponse{}, err
 		}
 		result.BlobSequenceNumber = &blobSequenceNumber
 	}
@@ -2536,7 +2536,7 @@ func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (clientS
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetHTTPHeadersResponse{}, err
+			return ClientSetHTTPHeadersResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2548,17 +2548,17 @@ func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (clientS
 // Generated from API version 2020-06-12
 // options - clientSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientSetImmutabilityPolicyResponse, error) {
+func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetImmutabilityPolicyResponse, error) {
 	req, err := client.setImmutabilityPolicyCreateRequest(ctx, comp, options, modifiedAccessConditions)
 	if err != nil {
-		return clientSetImmutabilityPolicyResponse{}, err
+		return ClientSetImmutabilityPolicyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetImmutabilityPolicyResponse{}, err
+		return ClientSetImmutabilityPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
+		return ClientSetImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setImmutabilityPolicyHandleResponse(resp)
 }
@@ -2593,8 +2593,8 @@ func (client *client) setImmutabilityPolicyCreateRequest(ctx context.Context, co
 }
 
 // setImmutabilityPolicyHandleResponse handles the SetImmutabilityPolicy response.
-func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (clientSetImmutabilityPolicyResponse, error) {
-	result := clientSetImmutabilityPolicyResponse{}
+func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (ClientSetImmutabilityPolicyResponse, error) {
+	result := ClientSetImmutabilityPolicyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2607,14 +2607,14 @@ func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetImmutabilityPolicyResponse{}, err
+			return ClientSetImmutabilityPolicyResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-immutability-policy-until-date"); val != "" {
 		immutabilityPolicyExpiry, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetImmutabilityPolicyResponse{}, err
+			return ClientSetImmutabilityPolicyResponse{}, err
 		}
 		result.ImmutabilityPolicyExpiry = &immutabilityPolicyExpiry
 	}
@@ -2629,17 +2629,17 @@ func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 // Generated from API version 2020-06-12
 // legalHold - Specified if a legal hold should be set on the blob.
 // options - clientSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
-func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *clientSetLegalHoldOptions) (clientSetLegalHoldResponse, error) {
+func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *clientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
 	req, err := client.setLegalHoldCreateRequest(ctx, comp, legalHold, options)
 	if err != nil {
-		return clientSetLegalHoldResponse{}, err
+		return ClientSetLegalHoldResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetLegalHoldResponse{}, err
+		return ClientSetLegalHoldResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetLegalHoldResponse{}, runtime.NewResponseError(resp)
+		return ClientSetLegalHoldResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setLegalHoldHandleResponse(resp)
 }
@@ -2666,8 +2666,8 @@ func (client *client) setLegalHoldCreateRequest(ctx context.Context, comp Enum27
 }
 
 // setLegalHoldHandleResponse handles the SetLegalHold response.
-func (client *client) setLegalHoldHandleResponse(resp *http.Response) (clientSetLegalHoldResponse, error) {
-	result := clientSetLegalHoldResponse{}
+func (client *client) setLegalHoldHandleResponse(resp *http.Response) (ClientSetLegalHoldResponse, error) {
+	result := ClientSetLegalHoldResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2680,14 +2680,14 @@ func (client *client) setLegalHoldHandleResponse(resp *http.Response) (clientSet
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetLegalHoldResponse{}, err
+			return ClientSetLegalHoldResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-legal-hold"); val != "" {
 		legalHold, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientSetLegalHoldResponse{}, err
+			return ClientSetLegalHoldResponse{}, err
 		}
 		result.LegalHold = &legalHold
 	}
@@ -2703,17 +2703,17 @@ func (client *client) setLegalHoldHandleResponse(resp *http.Response) (clientSet
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetMetadata(ctx context.Context, comp Enum12, options *clientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (clientSetMetadataResponse, error) {
+func (client *client) SetMetadata(ctx context.Context, comp Enum12, options *clientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetMetadataResponse, error) {
 	req, err := client.setMetadataCreateRequest(ctx, comp, options, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return clientSetMetadataResponse{}, err
+		return ClientSetMetadataResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetMetadataResponse{}, err
+		return ClientSetMetadataResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetMetadataResponse{}, runtime.NewResponseError(resp)
+		return ClientSetMetadataResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setMetadataHandleResponse(resp)
 }
@@ -2774,15 +2774,15 @@ func (client *client) setMetadataCreateRequest(ctx context.Context, comp Enum12,
 }
 
 // setMetadataHandleResponse handles the SetMetadata response.
-func (client *client) setMetadataHandleResponse(resp *http.Response) (clientSetMetadataResponse, error) {
-	result := clientSetMetadataResponse{}
+func (client *client) setMetadataHandleResponse(resp *http.Response) (ClientSetMetadataResponse, error) {
+	result := ClientSetMetadataResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetMetadataResponse{}, err
+			return ClientSetMetadataResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -2801,14 +2801,14 @@ func (client *client) setMetadataHandleResponse(resp *http.Response) (clientSetM
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetMetadataResponse{}, err
+			return ClientSetMetadataResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return clientSetMetadataResponse{}, err
+			return ClientSetMetadataResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -2827,17 +2827,17 @@ func (client *client) setMetadataHandleResponse(resp *http.Response) (clientSetM
 // options - clientSetTagsOptions contains the optional parameters for the client.SetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) SetTags(ctx context.Context, comp Enum42, options *clientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (clientSetTagsResponse, error) {
+func (client *client) SetTags(ctx context.Context, comp Enum42, options *clientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientSetTagsResponse, error) {
 	req, err := client.setTagsCreateRequest(ctx, comp, options, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return clientSetTagsResponse{}, err
+		return ClientSetTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetTagsResponse{}, err
+		return ClientSetTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return clientSetTagsResponse{}, runtime.NewResponseError(resp)
+		return ClientSetTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setTagsHandleResponse(resp)
 }
@@ -2881,8 +2881,8 @@ func (client *client) setTagsCreateRequest(ctx context.Context, comp Enum42, opt
 }
 
 // setTagsHandleResponse handles the SetTags response.
-func (client *client) setTagsHandleResponse(resp *http.Response) (clientSetTagsResponse, error) {
-	result := clientSetTagsResponse{}
+func (client *client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsResponse, error) {
+	result := ClientSetTagsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2895,7 +2895,7 @@ func (client *client) setTagsHandleResponse(resp *http.Response) (clientSetTagsR
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientSetTagsResponse{}, err
+			return ClientSetTagsResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -2912,17 +2912,17 @@ func (client *client) setTagsHandleResponse(resp *http.Response) (clientSetTagsR
 // options - clientSetTierOptions contains the optional parameters for the client.SetTier method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *client) SetTier(ctx context.Context, comp Enum32, tier AccessTier, options *clientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (clientSetTierResponse, error) {
+func (client *client) SetTier(ctx context.Context, comp Enum32, tier AccessTier, options *clientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetTierResponse, error) {
 	req, err := client.setTierCreateRequest(ctx, comp, tier, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return clientSetTierResponse{}, err
+		return ClientSetTierResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientSetTierResponse{}, err
+		return ClientSetTierResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return clientSetTierResponse{}, runtime.NewResponseError(resp)
+		return ClientSetTierResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setTierHandleResponse(resp)
 }
@@ -2964,8 +2964,8 @@ func (client *client) setTierCreateRequest(ctx context.Context, comp Enum32, tie
 }
 
 // setTierHandleResponse handles the SetTier response.
-func (client *client) setTierHandleResponse(resp *http.Response) (clientSetTierResponse, error) {
-	result := clientSetTierResponse{}
+func (client *client) setTierHandleResponse(resp *http.Response) (ClientSetTierResponse, error) {
+	result := ClientSetTierResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -2989,17 +2989,17 @@ func (client *client) setTierHandleResponse(resp *http.Response) (clientSetTierR
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-func (client *client) StartCopyFromURL(ctx context.Context, copySource string, options *clientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (clientStartCopyFromURLResponse, error) {
+func (client *client) StartCopyFromURL(ctx context.Context, copySource string, options *clientStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientStartCopyFromURLResponse, error) {
 	req, err := client.startCopyFromURLCreateRequest(ctx, copySource, options, sourceModifiedAccessConditions, modifiedAccessConditions, leaseAccessConditions)
 	if err != nil {
-		return clientStartCopyFromURLResponse{}, err
+		return ClientStartCopyFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientStartCopyFromURLResponse{}, err
+		return ClientStartCopyFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientStartCopyFromURLResponse{}, runtime.NewResponseError(resp)
+		return ClientStartCopyFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.startCopyFromURLHandleResponse(resp)
 }
@@ -3084,15 +3084,15 @@ func (client *client) startCopyFromURLCreateRequest(ctx context.Context, copySou
 }
 
 // startCopyFromURLHandleResponse handles the StartCopyFromURL response.
-func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (clientStartCopyFromURLResponse, error) {
-	result := clientStartCopyFromURLResponse{}
+func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (ClientStartCopyFromURLResponse, error) {
+	result := ClientStartCopyFromURLResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientStartCopyFromURLResponse{}, err
+			return ClientStartCopyFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -3111,7 +3111,7 @@ func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (clien
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientStartCopyFromURLResponse{}, err
+			return ClientStartCopyFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -3128,17 +3128,17 @@ func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (clien
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - clientUndeleteOptions contains the optional parameters for the client.Undelete method.
-func (client *client) Undelete(ctx context.Context, comp Enum14, options *clientUndeleteOptions) (clientUndeleteResponse, error) {
+func (client *client) Undelete(ctx context.Context, comp Enum14, options *clientUndeleteOptions) (ClientUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, comp, options)
 	if err != nil {
-		return clientUndeleteResponse{}, err
+		return ClientUndeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientUndeleteResponse{}, err
+		return ClientUndeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientUndeleteResponse{}, runtime.NewResponseError(resp)
+		return ClientUndeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.undeleteHandleResponse(resp)
 }
@@ -3164,8 +3164,8 @@ func (client *client) undeleteCreateRequest(ctx context.Context, comp Enum14, op
 }
 
 // undeleteHandleResponse handles the Undelete response.
-func (client *client) undeleteHandleResponse(resp *http.Response) (clientUndeleteResponse, error) {
-	result := clientUndeleteResponse{}
+func (client *client) undeleteHandleResponse(resp *http.Response) (ClientUndeleteResponse, error) {
+	result := ClientUndeleteResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -3178,7 +3178,7 @@ func (client *client) undeleteHandleResponse(resp *http.Response) (clientUndelet
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return clientUndeleteResponse{}, err
+			return ClientUndeleteResponse{}, err
 		}
 		result.Date = &date
 	}

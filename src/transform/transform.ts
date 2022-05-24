@@ -632,7 +632,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   // contains all the response envelopes
   const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
-  const respEnvName = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Response`, 'Envelope');
+  const respEnvName = ensureUniqueModelName(codeModel, `${capitalize(group.language.go!.clientName)}${op.language.go!.name}Response`, 'Envelope');
   const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<Property>();
