@@ -44,19 +44,19 @@ func newLibraryClient(endpoint string, pl runtime.Pipeline) *libraryClient {
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // content - Library file chunk.
 // options - libraryClientAppendOptions contains the optional parameters for the libraryClient.Append method.
-func (client *libraryClient) Append(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *libraryClientAppendOptions) (libraryClientAppendResponse, error) {
+func (client *libraryClient) Append(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *libraryClientAppendOptions) (LibraryClientAppendResponse, error) {
 	req, err := client.appendCreateRequest(ctx, libraryName, content, options)
 	if err != nil {
-		return libraryClientAppendResponse{}, err
+		return LibraryClientAppendResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return libraryClientAppendResponse{}, err
+		return LibraryClientAppendResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return libraryClientAppendResponse{}, runtime.NewResponseError(resp)
+		return LibraryClientAppendResponse{}, runtime.NewResponseError(resp)
 	}
-	return libraryClientAppendResponse{}, nil
+	return LibraryClientAppendResponse{}, nil
 }
 
 // appendCreateRequest creates the Append request.
@@ -85,15 +85,15 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 // Generated from API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginCreateOptions contains the optional parameters for the libraryClient.BeginCreate method.
-func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (*runtime.Poller[libraryClientCreateResponse], error) {
+func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string, options *libraryClientBeginCreateOptions) (*runtime.Poller[LibraryClientCreateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.create(ctx, libraryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[libraryClientCreateResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LibraryClientCreateResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[libraryClientCreateResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LibraryClientCreateResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -138,15 +138,15 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 // Generated from API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginDeleteOptions contains the optional parameters for the libraryClient.BeginDelete method.
-func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (*runtime.Poller[libraryClientDeleteResponse], error) {
+func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string, options *libraryClientBeginDeleteOptions) (*runtime.Poller[LibraryClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, libraryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[libraryClientDeleteResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LibraryClientDeleteResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[libraryClientDeleteResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LibraryClientDeleteResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -191,15 +191,15 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 // Generated from API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientBeginFlushOptions contains the optional parameters for the libraryClient.BeginFlush method.
-func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (*runtime.Poller[libraryClientFlushResponse], error) {
+func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string, options *libraryClientBeginFlushOptions) (*runtime.Poller[LibraryClientFlushResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.flush(ctx, libraryName, options)
 		if err != nil {
 			return nil, err
 		}
-		return runtime.NewPoller[libraryClientFlushResponse](resp, client.pl, nil)
+		return runtime.NewPoller[LibraryClientFlushResponse](resp, client.pl, nil)
 	} else {
-		return runtime.NewPollerFromResumeToken[libraryClientFlushResponse](options.ResumeToken, client.pl, nil)
+		return runtime.NewPollerFromResumeToken[LibraryClientFlushResponse](options.ResumeToken, client.pl, nil)
 	}
 }
 
@@ -244,17 +244,17 @@ func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName
 // Generated from API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // options - libraryClientGetOptions contains the optional parameters for the libraryClient.Get method.
-func (client *libraryClient) Get(ctx context.Context, libraryName string, options *libraryClientGetOptions) (libraryClientGetResponse, error) {
+func (client *libraryClient) Get(ctx context.Context, libraryName string, options *libraryClientGetOptions) (LibraryClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, libraryName, options)
 	if err != nil {
-		return libraryClientGetResponse{}, err
+		return LibraryClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return libraryClientGetResponse{}, err
+		return LibraryClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return libraryClientGetResponse{}, runtime.NewResponseError(resp)
+		return LibraryClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -278,10 +278,10 @@ func (client *libraryClient) getCreateRequest(ctx context.Context, libraryName s
 }
 
 // getHandleResponse handles the Get response.
-func (client *libraryClient) getHandleResponse(resp *http.Response) (libraryClientGetResponse, error) {
-	result := libraryClientGetResponse{}
+func (client *libraryClient) getHandleResponse(resp *http.Response) (LibraryClientGetResponse, error) {
+	result := LibraryClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryResource); err != nil {
-		return libraryClientGetResponse{}, err
+		return LibraryClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -292,17 +292,17 @@ func (client *libraryClient) getHandleResponse(resp *http.Response) (libraryClie
 // operationID - operation id for which status is requested
 // options - libraryClientGetOperationResultOptions contains the optional parameters for the libraryClient.GetOperationResult
 // method.
-func (client *libraryClient) GetOperationResult(ctx context.Context, operationID string, options *libraryClientGetOperationResultOptions) (libraryClientGetOperationResultResponse, error) {
+func (client *libraryClient) GetOperationResult(ctx context.Context, operationID string, options *libraryClientGetOperationResultOptions) (LibraryClientGetOperationResultResponse, error) {
 	req, err := client.getOperationResultCreateRequest(ctx, operationID, options)
 	if err != nil {
-		return libraryClientGetOperationResultResponse{}, err
+		return LibraryClientGetOperationResultResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return libraryClientGetOperationResultResponse{}, err
+		return LibraryClientGetOperationResultResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return libraryClientGetOperationResultResponse{}, runtime.NewResponseError(resp)
+		return LibraryClientGetOperationResultResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getOperationResultHandleResponse(resp)
 }
@@ -326,23 +326,23 @@ func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context
 }
 
 // getOperationResultHandleResponse handles the GetOperationResult response.
-func (client *libraryClient) getOperationResultHandleResponse(resp *http.Response) (libraryClientGetOperationResultResponse, error) {
-	result := libraryClientGetOperationResultResponse{}
+func (client *libraryClient) getOperationResultHandleResponse(resp *http.Response) (LibraryClientGetOperationResultResponse, error) {
+	result := LibraryClientGetOperationResultResponse{}
 	switch resp.StatusCode {
 	case http.StatusOK:
 		var val LibraryResource
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return libraryClientGetOperationResultResponse{}, err
+			return LibraryClientGetOperationResultResponse{}, err
 		}
 		result.Value = val
 	case http.StatusAccepted:
 		var val OperationResult
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return libraryClientGetOperationResultResponse{}, err
+			return LibraryClientGetOperationResultResponse{}, err
 		}
 		result.Value = val
 	default:
-		return libraryClientGetOperationResultResponse{}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)
+		return LibraryClientGetOperationResultResponse{}, fmt.Errorf("unhandled HTTP status code %d", resp.StatusCode)
 	}
 	return result, nil
 }
@@ -351,12 +351,12 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - libraryClientListOptions contains the optional parameters for the libraryClient.List method.
-func (client *libraryClient) NewListPager(options *libraryClientListOptions) *runtime.Pager[libraryClientListResponse] {
-	return runtime.NewPager(runtime.PagingHandler[libraryClientListResponse]{
-		More: func(page libraryClientListResponse) bool {
+func (client *libraryClient) NewListPager(options *libraryClientListOptions) *runtime.Pager[LibraryClientListResponse] {
+	return runtime.NewPager(runtime.PagingHandler[LibraryClientListResponse]{
+		More: func(page LibraryClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *libraryClientListResponse) (libraryClientListResponse, error) {
+		Fetcher: func(ctx context.Context, page *LibraryClientListResponse) (LibraryClientListResponse, error) {
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -365,14 +365,14 @@ func (client *libraryClient) NewListPager(options *libraryClientListOptions) *ru
 				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
 			}
 			if err != nil {
-				return libraryClientListResponse{}, err
+				return LibraryClientListResponse{}, err
 			}
 			resp, err := client.pl.Do(req)
 			if err != nil {
-				return libraryClientListResponse{}, err
+				return LibraryClientListResponse{}, err
 			}
 			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return libraryClientListResponse{}, runtime.NewResponseError(resp)
+				return LibraryClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -394,10 +394,10 @@ func (client *libraryClient) listCreateRequest(ctx context.Context, options *lib
 }
 
 // listHandleResponse handles the List response.
-func (client *libraryClient) listHandleResponse(resp *http.Response) (libraryClientListResponse, error) {
-	result := libraryClientListResponse{}
+func (client *libraryClient) listHandleResponse(resp *http.Response) (LibraryClientListResponse, error) {
+	result := LibraryClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LibraryListResponse); err != nil {
-		return libraryClientListResponse{}, err
+		return LibraryClientListResponse{}, err
 	}
 	return result, nil
 }

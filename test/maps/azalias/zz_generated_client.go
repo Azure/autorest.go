@@ -69,17 +69,17 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0
 // options - clientCreateOptions contains the optional parameters for the client.Create method.
-func (client *client) Create(ctx context.Context, options *clientCreateOptions) (clientCreateResponse, error) {
+func (client *client) Create(ctx context.Context, options *clientCreateOptions) (ClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
-		return clientCreateResponse{}, err
+		return ClientCreateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientCreateResponse{}, err
+		return ClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientCreateResponse{}, runtime.NewResponseError(resp)
+		return ClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -115,13 +115,13 @@ func (client *client) createCreateRequest(ctx context.Context, options *clientCr
 }
 
 // createHandleResponse handles the Create response.
-func (client *client) createHandleResponse(resp *http.Response) (clientCreateResponse, error) {
-	result := clientCreateResponse{}
+func (client *client) createHandleResponse(resp *http.Response) (ClientCreateResponse, error) {
+	result := ClientCreateResponse{}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {
-		return clientCreateResponse{}, err
+		return ClientCreateResponse{}, err
 	}
 	return result, nil
 }
@@ -130,17 +130,17 @@ func (client *client) createHandleResponse(resp *http.Response) (clientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0
 // options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
-func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (clientGetScriptResponse, error) {
+func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (ClientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
-		return clientGetScriptResponse{}, err
+		return ClientGetScriptResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientGetScriptResponse{}, err
+		return ClientGetScriptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetScriptResponse{}, runtime.NewResponseError(resp)
+		return ClientGetScriptResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getScriptHandleResponse(resp)
 }
@@ -157,11 +157,11 @@ func (client *client) getScriptCreateRequest(ctx context.Context, props GeoJSONO
 }
 
 // getScriptHandleResponse handles the GetScript response.
-func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScriptResponse, error) {
-	result := clientGetScriptResponse{}
+func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScriptResponse, error) {
+	result := ClientGetScriptResponse{}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return clientGetScriptResponse{}, err
+		return ClientGetScriptResponse{}, err
 	}
 	txt := string(body)
 	result.Value = &txt
@@ -189,12 +189,12 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0
 // options - clientListOptions contains the optional parameters for the client.List method.
-func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[clientListResponse] {
-	return runtime.NewPager(runtime.PagingHandler[clientListResponse]{
-		More: func(page clientListResponse) bool {
+func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[ClientListResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
+		More: func(page ClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
-		Fetcher: func(ctx context.Context, page *clientListResponse) (clientListResponse, error) {
+		Fetcher: func(ctx context.Context, page *ClientListResponse) (ClientListResponse, error) {
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -203,14 +203,14 @@ func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[cl
 				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextLink)
 			}
 			if err != nil {
-				return clientListResponse{}, err
+				return ClientListResponse{}, err
 			}
 			resp, err := client.pl.Do(req)
 			if err != nil {
-				return clientListResponse{}, err
+				return ClientListResponse{}, err
 			}
 			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return clientListResponse{}, runtime.NewResponseError(resp)
+				return ClientListResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listHandleResponse(resp)
 		},
@@ -237,10 +237,10 @@ func (client *client) listCreateRequest(ctx context.Context, options *clientList
 }
 
 // listHandleResponse handles the List response.
-func (client *client) listHandleResponse(resp *http.Response) (clientListResponse, error) {
-	result := clientListResponse{}
+func (client *client) listHandleResponse(resp *http.Response) (ClientListResponse, error) {
+	result := ClientListResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
-		return clientListResponse{}, err
+		return ClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -249,17 +249,17 @@ func (client *client) listHandleResponse(resp *http.Response) (clientListRespons
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0
 // options - clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
-func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (clientPolicyAssignmentResponse, error) {
+func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {
-		return clientPolicyAssignmentResponse{}, err
+		return ClientPolicyAssignmentResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return clientPolicyAssignmentResponse{}, err
+		return ClientPolicyAssignmentResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientPolicyAssignmentResponse{}, runtime.NewResponseError(resp)
+		return ClientPolicyAssignmentResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.policyAssignmentHandleResponse(resp)
 }
@@ -276,10 +276,10 @@ func (client *client) policyAssignmentCreateRequest(ctx context.Context, props S
 }
 
 // policyAssignmentHandleResponse handles the PolicyAssignment response.
-func (client *client) policyAssignmentHandleResponse(resp *http.Response) (clientPolicyAssignmentResponse, error) {
-	result := clientPolicyAssignmentResponse{}
+func (client *client) policyAssignmentHandleResponse(resp *http.Response) (ClientPolicyAssignmentResponse, error) {
+	result := ClientPolicyAssignmentResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PolicyAssignmentProperties); err != nil {
-		return clientPolicyAssignmentResponse{}, err
+		return ClientPolicyAssignmentResponse{}, err
 	}
 	return result, nil
 }

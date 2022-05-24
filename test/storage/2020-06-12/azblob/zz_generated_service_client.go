@@ -45,17 +45,17 @@ func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serv
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - serviceClientFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
-func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *serviceClientFilterBlobsOptions) (serviceClientFilterBlobsResponse, error) {
+func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *serviceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
-		return serviceClientFilterBlobsResponse{}, err
+		return ServiceClientFilterBlobsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientFilterBlobsResponse{}, err
+		return ServiceClientFilterBlobsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return serviceClientFilterBlobsResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientFilterBlobsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.filterBlobsHandleResponse(resp)
 }
@@ -90,8 +90,8 @@ func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, comp 
 }
 
 // filterBlobsHandleResponse handles the FilterBlobs response.
-func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (serviceClientFilterBlobsResponse, error) {
-	result := serviceClientFilterBlobsResponse{}
+func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (ServiceClientFilterBlobsResponse, error) {
+	result := ServiceClientFilterBlobsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -104,12 +104,12 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (ser
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return serviceClientFilterBlobsResponse{}, err
+			return ServiceClientFilterBlobsResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.FilterBlobSegment); err != nil {
-		return serviceClientFilterBlobsResponse{}, err
+		return ServiceClientFilterBlobsResponse{}, err
 	}
 	return result, nil
 }
@@ -118,17 +118,17 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (ser
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - serviceClientGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
-func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *serviceClientGetAccountInfoOptions) (serviceClientGetAccountInfoResponse, error) {
+func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *serviceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
-		return serviceClientGetAccountInfoResponse{}, err
+		return ServiceClientGetAccountInfoResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientGetAccountInfoResponse{}, err
+		return ServiceClientGetAccountInfoResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return serviceClientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccountInfoHandleResponse(resp)
 }
@@ -149,8 +149,8 @@ func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, re
 }
 
 // getAccountInfoHandleResponse handles the GetAccountInfo response.
-func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (serviceClientGetAccountInfoResponse, error) {
-	result := serviceClientGetAccountInfoResponse{}
+func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (ServiceClientGetAccountInfoResponse, error) {
+	result := ServiceClientGetAccountInfoResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -163,7 +163,7 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return serviceClientGetAccountInfoResponse{}, err
+			return ServiceClientGetAccountInfoResponse{}, err
 		}
 		result.Date = &date
 	}
@@ -176,7 +176,7 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("x-ms-is-hns-enabled"); val != "" {
 		isHierarchicalNamespaceEnabled, err := strconv.ParseBool(val)
 		if err != nil {
-			return serviceClientGetAccountInfoResponse{}, err
+			return ServiceClientGetAccountInfoResponse{}, err
 		}
 		result.IsHierarchicalNamespaceEnabled = &isHierarchicalNamespaceEnabled
 	}
@@ -188,17 +188,17 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - serviceClientGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
-func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *serviceClientGetPropertiesOptions) (serviceClientGetPropertiesResponse, error) {
+func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *serviceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
-		return serviceClientGetPropertiesResponse{}, err
+		return ServiceClientGetPropertiesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientGetPropertiesResponse{}, err
+		return ServiceClientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return serviceClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
@@ -225,8 +225,8 @@ func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, res
 }
 
 // getPropertiesHandleResponse handles the GetProperties response.
-func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (serviceClientGetPropertiesResponse, error) {
-	result := serviceClientGetPropertiesResponse{}
+func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (ServiceClientGetPropertiesResponse, error) {
+	result := ServiceClientGetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -237,7 +237,7 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (s
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.StorageServiceProperties); err != nil {
-		return serviceClientGetPropertiesResponse{}, err
+		return ServiceClientGetPropertiesResponse{}, err
 	}
 	return result, nil
 }
@@ -247,17 +247,17 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (s
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - serviceClientGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
-func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *serviceClientGetStatisticsOptions) (serviceClientGetStatisticsResponse, error) {
+func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *serviceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
-		return serviceClientGetStatisticsResponse{}, err
+		return ServiceClientGetStatisticsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientGetStatisticsResponse{}, err
+		return ServiceClientGetStatisticsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return serviceClientGetStatisticsResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStatisticsHandleResponse(resp)
 }
@@ -284,8 +284,8 @@ func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, res
 }
 
 // getStatisticsHandleResponse handles the GetStatistics response.
-func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (serviceClientGetStatisticsResponse, error) {
-	result := serviceClientGetStatisticsResponse{}
+func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (ServiceClientGetStatisticsResponse, error) {
+	result := ServiceClientGetStatisticsResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -298,12 +298,12 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (s
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return serviceClientGetStatisticsResponse{}, err
+			return ServiceClientGetStatisticsResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.StorageServiceStats); err != nil {
-		return serviceClientGetStatisticsResponse{}, err
+		return ServiceClientGetStatisticsResponse{}, err
 	}
 	return result, nil
 }
@@ -314,17 +314,17 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (s
 // Generated from API version 2020-06-12
 // options - serviceClientGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey
 // method.
-func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *serviceClientGetUserDelegationKeyOptions) (serviceClientGetUserDelegationKeyResponse, error) {
+func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *serviceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
-		return serviceClientGetUserDelegationKeyResponse{}, err
+		return ServiceClientGetUserDelegationKeyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientGetUserDelegationKeyResponse{}, err
+		return ServiceClientGetUserDelegationKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return serviceClientGetUserDelegationKeyResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientGetUserDelegationKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getUserDelegationKeyHandleResponse(resp)
 }
@@ -351,8 +351,8 @@ func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Conte
 }
 
 // getUserDelegationKeyHandleResponse handles the GetUserDelegationKey response.
-func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Response) (serviceClientGetUserDelegationKeyResponse, error) {
-	result := serviceClientGetUserDelegationKeyResponse{}
+func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Response) (ServiceClientGetUserDelegationKeyResponse, error) {
+	result := ServiceClientGetUserDelegationKeyResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -365,12 +365,12 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return serviceClientGetUserDelegationKeyResponse{}, err
+			return ServiceClientGetUserDelegationKeyResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.UserDelegationKey); err != nil {
-		return serviceClientGetUserDelegationKeyResponse{}, err
+		return ServiceClientGetUserDelegationKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -381,12 +381,12 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 // Generated from API version 2020-06-12
 // options - serviceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
 // method.
-func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *serviceClientListContainersSegmentOptions) *runtime.Pager[serviceClientListContainersSegmentResponse] {
-	return runtime.NewPager(runtime.PagingHandler[serviceClientListContainersSegmentResponse]{
-		More: func(page serviceClientListContainersSegmentResponse) bool {
+func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *serviceClientListContainersSegmentOptions) *runtime.Pager[ServiceClientListContainersSegmentResponse] {
+	return runtime.NewPager(runtime.PagingHandler[ServiceClientListContainersSegmentResponse]{
+		More: func(page ServiceClientListContainersSegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
 		},
-		Fetcher: func(ctx context.Context, page *serviceClientListContainersSegmentResponse) (serviceClientListContainersSegmentResponse, error) {
+		Fetcher: func(ctx context.Context, page *ServiceClientListContainersSegmentResponse) (ServiceClientListContainersSegmentResponse, error) {
 			var req *policy.Request
 			var err error
 			if page == nil {
@@ -395,14 +395,14 @@ func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *
 				req, err = runtime.NewRequest(ctx, http.MethodGet, *page.NextMarker)
 			}
 			if err != nil {
-				return serviceClientListContainersSegmentResponse{}, err
+				return ServiceClientListContainersSegmentResponse{}, err
 			}
 			resp, err := client.pl.Do(req)
 			if err != nil {
-				return serviceClientListContainersSegmentResponse{}, err
+				return ServiceClientListContainersSegmentResponse{}, err
 			}
 			if !runtime.HasStatusCode(resp, http.StatusOK) {
-				return serviceClientListContainersSegmentResponse{}, runtime.NewResponseError(resp)
+				return ServiceClientListContainersSegmentResponse{}, runtime.NewResponseError(resp)
 			}
 			return client.listContainersSegmentHandleResponse(resp)
 		},
@@ -442,8 +442,8 @@ func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Cont
 }
 
 // listContainersSegmentHandleResponse handles the ListContainersSegment response.
-func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Response) (serviceClientListContainersSegmentResponse, error) {
-	result := serviceClientListContainersSegmentResponse{}
+func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Response) (ServiceClientListContainersSegmentResponse, error) {
+	result := ServiceClientListContainersSegmentResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -454,7 +454,7 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Resp
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListContainersSegmentResponse); err != nil {
-		return serviceClientListContainersSegmentResponse{}, err
+		return ServiceClientListContainersSegmentResponse{}, err
 	}
 	return result, nil
 }
@@ -465,17 +465,17 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Resp
 // Generated from API version 2020-06-12
 // storageServiceProperties - The StorageService properties.
 // options - serviceClientSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
-func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *serviceClientSetPropertiesOptions) (serviceClientSetPropertiesResponse, error) {
+func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *serviceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
-		return serviceClientSetPropertiesResponse{}, err
+		return ServiceClientSetPropertiesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientSetPropertiesResponse{}, err
+		return ServiceClientSetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return serviceClientSetPropertiesResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientSetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setPropertiesHandleResponse(resp)
 }
@@ -502,8 +502,8 @@ func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, res
 }
 
 // setPropertiesHandleResponse handles the SetProperties response.
-func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (serviceClientSetPropertiesResponse, error) {
-	result := serviceClientSetPropertiesResponse{}
+func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (ServiceClientSetPropertiesResponse, error) {
+	result := ServiceClientSetPropertiesResponse{}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -524,17 +524,17 @@ func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (s
 // value: multipart/mixed; boundary=batch_
 // body - Initial data
 // options - serviceClientSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
-func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *serviceClientSubmitBatchOptions) (serviceClientSubmitBatchResponse, error) {
+func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *serviceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {
-		return serviceClientSubmitBatchResponse{}, err
+		return ServiceClientSubmitBatchResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return serviceClientSubmitBatchResponse{}, err
+		return ServiceClientSubmitBatchResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return serviceClientSubmitBatchResponse{}, runtime.NewResponseError(resp)
+		return ServiceClientSubmitBatchResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.submitBatchHandleResponse(resp)
 }
@@ -563,8 +563,8 @@ func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp 
 }
 
 // submitBatchHandleResponse handles the SubmitBatch response.
-func (client *serviceClient) submitBatchHandleResponse(resp *http.Response) (serviceClientSubmitBatchResponse, error) {
-	result := serviceClientSubmitBatchResponse{Body: resp.Body}
+func (client *serviceClient) submitBatchHandleResponse(resp *http.Response) (ServiceClientSubmitBatchResponse, error) {
+	result := ServiceClientSubmitBatchResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}

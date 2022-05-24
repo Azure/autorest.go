@@ -35,17 +35,17 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - workspaceClientGetOptions contains the optional parameters for the workspaceClient.Get method.
-func (client *workspaceClient) Get(ctx context.Context, options *workspaceClientGetOptions) (workspaceClientGetResponse, error) {
+func (client *workspaceClient) Get(ctx context.Context, options *workspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return workspaceClientGetResponse{}, err
+		return WorkspaceClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return workspaceClientGetResponse{}, err
+		return WorkspaceClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return workspaceClientGetResponse{}, runtime.NewResponseError(resp)
+		return WorkspaceClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -65,10 +65,10 @@ func (client *workspaceClient) getCreateRequest(ctx context.Context, options *wo
 }
 
 // getHandleResponse handles the Get response.
-func (client *workspaceClient) getHandleResponse(resp *http.Response) (workspaceClientGetResponse, error) {
-	result := workspaceClientGetResponse{}
+func (client *workspaceClient) getHandleResponse(resp *http.Response) (WorkspaceClientGetResponse, error) {
+	result := WorkspaceClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
-		return workspaceClientGetResponse{}, err
+		return WorkspaceClientGetResponse{}, err
 	}
 	return result, nil
 }
