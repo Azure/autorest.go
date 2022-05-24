@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { serialize } from '@azure-tools/codegen';
-import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
+import { AutorestExtensionHost, startSession } from '@autorest/extension-base';
 import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
@@ -16,16 +16,6 @@ import { generatePolymorphicHelpers } from './polymorphics';
 import { generateGoModFile } from './gomod';
 import { generateXMLAdditionalPropsHelpers } from './xmlAdditionalProps';
 
-async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
-  const version = await session.getValue('module-version', '');
-  if (version === '') {
-    throw new Error('--module-version is a required parameter');
-  } else if (!version.match(/^\d+\.\d+\.\d+$/) && !version.match(/^\d+\.\d+\.\d+-beta\.\d+$/)) {
-    throw new Error(`module version ${version} must in the format major.minor.patch[-beta.N]`);
-  }
-  return version;
-}
-
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: AutorestExtensionHost) {
   const debug = await host.getValue('debug') || false;
@@ -33,7 +23,6 @@ export async function protocolGen(host: AutorestExtensionHost) {
   try {
     // get the code model from the core
     const session = await startSession<CodeModel>(host, codeModelSchema);
-    const version = await getModuleVersion(session);
 
     const operations = await generateOperations(session);
     let filePrefix = await session.getValue('file-prefix', '');
@@ -65,7 +54,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       });
     }
 
-    const constants = await generateConstants(session, version);
+    const constants = await generateConstants(session);
     host.writeFile({
       filename: `${filePrefix}constants.go`,
       content: constants,
