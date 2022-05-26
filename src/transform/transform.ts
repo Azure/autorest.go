@@ -670,7 +670,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
         resultTypes.push(response.schema.language.go!.name);
       }
     }
-    const resultProp = newRespProperty('Value', `// Possible types are ${resultTypes.join(', ')}\n`, newAny('multi-response value'), true);
+    const resultProp = newRespProperty('Value', `Possible types are ${resultTypes.join(', ')}\n`, newAny('multi-response value'), true);
     respEnv.properties.push(resultProp);
     respEnv.language.go!.resultProp = resultProp;
     return;
