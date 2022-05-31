@@ -18,7 +18,7 @@ export const datetimeRFC1123Format = 'time.RFC1123';
 export async function contentPreamble(session: Session<CodeModel>): Promise<string> {
   const headerText = comment(await session.getValue('header-text', 'MISSING LICENSE HEADER'), '// ');
   let text = `//go:build go1.18\n`;
-  text += `// +build go1.18\n\n${headerText}\n\n`;
+  text += `// +build go1.18\n\n${headerText}\n// DO NOT EDIT.\n\n`;
   text += `package ${session.model.language.go!.packageName}\n\n`;
   return text;
 }
