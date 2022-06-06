@@ -101,7 +101,10 @@ export async function protocolGen(host: AutorestExtensionHost) {
         artifactType: 'source-file-go'
       });
     }
-    const gomod = await generateGoModFile(session);
+
+    // don't overwrite an existing go.mod file, update it if required
+    const existingGoMod = await host.readFile('go.mod');
+    const gomod = await generateGoModFile(session, existingGoMod);
     if (gomod.length > 0) {
       host.writeFile({
         filename: 'go.mod',
@@ -109,6 +112,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
         artifactType: 'source-file-go'
       });
     }
+
     const xmlAddlProps = await generateXMLAdditionalPropsHelpers(session);
     if (xmlAddlProps.length > 0) {
       host.writeFile({
