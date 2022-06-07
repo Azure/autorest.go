@@ -7,7 +7,7 @@ import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -86,8 +86,17 @@ async function process(session: Session<CodeModel>) {
       const descriptionMods = new Array<string>();
       if (prop.readOnly) {
         descriptionMods.push('READ-ONLY');
-      } else if (prop.required) {
+      } else if (prop.required && (prop.schema.type !== SchemaType.Constant || isOutputOnly(obj))) {
         descriptionMods.push('REQUIRED');
+      } else if (prop.required && prop.schema.type === SchemaType.Constant) {
+        descriptionMods.push('CONSTANT');
+      }
+      if (prop.required && prop.schema.type === SchemaType.Constant && !isOutputOnly(obj)) {
+        // add a comment with the const value for const properties that are sent over the wire
+        if (prop.language.go!.description) {
+          prop.language.go!.description += '<br/>';
+        }
+        prop.language.go!.description += `Field has constant value ${formatConstantValue(<ConstantSchema>prop.schema)}, any specified value is ignored.`;
       }
       if (prop.language.go!.description) {
         descriptionMods.push(parseComments(prop.language.go!.description));

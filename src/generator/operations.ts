@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
 import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
@@ -1215,17 +1215,6 @@ function getMediaType(protocol: Protocols): 'JSON' | 'XML' | 'binary' | 'text' |
     default:
       return 'none';
   }
-}
-
-function formatConstantValue(schema: ConstantSchema) {
-  // null check must come before any type checks
-  if (schema.value.value === null) {
-    return 'nil';
-  }
-  if (schema.valueType.type === SchemaType.String) {
-    return `"${schema.value.value}"`;
-  }
-  return schema.value.value;
 }
 
 // returns true if any responses are a binary stream

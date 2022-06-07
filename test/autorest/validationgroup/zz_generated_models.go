@@ -35,7 +35,8 @@ type AutoRestValidationTestClientValidationOfMethodParametersOptions struct {
 
 // ChildProduct - The product documentation.
 type ChildProduct struct {
-	// REQUIRED; Constant string
+	// CONSTANT; Constant string
+	// Field has constant value "constant", any specified value is ignored.
 	ConstProperty *string `json:"constProperty,omitempty"`
 
 	// Count
@@ -44,10 +45,12 @@ type ChildProduct struct {
 
 // ConstantProduct - The product documentation.
 type ConstantProduct struct {
-	// REQUIRED; Constant string
+	// CONSTANT; Constant string
+	// Field has constant value "constant", any specified value is ignored.
 	ConstProperty *string `json:"constProperty,omitempty"`
 
-	// REQUIRED; Constant string2
+	// CONSTANT; Constant string2
+	// Field has constant value "constant2", any specified value is ignored.
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
@@ -65,10 +68,12 @@ type Product struct {
 	// REQUIRED; The product documentation.
 	ConstChild *ConstantProduct `json:"constChild,omitempty"`
 
-	// REQUIRED; Constant int
+	// CONSTANT; Constant int
+	// Field has constant value 0, any specified value is ignored.
 	ConstInt *int32 `json:"constInt,omitempty"`
 
-	// REQUIRED; Constant string
+	// CONSTANT; Constant string
+	// Field has constant value "constant", any specified value is ignored.
 	ConstString *string `json:"constString,omitempty"`
 
 	// Non required int betwen 0 and 100 exclusive.
