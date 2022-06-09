@@ -52,6 +52,8 @@ namespace AutoRest.Go
 
         public IReadOnlyDictionary<HttpStatusCode, string> StatusCodeToGoString;
 
+        private List<string> ExtraReservedWords = new List<string>();
+
         // CommonInitialisms are those "words" within a name that Golint expects to be uppercase.
         // See https://github.com/golang/lint/blob/master/lint.go for detail.
         private HashSet<string> _commonInitialisms = new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
@@ -245,6 +247,9 @@ namespace AutoRest.Go
                     "Send"
 
                 });
+
+            // we add these two words to the extra reserved word list because we already have methods with the same name, therefore we no longer could have types/methods with the same name
+            ExtraReservedWords.AddRange(new[] { "Version", "UserAgent" });
         }
 
         /// <summary>
@@ -365,7 +370,7 @@ namespace AutoRest.Go
         public override string GetTypeName(string name) =>
             string.IsNullOrWhiteSpace(name) ?
             name :
-            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type"));
+            EnsureNameCase(GetEscapedReservedName(RemoveInvalidCharacters(PascalCase(name)), "Type", true));
 
         /// <summary>
         /// Formats a string for naming a local variable using Camel case by default.
@@ -476,6 +481,11 @@ namespace AutoRest.Go
         /// <returns>The transformed reserved name</returns>
         protected override string GetEscapedReservedName(string name, string appendValue)
         {
+            return GetEscapedReservedName(name, appendValue, false);
+        }
+
+        private string GetEscapedReservedName(string name, string appendValue, bool checkExtraReserved)
+        {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
@@ -488,6 +498,12 @@ namespace AutoRest.Go
 
             // Use case-sensitive comparisons to reduce generated names
             if (ReservedWords.Contains(name, StringComparer.Ordinal))
+            {
+                name += appendValue;
+            }
+
+            // If checkExtraReserved is true, we also includes some more words to escape
+            if (checkExtraReserved && ExtraReservedWords.Contains(name, StringComparer.Ordinal))
             {
                 name += appendValue;
             }
