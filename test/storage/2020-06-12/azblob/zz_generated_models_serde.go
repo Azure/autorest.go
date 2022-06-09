@@ -10,8 +10,12 @@
 package azblob
 
 import (
+	"encoding/json"
 	"encoding/xml"
+	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
+	"reflect"
 	"time"
 )
 
@@ -152,6 +156,64 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	c.DeletedTime = (*time.Time)(aux.DeletedTime)
 	c.LastModified = (*time.Time)(aux.LastModified)
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataLakeStorageError.
+func (d DataLakeStorageError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "error", d.DataLakeStorageErrorDetails)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeStorageError.
+func (d *DataLakeStorageError) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "error":
+			err = unpopulate(val, "DataLakeStorageErrorDetails", &d.DataLakeStorageErrorDetails)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type DataLakeStorageErrorError.
+func (d DataLakeStorageErrorError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "Code", d.Code)
+	populate(objectMap, "Message", d.Message)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type DataLakeStorageErrorError.
+func (d *DataLakeStorageErrorError) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", d, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "Code":
+			err = unpopulate(val, "Code", &d.Code)
+			delete(rawMsg, key)
+		case "Message":
+			err = unpopulate(val, "Message", &d.Message)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", d, err)
+		}
+	}
 	return nil
 }
 
@@ -363,6 +425,33 @@ func (q QueryRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(aux, start)
 }
 
+// MarshalJSON implements the json.Marshaller interface for type StorageError.
+func (s StorageError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "Message", s.Message)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type StorageError.
+func (s *StorageError) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", s, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "Message":
+			err = unpopulate(val, "Message", &s.Message)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", s, err)
+		}
+	}
+	return nil
+}
+
 // MarshalXML implements the xml.Marshaller interface for type StorageServiceProperties.
 func (s StorageServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type alias StorageServiceProperties
@@ -424,5 +513,25 @@ func (u *UserDelegationKey) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	}
 	u.SignedExpiry = (*time.Time)(aux.SignedExpiry)
 	u.SignedStart = (*time.Time)(aux.SignedStart)
+	return nil
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
+}
+
+func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+	if data == nil {
+		return nil
+	}
+	if err := json.Unmarshal(data, v); err != nil {
+		return fmt.Errorf("struct field %s: %v", fn, err)
+	}
 	return nil
 }

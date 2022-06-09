@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
 import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, isOutputOnly, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
+import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
@@ -58,10 +58,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
       }
       serdeTextBody += method.text;
     }
-    if (struct.HasJSONMarshaller) {
+    if (struct.SerDeMethods.length > 0) {
       needsJSONPopulate = true;
-    }
-    if (struct.HasJSONUnmarshaller) {
       needsJSONUnpopulate = true;
     }
     if (struct.HasJSONByteArray) {
@@ -147,94 +145,16 @@ function generateStructs(modelImports: ImportManager, serdeImports: ImportManage
         generateDiscriminatorMarkerMethod(parent, structDef);
       }
     }
-    const needs = determineMarshallers(obj);
-    if (needs.M) {
-      serdeImports.add('reflect');
-      serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-      structDef.HasJSONMarshaller = true;
-      if (obj.language.go!.byteArrayFormat) {
-        structDef.HasJSONByteArray = true;
-      }
-      generateJSONMarshaller(serdeImports, obj, structDef);
+    serdeImports.add('reflect');
+    serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+    if (obj.language.go!.byteArrayFormat) {
+      structDef.HasJSONByteArray = true;
     }
-    if (needs.U) {
-      structDef.HasJSONUnmarshaller = true;
-      generateJSONUnmarshaller(serdeImports, structDef);
-    }
+    generateJSONMarshaller(serdeImports, obj, structDef);
+    generateJSONUnmarshaller(serdeImports, structDef);
     structTypes.push(structDef);
   }
   return structTypes;
-}
-
-interface Marshallers {
-  M: boolean
-  U: boolean
-}
-
-function mergeMarshallers(lhs: Marshallers, rhs: Marshallers): Marshallers {
-  return {
-    M: lhs.M || rhs.M,
-    U: lhs.U || rhs.U
-  }
-}
-
-// determines the marshallers needed for the specified object.
-// it examines the object and all its parents.
-function determineMarshallers(obj: ObjectSchema): Marshallers {
-  let result = determineMarshallersForObj(obj);
-  for (const parent of values(obj.parents?.all)) {
-    if (isObjectSchema(parent)) {
-      result = mergeMarshallers(result, determineMarshallersForObj(parent))
-    }
-  }
-  return result;
-}
-
-// determines the marshallers needed for this specific object.
-// it does not look at the object graph or consider inheritance.
-function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
-  // things that require custom marshalling and/or unmarshalling:
-  //   needsDateTimeMarshalling M, U
-  //   needsDateMarshalling     M, U
-  //   needsUnixTimeMarshalling M, U
-  //   hasAdditionalProperties  M, U
-  //   hasPolymorphicField      M, U
-  //   discriminatorValue       M, U
-  //   byteArrayFormat          M, U
-  //   hasArrayMap              M
-  //   needsPatchMarshaller     M
-
-  let needsM = false, needsU = false;
-  if (obj.language.go!.needsDateTimeMarshalling ||
-    obj.language.go!.needsDateMarshalling ||
-    obj.language.go!.needsUnixTimeMarshalling ||
-    hasAdditionalProperties(obj) ||
-    hasPolymorphicField(obj) ||
-    obj.discriminatorValue ||
-    obj.language.go!.byteArrayFormat) {
-    needsM = needsU = true;
-  } else if (obj.language.go!.hasArrayMap ||
-    obj.language.go!.needsPatchMarshaller ||
-    hasConstantProperty(obj)) {
-    needsM = true;
-  }
-  if (isOutputOnly(obj)) {
-    // output-only types don't need a custom marshaller
-    needsM = false;
-  }
-  return {
-    M: needsM,
-    U: needsU,
-  }
-}
-
-function hasConstantProperty(obj: ObjectSchema): boolean {
-  for (const prop of values(obj.properties)) {
-    if (prop.required && prop.schema.type === SchemaType.Constant) {
-      return true;
-    }
-  }
-  return false;
 }
 
 function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {

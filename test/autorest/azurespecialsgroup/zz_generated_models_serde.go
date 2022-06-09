@@ -7,7 +7,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 // DO NOT EDIT.
 
-package stringgroup
+package azurespecialsgroup
 
 import (
 	"encoding/json"
@@ -19,6 +19,7 @@ import (
 // MarshalJSON implements the json.Marshaller interface for type Error.
 func (e Error) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	objectMap["constantId"] = 1
 	populate(objectMap, "message", e.Message)
 	populate(objectMap, "status", e.Status)
 	return json.Marshal(objectMap)
@@ -33,6 +34,9 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "constantId":
+			err = unpopulate(val, "ConstantID", &e.ConstantID)
+			delete(rawMsg, key)
 		case "message":
 			err = unpopulate(val, "Message", &e.Message)
 			delete(rawMsg, key)
@@ -47,32 +51,32 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type RefColorConstant.
-func (r RefColorConstant) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ODataFilter.
+func (o ODataFilter) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["ColorConstant"] = "green-color"
-	populate(objectMap, "field1", r.Field1)
+	populate(objectMap, "id", o.ID)
+	populate(objectMap, "name", o.Name)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type RefColorConstant.
-func (r *RefColorConstant) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ODataFilter.
+func (o *ODataFilter) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %v", o, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "ColorConstant":
-			err = unpopulate(val, "ColorConstant", &r.ColorConstant)
+		case "id":
+			err = unpopulate(val, "ID", &o.ID)
 			delete(rawMsg, key)
-		case "field1":
-			err = unpopulate(val, "Field1", &r.Field1)
+		case "name":
+			err = unpopulate(val, "Name", &o.Name)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %v", o, err)
 		}
 	}
 	return nil
