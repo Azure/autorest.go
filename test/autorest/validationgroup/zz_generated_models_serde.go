@@ -15,15 +15,31 @@ import (
 	"reflect"
 )
 
+// MarshalJSON implements the json.Marshaller interface for type ChildProduct.
+func (c ChildProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	objectMap["constProperty"] = "constant"
+	populate(objectMap, "count", c.Count)
+	return json.Marshal(objectMap)
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConstantProduct.
+func (c ConstantProduct) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	objectMap["constProperty"] = "constant"
+	objectMap["constProperty2"] = "constant2"
+	return json.Marshal(objectMap)
+}
+
 // MarshalJSON implements the json.Marshaller interface for type Product.
 func (p Product) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "capacity", p.Capacity)
 	populate(objectMap, "child", p.Child)
 	populate(objectMap, "constChild", p.ConstChild)
-	populate(objectMap, "constInt", p.ConstInt)
-	populate(objectMap, "constString", p.ConstString)
-	populate(objectMap, "constStringAsEnum", p.ConstStringAsEnum)
+	objectMap["constInt"] = 0
+	objectMap["constString"] = "constant"
+	objectMap["constStringAsEnum"] = "constant_string_as_enum"
 	populate(objectMap, "display_names", p.DisplayNames)
 	populate(objectMap, "image", p.Image)
 	return json.Marshal(objectMap)

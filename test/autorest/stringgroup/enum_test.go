@@ -64,9 +64,7 @@ func TestEnumPutReferenced(t *testing.T) {
 
 func TestEnumPutReferencedConstant(t *testing.T) {
 	client := newEnumClient()
-	val := string(ColorsGreenColor)
-	result, err := client.PutReferencedConstant(context.Background(), RefColorConstant{ColorConstant: &val}, nil)
+	result, err := client.PutReferencedConstant(context.Background(), RefColorConstant{}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
-
 }

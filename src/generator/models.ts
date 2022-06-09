@@ -5,9 +5,9 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaContext, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { isArraySchema, isDictionarySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
+import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, isOutputOnly, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
@@ -214,10 +214,11 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
     obj.language.go!.byteArrayFormat) {
     needsM = needsU = true;
   } else if (obj.language.go!.hasArrayMap ||
-    obj.language.go!.needsPatchMarshaller) {
+    obj.language.go!.needsPatchMarshaller ||
+    hasConstantProperty(obj)) {
     needsM = true;
   }
-  if (!values(obj.usage).any((u) => { return u === SchemaContext.Input})) {
+  if (isOutputOnly(obj)) {
     // output-only types don't need a custom marshaller
     needsM = false;
   }
@@ -225,6 +226,15 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
     M: needsM,
     U: needsU,
   }
+}
+
+function hasConstantProperty(obj: ObjectSchema): boolean {
+  for (const prop of values(obj.properties)) {
+    if (prop.required && prop.schema.type === SchemaType.Constant) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
@@ -348,6 +358,8 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       marshaller += `\t\taux[i] = (*${prop.schema.elementType.language.go!.internalTimeType})(${source}[i])\n`;
       marshaller += '\t}\n';
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
+    } else if (prop.schema.type === SchemaType.Constant) {
+      marshaller += `\tobjectMap["${prop.serializedName}"] = ${formatConstantValue(<ConstantSchema>prop.schema)}\n`;
     } else {
       let populate = 'populate';
       let addr = '';

@@ -45,7 +45,8 @@ type Error struct {
 }
 
 type RefColorConstant struct {
-	// REQUIRED; Referenced Color Constant Description.
+	// CONSTANT; Referenced Color Constant Description.
+	// Field has constant value "green-color", any specified value is ignored.
 	ColorConstant *string `json:"ColorConstant,omitempty"`
 
 	// Sample string.

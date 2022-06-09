@@ -11,7 +11,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
@@ -30,18 +29,23 @@ func TestValidationGetWithConstantInPath(t *testing.T) {
 func TestValidationPostWithConstantInBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
 	product := Product{
-		Child: &ChildProduct{
-			ConstProperty: to.Ptr("constant")},
-		ConstString: to.Ptr("constant"),
-		ConstInt:    to.Ptr[int32](0),
-		ConstChild: &ConstantProduct{
-			ConstProperty:  to.Ptr("constant"),
-			ConstProperty2: to.Ptr("constant2")}}
+		Child:      &ChildProduct{},
+		ConstChild: &ConstantProduct{},
+	}
 	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestClientPostWithConstantInBodyOptions{Body: &product})
 	require.NoError(t, err)
-	if r := cmp.Diff(product, result.Product); r != "" {
-		t.Fatal(r)
-	}
+	require.Equal(t, Product{
+		Child: &ChildProduct{
+			ConstProperty: to.Ptr("constant"),
+		},
+		ConstChild: &ConstantProduct{
+			ConstProperty:  to.Ptr("constant"),
+			ConstProperty2: to.Ptr("constant2"),
+		},
+		ConstInt:          to.Ptr[int32](0),
+		ConstString:       to.Ptr("constant"),
+		ConstStringAsEnum: to.Ptr("constant_string_as_enum"),
+	}, result.Product)
 }
 
 func TestValidationValidationOfBody(t *testing.T) {
