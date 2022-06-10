@@ -7,7 +7,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 // DO NOT EDIT.
 
-package stringgroup
+package datetimerfc1123group
 
 import (
 	"encoding/json"
@@ -42,37 +42,6 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		}
 		if err != nil {
 			return fmt.Errorf("unmarshalling type %T: %v", e, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type RefColorConstant.
-func (r RefColorConstant) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	objectMap["ColorConstant"] = "green-color"
-	populate(objectMap, "field1", r.Field1)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type RefColorConstant.
-func (r *RefColorConstant) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "ColorConstant":
-			err = unpopulate(val, "ColorConstant", &r.ColorConstant)
-			delete(rawMsg, key)
-		case "field1":
-			err = unpopulate(val, "Field1", &r.Field1)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
 		}
 	}
 	return nil

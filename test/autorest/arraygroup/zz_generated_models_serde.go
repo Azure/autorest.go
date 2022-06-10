@@ -7,7 +7,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 // DO NOT EDIT.
 
-package stringgroup
+package arraygroup
 
 import (
 	"encoding/json"
@@ -47,32 +47,32 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type RefColorConstant.
-func (r RefColorConstant) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Product.
+func (p Product) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["ColorConstant"] = "green-color"
-	populate(objectMap, "field1", r.Field1)
+	populate(objectMap, "integer", p.Integer)
+	populate(objectMap, "string", p.String)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type RefColorConstant.
-func (r *RefColorConstant) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Product.
+func (p *Product) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "ColorConstant":
-			err = unpopulate(val, "ColorConstant", &r.ColorConstant)
+		case "integer":
+			err = unpopulate(val, "Integer", &p.Integer)
 			delete(rawMsg, key)
-		case "field1":
-			err = unpopulate(val, "Field1", &r.Field1)
+		case "string":
+			err = unpopulate(val, "String", &p.String)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil

@@ -25,8 +25,6 @@ export class StructDef {
   readonly SerDeMethods: StructMethod[];
   readonly Methods: StructMethod[];
   readonly ComposedOf: string[];
-  HasJSONMarshaller: boolean;
-  HasJSONUnmarshaller: boolean;
   HasJSONByteArray: boolean;
 
   constructor(language: Language, props?: Property[], params?: Parameter[]) {
@@ -42,8 +40,6 @@ export class StructDef {
     this.SerDeMethods = new Array<StructMethod>();
     this.Methods = new Array<StructMethod>();
     this.ComposedOf = new Array<string>();
-    this.HasJSONMarshaller = false;
-    this.HasJSONUnmarshaller = false;
     this.HasJSONByteArray = false;
   }
 

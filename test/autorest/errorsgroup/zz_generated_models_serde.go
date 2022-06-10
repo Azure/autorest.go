@@ -12,7 +12,46 @@ package errorsgroup
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"reflect"
 )
+
+// MarshalJSON implements the json.Marshaller interface for type Animal.
+func (a Animal) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aniType", a.AniType)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Animal.
+func (a *Animal) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", a, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "aniType":
+			err = unpopulate(val, "AniType", &a.AniType)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", a, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type AnimalNotFound.
+func (a AnimalNotFound) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "reason", a.Reason)
+	populate(objectMap, "someBaseProp", a.SomeBaseProp)
+	objectMap["whatNotFound"] = "AnimalNotFound"
+	return json.Marshal(objectMap)
+}
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type AnimalNotFound.
 func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
@@ -43,6 +82,43 @@ func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type BaseError.
+func (b BaseError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "someBaseProp", b.SomeBaseProp)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type BaseError.
+func (b *BaseError) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", b, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "someBaseProp":
+			err = unpopulate(val, "SomeBaseProp", &b.SomeBaseProp)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", b, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LinkNotFound.
+func (l LinkNotFound) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "reason", l.Reason)
+	populate(objectMap, "someBaseProp", l.SomeBaseProp)
+	objectMap["whatNotFound"] = "InvalidResourceLink"
+	populate(objectMap, "whatSubAddress", l.WhatSubAddress)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkNotFound.
 func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -70,6 +146,145 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type NotFoundErrorBase.
+func (n NotFoundErrorBase) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "reason", n.Reason)
+	populate(objectMap, "someBaseProp", n.SomeBaseProp)
+	objectMap["whatNotFound"] = n.WhatNotFound
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type NotFoundErrorBase.
+func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", n, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "reason":
+			err = unpopulate(val, "Reason", &n.Reason)
+			delete(rawMsg, key)
+		case "someBaseProp":
+			err = unpopulate(val, "SomeBaseProp", &n.SomeBaseProp)
+			delete(rawMsg, key)
+		case "whatNotFound":
+			err = unpopulate(val, "WhatNotFound", &n.WhatNotFound)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", n, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Pet.
+func (p Pet) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aniType", p.AniType)
+	populate(objectMap, "name", p.Name)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Pet.
+func (p *Pet) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "aniType":
+			err = unpopulate(val, "AniType", &p.AniType)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, "Name", &p.Name)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PetAction.
+func (p PetAction) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionResponse", p.ActionResponse)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetAction.
+func (p *PetAction) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "actionResponse":
+			err = unpopulate(val, "ActionResponse", &p.ActionResponse)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PetActionError.
+func (p PetActionError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionResponse", p.ActionResponse)
+	populate(objectMap, "errorMessage", p.ErrorMessage)
+	objectMap["errorType"] = p.ErrorType
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type PetActionError.
+func (p *PetActionError) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "actionResponse":
+			err = unpopulate(val, "ActionResponse", &p.ActionResponse)
+			delete(rawMsg, key)
+		case "errorMessage":
+			err = unpopulate(val, "ErrorMessage", &p.ErrorMessage)
+			delete(rawMsg, key)
+		case "errorType":
+			err = unpopulate(val, "ErrorType", &p.ErrorType)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PetHungryOrThirstyError.
+func (p PetHungryOrThirstyError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionResponse", p.ActionResponse)
+	populate(objectMap, "errorMessage", p.ErrorMessage)
+	objectMap["errorType"] = "PetHungryOrThirstyError"
+	populate(objectMap, "hungryOrThirsty", p.HungryOrThirsty)
+	populate(objectMap, "reason", p.Reason)
+	return json.Marshal(objectMap)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetHungryOrThirstyError.
@@ -104,6 +319,16 @@ func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PetSadError.
+func (p PetSadError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionResponse", p.ActionResponse)
+	populate(objectMap, "errorMessage", p.ErrorMessage)
+	objectMap["errorType"] = "PetSadError"
+	populate(objectMap, "reason", p.Reason)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetSadError.
 func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
@@ -131,6 +356,16 @@ func (p *PetSadError) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+func populate(m map[string]interface{}, k string, v interface{}) {
+	if v == nil {
+		return
+	} else if azcore.IsNullValue(v) {
+		m[k] = nil
+	} else if !reflect.ValueOf(v).IsNil() {
+		m[k] = v
+	}
 }
 
 func unpopulate(data json.RawMessage, fn string, v interface{}) error {

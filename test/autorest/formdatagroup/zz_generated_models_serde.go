@@ -7,7 +7,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 // DO NOT EDIT.
 
-package stringgroup
+package formdatagroup
 
 import (
 	"encoding/json"
@@ -47,32 +47,59 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type RefColorConstant.
-func (r RefColorConstant) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema.
+func (p Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["ColorConstant"] = "green-color"
-	populate(objectMap, "field1", r.Field1)
+	populate(objectMap, "fileContent", p.FileContent)
+	populate(objectMap, "fileName", p.FileName)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type RefColorConstant.
-func (r *RefColorConstant) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema.
+func (p *Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", r, err)
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
 	}
 	for key, val := range rawMsg {
 		var err error
 		switch key {
-		case "ColorConstant":
-			err = unpopulate(val, "ColorConstant", &r.ColorConstant)
+		case "fileContent":
+			err = unpopulate(val, "FileContent", &p.FileContent)
 			delete(rawMsg, key)
-		case "field1":
-			err = unpopulate(val, "Field1", &r.Field1)
+		case "fileName":
+			err = unpopulate(val, "FileName", &p.FileName)
 			delete(rawMsg, key)
 		}
 		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", r, err)
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
+		}
+	}
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.
+func (p Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fileContent", p.FileContent)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.
+func (p *Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return fmt.Errorf("unmarshalling type %T: %v", p, err)
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "fileContent":
+			err = unpopulate(val, "FileContent", &p.FileContent)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return fmt.Errorf("unmarshalling type %T: %v", p, err)
 		}
 	}
 	return nil
