@@ -193,7 +193,7 @@ export async function namer(session: Session<CodeModel>) {
         }
         if (!honorBodyPlacement) {
           const opMethod = op.requests![0].protocol.http!.method;
-          if (param.protocol.http !== undefined && param.protocol.http!.in === 'body' && (opMethod === HttpMethod.Patch || opMethod === HttpMethod.Put)) {
+          if (param.protocol.http?.in === 'body' && (opMethod === HttpMethod.Patch || opMethod === HttpMethod.Put)) {
             // we enforce PATCH/PUT body parameters to be required.  do this before fixing up the parameter name
             param.required = true;
           }
