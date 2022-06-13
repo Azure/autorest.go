@@ -78,11 +78,11 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 // BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 201 to the initial request, with an entity that contains ProvisioningState=’Creating’.  Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
-	poller, err := op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), nil)
+	poller, err := op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), Product{}, nil)
 	require.NoError(t, err)
 	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
-	poller, err = op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), &LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options{
+	poller, err = op.BeginPut201CreatingSucceeded200(ctxWithHTTPHeader(), Product{}, &LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options{
 		ResumeToken: tk,
 	})
 	require.NoError(t, err)
@@ -109,11 +109,11 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 // BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running put request, service returns a 200 to the initial request, with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	op := newLrOSCustomHeaderClient()
-	poller, err := op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), nil)
+	poller, err := op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), Product{}, nil)
 	require.NoError(t, err)
 	tk, err := poller.ResumeToken()
 	require.NoError(t, err)
-	poller, err = op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), &LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions{
+	poller, err = op.BeginPutAsyncRetrySucceeded(ctxWithHTTPHeader(), Product{}, &LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions{
 		ResumeToken: tk,
 	})
 	require.NoError(t, err)

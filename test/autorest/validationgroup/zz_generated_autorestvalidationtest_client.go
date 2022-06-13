@@ -120,8 +120,8 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse
 // id - Required int multiple of 10 from 100 to 1000.
 // options - AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
 // method.
-func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfBodyOptions) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
-	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, options)
+func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, body Product, options *AutoRestValidationTestClientValidationOfBodyOptions) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
+	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, body, options)
 	if err != nil {
 		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
@@ -136,7 +136,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
-func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfBodyOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, body Product, options *AutoRestValidationTestClientValidationOfBodyOptions) (*policy.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -155,10 +155,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 	reqQP.Set("apiVersion", "1.0.0")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Body != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Body)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, body)
 }
 
 // validationOfBodyHandleResponse handles the ValidationOfBody response.

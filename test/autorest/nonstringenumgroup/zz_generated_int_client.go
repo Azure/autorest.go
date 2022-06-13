@@ -73,9 +73,10 @@ func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetRes
 // Put - Put an int enum
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0-preview
+// input - Input int enum.
 // options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
-func (client *IntClient) Put(ctx context.Context, options *IntClientPutOptions) (IntClientPutResponse, error) {
-	req, err := client.putCreateRequest(ctx, options)
+func (client *IntClient) Put(ctx context.Context, input IntEnum, options *IntClientPutOptions) (IntClientPutResponse, error) {
+	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
 		return IntClientPutResponse{}, err
 	}
@@ -90,17 +91,14 @@ func (client *IntClient) Put(ctx context.Context, options *IntClientPutOptions) 
 }
 
 // putCreateRequest creates the Put request.
-func (client *IntClient) putCreateRequest(ctx context.Context, options *IntClientPutOptions) (*policy.Request, error) {
+func (client *IntClient) putCreateRequest(ctx context.Context, input IntEnum, options *IntClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Input != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Input)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, input)
 }
 
 // putHandleResponse handles the Put response.

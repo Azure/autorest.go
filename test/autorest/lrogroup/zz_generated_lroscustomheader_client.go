@@ -142,11 +142,12 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPut201CreatingSucceeded200
 // method.
-func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LROsCustomHeaderClientPut201CreatingSucceeded200Response], error) {
+func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LROsCustomHeaderClientPut201CreatingSucceeded200Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.put201CreatingSucceeded200(ctx, options)
+		resp, err := client.put201CreatingSucceeded200(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -161,8 +162,8 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
-	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
+func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
+	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -177,17 +178,14 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Con
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
+func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/customheader/put/201/creating/succeeded/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header
@@ -195,11 +193,12 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded
 // method.
-func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*runtime.Poller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse], error) {
+func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*runtime.Poller[LROsCustomHeaderClientPutAsyncRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRetrySucceeded(ctx, options)
+		resp, err := client.putAsyncRetrySucceeded(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -214,8 +213,8 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*http.Response, error) {
-	req, err := client.putAsyncRetrySucceededCreateRequest(ctx, options)
+func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*http.Response, error) {
+	req, err := client.putAsyncRetrySucceededCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -230,15 +229,12 @@ func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context
 }
 
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
-func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
+func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, product Product, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/customheader/putasync/retry/succeeded"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }

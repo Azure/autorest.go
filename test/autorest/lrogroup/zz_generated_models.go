@@ -56,8 +56,6 @@ type LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions struct {
 // LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
 // method.
 type LRORetrysClientBeginPut201CreatingSucceeded200Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -65,8 +63,6 @@ type LRORetrysClientBeginPut201CreatingSucceeded200Options struct {
 // LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
 // method.
 type LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -201,8 +197,6 @@ type LROSADsClientBeginPostNonRetry400Options struct {
 // LROSADsClientBeginPut200InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPut200InvalidJSON
 // method.
 type LROSADsClientBeginPut200InvalidJSONOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -210,8 +204,6 @@ type LROSADsClientBeginPut200InvalidJSONOptions struct {
 // LROSADsClientBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetry400
 // method.
 type LROSADsClientBeginPutAsyncRelativeRetry400Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -219,8 +211,6 @@ type LROSADsClientBeginPutAsyncRelativeRetry400Options struct {
 // LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader
 // method.
 type LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -228,8 +218,6 @@ type LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions struct {
 // LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling
 // method.
 type LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -237,8 +225,6 @@ type LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions struct {
 // LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatus
 // method.
 type LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -246,8 +232,6 @@ type LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions struct {
 // LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload
 // method.
 type LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -255,8 +239,6 @@ type LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions struct {
 // LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions contains the optional parameters for the LROSADsClient.BeginPutError201NoProvisioningStatePayload
 // method.
 type LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -264,8 +246,6 @@ type LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions struct {
 // LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON
 // method.
 type LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -273,16 +253,12 @@ type LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions struct {
 // LROSADsClientBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400
 // method.
 type LROSADsClientBeginPutNonRetry201Creating400Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LROSADsClientBeginPutNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry400 method.
 type LROSADsClientBeginPutNonRetry400Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -372,8 +348,6 @@ type LROsClientBeginDeleteProvisioning202Deletingcanceled200Options struct {
 // LROsClientBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROsClient.BeginPatch200SucceededIgnoreHeaders
 // method.
 type LROsClientBeginPatch200SucceededIgnoreHeadersOptions struct {
-	// Product to patch
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -381,8 +355,6 @@ type LROsClientBeginPatch200SucceededIgnoreHeadersOptions struct {
 // LROsClientBeginPatch201RetryWithAsyncHeaderOptions contains the optional parameters for the LROsClient.BeginPatch201RetryWithAsyncHeader
 // method.
 type LROsClientBeginPatch201RetryWithAsyncHeaderOptions struct {
-	// Product to patch
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -390,8 +362,6 @@ type LROsClientBeginPatch201RetryWithAsyncHeaderOptions struct {
 // LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions contains the optional parameters for the LROsClient.BeginPatch202RetryWithAsyncAndLocationHeader
 // method.
 type LROsClientBeginPatch202RetryWithAsyncAndLocationHeaderOptions struct {
-	// Product to patch
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -484,8 +454,6 @@ type LROsClientBeginPostDoubleHeadersFinalLocationGetOptions struct {
 // LROsClientBeginPut200Acceptedcanceled200Options contains the optional parameters for the LROsClient.BeginPut200Acceptedcanceled200
 // method.
 type LROsClientBeginPut200Acceptedcanceled200Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -493,16 +461,12 @@ type LROsClientBeginPut200Acceptedcanceled200Options struct {
 // LROsClientBeginPut200SucceededNoStateOptions contains the optional parameters for the LROsClient.BeginPut200SucceededNoState
 // method.
 type LROsClientBeginPut200SucceededNoStateOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LROsClientBeginPut200SucceededOptions contains the optional parameters for the LROsClient.BeginPut200Succeeded method.
 type LROsClientBeginPut200SucceededOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -510,8 +474,6 @@ type LROsClientBeginPut200SucceededOptions struct {
 // LROsClientBeginPut200UpdatingSucceeded204Options contains the optional parameters for the LROsClient.BeginPut200UpdatingSucceeded204
 // method.
 type LROsClientBeginPut200UpdatingSucceeded204Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -519,8 +481,6 @@ type LROsClientBeginPut200UpdatingSucceeded204Options struct {
 // LROsClientBeginPut201CreatingFailed200Options contains the optional parameters for the LROsClient.BeginPut201CreatingFailed200
 // method.
 type LROsClientBeginPut201CreatingFailed200Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -528,24 +488,18 @@ type LROsClientBeginPut201CreatingFailed200Options struct {
 // LROsClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsClient.BeginPut201CreatingSucceeded200
 // method.
 type LROsClientBeginPut201CreatingSucceeded200Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LROsClientBeginPut201SucceededOptions contains the optional parameters for the LROsClient.BeginPut201Succeeded method.
 type LROsClientBeginPut201SucceededOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LROsClientBeginPut202Retry200Options contains the optional parameters for the LROsClient.BeginPut202Retry200 method.
 type LROsClientBeginPut202Retry200Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -553,8 +507,6 @@ type LROsClientBeginPut202Retry200Options struct {
 // LROsClientBeginPutAsyncNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoHeaderInRetry
 // method.
 type LROsClientBeginPutAsyncNoHeaderInRetryOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -562,8 +514,6 @@ type LROsClientBeginPutAsyncNoHeaderInRetryOptions struct {
 // LROsClientBeginPutAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoRetrySucceeded
 // method.
 type LROsClientBeginPutAsyncNoRetrySucceededOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -571,8 +521,6 @@ type LROsClientBeginPutAsyncNoRetrySucceededOptions struct {
 // LROsClientBeginPutAsyncNoRetrycanceledOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoRetrycanceled
 // method.
 type LROsClientBeginPutAsyncNoRetrycanceledOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -582,15 +530,11 @@ type LROsClientBeginPutAsyncNoRetrycanceledOptions struct {
 type LROsClientBeginPutAsyncNonResourceOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
-	// Sku to put
-	SKU *SKU
 }
 
 // LROsClientBeginPutAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginPutAsyncRetryFailed
 // method.
 type LROsClientBeginPutAsyncRetryFailedOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -598,8 +542,6 @@ type LROsClientBeginPutAsyncRetryFailedOptions struct {
 // LROsClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPutAsyncRetrySucceeded
 // method.
 type LROsClientBeginPutAsyncRetrySucceededOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -607,16 +549,12 @@ type LROsClientBeginPutAsyncRetrySucceededOptions struct {
 // LROsClientBeginPutAsyncSubResourceOptions contains the optional parameters for the LROsClient.BeginPutAsyncSubResource
 // method.
 type LROsClientBeginPutAsyncSubResourceOptions struct {
-	// Sub Product to put
-	Product *SubProduct
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
 
 // LROsClientBeginPutNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginPutNoHeaderInRetry method.
 type LROsClientBeginPutNoHeaderInRetryOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -625,14 +563,10 @@ type LROsClientBeginPutNoHeaderInRetryOptions struct {
 type LROsClientBeginPutNonResourceOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
-	// sku to put
-	SKU *SKU
 }
 
 // LROsClientBeginPutSubResourceOptions contains the optional parameters for the LROsClient.BeginPutSubResource method.
 type LROsClientBeginPutSubResourceOptions struct {
-	// Sub Product to put
-	Product *SubProduct
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -658,8 +592,6 @@ type LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions struct {
 // LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPut201CreatingSucceeded200
 // method.
 type LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -667,8 +599,6 @@ type LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options struct {
 // LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded
 // method.
 type LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions struct {
-	// Product to put
-	Product *Product
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }

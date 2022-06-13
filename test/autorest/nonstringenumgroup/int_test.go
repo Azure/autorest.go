@@ -33,9 +33,7 @@ func TestIntGet(t *testing.T) {
 // Put - Put an int enum
 func TestIntPut(t *testing.T) {
 	client := newIntClient()
-	result, err := client.Put(context.Background(), &IntClientPutOptions{
-		Input: to.Ptr(IntEnumTwoHundred),
-	})
+	result, err := client.Put(context.Background(), IntEnumTwoHundred, nil)
 	require.NoError(t, err)
 	if *result.Value != "Nice job posting an int enum" {
 		t.Fatalf("unexpected value %s", *result.Value)

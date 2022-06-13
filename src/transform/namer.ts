@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, uncapitalize } from '@azure-tools/codegen';
-import { CodeModel, HttpHeader, Language } from '@autorest/codemodel';
+import { CodeModel, HttpHeader, HttpMethod, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
 import { aggregateParameters, hasAdditionalProperties } from '../common/helpers';
@@ -87,6 +87,7 @@ export async function namer(session: Session<CodeModel>) {
   model.language.go!.headAsBoolean = headAsBoolean;
   const groupParameters = await session.getValue('group-parameters', true);
   model.language.go!.groupParameters = groupParameters;
+  const honorBodyPlacement = await session.getValue('honor-body-placement', false);
 
   // fix up type names
   const structNames = new Set<string>();
@@ -189,6 +190,13 @@ export async function namer(session: Session<CodeModel>) {
         if (param.language.go!.name === '$host' || param.language.go!.name.toUpperCase() === 'URL') {
           param.language.go!.name = 'endpoint';
           continue;
+        }
+        if (!honorBodyPlacement) {
+          const opMethod = op.requests![0].protocol.http!.method;
+          if (param.protocol.http?.in === 'body' && (opMethod === HttpMethod.Patch || opMethod === HttpMethod.Put)) {
+            // we enforce PATCH/PUT body parameters to be required.  do this before fixing up the parameter name
+            param.required = true;
+          }
         }
         const inParamGroup = (param.extensions?.['x-ms-parameter-grouping'] && groupParameters) || param.required !== true;
         const paramDetails = <Language>param.language.go;

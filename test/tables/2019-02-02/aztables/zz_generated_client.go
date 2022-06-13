@@ -429,9 +429,10 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
 // rowKey - The row key of the entity.
+// tableEntityProperties - The properties for the table entity.
 // options - ClientMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
-func (client *Client) MergeEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *ClientMergeEntityOptions) (ClientMergeEntityResponse, error) {
-	req, err := client.mergeEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
+func (client *Client) MergeEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, tableEntityProperties map[string]interface{}, options *ClientMergeEntityOptions) (ClientMergeEntityResponse, error) {
+	req, err := client.mergeEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
 		return ClientMergeEntityResponse{}, err
 	}
@@ -446,7 +447,7 @@ func (client *Client) MergeEntity(ctx context.Context, dataServiceVersion Enum1,
 }
 
 // mergeEntityCreateRequest creates the MergeEntity request.
-func (client *Client) mergeEntityCreateRequest(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *ClientMergeEntityOptions) (*policy.Request, error) {
+func (client *Client) mergeEntityCreateRequest(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, tableEntityProperties map[string]interface{}, options *ClientMergeEntityOptions) (*policy.Request, error) {
 	urlPath := "/{table}(PartitionKey='{partitionKey}',RowKey='{rowKey}')"
 	if table == "" {
 		return nil, errors.New("parameter table cannot be empty")
@@ -481,10 +482,7 @@ func (client *Client) mergeEntityCreateRequest(ctx context.Context, dataServiceV
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.TableEntityProperties != nil {
-		return req, runtime.MarshalAsJSON(req, options.TableEntityProperties)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, tableEntityProperties)
 }
 
 // mergeEntityHandleResponse handles the MergeEntity response.
@@ -793,9 +791,10 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 // Generated from API version 2019-02-02
 // table - The name of the table.
 // comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
+// tableACL - The acls for the table.
 // options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
-func (client *Client) SetAccessPolicy(ctx context.Context, table string, comp Enum4, options *ClientSetAccessPolicyOptions) (ClientSetAccessPolicyResponse, error) {
-	req, err := client.setAccessPolicyCreateRequest(ctx, table, comp, options)
+func (client *Client) SetAccessPolicy(ctx context.Context, table string, comp Enum4, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (ClientSetAccessPolicyResponse, error) {
+	req, err := client.setAccessPolicyCreateRequest(ctx, table, comp, tableACL, options)
 	if err != nil {
 		return ClientSetAccessPolicyResponse{}, err
 	}
@@ -810,7 +809,7 @@ func (client *Client) SetAccessPolicy(ctx context.Context, table string, comp En
 }
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
-func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table string, comp Enum4, options *ClientSetAccessPolicyOptions) (*policy.Request, error) {
+func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table string, comp Enum4, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (*policy.Request, error) {
 	urlPath := "/{table}"
 	if table == "" {
 		return nil, errors.New("parameter table cannot be empty")
@@ -835,10 +834,7 @@ func (client *Client) setAccessPolicyCreateRequest(ctx context.Context, table st
 		XMLName  xml.Name             `xml:"SignedIdentifiers"`
 		TableACL *[]*SignedIdentifier `xml:"SignedIdentifier"`
 	}
-	if options != nil && options.TableACL != nil {
-		return req, runtime.MarshalAsXML(req, wrapper{TableACL: &options.TableACL})
-	}
-	return req, nil
+	return req, runtime.MarshalAsXML(req, wrapper{TableACL: &tableACL})
 }
 
 // setAccessPolicyHandleResponse handles the SetAccessPolicy response.
@@ -870,9 +866,10 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
 // rowKey - The row key of the entity.
+// tableEntityProperties - The properties for the table entity.
 // options - ClientUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
-func (client *Client) UpdateEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *ClientUpdateEntityOptions) (ClientUpdateEntityResponse, error) {
-	req, err := client.updateEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
+func (client *Client) UpdateEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, tableEntityProperties map[string]interface{}, options *ClientUpdateEntityOptions) (ClientUpdateEntityResponse, error) {
+	req, err := client.updateEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
 		return ClientUpdateEntityResponse{}, err
 	}
@@ -887,7 +884,7 @@ func (client *Client) UpdateEntity(ctx context.Context, dataServiceVersion Enum1
 }
 
 // updateEntityCreateRequest creates the UpdateEntity request.
-func (client *Client) updateEntityCreateRequest(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *ClientUpdateEntityOptions) (*policy.Request, error) {
+func (client *Client) updateEntityCreateRequest(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, tableEntityProperties map[string]interface{}, options *ClientUpdateEntityOptions) (*policy.Request, error) {
 	urlPath := "/{table}(PartitionKey='{partitionKey}',RowKey='{rowKey}')"
 	if table == "" {
 		return nil, errors.New("parameter table cannot be empty")
@@ -922,10 +919,7 @@ func (client *Client) updateEntityCreateRequest(ctx context.Context, dataService
 		req.Raw().Header["If-Match"] = []string{*options.IfMatch}
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.TableEntityProperties != nil {
-		return req, runtime.MarshalAsJSON(req, options.TableEntityProperties)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, tableEntityProperties)
 }
 
 // updateEntityHandleResponse handles the UpdateEntity response.

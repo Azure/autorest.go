@@ -997,11 +997,12 @@ func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// restoreBlobDetails - The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
 // options - ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation
 // method.
-func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (*runtime.Poller[ClientFullRestoreOperationResponse], error) {
+func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*runtime.Poller[ClientFullRestoreOperationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
+		resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, restoreBlobDetails, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1017,8 +1018,8 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 // backup folder
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
-func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (*http.Response, error) {
-	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, options)
+func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*http.Response, error) {
+	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, restoreBlobDetails, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1034,7 @@ func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL str
 }
 
 // fullRestoreOperationCreateRequest creates the FullRestoreOperation request.
-func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
+func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore"
@@ -1045,10 +1046,7 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.RestoreBlobDetails != nil {
-		return req, runtime.MarshalAsJSON(req, *options.RestoreBlobDetails)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, restoreBlobDetails)
 }
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
@@ -3602,11 +3600,12 @@ func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to be restored from the user supplied backup
+// restoreBlobDetails - The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
 // options - ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
 // method.
-func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*runtime.Poller[ClientSelectiveKeyRestoreOperationResponse], error) {
+func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*runtime.Poller[ClientSelectiveKeyRestoreOperationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
+		resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, restoreBlobDetails, options)
 		if err != nil {
 			return nil, err
 		}
@@ -3622,8 +3621,8 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 // stored Azure Blob storage backup folder
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
-func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
-	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, options)
+func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
+	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, restoreBlobDetails, options)
 	if err != nil {
 		return nil, err
 	}
@@ -3638,7 +3637,7 @@ func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBas
 }
 
 // selectiveKeyRestoreOperationCreateRequest creates the SelectiveKeyRestoreOperation request.
-func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
+func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{keyName}/restore"
@@ -3654,10 +3653,7 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 	reqQP.Set("api-version", "7.2")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.RestoreBlobDetails != nil {
-		return req, runtime.MarshalAsJSON(req, *options.RestoreBlobDetails)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, restoreBlobDetails)
 }
 
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts

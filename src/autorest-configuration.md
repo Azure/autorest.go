@@ -80,4 +80,7 @@ help-content:
       - key: stutter
         type: string
         description: Uses the specified value to remove stuttering from types and funcs instead of the built-in algorithm.
+      - key: honor-body-placement
+        type: boolean
+        description: When true, optional body parameters are treated as such for PATCH and PUT operations.
 ```
