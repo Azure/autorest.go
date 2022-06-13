@@ -106,11 +106,11 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 
 func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLRORetrysClient()
-	poller, err := op.BeginPut201CreatingSucceeded200(context.Background(), nil)
+	poller, err := op.BeginPut201CreatingSucceeded200(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	poller, err = op.BeginPut201CreatingSucceeded200(context.Background(), &LRORetrysClientBeginPut201CreatingSucceeded200Options{
+	poller, err = op.BeginPut201CreatingSucceeded200(context.Background(), Product{}, &LRORetrysClientBeginPut201CreatingSucceeded200Options{
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)
@@ -129,11 +129,11 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 
 func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	op := newLRORetrysClient()
-	poller, err := op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), nil)
+	poller, err := op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), Product{}, nil)
 	require.NoError(t, err)
 	rt, err := poller.ResumeToken()
 	require.NoError(t, err)
-	poller, err = op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), &LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions{
+	poller, err = op.BeginPutAsyncRelativeRetrySucceeded(context.Background(), Product{}, &LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions{
 		ResumeToken: rt,
 	})
 	require.NoError(t, err)

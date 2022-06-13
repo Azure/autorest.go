@@ -51,17 +51,15 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 func TestValidationValidationOfBody(t *testing.T) {
 	t.Skip("need to confirm if this test will remain in the testserver and what values it's expecting")
 	client := newAutoRestValidationTestClient()
-	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestClientValidationOfBodyOptions{
-		Body: &Product{
-			DisplayNames: []*string{
-				to.Ptr("displayname1"),
-				to.Ptr("displayname2"),
-				to.Ptr("displayname3"),
-				to.Ptr("displayname4"),
-				to.Ptr("displayname5"),
-				to.Ptr("displayname6"),
-				to.Ptr("displayname7")}},
-	})
+	result, err := client.ValidationOfBody(context.Background(), "123", 150, Product{
+		DisplayNames: []*string{
+			to.Ptr("displayname1"),
+			to.Ptr("displayname2"),
+			to.Ptr("displayname3"),
+			to.Ptr("displayname4"),
+			to.Ptr("displayname5"),
+			to.Ptr("displayname6"),
+			to.Ptr("displayname7")}}, nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }

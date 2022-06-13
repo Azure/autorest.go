@@ -16,8 +16,7 @@ type FloatClientGetOptions struct {
 
 // FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
 type FloatClientPutOptions struct {
-	// Input float enum.
-	Input *FloatEnum
+	// placeholder for future optional parameters
 }
 
 // IntClientGetOptions contains the optional parameters for the IntClient.Get method.
@@ -27,6 +26,5 @@ type IntClientGetOptions struct {
 
 // IntClientPutOptions contains the optional parameters for the IntClient.Put method.
 type IntClientPutOptions struct {
-	// Input int enum.
-	Input *IntEnum
+	// placeholder for future optional parameters
 }

@@ -24,7 +24,7 @@ type AutoRestValidationTestClientPostWithConstantInBodyOptions struct {
 // AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
 // method.
 type AutoRestValidationTestClientValidationOfBodyOptions struct {
-	Body *Product
+	// placeholder for future optional parameters
 }
 
 // AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters

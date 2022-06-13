@@ -90,8 +90,6 @@ type ClientMergeEntityOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
-	// The properties for the table entity.
-	TableEntityProperties map[string]interface{}
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -158,8 +156,6 @@ type ClientSetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
-	// The acls for the table.
-	TableACL []*SignedIdentifier
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -176,8 +172,6 @@ type ClientUpdateEntityOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
-	// The properties for the table entity.
-	TableEntityProperties map[string]interface{}
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }

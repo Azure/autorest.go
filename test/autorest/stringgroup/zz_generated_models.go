@@ -111,8 +111,7 @@ type StringClientPutMBCSOptions struct {
 
 // StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
 type StringClientPutNullOptions struct {
-	// string body
-	StringBody *string
+	// placeholder for future optional parameters
 }
 
 // StringClientPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.

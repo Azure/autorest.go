@@ -33,9 +33,7 @@ func TestFloatGet(t *testing.T) {
 // Put - Put a float enum
 func TestFloatPut(t *testing.T) {
 	client := newFloatClient()
-	result, err := client.Put(context.Background(), &FloatClientPutOptions{
-		Input: to.Ptr(FloatEnumTwoHundred4),
-	})
+	result, err := client.Put(context.Background(), FloatEnumTwoHundred4, nil)
 	require.NoError(t, err)
 	if *result.Value != "Nice job posting a float enum" {
 		t.Fatalf("unexpected value %s", *result.Value)

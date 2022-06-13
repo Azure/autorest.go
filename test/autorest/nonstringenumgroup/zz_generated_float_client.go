@@ -73,9 +73,10 @@ func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGe
 // Put - Put a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0-preview
+// input - Input float enum.
 // options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
-func (client *FloatClient) Put(ctx context.Context, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
-	req, err := client.putCreateRequest(ctx, options)
+func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
+	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {
 		return FloatClientPutResponse{}, err
 	}
@@ -90,17 +91,14 @@ func (client *FloatClient) Put(ctx context.Context, options *FloatClientPutOptio
 }
 
 // putCreateRequest creates the Put request.
-func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatClientPutOptions) (*policy.Request, error) {
+func (client *FloatClient) putCreateRequest(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Input != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Input)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, input)
 }
 
 // putHandleResponse handles the Put response.

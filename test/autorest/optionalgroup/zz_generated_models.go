@@ -9,8 +9,6 @@
 
 package optionalgroup
 
-import "io"
-
 type ArrayOptionalWrapper struct {
 	Value []*string `json:"value,omitempty"`
 }
@@ -169,7 +167,7 @@ type ExplicitClientPostRequiredStringPropertyOptions struct {
 // ExplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody
 // method.
 type ExplicitClientPutOptionalBinaryBodyOptions struct {
-	BodyParameter io.ReadSeekCloser
+	// placeholder for future optional parameters
 }
 
 // ExplicitClientPutRequiredBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBody
@@ -203,12 +201,12 @@ type ImplicitClientGetRequiredPathOptions struct {
 // ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 // method.
 type ImplicitClientPutOptionalBinaryBodyOptions struct {
-	BodyParameter io.ReadSeekCloser
+	// placeholder for future optional parameters
 }
 
 // ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody method.
 type ImplicitClientPutOptionalBodyOptions struct {
-	BodyParameter *string
+	// placeholder for future optional parameters
 }
 
 // ImplicitClientPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader method.

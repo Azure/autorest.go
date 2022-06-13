@@ -822,11 +822,12 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 // not a valid json
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPut200InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPut200InvalidJSON
 // method.
-func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*runtime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
+func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPut200InvalidJSONOptions) (*runtime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.put200InvalidJSON(ctx, options)
+		resp, err := client.put200InvalidJSON(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -840,8 +841,8 @@ func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options
 // a valid json
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*http.Response, error) {
-	req, err := client.put200InvalidJSONCreateRequest(ctx, options)
+func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPut200InvalidJSONOptions) (*http.Response, error) {
+	req, err := client.put200InvalidJSONCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -856,28 +857,26 @@ func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, options *LRO
 }
 
 // put200InvalidJSONCreateRequest creates the Put200InvalidJSON request.
-func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context, options *LROSADsClientBeginPut200InvalidJSONOptions) (*policy.Request, error) {
+func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPut200InvalidJSONOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/put/200/invalidjson"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRelativeRetry400 - Long running put request, service returns a 200 with ProvisioningState=’Creating’. Poll
 // the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetry400
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRelativeRetry400(ctx, options)
+		resp, err := client.putAsyncRelativeRetry400(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -891,8 +890,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*http.Response, error) {
-	req, err := client.putAsyncRelativeRetry400CreateRequest(ctx, options)
+func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*http.Response, error) {
+	req, err := client.putAsyncRelativeRetry400CreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -907,28 +906,26 @@ func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, optio
 }
 
 // putAsyncRelativeRetry400CreateRequest creates the PutAsyncRelativeRetry400 request.
-func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*policy.Request, error) {
+func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/putasync/retry/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRelativeRetryInvalidHeader - Long running put request, service returns a 200 to the initial request, with
 // an entity that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, options)
+		resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -942,8 +939,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 // that contains ProvisioningState=’Creating’. The endpoint indicated in the Azure-AsyncOperation header is invalid.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*http.Response, error) {
-	req, err := client.putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, options)
+func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*http.Response, error) {
+	req, err := client.putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -958,17 +955,14 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Cont
 }
 
 // putAsyncRelativeRetryInvalidHeaderCreateRequest creates the PutAsyncRelativeRetryInvalidHeader request.
-func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*policy.Request, error) {
+func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidheader"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRelativeRetryInvalidJSONPolling - Long running put request, service returns a 200 to the initial request,
@@ -977,11 +971,12 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, options)
+		resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -996,8 +991,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*http.Response, error) {
-	req, err := client.putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, options)
+func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*http.Response, error) {
+	req, err := client.putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1012,17 +1007,14 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context
 }
 
 // putAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PutAsyncRelativeRetryInvalidJSONPolling request.
-func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*policy.Request, error) {
+func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidjsonpolling"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRelativeRetryNoStatus - Long running put request, service returns a 200 to the initial request, with an entity
@@ -1030,11 +1022,12 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatus
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRelativeRetryNoStatus(ctx, options)
+		resp, err := client.putAsyncRelativeRetryNoStatus(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1049,8 +1042,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*http.Response, error) {
-	req, err := client.putAsyncRelativeRetryNoStatusCreateRequest(ctx, options)
+func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*http.Response, error) {
+	req, err := client.putAsyncRelativeRetryNoStatusCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1065,17 +1058,14 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, 
 }
 
 // putAsyncRelativeRetryNoStatusCreateRequest creates the PutAsyncRelativeRetryNoStatus request.
-func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*policy.Request, error) {
+func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatus"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRelativeRetryNoStatusPayload - Long running put request, service returns a 200 to the initial request, with
@@ -1083,11 +1073,12 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload
 // method.
-func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
+func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, options)
+		resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1102,8 +1093,8 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 // operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*http.Response, error) {
-	req, err := client.putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, options)
+func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*http.Response, error) {
+	req, err := client.putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1118,28 +1109,26 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Co
 }
 
 // putAsyncRelativeRetryNoStatusPayloadCreateRequest creates the PutAsyncRelativeRetryNoStatusPayload request.
-func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx context.Context, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*policy.Request, error) {
+func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatuspayload"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutError201NoProvisioningStatePayload - Long running put request, service returns a 201 to the initial request with
 // no payload
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions contains the optional parameters for the LROSADsClient.BeginPutError201NoProvisioningStatePayload
 // method.
-func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*runtime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
+func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, product Product, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*runtime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putError201NoProvisioningStatePayload(ctx, options)
+		resp, err := client.putError201NoProvisioningStatePayload(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1153,8 +1142,8 @@ func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 // payload
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*http.Response, error) {
-	req, err := client.putError201NoProvisioningStatePayloadCreateRequest(ctx, options)
+func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.Context, product Product, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*http.Response, error) {
+	req, err := client.putError201NoProvisioningStatePayloadCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1169,28 +1158,26 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.C
 }
 
 // putError201NoProvisioningStatePayloadCreateRequest creates the PutError201NoProvisioningStatePayload request.
-func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(ctx context.Context, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*policy.Request, error) {
+func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/put/201/noprovisioningstatepayload"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutNonRetry201Creating400 - Long running put request, service returns a Product with 'ProvisioningState' = 'Creating'
 // and 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400
 // method.
-func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
+func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putNonRetry201Creating400(ctx, options)
+		resp, err := client.putNonRetry201Creating400(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1204,8 +1191,8 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 // 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*http.Response, error) {
-	req, err := client.putNonRetry201Creating400CreateRequest(ctx, options)
+func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*http.Response, error) {
+	req, err := client.putNonRetry201Creating400CreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1220,28 +1207,26 @@ func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, opti
 }
 
 // putNonRetry201Creating400CreateRequest creates the PutNonRetry201Creating400 request.
-func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*policy.Request, error) {
+func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutNonRetry201Creating400InvalidJSON - Long running put request, service returns a Product with 'ProvisioningState'
 // = 'Creating' and 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON
 // method.
-func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
+func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, options)
+		resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1255,8 +1240,8 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 // and 201 response code
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*http.Response, error) {
-	req, err := client.putNonRetry201Creating400InvalidJSONCreateRequest(ctx, options)
+func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*http.Response, error) {
+	req, err := client.putNonRetry201Creating400InvalidJSONCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1271,27 +1256,25 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Co
 }
 
 // putNonRetry201Creating400InvalidJSONCreateRequest creates the PutNonRetry201Creating400InvalidJSON request.
-func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(ctx context.Context, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*policy.Request, error) {
+func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400/invalidjson"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutNonRetry400 - Long running put request, service returns a 400 to the initial request
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LROSADsClientBeginPutNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry400
 // method.
-func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*runtime.Poller[LROSADsClientPutNonRetry400Response], error) {
+func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry400Options) (*runtime.Poller[LROSADsClientPutNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putNonRetry400(ctx, options)
+		resp, err := client.putNonRetry400(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -1304,8 +1287,8 @@ func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *L
 // PutNonRetry400 - Long running put request, service returns a 400 to the initial request
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LROSADsClient) putNonRetry400(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*http.Response, error) {
-	req, err := client.putNonRetry400CreateRequest(ctx, options)
+func (client *LROSADsClient) putNonRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry400Options) (*http.Response, error) {
+	req, err := client.putNonRetry400CreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -1320,15 +1303,12 @@ func (client *LROSADsClient) putNonRetry400(ctx context.Context, options *LROSAD
 }
 
 // putNonRetry400CreateRequest creates the PutNonRetry400 request.
-func (client *LROSADsClient) putNonRetry400CreateRequest(ctx context.Context, options *LROSADsClientBeginPutNonRetry400Options) (*policy.Request, error) {
+func (client *LROSADsClient) putNonRetry400CreateRequest(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/put/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }

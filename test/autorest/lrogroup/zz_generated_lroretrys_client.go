@@ -288,11 +288,12 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
 // method.
-func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LRORetrysClientPut201CreatingSucceeded200Response], error) {
+func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LRORetrysClientPut201CreatingSucceeded200Response], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.put201CreatingSucceeded200(ctx, options)
+		resp, err := client.put201CreatingSucceeded200(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -307,8 +308,8 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
-	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
+func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
+	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -323,17 +324,14 @@ func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, o
 }
 
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
-func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
+func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }
 
 // BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request,
@@ -341,11 +339,12 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 // header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
+// product - Product to put
 // options - LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
 // method.
-func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientPutAsyncRelativeRetrySucceededResponse], error) {
+func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientPutAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
-		resp, err := client.putAsyncRelativeRetrySucceeded(ctx, options)
+		resp, err := client.putAsyncRelativeRetrySucceeded(ctx, product, options)
 		if err != nil {
 			return nil, err
 		}
@@ -360,8 +359,8 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 // header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
-	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(ctx, options)
+func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
+	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(ctx, product, options)
 	if err != nil {
 		return nil, err
 	}
@@ -376,15 +375,12 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 }
 
 // putAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
-func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
+func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header["Accept"] = []string{"application/json"}
-	if options != nil && options.Product != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Product)
-	}
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, product)
 }

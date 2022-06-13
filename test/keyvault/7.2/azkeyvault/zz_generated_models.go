@@ -365,8 +365,6 @@ type ClientBeginFullBackupOptions struct {
 
 // ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation method.
 type ClientBeginFullRestoreOperationOptions struct {
-	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
-	RestoreBlobDetails *RestoreOperationParameters
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
@@ -374,8 +372,6 @@ type ClientBeginFullRestoreOperationOptions struct {
 // ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
 // method.
 type ClientBeginSelectiveKeyRestoreOperationOptions struct {
-	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
-	RestoreBlobDetails *SelectiveKeyRestoreOperationParameters
 	// Resumes the LRO from the provided token.
 	ResumeToken string
 }
