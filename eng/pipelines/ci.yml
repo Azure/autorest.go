@@ -1,12 +1,12 @@
 trigger:
   branches:
     include:
-    - master
+    - legacy
 
 pr:
   branches:
     include:
-    - master
+    - legacy
 
 variables:
   NodeVersion: '10.15.3'
