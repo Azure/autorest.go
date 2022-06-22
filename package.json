@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/Azure/autorest/issues"
   },
-  "homepage": "https://github.com/Azure/autorest.go/blob/master/README.md",
+  "homepage": "https://github.com/Azure/autorest.go/blob/legacy/README.md",
   "devDependencies": {
     "@microsoft.azure/autorest.modeler": "^2.3.54",
     "@microsoft.azure/autorest.testserver": "2.7.8",

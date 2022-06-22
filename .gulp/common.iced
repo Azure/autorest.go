@@ -488,7 +488,7 @@ task 'get-tag', '!', (done)->
 
     # grab the git branch name.
     execute "git rev-parse --abbrev-ref HEAD" , {silent:true}, (c,o,e)->
-      o = "preview" if( o == undefined || o == null || o == "" || o.trim() == 'master')
+      o = "preview" if( o == undefined || o == null || o == "" || o.trim() == 'legacy')
       global.tag = o.trim()
       done();
 
