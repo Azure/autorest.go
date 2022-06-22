@@ -21,7 +21,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ### Autorest plugin configuration
 - Please don't edit this section unless you're re-configuring how the Go extension plugs in to AutoRest
-AutoRest needs the below config to pick this up as a plug-in - see https://github.com/Azure/autorest/blob/master/docs/developer/architecture/AutoRest-extension.md
+AutoRest needs the below config to pick this up as a plug-in - see https://github.com/Azure/autorest/blob/main/docs/developer/writing-an-extension.md
 
 > AutoRest configuration is stored in the 'autorest-configuation.md' file.
 
