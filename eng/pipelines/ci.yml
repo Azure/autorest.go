@@ -1,12 +1,12 @@
 trigger:
   branches:
     include:
-    - track2
+    - main
 
 pr:
   branches:
     include:
-    - track2
+    - main
 
 variables:
   NodeVersion: '16.x'
