@@ -1,16 +1,16 @@
-variables:
+parameters:
   NodeVersion: "16.x"
   GoVersion: "18.0"
 
 steps:
   - task: NodeTool@0
-        displayName: 'Install Node $(NodeVersion)'
-        inputs:
-          versionSpec: '$(NodeVersion)'
+    displayName: "Install Node ${{ parameters.NodeVersion }}"
+    inputs:
+      versionSpec: "${{ parameters.NodeVersion }}"
 
   - task: GoTool@0
     inputs:
-      version: '$(GoVersion)'
+      version: "${{ parameters.GoVersion }}"
     displayName: "Select Go Version"
 
   - script: |
@@ -18,4 +18,4 @@ steps:
       npm install -g "@microsoft/rush"
       rush update --debug
       npm install -g autorest
-    displayName: 'Prepare Generator Environment'
+    displayName: "Prepare Generator Environment"

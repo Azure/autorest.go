@@ -1,6 +1,6 @@
-variables:
-  goTestPath: "$(system.defaultWorkingDirectory)/test"
-  GOBIN: "$(system.defaultWorkingDirectory)/bin/go"
+parameters:
+  GoTestPath: "$(system.defaultWorkingDirectory)/test"
+  GoBin: "$(system.defaultWorkingDirectory)/bin/go"
 
 steps:
   - script: |
@@ -20,10 +20,10 @@ steps:
       go version
       go install github.com/jstemmer/go-junit-report@v1.0.0
     displayName: "Install Dependencies"
-    workingDirectory: "$(goTestPath)"
+    workingDirectory: "${{ parameters.GoTestPath }}"
 
   - pwsh: |
-      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       $exit = 0
       foreach ($md in $modDirs) {
         pushd $md
@@ -37,7 +37,7 @@ steps:
     displayName: "Build"
 
   - pwsh: |
-      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       $exit = 0
       foreach ($md in $modDirs) {
         pushd $md
@@ -53,7 +53,7 @@ steps:
     displayName: "Mod Tidy"
 
   - pwsh: |
-      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir $(goTestPath))
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       $exit = 0
       foreach ($md in $modDirs) {
         pushd $md
@@ -70,11 +70,11 @@ steps:
       pushd ./src/node_modules/@microsoft.azure/autorest.testserver
       npm run start:prod&
       popd
-      $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir $(goTestPath))
+      $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
-        Write-Host "##[command]Executing go test -run "^Test" -v $td | $(GOBIN)/go-junit-report -set-exit-code > report.xml"
-        go test -run "^Test" -v | $(GOBIN)/go-junit-report -set-exit-code > report.xml
+        Write-Host "##[command]Executing go test -run "^Test" -v $td | ${{ parameters.GoBin }}/go-junit-report -set-exit-code > report.xml"
+        go test -run "^Test" -v | ${{ parameters.GoBin }}/go-junit-report -set-exit-code > report.xml
         popd
       }
       pushd ./test/autorest
@@ -92,13 +92,13 @@ steps:
   - task: PublishTestResults@2
     inputs:
       testRunner: JUnit
-      testResultsFiles: $(goTestPath)/**/report.xml
+      testResultsFiles: ${{ parameters.GoTestPath }}/**/report.xml
       failTaskOnFailedTests: true
 
   - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
-    - pwsh: |
-        $currentVersion = node -p -e "require('./src/package.json').version";
-        $currentVersion="$currentVersion-$(Build.BuildNumber)";
-        cd src/node_modules/@microsoft.azure/autorest.testserver;
-        npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
-      displayName: "Publish AutoRest Test Server Coverage Report"
+      - pwsh: |
+          $currentVersion = node -p -e "require('./src/package.json').version";
+          $currentVersion="$currentVersion-$(Build.BuildNumber)";
+          cd src/node_modules/@microsoft.azure/autorest.testserver;
+          npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
+        displayName: "Publish AutoRest Test Server Coverage Report"
