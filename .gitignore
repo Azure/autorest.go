@@ -381,3 +381,6 @@ package-deps.json
 !/tests/**/test/*
 
 .DS_Store
+
+tempoutput
+junit.xml
