@@ -36,11 +36,10 @@ export function generateReturnsInfo(op: Operation, apiType: 'api' | 'op' | 'hand
   if (isLROOperation(op)) {
     switch (apiType) {
       case 'api':
-        // this should go away once we can type alias a generic type
         if (isPageableOperation(op)) {
-          returnType = `*armruntime.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
+          returnType = `*runtime.Poller[*runtime.Pager[${getResponseEnvelopeName(op)}]]`;
         } else {
-          returnType = `*armruntime.Poller[${getResponseEnvelopeName(op)}]`;
+          returnType = `*runtime.Poller[${getResponseEnvelopeName(op)}]`;
         }
         break;
       case 'handler':
