@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="10" failures="0" errors="0" time="144.584">
+  <testsuite name="processRequest of go-linter" errors="0" failures="0" skipped="0" timestamp="2022-06-24T09:54:25" time="5.307" tests="1">
+    <testcase classname="processRequest of go-linter call go-fmt on go outputFiles only" name="processRequest of go-linter call go-fmt on go outputFiles only" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="processRequest of go-tester" errors="0" failures="0" skipped="0" timestamp="2022-06-24T09:54:25" time="8.687" tests="8">
+    <testcase classname="processRequest of go-tester processRequest with export-codemodel" name="processRequest of go-tester processRequest with export-codemodel" time="0.015">
+    </testcase>
+    <testcase classname="processRequest of go-tester processRequest without export-codemodel" name="processRequest of go-tester processRequest without export-codemodel" time="0.004">
+    </testcase>
+    <testcase classname="processRequest of go-tester don&apos;t generate mock test if generate-mock-test is true" name="processRequest of go-tester don&apos;t generate mock test if generate-mock-test is true" time="0.006">
+    </testcase>
+    <testcase classname="processRequest of go-tester generate sdk example if generate-sdk-example is true" name="processRequest of go-tester generate sdk example if generate-sdk-example is true" time="0.004">
+    </testcase>
+    <testcase classname="processRequest of go-tester generate scenario test if generate-scenario-test is true" name="processRequest of go-tester generate scenario test if generate-scenario-test is true" time="0.004">
+    </testcase>
+    <testcase classname="processRequest of go-tester generate sdk sample if generate-sdk-sample is true" name="processRequest of go-tester generate sdk sample if generate-sdk-sample is true" time="0.002">
+    </testcase>
+    <testcase classname="GoTestGenerator from RP agrifood Generate MockTest and SDK example" name="GoTestGenerator from RP agrifood Generate MockTest and SDK example" time="0.196">
+    </testcase>
+    <testcase classname="GoTestGenerator from RP signalR Generate scenario test" name="GoTestGenerator from RP signalR Generate scenario test" time="0.147">
+    </testcase>
+  </testsuite>
+  <testsuite name="Run autorest and compare the output" errors="0" failures="0" skipped="0" timestamp="2022-06-24T09:54:25" time="137.453" tests="1">
+    <testcase classname="Run autorest and compare the output " name="Run autorest and compare the output " time="132.112">
+    </testcase>
+  </testsuite>
+</testsuites>
