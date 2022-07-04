@@ -4,8 +4,8 @@ trigger:
       - main
   paths:
     exclude:
-      - packages/autorest.gotest
-      - swagger
+      - src
+      - test
 
 pr:
   branches:
@@ -13,8 +13,8 @@ pr:
       - main
   paths:
     exclude:
-      - packages/autorest.gotest
-      - swagger
+      - src
+      - test
 
 jobs:
   - job: "AutoRest_Go_CI"
@@ -35,4 +35,4 @@ jobs:
           NodeVersion: "16.x"
           GoVersion: "$(go.version)"
 
-      - template: ../steps/build-test.yaml
+      - template: ../steps/build-test-gotest.yaml

@@ -1,0 +1,20 @@
+steps:
+  - script: |
+      rush rebuild -v
+    displayName: "Build Generator Sources"
+
+  - pwsh: npm test
+    displayName: "Run Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/packages/autorest.gotest
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: $(Build.DefaultWorkingDirectory)/packages/autorest.gotest/**/junit.xml
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: $(Build.DefaultWorkingDirectory)/packages/autorest.gotest/**/coverage/cobertura-coverage.xml
+      reportDirectory: $(Build.DefaultWorkingDirectory)/packages/autorest.gotest/**/coverage
+
