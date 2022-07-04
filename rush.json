@@ -99,6 +99,12 @@
       "projectFolder": "src",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@autorest/gotest",
+      "projectFolder": "packages/autorest.gotest",
+      "reviewCategory": "production",
+      "shouldPublish": true
     }
   ]
 }
