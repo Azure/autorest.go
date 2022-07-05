@@ -1,6 +1,5 @@
 parameters:
   GoTestPath: "$(system.defaultWorkingDirectory)/test"
-  GoBin: "$(system.defaultWorkingDirectory)/bin/go"
 
 steps:
   - script: |
@@ -73,8 +72,8 @@ steps:
       $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
       foreach ($td in $testDirs) {
         pushd $td
-        Write-Host "##[command]Executing go test -run "^Test" -v $td | ${{ parameters.GoBin }}/go-junit-report -set-exit-code > report.xml"
-        go test -run "^Test" -v | ${{ parameters.GoBin }}/go-junit-report -set-exit-code > report.xml
+        Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
+        go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
         popd
       }
       pushd ./test/autorest
