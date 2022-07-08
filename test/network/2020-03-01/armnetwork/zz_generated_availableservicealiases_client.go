@@ -57,7 +57,6 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 }
 
 // NewListPager - Gets all available service aliases for this subscription in this region.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // location - The location.
 // options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
@@ -122,7 +121,6 @@ func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Respo
 }
 
 // NewListByResourceGroupPager - Gets all available service aliases for this resource group in this region.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // location - The location.

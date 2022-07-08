@@ -57,7 +57,6 @@ func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, o
 }
 
 // NewListPager - List network usages for a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // location - The location where resource usage is queried.
 // options - UsagesClientListOptions contains the optional parameters for the UsagesClient.List method.

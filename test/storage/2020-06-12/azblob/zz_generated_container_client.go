@@ -748,7 +748,6 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 }
 
 // NewListBlobFlatSegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
 // method.
@@ -842,7 +841,6 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 }
 
 // NewListBlobHierarchySegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // delimiter - When the request includes this parameter, the operation returns a BlobPrefix element in the response body that
 // acts as a placeholder for all blobs whose names begin with the same substring up to the

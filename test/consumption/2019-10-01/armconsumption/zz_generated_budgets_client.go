@@ -218,7 +218,6 @@ func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClie
 }
 
 // NewListPager - Lists all budgets for the defined scope.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for

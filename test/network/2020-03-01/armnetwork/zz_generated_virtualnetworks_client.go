@@ -306,7 +306,6 @@ func (client *VirtualNetworksClient) getHandleResponse(resp *http.Response) (Vir
 }
 
 // NewListPager - Gets all virtual networks in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualNetworksClientListOptions contains the optional parameters for the VirtualNetworksClient.List method.
@@ -370,7 +369,6 @@ func (client *VirtualNetworksClient) listHandleResponse(resp *http.Response) (Vi
 }
 
 // NewListAllPager - Gets all virtual networks in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VirtualNetworksClientListAllOptions contains the optional parameters for the VirtualNetworksClient.ListAll method.
 func (client *VirtualNetworksClient) NewListAllPager(options *VirtualNetworksClientListAllOptions) *runtime.Pager[VirtualNetworksClientListAllResponse] {
@@ -429,7 +427,6 @@ func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) 
 }
 
 // NewListUsagePager - Lists usage stats.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.

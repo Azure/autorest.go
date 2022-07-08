@@ -244,7 +244,6 @@ func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) 
 }
 
 // NewListPager - Gets all DDoS protection plans in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - DdosProtectionPlansClientListOptions contains the optional parameters for the DdosProtectionPlansClient.List
 // method.
@@ -304,7 +303,6 @@ func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response)
 }
 
 // NewListByResourceGroupPager - Gets all the DDoS protection plans in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - DdosProtectionPlansClientListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.ListByResourceGroup

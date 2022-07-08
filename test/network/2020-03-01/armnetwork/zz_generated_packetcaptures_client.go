@@ -329,7 +329,6 @@ func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, 
 }
 
 // NewListPager - Lists all packet capture sessions within the specified resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.

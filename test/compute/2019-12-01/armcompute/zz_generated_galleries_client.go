@@ -240,7 +240,6 @@ func (client *GalleriesClient) getHandleResponse(resp *http.Response) (Galleries
 }
 
 // NewListPager - List galleries under a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-12-01
 // options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
 func (client *GalleriesClient) NewListPager(options *GalleriesClientListOptions) *runtime.Pager[GalleriesClientListResponse] {
@@ -299,7 +298,6 @@ func (client *GalleriesClient) listHandleResponse(resp *http.Response) (Gallerie
 }
 
 // NewListByResourceGroupPager - List galleries under a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup

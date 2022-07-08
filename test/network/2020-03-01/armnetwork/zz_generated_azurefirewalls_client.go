@@ -244,7 +244,6 @@ func (client *AzureFirewallsClient) getHandleResponse(resp *http.Response) (Azur
 }
 
 // NewListPager - Lists all Azure Firewalls in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - AzureFirewallsClientListOptions contains the optional parameters for the AzureFirewallsClient.List method.
@@ -308,7 +307,6 @@ func (client *AzureFirewallsClient) listHandleResponse(resp *http.Response) (Azu
 }
 
 // NewListAllPager - Gets all the Azure Firewalls in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - AzureFirewallsClientListAllOptions contains the optional parameters for the AzureFirewallsClient.ListAll method.
 func (client *AzureFirewallsClient) NewListAllPager(options *AzureFirewallsClientListAllOptions) *runtime.Pager[AzureFirewallsClientListAllResponse] {

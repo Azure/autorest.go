@@ -245,7 +245,6 @@ func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (Mo
 }
 
 // NewListPager - Lists metric configurations in a role.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // roleName - The role name.

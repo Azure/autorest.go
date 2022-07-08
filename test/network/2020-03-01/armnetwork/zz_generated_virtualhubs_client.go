@@ -243,7 +243,6 @@ func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (Virtual
 }
 
 // NewListPager - Lists all the VirtualHubs in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VirtualHubsClientListOptions contains the optional parameters for the VirtualHubsClient.List method.
 func (client *VirtualHubsClient) NewListPager(options *VirtualHubsClientListOptions) *runtime.Pager[VirtualHubsClientListResponse] {
@@ -302,7 +301,6 @@ func (client *VirtualHubsClient) listHandleResponse(resp *http.Response) (Virtua
 }
 
 // NewListByResourceGroupPager - Lists all the VirtualHubs in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VirtualHub.
 // options - VirtualHubsClientListByResourceGroupOptions contains the optional parameters for the VirtualHubsClient.ListByResourceGroup

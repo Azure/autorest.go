@@ -198,7 +198,6 @@ func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (Da
 }
 
 // NewGetDataFlowsByWorkspacePager - Lists data flows.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - dataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
 // method.

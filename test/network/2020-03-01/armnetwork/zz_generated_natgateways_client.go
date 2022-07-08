@@ -246,7 +246,6 @@ func (client *NatGatewaysClient) getHandleResponse(resp *http.Response) (NatGate
 }
 
 // NewListPager - Gets all nat gateways in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - NatGatewaysClientListOptions contains the optional parameters for the NatGatewaysClient.List method.
@@ -310,7 +309,6 @@ func (client *NatGatewaysClient) listHandleResponse(resp *http.Response) (NatGat
 }
 
 // NewListAllPager - Gets all the Nat Gateways in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - NatGatewaysClientListAllOptions contains the optional parameters for the NatGatewaysClient.ListAll method.
 func (client *NatGatewaysClient) NewListAllPager(options *NatGatewaysClientListAllOptions) *runtime.Pager[NatGatewaysClientListAllResponse] {

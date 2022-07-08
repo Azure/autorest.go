@@ -220,7 +220,6 @@ func (client *DedicatedHostGroupsClient) getHandleResponse(resp *http.Response) 
 
 // NewListByResourceGroupPager - Lists all of the dedicated host groups in the specified resource group. Use the nextLink
 // property in the response to get the next page of dedicated host groups.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
@@ -286,7 +285,6 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupHandleResponse(resp 
 
 // NewListBySubscriptionPager - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the
 // response to get the next page of dedicated host groups.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-12-01
 // options - DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
 // method.

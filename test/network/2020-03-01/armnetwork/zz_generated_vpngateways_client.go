@@ -243,7 +243,6 @@ func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGate
 }
 
 // NewListPager - Lists all the VpnGateways in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VPNGatewaysClientListOptions contains the optional parameters for the VPNGatewaysClient.List method.
 func (client *VPNGatewaysClient) NewListPager(options *VPNGatewaysClientListOptions) *runtime.Pager[VPNGatewaysClientListResponse] {
@@ -302,7 +301,6 @@ func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGat
 }
 
 // NewListByResourceGroupPager - Lists all the VpnGateways in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // options - VPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup

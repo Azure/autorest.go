@@ -198,7 +198,6 @@ func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (
 }
 
 // NewGetSQLScriptsByWorkspacePager - Lists sql scripts.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - sqlScriptClientGetSQLScriptsByWorkspaceOptions contains the optional parameters for the sqlScriptClient.GetSQLScriptsByWorkspace
 // method.

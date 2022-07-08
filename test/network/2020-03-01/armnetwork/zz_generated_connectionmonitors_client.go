@@ -259,7 +259,6 @@ func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (
 }
 
 // NewListPager - Lists all connection monitors for the specified Network Watcher.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.

@@ -193,7 +193,6 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 }
 
 // NewListPager - Get all role definitions that are applicable at scope and above.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition.

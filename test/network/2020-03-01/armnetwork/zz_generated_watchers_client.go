@@ -831,7 +831,6 @@ func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Contex
 }
 
 // NewListPager - Gets all network watchers by resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - WatchersClientListOptions contains the optional parameters for the WatchersClient.List method.
@@ -889,7 +888,6 @@ func (client *WatchersClient) listHandleResponse(resp *http.Response) (WatchersC
 }
 
 // NewListAllPager - Gets all network watchers by subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - WatchersClientListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
 func (client *WatchersClient) NewListAllPager(options *WatchersClientListAllOptions) *runtime.Pager[WatchersClientListAllResponse] {

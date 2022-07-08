@@ -53,7 +53,6 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 }
 
 // NewListPager - Lists the reservations summaries for the defined scope daily or monthly grain.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // scope - The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
 // for BillingAccount scope (legacy), and
@@ -131,7 +130,6 @@ func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Respons
 }
 
 // NewListByReservationOrderPager - Lists the reservations summaries for daily or monthly grain.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // reservationOrderID - Order Id of the reservation
 // grain - Can be daily or monthly
@@ -197,7 +195,6 @@ func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(
 }
 
 // NewListByReservationOrderAndReservationPager - Lists the reservations summaries for daily or monthly grain.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // reservationOrderID - Order Id of the reservation
 // reservationID - Id of the reservation

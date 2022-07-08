@@ -513,7 +513,6 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedCreateReque
 }
 
 // NewListPager - Lists all the P2SVpnGateways in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - P2SVPNGatewaysClientListOptions contains the optional parameters for the P2SVPNGatewaysClient.List method.
 func (client *P2SVPNGatewaysClient) NewListPager(options *P2SVPNGatewaysClientListOptions) *runtime.Pager[P2SVPNGatewaysClientListResponse] {
@@ -572,7 +571,6 @@ func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2S
 }
 
 // NewListByResourceGroupPager - Lists all the P2SVpnGateways in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // options - P2SVPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.ListByResourceGroup

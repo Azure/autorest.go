@@ -259,7 +259,6 @@ func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (Pi
 }
 
 // NewGetPipelinesByWorkspacePager - Lists pipelines.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - pipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
 // method.

@@ -53,7 +53,6 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 }
 
 // NewListPager - List of transactions for reserved instances on billing account scope
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // billingAccountID - BillingAccount ID
 // options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List
@@ -117,7 +116,6 @@ func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Respo
 }
 
 // NewListByBillingProfilePager - List of transactions for reserved instances on billing account scope
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // billingAccountID - BillingAccount ID
 // billingProfileID - Azure Billing Profile ID.

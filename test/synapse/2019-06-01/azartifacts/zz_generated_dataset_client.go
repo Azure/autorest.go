@@ -198,7 +198,6 @@ func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (Data
 }
 
 // NewGetDatasetsByWorkspacePager - Lists datasets.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - datasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
 // method.

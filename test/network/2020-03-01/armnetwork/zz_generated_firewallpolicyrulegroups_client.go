@@ -260,7 +260,6 @@ func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *http.Respo
 }
 
 // NewListPager - Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.

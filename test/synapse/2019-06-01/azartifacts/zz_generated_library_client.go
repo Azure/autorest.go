@@ -349,7 +349,6 @@ func (client *libraryClient) getOperationResultHandleResponse(resp *http.Respons
 }
 
 // NewListPager - Lists Library.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - libraryClientListOptions contains the optional parameters for the libraryClient.List method.
 func (client *libraryClient) NewListPager(options *libraryClientListOptions) *runtime.Pager[LibraryClientListResponse] {

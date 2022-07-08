@@ -435,7 +435,6 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleResponse(re
 }
 
 // NewListPager - Lists all application gateways in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ApplicationGatewaysClientListOptions contains the optional parameters for the ApplicationGatewaysClient.List
@@ -500,7 +499,6 @@ func (client *ApplicationGatewaysClient) listHandleResponse(resp *http.Response)
 }
 
 // NewListAllPager - Gets all the application gateways in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAllOptions contains the optional parameters for the ApplicationGatewaysClient.ListAll
 // method.
@@ -701,7 +699,6 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleResponse(r
 }
 
 // NewListAvailableSSLPredefinedPoliciesPager - Lists all SSL predefined policies for configuring Ssl policy.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies
 // method.

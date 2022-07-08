@@ -180,7 +180,6 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *http.R
 }
 
 // NewListPager - Retrieves all the ExpressRouteCrossConnections in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ExpressRouteCrossConnectionsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.List
 // method.
@@ -317,7 +316,6 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableCreateRequest(ctx 
 }
 
 // NewListByResourceGroupPager - Retrieves all the ExpressRouteCrossConnections in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ExpressRouteCrossConnectionsClientListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnectionsClient.ListByResourceGroup

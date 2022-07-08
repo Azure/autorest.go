@@ -53,7 +53,6 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 
 // NewListPager - Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for
 // May 1, 2014 or later.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // scope - The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing

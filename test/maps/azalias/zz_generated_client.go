@@ -187,7 +187,6 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 // "2020-02-13T21:19:22.123Z" }, { "createdTimestamp": "2020-02-18T19:53:33.123Z", "aliasId": "1856dbfc-7a66-ee5a-bf8d-51dbfe1906f6",
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0
 // options - clientListOptions contains the optional parameters for the client.List method.
 func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[ClientListResponse] {

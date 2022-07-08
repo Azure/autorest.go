@@ -259,7 +259,6 @@ func (client *ContainersClient) getHandleResponse(resp *http.Response) (Containe
 }
 
 // NewListByStorageAccountPager - Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // storageAccountName - The storage Account name.

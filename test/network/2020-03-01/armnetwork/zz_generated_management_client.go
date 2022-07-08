@@ -177,7 +177,6 @@ func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx cont
 }
 
 // NewDisconnectActiveSessionsPager - Returns the list of currently active sessions on the Bastion.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
@@ -316,7 +315,6 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 }
 
 // BeginGetActiveSessions - Returns the list of currently active sessions on the Bastion.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
@@ -359,7 +357,6 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 }
 
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 func (client *ManagementClient) getActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*http.Response, error) {
 	req, err := client.getActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, options)
@@ -412,7 +409,6 @@ func (client *ManagementClient) getActiveSessionsHandleResponse(resp *http.Respo
 }
 
 // NewGetBastionShareableLinkPager - Return the Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
@@ -483,7 +479,6 @@ func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http
 }
 
 // BeginPutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
@@ -527,7 +522,6 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 }
 
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 func (client *ManagementClient) putBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*http.Response, error) {
 	req, err := client.putBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)

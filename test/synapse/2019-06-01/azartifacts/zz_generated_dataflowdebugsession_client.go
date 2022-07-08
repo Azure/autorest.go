@@ -212,7 +212,6 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 }
 
 // NewQueryDataFlowDebugSessionsByWorkspacePager - Query all active data flow debug sessions.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 // dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace method.

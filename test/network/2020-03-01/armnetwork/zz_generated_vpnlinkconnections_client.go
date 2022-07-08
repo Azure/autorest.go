@@ -57,7 +57,6 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 }
 
 // NewListByVPNConnectionPager - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.

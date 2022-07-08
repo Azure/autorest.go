@@ -246,7 +246,6 @@ func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (Trig
 }
 
 // NewGetTriggersByWorkspacePager - Lists triggers.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - triggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
 // method.

@@ -244,7 +244,6 @@ func (client *BastionHostsClient) getHandleResponse(resp *http.Response) (Bastio
 }
 
 // NewListPager - Lists all Bastion Hosts in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.List method.
 func (client *BastionHostsClient) NewListPager(options *BastionHostsClientListOptions) *runtime.Pager[BastionHostsClientListResponse] {
@@ -303,7 +302,6 @@ func (client *BastionHostsClient) listHandleResponse(resp *http.Response) (Basti
 }
 
 // NewListByResourceGroupPager - Lists all Bastion Hosts in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup

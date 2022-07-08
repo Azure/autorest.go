@@ -260,7 +260,6 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *http.Re
 }
 
 // NewListPager - Gets all peerings in a specified express route circuit.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.

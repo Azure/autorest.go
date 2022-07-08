@@ -247,7 +247,6 @@ func (client *IPAllocationsClient) getHandleResponse(resp *http.Response) (IPAll
 }
 
 // NewListPager - Gets all IpAllocations in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - IPAllocationsClientListOptions contains the optional parameters for the IPAllocationsClient.List method.
 func (client *IPAllocationsClient) NewListPager(options *IPAllocationsClientListOptions) *runtime.Pager[IPAllocationsClientListResponse] {
@@ -306,7 +305,6 @@ func (client *IPAllocationsClient) listHandleResponse(resp *http.Response) (IPAl
 }
 
 // NewListByResourceGroupPager - Gets all IpAllocations in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - IPAllocationsClientListByResourceGroupOptions contains the optional parameters for the IPAllocationsClient.ListByResourceGroup

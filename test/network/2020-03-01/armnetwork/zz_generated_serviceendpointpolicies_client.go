@@ -248,7 +248,6 @@ func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *http.Respon
 }
 
 // NewListPager - Gets all the service endpoint policies in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ServiceEndpointPoliciesClientListOptions contains the optional parameters for the ServiceEndpointPoliciesClient.List
 // method.
@@ -308,7 +307,6 @@ func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *http.Respo
 }
 
 // NewListByResourceGroupPager - Gets all service endpoint Policies in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ServiceEndpointPoliciesClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPoliciesClient.ListByResourceGroup

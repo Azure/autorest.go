@@ -1204,7 +1204,6 @@ func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (C
 
 // NewGetCertificateIssuersPager - The GetCertificateIssuers operation returns the set of certificate issuer resources in
 // the specified key vault. This operation requires the certificates/manageissuers/getissuers permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
@@ -1369,7 +1368,6 @@ func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (C
 
 // NewGetCertificateVersionsPager - The GetCertificateVersions operation returns the versions of a certificate in the specified
 // key vault. This operation requires the certificates/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -1436,7 +1434,6 @@ func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) 
 
 // NewGetCertificatesPager - The GetCertificates operation returns the set of certificates resources in the specified key
 // vault. This operation requires the certificates/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
@@ -1555,7 +1552,6 @@ func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (
 // are in a deleted state and ready for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete
 // enabled vaults.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
@@ -1675,7 +1671,6 @@ func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGe
 // operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return
 // an error if invoked on a non soft-delete enabled vault. This operation
 // requires the keys/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
@@ -1794,7 +1789,6 @@ func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response)
 
 // NewGetDeletedSasDefinitionsPager - The Get Deleted Sas Definitions operation returns the SAS definitions that have been
 // deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -1913,7 +1907,6 @@ func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (Clien
 
 // NewGetDeletedSecretsPager - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled
 // for soft-delete. This operation requires the secrets/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
@@ -2027,7 +2020,6 @@ func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response
 
 // NewGetDeletedStorageAccountsPager - The Get Deleted Storage Accounts operation returns the storage accounts that have been
 // deleted for a vault enabled for soft-delete. This operation requires the storage/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
@@ -2147,7 +2139,6 @@ func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyRes
 
 // NewGetKeyVersionsPager - The full key identifier, attributes, and tags are provided in the response. This operation requires
 // the keys/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -2216,7 +2207,6 @@ func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientG
 // of a stored key. The LIST operation is applicable to all key types, however only the base key
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response.
 // This operation requires the keys/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
@@ -2334,7 +2324,6 @@ func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (Clien
 
 // NewGetSasDefinitionsPager - List storage SAS definitions for the given storage account. This operation requires the storage/listsas
 // permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -2458,7 +2447,6 @@ func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSec
 
 // NewGetSecretVersionsPager - The full secret identifier and attributes are provided in the response. No values are returned
 // for the secrets. This operations requires the secrets/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -2526,7 +2514,6 @@ func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (Clie
 // NewGetSecretsPager - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier
 // and its attributes are provided in the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
@@ -2638,7 +2625,6 @@ func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (Clie
 
 // NewGetStorageAccountsPager - List storage accounts managed by the specified key vault. This operation requires the storage/list
 // permission.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.

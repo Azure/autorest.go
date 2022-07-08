@@ -247,7 +247,6 @@ func (client *PublicIPPrefixesClient) getHandleResponse(resp *http.Response) (Pu
 }
 
 // NewListPager - Gets all public IP prefixes in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - PublicIPPrefixesClientListOptions contains the optional parameters for the PublicIPPrefixesClient.List method.
@@ -311,7 +310,6 @@ func (client *PublicIPPrefixesClient) listHandleResponse(resp *http.Response) (P
 }
 
 // NewListAllPager - Gets all the public IP prefixes in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - PublicIPPrefixesClientListAllOptions contains the optional parameters for the PublicIPPrefixesClient.ListAll
 // method.
