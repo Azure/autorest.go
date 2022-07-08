@@ -1,0 +1,38 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - src
+      - test
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - src
+      - test
+
+jobs:
+  - job: "AutoRest_Go_CI"
+    displayName: "Run AutoRest CI Checks"
+
+    strategy:
+      matrix:
+        Linux_Go118:
+          vm.image: "ubuntu-18.04"
+          go.version: "1.18"
+
+    pool:
+      vmImage: "$(vm.image)"
+
+    steps:
+      - template: ../steps/set-env.yaml
+        parameters:
+          NodeVersion: "16.x"
+          GoVersion: "$(go.version)"
+
+      - template: ../steps/build-test-gotest.yaml

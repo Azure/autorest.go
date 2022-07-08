@@ -1,0 +1,103 @@
+parameters:
+  GoTestPath: "$(system.defaultWorkingDirectory)/test"
+
+steps:
+  - script: |
+      rush rebuild -v
+    displayName: "Build Generator Sources"
+
+  - script: |
+      rush regenerate
+      rush modtidy 2>&1
+      git add -A ./test/.
+      git diff --staged -w 1>&2
+    displayName: "Regenerate Autorest Tests"
+    failOnStderr: true
+
+  - script: |
+      set -e
+      go version
+      go install github.com/jstemmer/go-junit-report@v1.0.0
+    displayName: "Install Dependencies"
+    workingDirectory: "${{ parameters.GoTestPath }}"
+
+  - pwsh: |
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing go build -v ./... in $md"
+        go build -v ./...
+        if (!$?) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Build"
+
+  - pwsh: |
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing go mod tidy in $md"
+        go mod tidy
+        $diff = (git diff -w .)
+        write-host ($diff -join "`n")
+        if ($diff.Length -gt 0) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Mod Tidy"
+
+  - pwsh: |
+      $modDirs = (./eng/scripts/get_module_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      $exit = 0
+      foreach ($md in $modDirs) {
+        pushd $md
+        Write-Host "##[command]Executing go vet ./... in $md"
+        go vet ./...
+        if (!$?) {
+          $exit = 1
+        }
+      }
+      exit $exit
+    displayName: "Vet"
+
+  - pwsh: |
+      pushd ./src/node_modules/@microsoft.azure/autorest.testserver
+      npm run start:prod&
+      popd
+      $testDirs = (./eng/scripts/get_test_dirs.ps1 -serviceDir ${{ parameters.GoTestPath }})
+      foreach ($td in $testDirs) {
+        pushd $td
+        Write-Host "##[command]Executing go test -run "^Test" -v $td | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml"
+        go test -run "^Test" -v | & $HOME/go/bin/go-junit-report -set-exit-code > report.xml
+        popd
+      }
+      pushd ./test/autorest
+      go run ./covreport/main.go
+      popd
+      pushd ./src/node_modules/@microsoft.azure/autorest.testserver
+      npm stop
+      popd
+    displayName: "Run Acceptance Tests"
+
+  - pwsh: npm test
+    displayName: "Run Unit Tests"
+    workingDirectory: $(System.DefaultWorkingDirectory)/src
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: ${{ parameters.GoTestPath }}/**/report.xml
+      failTaskOnFailedTests: true
+
+  - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
+      - pwsh: |
+          $currentVersion = node -p -e "require('./src/package.json').version";
+          $currentVersion="$currentVersion-$(Build.BuildNumber)";
+          cd src/node_modules/@microsoft.azure/autorest.testserver;
+          npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
+        displayName: "Publish AutoRest Test Server Coverage Report"

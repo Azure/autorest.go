@@ -1,0 +1,27 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: "ubuntu-18.04"
+
+steps:
+  - template: ../steps/set-env.yaml
+    parameters:
+      NodeVersion: "16.x"
+      GoVersion: "1.18"
+
+  - template: ../steps/build-test-gotest.yaml
+
+  - pwsh: |
+      $currentVersion = node -p -e "require('./packages/autorest.gotest/package.json').version";
+      cd packages/autorest.gotest
+      npm version --no-git-tag-version $currentVersion
+      npm pack;
+      npx publish-release --token $(azuresdk-github-pat) --repo autorest.go --owner azure --name "@autorest/gotest_v$currentVersion" --tag v$currentVersion --notes='Go test generation' --editRelease false --assets autorest-gotest-$currentVersion.tgz --target_commitish $(Build.SourceBranchName);
+    displayName: "Publish GitHub Release"
+
+  - script: |
+      cd packages/autorest.gotest
+      echo "//registry.npmjs.org/:_authToken=$(azure-sdk-npm-token)" > ./.npmrc
+      npm publish --access public
+    displayName: "Publish to npm"
