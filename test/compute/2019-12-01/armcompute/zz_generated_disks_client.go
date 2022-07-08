@@ -311,7 +311,6 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 }
 
 // NewListPager - Lists all the disks under a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01
 // options - DisksClientListOptions contains the optional parameters for the DisksClient.List method.
 func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtime.Pager[DisksClientListResponse] {
@@ -370,7 +369,6 @@ func (client *DisksClient) listHandleResponse(resp *http.Response) (DisksClientL
 }
 
 // NewListByResourceGroupPager - Lists all the disks under a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // options - DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup

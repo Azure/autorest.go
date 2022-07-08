@@ -378,7 +378,6 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 
 // NewListContainersSegmentPager - The List Containers Segment operation returns a list of the containers under the specified
 // account
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // options - serviceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
 // method.

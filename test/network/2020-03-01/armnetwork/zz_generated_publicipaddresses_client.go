@@ -327,7 +327,6 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 }
 
 // NewListPager - Gets all public IP addresses in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.List method.
@@ -391,7 +390,6 @@ func (client *PublicIPAddressesClient) listHandleResponse(resp *http.Response) (
 }
 
 // NewListAllPager - Gets all the public IP addresses in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.ListAll
 // method.
@@ -452,7 +450,6 @@ func (client *PublicIPAddressesClient) listAllHandleResponse(resp *http.Response
 
 // NewListVirtualMachineScaleSetPublicIPAddressesPager - Gets information about all public IP addresses on a virtual machine
 // scale set level.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2018-10-01
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
@@ -523,7 +520,6 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 
 // NewListVirtualMachineScaleSetVMPublicIPAddressesPager - Gets information about all public IP addresses in a virtual machine
 // IP configuration in a virtual machine scale set.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2018-10-01
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.

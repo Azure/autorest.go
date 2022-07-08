@@ -245,7 +245,6 @@ func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Respo
 }
 
 // NewListPager - Gets all the Security Partner Providers in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
 // method.
@@ -305,7 +304,6 @@ func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Resp
 }
 
 // NewListByResourceGroupPager - Lists all Security Partner Providers in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup

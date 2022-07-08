@@ -258,7 +258,6 @@ func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (Dedi
 
 // NewListByHostGroupPager - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property
 // in the response to get the next page of dedicated hosts.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.

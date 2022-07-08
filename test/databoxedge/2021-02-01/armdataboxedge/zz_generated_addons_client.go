@@ -259,7 +259,6 @@ func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsClient
 }
 
 // NewListByRolePager - Lists all the addons configured in the role.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // roleName - The role name.

@@ -246,7 +246,6 @@ func (client *DiskEncryptionSetsClient) getHandleResponse(resp *http.Response) (
 }
 
 // NewListPager - Lists all the disk encryption sets under a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01
 // options - DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
 func (client *DiskEncryptionSetsClient) NewListPager(options *DiskEncryptionSetsClientListOptions) *runtime.Pager[DiskEncryptionSetsClientListResponse] {
@@ -305,7 +304,6 @@ func (client *DiskEncryptionSetsClient) listHandleResponse(resp *http.Response) 
 }
 
 // NewListByResourceGroupPager - Lists all the disk encryption sets under a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // options - DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup

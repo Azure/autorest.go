@@ -247,7 +247,6 @@ func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (Virt
 }
 
 // NewListPager - Gets all the Virtual Routers in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VirtualRoutersClientListOptions contains the optional parameters for the VirtualRoutersClient.List method.
 func (client *VirtualRoutersClient) NewListPager(options *VirtualRoutersClientListOptions) *runtime.Pager[VirtualRoutersClientListResponse] {
@@ -306,7 +305,6 @@ func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (Vir
 }
 
 // NewListByResourceGroupPager - Lists all Virtual Routers in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualRoutersClientListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.ListByResourceGroup

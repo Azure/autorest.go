@@ -51,7 +51,6 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 }
 
 // NewListPager - List of recommendations for purchasing reserved instances.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // scope - The scope associated with reservation recommendations operations. This includes '/subscriptions/{subscriptionId}/'
 // for subscription scope,

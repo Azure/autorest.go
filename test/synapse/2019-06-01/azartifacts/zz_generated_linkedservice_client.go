@@ -199,7 +199,6 @@ func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Res
 }
 
 // NewGetLinkedServicesByWorkspacePager - Lists linked services.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - linkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
 // method.

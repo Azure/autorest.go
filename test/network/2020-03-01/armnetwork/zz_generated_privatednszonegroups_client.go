@@ -260,7 +260,6 @@ func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *http.Response)
 }
 
 // NewListPager - Gets all private dns zone groups in a private endpoint.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // privateEndpointName - The name of the private endpoint.
 // resourceGroupName - The name of the resource group.

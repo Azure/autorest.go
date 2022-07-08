@@ -244,7 +244,6 @@ func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesClientGe
 }
 
 // NewListByDataBoxEdgeDevicePager - Lists all the roles configured in a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.

@@ -37,7 +37,6 @@ func NewPagingClient(pl runtime.Pipeline) *PagingClient {
 
 // NewDuplicateParamsPager - Define filter as a query param for all calls. However, the returned next link will also include
 // the filter as part of it. Make sure you don't end up duplicating the filter param in the url sent.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientDuplicateParamsOptions contains the optional parameters for the PagingClient.DuplicateParams method.
 func (client *PagingClient) NewDuplicateParamsPager(options *PagingClientDuplicateParamsOptions) *runtime.Pager[PagingClientDuplicateParamsResponse] {
@@ -95,7 +94,6 @@ func (client *PagingClient) duplicateParamsHandleResponse(resp *http.Response) (
 
 // NewFirstResponseEmptyPager - A paging operation whose first response's items list is empty, but still returns a next link.
 // Second (and final) call, will give you an items list of 1.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty
 // method.
@@ -148,7 +146,6 @@ func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response
 }
 
 // NewGetMultiplePagesPager - A paging operation that includes a nextLink that has 10 pages
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
 func (client *PagingClient) NewGetMultiplePagesPager(options *PagingClientGetMultiplePagesOptions) *runtime.Pager[PagingClientGetMultiplePagesResponse] {
@@ -209,7 +206,6 @@ func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) 
 }
 
 // NewGetMultiplePagesFailurePager - A paging operation that receives a 400 on the second call
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure
 // method.
@@ -262,7 +258,6 @@ func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Res
 }
 
 // NewGetMultiplePagesFailureURIPager - A paging operation that receives an invalid nextLink
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
 // method.
@@ -315,7 +310,6 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.
 }
 
 // NewGetMultiplePagesFragmentNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // apiVersion - Sets the api version to use.
 // tenant - Sets the tenant to use.
@@ -378,7 +372,6 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp 
 
 // NewGetMultiplePagesFragmentWithGroupingNextLinkPager - A paging operation that doesn't return a full URL, just a fragment
 // with parameters grouped
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // CustomParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
@@ -440,7 +433,6 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleRe
 }
 
 // BeginGetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
@@ -480,7 +472,6 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 }
 
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*http.Response, error) {
 	req, err := client.getMultiplePagesLROCreateRequest(ctx, options)
@@ -528,7 +519,6 @@ func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Respons
 
 // NewGetMultiplePagesRetryFirstPager - A paging operation that fails on the first call with 500 and then retries and then
 // get a response including a nextLink that has 10 pages
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
 // method.
@@ -582,7 +572,6 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.
 
 // NewGetMultiplePagesRetrySecondPager - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call
 // fails first with 500. The client should retry and finish all 10 pages eventually.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
 // method.
@@ -635,7 +624,6 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http
 }
 
 // NewGetMultiplePagesWithOffsetPager - A paging operation that includes a nextLink that has 10 pages
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.GetMultiplePagesWithOffset
 // method.
@@ -698,7 +686,6 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.
 }
 
 // NewGetNoItemNamePagesPager - A paging operation that must return result of the default 'value' node.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages
 // method.
@@ -751,7 +738,6 @@ func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response
 }
 
 // NewGetNullNextLinkNamePagesPager - A paging operation that must ignore any kind of nextLink, and stop after page 1.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
 // method.
@@ -798,7 +784,6 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Re
 }
 
 // NewGetODataMultiplePagesPager - A paging operation that includes a nextLink in odata format that has 10 pages
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages
 // method.
@@ -861,7 +846,6 @@ func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Respo
 
 // NewGetPagingModelWithItemNameWithXMSClientNamePager - A paging operation that returns a paging model whose item name is
 // is overriden by x-ms-client-name 'indexes'.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
 // method.
@@ -914,7 +898,6 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleRes
 }
 
 // NewGetSinglePagesPager - A paging operation that finishes on the first call without a nextlink
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
 func (client *PagingClient) NewGetSinglePagesPager(options *PagingClientGetSinglePagesOptions) *runtime.Pager[PagingClientGetSinglePagesResponse] {
@@ -966,7 +949,6 @@ func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (P
 }
 
 // NewGetSinglePagesFailurePager - A paging operation that receives a 400 on the first call
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PagingClientGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure
 // method.
@@ -1020,7 +1002,6 @@ func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Respo
 
 // NewGetWithQueryParamsPager - A paging operation that includes a next operation. It has a different query parameter from
 // it's next operation nextOperationWithQueryParams. Returns a ProductResult
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // requiredQueryParameter - A required integer query parameter. Put in value '100' to pass test.
 // options - PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams

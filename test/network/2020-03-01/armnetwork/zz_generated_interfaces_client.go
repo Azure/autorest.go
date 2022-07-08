@@ -457,7 +457,6 @@ func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleR
 }
 
 // NewListPager - Gets all network interfaces in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - InterfacesClientListOptions contains the optional parameters for the InterfacesClient.List method.
@@ -521,7 +520,6 @@ func (client *InterfacesClient) listHandleResponse(resp *http.Response) (Interfa
 }
 
 // NewListAllPager - Gets all network interfaces in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - InterfacesClientListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
 func (client *InterfacesClient) NewListAllPager(options *InterfacesClientListAllOptions) *runtime.Pager[InterfacesClientListAllResponse] {
@@ -646,7 +644,6 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(
 
 // NewListVirtualMachineScaleSetIPConfigurationsPager - Get the specified network interface ip configuration in a virtual
 // machine scale set.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2018-10-01
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
@@ -729,7 +726,6 @@ func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandle
 }
 
 // NewListVirtualMachineScaleSetNetworkInterfacesPager - Gets all network interfaces in a virtual machine scale set.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2018-10-01
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
@@ -800,7 +796,6 @@ func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandl
 
 // NewListVirtualMachineScaleSetVMNetworkInterfacesPager - Gets information about all network interfaces in a virtual machine
 // in a virtual machine scale set.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2018-10-01
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.

@@ -111,7 +111,6 @@ func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *http.Res
 
 // NewListPager - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location.
 // Available bandwidths can only be obtained when retrieving a specific peering location.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ExpressRoutePortsLocationsClientListOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.List
 // method.

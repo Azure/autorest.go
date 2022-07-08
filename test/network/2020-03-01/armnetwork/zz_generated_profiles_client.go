@@ -237,7 +237,6 @@ func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesCl
 }
 
 // NewListPager - Gets all network profiles in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
@@ -301,7 +300,6 @@ func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesC
 }
 
 // NewListAllPager - Gets all the network profiles in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
 func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOptions) *runtime.Pager[ProfilesClientListAllResponse] {

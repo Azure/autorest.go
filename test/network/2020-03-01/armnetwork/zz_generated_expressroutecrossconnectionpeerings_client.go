@@ -260,7 +260,6 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp 
 }
 
 // NewListPager - Gets all peerings in a specified ExpressRouteCrossConnection.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // crossConnectionName - The name of the ExpressRouteCrossConnection.

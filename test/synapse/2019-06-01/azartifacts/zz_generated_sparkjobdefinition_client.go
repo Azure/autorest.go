@@ -307,7 +307,6 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp
 }
 
 // NewGetSparkJobDefinitionsByWorkspacePager - Lists spark job definitions.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace
 // method.

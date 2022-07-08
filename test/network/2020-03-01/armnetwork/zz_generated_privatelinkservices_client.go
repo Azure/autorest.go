@@ -512,7 +512,6 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleRespo
 }
 
 // NewListPager - Gets all private link services in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - PrivateLinkServicesClientListOptions contains the optional parameters for the PrivateLinkServicesClient.List
@@ -578,7 +577,6 @@ func (client *PrivateLinkServicesClient) listHandleResponse(resp *http.Response)
 
 // NewListAutoApprovedPrivateLinkServicesPager - Returns all of the private link service ids that can be linked to a Private
 // Endpoint with auto approved in this subscription in this region.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // location - The location of the domain name.
 // options - PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesOptions contains the optional parameters for the
@@ -644,7 +642,6 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 
 // NewListAutoApprovedPrivateLinkServicesByResourceGroupPager - Returns all of the private link service ids that can be linked
 // to a Private Endpoint with auto approved in this subscription in this region.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
@@ -714,7 +711,6 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 }
 
 // NewListBySubscriptionPager - Gets all private link service in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - PrivateLinkServicesClientListBySubscriptionOptions contains the optional parameters for the PrivateLinkServicesClient.ListBySubscription
 // method.
@@ -774,7 +770,6 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleResponse(resp *
 }
 
 // NewListPrivateEndpointConnectionsPager - Gets all private end point connections for a specific private link service.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.

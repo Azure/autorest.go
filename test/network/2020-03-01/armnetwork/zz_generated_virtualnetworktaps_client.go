@@ -244,7 +244,6 @@ func (client *VirtualNetworkTapsClient) getHandleResponse(resp *http.Response) (
 }
 
 // NewListAllPager - Gets all the VirtualNetworkTaps in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VirtualNetworkTapsClientListAllOptions contains the optional parameters for the VirtualNetworkTapsClient.ListAll
 // method.
@@ -304,7 +303,6 @@ func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *http.Respons
 }
 
 // NewListByResourceGroupPager - Gets all the VirtualNetworkTaps in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualNetworkTapsClientListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTapsClient.ListByResourceGroup

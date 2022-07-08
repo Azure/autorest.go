@@ -192,7 +192,6 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 }
 
 // NewListForScopePager - Gets role assignments for a scope.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.

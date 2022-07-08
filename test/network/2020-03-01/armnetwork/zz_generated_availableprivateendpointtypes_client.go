@@ -58,7 +58,6 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 
 // NewListPager - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this
 // region.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // location - The location of the domain name.
 // options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
@@ -124,7 +123,6 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http
 
 // NewListByResourceGroupPager - Returns all of the resource types that can be linked to a Private Endpoint in this subscription
 // in this region.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.

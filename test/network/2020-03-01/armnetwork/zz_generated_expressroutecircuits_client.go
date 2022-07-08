@@ -364,7 +364,6 @@ func (client *ExpressRouteCircuitsClient) getStatsHandleResponse(resp *http.Resp
 }
 
 // NewListPager - Gets all the express route circuits in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ExpressRouteCircuitsClientListOptions contains the optional parameters for the ExpressRouteCircuitsClient.List
@@ -429,7 +428,6 @@ func (client *ExpressRouteCircuitsClient) listHandleResponse(resp *http.Response
 }
 
 // NewListAllPager - Gets all the express route circuits in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ExpressRouteCircuitsClientListAllOptions contains the optional parameters for the ExpressRouteCircuitsClient.ListAll
 // method.

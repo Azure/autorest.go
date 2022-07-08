@@ -7,7 +7,7 @@ import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -529,8 +529,9 @@ function processOperationResponses(session: Session<CodeModel>) {
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      if (!(session.model.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head')) {
-        // when head-as-boolean is enabled, no error is returned for 4xx status codes
+      if (!(session.model.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') && !isPageableOperation(op)) {
+        // when head-as-boolean is enabled, no error is returned for 4xx status codes.
+        // pager constructors don't return an error
         op.language.go!.description += '\nIf the operation fails it returns an *azcore.ResponseError type.';
       }
       // recursively add the marshalling format to the responses if applicable.

@@ -247,7 +247,6 @@ func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadB
 }
 
 // NewListPager - Gets all the load balancers in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - LoadBalancersClientListOptions contains the optional parameters for the LoadBalancersClient.List method.
@@ -311,7 +310,6 @@ func (client *LoadBalancersClient) listHandleResponse(resp *http.Response) (Load
 }
 
 // NewListAllPager - Gets all the load balancers in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - LoadBalancersClientListAllOptions contains the optional parameters for the LoadBalancersClient.ListAll method.
 func (client *LoadBalancersClient) NewListAllPager(options *LoadBalancersClientListAllOptions) *runtime.Pager[LoadBalancersClientListAllResponse] {

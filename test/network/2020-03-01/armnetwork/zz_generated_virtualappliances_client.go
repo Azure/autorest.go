@@ -247,7 +247,6 @@ func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (V
 }
 
 // NewListPager - Gets all Network Virtual Appliances in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
 func (client *VirtualAppliancesClient) NewListPager(options *VirtualAppliancesClientListOptions) *runtime.Pager[VirtualAppliancesClientListResponse] {
@@ -306,7 +305,6 @@ func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (
 }
 
 // NewListByResourceGroupPager - Lists all Network Virtual Appliances in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup

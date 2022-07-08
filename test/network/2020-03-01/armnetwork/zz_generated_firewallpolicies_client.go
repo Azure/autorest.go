@@ -247,7 +247,6 @@ func (client *FirewallPoliciesClient) getHandleResponse(resp *http.Response) (Fi
 }
 
 // NewListPager - Lists all Firewall Policies in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - FirewallPoliciesClientListOptions contains the optional parameters for the FirewallPoliciesClient.List method.
@@ -311,7 +310,6 @@ func (client *FirewallPoliciesClient) listHandleResponse(resp *http.Response) (F
 }
 
 // NewListAllPager - Gets all the Firewall Policies in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - FirewallPoliciesClientListAllOptions contains the optional parameters for the FirewallPoliciesClient.ListAll
 // method.

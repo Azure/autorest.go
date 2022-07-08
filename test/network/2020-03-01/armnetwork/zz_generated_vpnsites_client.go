@@ -243,7 +243,6 @@ func (client *VPNSitesClient) getHandleResponse(resp *http.Response) (VPNSitesCl
 }
 
 // NewListPager - Lists all the VpnSites in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - VPNSitesClientListOptions contains the optional parameters for the VPNSitesClient.List method.
 func (client *VPNSitesClient) NewListPager(options *VPNSitesClientListOptions) *runtime.Pager[VPNSitesClientListResponse] {
@@ -302,7 +301,6 @@ func (client *VPNSitesClient) listHandleResponse(resp *http.Response) (VPNSitesC
 }
 
 // NewListByResourceGroupPager - Lists all the vpnSites in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The resource group name of the VpnSite.
 // options - VPNSitesClientListByResourceGroupOptions contains the optional parameters for the VPNSitesClient.ListByResourceGroup

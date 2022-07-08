@@ -245,7 +245,6 @@ func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersClientGe
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the users registered on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.

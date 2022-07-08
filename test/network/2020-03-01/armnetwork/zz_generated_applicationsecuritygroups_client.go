@@ -245,7 +245,6 @@ func (client *ApplicationSecurityGroupsClient) getHandleResponse(resp *http.Resp
 }
 
 // NewListPager - Gets all the application security groups in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - ApplicationSecurityGroupsClientListOptions contains the optional parameters for the ApplicationSecurityGroupsClient.List
@@ -310,7 +309,6 @@ func (client *ApplicationSecurityGroupsClient) listHandleResponse(resp *http.Res
 }
 
 // NewListAllPager - Gets all application security groups in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - ApplicationSecurityGroupsClientListAllOptions contains the optional parameters for the ApplicationSecurityGroupsClient.ListAll
 // method.

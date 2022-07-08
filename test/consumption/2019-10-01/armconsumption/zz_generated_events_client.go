@@ -51,7 +51,6 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 }
 
 // NewListPager - Lists the events by billingAccountId and billingProfileId for given start and end date.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-10-01
 // startDate - Start date
 // endDate - End date

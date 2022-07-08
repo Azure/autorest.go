@@ -198,7 +198,6 @@ func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (No
 }
 
 // NewGetNotebookSummaryByWorkSpacePager - Lists a summary of Notebooks.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - notebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
 // method.
@@ -254,7 +253,6 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *
 }
 
 // NewGetNotebooksByWorkspacePager - Lists Notebooks.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // options - notebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
 // method.

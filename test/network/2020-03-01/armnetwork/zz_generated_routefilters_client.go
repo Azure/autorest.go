@@ -247,7 +247,6 @@ func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteF
 }
 
 // NewListPager - Gets all route filters in a subscription.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // options - RouteFiltersClientListOptions contains the optional parameters for the RouteFiltersClient.List method.
 func (client *RouteFiltersClient) NewListPager(options *RouteFiltersClientListOptions) *runtime.Pager[RouteFiltersClientListResponse] {
@@ -306,7 +305,6 @@ func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (Route
 }
 
 // NewListByResourceGroupPager - Gets all route filters in a resource group.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - RouteFiltersClientListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.ListByResourceGroup

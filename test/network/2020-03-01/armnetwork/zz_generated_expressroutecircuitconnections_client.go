@@ -276,7 +276,6 @@ func (client *ExpressRouteCircuitConnectionsClient) getHandleResponse(resp *http
 }
 
 // NewListPager - Gets all global reach connections associated with a private peering in an express route circuit.
-// If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
