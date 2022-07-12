@@ -1166,26 +1166,6 @@ func PossibleHTTPMethodValues() []HTTPMethod {
 	}
 }
 
-// HubVirtualNetworkConnectionStatus - The current state of the VirtualHub to vnet connection.
-type HubVirtualNetworkConnectionStatus string
-
-const (
-	HubVirtualNetworkConnectionStatusConnected    HubVirtualNetworkConnectionStatus = "Connected"
-	HubVirtualNetworkConnectionStatusConnecting   HubVirtualNetworkConnectionStatus = "Connecting"
-	HubVirtualNetworkConnectionStatusNotConnected HubVirtualNetworkConnectionStatus = "NotConnected"
-	HubVirtualNetworkConnectionStatusUnknown      HubVirtualNetworkConnectionStatus = "Unknown"
-)
-
-// PossibleHubVirtualNetworkConnectionStatusValues returns the possible values for the HubVirtualNetworkConnectionStatus const type.
-func PossibleHubVirtualNetworkConnectionStatusValues() []HubVirtualNetworkConnectionStatus {
-	return []HubVirtualNetworkConnectionStatus{
-		HubVirtualNetworkConnectionStatusConnected,
-		HubVirtualNetworkConnectionStatusConnecting,
-		HubVirtualNetworkConnectionStatusNotConnected,
-		HubVirtualNetworkConnectionStatusUnknown,
-	}
-}
-
 // IPAllocationMethod - IP address allocation method.
 type IPAllocationMethod string
 
@@ -1461,24 +1441,6 @@ const (
 func PossibleNatGatewaySKUNameValues() []NatGatewaySKUName {
 	return []NatGatewaySKUName{
 		NatGatewaySKUNameStandard,
-	}
-}
-
-// NetworkOperationStatus - Status of the Azure async operation.
-type NetworkOperationStatus string
-
-const (
-	NetworkOperationStatusFailed     NetworkOperationStatus = "Failed"
-	NetworkOperationStatusInProgress NetworkOperationStatus = "InProgress"
-	NetworkOperationStatusSucceeded  NetworkOperationStatus = "Succeeded"
-)
-
-// PossibleNetworkOperationStatusValues returns the possible values for the NetworkOperationStatus const type.
-func PossibleNetworkOperationStatusValues() []NetworkOperationStatus {
-	return []NetworkOperationStatus{
-		NetworkOperationStatusFailed,
-		NetworkOperationStatusInProgress,
-		NetworkOperationStatusSucceeded,
 	}
 }
 
@@ -2017,26 +1979,6 @@ func PossibleTransportProtocolValues() []TransportProtocol {
 		TransportProtocolAll,
 		TransportProtocolTCP,
 		TransportProtocolUDP,
-	}
-}
-
-// TunnelConnectionStatus - The current state of the tunnel.
-type TunnelConnectionStatus string
-
-const (
-	TunnelConnectionStatusConnected    TunnelConnectionStatus = "Connected"
-	TunnelConnectionStatusConnecting   TunnelConnectionStatus = "Connecting"
-	TunnelConnectionStatusNotConnected TunnelConnectionStatus = "NotConnected"
-	TunnelConnectionStatusUnknown      TunnelConnectionStatus = "Unknown"
-)
-
-// PossibleTunnelConnectionStatusValues returns the possible values for the TunnelConnectionStatus const type.
-func PossibleTunnelConnectionStatusValues() []TunnelConnectionStatus {
-	return []TunnelConnectionStatus{
-		TunnelConnectionStatusConnected,
-		TunnelConnectionStatusConnecting,
-		TunnelConnectionStatusNotConnected,
-		TunnelConnectionStatusUnknown,
 	}
 }
 

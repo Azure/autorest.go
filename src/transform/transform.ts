@@ -7,7 +7,7 @@ import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isChoiceSchema, isSealedChoiceSchema, isArraySchema, isDictionarySchema, aggregateProperties } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -22,6 +22,7 @@ export async function transform(host: AutorestExtensionHost) {
     // run the namer first, so that any transformations are applied on proper names
     await namer(session);
     await process(session);
+    await labelNonReferenceSchema(session);
 
     // output the model to the pipeline
     host.writeFile({
@@ -937,4 +938,96 @@ function parseComments(comment: string): string {
     wordwrap: 200,
     tables: true,
   });
+}
+
+
+// This function try to label all non reference schema before doing transform.
+async function labelNonReferenceSchema(session: Session<CodeModel>) {
+  const model = session.model;
+
+  const isRemoveNonReferenceSchema = await session.getValue('remove-non-reference-schema', false);
+
+  if (!isRemoveNonReferenceSchema) return;
+
+  const choices = new Set<ChoiceSchema>();
+  const sealedChoices = new Set<SealedChoiceSchema>();
+  const objects = new Set<ObjectSchema>();
+
+  iterateOperations(model, choices, sealedChoices, objects);
+
+  labelSchema(model.schemas.choices, choices);
+  labelSchema(model.schemas.sealedChoices, sealedChoices);
+  labelSchema(model.schemas.objects, objects);
+}
+
+function labelSchema<Type extends Schema>(modelSchemas: Array<Type> | undefined, existedSet: Set<Type>) {
+  if (modelSchemas){
+    for (const schema of modelSchemas){
+      if (!existedSet.has(schema)){
+        schema.language.go!.omitType = true;
+      }
+    }
+  }
+}
+
+function iterateOperations(model: CodeModel, choices: Set<ChoiceSchema>, sealedChoices: Set<SealedChoiceSchema>, objects: Set<ObjectSchema> ) {
+  const visited = new Set<Schema> ();
+  for (const group of values(model.operationGroups)) {
+    for (const op of values(group.operations)) {
+      for (const param of values(aggregateParameters(op))) {
+        dfsSchema(param.schema, visited, choices, sealedChoices, objects);
+      }
+      // We do not use error responses' definition to unmarshal response. Reserve for now.
+      const jointResponses = values(op.responses).concat(values(op.exceptions));
+      for (const resp of values(jointResponses)) {
+        if (isSchemaResponse(resp)) {
+          dfsSchema(resp.schema, visited, choices, sealedChoices, objects);
+        }
+        const httpResponse = <HttpResponse>resp.protocol.http;
+        for (const header of values(httpResponse.headers)) {
+          dfsSchema(header.schema, visited, choices, sealedChoices, objects);
+        }
+      }
+      // Such odata definition is not used directly in operation. But it seems the model is a detailed definition for some string param. Reserve for now.
+      if (op.extensions?.['x-ms-odata']) {
+        const schemaParts = op.extensions['x-ms-odata'].split('/');
+        const schema = values(model.schemas.objects).where((o) => o.language.default.name === schemaParts[schemaParts.length - 1]).first();
+        if (schema) {
+          dfsSchema(schema, visited, choices, sealedChoices, objects);
+        }
+      }
+    }
+  }
+}
+
+function dfsSchema(schema: Schema, visited: Set<Schema>, choices: Set<ChoiceSchema>, sealedChoices: Set<SealedChoiceSchema>, objects: Set<ObjectSchema>) {
+  if (visited.has(schema)) return;
+  visited.add(schema);
+  if (isChoiceSchema(schema)) {
+    choices.add(schema);
+  } else if (isSealedChoiceSchema(schema)) {
+    sealedChoices.add(schema);
+  } else if (isObjectSchema(schema)) {
+    objects.add(schema);
+    const allProps = aggregateProperties(schema);
+    for (const prop of allProps){
+      dfsSchema(prop.schema, visited, choices, sealedChoices, objects);
+    }
+    // If schema is a discriminator, then reserve all the children
+    if (schema.discriminator) {
+      for (const child of values(schema.children?.all)) {
+        dfsSchema(child, visited, choices, sealedChoices, objects);
+      }
+    }
+    // If schema is has allOf, then reserve all the parents
+    for (const parent of values(schema.parents?.immediate)) {
+      if (isObjectSchema(parent)) {
+        dfsSchema(parent, visited, choices, sealedChoices, objects);
+      }
+    }
+  } else if (isArraySchema(schema)) {
+    dfsSchema(schema.elementType, visited, choices, sealedChoices, objects);
+  } else if (isDictionarySchema(schema)) {
+    dfsSchema(schema.elementType, visited, choices, sealedChoices, objects);
+  }
 }

@@ -51,23 +51,6 @@ func PossibleAggregatedReplicationStateValues() []AggregatedReplicationState {
 	}
 }
 
-// AvailabilitySetSKUTypes - Specifies the sku of an Availability Set. Use 'Aligned' for virtual machines with managed disks
-// and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'.
-type AvailabilitySetSKUTypes string
-
-const (
-	AvailabilitySetSKUTypesAligned AvailabilitySetSKUTypes = "Aligned"
-	AvailabilitySetSKUTypesClassic AvailabilitySetSKUTypes = "Classic"
-)
-
-// PossibleAvailabilitySetSKUTypesValues returns the possible values for the AvailabilitySetSKUTypes const type.
-func PossibleAvailabilitySetSKUTypesValues() []AvailabilitySetSKUTypes {
-	return []AvailabilitySetSKUTypes{
-		AvailabilitySetSKUTypesAligned,
-		AvailabilitySetSKUTypesClassic,
-	}
-}
-
 // CachingTypes - Specifies the caching requirements.
 // Possible values are:
 // None

@@ -47,64 +47,6 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarshalJSON implements the json.Marshaller interface for type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema.
-func (p Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "fileContent", p.FileContent)
-	populate(objectMap, "fileName", p.FileName)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema.
-func (p *Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "fileContent":
-			err = unpopulate(val, "FileContent", &p.FileContent)
-			delete(rawMsg, key)
-		case "fileName":
-			err = unpopulate(val, "FileName", &p.FileName)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
-		}
-	}
-	return nil
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.
-func (p Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "fileContent", p.FileContent)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.
-func (p *Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return fmt.Errorf("unmarshalling type %T: %v", p, err)
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "fileContent":
-			err = unpopulate(val, "FileContent", &p.FileContent)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return fmt.Errorf("unmarshalling type %T: %v", p, err)
-		}
-	}
-	return nil
-}
-
 func populate(m map[string]interface{}, k string, v interface{}) {
 	if v == nil {
 		return

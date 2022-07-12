@@ -11,40 +11,6 @@ package lrogroup
 
 const host = "http://localhost:3000"
 
-// OperationResultStatus - The status of the request
-type OperationResultStatus string
-
-const (
-	OperationResultStatusAccepted  OperationResultStatus = "Accepted"
-	OperationResultStatusCanceled  OperationResultStatus = "canceled"
-	OperationResultStatusCreated   OperationResultStatus = "Created"
-	OperationResultStatusCreating  OperationResultStatus = "Creating"
-	OperationResultStatusDeleted   OperationResultStatus = "Deleted"
-	OperationResultStatusDeleting  OperationResultStatus = "Deleting"
-	OperationResultStatusFailed    OperationResultStatus = "Failed"
-	OperationResultStatusOK        OperationResultStatus = "OK"
-	OperationResultStatusSucceeded OperationResultStatus = "Succeeded"
-	OperationResultStatusUpdated   OperationResultStatus = "Updated"
-	OperationResultStatusUpdating  OperationResultStatus = "Updating"
-)
-
-// PossibleOperationResultStatusValues returns the possible values for the OperationResultStatus const type.
-func PossibleOperationResultStatusValues() []OperationResultStatus {
-	return []OperationResultStatus{
-		OperationResultStatusAccepted,
-		OperationResultStatusCanceled,
-		OperationResultStatusCreated,
-		OperationResultStatusCreating,
-		OperationResultStatusDeleted,
-		OperationResultStatusDeleting,
-		OperationResultStatusFailed,
-		OperationResultStatusOK,
-		OperationResultStatusSucceeded,
-		OperationResultStatusUpdated,
-		OperationResultStatusUpdating,
-	}
-}
-
 type ProductPropertiesProvisioningStateValues string
 
 const (

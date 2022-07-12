@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, BinaryResponse, ConstantSchema, DictionarySchema, ObjectSchema, Operation, Parameter, Response, Schema, SchemaContext, SchemaResponse, SchemaType } from '@autorest/codemodel';
+import { ArraySchema, BinaryResponse, ChoiceSchema, ConstantSchema, DictionarySchema, ObjectSchema, Operation, Parameter, Property, Response, Schema, SchemaContext, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
@@ -24,6 +24,16 @@ export function aggregateParameters(op: Operation): Array<Parameter> {
     }
   }
   return params;
+}
+
+// returns ChoiceSchema type predicate if the schema is an ChoiceSchema
+export function isChoiceSchema(resp: Schema): resp is ChoiceSchema {
+  return resp.type === SchemaType.Choice;
+}
+
+// returns SealedChoiceSchema type predicate if the schema is an SealedChoiceSchema
+export function isSealedChoiceSchema(resp: Schema): resp is SealedChoiceSchema {
+  return resp.type === SchemaType.SealedChoice;
 }
 
 // returns ArraySchema type predicate if the schema is an ArraySchema
@@ -198,4 +208,30 @@ export function formatConstantValue(schema: ConstantSchema): string {
 //  returns true if the object is used for output only
 export function isOutputOnly(obj: ObjectSchema): boolean {
   return !values(obj.usage).any((u) => { return u === SchemaContext.Input});
+}
+
+// aggregate the properties from the provided type and its parent types
+export function aggregateProperties(obj: ObjectSchema): Array<Property> {
+  const allProps = new Array<Property>();
+  for (const prop of values(obj.properties)) {
+    allProps.push(prop);
+  }
+  for (const parent of values(obj.parents?.all)) {
+    if (isObjectSchema(parent)) {
+      for (const parentProp of values(parent.properties)) {
+        // ensure that the parent doesn't contain any properties with the same name but different type
+        const exists = values(allProps).where(p => { return p.language.go!.name === parentProp.language.go!.name; }).first();
+        if (exists) {
+          if (exists.schema.language.go!.name !== parentProp.schema.language.go!.name) {
+            const msg = `type ${obj.language.go!.name} contains duplicate property ${exists.language.go!.name} with mismatched types`;
+            throw new Error(msg);
+          }
+          // don't add the duplicate
+          continue;
+        }
+        allProps.push(parentProp);
+      }
+    }
+  }
+  return allProps;
 }

@@ -5,9 +5,9 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength } from '../common/helpers';
+import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength, aggregateProperties } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
@@ -181,32 +181,6 @@ function generateParamGroupStruct(imports: ImportManager, lang: Language, params
     imports.addImportForSchemaType(param.schema);
   }
   return st;
-}
-
-// aggregate the properties from the provided type and its parent types
-function aggregateProperties(obj: ObjectSchema): Array<Property> {
-  const allProps = new Array<Property>();
-  for (const prop of values(obj.properties)) {
-    allProps.push(prop);
-  }
-  for (const parent of values(obj.parents?.all)) {
-    if (isObjectSchema(parent)) {
-      for (const parentProp of values(parent.properties)) {
-        // ensure that the parent doesn't contain any properties with the same name but different type
-        const exists = values(allProps).where(p => { return p.language.go!.name === parentProp.language.go!.name}).first();
-        if (exists) {
-          if (exists.schema.language.go!.name !== parentProp.schema.language.go!.name) {
-            const msg = `type ${obj.language.go!.name} contains duplicate property ${exists.language.go!.name} with mismatched types`;
-            throw new Error(msg);
-          }
-          // don't add the duplicate
-          continue;
-        }
-        allProps.push(parentProp);
-      }
-    }
-  }
-  return allProps;
 }
 
 // generates discriminator marker method

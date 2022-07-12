@@ -399,15 +399,6 @@ type CurrentSpend struct {
 	Unit *string `json:"unit,omitempty" azure:"ro"`
 }
 
-// DownloadProperties - The properties of the price sheet download.
-type DownloadProperties struct {
-	// READ-ONLY; The link (url) to download the pricesheet.
-	DownloadURL *string `json:"downloadUrl,omitempty" azure:"ro"`
-
-	// READ-ONLY; Download link validity.
-	ValidTill *string `json:"validTill,omitempty" azure:"ro"`
-}
-
 // ErrorDetails - The details of the error.
 type ErrorDetails struct {
 	// READ-ONLY; Error code.
@@ -772,24 +763,6 @@ type LegacyReservationRecommendationProperties struct {
 
 	// READ-ONLY; The total amount of cost with reserved instances.
 	TotalCostWithReservedInstances *float64 `json:"totalCostWithReservedInstances,omitempty" azure:"ro"`
-}
-
-// LegacyReservationTransaction - Legacy Reservation transaction resource.
-type LegacyReservationTransaction struct {
-	// The properties of a legacy reservation transaction.
-	Properties *LegacyReservationTransactionProperties `json:"properties,omitempty"`
-
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource tags.
-	Tags []*string `json:"tags,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // LegacyReservationTransactionProperties - The properties of a legacy reservation transaction.

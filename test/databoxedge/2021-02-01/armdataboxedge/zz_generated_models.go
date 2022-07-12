@@ -1622,15 +1622,6 @@ type MountPointMap struct {
 	RoleType *RoleTypes `json:"roleType,omitempty" azure:"ro"`
 }
 
-// MoveRequest - Resource Move details
-type MoveRequest struct {
-	// REQUIRED; List of resources to be moved
-	Resources []*string `json:"resources,omitempty"`
-
-	// REQUIRED; Target resource group ARMId
-	TargetResourceGroup *string `json:"targetResourceGroup,omitempty"`
-}
-
 // NetworkAdapter - Represents the networkAdapter on a device.
 type NetworkAdapter struct {
 	// Value indicating whether this adapter has DHCP enabled.
@@ -2066,15 +2057,6 @@ type ResourceMoveDetails struct {
 	OperationInProgressLockTimeoutInUTC *time.Time `json:"operationInProgressLockTimeoutInUTC,omitempty"`
 }
 
-// ResourceTypeSKU - Resource type Sku object
-type ResourceTypeSKU struct {
-	// READ-ONLY; The resource type.
-	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
-
-	// READ-ONLY; The skus.
-	SKUs []*SKUInformation `json:"skus,omitempty" azure:"ro"`
-}
-
 // RoleClassification provides polymorphic access to related types.
 // Call the interface's GetRole() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -2210,45 +2192,6 @@ type SKUCost struct {
 
 	// READ-ONLY; The cost quantity.
 	Quantity *int64 `json:"quantity,omitempty" azure:"ro"`
-}
-
-// SKUInformation - Sku information
-type SKUInformation struct {
-	// READ-ONLY; The pricing info of the Sku.
-	Costs []*SKUCost `json:"costs,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku family.
-	Family *string `json:"family,omitempty" azure:"ro"`
-
-	// READ-ONLY; The sku kind.
-	Kind *string `json:"kind,omitempty" azure:"ro"`
-
-	// READ-ONLY; The locations where Sku is available with zones and sites info
-	LocationInfo []*SKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
-
-	// READ-ONLY; The locations where Sku is available.
-	Locations []*string `json:"locations,omitempty" azure:"ro"`
-
-	// READ-ONLY; The sku name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; The required features for the sku to be available.
-	RequiredFeatures []*string `json:"requiredFeatures,omitempty" azure:"ro"`
-
-	// READ-ONLY; The required quotaIds for the sku to be available.
-	RequiredQuotaIDs []*string `json:"requiredQuotaIds,omitempty" azure:"ro"`
-
-	// READ-ONLY; The sku tier.
-	Tier *string `json:"tier,omitempty" azure:"ro"`
-}
-
-// SKUInformationList - List of SKU Information objects
-type SKUInformationList struct {
-	// READ-ONLY; Links to the next set of results
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
-	// READ-ONLY; List of ResourceTypeSku objects
-	Value []*ResourceTypeSKU `json:"value,omitempty" azure:"ro"`
 }
 
 // SKUList - List of SKU Information objects.

@@ -9,8 +9,6 @@
 
 package formdatagroup
 
-import "io"
-
 type Error struct {
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
@@ -29,17 +27,4 @@ type FormdataClientUploadFileViaBodyOptions struct {
 // FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 type FormdataClientUploadFilesOptions struct {
 	// placeholder for future optional parameters
-}
-
-type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema struct {
-	// REQUIRED; File to upload.
-	FileContent *io.ReadSeekCloser `json:"fileContent,omitempty"`
-
-	// REQUIRED; File name to upload. Name has to be spelled exactly as written here.
-	FileName *string `json:"fileName,omitempty"`
-}
-
-type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema struct {
-	// REQUIRED; Files to upload.
-	FileContent []io.ReadSeekCloser `json:"fileContent,omitempty"`
 }

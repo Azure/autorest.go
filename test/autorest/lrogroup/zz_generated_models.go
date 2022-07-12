@@ -603,21 +603,6 @@ type LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions struct {
 	ResumeToken string
 }
 
-type OperationResult struct {
-	Error *OperationResultError `json:"error,omitempty"`
-
-	// The status of the request
-	Status *OperationResultStatus `json:"status,omitempty"`
-}
-
-type OperationResultError struct {
-	// The error code for an operation failure
-	Code *int32 `json:"code,omitempty"`
-
-	// The detailed arror message
-	Message *string `json:"message,omitempty"`
-}
-
 type Product struct {
 	// Resource Location
 	Location   *string            `json:"location,omitempty"`
