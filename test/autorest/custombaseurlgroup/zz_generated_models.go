@@ -9,11 +9,6 @@
 
 package custombaseurlgroup
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 type PathsClientGetEmptyOptions struct {
 	// placeholder for future optional parameters

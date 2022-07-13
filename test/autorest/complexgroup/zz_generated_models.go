@@ -238,11 +238,6 @@ type DurationWrapper struct {
 	Field *string `json:"field,omitempty"`
 }
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // FishClassification provides polymorphic access to related types.
 // Call the interface's GetFish() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:

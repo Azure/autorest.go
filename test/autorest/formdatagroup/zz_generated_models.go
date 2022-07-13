@@ -9,11 +9,6 @@
 
 package formdatagroup
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
 type FormdataClientUploadFileOptions struct {
 	// placeholder for future optional parameters

@@ -400,24 +400,6 @@ type CloudEdgeManagementRoleProperties struct {
 	LocalManagementStatus *RoleStatus `json:"localManagementStatus,omitempty" azure:"ro"`
 }
 
-// CloudError - An error response from the service.
-type CloudError struct {
-	// The error details.
-	Error *CloudErrorBody `json:"error,omitempty"`
-}
-
-// CloudErrorBody - An error response from the service.
-type CloudErrorBody struct {
-	// An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-	Code *string `json:"code,omitempty"`
-
-	// A list of additional details about the error.
-	Details []*CloudErrorBody `json:"details,omitempty"`
-
-	// A message describing the error, intended to be suitable for display in a user interface.
-	Message *string `json:"message,omitempty"`
-}
-
 // CniConfig - Cni configuration
 type CniConfig struct {
 	// READ-ONLY; Pod Subnet

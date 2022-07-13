@@ -9,11 +9,6 @@
 
 package paramgroupinggroup
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups method.
 type FirstParameterGroup struct {
 	HeaderOne *string

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArraySchema, BinaryResponse, ChoiceSchema, ConstantSchema, DictionarySchema, ObjectSchema, Operation, Parameter, Property, Response, Schema, SchemaContext, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
+import { ArraySchema, BinaryResponse, ConstantSchema, DictionarySchema, ObjectSchema, Operation, Parameter, Property, Response, Schema, SchemaContext, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
@@ -24,16 +24,6 @@ export function aggregateParameters(op: Operation): Array<Parameter> {
     }
   }
   return params;
-}
-
-// returns ChoiceSchema type predicate if the schema is an ChoiceSchema
-export function isChoiceSchema(resp: Schema): resp is ChoiceSchema {
-  return resp.type === SchemaType.Choice;
-}
-
-// returns SealedChoiceSchema type predicate if the schema is an SealedChoiceSchema
-export function isSealedChoiceSchema(resp: Schema): resp is SealedChoiceSchema {
-  return resp.type === SchemaType.SealedChoice;
 }
 
 // returns ArraySchema type predicate if the schema is an ArraySchema

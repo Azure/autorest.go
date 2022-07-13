@@ -58,8 +58,3 @@ type Datetimerfc1123ClientPutUTCMaxDateTimeOptions struct {
 type Datetimerfc1123ClientPutUTCMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
-
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}

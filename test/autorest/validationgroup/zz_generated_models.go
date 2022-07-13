@@ -54,12 +54,6 @@ type ConstantProduct struct {
 	ConstProperty2 *string `json:"constProperty2,omitempty"`
 }
 
-type Error struct {
-	Code    *int32  `json:"code,omitempty"`
-	Fields  *string `json:"fields,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
-
 // Product - The product documentation.
 type Product struct {
 	// REQUIRED; The product documentation.

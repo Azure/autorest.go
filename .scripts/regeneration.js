@@ -10,47 +10,47 @@ const sem = require('./semaphore')(8);
 const swaggerDir = 'src/node_modules/@microsoft.azure/autorest.testserver/swagger/';
 
 const goMappings = {
-    'additionalpropsgroup': ['additionalProperties.json', '--remove-non-reference-schema'],
-    'arraygroup': ['body-array.json', '--remove-non-reference-schema'],
-    'azurereportgroup': ['azure-report.json', '--remove-non-reference-schema'],
-    'azurespecialsgroup': ['azure-special-properties.json', '--head-as-boolean', '--remove-non-reference-schema'],
-    'binarygroup': ['body-binary.json', '--remove-non-reference-schema'],
-    'booleangroup': ['body-boolean.json', '--remove-non-reference-schema'],
-    'bytegroup': ['body-byte.json', '--remove-non-reference-schema'],
-    'complexgroup': ['body-complex.json', '--remove-non-reference-schema'],
-    'complexmodelgroup': ['complex-model.json', '--remove-non-reference-schema'],
-    'custombaseurlgroup': ['custom-baseUrl.json', '--remove-non-reference-schema'],
-    'dategroup': ['body-date.json', '--remove-non-reference-schema'],
-    'datetimegroup': ['body-datetime.json', '--remove-non-reference-schema'],
-    'datetimerfc1123group': ['body-datetime-rfc1123.json', '--remove-non-reference-schema'],
-    'dictionarygroup': ['body-dictionary.json', '--remove-non-reference-schema'],
-    'durationgroup': ['body-duration.json', '--remove-non-reference-schema'],
-    'errorsgroup': ['xms-error-responses.json', '--remove-non-reference-schema'],
-    'extenumsgroup': ['extensible-enums-swagger.json', '--remove-non-reference-schema'],
-    'filegroup': ['body-file.json', '--remove-non-reference-schema'],
-    'formdatagroup': ['body-formdata.json', '--remove-non-reference-schema'],
-    'headergroup': ['header.json', '--remove-non-reference-schema'],
-    'headgroup': ['head.json', '--head-as-boolean', '--remove-non-reference-schema'],
-    'httpinfrastructuregroup': ['httpInfrastructure.json', '--head-as-boolean', '--remove-non-reference-schema'],
-    'integergroup': ['body-integer.json', '--remove-non-reference-schema'],
-    'lrogroup': ['lro.json', '--remove-non-reference-schema'],
-    'mediatypesgroup': ['media_types.json', '--remove-non-reference-schema'],
-    'migroup': ['multiple-inheritance.json', '--remove-non-reference-schema'],
+    'additionalpropsgroup': ['additionalProperties.json', '--remove-unreferenced-types'],
+    'arraygroup': ['body-array.json', '--remove-unreferenced-types'],
+    'azurereportgroup': ['azure-report.json', '--remove-unreferenced-types'],
+    'azurespecialsgroup': ['azure-special-properties.json', '--head-as-boolean', '--remove-unreferenced-types'],
+    'binarygroup': ['body-binary.json', '--remove-unreferenced-types'],
+    'booleangroup': ['body-boolean.json', '--remove-unreferenced-types'],
+    'bytegroup': ['body-byte.json', '--remove-unreferenced-types'],
+    'complexgroup': ['body-complex.json', '--remove-unreferenced-types'],
+    'complexmodelgroup': ['complex-model.json', '--remove-unreferenced-types'],
+    'custombaseurlgroup': ['custom-baseUrl.json', '--remove-unreferenced-types'],
+    'dategroup': ['body-date.json', '--remove-unreferenced-types'],
+    'datetimegroup': ['body-datetime.json', '--remove-unreferenced-types'],
+    'datetimerfc1123group': ['body-datetime-rfc1123.json', '--remove-unreferenced-types'],
+    'dictionarygroup': ['body-dictionary.json', '--remove-unreferenced-types'],
+    'durationgroup': ['body-duration.json', '--remove-unreferenced-types'],
+    'errorsgroup': ['xms-error-responses.json', '--remove-unreferenced-types'],
+    'extenumsgroup': ['extensible-enums-swagger.json', '--remove-unreferenced-types'],
+    'filegroup': ['body-file.json', '--remove-unreferenced-types'],
+    'formdatagroup': ['body-formdata.json', '--remove-unreferenced-types'],
+    'headergroup': ['header.json', '--remove-unreferenced-types'],
+    'headgroup': ['head.json', '--head-as-boolean', '--remove-unreferenced-types'],
+    'httpinfrastructuregroup': ['httpInfrastructure.json', '--head-as-boolean', '--remove-unreferenced-types'],
+    'integergroup': ['body-integer.json', '--remove-unreferenced-types'],
+    'lrogroup': ['lro.json', '--remove-unreferenced-types'],
+    'mediatypesgroup': ['media_types.json', '--remove-unreferenced-types'],
+    'migroup': ['multiple-inheritance.json', '--remove-unreferenced-types'],
     //'modelflatteninggroup': ['model-flattening.json'],
-    'morecustombaseurigroup': ['custom-baseUrl-more-options.json', '--remove-non-reference-schema'],
-    'nonstringenumgroup': ['non-string-enum.json', '--remove-non-reference-schema'],
+    'morecustombaseurigroup': ['custom-baseUrl-more-options.json', '--remove-unreferenced-types'],
+    'nonstringenumgroup': ['non-string-enum.json', '--remove-unreferenced-types'],
     'noopsgroup': ['no-operations.json'],
-    'numbergroup': ['body-number.json', '--remove-non-reference-schema'],
-    'objectgroup': ['object-type.json', '--remove-non-reference-schema'],
-    'optionalgroup': ['required-optional.json', '--remove-non-reference-schema'],
-    'paginggroup': ['paging.json', '--remove-non-reference-schema'],
-    'paramgroupinggroup': ['azure-parameter-grouping.json', '--remove-non-reference-schema'],
-    'reportgroup': ['report.json', '--remove-non-reference-schema'],
-    'stringgroup': ['body-string.json', '--remove-non-reference-schema'],
-    'urlgroup': ['url.json', '--remove-non-reference-schema'],
-    'urlmultigroup': ['url-multi-collectionFormat.json', '--remove-non-reference-schema'],
-    'validationgroup': ['validation.json', '--remove-non-reference-schema'],
-    'xmlgroup': ['xml-service.json', '--remove-non-reference-schema'],
+    'numbergroup': ['body-number.json', '--remove-unreferenced-types'],
+    'objectgroup': ['object-type.json', '--remove-unreferenced-types'],
+    'optionalgroup': ['required-optional.json', '--remove-unreferenced-types'],
+    'paginggroup': ['paging.json', '--remove-unreferenced-types'],
+    'paramgroupinggroup': ['azure-parameter-grouping.json', '--remove-unreferenced-types'],
+    'reportgroup': ['report.json', '--remove-unreferenced-types'],
+    'stringgroup': ['body-string.json', '--remove-unreferenced-types'],
+    'urlgroup': ['url.json', '--remove-unreferenced-types'],
+    'urlmultigroup': ['url-multi-collectionFormat.json', '--remove-unreferenced-types'],
+    'validationgroup': ['validation.json', '--remove-unreferenced-types'],
+    'xmlgroup': ['xml-service.json', '--remove-unreferenced-types'],
 };
 
 const args = process.argv.slice(2);
@@ -96,10 +96,10 @@ const blobStorage = 'https://raw.githubusercontent.com/Azure/azure-rest-api-spec
 generate("azstorage", blobStorage, 'test/storage/2020-06-12/azblob', '--security=AzureKey --module="azstorage" --openapi-type="data-plane" --honor-body-placement');
 
 const network = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/network/resource-manager/readme.md';
-generateFromReadme("armnetwork", network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--module=armnetwork --azure-arm=true --remove-non-reference-schema');
+generateFromReadme("armnetwork", network, 'package-2020-03', 'test/network/2020-03-01/armnetwork', '--module=armnetwork --azure-arm=true --remove-unreferenced-types');
 
 const compute = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/compute/resource-manager/readme.md';
-generateFromReadme("armcompute", compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--module=armcompute --azure-arm=true --remove-non-reference-schema');
+generateFromReadme("armcompute", compute, 'package-2019-12-01', 'test/compute/2019-12-01/armcompute', '--module=armcompute --azure-arm=true --remove-unreferenced-types');
 
 const synapseArtifacts = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/synapse/data-plane/readme.md';
 generateFromReadme("azartifacts", synapseArtifacts, 'package-artifacts-2019-06-01-preview', 'test/synapse/2019-06-01/azartifacts', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azartifacts" --openapi-type="data-plane"');
@@ -114,10 +114,10 @@ const keyvault = fullPath('test/keyvault/7.2/azkeyvault/autorest.md');
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault');
 
 const consumption = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/consumption/resource-manager/readme.md';
-generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true --remove-non-reference-schema');
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true --remove-unreferenced-types');
 
 const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autorest.md');
-generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-non-reference-schema');
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-unreferenced-types');
 
 generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
 

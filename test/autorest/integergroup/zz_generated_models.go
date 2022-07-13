@@ -9,11 +9,6 @@
 
 package integergroup
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // IntClientGetInvalidOptions contains the optional parameters for the IntClient.GetInvalid method.
 type IntClientGetInvalidOptions struct {
 	// placeholder for future optional parameters

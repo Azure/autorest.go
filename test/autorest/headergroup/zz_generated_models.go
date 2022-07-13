@@ -11,11 +11,6 @@ package headergroup
 
 import "time"
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // HeaderClientCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.
 type HeaderClientCustomRequestIDOptions struct {
 	// placeholder for future optional parameters

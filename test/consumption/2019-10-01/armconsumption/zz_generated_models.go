@@ -399,29 +399,6 @@ type CurrentSpend struct {
 	Unit *string `json:"unit,omitempty" azure:"ro"`
 }
 
-// ErrorDetails - The details of the error.
-type ErrorDetails struct {
-	// READ-ONLY; Error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; Error message indicating why the operation failed.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
-// ErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason is provided
-// in the error message.
-// Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
-// header.
-//
-//
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
-// header.
-type ErrorResponse struct {
-	// The details of the error.
-	Error *ErrorDetails `json:"error,omitempty"`
-}
-
 // EventProperties - The event properties.
 type EventProperties struct {
 	// The type of event.
@@ -588,29 +565,6 @@ type ForecastsClientListOptions struct {
 type ForecastsListResult struct {
 	// READ-ONLY; The list of forecasts.
 	Value []*Forecast `json:"value,omitempty" azure:"ro"`
-}
-
-// HighCasedErrorDetails - The details of the error.
-type HighCasedErrorDetails struct {
-	// READ-ONLY; Error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; Error message indicating why the operation failed.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
-// HighCasedErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason
-// is provided in the error message.
-// Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
-// header.
-//
-//
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
-// header.
-type HighCasedErrorResponse struct {
-	// The details of the error.
-	Error *HighCasedErrorDetails `json:"error,omitempty"`
 }
 
 // LegacyChargeSummary - Legacy charge summary.

@@ -9,11 +9,6 @@
 
 package numbergroup
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // NumberClientGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
 // method.
 type NumberClientGetBigDecimalNegativeDecimalOptions struct {

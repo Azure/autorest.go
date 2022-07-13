@@ -268,12 +268,6 @@ type BootDiagnosticsInstanceView struct {
 	Status *InstanceViewStatus `json:"status,omitempty" azure:"ro"`
 }
 
-// CloudError - An error response from the Compute service.
-type CloudError struct {
-	// Api error.
-	Error *APIError `json:"error,omitempty"`
-}
-
 // ContainerService - Container service.
 type ContainerService struct {
 	// REQUIRED; Resource location

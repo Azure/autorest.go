@@ -9,11 +9,6 @@
 
 package lrogroup
 
-type CloudError struct {
-	Code    *int32  `json:"code,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
-
 // LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
 // method.
 type LRORetrysClientBeginDelete202Retry200Options struct {

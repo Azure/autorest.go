@@ -358,11 +358,6 @@ type ArrayClientPutUUIDValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 type Product struct {
 	Integer *int32  `json:"integer,omitempty"`
 	String  *string `json:"string,omitempty"`

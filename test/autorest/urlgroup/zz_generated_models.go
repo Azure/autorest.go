@@ -11,11 +11,6 @@ package urlgroup
 
 import "time"
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // PathItemsClientGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues method.
 type PathItemsClientGetAllWithValuesOptions struct {
 	// should contain value 'localStringQuery'
