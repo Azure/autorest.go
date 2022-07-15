@@ -13,13 +13,13 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 )
 {{imports}}
-
+{%- set allExamples = [] %}
 {%- for exampleGroup in exampleGroups %}
-{% if exampleGroup.operation.language.default.name == exampleGroup.operation.language.go.name %}
 {%- for example in exampleGroup.examples %}
-{%- if loop.first %}
+{%- if allExamples.indexOf(example.originalFile)<0 %}
+{%- set _ = allExamples.push(example.originalFile) %}
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/{{example.originalFile}}
-func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}() {
+func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}_{{jsFunc.getExampleSuffix(example.originalFile)}}() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -31,21 +31,21 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
 	}
 	{%- if example.returnInfo.length == 2 %}
 	{%- if example.isLRO %}
-	poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+	poller, err := client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
 	{%- else %}
-	{% if example.checkResponse %}res{% else %}_{% endif %}, err {% if loop.first and example.checkResponse %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+	{% if example.checkResponse %}res{% else %}_{% endif %}, err {% if example.checkResponse %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
 	{%- endif %}
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
 	{%- if example.isLRO %}
-	{% if example.checkResponse %}res{% else %}_{% endif %}, err {% if loop.first and example.checkResponse %}:{% endif %}= poller.PollUntilDone(ctx, nil)
+	{% if example.checkResponse %}res{% else %}_{% endif %}, err {% if example.checkResponse %}:{% endif %}= poller.PollUntilDone(ctx, nil)
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
 	{%- endif %}
 	{%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
-	pager {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
+	pager := client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
 	for pager.More() {
         nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -76,7 +76,6 @@ func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}
     _ = res
 	{%- endif %}
 }
-{% endif %}
+{%- endif %}
 {%- endfor %}
-{% endif %}
 {%- endfor %}

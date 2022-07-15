@@ -36,5 +36,5 @@ export class GoExampleModel extends ExampleModel {
 }
 
 export class ParameterOutput {
-    public constructor(public paramName:string, public paramOutput:string){}
+  public constructor(public paramName:string, public paramOutput:string){}
 }
