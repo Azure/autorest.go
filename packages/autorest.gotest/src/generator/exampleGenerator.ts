@@ -6,16 +6,10 @@
 import { BaseCodeGenerator } from './baseGenerator';
 import { Config } from '../common/constant';
 import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
-import { GoExampleModel } from '../common/model';
 import { MockTestDataRender } from './mockTestGenerator';
-import { getAPIParametersSig, getClientParametersSig } from '../util/codegenBridge';
+import { ParameterOutput } from '../common/model';
 
 export class ExampleDataRender extends MockTestDataRender {
-  protected fillExampleOutput(example: GoExampleModel): void {
-    const op = example.operation;
-    example.methodParametersPlaceholderOutput = this.toParametersOutput(getAPIParametersSig(op), example.methodParameters);
-    example.clientParametersPlaceholderOutput = this.toParametersOutput(getClientParametersSig(example.operationGroup), example.clientParameters);
-  }
 }
 
 export class ExampleCodeGenerator extends BaseCodeGenerator {
@@ -37,6 +31,9 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
         'exampleTest.go.njk',
         `${this.getFilePrefix(Config.exampleFilePrefix)}${exampleModel.operationGroup.language.go.name.toLowerCase()}_client_example_test.go`,
         extraParam,
+        {
+          getParamsValue: (params: Array<ParameterOutput>) => { return params.map((p)=>{return p.paramOutput;}).join(', '); },
+        },
       );
     }
   }

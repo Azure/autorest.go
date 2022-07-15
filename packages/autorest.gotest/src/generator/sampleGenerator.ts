@@ -11,6 +11,8 @@ import { Config } from '../common/constant';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { ScenarioTestDataRender } from './scenarioTestGenerator';
 import { TestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
+import { ParameterOutput } from '../common/model';
+import { map } from 'lodash';
 
 export class SampleDataRender extends ScenarioTestDataRender {
     packagePrefixForGlobalVariables = '';
@@ -63,6 +65,7 @@ export class SampleCodeGenerator extends BaseCodeGenerator {
               //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
               return Helper.uncapitalize(typeName.split('.').join('*').split('*').pop());
             },
+            getParamsValue: (params: Array<ParameterOutput>) => { return params.map((p)=>{return p.paramOutput;}).join(', '); },
           },
         );
       }
