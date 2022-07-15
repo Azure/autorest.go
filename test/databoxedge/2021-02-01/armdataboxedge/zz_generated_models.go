@@ -11,18 +11,6 @@ package armdataboxedge
 
 import "time"
 
-// ARMBaseModel - Represents the base class for all object models.
-type ARMBaseModel struct {
-	// READ-ONLY; The path ID that uniquely identifies the object.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; The object name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; The hierarchical type of the object.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // AddonClassification provides polymorphic access to related types.
 // Call the interface's GetAddon() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:

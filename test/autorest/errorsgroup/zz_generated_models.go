@@ -9,10 +9,6 @@
 
 package errorsgroup
 
-type Animal struct {
-	AniType *string `json:"aniType,omitempty"`
-}
-
 type Pet struct {
 	AniType *string `json:"aniType,omitempty"`
 

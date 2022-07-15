@@ -967,12 +967,6 @@ type DiskEncryptionSettings struct {
 	KeyEncryptionKey *KeyVaultKeyReference `json:"keyEncryptionKey,omitempty"`
 }
 
-// DiskImageEncryption - This is the disk image encryption base class.
-type DiskImageEncryption struct {
-	// A relative URI containing the resource ID of the disk encryption set.
-	DiskEncryptionSetID *string `json:"diskEncryptionSetId,omitempty"`
-}
-
 // DiskInstanceView - The instance view of the disk.
 type DiskInstanceView struct {
 	// Specifies the encryption settings for the OS Disk.
@@ -1520,29 +1514,6 @@ type GalleryApplicationsClientListByGalleryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryArtifactPublishingProfileBase - Describes the basic gallery artifact publishing profile.
-type GalleryArtifactPublishingProfileBase struct {
-	// The end of life date of the gallery Image Version. This property can be used for decommissioning purposes. This property
-	// is updatable.
-	EndOfLifeDate *time.Time `json:"endOfLifeDate,omitempty"`
-
-	// If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version.
-	ExcludeFromLatest *bool `json:"excludeFromLatest,omitempty"`
-
-	// The number of replicas of the Image Version to be created per region. This property would take effect for a region when
-	// regionalReplicaCount is not specified. This property is updatable.
-	ReplicaCount *int32 `json:"replicaCount,omitempty"`
-
-	// Specifies the storage account type to be used to store the image. This property is not updatable.
-	StorageAccountType *StorageAccountType `json:"storageAccountType,omitempty"`
-
-	// The target regions where the Image Version is going to be replicated to. This property is updatable.
-	TargetRegions []*TargetRegion `json:"targetRegions,omitempty"`
-
-	// READ-ONLY; The timestamp for when the gallery Image Version is published.
-	PublishedDate *time.Time `json:"publishedDate,omitempty" azure:"ro"`
-}
-
 // GalleryArtifactVersionSource - The gallery artifact version source.
 type GalleryArtifactVersionSource struct {
 	// The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, or user image.
@@ -1556,18 +1527,6 @@ type GalleryDataDiskImage struct {
 	// Virtual Machine.
 	Lun *int32 `json:"lun,omitempty"`
 
-	// The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'
-	HostCaching *HostCaching `json:"hostCaching,omitempty"`
-
-	// The gallery artifact version source.
-	Source *GalleryArtifactVersionSource `json:"source,omitempty"`
-
-	// READ-ONLY; This property indicates the size of the VHD to be created.
-	SizeInGB *int32 `json:"sizeInGB,omitempty" azure:"ro"`
-}
-
-// GalleryDiskImage - This is the disk image base class.
-type GalleryDiskImage struct {
 	// The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'
 	HostCaching *HostCaching `json:"hostCaching,omitempty"`
 
@@ -1984,38 +1943,6 @@ type ImageDataDisk struct {
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
-// ImageDisk - Describes a image disk.
-type ImageDisk struct {
-	// The Virtual Hard Disk.
-	BlobURI *string `json:"blobUri,omitempty"`
-
-	// Specifies the caching requirements.
-	// Possible values are:
-	// None
-	// ReadOnly
-	// ReadWrite
-	// Default: None for Standard storage. ReadOnly for Premium storage
-	Caching *CachingTypes `json:"caching,omitempty"`
-
-	// Specifies the customer managed disk encryption set resource id for the managed image disk.
-	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
-
-	// Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual
-	// machine image.
-	// This value cannot be larger than 1023 GB
-	DiskSizeGB *int32 `json:"diskSizeGB,omitempty"`
-
-	// The managedDisk.
-	ManagedDisk *SubResource `json:"managedDisk,omitempty"`
-
-	// The snapshot.
-	Snapshot *SubResource `json:"snapshot,omitempty"`
-
-	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
-	// be used with OS Disk.
-	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
-}
-
 // ImageDiskReference - The source image used for creating the disk.
 type ImageDiskReference struct {
 	// REQUIRED; A relative uri containing either a Platform Image Repository or user image reference.
@@ -2298,27 +2225,6 @@ type LogAnalyticsClientBeginExportRequestRateByIntervalOptions struct {
 type LogAnalyticsClientBeginExportThrottledRequestsOptions struct {
 	// Resumes the LRO from the provided token.
 	ResumeToken string
-}
-
-// LogAnalyticsInputBase - Api input base class for LogAnalytics Api.
-type LogAnalyticsInputBase struct {
-	// REQUIRED; SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to.
-	BlobContainerSasURI *string `json:"blobContainerSasUri,omitempty"`
-
-	// REQUIRED; From time of the query
-	FromTime *time.Time `json:"fromTime,omitempty"`
-
-	// REQUIRED; To time of the query
-	ToTime *time.Time `json:"toTime,omitempty"`
-
-	// Group query result by Operation Name.
-	GroupByOperationName *bool `json:"groupByOperationName,omitempty"`
-
-	// Group query result by Resource Name.
-	GroupByResourceName *bool `json:"groupByResourceName,omitempty"`
-
-	// Group query result by Throttle Policy applied.
-	GroupByThrottlePolicy *bool `json:"groupByThrottlePolicy,omitempty"`
 }
 
 // LogAnalyticsOperationResult - LogAnalytics operation status response
@@ -2782,24 +2688,6 @@ type RequestRateByIntervalInput struct {
 
 	// Group query result by Throttle Policy applied.
 	GroupByThrottlePolicy *bool `json:"groupByThrottlePolicy,omitempty"`
-}
-
-// Resource - The Resource model definition.
-type Resource struct {
-	// REQUIRED; Resource location
-	Location *string `json:"location,omitempty"`
-
-	// Resource tags
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// READ-ONLY; Resource Id
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type
-	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // ResourceRange - Describes the resource range.
@@ -3558,27 +3446,6 @@ type ThrottledRequestsInput struct {
 
 	// Group query result by Throttle Policy applied.
 	GroupByThrottlePolicy *bool `json:"groupByThrottlePolicy,omitempty"`
-}
-
-// UpdateResource - The Update Resource model definition.
-type UpdateResource struct {
-	// Resource tags
-	Tags map[string]*string `json:"tags,omitempty"`
-}
-
-// UpdateResourceDefinition - The Update Resource model definition.
-type UpdateResourceDefinition struct {
-	// Resource tags
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// READ-ONLY; Resource Id
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type
-	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // UpgradeOperationHistoricalStatusInfo - Virtual Machine Scale Set OS Upgrade History operation response.

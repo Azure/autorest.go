@@ -8407,24 +8407,6 @@ type ReferencedPublicIPAddress struct {
 	ID *string `json:"id,omitempty"`
 }
 
-// Resource - Common resource representation.
-type Resource struct {
-	// Resource ID.
-	ID *string `json:"id,omitempty"`
-
-	// Resource location.
-	Location *string `json:"location,omitempty"`
-
-	// Resource tags.
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // ResourceNavigationLink resource.
 type ResourceNavigationLink struct {
 	// Resource ID.
@@ -8467,12 +8449,6 @@ type ResourceNavigationLinksListResult struct {
 
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// ResourceSet - The base resource set for visibility and auto-approval.
-type ResourceSet struct {
-	// The list of subscriptions.
-	Subscriptions []*string `json:"subscriptions,omitempty"`
 }
 
 // RetentionPolicyParameters - Parameters that define the retention policy for flow log.

@@ -1943,22 +1943,6 @@ type PriceSheetResult struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// ProxyResource - The Resource model definition.
-type ProxyResource struct {
-	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
-	// the latest version or not.
-	ETag *string `json:"eTag,omitempty"`
-
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // Reseller details
 type Reseller struct {
 	// READ-ONLY; Reseller Description.
@@ -2356,21 +2340,6 @@ type ReservationTransaction struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// ReservationTransactionResource - The Resource model definition.
-type ReservationTransactionResource struct {
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource tags.
-	Tags []*string `json:"tags,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
 // method.
 type ReservationTransactionsClientListByBillingProfileOptions struct {
@@ -2449,33 +2418,6 @@ type ReservationsSummariesClientListOptions struct {
 	ReservationOrderID *string
 	// Start date. Required only when querying with billing profile
 	StartDate *string
-}
-
-// Resource - The Resource model definition.
-type Resource struct {
-	// READ-ONLY; Resource etag.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource tags.
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// ResourceAttributes - The Resource model definition.
-type ResourceAttributes struct {
-	// READ-ONLY; Resource location
-	Location *string `json:"location,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource sku
-	SKU *string `json:"sku,omitempty" azure:"ro"`
 }
 
 // SKUProperty - The Sku property

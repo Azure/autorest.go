@@ -1022,7 +1022,7 @@ function dfsSchema(schema: Schema, referencedTypes: Set<Schema>) {
     }
     // If schema is has allOf, then reserve all the parents
     for (const parent of values(schema.parents?.immediate)) {
-      if (isObjectSchema(parent)) {
+      if (isObjectSchema(parent) && parent.discriminator) {
         dfsSchema(parent, referencedTypes);
       }
     }
