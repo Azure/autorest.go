@@ -7,7 +7,7 @@ For Azure SDK for Go, we introduced `@autorest/gotest`, an autorest extension to
 - [Go 1.18+](https://go.dev/dl/) is required because we leverage Go generic in our SDK.
 - Add your default `GOPATH/bin` (default is `~/go/bin`) to your system `PATH` environment.
 - Prepare local workspace of [Azure SDK for Go](https://github.com/Azure/azure-sdk-for-go) repository.  (We will use `<sdk-repo-workspace>` for SDK workspace in this document.)
-- Prepare local workspace of service swagger files. (We will use a test signalR [swagger](https://github.com/Azure/azure-sdk-tools/tree/main/tools/sdk-testgen/swagger/specification/signalr/resource-manager) as example in this document. The workspace will be `<swagger-repo-workspace>`.)
+- Prepare local workspace of service swagger files. (We will use a test signalR [swagger](../../../swagger/specification/signalr/resource-manager) as example in this document. The workspace will be `<swagger-repo-workspace>`.)
 - [Node 1.14+](https://nodejs.org/en/download/) is required and [Autorest CLI](https://github.com/Azure/autorest/tree/main/packages/apps/autorest) should be installed globally.
 
 ## Config swagger
@@ -153,4 +153,4 @@ go run main.go
 
 ## Other generation config
 
-For further configuration of `@autorest/gotest`, you could reference the [readme](https://github.com/Azure/azure-sdk-tools/tree/main/tools/sdk-testgen/packages/autorest.gotest#readme).
+For further configuration of `@autorest/gotest`, you could reference the [readme](../README.md).
