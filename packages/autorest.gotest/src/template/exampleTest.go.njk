@@ -19,7 +19,7 @@ import (
 {%- if allExamples.indexOf(example.originalFile)<0 %}
 {%- set _ = allExamples.push(example.originalFile) %}
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/{{example.originalFile}}
-func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}_{{jsFunc.getExampleSuffix(example.originalFile)}}() {
+func Example{{example.operationGroup.language.go.clientName}}_{{example.opName}}{% if exampleGroup.examples.length>1 %}_{{jsFunc.getExampleSuffix(example.originalFile)}}{% endif %}() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
