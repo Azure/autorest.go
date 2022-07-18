@@ -28,21 +28,16 @@ func ExampleGalleryApplicationsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		armcompute.GalleryApplication{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryApplicationProperties{
-				Description:         to.Ptr("This is the gallery application description."),
-				Eula:                to.Ptr("This is the gallery application EULA."),
-				PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
-				ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
-				SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplication{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryApplicationProperties{
+			Description:         to.Ptr("This is the gallery application description."),
+			Eula:                to.Ptr("This is the gallery application EULA."),
+			PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+			ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
+			SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -65,20 +60,15 @@ func ExampleGalleryApplicationsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		armcompute.GalleryApplicationUpdate{
-			Properties: &armcompute.GalleryApplicationProperties{
-				Description:         to.Ptr("This is the gallery application description."),
-				Eula:                to.Ptr("This is the gallery application EULA."),
-				PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
-				ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
-				SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplicationUpdate{
+		Properties: &armcompute.GalleryApplicationProperties{
+			Description:         to.Ptr("This is the gallery application description."),
+			Eula:                to.Ptr("This is the gallery application EULA."),
+			PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+			ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
+			SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -101,11 +91,7 @@ func ExampleGalleryApplicationsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -124,11 +110,7 @@ func ExampleGalleryApplicationsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -149,9 +131,7 @@ func ExampleGalleryApplicationsClient_NewListByGalleryPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByGalleryPager("myResourceGroup",
-		"myGalleryName",
-		nil)
+	pager := client.NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

@@ -28,46 +28,40 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		armcompute.VirtualMachineScaleSetVMExtension{
-			Properties: &armcompute.VirtualMachineExtensionProperties{
-				Type:                    to.Ptr("extType"),
-				AutoUpgradeMinorVersion: to.Ptr(true),
-				Publisher:               to.Ptr("extPublisher"),
-				Settings: map[string]interface{}{
-					"UserName": "xyz@microsoft.com",
-					"items": []interface{}{
-						map[string]interface{}{
-							"name": "text - 2",
-							"type": float64(1),
-							"content": map[string]interface{}{
-								"json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections.",
-							},
-						},
-						map[string]interface{}{
-							"name": "query - 2",
-							"type": float64(3),
-							"content": map[string]interface{}{
-								"exportToExcelOptions": "visible",
-								"query":                "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
-								"queryType":            float64(0),
-								"resourceType":         "microsoft.operationalinsights/workspaces",
-								"size":                 float64(1),
-								"version":              "KqlItem/1.0",
-							},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtension{
+		Properties: &armcompute.VirtualMachineExtensionProperties{
+			Type:                    to.Ptr("extType"),
+			AutoUpgradeMinorVersion: to.Ptr(true),
+			Publisher:               to.Ptr("extPublisher"),
+			Settings: map[string]interface{}{
+				"UserName": "xyz@microsoft.com",
+				"items": []interface{}{
+					map[string]interface{}{
+						"name": "text - 2",
+						"type": float64(1),
+						"content": map[string]interface{}{
+							"json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections.",
 						},
 					},
-					"styleSettings": map[string]interface{}{},
-					"test":          float64(1),
+					map[string]interface{}{
+						"name": "query - 2",
+						"type": float64(3),
+						"content": map[string]interface{}{
+							"exportToExcelOptions": "visible",
+							"query":                "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+							"queryType":            float64(0),
+							"resourceType":         "microsoft.operationalinsights/workspaces",
+							"size":                 float64(1),
+							"version":              "KqlItem/1.0",
+						},
+					},
 				},
-				TypeHandlerVersion: to.Ptr("1.2"),
+				"styleSettings": map[string]interface{}{},
+				"test":          float64(1),
 			},
+			TypeHandlerVersion: to.Ptr("1.2"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -90,23 +84,17 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		armcompute.VirtualMachineScaleSetVMExtensionUpdate{
-			Properties: &armcompute.VirtualMachineExtensionUpdateProperties{
-				Type:                    to.Ptr("extType"),
-				AutoUpgradeMinorVersion: to.Ptr(true),
-				Publisher:               to.Ptr("extPublisher"),
-				Settings: map[string]interface{}{
-					"UserName": "xyz@microsoft.com",
-				},
-				TypeHandlerVersion: to.Ptr("1.2"),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtensionUpdate{
+		Properties: &armcompute.VirtualMachineExtensionUpdateProperties{
+			Type:                    to.Ptr("extType"),
+			AutoUpgradeMinorVersion: to.Ptr(true),
+			Publisher:               to.Ptr("extPublisher"),
+			Settings: map[string]interface{}{
+				"UserName": "xyz@microsoft.com",
 			},
+			TypeHandlerVersion: to.Ptr("1.2"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -129,12 +117,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -155,12 +138,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		&armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", &armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -179,11 +157,7 @@ func ExampleVirtualMachineScaleSetVMExtensionsClient_List() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.List(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
+	res, err := client.List(ctx, "myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

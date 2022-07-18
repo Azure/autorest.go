@@ -94,218 +94,194 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 	// From step SignalR_CheckNameAvailability
 	client, err := armsignalr.NewClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	_, err = client.CheckNameAvailability(testsuite.ctx,
-		testsuite.location,
-		armsignalr.NameAvailabilityParameters{
-			Name: to.Ptr(resourceName),
-			Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-		},
-		nil)
+	_, err = client.CheckNameAvailability(testsuite.ctx, testsuite.location, armsignalr.NameAvailabilityParameters{
+		Name: to.Ptr(resourceName),
+		Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+	}, nil)
 	testsuite.Require().NoError(err)
 
 	// From step SignalR_CreateOrUpdate
-	clientCreateOrUpdateResponsePoller, err := client.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		armsignalr.ResourceInfo{
-			Location: to.Ptr(testsuite.location),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
+	clientCreateOrUpdateResponsePoller, err := client.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, armsignalr.ResourceInfo{
+		Location: to.Ptr(testsuite.location),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Identity: &armsignalr.ManagedIdentity{
+			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		},
+		Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		Properties: &armsignalr.Properties{
+			Cors: &armsignalr.CorsSettings{
+				AllowedOrigins: []*string{
+					to.Ptr("https://foo.com"),
+					to.Ptr("https://bar.com")},
 			},
-			Identity: &armsignalr.ManagedIdentity{
-				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-			},
-			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-			Properties: &armsignalr.Properties{
-				Cors: &armsignalr.CorsSettings{
-					AllowedOrigins: []*string{
-						to.Ptr("https://foo.com"),
-						to.Ptr("https://bar.com")},
+			DisableAADAuth:   to.Ptr(false),
+			DisableLocalAuth: to.Ptr(false),
+			Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("Serverless"),
 				},
-				DisableAADAuth:   to.Ptr(false),
-				DisableLocalAuth: to.Ptr(false),
-				Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("True"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				}},
+			NetworkACLs: &armsignalr.NetworkACLs{
+				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
 					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("Serverless"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("True"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					}},
-				NetworkACLs: &armsignalr.NetworkACLs{
-					DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-					PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-						{
-							Allow: []*armsignalr.SignalRRequestType{
-								to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-							Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-						}},
-					PublicNetwork: &armsignalr.NetworkACL{
 						Allow: []*armsignalr.SignalRRequestType{
-							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-					},
-				},
-				PublicNetworkAccess: to.Ptr("Enabled"),
-				TLS: &armsignalr.TLSSettings{
-					ClientCertEnabled: to.Ptr(false),
-				},
-				Upstream: &armsignalr.ServerlessUpstreamSettings{
-					Templates: []*armsignalr.UpstreamTemplate{
-						{
-							Auth: &armsignalr.UpstreamAuthSettings{
-								Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-								ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-									Resource: to.Ptr("api://example"),
-								},
-							},
-							CategoryPattern: to.Ptr("*"),
-							EventPattern:    to.Ptr("connect,disconnect"),
-							HubPattern:      to.Ptr("*"),
-							URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
-						}},
+							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+						Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+					}},
+				PublicNetwork: &armsignalr.NetworkACL{
+					Allow: []*armsignalr.SignalRRequestType{
+						to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
 				},
 			},
-			SKU: &armsignalr.ResourceSKU{
-				Name:     to.Ptr("Standard_S1"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+			PublicNetworkAccess: to.Ptr("Enabled"),
+			TLS: &armsignalr.TLSSettings{
+				ClientCertEnabled: to.Ptr(false),
+			},
+			Upstream: &armsignalr.ServerlessUpstreamSettings{
+				Templates: []*armsignalr.UpstreamTemplate{
+					{
+						Auth: &armsignalr.UpstreamAuthSettings{
+							Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+							ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+								Resource: to.Ptr("api://example"),
+							},
+						},
+						CategoryPattern: to.Ptr("*"),
+						EventPattern:    to.Ptr("connect,disconnect"),
+						HubPattern:      to.Ptr("*"),
+						URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
+					}},
 			},
 		},
-		nil)
+		SKU: &armsignalr.ResourceSKU{
+			Name:     to.Ptr("Standard_S1"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, clientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step SignalR_Get
-	_, err = client.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		nil)
+	_, err = client.Get(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step SignalR_Update
-	clientUpdateResponsePoller, err := client.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		armsignalr.ResourceInfo{
-			Location: to.Ptr(testsuite.location),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
+	clientUpdateResponsePoller, err := client.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, armsignalr.ResourceInfo{
+		Location: to.Ptr(testsuite.location),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Identity: &armsignalr.ManagedIdentity{
+			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		},
+		Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		Properties: &armsignalr.Properties{
+			Cors: &armsignalr.CorsSettings{
+				AllowedOrigins: []*string{
+					to.Ptr("https://foo.com"),
+					to.Ptr("https://bar.com")},
 			},
-			Identity: &armsignalr.ManagedIdentity{
-				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-			},
-			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-			Properties: &armsignalr.Properties{
-				Cors: &armsignalr.CorsSettings{
-					AllowedOrigins: []*string{
-						to.Ptr("https://foo.com"),
-						to.Ptr("https://bar.com")},
+			DisableAADAuth:   to.Ptr(false),
+			DisableLocalAuth: to.Ptr(false),
+			Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("Serverless"),
 				},
-				DisableAADAuth:   to.Ptr(false),
-				DisableLocalAuth: to.Ptr(false),
-				Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("True"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				}},
+			NetworkACLs: &armsignalr.NetworkACLs{
+				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
 					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("Serverless"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("True"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					}},
-				NetworkACLs: &armsignalr.NetworkACLs{
-					DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-					PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-						{
-							Allow: []*armsignalr.SignalRRequestType{
-								to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-							Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-						}},
-					PublicNetwork: &armsignalr.NetworkACL{
 						Allow: []*armsignalr.SignalRRequestType{
-							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-					},
-				},
-				PublicNetworkAccess: to.Ptr("Enabled"),
-				TLS: &armsignalr.TLSSettings{
-					ClientCertEnabled: to.Ptr(false),
-				},
-				Upstream: &armsignalr.ServerlessUpstreamSettings{
-					Templates: []*armsignalr.UpstreamTemplate{
-						{
-							Auth: &armsignalr.UpstreamAuthSettings{
-								Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-								ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-									Resource: to.Ptr("api://example"),
-								},
-							},
-							CategoryPattern: to.Ptr("*"),
-							EventPattern:    to.Ptr("connect,disconnect"),
-							HubPattern:      to.Ptr("*"),
-							URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
-						}},
+							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+						Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+					}},
+				PublicNetwork: &armsignalr.NetworkACL{
+					Allow: []*armsignalr.SignalRRequestType{
+						to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
 				},
 			},
-			SKU: &armsignalr.ResourceSKU{
-				Name:     to.Ptr("Standard_S1"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+			PublicNetworkAccess: to.Ptr("Enabled"),
+			TLS: &armsignalr.TLSSettings{
+				ClientCertEnabled: to.Ptr(false),
+			},
+			Upstream: &armsignalr.ServerlessUpstreamSettings{
+				Templates: []*armsignalr.UpstreamTemplate{
+					{
+						Auth: &armsignalr.UpstreamAuthSettings{
+							Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+							ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+								Resource: to.Ptr("api://example"),
+							},
+						},
+						CategoryPattern: to.Ptr("*"),
+						EventPattern:    to.Ptr("connect,disconnect"),
+						HubPattern:      to.Ptr("*"),
+						URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
+					}},
 			},
 		},
-		nil)
+		SKU: &armsignalr.ResourceSKU{
+			Name:     to.Ptr("Standard_S1"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, clientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step SignalR_ListKeys
-	_, err = client.ListKeys(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		nil)
+	_, err = client.ListKeys(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step SignalR_RegenerateKey
-	clientRegenerateKeyResponsePoller, err := client.BeginRegenerateKey(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		armsignalr.RegenerateKeyParameters{
-			KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-		},
-		nil)
+	clientRegenerateKeyResponsePoller, err := client.BeginRegenerateKey(testsuite.ctx, testsuite.resourceGroupName, resourceName, armsignalr.RegenerateKeyParameters{
+		KeyType: to.Ptr(armsignalr.KeyTypePrimary),
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, clientRegenerateKeyResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step SignalR_Restart
-	clientRestartResponsePoller, err := client.BeginRestart(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		nil)
+	clientRestartResponsePoller, err := client.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, clientRestartResponsePoller)
 	testsuite.Require().NoError(err)
@@ -313,8 +289,7 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 	// From step Usages_List
 	usagesClient, err := armsignalr.NewUsagesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	usagesClientNewListPager := usagesClient.NewListPager(testsuite.location,
-		nil)
+	usagesClientNewListPager := usagesClient.NewListPager(testsuite.location, nil)
 	for usagesClientNewListPager.More() {
 		_, err := usagesClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -322,8 +297,7 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 	}
 
 	// From step SignalR_ListByResourceGroup
-	clientNewListByResourceGroupPager := client.NewListByResourceGroupPager(testsuite.resourceGroupName,
-		nil)
+	clientNewListByResourceGroupPager := client.NewListByResourceGroupPager(testsuite.resourceGroupName, nil)
 	for clientNewListByResourceGroupPager.More() {
 		_, err := clientNewListByResourceGroupPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -349,10 +323,7 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 	}
 
 	// From step SignalR_Delete
-	clientDeleteResponsePoller, err := client.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		resourceName,
-		nil)
+	clientDeleteResponsePoller, err := client.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, clientDeleteResponsePoller)
 	testsuite.Require().NoError(err)

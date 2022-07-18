@@ -112,13 +112,10 @@ func (testsuite *MockTestSuite) TestSignalR_CheckNameAvailability() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CheckNameAvailability(ctx,
-		"eastus",
-		armsignalr.NameAvailabilityParameters{
-			Name: to.Ptr("mySignalRService"),
-			Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-		},
-		nil)
+	res, err := client.CheckNameAvailability(ctx, "eastus", armsignalr.NameAvailabilityParameters{
+		Name: to.Ptr("mySignalRService"),
+		Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CheckNameAvailability.json")
 	// Response check
 	exampleRes := armsignalr.NameAvailability{
@@ -277,8 +274,7 @@ func (testsuite *MockTestSuite) TestSignalR_ListByResourceGroup() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListByResourceGroup.json")
@@ -414,10 +410,7 @@ func (testsuite *MockTestSuite) TestSignalR_Get() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Get.json")
 	// Response check
 	exampleRes := armsignalr.ResourceInfo{
@@ -547,87 +540,83 @@ func (testsuite *MockTestSuite) TestSignalR_CreateOrUpdate() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		armsignalr.ResourceInfo{
-			Location: to.Ptr("eastus"),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
+		Location: to.Ptr("eastus"),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Identity: &armsignalr.ManagedIdentity{
+			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		},
+		Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		Properties: &armsignalr.Properties{
+			Cors: &armsignalr.CorsSettings{
+				AllowedOrigins: []*string{
+					to.Ptr("https://foo.com"),
+					to.Ptr("https://bar.com")},
 			},
-			Identity: &armsignalr.ManagedIdentity{
-				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-			},
-			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-			Properties: &armsignalr.Properties{
-				Cors: &armsignalr.CorsSettings{
-					AllowedOrigins: []*string{
-						to.Ptr("https://foo.com"),
-						to.Ptr("https://bar.com")},
+			DisableAADAuth:   to.Ptr(false),
+			DisableLocalAuth: to.Ptr(false),
+			Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("Serverless"),
 				},
-				DisableAADAuth:   to.Ptr(false),
-				DisableLocalAuth: to.Ptr(false),
-				Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("True"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				}},
+			NetworkACLs: &armsignalr.NetworkACLs{
+				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
 					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("Serverless"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("True"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					}},
-				NetworkACLs: &armsignalr.NetworkACLs{
-					DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-					PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-						{
-							Allow: []*armsignalr.SignalRRequestType{
-								to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-						}},
-					PublicNetwork: &armsignalr.NetworkACL{
 						Allow: []*armsignalr.SignalRRequestType{
-							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-					},
-				},
-				PublicNetworkAccess: to.Ptr("Enabled"),
-				TLS: &armsignalr.TLSSettings{
-					ClientCertEnabled: to.Ptr(false),
-				},
-				Upstream: &armsignalr.ServerlessUpstreamSettings{
-					Templates: []*armsignalr.UpstreamTemplate{
-						{
-							Auth: &armsignalr.UpstreamAuthSettings{
-								Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-								ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-									Resource: to.Ptr("api://example"),
-								},
-							},
-							CategoryPattern: to.Ptr("*"),
-							EventPattern:    to.Ptr("connect,disconnect"),
-							HubPattern:      to.Ptr("*"),
-							URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
-						}},
+							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+						Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+					}},
+				PublicNetwork: &armsignalr.NetworkACL{
+					Allow: []*armsignalr.SignalRRequestType{
+						to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
 				},
 			},
-			SKU: &armsignalr.ResourceSKU{
-				Name:     to.Ptr("Standard_S1"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+			PublicNetworkAccess: to.Ptr("Enabled"),
+			TLS: &armsignalr.TLSSettings{
+				ClientCertEnabled: to.Ptr(false),
+			},
+			Upstream: &armsignalr.ServerlessUpstreamSettings{
+				Templates: []*armsignalr.UpstreamTemplate{
+					{
+						Auth: &armsignalr.UpstreamAuthSettings{
+							Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+							ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+								Resource: to.Ptr("api://example"),
+							},
+						},
+						CategoryPattern: to.Ptr("*"),
+						EventPattern:    to.Ptr("connect,disconnect"),
+						HubPattern:      to.Ptr("*"),
+						URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
+					}},
 			},
 		},
-		nil)
+		SKU: &armsignalr.ResourceSKU{
+			Name:     to.Ptr("Standard_S1"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_CreateOrUpdate.json")
@@ -759,10 +748,7 @@ func (testsuite *MockTestSuite) TestSignalR_Delete() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Delete.json")
@@ -776,87 +762,83 @@ func (testsuite *MockTestSuite) TestSignalR_Update() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		armsignalr.ResourceInfo{
-			Location: to.Ptr("eastus"),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
+		Location: to.Ptr("eastus"),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Identity: &armsignalr.ManagedIdentity{
+			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		},
+		Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		Properties: &armsignalr.Properties{
+			Cors: &armsignalr.CorsSettings{
+				AllowedOrigins: []*string{
+					to.Ptr("https://foo.com"),
+					to.Ptr("https://bar.com")},
 			},
-			Identity: &armsignalr.ManagedIdentity{
-				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-			},
-			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-			Properties: &armsignalr.Properties{
-				Cors: &armsignalr.CorsSettings{
-					AllowedOrigins: []*string{
-						to.Ptr("https://foo.com"),
-						to.Ptr("https://bar.com")},
+			DisableAADAuth:   to.Ptr(false),
+			DisableLocalAuth: to.Ptr(false),
+			Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("Serverless"),
 				},
-				DisableAADAuth:   to.Ptr(false),
-				DisableLocalAuth: to.Ptr(false),
-				Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("True"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				}},
+			NetworkACLs: &armsignalr.NetworkACLs{
+				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
 					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("Serverless"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("True"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					}},
-				NetworkACLs: &armsignalr.NetworkACLs{
-					DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-					PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-						{
-							Allow: []*armsignalr.SignalRRequestType{
-								to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-							Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-						}},
-					PublicNetwork: &armsignalr.NetworkACL{
 						Allow: []*armsignalr.SignalRRequestType{
-							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-					},
-				},
-				PublicNetworkAccess: to.Ptr("Enabled"),
-				TLS: &armsignalr.TLSSettings{
-					ClientCertEnabled: to.Ptr(false),
-				},
-				Upstream: &armsignalr.ServerlessUpstreamSettings{
-					Templates: []*armsignalr.UpstreamTemplate{
-						{
-							Auth: &armsignalr.UpstreamAuthSettings{
-								Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-								ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-									Resource: to.Ptr("api://example"),
-								},
-							},
-							CategoryPattern: to.Ptr("*"),
-							EventPattern:    to.Ptr("connect,disconnect"),
-							HubPattern:      to.Ptr("*"),
-							URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
-						}},
+							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+						Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+					}},
+				PublicNetwork: &armsignalr.NetworkACL{
+					Allow: []*armsignalr.SignalRRequestType{
+						to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
 				},
 			},
-			SKU: &armsignalr.ResourceSKU{
-				Name:     to.Ptr("Standard_S1"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+			PublicNetworkAccess: to.Ptr("Enabled"),
+			TLS: &armsignalr.TLSSettings{
+				ClientCertEnabled: to.Ptr(false),
+			},
+			Upstream: &armsignalr.ServerlessUpstreamSettings{
+				Templates: []*armsignalr.UpstreamTemplate{
+					{
+						Auth: &armsignalr.UpstreamAuthSettings{
+							Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+							ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+								Resource: to.Ptr("api://example"),
+							},
+						},
+						CategoryPattern: to.Ptr("*"),
+						EventPattern:    to.Ptr("connect,disconnect"),
+						HubPattern:      to.Ptr("*"),
+						URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
+					}},
 			},
 		},
-		nil)
+		SKU: &armsignalr.ResourceSKU{
+			Name:     to.Ptr("Standard_S1"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Update.json")
@@ -988,10 +970,7 @@ func (testsuite *MockTestSuite) TestSignalR_ListKeys() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListKeys(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	res, err := client.ListKeys(ctx, "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_ListKeys.json")
 	// Response check
 	exampleRes := armsignalr.Keys{}
@@ -1010,13 +989,9 @@ func (testsuite *MockTestSuite) TestSignalR_RegenerateKey() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRegenerateKey(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		armsignalr.RegenerateKeyParameters{
-			KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-		},
-		nil)
+	poller, err := client.BeginRegenerateKey(ctx, "myResourceGroup", "mySignalRService", armsignalr.RegenerateKeyParameters{
+		KeyType: to.Ptr(armsignalr.KeyTypePrimary),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_RegenerateKey.json")
@@ -1030,10 +1005,7 @@ func (testsuite *MockTestSuite) TestSignalR_Restart() {
 	})
 	client, err := armsignalr.NewClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRestart(ctx,
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	poller, err := client.BeginRestart(ctx, "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalR_Restart.json")
@@ -1047,8 +1019,7 @@ func (testsuite *MockTestSuite) TestUsages_List() {
 	})
 	client, err := armsignalr.NewUsagesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("eastus",
-		nil)
+	pager := client.NewListPager("eastus", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/Usages_List.json")
@@ -1092,9 +1063,7 @@ func (testsuite *MockTestSuite) TestSignalRPrivateEndpointConnections_List() {
 	})
 	client, err := armsignalr.NewPrivateEndpointConnectionsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"mySignalRService",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "mySignalRService", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_List.json")
@@ -1141,11 +1110,7 @@ func (testsuite *MockTestSuite) TestSignalRPrivateEndpointConnections_Get() {
 	})
 	client, err := armsignalr.NewPrivateEndpointConnectionsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	res, err := client.Get(ctx, "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e", "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Get.json")
 	// Response check
 	exampleRes := armsignalr.PrivateEndpointConnection{
@@ -1186,22 +1151,17 @@ func (testsuite *MockTestSuite) TestSignalRPrivateEndpointConnections_Update() {
 	})
 	client, err := armsignalr.NewPrivateEndpointConnectionsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Update(ctx,
-		"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-		"myResourceGroup",
-		"mySignalRService",
-		armsignalr.PrivateEndpointConnection{
-			Properties: &armsignalr.PrivateEndpointConnectionProperties{
-				PrivateEndpoint: &armsignalr.PrivateEndpoint{
-					ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-				},
-				PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-					ActionsRequired: to.Ptr("None"),
-					Status:          to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-				},
+	res, err := client.Update(ctx, "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e", "myResourceGroup", "mySignalRService", armsignalr.PrivateEndpointConnection{
+		Properties: &armsignalr.PrivateEndpointConnectionProperties{
+			PrivateEndpoint: &armsignalr.PrivateEndpoint{
+				ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+			},
+			PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+				ActionsRequired: to.Ptr("None"),
+				Status:          to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Update.json")
 	// Response check
 	exampleRes := armsignalr.PrivateEndpointConnection{
@@ -1242,11 +1202,7 @@ func (testsuite *MockTestSuite) TestSignalRPrivateEndpointConnections_Delete() {
 	})
 	client, err := armsignalr.NewPrivateEndpointConnectionsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	poller, err := client.BeginDelete(ctx, "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e", "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateEndpointConnections_Delete.json")
@@ -1260,9 +1216,7 @@ func (testsuite *MockTestSuite) TestSignalRPrivateLinkResources_List() {
 	})
 	client, err := armsignalr.NewPrivateLinkResourcesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"mySignalRService",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "mySignalRService", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRPrivateLinkResources_List.json")
@@ -1307,9 +1261,7 @@ func (testsuite *MockTestSuite) TestSignalRSharedPrivateLinkResources_List() {
 	})
 	client, err := armsignalr.NewSharedPrivateLinkResourcesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"mySignalRService",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "mySignalRService", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_List.json")
@@ -1345,11 +1297,7 @@ func (testsuite *MockTestSuite) TestSignalRSharedPrivateLinkResources_Get() {
 	})
 	client, err := armsignalr.NewSharedPrivateLinkResourcesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"upstream",
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	res, err := client.Get(ctx, "upstream", "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Get.json")
 	// Response check
 	exampleRes := armsignalr.SharedPrivateLinkResource{
@@ -1379,18 +1327,13 @@ func (testsuite *MockTestSuite) TestSignalRSharedPrivateLinkResources_CreateOrUp
 	})
 	client, err := armsignalr.NewSharedPrivateLinkResourcesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"upstream",
-		"myResourceGroup",
-		"mySignalRService",
-		armsignalr.SharedPrivateLinkResource{
-			Properties: &armsignalr.SharedPrivateLinkResourceProperties{
-				GroupID:               to.Ptr("sites"),
-				PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
-				RequestMessage:        to.Ptr("Please approve"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "upstream", "myResourceGroup", "mySignalRService", armsignalr.SharedPrivateLinkResource{
+		Properties: &armsignalr.SharedPrivateLinkResourceProperties{
+			GroupID:               to.Ptr("sites"),
+			PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
+			RequestMessage:        to.Ptr("Please approve"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_CreateOrUpdate.json")
@@ -1422,11 +1365,7 @@ func (testsuite *MockTestSuite) TestSignalRSharedPrivateLinkResources_Delete() {
 	})
 	client, err := armsignalr.NewSharedPrivateLinkResourcesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"upstream",
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	poller, err := client.BeginDelete(ctx, "upstream", "myResourceGroup", "mySignalRService", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/signalr/resource-manager/Microsoft.SignalRService/preview/2021-06-01-preview/examples/SignalRSharedPrivateLinkResources_Delete.json")

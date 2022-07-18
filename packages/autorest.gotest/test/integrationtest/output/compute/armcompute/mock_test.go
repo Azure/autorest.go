@@ -81,20 +81,16 @@ func (testsuite *MockTestSuite) TestAvailabilitySets_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewAvailabilitySetsClient("1", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myAvailabilitySet",
-		armcompute.AvailabilitySet{
-			Location: to.Ptr("westus"),
-			AdditionalProperties: map[string]*string{
-				"anyProperty": to.Ptr("fakeValue"),
-			},
-			Properties: &armcompute.AvailabilitySetProperties{
-				PlatformFaultDomainCount:  to.Ptr[int32](2),
-				PlatformUpdateDomainCount: to.Ptr[int32](20),
-			},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myAvailabilitySet", armcompute.AvailabilitySet{
+		Location: to.Ptr("westus"),
+		AdditionalProperties: map[string]*string{
+			"anyProperty": to.Ptr("fakeValue"),
 		},
-		nil)
+		Properties: &armcompute.AvailabilitySetProperties{
+			PlatformFaultDomainCount:  to.Ptr[int32](2),
+			PlatformUpdateDomainCount: to.Ptr[int32](20),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnAvailabilitySet.json")
 	// Response check
 	exampleRes := armcompute.AvailabilitySet{
@@ -237,16 +233,12 @@ func (testsuite *MockTestSuite) TestProximityPlacementGroups_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewProximityPlacementGroupsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"$(resourceName)",
-		armcompute.ProximityPlacementGroup{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.ProximityPlacementGroupProperties{
-				ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
-			},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "$(resourceName)", armcompute.ProximityPlacementGroup{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.ProximityPlacementGroupProperties{
+			ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAProximityPlacementGroup.json")
 	// Response check
 	exampleRes := armcompute.ProximityPlacementGroup{
@@ -273,15 +265,11 @@ func (testsuite *MockTestSuite) TestProximityPlacementGroups_Update() {
 	})
 	client, err := armcompute.NewProximityPlacementGroupsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Update(ctx,
-		"myResourceGroup",
-		"myProximityPlacementGroup",
-		armcompute.ProximityPlacementGroupUpdate{
-			Tags: map[string]*string{
-				"additionalProp1": to.Ptr("string"),
-			},
+	res, err := client.Update(ctx, "myResourceGroup", "myProximityPlacementGroup", armcompute.ProximityPlacementGroupUpdate{
+		Tags: map[string]*string{
+			"additionalProp1": to.Ptr("string"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PatchAProximityPlacementGroup.json")
 	// Response check
 	exampleRes := armcompute.ProximityPlacementGroup{
@@ -308,10 +296,7 @@ func (testsuite *MockTestSuite) TestProximityPlacementGroups_Delete() {
 	})
 	client, err := armcompute.NewProximityPlacementGroupsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"myResourceGroup",
-		"$(resourceName)",
-		nil)
+	_, err = client.Delete(ctx, "myResourceGroup", "$(resourceName)", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteAProximityPlacementGroup.json")
 }
 
@@ -323,10 +308,7 @@ func (testsuite *MockTestSuite) TestProximityPlacementGroups_Get() {
 	})
 	client, err := armcompute.NewProximityPlacementGroupsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myProximityPlacementGroup",
-		&armcompute.ProximityPlacementGroupsClientGetOptions{IncludeColocationStatus: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myProximityPlacementGroup", &armcompute.ProximityPlacementGroupsClientGetOptions{IncludeColocationStatus: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAProximityPlacementGroup.json")
 	// Response check
 	exampleRes := armcompute.ProximityPlacementGroup{
@@ -410,8 +392,7 @@ func (testsuite *MockTestSuite) TestProximityPlacementGroups_ListByResourceGroup
 	})
 	client, err := armcompute.NewProximityPlacementGroupsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListProximityPlacementGroupsInAResourceGroup.json")
@@ -456,22 +437,18 @@ func (testsuite *MockTestSuite) TestDedicatedHostGroups_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewDedicatedHostGroupsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDedicatedHostGroup",
-		armcompute.DedicatedHostGroup{
-			Location: to.Ptr("westus"),
-			Tags: map[string]*string{
-				"department": to.Ptr("finance"),
-			},
-			Properties: &armcompute.DedicatedHostGroupProperties{
-				PlatformFaultDomainCount:  to.Ptr[int32](3),
-				SupportAutomaticPlacement: to.Ptr(true),
-			},
-			Zones: []*string{
-				to.Ptr("1")},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myDedicatedHostGroup", armcompute.DedicatedHostGroup{
+		Location: to.Ptr("westus"),
+		Tags: map[string]*string{
+			"department": to.Ptr("finance"),
 		},
-		nil)
+		Properties: &armcompute.DedicatedHostGroupProperties{
+			PlatformFaultDomainCount:  to.Ptr[int32](3),
+			SupportAutomaticPlacement: to.Ptr(true),
+		},
+		Zones: []*string{
+			to.Ptr("1")},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHostGroup.json")
 	// Response check
 	exampleRes := armcompute.DedicatedHostGroup{
@@ -512,10 +489,7 @@ func (testsuite *MockTestSuite) TestDedicatedHostGroups_Get() {
 	})
 	client, err := armcompute.NewDedicatedHostGroupsClient("{subscriptionId}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myDedicatedHostGroup",
-		&armcompute.DedicatedHostGroupsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myDedicatedHostGroup", &armcompute.DedicatedHostGroupsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHostGroup.json")
 	// Response check
 	exampleRes := armcompute.DedicatedHostGroup{
@@ -608,23 +582,18 @@ func (testsuite *MockTestSuite) TestDedicatedHosts_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewDedicatedHostsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDedicatedHostGroup",
-		"myDedicatedHost",
-		armcompute.DedicatedHost{
-			Location: to.Ptr("westus"),
-			Tags: map[string]*string{
-				"department": to.Ptr("HR"),
-			},
-			Properties: &armcompute.DedicatedHostProperties{
-				PlatformFaultDomain: to.Ptr[int32](1),
-			},
-			SKU: &armcompute.SKU{
-				Name: to.Ptr("DSv3-Type1"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDedicatedHostGroup", "myDedicatedHost", armcompute.DedicatedHost{
+		Location: to.Ptr("westus"),
+		Tags: map[string]*string{
+			"department": to.Ptr("HR"),
 		},
-		nil)
+		Properties: &armcompute.DedicatedHostProperties{
+			PlatformFaultDomain: to.Ptr[int32](1),
+		},
+		SKU: &armcompute.SKU{
+			Name: to.Ptr("DSv3-Type1"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHost.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateADedicatedHost.json")
@@ -669,11 +638,7 @@ func (testsuite *MockTestSuite) TestDedicatedHosts_Get() {
 	})
 	client, err := armcompute.NewDedicatedHostsClient("{subscriptionId}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myDedicatedHostGroup",
-		"myHost",
-		&armcompute.DedicatedHostsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myDedicatedHostGroup", "myHost", &armcompute.DedicatedHostsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetADedicatedHost.json")
 	// Response check
 	exampleRes := armcompute.DedicatedHost{
@@ -745,16 +710,12 @@ func (testsuite *MockTestSuite) TestSSHPublicKeys_Create() {
 	})
 	client, err := armcompute.NewSSHPublicKeysClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Create(ctx,
-		"myResourceGroup",
-		"mySshPublicKeyName",
-		armcompute.SSHPublicKeyResource{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.SSHPublicKeyResourceProperties{
-				PublicKey: to.Ptr("{ssh-rsa public key}"),
-			},
+	res, err := client.Create(ctx, "myResourceGroup", "mySshPublicKeyName", armcompute.SSHPublicKeyResource{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.SSHPublicKeyResourceProperties{
+			PublicKey: to.Ptr("{ssh-rsa public key}"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnSshPublicKey.json")
 	// Response check
 	exampleRes := armcompute.SSHPublicKeyResource{
@@ -788,10 +749,7 @@ func (testsuite *MockTestSuite) TestSSHPublicKeys_Get() {
 	})
 	client, err := armcompute.NewSSHPublicKeysClient("{subscriptionId}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"mySshPublicKeyName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetAnSshPublicKey.json")
 	// Response check
 	exampleRes := armcompute.SSHPublicKeyResource{
@@ -820,10 +778,7 @@ func (testsuite *MockTestSuite) TestSSHPublicKeys_GenerateKeyPair() {
 	})
 	client, err := armcompute.NewSSHPublicKeysClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GenerateKeyPair(ctx,
-		"myResourceGroup",
-		"mySshPublicKeyName",
-		nil)
+	res, err := client.GenerateKeyPair(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GenerateSshKeyPair.json")
 	// Response check
 	exampleRes := armcompute.SSHPublicKeyGenerateKeyPairResult{
@@ -914,8 +869,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_ListByLocation() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscriptionId}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByLocationPager("eastus",
-		nil)
+	pager := client.NewListByLocationPager("eastus", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachinesInASubscriptionByLocation.json")
@@ -1053,54 +1007,50 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					LinuxConfiguration: &armcompute.LinuxConfiguration{
-						PatchSettings: &armcompute.LinuxPatchSettings{
-							AssessmentMode: to.Ptr(armcompute.LinuxPatchAssessmentModeImageDefault),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				LinuxConfiguration: &armcompute.LinuxConfiguration{
+					PatchSettings: &armcompute.LinuxPatchSettings{
+						AssessmentMode: to.Ptr(armcompute.LinuxPatchAssessmentModeImageDefault),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("UbuntuServer"),
-						Publisher: to.Ptr("Canonical"),
-						SKU:       to.Ptr("16.04-LTS"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("UbuntuServer"),
+					Publisher: to.Ptr("Canonical"),
+					SKU:       to.Ptr("16.04-LTS"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingAssessmentModeOfImageDefault.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingAssessmentModeOfImageDefault.json")
@@ -1168,54 +1118,50 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					LinuxConfiguration: &armcompute.LinuxConfiguration{
-						PatchSettings: &armcompute.LinuxPatchSettings{
-							PatchMode: to.Ptr(armcompute.LinuxVMGuestPatchModeImageDefault),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				LinuxConfiguration: &armcompute.LinuxConfiguration{
+					PatchSettings: &armcompute.LinuxPatchSettings{
+						PatchMode: to.Ptr(armcompute.LinuxVMGuestPatchModeImageDefault),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("UbuntuServer"),
-						Publisher: to.Ptr("Canonical"),
-						SKU:       to.Ptr("16.04-LTS"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("UbuntuServer"),
+					Publisher: to.Ptr("Canonical"),
+					SKU:       to.Ptr("16.04-LTS"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModeOfImageDefault.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModeOfImageDefault.json")
@@ -1283,55 +1229,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					LinuxConfiguration: &armcompute.LinuxConfiguration{
-						PatchSettings: &armcompute.LinuxPatchSettings{
-							AssessmentMode: to.Ptr(armcompute.LinuxPatchAssessmentModeAutomaticByPlatform),
-							PatchMode:      to.Ptr(armcompute.LinuxVMGuestPatchModeAutomaticByPlatform),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				LinuxConfiguration: &armcompute.LinuxConfiguration{
+					PatchSettings: &armcompute.LinuxPatchSettings{
+						AssessmentMode: to.Ptr(armcompute.LinuxPatchAssessmentModeAutomaticByPlatform),
+						PatchMode:      to.Ptr(armcompute.LinuxVMGuestPatchModeAutomaticByPlatform),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("UbuntuServer"),
-						Publisher: to.Ptr("Canonical"),
-						SKU:       to.Ptr("16.04-LTS"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("UbuntuServer"),
+					Publisher: to.Ptr("Canonical"),
+					SKU:       to.Ptr("16.04-LTS"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModesOfAutomaticByPlatform.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModesOfAutomaticByPlatform.json")
@@ -1400,55 +1342,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				SecurityProfile: &armcompute.SecurityProfile{
-					SecurityType: to.Ptr("TrustedLaunch"),
-					UefiSettings: &armcompute.UefiSettings{
-						SecureBootEnabled: to.Ptr(true),
-						VTpmEnabled:       to.Ptr(true),
-					},
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windowsserver-gen2preview-preview"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("windows10-tvm"),
-						Version:   to.Ptr("18363.592.2001092016"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardSSDLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2SV3),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			SecurityProfile: &armcompute.SecurityProfile{
+				SecurityType: to.Ptr("TrustedLaunch"),
+				UefiSettings: &armcompute.UefiSettings{
+					SecureBootEnabled: to.Ptr(true),
+					VTpmEnabled:       to.Ptr(true),
+				},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windowsserver-gen2preview-preview"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("windows10-tvm"),
+					Version:   to.Ptr("18363.592.2001092016"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardSSDLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithUefiSettings.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithUefiSettings.json")
@@ -1521,55 +1459,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vm-name}",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-					BootDiagnostics: &armcompute.BootDiagnostics{
-						Enabled:    to.Ptr(true),
-						StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vm-name}", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+				BootDiagnostics: &armcompute.BootDiagnostics{
+					Enabled:    to.Ptr(true),
+					StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
 				},
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("{vm-name}"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("vmOSdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
-					},
-				},
-				UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
 			},
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
+						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("{vm-name}"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("vmOSdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+					},
+				},
+			},
+			UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAVmWithUserData.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAVmWithUserData.json")
@@ -1641,68 +1575,64 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkAPIVersion: to.Ptr(armcompute.NetworkAPIVersionTwoThousandTwenty1101),
-					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineNetworkInterfaceConfiguration{
-						{
-							Name: to.Ptr("{nic-config-name}"),
-							Properties: &armcompute.VirtualMachineNetworkInterfaceConfigurationProperties{
-								DeleteOption: to.Ptr(armcompute.DeleteOptionsDelete),
-								IPConfigurations: []*armcompute.VirtualMachineNetworkInterfaceIPConfiguration{
-									{
-										Name: to.Ptr("{ip-config-name}"),
-										Properties: &armcompute.VirtualMachineNetworkInterfaceIPConfigurationProperties{
-											Primary: to.Ptr(true),
-											PublicIPAddressConfiguration: &armcompute.VirtualMachinePublicIPAddressConfiguration{
-												Name: to.Ptr("{publicIP-config-name}"),
-												Properties: &armcompute.VirtualMachinePublicIPAddressConfigurationProperties{
-													DeleteOption:             to.Ptr(armcompute.DeleteOptionsDetach),
-													PublicIPAllocationMethod: to.Ptr(armcompute.PublicIPAllocationMethodStatic),
-												},
-												SKU: &armcompute.PublicIPAddressSKU{
-													PublicIPAddressSKUName: to.Ptr(armcompute.PublicIPAddressSKUNameBasic),
-													PublicIPAddressSKUTier: to.Ptr(armcompute.PublicIPAddressSKUTierGlobal),
-												},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkAPIVersion: to.Ptr(armcompute.NetworkAPIVersionTwoThousandTwenty1101),
+				NetworkInterfaceConfigurations: []*armcompute.VirtualMachineNetworkInterfaceConfiguration{
+					{
+						Name: to.Ptr("{nic-config-name}"),
+						Properties: &armcompute.VirtualMachineNetworkInterfaceConfigurationProperties{
+							DeleteOption: to.Ptr(armcompute.DeleteOptionsDelete),
+							IPConfigurations: []*armcompute.VirtualMachineNetworkInterfaceIPConfiguration{
+								{
+									Name: to.Ptr("{ip-config-name}"),
+									Properties: &armcompute.VirtualMachineNetworkInterfaceIPConfigurationProperties{
+										Primary: to.Ptr(true),
+										PublicIPAddressConfiguration: &armcompute.VirtualMachinePublicIPAddressConfiguration{
+											Name: to.Ptr("{publicIP-config-name}"),
+											Properties: &armcompute.VirtualMachinePublicIPAddressConfigurationProperties{
+												DeleteOption:             to.Ptr(armcompute.DeleteOptionsDetach),
+												PublicIPAllocationMethod: to.Ptr(armcompute.PublicIPAllocationMethodStatic),
+											},
+											SKU: &armcompute.PublicIPAddressSKU{
+												PublicIPAddressSKUName: to.Ptr(armcompute.PublicIPAddressSKUNameBasic),
+												PublicIPAddressSKUTier: to.Ptr(armcompute.PublicIPAddressSKUTierGlobal),
 											},
 										},
-									}},
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+									},
+								}},
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithNetworkInterfaceConfiguration.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithNetworkInterfaceConfiguration.json")
@@ -1768,55 +1698,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					WindowsConfiguration: &armcompute.WindowsConfiguration{
-						EnableAutomaticUpdates: to.Ptr(true),
-						PatchSettings: &armcompute.PatchSettings{
-							AssessmentMode: to.Ptr(armcompute.WindowsPatchAssessmentModeImageDefault),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				WindowsConfiguration: &armcompute.WindowsConfiguration{
+					EnableAutomaticUpdates: to.Ptr(true),
+					PatchSettings: &armcompute.PatchSettings{
+						AssessmentMode: to.Ptr(armcompute.WindowsPatchAssessmentModeImageDefault),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingAssessmentModeOfImageDefault.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingAssessmentModeOfImageDefault.json")
@@ -1885,55 +1811,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					WindowsConfiguration: &armcompute.WindowsConfiguration{
-						EnableAutomaticUpdates: to.Ptr(true),
-						PatchSettings: &armcompute.PatchSettings{
-							PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByOS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/nsgExistingNic"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				WindowsConfiguration: &armcompute.WindowsConfiguration{
+					EnableAutomaticUpdates: to.Ptr(true),
+					PatchSettings: &armcompute.PatchSettings{
+						PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByOS),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByOS.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByOS.json")
@@ -2002,56 +1924,52 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					WindowsConfiguration: &armcompute.WindowsConfiguration{
-						EnableAutomaticUpdates: to.Ptr(true),
-						PatchSettings: &armcompute.PatchSettings{
-							EnableHotpatching: to.Ptr(true),
-							PatchMode:         to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByPlatform),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				WindowsConfiguration: &armcompute.WindowsConfiguration{
+					EnableAutomaticUpdates: to.Ptr(true),
+					PatchSettings: &armcompute.PatchSettings{
+						EnableHotpatching: to.Ptr(true),
+						PatchMode:         to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByPlatform),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json")
@@ -2121,55 +2039,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					WindowsConfiguration: &armcompute.WindowsConfiguration{
-						EnableAutomaticUpdates: to.Ptr(true),
-						PatchSettings: &armcompute.PatchSettings{
-							PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeManual),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				WindowsConfiguration: &armcompute.WindowsConfiguration{
+					EnableAutomaticUpdates: to.Ptr(true),
+					PatchSettings: &armcompute.PatchSettings{
+						PatchMode: to.Ptr(armcompute.WindowsVMGuestPatchModeManual),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfManual.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfManual.json")
@@ -2238,56 +2152,52 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					WindowsConfiguration: &armcompute.WindowsConfiguration{
-						EnableAutomaticUpdates: to.Ptr(true),
-						PatchSettings: &armcompute.PatchSettings{
-							AssessmentMode: to.Ptr(armcompute.WindowsPatchAssessmentModeAutomaticByPlatform),
-							PatchMode:      to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByPlatform),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						ProvisionVMAgent: to.Ptr(true),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				WindowsConfiguration: &armcompute.WindowsConfiguration{
+					EnableAutomaticUpdates: to.Ptr(true),
+					PatchSettings: &armcompute.PatchSettings{
+						AssessmentMode: to.Ptr(armcompute.WindowsPatchAssessmentModeAutomaticByPlatform),
+						PatchMode:      to.Ptr(armcompute.WindowsVMGuestPatchModeAutomaticByPlatform),
 					},
+					ProvisionVMAgent: to.Ptr(true),
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModesOfAutomaticByPlatform.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModesOfAutomaticByPlatform.json")
@@ -2357,46 +2267,42 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vm-name}",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						Image: &armcompute.VirtualHardDisk{
-							URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/{existing-generalized-os-image-blob-name}.vhd"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vm-name}", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
-						Vhd: &armcompute.VirtualHardDisk{
-							URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
-						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					Image: &armcompute.VirtualHardDisk{
+						URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/{existing-generalized-os-image-blob-name}.vhd"),
+					},
+					OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+					Vhd: &armcompute.VirtualHardDisk{
+						URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageVmFromAnUnmanagedGeneralizedOsImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageVmFromAnUnmanagedGeneralizedOsImage.json")
@@ -2459,65 +2365,61 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vm-name}",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					DataDisks: []*armcompute.DataDisk{
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](0),
-							Vhd: &armcompute.VirtualHardDisk{
-								URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk0.vhd"),
-							},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vm-name}", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](1),
-							Vhd: &armcompute.VirtualHardDisk{
-								URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk1.vhd"),
-							},
-						}},
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				DataDisks: []*armcompute.DataDisk{
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](0),
 						Vhd: &armcompute.VirtualHardDisk{
-							URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
+							URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk0.vhd"),
 						},
+					},
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](1),
+						Vhd: &armcompute.VirtualHardDisk{
+							URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk1.vhd"),
+						},
+					}},
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					Vhd: &armcompute.VirtualHardDisk{
+						URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/myDisk.vhd"),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageVmWithUnmanagedOsAndDataDisks.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageVmWithUnmanagedOsAndDataDisks.json")
@@ -2603,45 +2505,41 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromACustomImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromACustomImage.json")
@@ -2704,45 +2602,41 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromAGeneralizedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromAGeneralizedSharedImage.json")
@@ -2805,40 +2699,36 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromASpecializedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmFromASpecializedSharedImage.json")
@@ -2893,52 +2783,48 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				PlatformFaultDomain: to.Ptr[int32](1),
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-					},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			PlatformFaultDomain: to.Ptr[int32](1),
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
 				},
-				VirtualMachineScaleSet: &armcompute.SubResource{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{existing-flex-vmss-name-with-platformFaultDomainCount-greater-than-1}"),
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+					},
 				},
 			},
+			VirtualMachineScaleSet: &armcompute.SubResource{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachineScaleSets/{existing-flex-vmss-name-with-platformFaultDomainCount-greater-than-1}"),
+			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAVirtualMachineScaleSetWithCustomerAssignedPlatformFaultDomain.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAVirtualMachineScaleSetWithCustomerAssignedPlatformFaultDomain.json")
@@ -3008,51 +2894,47 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				AvailabilitySet: &armcompute.SubResource{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/{existing-availability-set-name}"),
-				},
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			AvailabilitySet: &armcompute.SubResource{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/availabilitySets/{existing-availability-set-name}"),
+			},
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAnAvailabilitySet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmInAnAvailabilitySet.json")
@@ -3121,63 +3003,33 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					DataDisks: []*armcompute.DataDisk{
-						{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](0),
-							ManagedDisk: &armcompute.ManagedDiskParameters{
-								DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
-									ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-								},
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesAttach),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](1),
-							ManagedDisk: &armcompute.ManagedDiskParameters{
-								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-managed-disk-name}"),
-								DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
-									ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-								},
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						}},
-					ImageReference: &armcompute.ImageReference{
-						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				DataDisks: []*armcompute.DataDisk{
+					{
 						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](0),
 						ManagedDisk: &armcompute.ManagedDiskParameters{
 							DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
 								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
@@ -3185,10 +3037,36 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
+					{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesAttach),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](1),
+						ManagedDisk: &armcompute.ManagedDiskParameters{
+							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/{existing-managed-disk-name}"),
+							DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+							},
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					}},
+				ImageReference: &armcompute.ImageReference{
+					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+						},
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithDiskEncryptionSetResource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithDiskEncryptionSetResource.json")
@@ -3279,56 +3157,52 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("$(fakeStepVar)"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("$(fakeStepVar)"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				SecurityProfile: &armcompute.SecurityProfile{
-					EncryptionAtHost: to.Ptr(true),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr("$(fakeScenarioVar)"),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			SecurityProfile: &armcompute.SecurityProfile{
+				EncryptionAtHost: to.Ptr(true),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr("$(fakeScenarioVar)"),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEncryptionAtHost.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEncryptionAtHost.json")
@@ -3402,60 +3276,56 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-					BootDiagnostics: &armcompute.BootDiagnostics{
-						Enabled:    to.Ptr(true),
-						StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+				BootDiagnostics: &armcompute.BootDiagnostics{
+					Enabled:    to.Ptr(true),
+					StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
 				},
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				ScheduledEventsProfile: &armcompute.ScheduledEventsProfile{
-					TerminateNotificationProfile: &armcompute.TerminateNotificationProfile{
-						Enable:           to.Ptr(true),
-						NotBeforeTimeout: to.Ptr("PT10M"),
-					},
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			},
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			ScheduledEventsProfile: &armcompute.ScheduledEventsProfile{
+				TerminateNotificationProfile: &armcompute.TerminateNotificationProfile{
+					Enable:           to.Ptr(true),
+					NotBeforeTimeout: to.Ptr("PT10M"),
+				},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithScheduledEventsProfile.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithScheduledEventsProfile.json")
@@ -3533,53 +3403,49 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr("microsoft-ads"),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr("microsoft-ads"),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithAMarketplaceImagePlan.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithAMarketplaceImagePlan.json")
@@ -3650,55 +3516,51 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-					BootDiagnostics: &armcompute.BootDiagnostics{
-						Enabled:    to.Ptr(true),
-						StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+				BootDiagnostics: &armcompute.BootDiagnostics{
+					Enabled:    to.Ptr(true),
+					StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
 				},
-				ExtensionsTimeBudget: to.Ptr("PT30M"),
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			},
+			ExtensionsTimeBudget: to.Ptr("PT30M"),
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithExtensionsTimeBudget.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithExtensionsTimeBudget.json")
@@ -3771,54 +3633,50 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-					BootDiagnostics: &armcompute.BootDiagnostics{
-						Enabled:    to.Ptr(true),
-						StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+				BootDiagnostics: &armcompute.BootDiagnostics{
+					Enabled:    to.Ptr(true),
+					StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
 				},
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			},
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithBootDiagnostics.json")
@@ -3890,59 +3748,55 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					DataDisks: []*armcompute.DataDisk{
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](0),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](1),
-						}},
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				DataDisks: []*armcompute.DataDisk{
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](0),
 					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](1),
+					}},
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEmptyDataDisks.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEmptyDataDisks.json")
@@ -4026,57 +3880,53 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
+						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr("microsoft-ads"),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
 				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr("microsoft-ads"),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					DiffDiskSettings: &armcompute.DiffDiskSettings{
+						Option:    to.Ptr(armcompute.DiffDiskOptionsLocal),
+						Placement: to.Ptr(armcompute.DiffDiskPlacementCacheDisk),
 					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						DiffDiskSettings: &armcompute.DiffDiskSettings{
-							Option:    to.Ptr(armcompute.DiffDiskOptionsLocal),
-							Placement: to.Ptr(armcompute.DiffDiskPlacementCacheDisk),
-						},
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json")
@@ -4151,57 +4001,53 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
+						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr("microsoft-ads"),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
 				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr("microsoft-ads"),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					DiffDiskSettings: &armcompute.DiffDiskSettings{
+						Option:    to.Ptr(armcompute.DiffDiskOptionsLocal),
+						Placement: to.Ptr(armcompute.DiffDiskPlacementResourceDisk),
 					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						DiffDiskSettings: &armcompute.DiffDiskSettings{
-							Option:    to.Ptr(armcompute.DiffDiskOptionsLocal),
-							Placement: to.Ptr(armcompute.DiffDiskPlacementResourceDisk),
-						},
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json")
@@ -4276,56 +4122,52 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
+						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr("microsoft-ads"),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
 				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr("microsoft-ads"),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					DiffDiskSettings: &armcompute.DiffDiskSettings{
+						Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
 					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						DiffDiskSettings: &armcompute.DiffDiskSettings{
-							Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
-						},
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDisk.json")
@@ -4399,53 +4241,49 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-					BootDiagnostics: &armcompute.BootDiagnostics{
-						Enabled: to.Ptr(true),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+				BootDiagnostics: &armcompute.BootDiagnostics{
+					Enabled: to.Ptr(true),
 				},
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			},
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithManagedBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithManagedBootDiagnostics.json")
@@ -4516,48 +4354,44 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPasswordAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPasswordAuthentication.json")
@@ -4623,48 +4457,44 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPremiumStorage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithPremiumStorage.json")
@@ -4730,57 +4560,53 @@ func (testsuite *MockTestSuite) TestVirtualMachines_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-					LinuxConfiguration: &armcompute.LinuxConfiguration{
-						DisablePasswordAuthentication: to.Ptr(true),
-						SSH: &armcompute.SSHConfiguration{
-							PublicKeys: []*armcompute.SSHPublicKey{
-								{
-									Path:    to.Ptr("/home/{your-username}/.ssh/authorized_keys"),
-									KeyData: to.Ptr("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"),
-								}},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD1V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+				LinuxConfiguration: &armcompute.LinuxConfiguration{
+					DisablePasswordAuthentication: to.Ptr(true),
+					SSH: &armcompute.SSHConfiguration{
+						PublicKeys: []*armcompute.SSHPublicKey{
+							{
+								Path:    to.Ptr("/home/{your-username}/.ssh/authorized_keys"),
+								KeyData: to.Ptr("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"),
+							}},
 					},
 				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("{image_offer}"),
-						Publisher: to.Ptr("{image_publisher}"),
-						SKU:       to.Ptr("{image_sku}"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("{image_offer}"),
+					Publisher: to.Ptr("{image_publisher}"),
+					SKU:       to.Ptr("{image_sku}"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithSshAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithSshAuthentication.json")
@@ -4855,60 +4681,56 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Update() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachineUpdate{
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					DataDisks: []*armcompute.DataDisk{
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](0),
-							ToBeDetached: to.Ptr(true),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachineUpdate{
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](1),
-							ToBeDetached: to.Ptr(false),
-						}},
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				DataDisks: []*armcompute.DataDisk{
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](0),
+						ToBeDetached: to.Ptr(true),
 					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](1),
+						ToBeDetached: to.Ptr(false),
+					}},
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMDetachDataDiskUsingToBeDetachedProperty.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMDetachDataDiskUsingToBeDetachedProperty.json")
@@ -4994,61 +4816,57 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Update() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		armcompute.VirtualMachineUpdate{
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					DataDisks: []*armcompute.DataDisk{
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DetachOption: to.Ptr(armcompute.DiskDetachOptionTypesForceDetach),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](0),
-							ToBeDetached: to.Ptr(true),
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myVM", armcompute.VirtualMachineUpdate{
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardD2V2),
+			},
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
-						{
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-							DiskSizeGB:   to.Ptr[int32](1023),
-							Lun:          to.Ptr[int32](1),
-							ToBeDetached: to.Ptr(false),
-						}},
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("WindowsServer"),
-						Publisher: to.Ptr("MicrosoftWindowsServer"),
-						SKU:       to.Ptr("2016-Datacenter"),
-						Version:   to.Ptr("latest"),
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				DataDisks: []*armcompute.DataDisk{
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DetachOption: to.Ptr(armcompute.DiskDetachOptionTypesForceDetach),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](0),
+						ToBeDetached: to.Ptr(true),
 					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-						},
+					{
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+						DiskSizeGB:   to.Ptr[int32](1023),
+						Lun:          to.Ptr[int32](1),
+						ToBeDetached: to.Ptr(false),
+					}},
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("WindowsServer"),
+					Publisher: to.Ptr("MicrosoftWindowsServer"),
+					SKU:       to.Ptr("2016-Datacenter"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMForceDetachDataDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMForceDetachDataDisk.json")
@@ -5138,10 +4956,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Delete() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myVM",
-		&armcompute.VirtualMachinesClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myVM", &armcompute.VirtualMachinesClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachine.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachine.json")
@@ -5155,10 +4970,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Get() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myVM",
-		&armcompute.VirtualMachinesClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myVM", &armcompute.VirtualMachinesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachine.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachine{
@@ -5278,10 +5090,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Get() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myVM",
-		&armcompute.VirtualMachinesClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myVM", &armcompute.VirtualMachinesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineAutoPlacedOnDedicatedHostGroup.json")
 	// Response check
 	exampleRes = armcompute.VirtualMachine{
@@ -5353,10 +5162,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.InstanceView(ctx,
-		"myResourceGroup",
-		"myVM",
-		nil)
+	res, err := client.InstanceView(ctx, "myResourceGroup", "myVM", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceView.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineInstanceView{
@@ -5492,10 +5298,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstanceView() {
 	})
 	client, err = armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.InstanceView(ctx,
-		"myResourceGroup",
-		"myVM",
-		nil)
+	res, err = client.InstanceView(ctx, "myResourceGroup", "myVM", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceViewAutoPlacedOnDedicatedHostGroup.json")
 	// Response check
 	exampleRes = armcompute.VirtualMachineInstanceView{
@@ -5562,10 +5365,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Generalize() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Generalize(ctx,
-		"myResourceGroup",
-		"myVMName",
-		nil)
+	_, err = client.Generalize(ctx, "myResourceGroup", "myVMName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GeneralizeVirtualMachine.json")
 }
 
@@ -5585,9 +5385,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_ListAvailableSizes() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListAvailableSizesPager("myResourceGroup",
-		"myVmName",
-		nil)
+	pager := client.NewListAvailableSizesPager("myResourceGroup", "myVmName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListAvailableVmSizes_VirtualMachines.json")
@@ -5631,10 +5429,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Reapply() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginReapply(ctx,
-		"ResourceGroup",
-		"VMName",
-		nil)
+	poller, err := client.BeginReapply(ctx, "ResourceGroup", "VMName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReapplyVirtualMachine.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReapplyVirtualMachine.json")
@@ -5660,13 +5455,10 @@ func (testsuite *MockTestSuite) TestVirtualMachines_Reimage() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginReimage(ctx,
-		"myResourceGroup",
-		"myVMName",
-		&armcompute.VirtualMachinesClientBeginReimageOptions{Parameters: &armcompute.VirtualMachineReimageParameters{
-			TempDisk: to.Ptr(true),
-		},
-		})
+	poller, err := client.BeginReimage(ctx, "myResourceGroup", "myVMName", &armcompute.VirtualMachinesClientBeginReimageOptions{Parameters: &armcompute.VirtualMachineReimageParameters{
+		TempDisk: to.Ptr(true),
+	},
+	})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageVirtualMachine.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageVirtualMachine.json")
@@ -5680,10 +5472,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_RetrieveBootDiagnosticsData(
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.RetrieveBootDiagnosticsData(ctx,
-		"ResourceGroup",
-		"VMName",
-		&armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
+	res, err := client.RetrieveBootDiagnosticsData(ctx, "ResourceGroup", "VMName", &armcompute.VirtualMachinesClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVirtualMachine.json")
 	// Response check
 	exampleRes := armcompute.RetrieveBootDiagnosticsDataResult{
@@ -5709,10 +5498,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_SimulateEviction() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.SimulateEviction(ctx,
-		"ResourceGroup",
-		"VMName",
-		nil)
+	_, err = client.SimulateEviction(ctx, "ResourceGroup", "VMName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVM.json")
 }
 
@@ -5724,10 +5510,7 @@ func (testsuite *MockTestSuite) TestVirtualMachines_AssessPatches() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginAssessPatches(ctx,
-		"myResourceGroupName",
-		"myVMName",
-		nil)
+	poller, err := client.BeginAssessPatches(ctx, "myResourceGroupName", "myVMName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineAssessPatches.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineAssessPatches.json")
@@ -5782,20 +5565,16 @@ func (testsuite *MockTestSuite) TestVirtualMachines_InstallPatches() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginInstallPatches(ctx,
-		"myResourceGroupName",
-		"myVMName",
-		armcompute.VirtualMachineInstallPatchesParameters{
-			MaximumDuration: to.Ptr("PT4H"),
-			RebootSetting:   to.Ptr(armcompute.VMGuestPatchRebootSettingIfRequired),
-			WindowsParameters: &armcompute.WindowsParameters{
-				ClassificationsToInclude: []*armcompute.VMGuestPatchClassificationWindows{
-					to.Ptr(armcompute.VMGuestPatchClassificationWindowsCritical),
-					to.Ptr(armcompute.VMGuestPatchClassificationWindowsSecurity)},
-				MaxPatchPublishDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-11-19T02:36:43.0539904+00:00"); return t }()),
-			},
+	poller, err := client.BeginInstallPatches(ctx, "myResourceGroupName", "myVMName", armcompute.VirtualMachineInstallPatchesParameters{
+		MaximumDuration: to.Ptr("PT4H"),
+		RebootSetting:   to.Ptr(armcompute.VMGuestPatchRebootSettingIfRequired),
+		WindowsParameters: &armcompute.WindowsParameters{
+			ClassificationsToInclude: []*armcompute.VMGuestPatchClassificationWindows{
+				to.Ptr(armcompute.VMGuestPatchClassificationWindowsCritical),
+				to.Ptr(armcompute.VMGuestPatchClassificationWindowsSecurity)},
+			MaxPatchPublishDate: to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-11-19T02:36:43.0539904+00:00"); return t }()),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineInstallPatches.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineInstallPatches.json")
@@ -5846,13 +5625,9 @@ func (testsuite *MockTestSuite) TestVirtualMachines_RunCommand() {
 	})
 	client, err := armcompute.NewVirtualMachinesClient("24fb23e3-6ba3-41f0-9b6e-e41131d5d61e", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRunCommand(ctx,
-		"crptestar98131",
-		"vm3036",
-		armcompute.RunCommandInput{
-			CommandID: to.Ptr("RunPowerShellScript"),
-		},
-		nil)
+	poller, err := client.BeginRunCommand(ctx, "crptestar98131", "vm3036", armcompute.RunCommandInput{
+		CommandID: to.Ptr("RunPowerShellScript"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommand.json")
@@ -5887,8 +5662,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_ListByLocation() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByLocationPager("eastus",
-		nil)
+	pager := client.NewListByLocationPager("eastus", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetsInASubscriptionByLocation.json")
@@ -6062,55 +5836,51 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetsClient("<subscription-id>", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"<resource-group-name>",
-		"<vm-scale-set-name>",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
+	poller, err := client.BeginCreateOrUpdate(ctx, "<resource-group-name>", "<vm-scale-set-name>", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
+			},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Name:         to.Ptr("osDisk"),
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							Image: &armcompute.VirtualHardDisk{
-								URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/{existing-generalized-os-image-blob-name}.vhd"),
+										},
+									}},
+								Primary: to.Ptr(true),
 							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Name:         to.Ptr("osDisk"),
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						Image: &armcompute.VirtualHardDisk{
+							URI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/{existing-generalized-os-image-blob-name}.vhd"),
 						},
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageScaleSetFromAnUnmanagedGeneralizedOsImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateACustomImageScaleSetFromAnUnmanagedGeneralizedOsImage.json")
@@ -6193,69 +5963,65 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Name:         to.Ptr("osDisk"),
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							VhdContainers: []*string{
-								to.Ptr("http://{existing-storage-account-name-0}.blob.core.windows.net/vhdContainer"),
-								to.Ptr("http://{existing-storage-account-name-1}.blob.core.windows.net/vhdContainer"),
-								to.Ptr("http://{existing-storage-account-name-2}.blob.core.windows.net/vhdContainer"),
-								to.Ptr("http://{existing-storage-account-name-3}.blob.core.windows.net/vhdContainer"),
-								to.Ptr("http://{existing-storage-account-name-4}.blob.core.windows.net/vhdContainer")},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Name:         to.Ptr("osDisk"),
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						VhdContainers: []*string{
+							to.Ptr("http://{existing-storage-account-name-0}.blob.core.windows.net/vhdContainer"),
+							to.Ptr("http://{existing-storage-account-name-1}.blob.core.windows.net/vhdContainer"),
+							to.Ptr("http://{existing-storage-account-name-2}.blob.core.windows.net/vhdContainer"),
+							to.Ptr("http://{existing-storage-account-name-3}.blob.core.windows.net/vhdContainer"),
+							to.Ptr("http://{existing-storage-account-name-4}.blob.core.windows.net/vhdContainer")},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageScaleSetWithUnmanagedOsDisks.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAPlatformImageScaleSetWithUnmanagedOsDisks.json")
@@ -6342,62 +6108,58 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromACustomImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromACustomImage.json")
@@ -6480,62 +6242,58 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromAGeneralizedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromAGeneralizedSharedImage.json")
@@ -6618,57 +6376,53 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromASpecializedSharedImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromASpecializedSharedImage.json")
@@ -6743,78 +6497,74 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
+			},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
-							{
-								Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-								CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-								DiskSizeGB:   to.Ptr[int32](1023),
-								Lun:          to.Ptr[int32](0),
-								ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-									DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
-										ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-									},
-									StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-								},
-							}},
-						ImageReference: &armcompute.ImageReference{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+						{
 							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+							DiskSizeGB:   to.Ptr[int32](1023),
+							Lun:          to.Ptr[int32](0),
 							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
 								DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
 									ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 								},
 								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 							},
+						}},
+					ImageReference: &armcompute.ImageReference{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+							},
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
 				},
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_DS1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
-			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_DS1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScalesetWithDiskEncryptionSetResource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScalesetWithDiskEncryptionSetResource.json")
@@ -6913,82 +6663,78 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							},
-							{
-								Name: to.Ptr("{fpgaNic-Name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableAcceleratedNetworking: to.Ptr(false),
-									EnableFpga:                  to.Ptr(true),
-									EnableIPForwarding:          to.Ptr(false),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{fpgaNic-Name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Primary:                 to.Ptr(true),
-												PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-fpga-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(false),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						},
+						{
+							Name: to.Ptr("{fpgaNic-Name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableAcceleratedNetworking: to.Ptr(false),
+								EnableFpga:                  to.Ptr(true),
+								EnableIPForwarding:          to.Ptr(false),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{fpgaNic-Name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Primary:                 to.Ptr(true),
+											PrivateIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-fpga-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(false),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromWithFpgaNetworkInterface.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetFromWithFpgaNetworkInterface.json")
@@ -7093,73 +6839,69 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					SecurityProfile: &armcompute.SecurityProfile{
-						EncryptionAtHost: to.Ptr(true),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("windows-data-science-vm"),
-							Publisher: to.Ptr("microsoft-ads"),
-							SKU:       to.Ptr("windows2016"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+										},
+									}},
+								Primary: to.Ptr(true),
 							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				SecurityProfile: &armcompute.SecurityProfile{
+					EncryptionAtHost: to.Ptr(true),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("windows-data-science-vm"),
+						Publisher: to.Ptr("microsoft-ads"),
+						SKU:       to.Ptr("windows2016"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
 				},
-			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_DS1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_DS1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEncryptionAtHost.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEncryptionAtHost.json")
@@ -7254,72 +6996,68 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					SecurityProfile: &armcompute.SecurityProfile{
-						SecurityType: to.Ptr("TrustedLaunch"),
-						UefiSettings: &armcompute.UefiSettings{
-							SecureBootEnabled: to.Ptr(true),
-							VTpmEnabled:       to.Ptr(true),
-						},
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("windowsserver-gen2preview-preview"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("windows10-tvm"),
-							Version:   to.Ptr("18363.592.2001092016"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardSSDLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D2s_v3"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				SecurityProfile: &armcompute.SecurityProfile{
+					SecurityType: to.Ptr("TrustedLaunch"),
+					UefiSettings: &armcompute.UefiSettings{
+						SecureBootEnabled: to.Ptr(true),
+						VTpmEnabled:       to.Ptr(true),
+					},
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("windowsserver-gen2preview-preview"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("windows10-tvm"),
+						Version:   to.Ptr("18363.592.2001092016"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardSSDLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D2s_v3"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithUefiSettings.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithUefiSettings.json")
@@ -7413,70 +7151,66 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("windows-data-science-vm"),
-							Publisher: to.Ptr("microsoft-ads"),
-							SKU:       to.Ptr("windows2016"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+										},
+									}},
+								Primary: to.Ptr(true),
 							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("windows-data-science-vm"),
+						Publisher: to.Ptr("microsoft-ads"),
+						SKU:       to.Ptr("windows2016"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
 				},
-			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAMarketplaceImagePlan.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAMarketplaceImagePlan.json")
@@ -7568,69 +7302,65 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												ApplicationGatewayBackendAddressPools: []*armcompute.SubResource{
-													{
-														ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/applicationGateways/{existing-application-gateway-name}/backendAddressPools/{existing-backend-address-pool-name}"),
-													}},
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											ApplicationGatewayBackendAddressPools: []*armcompute.SubResource{
+												{
+													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/applicationGateways/{existing-application-gateway-name}/backendAddressPools/{existing-backend-address-pool-name}"),
+												}},
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureApplicationGateway.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureApplicationGateway.json")
@@ -7721,79 +7451,75 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												LoadBalancerBackendAddressPools: []*armcompute.SubResource{
-													{
-														ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/{existing-load-balancer-name}/backendAddressPools/{existing-backend-address-pool-name}"),
-													}},
-												LoadBalancerInboundNatPools: []*armcompute.SubResource{
-													{
-														ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/{existing-load-balancer-name}/inboundNatPools/{existing-nat-pool-name}"),
-													}},
-												PublicIPAddressConfiguration: &armcompute.VirtualMachineScaleSetPublicIPAddressConfiguration{
-													Name: to.Ptr("{vmss-name}"),
-													Properties: &armcompute.VirtualMachineScaleSetPublicIPAddressConfigurationProperties{
-														PublicIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
-													},
-												},
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
+			},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											LoadBalancerBackendAddressPools: []*armcompute.SubResource{
+												{
+													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/{existing-load-balancer-name}/backendAddressPools/{existing-backend-address-pool-name}"),
+												}},
+											LoadBalancerInboundNatPools: []*armcompute.SubResource{
+												{
+													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/{existing-load-balancer-name}/inboundNatPools/{existing-nat-pool-name}"),
+												}},
+											PublicIPAddressConfiguration: &armcompute.VirtualMachineScaleSetPublicIPAddressConfiguration{
+												Name: to.Ptr("{vmss-name}"),
+												Properties: &armcompute.VirtualMachineScaleSetPublicIPAddressConfigurationProperties{
+													PublicIPAddressVersion: to.Ptr(armcompute.IPVersionIPv4),
 												},
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
 							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
 				},
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
-			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureLoadBalancer.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAnAzureLoadBalancer.json")
@@ -7888,69 +7614,65 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				AutomaticRepairsPolicy: &armcompute.AutomaticRepairsPolicy{
-					Enabled:     to.Ptr(true),
-					GracePeriod: to.Ptr("PT30M"),
-				},
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			AutomaticRepairsPolicy: &armcompute.AutomaticRepairsPolicy{
+				Enabled:     to.Ptr(true),
+				GracePeriod: to.Ptr("PT30M"),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
+			},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAutomaticRepairs.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithAutomaticRepairs.json")
@@ -8041,71 +7763,67 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-						BootDiagnostics: &armcompute.BootDiagnostics{
-							Enabled:    to.Ptr(true),
-							StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
-						},
-					},
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+					BootDiagnostics: &armcompute.BootDiagnostics{
+						Enabled:    to.Ptr(true),
+						StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
+					},
+				},
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithBootDiagnostics.json")
@@ -8198,77 +7916,73 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
-							{
-								CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-								DiskSizeGB:   to.Ptr[int32](1023),
-								Lun:          to.Ptr[int32](0),
-							},
-							{
-								CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-								DiskSizeGB:   to.Ptr[int32](1023),
-								Lun:          to.Ptr[int32](1),
-							}},
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							DiskSizeGB:   to.Ptr[int32](512),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D2_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+						{
+							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+							DiskSizeGB:   to.Ptr[int32](1023),
+							Lun:          to.Ptr[int32](0),
+						},
+						{
+							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+							DiskSizeGB:   to.Ptr[int32](1023),
+							Lun:          to.Ptr[int32](1),
+						}},
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						DiskSizeGB:   to.Ptr[int32](512),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D2_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEmptyDataDisksOnEachVm.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithEmptyDataDisksOnEachVm.json")
@@ -8375,74 +8089,70 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("windows-data-science-vm"),
+						Publisher: to.Ptr("microsoft-ads"),
+						SKU:       to.Ptr("windows2016"),
+						Version:   to.Ptr("latest"),
 					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("windows-data-science-vm"),
-							Publisher: to.Ptr("microsoft-ads"),
-							SKU:       to.Ptr("windows2016"),
-							Version:   to.Ptr("latest"),
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						DiffDiskSettings: &armcompute.DiffDiskSettings{
+							Option:    to.Ptr(armcompute.DiffDiskOptionsLocal),
+							Placement: to.Ptr(armcompute.DiffDiskPlacementResourceDisk),
 						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							DiffDiskSettings: &armcompute.DiffDiskSettings{
-								Option:    to.Ptr(armcompute.DiffDiskOptionsLocal),
-								Placement: to.Ptr(armcompute.DiffDiskPlacementResourceDisk),
-							},
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
 				},
-			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_DS1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_DS1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDiskUsingDiffDiskPlacement.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDiskUsingDiffDiskPlacement.json")
@@ -8538,69 +8248,65 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr("windows2016"),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
-			},
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("windows-data-science-vm"),
-							Publisher: to.Ptr("microsoft-ads"),
-							SKU:       to.Ptr("windows2016"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							DiffDiskSettings: &armcompute.DiffDiskSettings{
-								Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
-							},
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
-			},
-			SKU: &armcompute.SKU{},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr("windows2016"),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
 		},
-		nil)
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
+			},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("windows-data-science-vm"),
+						Publisher: to.Ptr("microsoft-ads"),
+						SKU:       to.Ptr("windows2016"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						DiffDiskSettings: &armcompute.DiffDiskSettings{
+							Option: to.Ptr(armcompute.DiffDiskOptionsLocal),
+						},
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
+			},
+		},
+		SKU: &armcompute.SKU{},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithDiffOsDisk.json")
@@ -8695,85 +8401,81 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-						BootDiagnostics: &armcompute.BootDiagnostics{
-							Enabled:    to.Ptr(true),
-							StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
-						},
-					},
-					ExtensionProfile: &armcompute.VirtualMachineScaleSetExtensionProfile{
-						ExtensionsTimeBudget: to.Ptr("PT1H20M"),
-						Extensions: []*armcompute.VirtualMachineScaleSetExtension{
-							{
-								Name: to.Ptr("{extension-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetExtensionProperties{
-									Type:                    to.Ptr("{extension-Type}"),
-									AutoUpgradeMinorVersion: to.Ptr(false),
-									Publisher:               to.Ptr("{extension-Publisher}"),
-									Settings:                map[string]interface{}{},
-									TypeHandlerVersion:      to.Ptr("{handler-version}"),
-								},
-							}},
-					},
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+					BootDiagnostics: &armcompute.BootDiagnostics{
+						Enabled:    to.Ptr(true),
+						StorageURI: to.Ptr("http://{existing-storage-account-name}.blob.core.windows.net"),
+					},
+				},
+				ExtensionProfile: &armcompute.VirtualMachineScaleSetExtensionProfile{
+					ExtensionsTimeBudget: to.Ptr("PT1H20M"),
+					Extensions: []*armcompute.VirtualMachineScaleSetExtension{
+						{
+							Name: to.Ptr("{extension-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetExtensionProperties{
+								Type:                    to.Ptr("{extension-Type}"),
+								AutoUpgradeMinorVersion: to.Ptr(false),
+								Publisher:               to.Ptr("{extension-Publisher}"),
+								Settings:                map[string]interface{}{},
+								TypeHandlerVersion:      to.Ptr("{handler-version}"),
+							},
+						}},
+				},
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithExtensionsTimeBudget.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithExtensionsTimeBudget.json")
@@ -8880,70 +8582,66 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					DiagnosticsProfile: &armcompute.DiagnosticsProfile{
-						BootDiagnostics: &armcompute.BootDiagnostics{
-							Enabled: to.Ptr(true),
-						},
-					},
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				DiagnosticsProfile: &armcompute.DiagnosticsProfile{
+					BootDiagnostics: &armcompute.BootDiagnostics{
+						Enabled: to.Ptr(true),
+					},
+				},
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithManagedBootDiagnostics.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithManagedBootDiagnostics.json")
@@ -9035,65 +8733,61 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPasswordAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPasswordAuthentication.json")
@@ -9180,65 +8874,61 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesPremiumLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPremiumStorage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithPremiumStorage.json")
@@ -9325,74 +9015,70 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-						LinuxConfiguration: &armcompute.LinuxConfiguration{
-							DisablePasswordAuthentication: to.Ptr(true),
-							SSH: &armcompute.SSHConfiguration{
-								PublicKeys: []*armcompute.SSHPublicKey{
-									{
-										Path:    to.Ptr("/home/{your-username}/.ssh/authorized_keys"),
-										KeyData: to.Ptr("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"),
-									}},
-							},
-						},
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+					LinuxConfiguration: &armcompute.LinuxConfiguration{
+						DisablePasswordAuthentication: to.Ptr(true),
+						SSH: &armcompute.SSHConfiguration{
+							PublicKeys: []*armcompute.SSHPublicKey{
+								{
+									Path:    to.Ptr("/home/{your-username}/.ssh/authorized_keys"),
+									KeyData: to.Ptr("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1"),
+								}},
+						},
+					},
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithSshAuthentication.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithSshAuthentication.json")
@@ -9485,71 +9171,67 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					ScheduledEventsProfile: &armcompute.ScheduledEventsProfile{
-						TerminateNotificationProfile: &armcompute.TerminateNotificationProfile{
-							Enable:           to.Ptr(true),
-							NotBeforeTimeout: to.Ptr("PT5M"),
-						},
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				ScheduledEventsProfile: &armcompute.ScheduledEventsProfile{
+					TerminateNotificationProfile: &armcompute.TerminateNotificationProfile{
+						Enable:           to.Ptr(true),
+						NotBeforeTimeout: to.Ptr("PT5M"),
+					},
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithTerminateScheduledEventEnabled.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithTerminateScheduledEventEnabled.json")
@@ -9642,66 +9324,62 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeManual),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
-											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
-						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
-						},
-					},
-					UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeManual),
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_D1_v2"),
-				Capacity: to.Ptr[int64](3),
-				Tier:     to.Ptr("Standard"),
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
+											},
+										},
+									}},
+								Primary: to.Ptr(true),
+							},
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+						},
+					},
+				},
+				UserData: to.Ptr("RXhhbXBsZSBVc2VyRGF0YQ=="),
 			},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_D1_v2"),
+			Capacity: to.Ptr[int64](3),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAScaleSetWithUserData.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAScaleSetWithUserData.json")
@@ -9794,80 +9472,76 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		armcompute.VirtualMachineScaleSet{
-			Location: to.Ptr("centralus"),
-			Properties: &armcompute.VirtualMachineScaleSetProperties{
-				Overprovision: to.Ptr(true),
-				UpgradePolicy: &armcompute.UpgradePolicy{
-					Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
-				},
-				VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
-					NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
-						NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
-							{
-								Name: to.Ptr("{vmss-name}"),
-								Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
-									EnableIPForwarding: to.Ptr(true),
-									IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
-										{
-											Name: to.Ptr("{vmss-name}"),
-											Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
-												Subnet: &armcompute.APIEntityReference{
-													ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-												},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "{vmss-name}", armcompute.VirtualMachineScaleSet{
+		Location: to.Ptr("centralus"),
+		Properties: &armcompute.VirtualMachineScaleSetProperties{
+			Overprovision: to.Ptr(true),
+			UpgradePolicy: &armcompute.UpgradePolicy{
+				Mode: to.Ptr(armcompute.UpgradeModeAutomatic),
+			},
+			VirtualMachineProfile: &armcompute.VirtualMachineScaleSetVMProfile{
+				NetworkProfile: &armcompute.VirtualMachineScaleSetNetworkProfile{
+					NetworkInterfaceConfigurations: []*armcompute.VirtualMachineScaleSetNetworkConfiguration{
+						{
+							Name: to.Ptr("{vmss-name}"),
+							Properties: &armcompute.VirtualMachineScaleSetNetworkConfigurationProperties{
+								EnableIPForwarding: to.Ptr(true),
+								IPConfigurations: []*armcompute.VirtualMachineScaleSetIPConfiguration{
+									{
+										Name: to.Ptr("{vmss-name}"),
+										Properties: &armcompute.VirtualMachineScaleSetIPConfigurationProperties{
+											Subnet: &armcompute.APIEntityReference{
+												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
 											},
-										}},
-									Primary: to.Ptr(true),
-								},
-							}},
-					},
-					OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
-						AdminPassword:      to.Ptr("{your-password}"),
-						AdminUsername:      to.Ptr("{your-username}"),
-						ComputerNamePrefix: to.Ptr("{vmss-name}"),
-					},
-					StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
-						DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
-							{
-								CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-								DiskSizeGB:   to.Ptr[int32](1023),
-								Lun:          to.Ptr[int32](0),
+										},
+									}},
+								Primary: to.Ptr(true),
 							},
-							{
-								CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
-								DiskSizeGB:   to.Ptr[int32](1023),
-								Lun:          to.Ptr[int32](1),
-							}},
-						ImageReference: &armcompute.ImageReference{
-							Offer:     to.Ptr("WindowsServer"),
-							Publisher: to.Ptr("MicrosoftWindowsServer"),
-							SKU:       to.Ptr("2016-Datacenter"),
-							Version:   to.Ptr("latest"),
+						}},
+				},
+				OSProfile: &armcompute.VirtualMachineScaleSetOSProfile{
+					AdminPassword:      to.Ptr("{your-password}"),
+					AdminUsername:      to.Ptr("{your-username}"),
+					ComputerNamePrefix: to.Ptr("{vmss-name}"),
+				},
+				StorageProfile: &armcompute.VirtualMachineScaleSetStorageProfile{
+					DataDisks: []*armcompute.VirtualMachineScaleSetDataDisk{
+						{
+							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+							DiskSizeGB:   to.Ptr[int32](1023),
+							Lun:          to.Ptr[int32](0),
 						},
-						OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
-							Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
-							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-							DiskSizeGB:   to.Ptr[int32](512),
-							ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
-								StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
-							},
+						{
+							CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesEmpty),
+							DiskSizeGB:   to.Ptr[int32](1023),
+							Lun:          to.Ptr[int32](1),
+						}},
+					ImageReference: &armcompute.ImageReference{
+						Offer:     to.Ptr("WindowsServer"),
+						Publisher: to.Ptr("MicrosoftWindowsServer"),
+						SKU:       to.Ptr("2016-Datacenter"),
+						Version:   to.Ptr("latest"),
+					},
+					OSDisk: &armcompute.VirtualMachineScaleSetOSDisk{
+						Caching:      to.Ptr(armcompute.CachingTypesReadWrite),
+						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+						DiskSizeGB:   to.Ptr[int32](512),
+						ManagedDisk: &armcompute.VirtualMachineScaleSetManagedDiskParameters{
+							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 						},
 					},
 				},
 			},
-			SKU: &armcompute.SKU{
-				Name:     to.Ptr("Standard_A1_v2"),
-				Capacity: to.Ptr[int64](2),
-				Tier:     to.Ptr("Standard"),
-			},
-			Zones: []*string{
-				to.Ptr("1"),
-				to.Ptr("3")},
 		},
-		nil)
+		SKU: &armcompute.SKU{
+			Name:     to.Ptr("Standard_A1_v2"),
+			Capacity: to.Ptr[int64](2),
+			Tier:     to.Ptr("Standard"),
+		},
+		Zones: []*string{
+			to.Ptr("1"),
+			to.Ptr("3")},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithVMsInDifferentZones.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAScaleSetWithVMsInDifferentZones.json")
@@ -9985,10 +9659,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_Delete() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		&armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", &armcompute.VirtualMachineScaleSetsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSets.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSets.json")
@@ -10002,10 +9673,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_Get() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myVirtualMachineScaleSet",
-		&armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myVirtualMachineScaleSet", &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetAutoPlacedOnDedicatedHostGroup.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineScaleSet{
@@ -10098,10 +9766,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSets_Get() {
 	})
 	client, err = armcompute.NewVirtualMachineScaleSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myVirtualMachineScaleSet",
-		&armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myVirtualMachineScaleSet", &armcompute.VirtualMachineScaleSetsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetWithUserData.json")
 	// Response check
 	exampleRes = armcompute.VirtualMachineScaleSet{
@@ -10270,25 +9935,21 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					OSDisk: &armcompute.ImageOSDisk{
-						BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				OSDisk: &armcompute.ImageOSDisk{
+					BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+					DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 					},
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlobWithDiskEncryptionSet.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlobWithDiskEncryptionSet.json")
@@ -10326,23 +9987,19 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					OSDisk: &armcompute.ImageOSDisk{
-						BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
-					},
-					ZoneResilient: to.Ptr(true),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				OSDisk: &armcompute.ImageOSDisk{
+					BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
+				ZoneResilient: to.Ptr(true),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlob.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlob.json")
@@ -10378,27 +10035,23 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					OSDisk: &armcompute.ImageOSDisk{
-						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-						},
-						ManagedDisk: &armcompute.SubResource{
-							ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
-						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				OSDisk: &armcompute.ImageOSDisk{
+					DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 					},
+					ManagedDisk: &armcompute.SubResource{
+						ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+					},
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDiskWithDiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDiskWithDiskEncryptionSet.json")
@@ -10438,25 +10091,21 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					OSDisk: &armcompute.ImageOSDisk{
-						ManagedDisk: &armcompute.SubResource{
-							ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
-						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				OSDisk: &armcompute.ImageOSDisk{
+					ManagedDisk: &armcompute.SubResource{
+						ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
 					},
-					ZoneResilient: to.Ptr(true),
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
+				ZoneResilient: to.Ptr(true),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDisk.json")
@@ -10494,27 +10143,23 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					OSDisk: &armcompute.ImageOSDisk{
-						DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
-							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-						},
-						Snapshot: &armcompute.SubResource{
-							ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				OSDisk: &armcompute.ImageOSDisk{
+					DiskEncryptionSet: &armcompute.DiskEncryptionSetParameters{
+						ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 					},
+					Snapshot: &armcompute.SubResource{
+						ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+					},
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshotWithDiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshotWithDiskEncryptionSet.json")
@@ -10554,25 +10199,21 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					OSDisk: &armcompute.ImageOSDisk{
-						Snapshot: &armcompute.SubResource{
-							ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				OSDisk: &armcompute.ImageOSDisk{
+					Snapshot: &armcompute.SubResource{
+						ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 					},
-					ZoneResilient: to.Ptr(false),
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
+				ZoneResilient: to.Ptr(false),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshot.json")
@@ -10610,18 +10251,14 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				SourceVirtualMachine: &armcompute.SubResource{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			SourceVirtualMachine: &armcompute.SubResource{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAVM.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAVM.json")
@@ -10662,28 +10299,24 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					DataDisks: []*armcompute.ImageDataDisk{
-						{
-							BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
-							Lun:     to.Ptr[int32](1),
-						}},
-					OSDisk: &armcompute.ImageOSDisk{
-						BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
-					},
-					ZoneResilient: to.Ptr(false),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				DataDisks: []*armcompute.ImageDataDisk{
+					{
+						BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
+						Lun:     to.Ptr[int32](1),
+					}},
+				OSDisk: &armcompute.ImageOSDisk{
+					BlobURI: to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
+				ZoneResilient: to.Ptr(false),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromABlob.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromABlob.json")
@@ -10723,32 +10356,28 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					DataDisks: []*armcompute.ImageDataDisk{
-						{
-							ManagedDisk: &armcompute.SubResource{
-								ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
-							},
-							Lun: to.Ptr[int32](1),
-						}},
-					OSDisk: &armcompute.ImageOSDisk{
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				DataDisks: []*armcompute.ImageDataDisk{
+					{
 						ManagedDisk: &armcompute.SubResource{
-							ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
+							ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
 						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+						Lun: to.Ptr[int32](1),
+					}},
+				OSDisk: &armcompute.ImageOSDisk{
+					ManagedDisk: &armcompute.SubResource{
+						ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
 					},
-					ZoneResilient: to.Ptr(false),
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
+				ZoneResilient: to.Ptr(false),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromAManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromAManagedDisk.json")
@@ -10792,32 +10421,28 @@ func (testsuite *MockTestSuite) TestImages_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.Image{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.ImageProperties{
-				StorageProfile: &armcompute.ImageStorageProfile{
-					DataDisks: []*armcompute.ImageDataDisk{
-						{
-							Snapshot: &armcompute.SubResource{
-								ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
-							},
-							Lun: to.Ptr[int32](1),
-						}},
-					OSDisk: &armcompute.ImageOSDisk{
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myImage", armcompute.Image{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.ImageProperties{
+			StorageProfile: &armcompute.ImageStorageProfile{
+				DataDisks: []*armcompute.ImageDataDisk{
+					{
 						Snapshot: &armcompute.SubResource{
-							ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+							ID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
 						},
-						OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-						OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
+						Lun: to.Ptr[int32](1),
+					}},
+				OSDisk: &armcompute.ImageOSDisk{
+					Snapshot: &armcompute.SubResource{
+						ID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 					},
-					ZoneResilient: to.Ptr(true),
+					OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+					OSType:  to.Ptr(armcompute.OperatingSystemTypesLinux),
 				},
+				ZoneResilient: to.Ptr(true),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromASnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromASnapshot.json")
@@ -10864,21 +10489,17 @@ func (testsuite *MockTestSuite) TestImages_Update() {
 	})
 	client, err := armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myImage",
-		armcompute.ImageUpdate{
-			Tags: map[string]*string{
-				"department": to.Ptr("HR"),
-			},
-			Properties: &armcompute.ImageProperties{
-				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationTypesV1),
-				SourceVirtualMachine: &armcompute.SubResource{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
-				},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myImage", armcompute.ImageUpdate{
+		Tags: map[string]*string{
+			"department": to.Ptr("HR"),
+		},
+		Properties: &armcompute.ImageProperties{
+			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationTypesV1),
+			SourceVirtualMachine: &armcompute.SubResource{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateImage.json")
@@ -10942,10 +10563,7 @@ func (testsuite *MockTestSuite) TestImages_Get() {
 	})
 	client, err := armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myImage",
-		&armcompute.ImagesClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myImage", &armcompute.ImagesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInformationAboutAnImage.json")
 	// Response check
 	exampleRes := armcompute.Image{
@@ -11000,8 +10618,7 @@ func (testsuite *MockTestSuite) TestImages_ListByResourceGroup() {
 	})
 	client, err := armcompute.NewImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListImagesInAResourceGroup.json")
@@ -11119,21 +10736,17 @@ func (testsuite *MockTestSuite) TestRestorePointCollections_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myRpc",
-		armcompute.RestorePointCollection{
-			Location: to.Ptr("norwayeast"),
-			Tags: map[string]*string{
-				"myTag1": to.Ptr("tagValue1"),
-			},
-			Properties: &armcompute.RestorePointCollectionProperties{
-				Source: &armcompute.RestorePointCollectionSourceProperties{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myRpc", armcompute.RestorePointCollection{
+		Location: to.Ptr("norwayeast"),
+		Tags: map[string]*string{
+			"myTag1": to.Ptr("tagValue1"),
+		},
+		Properties: &armcompute.RestorePointCollectionProperties{
+			Source: &armcompute.RestorePointCollectionSourceProperties{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateARestorePointCollection.json")
 	// Response check
 	exampleRes := armcompute.RestorePointCollection{
@@ -11176,10 +10789,7 @@ func (testsuite *MockTestSuite) TestRestorePointCollections_Get() {
 	})
 	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myRpc",
-		&armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myRpc", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollection.json")
 	// Response check
 	exampleRes := armcompute.RestorePointCollection{
@@ -11211,10 +10821,7 @@ func (testsuite *MockTestSuite) TestRestorePointCollections_Get() {
 	})
 	client, err = armcompute.NewRestorePointCollectionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"rpcName",
-		&armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "rpcName", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionWithContainedRestorePoints.json")
 	// Response check
 	exampleRes = armcompute.RestorePointCollection{
@@ -11315,8 +10922,7 @@ func (testsuite *MockTestSuite) TestRestorePointCollections_List() {
 	})
 	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		nil)
+	pager := client.NewListPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionsInAResourceGroup.json")
@@ -11432,17 +11038,12 @@ func (testsuite *MockTestSuite) TestRestorePoints_Create() {
 	})
 	client, err := armcompute.NewRestorePointsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreate(ctx,
-		"myResourceGroup",
-		"rpcName",
-		"rpName",
-		armcompute.RestorePoint{
-			ExcludeDisks: []*armcompute.APIEntityReference{
-				{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
-				}},
-		},
-		nil)
+	poller, err := client.BeginCreate(ctx, "myResourceGroup", "rpcName", "rpName", armcompute.RestorePoint{
+		ExcludeDisks: []*armcompute.APIEntityReference{
+			{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
+			}},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateARestorePoint.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateARestorePoint.json")
@@ -11460,11 +11061,7 @@ func (testsuite *MockTestSuite) TestRestorePoints_Get() {
 	})
 	client, err := armcompute.NewRestorePointsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"rpcName",
-		"rpName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "rpcName", "rpName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePoint.json")
 	// Response check
 	exampleRes := armcompute.RestorePoint{
@@ -11575,10 +11172,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetRollingUpgrades_StartE
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetRollingUpgradesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginStartExtensionUpgrade(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		nil)
+	poller, err := client.BeginStartExtensionUpgrade(ctx, "myResourceGroup", "{vmss-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetExtensionRollingUpgrade.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetExtensionRollingUpgrade.json")
@@ -11596,46 +11190,40 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_CreateOrU
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		armcompute.VirtualMachineScaleSetVMExtension{
-			Properties: &armcompute.VirtualMachineExtensionProperties{
-				Type:                    to.Ptr("extType"),
-				AutoUpgradeMinorVersion: to.Ptr(true),
-				Publisher:               to.Ptr("extPublisher"),
-				Settings: map[string]interface{}{
-					"UserName": "xyz@microsoft.com",
-					"items": []interface{}{
-						map[string]interface{}{
-							"name": "text - 2",
-							"type": float64(1),
-							"content": map[string]interface{}{
-								"json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections.",
-							},
-						},
-						map[string]interface{}{
-							"name": "query - 2",
-							"type": float64(3),
-							"content": map[string]interface{}{
-								"exportToExcelOptions": "visible",
-								"query":                "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
-								"queryType":            float64(0),
-								"resourceType":         "microsoft.operationalinsights/workspaces",
-								"size":                 float64(1),
-								"version":              "KqlItem/1.0",
-							},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtension{
+		Properties: &armcompute.VirtualMachineExtensionProperties{
+			Type:                    to.Ptr("extType"),
+			AutoUpgradeMinorVersion: to.Ptr(true),
+			Publisher:               to.Ptr("extPublisher"),
+			Settings: map[string]interface{}{
+				"UserName": "xyz@microsoft.com",
+				"items": []interface{}{
+					map[string]interface{}{
+						"name": "text - 2",
+						"type": float64(1),
+						"content": map[string]interface{}{
+							"json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe've included a basic analytics query to get you started. Use the `Edit` button below each section to configure it or add more sections.",
 						},
 					},
-					"styleSettings": map[string]interface{}{},
-					"test":          float64(1),
+					map[string]interface{}{
+						"name": "query - 2",
+						"type": float64(3),
+						"content": map[string]interface{}{
+							"exportToExcelOptions": "visible",
+							"query":                "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+							"queryType":            float64(0),
+							"resourceType":         "microsoft.operationalinsights/workspaces",
+							"size":                 float64(1),
+							"version":              "KqlItem/1.0",
+						},
+					},
 				},
-				TypeHandlerVersion: to.Ptr("1.2"),
+				"styleSettings": map[string]interface{}{},
+				"test":          float64(1),
 			},
+			TypeHandlerVersion: to.Ptr("1.2"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMExtensions.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMExtensions.json")
@@ -11670,23 +11258,17 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_Update() 
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		armcompute.VirtualMachineScaleSetVMExtensionUpdate{
-			Properties: &armcompute.VirtualMachineExtensionUpdateProperties{
-				Type:                    to.Ptr("extType"),
-				AutoUpgradeMinorVersion: to.Ptr(true),
-				Publisher:               to.Ptr("extPublisher"),
-				Settings: map[string]interface{}{
-					"UserName": "xyz@microsoft.com",
-				},
-				TypeHandlerVersion: to.Ptr("1.2"),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", armcompute.VirtualMachineScaleSetVMExtensionUpdate{
+		Properties: &armcompute.VirtualMachineExtensionUpdateProperties{
+			Type:                    to.Ptr("extType"),
+			AutoUpgradeMinorVersion: to.Ptr(true),
+			Publisher:               to.Ptr("extPublisher"),
+			Settings: map[string]interface{}{
+				"UserName": "xyz@microsoft.com",
 			},
+			TypeHandlerVersion: to.Ptr("1.2"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMExtensions.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMExtensions.json")
@@ -11721,12 +11303,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_Delete() 
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMExtensions.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMExtensions.json")
@@ -11740,12 +11317,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_Get() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myVMExtension",
-		&armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myvmScaleSet", "0", "myVMExtension", &armcompute.VirtualMachineScaleSetVMExtensionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMExtensions.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineScaleSetVMExtension{
@@ -11778,11 +11350,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMExtensions_List() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMExtensionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.List(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
+	res, err := client.List(ctx, "myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMExtensionsClientListOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMExtensions.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineScaleSetVMExtensionsListResult{
@@ -11849,11 +11417,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_Delete() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSetVM.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ForceDeleteVirtualMachineScaleSetVM.json")
@@ -11867,11 +11431,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_Get() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "{vmss-name}", "0", &armcompute.VirtualMachineScaleSetVMsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMWithUserData.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineScaleSetVM{
@@ -12003,11 +11563,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_GetInstanceView() 
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetInstanceView(ctx,
-		"myResourceGroup",
-		"myVirtualMachineScaleSet",
-		"0",
-		nil)
+	res, err := client.GetInstanceView(ctx, "myResourceGroup", "myVirtualMachineScaleSet", "0", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMInstanceViewAutoPlacedOnDedicatedHostGroup.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineScaleSetVMInstanceView{
@@ -12084,11 +11640,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_RetrieveBootDiagno
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.RetrieveBootDiagnosticsData(ctx,
-		"ResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
+	res, err := client.RetrieveBootDiagnosticsData(ctx, "ResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RetrieveBootDiagnosticsDataVMScaleSetVM.json")
 	// Response check
 	exampleRes := armcompute.RetrieveBootDiagnosticsDataResult{
@@ -12114,11 +11666,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_SimulateEviction()
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.SimulateEviction(ctx,
-		"ResourceGroup",
-		"VmScaleSetName",
-		"InstanceId",
-		nil)
+	_, err = client.SimulateEviction(ctx, "ResourceGroup", "VmScaleSetName", "InstanceId", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/SimulateEvictionOfVmssVM.json")
 }
 
@@ -12130,16 +11678,11 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMs_RunCommand() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRunCommand(ctx,
-		"myResourceGroup",
-		"myVirtualMachineScaleSet",
-		"0",
-		armcompute.RunCommandInput{
-			CommandID: to.Ptr("RunPowerShellScript"),
-			Script: []*string{
-				to.Ptr("# Test multi-line string\r\nWrite-Host Hello World!")},
-		},
-		nil)
+	poller, err := client.BeginRunCommand(ctx, "myResourceGroup", "myVirtualMachineScaleSet", "0", armcompute.RunCommandInput{
+		CommandID: to.Ptr("RunPowerShellScript"),
+		Script: []*string{
+			to.Ptr("# Test multi-line string\r\nWrite-Host Hello World!")},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VMScaleSetRunCommand.json")
@@ -12174,16 +11717,13 @@ func (testsuite *MockTestSuite) TestLogAnalytics_ExportRequestRateByInterval() {
 	})
 	client, err := armcompute.NewLogAnalyticsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginExportRequestRateByInterval(ctx,
-		"westus",
-		armcompute.RequestRateByIntervalInput{
-			BlobContainerSasURI: to.Ptr("https://somesasuri"),
-			FromTime:            to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
-			GroupByResourceName: to.Ptr(true),
-			ToTime:              to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862601Z"); return t }()),
-			IntervalLength:      to.Ptr(armcompute.IntervalInMinsFiveMins),
-		},
-		nil)
+	poller, err := client.BeginExportRequestRateByInterval(ctx, "westus", armcompute.RequestRateByIntervalInput{
+		BlobContainerSasURI: to.Ptr("https://somesasuri"),
+		FromTime:            to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
+		GroupByResourceName: to.Ptr(true),
+		ToTime:              to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862601Z"); return t }()),
+		IntervalLength:      to.Ptr(armcompute.IntervalInMinsFiveMins),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsRequestRateByInterval.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsRequestRateByInterval.json")
@@ -12208,18 +11748,15 @@ func (testsuite *MockTestSuite) TestLogAnalytics_ExportThrottledRequests() {
 	})
 	client, err := armcompute.NewLogAnalyticsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginExportThrottledRequests(ctx,
-		"westus",
-		armcompute.ThrottledRequestsInput{
-			BlobContainerSasURI:        to.Ptr("https://somesasuri"),
-			FromTime:                   to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
-			GroupByClientApplicationID: to.Ptr(false),
-			GroupByOperationName:       to.Ptr(true),
-			GroupByResourceName:        to.Ptr(false),
-			GroupByUserAgent:           to.Ptr(false),
-			ToTime:                     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862601Z"); return t }()),
-		},
-		nil)
+	poller, err := client.BeginExportThrottledRequests(ctx, "westus", armcompute.ThrottledRequestsInput{
+		BlobContainerSasURI:        to.Ptr("https://somesasuri"),
+		FromTime:                   to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-21T01:54:06.862601Z"); return t }()),
+		GroupByClientApplicationID: to.Ptr(false),
+		GroupByOperationName:       to.Ptr(true),
+		GroupByResourceName:        to.Ptr(false),
+		GroupByUserAgent:           to.Ptr(false),
+		ToTime:                     to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2018-01-23T01:54:06.862601Z"); return t }()),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsThrottledRequests.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/LogAnalyticsThrottledRequests.json")
@@ -12244,8 +11781,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_List() {
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("subid", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("SoutheastAsia",
-		nil)
+	pager := client.NewListPager("SoutheastAsia", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommandList.json")
@@ -12339,10 +11875,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_Get() {
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("24fb23e3-6ba3-41f0-9b6e-e41131d5d61e", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"SoutheastAsia",
-		"RunPowerShellScript",
-		nil)
+	res, err := client.Get(ctx, "SoutheastAsia", "RunPowerShellScript", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/VirtualMachineRunCommandGet.json")
 	// Response check
 	exampleRes := armcompute.RunCommandDocument{
@@ -12384,32 +11917,27 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		"myRunCommand",
-		armcompute.VirtualMachineRunCommand{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.VirtualMachineRunCommandProperties{
-				AsyncExecution: to.Ptr(false),
-				Parameters: []*armcompute.RunCommandInputParameter{
-					{
-						Name:  to.Ptr("param1"),
-						Value: to.Ptr("value1"),
-					},
-					{
-						Name:  to.Ptr("param2"),
-						Value: to.Ptr("value2"),
-					}},
-				RunAsPassword: to.Ptr("<runAsPassword>"),
-				RunAsUser:     to.Ptr("user1"),
-				Source: &armcompute.VirtualMachineRunCommandScriptSource{
-					Script: to.Ptr("Write-Host Hello World!"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myVM", "myRunCommand", armcompute.VirtualMachineRunCommand{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.VirtualMachineRunCommandProperties{
+			AsyncExecution: to.Ptr(false),
+			Parameters: []*armcompute.RunCommandInputParameter{
+				{
+					Name:  to.Ptr("param1"),
+					Value: to.Ptr("value1"),
 				},
-				TimeoutInSeconds: to.Ptr[int32](3600),
+				{
+					Name:  to.Ptr("param2"),
+					Value: to.Ptr("value2"),
+				}},
+			RunAsPassword: to.Ptr("<runAsPassword>"),
+			RunAsUser:     to.Ptr("user1"),
+			Source: &armcompute.VirtualMachineRunCommandScriptSource{
+				Script: to.Ptr("Write-Host Hello World!"),
 			},
+			TimeoutInSeconds: to.Ptr[int32](3600),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateRunCommand.json")
@@ -12457,18 +11985,13 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_Update() {
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myVM",
-		"myRunCommand",
-		armcompute.VirtualMachineRunCommandUpdate{
-			Properties: &armcompute.VirtualMachineRunCommandProperties{
-				Source: &armcompute.VirtualMachineRunCommandScriptSource{
-					Script: to.Ptr("Write-Host Script Source Updated!"),
-				},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myVM", "myRunCommand", armcompute.VirtualMachineRunCommandUpdate{
+		Properties: &armcompute.VirtualMachineRunCommandProperties{
+			Source: &armcompute.VirtualMachineRunCommandScriptSource{
+				Script: to.Ptr("Write-Host Script Source Updated!"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateRunCommand.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateRunCommand.json")
@@ -12516,11 +12039,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_Delete() {
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myVM",
-		"myRunCommand",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myVM", "myRunCommand", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteRunCommand.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteRunCommand.json")
@@ -12534,11 +12053,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_GetByVirtualMachin
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetByVirtualMachine(ctx,
-		"myResourceGroup",
-		"myVM",
-		"myRunCommand",
-		&armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions{Expand: nil})
+	res, err := client.GetByVirtualMachine(ctx, "myResourceGroup", "myVM", "myRunCommand", &armcompute.VirtualMachineRunCommandsClientGetByVirtualMachineOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRunCommand.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineRunCommand{
@@ -12584,9 +12099,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineRunCommands_ListByVirtualMachi
 	})
 	client, err := armcompute.NewVirtualMachineRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByVirtualMachinePager("myResourceGroup",
-		"myVM",
-		&armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions{Expand: nil})
+	pager := client.NewListByVirtualMachinePager("myResourceGroup", "myVM", &armcompute.VirtualMachineRunCommandsClientListByVirtualMachineOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListRunCommandsInVM.json")
@@ -12638,33 +12151,27 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMRunCommands_CreateOr
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		armcompute.VirtualMachineRunCommand{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.VirtualMachineRunCommandProperties{
-				AsyncExecution: to.Ptr(false),
-				Parameters: []*armcompute.RunCommandInputParameter{
-					{
-						Name:  to.Ptr("param1"),
-						Value: to.Ptr("value1"),
-					},
-					{
-						Name:  to.Ptr("param2"),
-						Value: to.Ptr("value2"),
-					}},
-				RunAsPassword: to.Ptr("<runAsPassword>"),
-				RunAsUser:     to.Ptr("user1"),
-				Source: &armcompute.VirtualMachineRunCommandScriptSource{
-					Script: to.Ptr("Write-Host Hello World!"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", armcompute.VirtualMachineRunCommand{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.VirtualMachineRunCommandProperties{
+			AsyncExecution: to.Ptr(false),
+			Parameters: []*armcompute.RunCommandInputParameter{
+				{
+					Name:  to.Ptr("param1"),
+					Value: to.Ptr("value1"),
 				},
-				TimeoutInSeconds: to.Ptr[int32](3600),
+				{
+					Name:  to.Ptr("param2"),
+					Value: to.Ptr("value2"),
+				}},
+			RunAsPassword: to.Ptr("<runAsPassword>"),
+			RunAsUser:     to.Ptr("user1"),
+			Source: &armcompute.VirtualMachineRunCommandScriptSource{
+				Script: to.Ptr("Write-Host Hello World!"),
 			},
+			TimeoutInSeconds: to.Ptr[int32](3600),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMRunCommands.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateVirtualMachineScaleSetVMRunCommands.json")
@@ -12708,19 +12215,13 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMRunCommands_Update()
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		armcompute.VirtualMachineRunCommandUpdate{
-			Properties: &armcompute.VirtualMachineRunCommandProperties{
-				Source: &armcompute.VirtualMachineRunCommandScriptSource{
-					Script: to.Ptr("Write-Host Script Source Updated!"),
-				},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", armcompute.VirtualMachineRunCommandUpdate{
+		Properties: &armcompute.VirtualMachineRunCommandProperties{
+			Source: &armcompute.VirtualMachineRunCommandScriptSource{
+				Script: to.Ptr("Write-Host Script Source Updated!"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMRunCommands.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVirtualMachineScaleSetVMRunCommands.json")
@@ -12768,12 +12269,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMRunCommands_Delete()
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMRunCommands.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteVirtualMachineScaleSetVMRunCommands.json")
@@ -12787,12 +12283,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMRunCommands_Get() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		&armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", &armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineScaleSetVMRunCommands.json")
 	// Response check
 	exampleRes := armcompute.VirtualMachineRunCommand{
@@ -12838,10 +12329,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineScaleSetVMRunCommands_List() {
 	})
 	client, err := armcompute.NewVirtualMachineScaleSetVMRunCommandsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions{Expand: nil})
+	pager := client.NewListPager("myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListVirtualMachineScaleSetVMRunCommands.json")
@@ -13264,21 +12752,17 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
-				},
-				DiskAccessID:        to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/{existing-diskAccess-name}"),
-				DiskSizeGB:          to.Ptr[int32](200),
-				NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowPrivate),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
 			},
+			DiskAccessID:        to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskAccesses/{existing-diskAccess-name}"),
+			DiskSizeGB:          to.Ptr[int32](200),
+			NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowPrivate),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskAccess.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskAccess.json")
@@ -13308,22 +12792,18 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
-				},
-				DiskSizeGB: to.Ptr[int32](200),
-				Encryption: &armcompute.Encryption{
-					DiskEncryptionSetID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+			},
+			DiskSizeGB: to.Ptr[int32](200),
+			Encryption: &armcompute.Encryption{
+				DiskEncryptionSetID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskEncryptionSet.json")
@@ -13354,19 +12834,15 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:     to.Ptr(armcompute.DiskCreateOptionCopy),
-					SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:     to.Ptr(armcompute.DiskCreateOptionCopy),
+				SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByCopyingASnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByCopyingASnapshot.json")
@@ -13394,20 +12870,16 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:     to.Ptr(armcompute.DiskCreateOptionImport),
-					SourceURI:        to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-					StorageAccountID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:     to.Ptr(armcompute.DiskCreateOptionImport),
+				SourceURI:        to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+				StorageAccountID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromADifferentSubscription.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromADifferentSubscription.json")
@@ -13436,19 +12908,15 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
-					SourceURI:    to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+				SourceURI:    to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromTheSameSubscription.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskByImportingAnUnmanagedBlobFromTheSameSubscription.json")
@@ -13476,22 +12944,18 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscriptionId}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
-					ImageReference: &armcompute.ImageDiskReference{
-						ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/westus/Publishers/{publisher}/ArtifactTypes/VMImage/Offers/{offer}/Skus/{sku}/Versions/1.0.0"),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+				ImageReference: &armcompute.ImageDiskReference{
+					ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/westus/Publishers/{publisher}/ArtifactTypes/VMImage/Offers/{offer}/Skus/{sku}/Versions/1.0.0"),
 				},
-				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
 			},
+			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAPlatformImage.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAPlatformImage.json")
@@ -13528,19 +12992,15 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk2",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:     to.Ptr(armcompute.DiskCreateOptionCopy),
-					SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk1"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk2", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:     to.Ptr(armcompute.DiskCreateOptionCopy),
+				SourceResourceID: to.Ptr("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myDisk1"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAnExistingManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAnExistingManagedDisk.json")
@@ -13568,25 +13028,21 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("North Central US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
-					ImageReference: &armcompute.ImageDiskReference{
-						ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"),
-					},
-				},
-				OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
-				SecurityProfile: &armcompute.DiskSecurityProfile{
-					SecurityType: to.Ptr(armcompute.DiskSecurityTypesTrustedLaunch),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("North Central US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionFromImage),
+				ImageReference: &armcompute.ImageDiskReference{
+					ID: to.Ptr("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"),
 				},
 			},
+			OSType: to.Ptr(armcompute.OperatingSystemTypesWindows),
+			SecurityProfile: &armcompute.DiskSecurityProfile{
+				SecurityType: to.Ptr(armcompute.DiskSecurityTypesTrustedLaunch),
+			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSecurityProfile.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSecurityProfile.json")
@@ -13620,22 +13076,18 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
-				},
-				DiskSizeGB: to.Ptr[int32](200),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
 			},
-			SKU: &armcompute.DiskSKU{
-				Name: to.Ptr(armcompute.DiskStorageAccountTypesPremiumZRS),
-			},
+			DiskSizeGB: to.Ptr[int32](200),
 		},
-		nil)
+		SKU: &armcompute.DiskSKU{
+			Name: to.Ptr(armcompute.DiskStorageAccountTypesPremiumZRS),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSSDZRSAccountType.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSSDZRSAccountType.json")
@@ -13667,19 +13119,15 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:    to.Ptr(armcompute.DiskCreateOptionUpload),
-					UploadSizeBytes: to.Ptr[int64](10737418752),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:    to.Ptr(armcompute.DiskCreateOptionUpload),
+				UploadSizeBytes: to.Ptr[int64](10737418752),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedUploadDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedUploadDisk.json")
@@ -13707,23 +13155,19 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			ExtendedLocation: &armcompute.ExtendedLocation{
-				Name: to.Ptr("{edge-zone-id}"),
-				Type: to.Ptr(armcompute.ExtendedLocationTypesEdgeZone),
-			},
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
-				},
-				DiskSizeGB: to.Ptr[int32](200),
-			},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		ExtendedLocation: &armcompute.ExtendedLocation{
+			Name: to.Ptr("{edge-zone-id}"),
+			Type: to.Ptr(armcompute.ExtendedLocationTypesEdgeZone),
 		},
-		nil)
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
+			},
+			DiskSizeGB: to.Ptr[int32](200),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDiskInExtendedLocation.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDiskInExtendedLocation.json")
@@ -13755,19 +13199,15 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
-				},
-				DiskSizeGB: to.Ptr[int32](200),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionEmpty),
 			},
+			DiskSizeGB: to.Ptr[int32](200),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDisk.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAnEmptyManagedDisk.json")
@@ -13795,23 +13235,19 @@ func (testsuite *MockTestSuite) TestDisks_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.Disk{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.DiskProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:      to.Ptr(armcompute.DiskCreateOptionEmpty),
-					LogicalSectorSize: to.Ptr[int32](512),
-				},
-				DiskSizeGB: to.Ptr[int32](200),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDisk", armcompute.Disk{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.DiskProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:      to.Ptr(armcompute.DiskCreateOptionEmpty),
+				LogicalSectorSize: to.Ptr[int32](512),
 			},
-			SKU: &armcompute.DiskSKU{
-				Name: to.Ptr(armcompute.DiskStorageAccountTypesUltraSSDLRS),
-			},
+			DiskSizeGB: to.Ptr[int32](200),
 		},
-		nil)
+		SKU: &armcompute.DiskSKU{
+			Name: to.Ptr(armcompute.DiskStorageAccountTypesUltraSSDLRS),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithLogicalSectorSize.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithLogicalSectorSize.json")
@@ -13847,16 +13283,12 @@ func (testsuite *MockTestSuite) TestDisks_Update() {
 	})
 	client, err := armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.DiskUpdate{
-			Properties: &armcompute.DiskUpdateProperties{
-				BurstingEnabled: to.Ptr(true),
-				DiskSizeGB:      to.Ptr[int32](1024),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+		Properties: &armcompute.DiskUpdateProperties{
+			BurstingEnabled: to.Ptr(true),
+			DiskSizeGB:      to.Ptr[int32](1024),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateOrUpdateABurstingEnabledManagedDisk.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateOrUpdateABurstingEnabledManagedDisk.json")
@@ -13885,20 +13317,16 @@ func (testsuite *MockTestSuite) TestDisks_Update() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.DiskUpdate{
-			Properties: &armcompute.DiskUpdateProperties{
-				PurchasePlan: &armcompute.DiskPurchasePlan{
-					Name:          to.Ptr("myPurchasePlanName"),
-					Product:       to.Ptr("myPurchasePlanProduct"),
-					PromotionCode: to.Ptr("myPurchasePlanPromotionCode"),
-					Publisher:     to.Ptr("myPurchasePlanPublisher"),
-				},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+		Properties: &armcompute.DiskUpdateProperties{
+			PurchasePlan: &armcompute.DiskPurchasePlan{
+				Name:          to.Ptr("myPurchasePlanName"),
+				Product:       to.Ptr("myPurchasePlanProduct"),
+				PromotionCode: to.Ptr("myPurchasePlanPromotionCode"),
+				Publisher:     to.Ptr("myPurchasePlanPublisher"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddPurchasePlan.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddPurchasePlan.json")
@@ -13941,15 +13369,11 @@ func (testsuite *MockTestSuite) TestDisks_Update() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.DiskUpdate{
-			Properties: &armcompute.DiskUpdateProperties{
-				SupportsHibernation: to.Ptr(true),
-			},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+		Properties: &armcompute.DiskUpdateProperties{
+			SupportsHibernation: to.Ptr(true),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddSupportsHibernation.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToAddSupportsHibernation.json")
@@ -13985,15 +13409,11 @@ func (testsuite *MockTestSuite) TestDisks_Update() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.DiskUpdate{
-			Properties: &armcompute.DiskUpdateProperties{
-				Tier: to.Ptr("P30"),
-			},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+		Properties: &armcompute.DiskUpdateProperties{
+			Tier: to.Ptr("P30"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToChangeTier.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToChangeTier.json")
@@ -14021,15 +13441,11 @@ func (testsuite *MockTestSuite) TestDisks_Update() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.DiskUpdate{
-			Properties: &armcompute.DiskUpdateProperties{
-				BurstingEnabled: to.Ptr(false),
-			},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+		Properties: &armcompute.DiskUpdateProperties{
+			BurstingEnabled: to.Ptr(false),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToDisableBursting.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToDisableBursting.json")
@@ -14056,15 +13472,11 @@ func (testsuite *MockTestSuite) TestDisks_Update() {
 	})
 	client, err = armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDisk",
-		armcompute.DiskUpdate{
-			Properties: &armcompute.DiskUpdateProperties{
-				NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowAll),
-			},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDisk", armcompute.DiskUpdate{
+		Properties: &armcompute.DiskUpdateProperties{
+			NetworkAccessPolicy: to.Ptr(armcompute.NetworkAccessPolicyAllowAll),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToRemoveDiskAccess.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToRemoveDiskAccess.json")
@@ -14096,10 +13508,7 @@ func (testsuite *MockTestSuite) TestDisks_Get() {
 	})
 	client, err := armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myManagedDisk",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myManagedDisk", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAManagedDisk.json")
 	// Response check
 	exampleRes := armcompute.Disk{
@@ -14178,8 +13587,7 @@ func (testsuite *MockTestSuite) TestDisks_ListByResourceGroup() {
 	})
 	client, err := armcompute.NewDisksClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListManagedDisksInAResourceGroup.json")
@@ -14439,20 +13847,16 @@ func (testsuite *MockTestSuite) TestSnapshots_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewSnapshotsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"mySnapshot1",
-		armcompute.Snapshot{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.SnapshotProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:     to.Ptr(armcompute.DiskCreateOptionImport),
-					SourceURI:        to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-					StorageAccountID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
-				},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "mySnapshot1", armcompute.Snapshot{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.SnapshotProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:     to.Ptr(armcompute.DiskCreateOptionImport),
+				SourceURI:        to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
+				StorageAccountID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/myStorageAccount"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromADifferentSubscription.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromADifferentSubscription.json")
@@ -14481,19 +13885,15 @@ func (testsuite *MockTestSuite) TestSnapshots_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewSnapshotsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"mySnapshot1",
-		armcompute.Snapshot{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.SnapshotProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
-					SourceURI:    to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "mySnapshot1", armcompute.Snapshot{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.SnapshotProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption: to.Ptr(armcompute.DiskCreateOptionImport),
+				SourceURI:    to.Ptr("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromTheSameSubscription.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotByImportingAnUnmanagedBlobFromTheSameSubscription.json")
@@ -14521,19 +13921,15 @@ func (testsuite *MockTestSuite) TestSnapshots_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewSnapshotsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"mySnapshot2",
-		armcompute.Snapshot{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.SnapshotProperties{
-				CreationData: &armcompute.CreationData{
-					CreateOption:     to.Ptr(armcompute.DiskCreateOptionCopy),
-					SourceResourceID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "mySnapshot2", armcompute.Snapshot{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.SnapshotProperties{
+			CreationData: &armcompute.CreationData{
+				CreateOption:     to.Ptr(armcompute.DiskCreateOptionCopy),
+				SourceResourceID: to.Ptr("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot1"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotFromAnExistingSnapshot.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateASnapshotFromAnExistingSnapshot.json")
@@ -14568,10 +13964,7 @@ func (testsuite *MockTestSuite) TestSnapshots_Get() {
 	})
 	client, err := armcompute.NewSnapshotsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"mySnapshot",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "mySnapshot", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutASnapshot.json")
 	// Response check
 	exampleRes := armcompute.Snapshot{
@@ -14642,8 +14035,7 @@ func (testsuite *MockTestSuite) TestSnapshots_ListByResourceGroup() {
 	})
 	client, err := armcompute.NewSnapshotsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListSnapshotsInAResourceGroup.json")
@@ -14823,22 +14215,18 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSet{
-			Location: to.Ptr("West US"),
-			Identity: &armcompute.EncryptionSetIdentity{
-				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
-			},
-			Properties: &armcompute.EncryptionSetProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}"),
-				},
-				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
+		Location: to.Ptr("West US"),
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
-		nil)
+		Properties: &armcompute.EncryptionSetProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}"),
+			},
+			EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSetWithKeyVaultFromADifferentSubscription.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSetWithKeyVaultFromADifferentSubscription.json")
@@ -14869,25 +14257,21 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSet{
-			Location: to.Ptr("West US"),
-			Identity: &armcompute.EncryptionSetIdentity{
-				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
-			},
-			Properties: &armcompute.EncryptionSetProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
-					SourceVault: &armcompute.SourceVault{
-						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
-					},
-				},
-				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-			},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
+		Location: to.Ptr("West US"),
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
-		nil)
+		Properties: &armcompute.EncryptionSetProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+				SourceVault: &armcompute.SourceVault{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+				},
+			},
+			EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSet.json")
@@ -14924,22 +14308,18 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Update() {
 	})
 	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSetUpdate{
-			Identity: &armcompute.EncryptionSetIdentity{
-				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
-			},
-			Properties: &armcompute.DiskEncryptionSetUpdateProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
-				},
-				EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-				RotationToLatestKeyVersionEnabled: to.Ptr(true),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
-		nil)
+		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
+			},
+			EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+			RotationToLatestKeyVersionEnabled: to.Ptr(true),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled.json")
@@ -14974,22 +14354,18 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Update() {
 	})
 	client, err = armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSetUpdate{
-			Identity: &armcompute.EncryptionSetIdentity{
-				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
-			},
-			Properties: &armcompute.DiskEncryptionSetUpdateProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
-				},
-				EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-				RotationToLatestKeyVersionEnabled: to.Ptr(true),
-			},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
-		nil)
+		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
+			},
+			EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+			RotationToLatestKeyVersionEnabled: to.Ptr(true),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress.json")
@@ -15028,25 +14404,21 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Update() {
 	})
 	client, err = armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSetUpdate{
-			Properties: &armcompute.DiskEncryptionSetUpdateProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/keyName/keyVersion"),
-					SourceVault: &armcompute.SourceVault{
-						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
-					},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/keyName/keyVersion"),
+				SourceVault: &armcompute.SourceVault{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
 				},
-				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
 			},
-			Tags: map[string]*string{
-				"department": to.Ptr("Development"),
-				"project":    to.Ptr("Encryption"),
-			},
+			EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
 		},
-		nil)
+		Tags: map[string]*string{
+			"department": to.Ptr("Development"),
+			"project":    to.Ptr("Encryption"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSet.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSet.json")
@@ -15088,10 +14460,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Get() {
 	})
 	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskEncryptionSet.json")
 	// Response check
 	exampleRes := armcompute.DiskEncryptionSet{
@@ -15133,10 +14502,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_Delete() {
 	})
 	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskEncryptionSet.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskEncryptionSet.json")
@@ -15150,8 +14516,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_ListByResourceGroup() {
 	})
 	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskEncryptionSetsInAResourceGroup.json")
@@ -15295,9 +14660,7 @@ func (testsuite *MockTestSuite) TestDiskEncryptionSets_ListAssociatedResources()
 	})
 	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListAssociatedResourcesPager("myResourceGroup",
-		"myDiskEncryptionSet",
-		nil)
+	pager := client.NewListAssociatedResourcesPager("myResourceGroup", "myDiskEncryptionSet", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskEncryptionSetAssociatedResources.json")
@@ -15323,13 +14686,9 @@ func (testsuite *MockTestSuite) TestDiskAccesses_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		armcompute.DiskAccess{
-			Location: to.Ptr("West US"),
-		},
-		nil)
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskAccess", armcompute.DiskAccess{
+		Location: to.Ptr("West US"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskAccess.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskAccess.json")
@@ -15359,16 +14718,12 @@ func (testsuite *MockTestSuite) TestDiskAccesses_Update() {
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		armcompute.DiskAccessUpdate{
-			Tags: map[string]*string{
-				"department": to.Ptr("Development"),
-				"project":    to.Ptr("PrivateEndpoints"),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskAccess", armcompute.DiskAccessUpdate{
+		Tags: map[string]*string{
+			"department": to.Ptr("Development"),
+			"project":    to.Ptr("PrivateEndpoints"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskAccess.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskAccess.json")
@@ -15398,10 +14753,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_Get() {
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myDiskAccess", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccessWithPrivateEndpoints.json")
 	// Response check
 	exampleRes := armcompute.DiskAccess{
@@ -15447,10 +14799,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_Get() {
 	})
 	client, err = armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		nil)
+	res, err = client.Get(ctx, "myResourceGroup", "myDiskAccess", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccess.json")
 	// Response check
 	exampleRes = armcompute.DiskAccess{
@@ -15482,10 +14831,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_Delete() {
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myDiskAccess", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskAccess.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteADiskAccess.json")
@@ -15499,8 +14845,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_ListByResourceGroup() {
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskAccessesInAResourceGroup.json")
@@ -15638,10 +14983,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_GetPrivateLinkResources() {
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetPrivateLinkResources(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		nil)
+	res, err := client.GetPrivateLinkResources(ctx, "myResourceGroup", "myDiskAccess", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetDiskAccessPrivateLinkResources.json")
 	// Response check
 	exampleRes := armcompute.PrivateLinkResourceListResult{
@@ -15674,19 +15016,14 @@ func (testsuite *MockTestSuite) TestDiskAccesses_UpdateAPrivateEndpointConnectio
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdateAPrivateEndpointConnection(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		"myPrivateEndpointConnection",
-		armcompute.PrivateEndpointConnection{
-			Properties: &armcompute.PrivateEndpointConnectionProperties{
-				PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
-					Description: to.Ptr("Approving myPrivateEndpointConnection"),
-					Status:      to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
-				},
+	poller, err := client.BeginUpdateAPrivateEndpointConnection(ctx, "myResourceGroup", "myDiskAccess", "myPrivateEndpointConnection", armcompute.PrivateEndpointConnection{
+		Properties: &armcompute.PrivateEndpointConnectionProperties{
+			PrivateLinkServiceConnectionState: &armcompute.PrivateLinkServiceConnectionState{
+				Description: to.Ptr("Approving myPrivateEndpointConnection"),
+				Status:      to.Ptr(armcompute.PrivateEndpointServiceConnectionStatusApproved),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ApprovePrivateEndpointConnection.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ApprovePrivateEndpointConnection.json")
@@ -15722,11 +15059,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_GetAPrivateEndpointConnection()
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetAPrivateEndpointConnection(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		"myPrivateEndpointConnection",
-		nil)
+	res, err := client.GetAPrivateEndpointConnection(ctx, "myResourceGroup", "myDiskAccess", "myPrivateEndpointConnection", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutAPrivateEndpointConnection.json")
 	// Response check
 	exampleRes := armcompute.PrivateEndpointConnection{
@@ -15760,11 +15093,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_DeleteAPrivateEndpointConnectio
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDeleteAPrivateEndpointConnection(ctx,
-		"myResourceGroup",
-		"myDiskAccess",
-		"myPrivateEndpointConnection",
-		nil)
+	poller, err := client.BeginDeleteAPrivateEndpointConnection(ctx, "myResourceGroup", "myDiskAccess", "myPrivateEndpointConnection", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteAPrivateEndpointConnection.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/DeleteAPrivateEndpointConnection.json")
@@ -15778,9 +15107,7 @@ func (testsuite *MockTestSuite) TestDiskAccesses_ListPrivateEndpointConnections(
 	})
 	client, err := armcompute.NewDiskAccessesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPrivateEndpointConnectionsPager("myResourceGroup",
-		"myDiskAccess",
-		nil)
+	pager := client.NewListPrivateEndpointConnectionsPager("myResourceGroup", "myDiskAccess", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListPrivateEndpointConnectionsInADiskAccess.json")
@@ -15820,12 +15147,7 @@ func (testsuite *MockTestSuite) TestDiskRestorePoint_Get() {
 	})
 	client, err := armcompute.NewDiskRestorePointClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"rpc",
-		"vmrp",
-		"TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "rpc", "vmrp", "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetDiskRestorePointResources.json")
 	// Response check
 	exampleRes := armcompute.DiskRestorePoint{
@@ -15855,10 +15177,7 @@ func (testsuite *MockTestSuite) TestDiskRestorePoint_ListByRestorePoint() {
 	})
 	client, err := armcompute.NewDiskRestorePointClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByRestorePointPager("myResourceGroup",
-		"rpc",
-		"vmrp",
-		nil)
+	pager := client.NewListByRestorePointPager("myResourceGroup", "rpc", "vmrp", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/ListDiskRestorePointsInVmRestorePoint.json")
@@ -15894,19 +15213,15 @@ func (testsuite *MockTestSuite) TestGalleries_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		armcompute.Gallery{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryProperties{
-				Description: to.Ptr("This is the gallery description."),
-				SharingProfile: &armcompute.SharingProfile{
-					Permissions: to.Ptr(armcompute.GallerySharingPermissionTypesGroups),
-				},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.Gallery{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryProperties{
+			Description: to.Ptr("This is the gallery description."),
+			SharingProfile: &armcompute.SharingProfile{
+				Permissions: to.Ptr(armcompute.GallerySharingPermissionTypesGroups),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryWithSharingProfile.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryWithSharingProfile.json")
@@ -15937,16 +15252,12 @@ func (testsuite *MockTestSuite) TestGalleries_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		armcompute.Gallery{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryProperties{
-				Description: to.Ptr("This is the gallery description."),
-			},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.Gallery{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryProperties{
+			Description: to.Ptr("This is the gallery description."),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGallery.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGallery.json")
@@ -15977,15 +15288,11 @@ func (testsuite *MockTestSuite) TestGalleries_Update() {
 	})
 	client, err := armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		armcompute.GalleryUpdate{
-			Properties: &armcompute.GalleryProperties{
-				Description: to.Ptr("This is the gallery description."),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.GalleryUpdate{
+		Properties: &armcompute.GalleryProperties{
+			Description: to.Ptr("This is the gallery description."),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGallery.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGallery.json")
@@ -16016,10 +15323,7 @@ func (testsuite *MockTestSuite) TestGalleries_Get() {
 	})
 	client, err := armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		&armcompute.GalleriesClientGetOptions{Select: to.Ptr(armcompute.SelectPermissionsPermissions)})
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", &armcompute.GalleriesClientGetOptions{Select: to.Ptr(armcompute.SelectPermissionsPermissions)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryWithSelectPermissions.json")
 	// Response check
 	exampleRes := armcompute.Gallery{
@@ -16055,10 +15359,7 @@ func (testsuite *MockTestSuite) TestGalleries_Get() {
 	})
 	client, err = armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		&armcompute.GalleriesClientGetOptions{Select: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myGalleryName", &armcompute.GalleriesClientGetOptions{Select: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGallery.json")
 	// Response check
 	exampleRes = armcompute.Gallery{
@@ -16087,10 +15388,7 @@ func (testsuite *MockTestSuite) TestGalleries_Delete() {
 	})
 	client, err := armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGallery.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGallery.json")
@@ -16104,8 +15402,7 @@ func (testsuite *MockTestSuite) TestGalleries_ListByResourceGroup() {
 	})
 	client, err := armcompute.NewGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleriesInAResourceGroup.json")
@@ -16177,24 +15474,19 @@ func (testsuite *MockTestSuite) TestGalleryImages_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		armcompute.GalleryImage{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageProperties{
-				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
-				Identifier: &armcompute.GalleryImageIdentifier{
-					Offer:     to.Ptr("myOfferName"),
-					Publisher: to.Ptr("myPublisherName"),
-					SKU:       to.Ptr("mySkuName"),
-				},
-				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-				OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImage{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageProperties{
+			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+			Identifier: &armcompute.GalleryImageIdentifier{
+				Offer:     to.Ptr("myOfferName"),
+				Publisher: to.Ptr("myPublisherName"),
+				SKU:       to.Ptr("mySkuName"),
 			},
+			OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+			OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImage.json")
@@ -16229,23 +15521,18 @@ func (testsuite *MockTestSuite) TestGalleryImages_Update() {
 	})
 	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		armcompute.GalleryImageUpdate{
-			Properties: &armcompute.GalleryImageProperties{
-				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
-				Identifier: &armcompute.GalleryImageIdentifier{
-					Offer:     to.Ptr("myOfferName"),
-					Publisher: to.Ptr("myPublisherName"),
-					SKU:       to.Ptr("mySkuName"),
-				},
-				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-				OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImageUpdate{
+		Properties: &armcompute.GalleryImageProperties{
+			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+			Identifier: &armcompute.GalleryImageIdentifier{
+				Offer:     to.Ptr("myOfferName"),
+				Publisher: to.Ptr("myPublisherName"),
+				SKU:       to.Ptr("mySkuName"),
 			},
+			OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+			OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImage.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImage.json")
@@ -16280,11 +15567,7 @@ func (testsuite *MockTestSuite) TestGalleryImages_Get() {
 	})
 	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImage.json")
 	// Response check
 	exampleRes := armcompute.GalleryImage{
@@ -16317,11 +15600,7 @@ func (testsuite *MockTestSuite) TestGalleryImages_Delete() {
 	})
 	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImage.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImage.json")
@@ -16335,9 +15614,7 @@ func (testsuite *MockTestSuite) TestGalleryImages_ListByGallery() {
 	})
 	client, err := armcompute.NewGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByGalleryPager("myResourceGroup",
-		"myGalleryName",
-		nil)
+	pager := client.NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryImagesInAGallery.json")
@@ -16376,62 +15653,56 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name: to.Ptr("West US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](0),
-									},
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name: to.Ptr("West US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](0),
+								},
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](1),
 						},
-						{
-							Name: to.Ptr("East US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](0),
-									},
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
-									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-								},
-							},
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					Source: &armcompute.GalleryArtifactVersionSource{
-						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
+						RegionalReplicaCount: to.Ptr[int32](1),
 					},
+					{
+						Name: to.Ptr("East US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](0),
+								},
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+							},
+						},
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				Source: &armcompute.GalleryArtifactVersionSource{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVMAsSource.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVMAsSource.json")
@@ -16514,62 +15785,56 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name: to.Ptr("West US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](0),
-									},
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name: to.Ptr("West US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](0),
+								},
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](1),
 						},
-						{
-							Name: to.Ptr("East US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](0),
-									},
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
-									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-								},
-							},
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					Source: &armcompute.GalleryArtifactVersionSource{
-						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+						RegionalReplicaCount: to.Ptr[int32](1),
 					},
+					{
+						Name: to.Ptr("East US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](0),
+								},
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+							},
+						},
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				Source: &armcompute.GalleryArtifactVersionSource{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersion.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersion.json")
@@ -16652,65 +15917,59 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name: to.Ptr("West US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name: to.Ptr("West US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](1),
 						},
-						{
-							Name: to.Ptr("East US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+						RegionalReplicaCount: to.Ptr[int32](1),
+					},
+					{
+						Name: to.Ptr("East US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					DataDiskImages: []*armcompute.GalleryDataDiskImage{
-						{
-							HostCaching: to.Ptr(armcompute.HostCachingNone),
-							Source: &armcompute.GalleryArtifactVersionSource{
-								ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
-							},
-							Lun: to.Ptr[int32](1),
-						}},
-					OSDiskImage: &armcompute.GalleryOSDiskImage{
-						HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
-						Source: &armcompute.GalleryArtifactVersionSource{
-							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
 						},
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				DataDiskImages: []*armcompute.GalleryDataDiskImage{
+					{
+						HostCaching: to.Ptr(armcompute.HostCachingNone),
+						Source: &armcompute.GalleryArtifactVersionSource{
+							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
+						},
+						Lun: to.Ptr[int32](1),
+					}},
+				OSDiskImage: &armcompute.GalleryOSDiskImage{
+					HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+					Source: &armcompute.GalleryArtifactVersionSource{
+						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json")
@@ -16788,62 +16047,56 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name: to.Ptr("West US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](0),
-									},
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name: to.Ptr("West US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](0),
+								},
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](1),
 						},
-						{
-							Name: to.Ptr("East US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](0),
-									},
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
-									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-								},
-							},
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					Source: &armcompute.GalleryArtifactVersionSource{
-						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionName}"),
+						RegionalReplicaCount: to.Ptr[int32](1),
 					},
+					{
+						Name: to.Ptr("East US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](0),
+								},
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+							},
+						},
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				Source: &armcompute.GalleryArtifactVersionSource{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionName}"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithImageVersionAsSource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithImageVersionAsSource.json")
@@ -16926,65 +16179,59 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name: to.Ptr("West US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name: to.Ptr("West US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](1),
 						},
-						{
-							Name: to.Ptr("East US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
+						RegionalReplicaCount: to.Ptr[int32](1),
+					},
+					{
+						Name: to.Ptr("East US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
 									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-								},
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					DataDiskImages: []*armcompute.GalleryDataDiskImage{
-						{
-							HostCaching: to.Ptr(armcompute.HostCachingNone),
-							Source: &armcompute.GalleryArtifactVersionSource{
-								ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
-							},
-							Lun: to.Ptr[int32](1),
-						}},
-					OSDiskImage: &armcompute.GalleryOSDiskImage{
-						HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
-						Source: &armcompute.GalleryArtifactVersionSource{
-							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
 						},
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				DataDiskImages: []*armcompute.GalleryDataDiskImage{
+					{
+						HostCaching: to.Ptr(armcompute.HostCachingNone),
+						Source: &armcompute.GalleryArtifactVersionSource{
+							ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
+						},
+						Lun: to.Ptr[int32](1),
+					}},
+				OSDiskImage: &armcompute.GalleryOSDiskImage{
+					HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+					Source: &armcompute.GalleryArtifactVersionSource{
+						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithSnapshotsAsSource.json")
@@ -17062,57 +16309,51 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name: to.Ptr("West US"),
-							Encryption: &armcompute.EncryptionImages{
-								DataDiskImages: []*armcompute.DataDiskImageEncryption{
-									{
-										DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
-										Lun:                 to.Ptr[int32](1),
-									}},
-								OSDiskImage: &armcompute.OSDiskImageEncryption{
-									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
-								},
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name: to.Ptr("West US"),
+						Encryption: &armcompute.EncryptionImages{
+							DataDiskImages: []*armcompute.DataDiskImageEncryption{
+								{
+									DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
+									Lun:                 to.Ptr[int32](1),
+								}},
+							OSDiskImage: &armcompute.OSDiskImageEncryption{
+								DiskEncryptionSetID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
 							},
-							RegionalReplicaCount: to.Ptr[int32](1),
 						},
-						{
-							Name:                 to.Ptr("East US"),
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					DataDiskImages: []*armcompute.GalleryDataDiskImage{
-						{
-							HostCaching: to.Ptr(armcompute.HostCachingNone),
-							Source: &armcompute.GalleryArtifactVersionSource{
-								ID:  to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
-								URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
-							},
-							Lun: to.Ptr[int32](1),
-						}},
-					OSDiskImage: &armcompute.GalleryOSDiskImage{
-						HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+						RegionalReplicaCount: to.Ptr[int32](1),
+					},
+					{
+						Name:                 to.Ptr("East US"),
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				DataDiskImages: []*armcompute.GalleryDataDiskImage{
+					{
+						HostCaching: to.Ptr(armcompute.HostCachingNone),
 						Source: &armcompute.GalleryArtifactVersionSource{
 							ID:  to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
 							URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
 						},
+						Lun: to.Ptr[int32](1),
+					}},
+				OSDiskImage: &armcompute.GalleryOSDiskImage{
+					HostCaching: to.Ptr(armcompute.HostCachingReadOnly),
+					Source: &armcompute.GalleryArtifactVersionSource{
+						ID:  to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
+						URI: to.Ptr("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVHD.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryImageVersionWithVHD.json")
@@ -17183,33 +16424,27 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Update() {
 	})
 	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersionUpdate{
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name:                 to.Ptr("West US"),
-							RegionalReplicaCount: to.Ptr[int32](1),
-						},
-						{
-							Name:                 to.Ptr("East US"),
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
-					Source: &armcompute.GalleryArtifactVersionSource{
-						ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersionUpdate{
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name:                 to.Ptr("West US"),
+						RegionalReplicaCount: to.Ptr[int32](1),
 					},
+					{
+						Name:                 to.Ptr("East US"),
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
+			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{
+				Source: &armcompute.GalleryArtifactVersionSource{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersion.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersion.json")
@@ -17274,29 +16509,23 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Update() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		armcompute.GalleryImageVersionUpdate{
-			Properties: &armcompute.GalleryImageVersionProperties{
-				PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name:                 to.Ptr("West US"),
-							RegionalReplicaCount: to.Ptr[int32](1),
-						},
-						{
-							Name:                 to.Ptr("East US"),
-							RegionalReplicaCount: to.Ptr[int32](2),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
-						}},
-				},
-				StorageProfile: &armcompute.GalleryImageVersionStorageProfile{},
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", armcompute.GalleryImageVersionUpdate{
+		Properties: &armcompute.GalleryImageVersionProperties{
+			PublishingProfile: &armcompute.GalleryImageVersionPublishingProfile{
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name:                 to.Ptr("West US"),
+						RegionalReplicaCount: to.Ptr[int32](1),
+					},
+					{
+						Name:                 to.Ptr("East US"),
+						RegionalReplicaCount: to.Ptr[int32](2),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardZRS),
+					}},
 			},
+			StorageProfile: &armcompute.GalleryImageVersionStorageProfile{},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersionWithoutSourceId.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryImageVersionWithoutSourceId.json")
@@ -17364,12 +16593,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 	})
 	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		&armcompute.GalleryImageVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithReplicationStatus.json")
 	// Response check
 	exampleRes := armcompute.GalleryImageVersion{
@@ -17452,12 +16676,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		&armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithSnapshotsAsSource.json")
 	// Response check
 	exampleRes = armcompute.GalleryImageVersion{
@@ -17519,12 +16738,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		&armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersionWithVhdAsSource.json")
 	// Response check
 	exampleRes = armcompute.GalleryImageVersion{
@@ -17590,12 +16804,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Get() {
 	})
 	client, err = armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		&armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", &armcompute.GalleryImageVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryImageVersion.json")
 	// Response check
 	exampleRes = armcompute.GalleryImageVersion{
@@ -17665,12 +16874,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_Delete() {
 	})
 	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		"1.0.0",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", "1.0.0", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImageVersion.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryImageVersion.json")
@@ -17684,10 +16888,7 @@ func (testsuite *MockTestSuite) TestGalleryImageVersions_ListByGalleryImage() {
 	})
 	client, err := armcompute.NewGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByGalleryImagePager("myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		nil)
+	pager := client.NewListByGalleryImagePager("myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryImageVersionsInAGalleryImage.json")
@@ -17763,21 +16964,16 @@ func (testsuite *MockTestSuite) TestGalleryApplications_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		armcompute.GalleryApplication{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryApplicationProperties{
-				Description:         to.Ptr("This is the gallery application description."),
-				Eula:                to.Ptr("This is the gallery application EULA."),
-				PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
-				ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
-				SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplication{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryApplicationProperties{
+			Description:         to.Ptr("This is the gallery application description."),
+			Eula:                to.Ptr("This is the gallery application EULA."),
+			PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+			ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
+			SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplication.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplication.json")
@@ -17810,20 +17006,15 @@ func (testsuite *MockTestSuite) TestGalleryApplications_Update() {
 	})
 	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		armcompute.GalleryApplicationUpdate{
-			Properties: &armcompute.GalleryApplicationProperties{
-				Description:         to.Ptr("This is the gallery application description."),
-				Eula:                to.Ptr("This is the gallery application EULA."),
-				PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
-				ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
-				SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", armcompute.GalleryApplicationUpdate{
+		Properties: &armcompute.GalleryApplicationProperties{
+			Description:         to.Ptr("This is the gallery application description."),
+			Eula:                to.Ptr("This is the gallery application EULA."),
+			PrivacyStatementURI: to.Ptr("myPrivacyStatementUri}"),
+			ReleaseNoteURI:      to.Ptr("myReleaseNoteUri"),
+			SupportedOSType:     to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplication.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplication.json")
@@ -17856,11 +17047,7 @@ func (testsuite *MockTestSuite) TestGalleryApplications_Get() {
 	})
 	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplication.json")
 	// Response check
 	exampleRes := armcompute.GalleryApplication{
@@ -17889,11 +17076,7 @@ func (testsuite *MockTestSuite) TestGalleryApplications_Delete() {
 	})
 	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplication.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplication.json")
@@ -17907,9 +17090,7 @@ func (testsuite *MockTestSuite) TestGalleryApplications_ListByGallery() {
 	})
 	client, err := armcompute.NewGalleryApplicationsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByGalleryPager("myResourceGroup",
-		"myGalleryName",
-		nil)
+	pager := client.NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryApplicationsInAGallery.json")
@@ -17944,35 +17125,29 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_CreateOrUpdate() 
 	})
 	client, err := armcompute.NewGalleryApplicationVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		"1.0.0",
-		armcompute.GalleryApplicationVersion{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryApplicationVersionProperties{
-				PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-					EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00Z"); return t }()),
-					ReplicaCount:       to.Ptr[int32](1),
-					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name:                 to.Ptr("West US"),
-							RegionalReplicaCount: to.Ptr[int32](1),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardLRS),
-						}},
-					ManageActions: &armcompute.UserArtifactManage{
-						Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
-						Remove:  to.Ptr("del C:\\package "),
-					},
-					Source: &armcompute.UserArtifactSource{
-						MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
-					},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", "1.0.0", armcompute.GalleryApplicationVersion{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryApplicationVersionProperties{
+			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00Z"); return t }()),
+				ReplicaCount:       to.Ptr[int32](1),
+				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name:                 to.Ptr("West US"),
+						RegionalReplicaCount: to.Ptr[int32](1),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+					}},
+				ManageActions: &armcompute.UserArtifactManage{
+					Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+					Remove:  to.Ptr("del C:\\package "),
+				},
+				Source: &armcompute.UserArtifactSource{
+					MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplicationVersion.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/CreateOrUpdateASimpleGalleryApplicationVersion.json")
@@ -18022,34 +17197,28 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Update() {
 	})
 	client, err := armcompute.NewGalleryApplicationVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		"1.0.0",
-		armcompute.GalleryApplicationVersionUpdate{
-			Properties: &armcompute.GalleryApplicationVersionProperties{
-				PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
-					EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00Z"); return t }()),
-					ReplicaCount:       to.Ptr[int32](1),
-					StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
-					TargetRegions: []*armcompute.TargetRegion{
-						{
-							Name:                 to.Ptr("West US"),
-							RegionalReplicaCount: to.Ptr[int32](1),
-							StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardLRS),
-						}},
-					ManageActions: &armcompute.UserArtifactManage{
-						Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
-						Remove:  to.Ptr("del C:\\package "),
-					},
-					Source: &armcompute.UserArtifactSource{
-						MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
-					},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", "1.0.0", armcompute.GalleryApplicationVersionUpdate{
+		Properties: &armcompute.GalleryApplicationVersionProperties{
+			PublishingProfile: &armcompute.GalleryApplicationVersionPublishingProfile{
+				EndOfLifeDate:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2019-07-01T07:00:00Z"); return t }()),
+				ReplicaCount:       to.Ptr[int32](1),
+				StorageAccountType: to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+				TargetRegions: []*armcompute.TargetRegion{
+					{
+						Name:                 to.Ptr("West US"),
+						RegionalReplicaCount: to.Ptr[int32](1),
+						StorageAccountType:   to.Ptr(armcompute.StorageAccountTypeStandardLRS),
+					}},
+				ManageActions: &armcompute.UserArtifactManage{
+					Install: to.Ptr("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\""),
+					Remove:  to.Ptr("del C:\\package "),
+				},
+				Source: &armcompute.UserArtifactSource{
+					MediaLink: to.Ptr("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplicationVersion.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/UpdateASimpleGalleryApplicationVersion.json")
@@ -18099,12 +17268,7 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Get() {
 	})
 	client, err := armcompute.NewGalleryApplicationVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		"1.0.0",
-		&armcompute.GalleryApplicationVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", "1.0.0", &armcompute.GalleryApplicationVersionsClientGetOptions{Expand: to.Ptr(armcompute.ReplicationStatusTypesReplicationStatus)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersionWithReplicationStatus.json")
 	// Response check
 	exampleRes := armcompute.GalleryApplicationVersion{
@@ -18157,12 +17321,7 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Get() {
 	})
 	client, err = armcompute.NewGalleryApplicationVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		"1.0.0",
-		&armcompute.GalleryApplicationVersionsClientGetOptions{Expand: nil})
+	res, err = client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", "1.0.0", &armcompute.GalleryApplicationVersionsClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetAGalleryApplicationVersion.json")
 	// Response check
 	exampleRes = armcompute.GalleryApplicationVersion{
@@ -18210,12 +17369,7 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_Delete() {
 	})
 	client, err := armcompute.NewGalleryApplicationVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		"1.0.0",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryApplicationName", "1.0.0", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplicationVersion.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/DeleteAGalleryApplicationVersion.json")
@@ -18229,10 +17383,7 @@ func (testsuite *MockTestSuite) TestGalleryApplicationVersions_ListByGalleryAppl
 	})
 	client, err := armcompute.NewGalleryApplicationVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByGalleryApplicationPager("myResourceGroup",
-		"myGalleryName",
-		"myGalleryApplicationName",
-		nil)
+	pager := client.NewListByGalleryApplicationPager("myResourceGroup", "myGalleryName", "myGalleryApplicationName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListGalleryApplicationVersionsInAGalleryApplication.json")
@@ -18286,25 +17437,21 @@ func (testsuite *MockTestSuite) TestGallerySharingProfile_Update() {
 	})
 	client, err := armcompute.NewGallerySharingProfileClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		armcompute.SharingUpdate{
-			Groups: []*armcompute.SharingProfileGroup{
-				{
-					Type: to.Ptr(armcompute.SharingProfileGroupTypesSubscriptions),
-					IDs: []*string{
-						to.Ptr("34a4ab42-0d72-47d9-bd1a-aed207386dac"),
-						to.Ptr("380fd389-260b-41aa-bad9-0a83108c370b")},
-				},
-				{
-					Type: to.Ptr(armcompute.SharingProfileGroupTypesAADTenants),
-					IDs: []*string{
-						to.Ptr("c24c76aa-8897-4027-9b03-8f7928b54ff6")},
-				}},
-			OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesAdd),
-		},
-		nil)
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.SharingUpdate{
+		Groups: []*armcompute.SharingProfileGroup{
+			{
+				Type: to.Ptr(armcompute.SharingProfileGroupTypesSubscriptions),
+				IDs: []*string{
+					to.Ptr("34a4ab42-0d72-47d9-bd1a-aed207386dac"),
+					to.Ptr("380fd389-260b-41aa-bad9-0a83108c370b")},
+			},
+			{
+				Type: to.Ptr(armcompute.SharingProfileGroupTypesAADTenants),
+				IDs: []*string{
+					to.Ptr("c24c76aa-8897-4027-9b03-8f7928b54ff6")},
+			}},
+		OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesAdd),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/AddToSharingProfileInAGallery.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/AddToSharingProfileInAGallery.json")
@@ -18336,13 +17483,9 @@ func (testsuite *MockTestSuite) TestGallerySharingProfile_Update() {
 	})
 	client, err = armcompute.NewGallerySharingProfileClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		armcompute.SharingUpdate{
-			OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesReset),
-		},
-		nil)
+	poller, err = client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", armcompute.SharingUpdate{
+		OperationType: to.Ptr(armcompute.SharingUpdateOperationTypesReset),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ResetSharingProfileInAGallery.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ResetSharingProfileInAGallery.json")
@@ -18365,8 +17508,7 @@ func (testsuite *MockTestSuite) TestSharedGalleries_List() {
 	})
 	client, err := armcompute.NewSharedGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myLocation",
-		&armcompute.SharedGalleriesClientListOptions{SharedTo: nil})
+	pager := client.NewListPager("myLocation", &armcompute.SharedGalleriesClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListSharedGalleries.json")
@@ -18397,10 +17539,7 @@ func (testsuite *MockTestSuite) TestSharedGalleries_Get() {
 	})
 	client, err := armcompute.NewSharedGalleriesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myLocation",
-		"galleryUniqueName",
-		nil)
+	res, err := client.Get(ctx, "myLocation", "galleryUniqueName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGallery.json")
 	// Response check
 	exampleRes := armcompute.SharedGallery{
@@ -18425,9 +17564,7 @@ func (testsuite *MockTestSuite) TestSharedGalleryImages_List() {
 	})
 	client, err := armcompute.NewSharedGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myLocation",
-		"galleryUniqueName",
-		&armcompute.SharedGalleryImagesClientListOptions{SharedTo: nil})
+	pager := client.NewListPager("myLocation", "galleryUniqueName", &armcompute.SharedGalleryImagesClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListSharedGalleryImages.json")
@@ -18468,11 +17605,7 @@ func (testsuite *MockTestSuite) TestSharedGalleryImages_Get() {
 	})
 	client, err := armcompute.NewSharedGalleryImagesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myLocation",
-		"galleryUniqueName",
-		"myGalleryImageName",
-		nil)
+	res, err := client.Get(ctx, "myLocation", "galleryUniqueName", "myGalleryImageName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGalleryImage.json")
 	// Response check
 	exampleRes := armcompute.SharedGalleryImage{
@@ -18507,10 +17640,7 @@ func (testsuite *MockTestSuite) TestSharedGalleryImageVersions_List() {
 	})
 	client, err := armcompute.NewSharedGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myLocation",
-		"galleryUniqueName",
-		"myGalleryImageName",
-		&armcompute.SharedGalleryImageVersionsClientListOptions{SharedTo: nil})
+	pager := client.NewListPager("myLocation", "galleryUniqueName", "myGalleryImageName", &armcompute.SharedGalleryImageVersionsClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ListSharedGalleryImageVersions.json")
@@ -18545,12 +17675,7 @@ func (testsuite *MockTestSuite) TestSharedGalleryImageVersions_Get() {
 	})
 	client, err := armcompute.NewSharedGalleryImageVersionsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myLocation",
-		"galleryUniqueName",
-		"myGalleryImageName",
-		"myGalleryImageVersionName",
-		nil)
+	res, err := client.Get(ctx, "myLocation", "galleryUniqueName", "myGalleryImageName", "myGalleryImageVersionName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/GetASharedGalleryImageVersion.json")
 	// Response check
 	exampleRes := armcompute.SharedGalleryImageVersion{
@@ -18579,11 +17704,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_Delete() {
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginDelete(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstance.json")
@@ -18597,11 +17718,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_Get() {
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServiceRoleInstancesClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", &armcompute.CloudServiceRoleInstancesClientGetOptions{Expand: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceRoleInstance.json")
 	// Response check
 	exampleRes := armcompute.RoleInstance{
@@ -18637,11 +17754,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_GetInstanceView() 
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetInstanceView(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	res, err := client.GetInstanceView(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetInstanceViewOfCloudServiceRoleInstance.json")
 	// Response check
 	exampleRes := armcompute.RoleInstanceView{
@@ -18671,9 +17784,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_List() {
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServiceRoleInstancesClientListOptions{Expand: nil})
+	pager := client.NewListPager("ConstosoRG", "{cs-name}", &armcompute.CloudServiceRoleInstancesClientListOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceRolesInstances.json")
@@ -18769,11 +17880,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_Restart() {
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRestart(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginRestart(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstance.json")
@@ -18787,11 +17894,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_Reimage() {
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginReimage(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginReimage(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstance.json")
@@ -18805,11 +17908,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoleInstances_Rebuild() {
 	})
 	client, err := armcompute.NewCloudServiceRoleInstancesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRebuild(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginRebuild(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstance.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstance.json")
@@ -18827,11 +17926,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoles_Get() {
 	})
 	client, err := armcompute.NewCloudServiceRolesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"{role-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	res, err := client.Get(ctx, "{role-name}", "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceRole.json")
 	// Response check
 	exampleRes := armcompute.CloudServiceRole{
@@ -18863,9 +17958,7 @@ func (testsuite *MockTestSuite) TestCloudServiceRoles_List() {
 	})
 	client, err := armcompute.NewCloudServiceRolesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("ConstosoRG",
-		"{cs-name}",
-		nil)
+	pager := client.NewListPager("ConstosoRG", "{cs-name}", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceRoles.json")
@@ -18917,54 +18010,50 @@ func (testsuite *MockTestSuite) TestCloudServices_CreateOrUpdate() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		armcompute.CloudService{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.CloudServiceProperties{
-				Configuration: to.Ptr("{ServiceConfiguration}"),
-				NetworkProfile: &armcompute.CloudServiceNetworkProfile{
-					LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
-						{
-							Name: to.Ptr("contosolb"),
-							Properties: &armcompute.LoadBalancerConfigurationProperties{
-								FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
-									{
-										Name: to.Ptr("contosofe"),
-										Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
-											PublicIPAddress: &armcompute.SubResource{
-												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
-											},
+	poller, err := client.BeginCreateOrUpdate(ctx, "ConstosoRG", "{cs-name}", armcompute.CloudService{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.CloudServiceProperties{
+			Configuration: to.Ptr("{ServiceConfiguration}"),
+			NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+				LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+					{
+						Name: to.Ptr("contosolb"),
+						Properties: &armcompute.LoadBalancerConfigurationProperties{
+							FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+								{
+									Name: to.Ptr("contosofe"),
+									Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+										PublicIPAddress: &armcompute.SubResource{
+											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
 										},
-									}},
-							},
-						}},
-				},
-				PackageURL: to.Ptr("{PackageUrl}"),
-				RoleProfile: &armcompute.CloudServiceRoleProfile{
-					Roles: []*armcompute.CloudServiceRoleProfileProperties{
-						{
-							Name: to.Ptr("ContosoFrontend"),
-							SKU: &armcompute.CloudServiceRoleSKU{
-								Name:     to.Ptr("Standard_D1_v2"),
-								Capacity: to.Ptr[int64](1),
-								Tier:     to.Ptr("Standard"),
-							},
+									},
+								}},
 						},
-						{
-							Name: to.Ptr("ContosoBackend"),
-							SKU: &armcompute.CloudServiceRoleSKU{
-								Name:     to.Ptr("Standard_D1_v2"),
-								Capacity: to.Ptr[int64](1),
-								Tier:     to.Ptr("Standard"),
-							},
-						}},
-				},
-				UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+					}},
 			},
+			PackageURL: to.Ptr("{PackageUrl}"),
+			RoleProfile: &armcompute.CloudServiceRoleProfile{
+				Roles: []*armcompute.CloudServiceRoleProfileProperties{
+					{
+						Name: to.Ptr("ContosoFrontend"),
+						SKU: &armcompute.CloudServiceRoleSKU{
+							Name:     to.Ptr("Standard_D1_v2"),
+							Capacity: to.Ptr[int64](1),
+							Tier:     to.Ptr("Standard"),
+						},
+					},
+					{
+						Name: to.Ptr("ContosoBackend"),
+						SKU: &armcompute.CloudServiceRoleSKU{
+							Name:     to.Ptr("Standard_D1_v2"),
+							Capacity: to.Ptr[int64](1),
+							Tier:     to.Ptr("Standard"),
+						},
+					}},
+			},
+			UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithMultiRole.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithMultiRole.json")
@@ -19033,46 +18122,42 @@ func (testsuite *MockTestSuite) TestCloudServices_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		armcompute.CloudService{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.CloudServiceProperties{
-				Configuration: to.Ptr("{ServiceConfiguration}"),
-				NetworkProfile: &armcompute.CloudServiceNetworkProfile{
-					LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
-						{
-							Name: to.Ptr("myLoadBalancer"),
-							Properties: &armcompute.LoadBalancerConfigurationProperties{
-								FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
-									{
-										Name: to.Ptr("myfe"),
-										Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
-											PublicIPAddress: &armcompute.SubResource{
-												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/myPublicIP"),
-											},
+	poller, err = client.BeginCreateOrUpdate(ctx, "ConstosoRG", "{cs-name}", armcompute.CloudService{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.CloudServiceProperties{
+			Configuration: to.Ptr("{ServiceConfiguration}"),
+			NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+				LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+					{
+						Name: to.Ptr("myLoadBalancer"),
+						Properties: &armcompute.LoadBalancerConfigurationProperties{
+							FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+								{
+									Name: to.Ptr("myfe"),
+									Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+										PublicIPAddress: &armcompute.SubResource{
+											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/myPublicIP"),
 										},
-									}},
-							},
-						}},
-				},
-				PackageURL: to.Ptr("{PackageUrl}"),
-				RoleProfile: &armcompute.CloudServiceRoleProfile{
-					Roles: []*armcompute.CloudServiceRoleProfileProperties{
-						{
-							Name: to.Ptr("ContosoFrontend"),
-							SKU: &armcompute.CloudServiceRoleSKU{
-								Name:     to.Ptr("Standard_D1_v2"),
-								Capacity: to.Ptr[int64](1),
-								Tier:     to.Ptr("Standard"),
-							},
-						}},
-				},
-				UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+									},
+								}},
+						},
+					}},
 			},
+			PackageURL: to.Ptr("{PackageUrl}"),
+			RoleProfile: &armcompute.CloudServiceRoleProfile{
+				Roles: []*armcompute.CloudServiceRoleProfileProperties{
+					{
+						Name: to.Ptr("ContosoFrontend"),
+						SKU: &armcompute.CloudServiceRoleSKU{
+							Name:     to.Ptr("Standard_D1_v2"),
+							Capacity: to.Ptr[int64](1),
+							Tier:     to.Ptr("Standard"),
+						},
+					}},
+			},
+			UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRole.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRole.json")
@@ -19133,58 +18218,54 @@ func (testsuite *MockTestSuite) TestCloudServices_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		armcompute.CloudService{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.CloudServiceProperties{
-				Configuration: to.Ptr("{ServiceConfiguration}"),
-				NetworkProfile: &armcompute.CloudServiceNetworkProfile{
-					LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
-						{
-							Name: to.Ptr("contosolb"),
-							Properties: &armcompute.LoadBalancerConfigurationProperties{
-								FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
-									{
-										Name: to.Ptr("contosofe"),
-										Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
-											PublicIPAddress: &armcompute.SubResource{
-												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
-											},
-										},
-									}},
-							},
-						}},
-				},
-				OSProfile: &armcompute.CloudServiceOsProfile{
-					Secrets: []*armcompute.CloudServiceVaultSecretGroup{
-						{
-							SourceVault: &armcompute.SubResource{
-								ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.KeyVault/vaults/{keyvault-name}"),
-							},
-							VaultCertificates: []*armcompute.CloudServiceVaultCertificate{
+	poller, err = client.BeginCreateOrUpdate(ctx, "ConstosoRG", "{cs-name}", armcompute.CloudService{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.CloudServiceProperties{
+			Configuration: to.Ptr("{ServiceConfiguration}"),
+			NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+				LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+					{
+						Name: to.Ptr("contosolb"),
+						Properties: &armcompute.LoadBalancerConfigurationProperties{
+							FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
 								{
-									CertificateURL: to.Ptr("https://{keyvault-name}.vault.azure.net:443/secrets/ContosoCertificate/{secret-id}"),
+									Name: to.Ptr("contosofe"),
+									Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+										PublicIPAddress: &armcompute.SubResource{
+											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+										},
+									},
 								}},
-						}},
-				},
-				PackageURL: to.Ptr("{PackageUrl}"),
-				RoleProfile: &armcompute.CloudServiceRoleProfile{
-					Roles: []*armcompute.CloudServiceRoleProfileProperties{
-						{
-							Name: to.Ptr("ContosoFrontend"),
-							SKU: &armcompute.CloudServiceRoleSKU{
-								Name:     to.Ptr("Standard_D1_v2"),
-								Capacity: to.Ptr[int64](1),
-								Tier:     to.Ptr("Standard"),
-							},
-						}},
-				},
-				UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+						},
+					}},
 			},
+			OSProfile: &armcompute.CloudServiceOsProfile{
+				Secrets: []*armcompute.CloudServiceVaultSecretGroup{
+					{
+						SourceVault: &armcompute.SubResource{
+							ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.KeyVault/vaults/{keyvault-name}"),
+						},
+						VaultCertificates: []*armcompute.CloudServiceVaultCertificate{
+							{
+								CertificateURL: to.Ptr("https://{keyvault-name}.vault.azure.net:443/secrets/ContosoCertificate/{secret-id}"),
+							}},
+					}},
+			},
+			PackageURL: to.Ptr("{PackageUrl}"),
+			RoleProfile: &armcompute.CloudServiceRoleProfile{
+				Roles: []*armcompute.CloudServiceRoleProfileProperties{
+					{
+						Name: to.Ptr("ContosoFrontend"),
+						SKU: &armcompute.CloudServiceRoleSKU{
+							Name:     to.Ptr("Standard_D1_v2"),
+							Capacity: to.Ptr[int64](1),
+							Tier:     to.Ptr("Standard"),
+						},
+					}},
+			},
+			UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndCertificate.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndCertificate.json")
@@ -19254,60 +18335,56 @@ func (testsuite *MockTestSuite) TestCloudServices_CreateOrUpdate() {
 	})
 	client, err = armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		armcompute.CloudService{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.CloudServiceProperties{
-				Configuration: to.Ptr("{ServiceConfiguration}"),
-				ExtensionProfile: &armcompute.CloudServiceExtensionProfile{
-					Extensions: []*armcompute.Extension{
-						{
-							Name: to.Ptr("RDPExtension"),
-							Properties: &armcompute.CloudServiceExtensionProperties{
-								Type:                    to.Ptr("RDP"),
-								AutoUpgradeMinorVersion: to.Ptr(false),
-								ProtectedSettings:       to.Ptr("<PrivateConfig><Password>{password}</Password></PrivateConfig>"),
-								Publisher:               to.Ptr("Microsoft.Windows.Azure.Extensions"),
-								Settings:                to.Ptr("<PublicConfig><UserName>UserAzure</UserName><Expiration>10/22/2021 15:05:45</Expiration></PublicConfig>"),
-								TypeHandlerVersion:      to.Ptr("1.2.1"),
-							},
-						}},
-				},
-				NetworkProfile: &armcompute.CloudServiceNetworkProfile{
-					LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
-						{
-							Name: to.Ptr("contosolb"),
-							Properties: &armcompute.LoadBalancerConfigurationProperties{
-								FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
-									{
-										Name: to.Ptr("contosofe"),
-										Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
-											PublicIPAddress: &armcompute.SubResource{
-												ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
-											},
-										},
-									}},
-							},
-						}},
-				},
-				PackageURL: to.Ptr("{PackageUrl}"),
-				RoleProfile: &armcompute.CloudServiceRoleProfile{
-					Roles: []*armcompute.CloudServiceRoleProfileProperties{
-						{
-							Name: to.Ptr("ContosoFrontend"),
-							SKU: &armcompute.CloudServiceRoleSKU{
-								Name:     to.Ptr("Standard_D1_v2"),
-								Capacity: to.Ptr[int64](1),
-								Tier:     to.Ptr("Standard"),
-							},
-						}},
-				},
-				UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
+	poller, err = client.BeginCreateOrUpdate(ctx, "ConstosoRG", "{cs-name}", armcompute.CloudService{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.CloudServiceProperties{
+			Configuration: to.Ptr("{ServiceConfiguration}"),
+			ExtensionProfile: &armcompute.CloudServiceExtensionProfile{
+				Extensions: []*armcompute.Extension{
+					{
+						Name: to.Ptr("RDPExtension"),
+						Properties: &armcompute.CloudServiceExtensionProperties{
+							Type:                    to.Ptr("RDP"),
+							AutoUpgradeMinorVersion: to.Ptr(false),
+							ProtectedSettings:       to.Ptr("<PrivateConfig><Password>{password}</Password></PrivateConfig>"),
+							Publisher:               to.Ptr("Microsoft.Windows.Azure.Extensions"),
+							Settings:                to.Ptr("<PublicConfig><UserName>UserAzure</UserName><Expiration>10/22/2021 15:05:45</Expiration></PublicConfig>"),
+							TypeHandlerVersion:      to.Ptr("1.2.1"),
+						},
+					}},
 			},
+			NetworkProfile: &armcompute.CloudServiceNetworkProfile{
+				LoadBalancerConfigurations: []*armcompute.LoadBalancerConfiguration{
+					{
+						Name: to.Ptr("contosolb"),
+						Properties: &armcompute.LoadBalancerConfigurationProperties{
+							FrontendIPConfigurations: []*armcompute.LoadBalancerFrontendIPConfiguration{
+								{
+									Name: to.Ptr("contosofe"),
+									Properties: &armcompute.LoadBalancerFrontendIPConfigurationProperties{
+										PublicIPAddress: &armcompute.SubResource{
+											ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.Network/publicIPAddresses/contosopublicip"),
+										},
+									},
+								}},
+						},
+					}},
+			},
+			PackageURL: to.Ptr("{PackageUrl}"),
+			RoleProfile: &armcompute.CloudServiceRoleProfile{
+				Roles: []*armcompute.CloudServiceRoleProfileProperties{
+					{
+						Name: to.Ptr("ContosoFrontend"),
+						SKU: &armcompute.CloudServiceRoleSKU{
+							Name:     to.Ptr("Standard_D1_v2"),
+							Capacity: to.Ptr[int64](1),
+							Tier:     to.Ptr("Standard"),
+						},
+					}},
+			},
+			UpgradeMode: to.Ptr(armcompute.CloudServiceUpgradeModeAuto),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndRDP.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndRDP.json")
@@ -19387,15 +18464,11 @@ func (testsuite *MockTestSuite) TestCloudServices_Update() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		armcompute.CloudServiceUpdate{
-			Tags: map[string]*string{
-				"Documentation": to.Ptr("RestAPI"),
-			},
+	poller, err := client.BeginUpdate(ctx, "ConstosoRG", "{cs-name}", armcompute.CloudServiceUpdate{
+		Tags: map[string]*string{
+			"Documentation": to.Ptr("RestAPI"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceToIncludeTags.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceToIncludeTags.json")
@@ -19469,10 +18542,7 @@ func (testsuite *MockTestSuite) TestCloudServices_Delete() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginDelete(ctx, "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudService.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudService.json")
@@ -19486,10 +18556,7 @@ func (testsuite *MockTestSuite) TestCloudServices_Get() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	res, err := client.Get(ctx, "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceWithMultiRoleAndRDP.json")
 	// Response check
 	exampleRes := armcompute.CloudService{
@@ -19574,10 +18641,7 @@ func (testsuite *MockTestSuite) TestCloudServices_GetInstanceView() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetInstanceView(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	res, err := client.GetInstanceView(ctx, "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceInstanceViewWithMultiRole.json")
 	// Response check
 	exampleRes := armcompute.CloudServiceInstanceView{
@@ -19729,8 +18793,7 @@ func (testsuite *MockTestSuite) TestCloudServices_List() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("ConstosoRG",
-		nil)
+	pager := client.NewListPager("ConstosoRG", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServicesInResourceGroup.json")
@@ -19821,10 +18884,7 @@ func (testsuite *MockTestSuite) TestCloudServices_Start() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginStart(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginStart(ctx, "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/StartCloudService.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/StartCloudService.json")
@@ -19838,10 +18898,7 @@ func (testsuite *MockTestSuite) TestCloudServices_PowerOff() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginPowerOff(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginPowerOff(ctx, "ConstosoRG", "{cs-name}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PowerOffCloudService.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/PowerOffCloudService.json")
@@ -19855,15 +18912,12 @@ func (testsuite *MockTestSuite) TestCloudServices_Restart() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRestart(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServicesClientBeginRestartOptions{Parameters: &armcompute.RoleInstances{
-			RoleInstances: []*string{
-				to.Ptr("ContosoFrontend_IN_0"),
-				to.Ptr("ContosoBackend_IN_1")},
-		},
-		})
+	poller, err := client.BeginRestart(ctx, "ConstosoRG", "{cs-name}", &armcompute.CloudServicesClientBeginRestartOptions{Parameters: &armcompute.RoleInstances{
+		RoleInstances: []*string{
+			to.Ptr("ContosoFrontend_IN_0"),
+			to.Ptr("ContosoBackend_IN_1")},
+	},
+	})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstances.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RestartCloudServiceRoleInstances.json")
@@ -19877,15 +18931,12 @@ func (testsuite *MockTestSuite) TestCloudServices_Reimage() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginReimage(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServicesClientBeginReimageOptions{Parameters: &armcompute.RoleInstances{
-			RoleInstances: []*string{
-				to.Ptr("ContosoFrontend_IN_0"),
-				to.Ptr("ContosoBackend_IN_1")},
-		},
-		})
+	poller, err := client.BeginReimage(ctx, "ConstosoRG", "{cs-name}", &armcompute.CloudServicesClientBeginReimageOptions{Parameters: &armcompute.RoleInstances{
+		RoleInstances: []*string{
+			to.Ptr("ContosoFrontend_IN_0"),
+			to.Ptr("ContosoBackend_IN_1")},
+	},
+	})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstances.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ReimageCloudServiceRoleInstances.json")
@@ -19899,15 +18950,12 @@ func (testsuite *MockTestSuite) TestCloudServices_Rebuild() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRebuild(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServicesClientBeginRebuildOptions{Parameters: &armcompute.RoleInstances{
-			RoleInstances: []*string{
-				to.Ptr("ContosoFrontend_IN_0"),
-				to.Ptr("ContosoBackend_IN_1")},
-		},
-		})
+	poller, err := client.BeginRebuild(ctx, "ConstosoRG", "{cs-name}", &armcompute.CloudServicesClientBeginRebuildOptions{Parameters: &armcompute.RoleInstances{
+		RoleInstances: []*string{
+			to.Ptr("ContosoFrontend_IN_0"),
+			to.Ptr("ContosoBackend_IN_1")},
+	},
+	})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstances.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/RebuildCloudServiceRoleInstances.json")
@@ -19921,15 +18969,12 @@ func (testsuite *MockTestSuite) TestCloudServices_DeleteInstances() {
 	})
 	client, err := armcompute.NewCloudServicesClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDeleteInstances(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServicesClientBeginDeleteInstancesOptions{Parameters: &armcompute.RoleInstances{
-			RoleInstances: []*string{
-				to.Ptr("ContosoFrontend_IN_0"),
-				to.Ptr("ContosoBackend_IN_1")},
-		},
-		})
+	poller, err := client.BeginDeleteInstances(ctx, "ConstosoRG", "{cs-name}", &armcompute.CloudServicesClientBeginDeleteInstancesOptions{Parameters: &armcompute.RoleInstances{
+		RoleInstances: []*string{
+			to.Ptr("ContosoFrontend_IN_0"),
+			to.Ptr("ContosoBackend_IN_1")},
+	},
+	})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstances.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/DeleteCloudServiceRoleInstances.json")
@@ -19943,12 +18988,7 @@ func (testsuite *MockTestSuite) TestCloudServicesUpdateDomain_WalkUpdateDomain()
 	})
 	client, err := armcompute.NewCloudServicesUpdateDomainClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginWalkUpdateDomain(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		1,
-		armcompute.UpdateDomain{},
-		nil)
+	poller, err := client.BeginWalkUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, armcompute.UpdateDomain{}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceUpdateDomain.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateCloudServiceUpdateDomain.json")
@@ -19962,11 +19002,7 @@ func (testsuite *MockTestSuite) TestCloudServicesUpdateDomain_GetUpdateDomain() 
 	})
 	client, err := armcompute.NewCloudServicesUpdateDomainClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetUpdateDomain(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		1,
-		nil)
+	res, err := client.GetUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceUpdateDomain.json")
 	// Response check
 	exampleRes := armcompute.UpdateDomain{
@@ -19988,9 +19024,7 @@ func (testsuite *MockTestSuite) TestCloudServicesUpdateDomain_ListUpdateDomains(
 	})
 	client, err := armcompute.NewCloudServicesUpdateDomainClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListUpdateDomainsPager("ConstosoRG",
-		"{cs-name}",
-		nil)
+	pager := client.NewListUpdateDomainsPager("ConstosoRG", "{cs-name}", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceUpdateDomains.json")
@@ -20022,10 +19056,7 @@ func (testsuite *MockTestSuite) TestCloudServiceOperatingSystems_GetOSVersion() 
 	})
 	client, err := armcompute.NewCloudServiceOperatingSystemsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetOSVersion(ctx,
-		"westus2",
-		"WA-GUEST-OS-3.90_202010-02",
-		nil)
+	res, err := client.GetOSVersion(ctx, "westus2", "WA-GUEST-OS-3.90_202010-02", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceOSVersion.json")
 	// Response check
 	exampleRes := armcompute.OSVersion{
@@ -20057,8 +19088,7 @@ func (testsuite *MockTestSuite) TestCloudServiceOperatingSystems_ListOSVersions(
 	})
 	client, err := armcompute.NewCloudServiceOperatingSystemsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListOSVersionsPager("westus2",
-		nil)
+	pager := client.NewListOSVersionsPager("westus2", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceOSVersions.json")
@@ -20110,10 +19140,7 @@ func (testsuite *MockTestSuite) TestCloudServiceOperatingSystems_GetOSFamily() {
 	})
 	client, err := armcompute.NewCloudServiceOperatingSystemsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetOSFamily(ctx,
-		"westus2",
-		"3",
-		nil)
+	res, err := client.GetOSFamily(ctx, "westus2", "3", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetCloudServiceOSFamily.json")
 	// Response check
 	exampleRes := armcompute.OSFamily{
@@ -20148,8 +19175,7 @@ func (testsuite *MockTestSuite) TestCloudServiceOperatingSystems_ListOSFamilies(
 	})
 	client, err := armcompute.NewCloudServiceOperatingSystemsClient("{subscription-id}", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListOSFamiliesPager("westus2",
-		nil)
+	pager := client.NewListOSFamiliesPager("westus2", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/ListCloudServiceOSFamilies.json")

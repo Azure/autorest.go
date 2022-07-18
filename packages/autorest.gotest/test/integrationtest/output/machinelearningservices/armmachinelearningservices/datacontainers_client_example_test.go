@@ -28,11 +28,9 @@ func ExampleDataContainersClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123",
-		"workspace123",
-		&armmachinelearningservices.DataContainersClientListOptions{Skip: nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("testrg123", "workspace123", &armmachinelearningservices.DataContainersClientListOptions{Skip: nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -56,11 +54,7 @@ func ExampleDataContainersClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"workspace123",
-		"datacontainer123",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "workspace123", "datacontainer123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -77,11 +71,7 @@ func ExampleDataContainersClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"testrg123",
-		"workspace123",
-		"datacontainer123",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "workspace123", "datacontainer123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -100,25 +90,20 @@ func ExampleDataContainersClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"workspace123",
-		"datacontainer123",
-		armmachinelearningservices.DataContainerData{
-			Properties: &armmachinelearningservices.DataContainerDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"properties1": to.Ptr("value1"),
-					"properties2": to.Ptr("value2"),
-				},
-				Tags: map[string]*string{
-					"tag1": to.Ptr("value1"),
-					"tag2": to.Ptr("value2"),
-				},
-				DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "workspace123", "datacontainer123", armmachinelearningservices.DataContainerData{
+		Properties: &armmachinelearningservices.DataContainerDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"properties1": to.Ptr("value1"),
+				"properties2": to.Ptr("value2"),
 			},
+			Tags: map[string]*string{
+				"tag1": to.Ptr("value1"),
+				"tag2": to.Ptr("value2"),
+			},
+			DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

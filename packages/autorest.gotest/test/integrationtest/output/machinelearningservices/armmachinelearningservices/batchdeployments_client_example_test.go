@@ -28,13 +28,10 @@ func ExampleBatchDeploymentsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		&armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:  to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:  to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -58,12 +55,7 @@ func ExampleBatchDeploymentsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -84,12 +76,7 @@ func ExampleBatchDeploymentsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -108,59 +95,53 @@ func ExampleBatchDeploymentsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialBatchDeployment{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.PartialCodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				Compute:       to.Ptr("string"),
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				ErrorThreshold:            to.Ptr[int32](1),
-				LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
-				MaxConcurrencyPerInstance: to.Ptr[int32](1),
-				MiniBatchSize:             to.Ptr[int64](1),
-				Model: &armmachinelearningservices.PartialIDAssetReference{
-					ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
-					AssetID:       to.Ptr("string"),
-				},
-				OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
-				OutputFileName: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				RetrySettings: &armmachinelearningservices.PartialBatchRetrySettings{
-					MaxRetries: to.Ptr[int32](1),
-					Timeout:    to.Ptr("PT5M"),
-				},
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialBatchDeployment{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.PartialCodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			Compute:       to.Ptr("string"),
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			ErrorThreshold:            to.Ptr[int32](1),
+			LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+			MaxConcurrencyPerInstance: to.Ptr[int32](1),
+			MiniBatchSize:             to.Ptr[int64](1),
+			Model: &armmachinelearningservices.PartialIDAssetReference{
+				ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+				AssetID:       to.Ptr("string"),
+			},
+			OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+			OutputFileName: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			RetrySettings: &armmachinelearningservices.PartialBatchRetrySettings{
+				MaxRetries: to.Ptr[int32](1),
+				Timeout:    to.Ptr("PT5M"),
+			},
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -183,68 +164,62 @@ func ExampleBatchDeploymentsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.BatchDeploymentData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.BatchDeploymentDetails{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Compute:                   to.Ptr("string"),
-				ErrorThreshold:            to.Ptr[int32](1),
-				LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
-				MaxConcurrencyPerInstance: to.Ptr[int32](1),
-				MiniBatchSize:             to.Ptr[int64](1),
-				Model: &armmachinelearningservices.IDAssetReference{
-					ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
-					AssetID:       to.Ptr("string"),
-				},
-				OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
-				OutputFileName: to.Ptr("string"),
-				Resources: &armmachinelearningservices.ResourceConfiguration{
-					InstanceCount: to.Ptr[int32](1),
-					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
-							"cd3c37dc-2876-4ca4-8a54-21bd7619724a": nil,
-						},
-					},
-				},
-				RetrySettings: &armmachinelearningservices.BatchRetrySettings{
-					MaxRetries: to.Ptr[int32](1),
-					Timeout:    to.Ptr("PT5M"),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.BatchDeploymentData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.BatchDeploymentDetails{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Compute:                   to.Ptr("string"),
+			ErrorThreshold:            to.Ptr[int32](1),
+			LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+			MaxConcurrencyPerInstance: to.Ptr[int32](1),
+			MiniBatchSize:             to.Ptr[int64](1),
+			Model: &armmachinelearningservices.IDAssetReference{
+				ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+				AssetID:       to.Ptr("string"),
+			},
+			OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+			OutputFileName: to.Ptr("string"),
+			Resources: &armmachinelearningservices.ResourceConfiguration{
+				InstanceCount: to.Ptr[int32](1),
+				InstanceType:  to.Ptr("string"),
+				Properties: map[string]interface{}{
+					"string": map[string]interface{}{
+						"cd3c37dc-2876-4ca4-8a54-21bd7619724a": nil,
+					},
+				},
+			},
+			RetrySettings: &armmachinelearningservices.BatchRetrySettings{
+				MaxRetries: to.Ptr[int32](1),
+				Timeout:    to.Ptr("PT5M"),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

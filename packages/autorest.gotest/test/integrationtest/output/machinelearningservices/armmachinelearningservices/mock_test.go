@@ -125,10 +125,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_Get() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	res, err := client.Get(ctx, "workspace-1234", "testworkspace", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.Workspace{
@@ -216,49 +213,45 @@ func (testsuite *MockTestSuite) TestWorkspaces_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"workspace-1234",
-		"testworkspace",
-		armmachinelearningservices.Workspace{
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Location: to.Ptr("eastus2euap"),
-			Properties: &armmachinelearningservices.WorkspaceProperties{
-				Description:         to.Ptr("test description"),
-				ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
-				ContainerRegistry:   to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
-				Encryption: &armmachinelearningservices.EncryptionProperty{
-					Identity: &armmachinelearningservices.IdentityForCmk{
-						UserAssignedIdentity: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"),
-					},
-					KeyVaultProperties: &armmachinelearningservices.EncryptionKeyVaultProperties{
-						IdentityClientID: to.Ptr(""),
-						KeyIdentifier:    to.Ptr("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb"),
-						KeyVaultArmID:    to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
-					},
-					Status: to.Ptr(armmachinelearningservices.EncryptionStatusEnabled),
-				},
-				FriendlyName: to.Ptr("HelloName"),
-				HbiWorkspace: to.Ptr(false),
-				KeyVault:     to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
-				SharedPrivateLinkResources: []*armmachinelearningservices.SharedPrivateLinkResource{
-					{
-						Name: to.Ptr("testdbresource"),
-						Properties: &armmachinelearningservices.SharedPrivateLinkResourceProperty{
-							GroupID:               to.Ptr("Sql"),
-							PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql"),
-							RequestMessage:        to.Ptr("Please approve"),
-							Status:                to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
-						},
-					}},
-				StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.Workspace{
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Location: to.Ptr("eastus2euap"),
+		Properties: &armmachinelearningservices.WorkspaceProperties{
+			Description:         to.Ptr("test description"),
+			ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+			ContainerRegistry:   to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+			Encryption: &armmachinelearningservices.EncryptionProperty{
+				Identity: &armmachinelearningservices.IdentityForCmk{
+					UserAssignedIdentity: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"),
+				},
+				KeyVaultProperties: &armmachinelearningservices.EncryptionKeyVaultProperties{
+					IdentityClientID: to.Ptr(""),
+					KeyIdentifier:    to.Ptr("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb"),
+					KeyVaultArmID:    to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+				},
+				Status: to.Ptr(armmachinelearningservices.EncryptionStatusEnabled),
+			},
+			FriendlyName: to.Ptr("HelloName"),
+			HbiWorkspace: to.Ptr(false),
+			KeyVault:     to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+			SharedPrivateLinkResources: []*armmachinelearningservices.SharedPrivateLinkResource{
+				{
+					Name: to.Ptr("testdbresource"),
+					Properties: &armmachinelearningservices.SharedPrivateLinkResourceProperty{
+						GroupID:               to.Ptr("Sql"),
+						PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql"),
+						RequestMessage:        to.Ptr("Please approve"),
+						Status:                to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+					},
+				}},
+			StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/create.json")
@@ -328,10 +321,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_Delete() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	poller, err := client.BeginDelete(ctx, "workspace-1234", "testworkspace", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/delete.json")
@@ -345,17 +335,13 @@ func (testsuite *MockTestSuite) TestWorkspaces_Update() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"workspace-1234",
-		"testworkspace",
-		armmachinelearningservices.WorkspaceUpdateParameters{
-			Properties: &armmachinelearningservices.WorkspacePropertiesUpdateParameters{
-				Description:         to.Ptr("new description"),
-				FriendlyName:        to.Ptr("New friendly name"),
-				PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
-			},
+	poller, err := client.BeginUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.WorkspaceUpdateParameters{
+		Properties: &armmachinelearningservices.WorkspacePropertiesUpdateParameters{
+			Description:         to.Ptr("new description"),
+			FriendlyName:        to.Ptr("New friendly name"),
+			PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/update.json")
@@ -396,8 +382,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ListByResourceGroup() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListByResourceGroupPager("workspace-1234",
-		&armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
+	pager := client.NewListByResourceGroupPager("workspace-1234", &armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listByResourceGroup.json")
@@ -451,23 +436,20 @@ func (testsuite *MockTestSuite) TestWorkspaces_Diagnose() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDiagnose(ctx,
-		"workspace-1234",
-		"testworkspace",
-		&armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
-			Value: &armmachinelearningservices.DiagnoseRequestProperties{
-				ApplicationInsights: map[string]interface{}{},
-				ContainerRegistry:   map[string]interface{}{},
-				DNSResolution:       map[string]interface{}{},
-				KeyVault:            map[string]interface{}{},
-				Nsg:                 map[string]interface{}{},
-				Others:              map[string]interface{}{},
-				ResourceLock:        map[string]interface{}{},
-				StorageAccount:      map[string]interface{}{},
-				Udr:                 map[string]interface{}{},
-			},
+	poller, err := client.BeginDiagnose(ctx, "workspace-1234", "testworkspace", &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
+		Value: &armmachinelearningservices.DiagnoseRequestProperties{
+			ApplicationInsights: map[string]interface{}{},
+			ContainerRegistry:   map[string]interface{}{},
+			DNSResolution:       map[string]interface{}{},
+			KeyVault:            map[string]interface{}{},
+			Nsg:                 map[string]interface{}{},
+			Others:              map[string]interface{}{},
+			ResourceLock:        map[string]interface{}{},
+			StorageAccount:      map[string]interface{}{},
+			Udr:                 map[string]interface{}{},
 		},
-		})
+	},
+	})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/diagnose.json")
@@ -505,10 +487,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ListKeys() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	res, err := client.ListKeys(ctx, "testrg123", "workspaces123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listKeys.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ListWorkspaceKeysResult{
@@ -542,10 +521,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ResyncKeys() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginResyncKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	poller, err := client.BeginResyncKeys(ctx, "testrg123", "workspaces123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/resyncKeys.json")
@@ -613,10 +589,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ListNotebookAccessToken() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListNotebookAccessToken(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	res, err := client.ListNotebookAccessToken(ctx, "workspace-1234", "testworkspace", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listNotebookAccessToken.json")
 	// Response check
 	exampleRes := armmachinelearningservices.NotebookAccessTokenResult{
@@ -642,10 +615,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_PrepareNotebook() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginPrepareNotebook(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	poller, err := client.BeginPrepareNotebook(ctx, "testrg123", "workspaces123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/prepare.json")
@@ -673,10 +643,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ListStorageAccountKeys() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListStorageAccountKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	res, err := client.ListStorageAccountKeys(ctx, "testrg123", "workspaces123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Workspace/listStorageAccountKeys.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ListStorageAccountKeysResult{}
@@ -695,10 +662,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ListNotebookKeys() {
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListNotebookKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	res, err := client.ListNotebookKeys(ctx, "testrg123", "workspaces123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Notebook/listKeys.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ListNotebookKeysResult{}
@@ -717,10 +681,7 @@ func (testsuite *MockTestSuite) TestWorkspaces_ListOutboundNetworkDependenciesEn
 	})
 	client, err := armmachinelearningservices.NewWorkspacesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListOutboundNetworkDependenciesEndpoints(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	res, err := client.ListOutboundNetworkDependenciesEndpoints(ctx, "workspace-1234", "testworkspace", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ExternalFQDN/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ExternalFQDNResponse{
@@ -767,8 +728,7 @@ func (testsuite *MockTestSuite) TestUsages_List() {
 	})
 	client, err := armmachinelearningservices.NewUsagesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("eastus",
-		nil)
+	pager := client.NewListPager("eastus", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Usage/list.json")
@@ -1177,9 +1137,7 @@ func (testsuite *MockTestSuite) TestVirtualMachineSizes_List() {
 	})
 	client, err := armmachinelearningservices.NewVirtualMachineSizesClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.List(ctx,
-		"eastus",
-		nil)
+	res, err := client.List(ctx, "eastus", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/VirtualMachineSize/list.json")
 	// Response check
 	exampleRes := armmachinelearningservices.VirtualMachineSizeListResult{
@@ -1555,24 +1513,21 @@ func (testsuite *MockTestSuite) TestQuotas_Update() {
 	})
 	client, err := armmachinelearningservices.NewQuotasClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Update(ctx,
-		"eastus",
-		armmachinelearningservices.QuotaUpdateParameters{
-			Value: []*armmachinelearningservices.QuotaBaseProperties{
-				{
-					Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
-					ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
-					Limit: to.Ptr[int64](100),
-					Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
-				},
-				{
-					Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
-					ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
-					Limit: to.Ptr[int64](200),
-					Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
-				}},
-		},
-		nil)
+	res, err := client.Update(ctx, "eastus", armmachinelearningservices.QuotaUpdateParameters{
+		Value: []*armmachinelearningservices.QuotaBaseProperties{
+			{
+				Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
+				ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+				Limit: to.Ptr[int64](100),
+				Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
+			},
+			{
+				Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
+				ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+				Limit: to.Ptr[int64](200),
+				Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
+			}},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/update.json")
 	// Response check
 	exampleRes := armmachinelearningservices.UpdateWorkspaceQuotasResult{
@@ -1607,8 +1562,7 @@ func (testsuite *MockTestSuite) TestQuotas_List() {
 	})
 	client, err := armmachinelearningservices.NewQuotasClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("eastus",
-		nil)
+	pager := client.NewListPager("eastus", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Quota/list.json")
@@ -2032,9 +1986,7 @@ func (testsuite *MockTestSuite) TestCompute_List() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("testrg123",
-		"workspaces123",
-		&armmachinelearningservices.ComputeClientListOptions{Skip: nil})
+	pager := client.NewListPager("testrg123", "workspaces123", &armmachinelearningservices.ComputeClientListOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/list.json")
@@ -2086,11 +2038,7 @@ func (testsuite *MockTestSuite) TestCompute_Get() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ComputeResource{
@@ -2119,11 +2067,7 @@ func (testsuite *MockTestSuite) TestCompute_Get() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err = client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json")
 	// Response check
 	exampleRes = armmachinelearningservices.ComputeResource{
@@ -2179,11 +2123,7 @@ func (testsuite *MockTestSuite) TestCompute_Get() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err = client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json")
 	// Response check
 	exampleRes = armmachinelearningservices.ComputeResource{
@@ -2234,11 +2174,7 @@ func (testsuite *MockTestSuite) TestCompute_Get() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err = client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json")
 	// Response check
 	exampleRes = armmachinelearningservices.ComputeResource{
@@ -2303,39 +2239,34 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.Kubernetes{
-				Description: to.Ptr("some compute"),
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
-				ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
-				Properties: &armmachinelearningservices.KubernetesProperties{
-					DefaultInstanceType: to.Ptr("defaultInstanceType"),
-					InstanceTypes: map[string]*armmachinelearningservices.InstanceTypeSchema{
-						"defaultInstanceType": &armmachinelearningservices.InstanceTypeSchema{
-							Resources: &armmachinelearningservices.InstanceTypeSchemaResources{
-								Limits: map[string]*string{
-									"cpu":            to.Ptr("1"),
-									"memory":         to.Ptr("4Gi"),
-									"nvidia.com/gpu": nil,
-								},
-								Requests: map[string]*string{
-									"cpu":            to.Ptr("1"),
-									"memory":         to.Ptr("4Gi"),
-									"nvidia.com/gpu": nil,
-								},
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.Kubernetes{
+			Description: to.Ptr("some compute"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
+			ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+			Properties: &armmachinelearningservices.KubernetesProperties{
+				DefaultInstanceType: to.Ptr("defaultInstanceType"),
+				InstanceTypes: map[string]*armmachinelearningservices.InstanceTypeSchema{
+					"defaultInstanceType": &armmachinelearningservices.InstanceTypeSchema{
+						Resources: &armmachinelearningservices.InstanceTypeSchemaResources{
+							Limits: map[string]*string{
+								"cpu":            to.Ptr("1"),
+								"memory":         to.Ptr("4Gi"),
+								"nvidia.com/gpu": nil,
+							},
+							Requests: map[string]*string{
+								"cpu":            to.Ptr("1"),
+								"memory":         to.Ptr("4Gi"),
+								"nvidia.com/gpu": nil,
 							},
 						},
 					},
-					Namespace: to.Ptr("default"),
 				},
+				Namespace: to.Ptr("default"),
 			},
-			Location: to.Ptr("eastus"),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json")
@@ -2385,33 +2316,28 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.AmlCompute{
-				Properties: &armmachinelearningservices.AmlComputeProperties{
-					EnableNodePublicIP:          to.Ptr(true),
-					IsolatedNetwork:             to.Ptr(false),
-					OSType:                      to.Ptr(armmachinelearningservices.OsTypeWindows),
-					RemoteLoginPortPublicAccess: to.Ptr(armmachinelearningservices.RemoteLoginPortPublicAccessNotSpecified),
-					ScaleSettings: &armmachinelearningservices.ScaleSettings{
-						MaxNodeCount:                to.Ptr[int32](1),
-						MinNodeCount:                to.Ptr[int32](0),
-						NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
-					},
-					VirtualMachineImage: &armmachinelearningservices.VirtualMachineImage{
-						ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myImageGallery/images/myImageDefinition/versions/0.0.1"),
-					},
-					VMPriority: to.Ptr(armmachinelearningservices.VMPriorityDedicated),
-					VMSize:     to.Ptr("STANDARD_NC6"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AmlCompute{
+			Properties: &armmachinelearningservices.AmlComputeProperties{
+				EnableNodePublicIP:          to.Ptr(true),
+				IsolatedNetwork:             to.Ptr(false),
+				OSType:                      to.Ptr(armmachinelearningservices.OsTypeWindows),
+				RemoteLoginPortPublicAccess: to.Ptr(armmachinelearningservices.RemoteLoginPortPublicAccessNotSpecified),
+				ScaleSettings: &armmachinelearningservices.ScaleSettings{
+					MaxNodeCount:                to.Ptr[int32](1),
+					MinNodeCount:                to.Ptr[int32](0),
+					NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
 				},
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
+				VirtualMachineImage: &armmachinelearningservices.VirtualMachineImage{
+					ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myImageGallery/images/myImageDefinition/versions/0.0.1"),
+				},
+				VMPriority: to.Ptr(armmachinelearningservices.VMPriorityDedicated),
+				VMSize:     to.Ptr("STANDARD_NC6"),
 			},
-			Location: to.Ptr("eastus"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json")
@@ -2438,17 +2364,12 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.DataFactory{
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeDataFactory),
-			},
-			Location: to.Ptr("eastus"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.DataFactory{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeDataFactory),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json")
@@ -2475,17 +2396,12 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.AKS{
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
-			},
-			Location: to.Ptr("eastus"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AKS{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json")
@@ -2512,34 +2428,29 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.ComputeInstance{
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
-				Properties: &armmachinelearningservices.ComputeInstanceProperties{
-					ApplicationSharingPolicy:         to.Ptr(armmachinelearningservices.ApplicationSharingPolicyPersonal),
-					ComputeInstanceAuthorizationType: to.Ptr(armmachinelearningservices.ComputeInstanceAuthorizationTypePersonal),
-					PersonalComputeInstanceSettings: &armmachinelearningservices.PersonalComputeInstanceSettings{
-						AssignedUser: &armmachinelearningservices.AssignedUser{
-							ObjectID: to.Ptr("00000000-0000-0000-0000-000000000000"),
-							TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
-						},
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.ComputeInstance{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+			Properties: &armmachinelearningservices.ComputeInstanceProperties{
+				ApplicationSharingPolicy:         to.Ptr(armmachinelearningservices.ApplicationSharingPolicyPersonal),
+				ComputeInstanceAuthorizationType: to.Ptr(armmachinelearningservices.ComputeInstanceAuthorizationTypePersonal),
+				PersonalComputeInstanceSettings: &armmachinelearningservices.PersonalComputeInstanceSettings{
+					AssignedUser: &armmachinelearningservices.AssignedUser{
+						ObjectID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+						TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
 					},
-					SSHSettings: &armmachinelearningservices.ComputeInstanceSSHSettings{
-						SSHPublicAccess: to.Ptr(armmachinelearningservices.SSHPublicAccessDisabled),
-					},
-					Subnet: &armmachinelearningservices.ResourceID{
-						ID: to.Ptr("test-subnet-resource-id"),
-					},
-					VMSize: to.Ptr("STANDARD_NC6"),
 				},
+				SSHSettings: &armmachinelearningservices.ComputeInstanceSSHSettings{
+					SSHPublicAccess: to.Ptr(armmachinelearningservices.SSHPublicAccessDisabled),
+				},
+				Subnet: &armmachinelearningservices.ResourceID{
+					ID: to.Ptr("test-subnet-resource-id"),
+				},
+				VMSize: to.Ptr("STANDARD_NC6"),
 			},
-			Location: to.Ptr("eastus"),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json")
@@ -2566,20 +2477,15 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.ComputeInstance{
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
-				Properties: &armmachinelearningservices.ComputeInstanceProperties{
-					VMSize: to.Ptr("STANDARD_NC6"),
-				},
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.ComputeInstance{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+			Properties: &armmachinelearningservices.ComputeInstanceProperties{
+				VMSize: to.Ptr("STANDARD_NC6"),
 			},
-			Location: to.Ptr("eastus"),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json")
@@ -2606,25 +2512,20 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.AmlCompute{
-				Properties: &armmachinelearningservices.AmlComputeProperties{
-					ScaleSettings: &armmachinelearningservices.ScaleSettings{
-						MaxNodeCount:                to.Ptr[int32](4),
-						MinNodeCount:                to.Ptr[int32](4),
-						NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
-					},
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AmlCompute{
+			Properties: &armmachinelearningservices.AmlComputeProperties{
+				ScaleSettings: &armmachinelearningservices.ScaleSettings{
+					MaxNodeCount:                to.Ptr[int32](4),
+					MinNodeCount:                to.Ptr[int32](4),
+					NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
 				},
-				Description: to.Ptr("some compute"),
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
 			},
-			Location: to.Ptr("eastus"),
+			Description: to.Ptr("some compute"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json")
@@ -2682,22 +2583,17 @@ func (testsuite *MockTestSuite) TestCompute_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.AKS{
-				Properties: &armmachinelearningservices.AKSSchemaProperties{
-					AgentCount: to.Ptr[int32](4),
-				},
-				Description: to.Ptr("some compute"),
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
-				ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AKS{
+			Properties: &armmachinelearningservices.AKSSchemaProperties{
+				AgentCount: to.Ptr[int32](4),
 			},
-			Location: to.Ptr("eastus"),
+			Description: to.Ptr("some compute"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+			ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json")
@@ -2732,22 +2628,17 @@ func (testsuite *MockTestSuite) TestCompute_Update() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ClusterUpdateParameters{
-			Properties: &armmachinelearningservices.ClusterUpdateProperties{
-				Properties: &armmachinelearningservices.ScaleSettingsInformation{
-					ScaleSettings: &armmachinelearningservices.ScaleSettings{
-						MaxNodeCount:                to.Ptr[int32](4),
-						MinNodeCount:                to.Ptr[int32](4),
-						NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
-					},
+	poller, err := client.BeginUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ClusterUpdateParameters{
+		Properties: &armmachinelearningservices.ClusterUpdateProperties{
+			Properties: &armmachinelearningservices.ScaleSettingsInformation{
+				ScaleSettings: &armmachinelearningservices.ScaleSettings{
+					MaxNodeCount:                to.Ptr[int32](4),
+					MinNodeCount:                to.Ptr[int32](4),
+					NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/patch.json")
@@ -2778,12 +2669,7 @@ func (testsuite *MockTestSuite) TestCompute_Delete() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.UnderlyingResourceActionDelete,
-		nil)
+	poller, err := client.BeginDelete(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.UnderlyingResourceActionDelete, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/delete.json")
@@ -2797,10 +2683,7 @@ func (testsuite *MockTestSuite) TestCompute_ListNodes() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListNodesPager("testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	pager := client.NewListNodesPager("testrg123", "workspaces123", "compute123", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listNodes.json")
@@ -2839,11 +2722,7 @@ func (testsuite *MockTestSuite) TestCompute_ListKeys() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err := client.ListKeys(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/listKeys.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ComputeClientListKeysResponse{
@@ -2869,11 +2748,7 @@ func (testsuite *MockTestSuite) TestCompute_Start() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginStart(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	poller, err := client.BeginStart(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/start.json")
@@ -2887,11 +2762,7 @@ func (testsuite *MockTestSuite) TestCompute_Stop() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginStop(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	poller, err := client.BeginStop(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/stop.json")
@@ -2905,11 +2776,7 @@ func (testsuite *MockTestSuite) TestCompute_Restart() {
 	})
 	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRestart(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	poller, err := client.BeginRestart(ctx, "testrg123", "workspaces123", "compute123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/restart.json")
@@ -2923,9 +2790,7 @@ func (testsuite *MockTestSuite) TestPrivateEndpointConnections_List() {
 	})
 	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("rg-1234",
-		"testworkspace",
-		nil)
+	pager := client.NewListPager("rg-1234", "testworkspace", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/list.json")
@@ -2981,11 +2846,7 @@ func (testsuite *MockTestSuite) TestPrivateEndpointConnections_Get() {
 	})
 	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"rg-1234",
-		"testworkspace",
-		"{privateEndpointConnectionName}",
-		nil)
+	res, err := client.Get(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.PrivateEndpointConnection{
@@ -3019,19 +2880,14 @@ func (testsuite *MockTestSuite) TestPrivateEndpointConnections_CreateOrUpdate() 
 	})
 	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"rg-1234",
-		"testworkspace",
-		"{privateEndpointConnectionName}",
-		armmachinelearningservices.PrivateEndpointConnection{
-			Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
-				PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
-					Description: to.Ptr("Auto-Approved"),
-					Status:      to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
-				},
+	res, err := client.CreateOrUpdate(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", armmachinelearningservices.PrivateEndpointConnection{
+		Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+			PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+				Description: to.Ptr("Auto-Approved"),
+				Status:      to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.PrivateEndpointConnection{
@@ -3065,11 +2921,7 @@ func (testsuite *MockTestSuite) TestPrivateEndpointConnections_Delete() {
 	})
 	client, err := armmachinelearningservices.NewPrivateEndpointConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"rg-1234",
-		"testworkspace",
-		"{privateEndpointConnectionName}",
-		nil)
+	_, err = client.Delete(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateEndpointConnection/delete.json")
 }
 
@@ -3081,10 +2933,7 @@ func (testsuite *MockTestSuite) TestPrivateLinkResources_List() {
 	})
 	client, err := armmachinelearningservices.NewPrivateLinkResourcesClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.List(ctx,
-		"rg-1234",
-		"testworkspace",
-		nil)
+	res, err := client.List(ctx, "rg-1234", "testworkspace", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/PrivateLinkResource/list.json")
 	// Response check
 	exampleRes := armmachinelearningservices.PrivateLinkResourceListResult{
@@ -3115,11 +2964,9 @@ func (testsuite *MockTestSuite) TestWorkspaceConnections_List() {
 	})
 	client, err := armmachinelearningservices.NewWorkspaceConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("resourceGroup-1",
-		"workspace-1",
-		&armmachinelearningservices.WorkspaceConnectionsClientListOptions{Target: to.Ptr("www.facebook.com"),
-			Category: to.Ptr("ACR"),
-		})
+	pager := client.NewListPager("resourceGroup-1", "workspace-1", &armmachinelearningservices.WorkspaceConnectionsClientListOptions{Target: to.Ptr("www.facebook.com"),
+		Category: to.Ptr("ACR"),
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/list.json")
@@ -3165,19 +3012,14 @@ func (testsuite *MockTestSuite) TestWorkspaceConnections_Create() {
 	})
 	client, err := armmachinelearningservices.NewWorkspaceConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Create(ctx,
-		"resourceGroup-1",
-		"workspace-1",
-		"connection-1",
-		armmachinelearningservices.WorkspaceConnection{
-			Properties: &armmachinelearningservices.WorkspaceConnectionProps{
-				AuthType: to.Ptr("PAT"),
-				Category: to.Ptr("ACR"),
-				Target:   to.Ptr("www.facebook.com"),
-				Value:    to.Ptr("secrets"),
-			},
+	res, err := client.Create(ctx, "resourceGroup-1", "workspace-1", "connection-1", armmachinelearningservices.WorkspaceConnection{
+		Properties: &armmachinelearningservices.WorkspaceConnectionProps{
+			AuthType: to.Ptr("PAT"),
+			Category: to.Ptr("ACR"),
+			Target:   to.Ptr("www.facebook.com"),
+			Value:    to.Ptr("secrets"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/create.json")
 	// Response check
 	exampleRes := armmachinelearningservices.WorkspaceConnection{
@@ -3206,11 +3048,7 @@ func (testsuite *MockTestSuite) TestWorkspaceConnections_Get() {
 	})
 	client, err := armmachinelearningservices.NewWorkspaceConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"resourceGroup-1",
-		"workspace-1",
-		"connection-1",
-		nil)
+	res, err := client.Get(ctx, "resourceGroup-1", "workspace-1", "connection-1", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.WorkspaceConnection{
@@ -3239,11 +3077,7 @@ func (testsuite *MockTestSuite) TestWorkspaceConnections_Delete() {
 	})
 	client, err := armmachinelearningservices.NewWorkspaceConnectionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"resourceGroup-1",
-		"workspace-1",
-		"connection-1",
-		nil)
+	_, err = client.Delete(ctx, "resourceGroup-1", "workspace-1", "connection-1", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceConnection/delete.json")
 }
 
@@ -3255,11 +3089,9 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_List() {
 	})
 	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/list.json")
@@ -3329,11 +3161,7 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_Delete() {
 	})
 	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"resourceGroup-1234",
-		"testworkspace",
-		"testBatchEndpoint",
-		nil)
+	poller, err := client.BeginDelete(ctx, "resourceGroup-1234", "testworkspace", "testBatchEndpoint", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/delete.json")
@@ -3347,11 +3175,7 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_Get() {
 	})
 	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.BatchEndpointData{
@@ -3415,34 +3239,29 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_Update() {
 	})
 	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialBatchEndpoint{
-				Defaults: &armmachinelearningservices.BatchEndpointDefaults{
-					DeploymentName: to.Ptr("string"),
-				},
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialBatchEndpoint{
+			Defaults: &armmachinelearningservices.BatchEndpointDefaults{
+				DeploymentName: to.Ptr("string"),
+			},
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/update.json")
@@ -3509,39 +3328,34 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.BatchEndpointData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.BatchEndpointDetails{
-				Description: to.Ptr("string"),
-				AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Defaults: &armmachinelearningservices.BatchEndpointDefaults{
-					DeploymentName: to.Ptr("string"),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.BatchEndpointData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.BatchEndpointDetails{
+			Description: to.Ptr("string"),
+			AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Defaults: &armmachinelearningservices.BatchEndpointDefaults{
+				DeploymentName: to.Ptr("string"),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/createOrUpdate.json")
@@ -3607,11 +3421,7 @@ func (testsuite *MockTestSuite) TestBatchEndpoints_ListKeys() {
 	})
 	client, err := armmachinelearningservices.NewBatchEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListKeys(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchEndpoint/listKeys.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EndpointAuthKeys{
@@ -3633,13 +3443,10 @@ func (testsuite *MockTestSuite) TestBatchDeployments_List() {
 	})
 	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		&armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:  to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.BatchDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:  to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/list.json")
@@ -3736,12 +3543,7 @@ func (testsuite *MockTestSuite) TestBatchDeployments_Delete() {
 	})
 	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/delete.json")
@@ -3755,12 +3557,7 @@ func (testsuite *MockTestSuite) TestBatchDeployments_Get() {
 	})
 	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.BatchDeploymentData{
@@ -3851,59 +3648,53 @@ func (testsuite *MockTestSuite) TestBatchDeployments_Update() {
 	})
 	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialBatchDeploymentPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialBatchDeployment{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.PartialCodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				Compute:       to.Ptr("string"),
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				ErrorThreshold:            to.Ptr[int32](1),
-				LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
-				MaxConcurrencyPerInstance: to.Ptr[int32](1),
-				MiniBatchSize:             to.Ptr[int64](1),
-				Model: &armmachinelearningservices.PartialIDAssetReference{
-					ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
-					AssetID:       to.Ptr("string"),
-				},
-				OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
-				OutputFileName: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				RetrySettings: &armmachinelearningservices.PartialBatchRetrySettings{
-					MaxRetries: to.Ptr[int32](1),
-					Timeout:    to.Ptr("PT5M"),
-				},
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialBatchDeployment{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.PartialCodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			Compute:       to.Ptr("string"),
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			ErrorThreshold:            to.Ptr[int32](1),
+			LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+			MaxConcurrencyPerInstance: to.Ptr[int32](1),
+			MiniBatchSize:             to.Ptr[int64](1),
+			Model: &armmachinelearningservices.PartialIDAssetReference{
+				ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+				AssetID:       to.Ptr("string"),
+			},
+			OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+			OutputFileName: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			RetrySettings: &armmachinelearningservices.PartialBatchRetrySettings{
+				MaxRetries: to.Ptr[int32](1),
+				Timeout:    to.Ptr("PT5M"),
+			},
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/update.json")
@@ -3996,68 +3787,62 @@ func (testsuite *MockTestSuite) TestBatchDeployments_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewBatchDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.BatchDeploymentData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.BatchDeploymentDetails{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Compute:                   to.Ptr("string"),
-				ErrorThreshold:            to.Ptr[int32](1),
-				LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
-				MaxConcurrencyPerInstance: to.Ptr[int32](1),
-				MiniBatchSize:             to.Ptr[int64](1),
-				Model: &armmachinelearningservices.IDAssetReference{
-					ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
-					AssetID:       to.Ptr("string"),
-				},
-				OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
-				OutputFileName: to.Ptr("string"),
-				Resources: &armmachinelearningservices.ResourceConfiguration{
-					InstanceCount: to.Ptr[int32](1),
-					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
-							"cd3c37dc-2876-4ca4-8a54-21bd7619724a": nil,
-						},
-					},
-				},
-				RetrySettings: &armmachinelearningservices.BatchRetrySettings{
-					MaxRetries: to.Ptr[int32](1),
-					Timeout:    to.Ptr("PT5M"),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.BatchDeploymentData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.BatchDeploymentDetails{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Compute:                   to.Ptr("string"),
+			ErrorThreshold:            to.Ptr[int32](1),
+			LoggingLevel:              to.Ptr(armmachinelearningservices.BatchLoggingLevelInfo),
+			MaxConcurrencyPerInstance: to.Ptr[int32](1),
+			MiniBatchSize:             to.Ptr[int64](1),
+			Model: &armmachinelearningservices.IDAssetReference{
+				ReferenceType: to.Ptr(armmachinelearningservices.ReferenceTypeID),
+				AssetID:       to.Ptr("string"),
+			},
+			OutputAction:   to.Ptr(armmachinelearningservices.BatchOutputActionSummaryOnly),
+			OutputFileName: to.Ptr("string"),
+			Resources: &armmachinelearningservices.ResourceConfiguration{
+				InstanceCount: to.Ptr[int32](1),
+				InstanceType:  to.Ptr("string"),
+				Properties: map[string]interface{}{
+					"string": map[string]interface{}{
+						"cd3c37dc-2876-4ca4-8a54-21bd7619724a": nil,
+					},
+				},
+			},
+			RetrySettings: &armmachinelearningservices.BatchRetrySettings{
+				MaxRetries: to.Ptr[int32](1),
+				Timeout:    to.Ptr("PT5M"),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/BatchDeployment/createOrUpdate.json")
@@ -4150,9 +3935,7 @@ func (testsuite *MockTestSuite) TestCodeContainers_List() {
 	})
 	client, err := armmachinelearningservices.NewCodeContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("testrg123",
-		"testworkspace",
-		&armmachinelearningservices.CodeContainersClientListOptions{Skip: nil})
+	pager := client.NewListPager("testrg123", "testworkspace", &armmachinelearningservices.CodeContainersClientListOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/list.json")
@@ -4216,11 +3999,7 @@ func (testsuite *MockTestSuite) TestCodeContainers_Delete() {
 	})
 	client, err := armmachinelearningservices.NewCodeContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/delete.json")
 }
 
@@ -4232,11 +4011,7 @@ func (testsuite *MockTestSuite) TestCodeContainers_Get() {
 	})
 	client, err := armmachinelearningservices.NewCodeContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.CodeContainerData{
@@ -4274,20 +4049,15 @@ func (testsuite *MockTestSuite) TestCodeContainers_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewCodeContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		armmachinelearningservices.CodeContainerData{
-			Properties: &armmachinelearningservices.CodeContainerDetails{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"tag1": to.Ptr("value1"),
-					"tag2": to.Ptr("value2"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "testworkspace", "testContainer", armmachinelearningservices.CodeContainerData{
+		Properties: &armmachinelearningservices.CodeContainerDetails{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"tag1": to.Ptr("value1"),
+				"tag2": to.Ptr("value2"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeContainer/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.CodeContainerData{
@@ -4325,13 +4095,10 @@ func (testsuite *MockTestSuite) TestCodeVersions_List() {
 	})
 	client, err := armmachinelearningservices.NewCodeVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.CodeVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:  to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.CodeVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:  to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/list.json")
@@ -4379,12 +4146,7 @@ func (testsuite *MockTestSuite) TestCodeVersions_Delete() {
 	})
 	client, err := armmachinelearningservices.NewCodeVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/delete.json")
 }
 
@@ -4396,12 +4158,7 @@ func (testsuite *MockTestSuite) TestCodeVersions_Get() {
 	})
 	client, err := armmachinelearningservices.NewCodeVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.CodeVersionData{
@@ -4443,25 +4200,19 @@ func (testsuite *MockTestSuite) TestCodeVersions_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewCodeVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.CodeVersionData{
-			Properties: &armmachinelearningservices.CodeVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				CodeURI:     to.Ptr("https://blobStorage/folderName"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.CodeVersionData{
+		Properties: &armmachinelearningservices.CodeVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			CodeURI:     to.Ptr("https://blobStorage/folderName"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/CodeVersion/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.CodeVersionData{
@@ -4503,11 +4254,9 @@ func (testsuite *MockTestSuite) TestComponentContainers_List() {
 	})
 	client, err := armmachinelearningservices.NewComponentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.ComponentContainersClientListOptions{Skip: nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.ComponentContainersClientListOptions{Skip: nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/list.json")
@@ -4553,11 +4302,7 @@ func (testsuite *MockTestSuite) TestComponentContainers_Delete() {
 	})
 	client, err := armmachinelearningservices.NewComponentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/delete.json")
 }
 
@@ -4569,11 +4314,7 @@ func (testsuite *MockTestSuite) TestComponentContainers_Get() {
 	})
 	client, err := armmachinelearningservices.NewComponentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ComponentContainerData{
@@ -4613,22 +4354,17 @@ func (testsuite *MockTestSuite) TestComponentContainers_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewComponentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.ComponentContainerData{
-			Properties: &armmachinelearningservices.ComponentContainerDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.ComponentContainerData{
+		Properties: &armmachinelearningservices.ComponentContainerDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentContainer/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ComponentContainerData{
@@ -4668,14 +4404,11 @@ func (testsuite *MockTestSuite) TestComponentVersions_List() {
 	})
 	client, err := armmachinelearningservices.NewComponentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.ComponentVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Skip:         nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.ComponentVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Skip:         nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/list.json")
@@ -4725,12 +4458,7 @@ func (testsuite *MockTestSuite) TestComponentVersions_Delete() {
 	})
 	client, err := armmachinelearningservices.NewComponentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/delete.json")
 }
 
@@ -4742,12 +4470,7 @@ func (testsuite *MockTestSuite) TestComponentVersions_Get() {
 	})
 	client, err := armmachinelearningservices.NewComponentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ComponentVersionData{
@@ -4791,27 +4514,21 @@ func (testsuite *MockTestSuite) TestComponentVersions_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewComponentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.ComponentVersionData{
-			Properties: &armmachinelearningservices.ComponentVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				ComponentSpec: map[string]interface{}{
-					"8ced901b-d826-477d-bfef-329da9672513": nil,
-				},
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.ComponentVersionData{
+		Properties: &armmachinelearningservices.ComponentVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			ComponentSpec: map[string]interface{}{
+				"8ced901b-d826-477d-bfef-329da9672513": nil,
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ComponentVersion/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ComponentVersionData{
@@ -4855,11 +4572,9 @@ func (testsuite *MockTestSuite) TestDataContainers_List() {
 	})
 	client, err := armmachinelearningservices.NewDataContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("testrg123",
-		"workspace123",
-		&armmachinelearningservices.DataContainersClientListOptions{Skip: nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("testrg123", "workspace123", &armmachinelearningservices.DataContainersClientListOptions{Skip: nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/list.json")
@@ -4933,11 +4648,7 @@ func (testsuite *MockTestSuite) TestDataContainers_Delete() {
 	})
 	client, err := armmachinelearningservices.NewDataContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"workspace123",
-		"datacontainer123",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "workspace123", "datacontainer123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/delete.json")
 }
 
@@ -4949,11 +4660,7 @@ func (testsuite *MockTestSuite) TestDataContainers_Get() {
 	})
 	client, err := armmachinelearningservices.NewDataContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"testrg123",
-		"workspace123",
-		"datacontainer123",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "workspace123", "datacontainer123", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DataContainerData{
@@ -4996,25 +4703,20 @@ func (testsuite *MockTestSuite) TestDataContainers_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewDataContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"workspace123",
-		"datacontainer123",
-		armmachinelearningservices.DataContainerData{
-			Properties: &armmachinelearningservices.DataContainerDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"properties1": to.Ptr("value1"),
-					"properties2": to.Ptr("value2"),
-				},
-				Tags: map[string]*string{
-					"tag1": to.Ptr("value1"),
-					"tag2": to.Ptr("value2"),
-				},
-				DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "workspace123", "datacontainer123", armmachinelearningservices.DataContainerData{
+		Properties: &armmachinelearningservices.DataContainerDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"properties1": to.Ptr("value1"),
+				"properties2": to.Ptr("value2"),
 			},
+			Tags: map[string]*string{
+				"tag1": to.Ptr("value1"),
+				"tag2": to.Ptr("value2"),
+			},
+			DataType: to.Ptr(armmachinelearningservices.DataTypeURIFile),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataContainer/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DataContainerData{
@@ -5057,15 +4759,12 @@ func (testsuite *MockTestSuite) TestDataVersions_List() {
 	})
 	client, err := armmachinelearningservices.NewDataVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.DataVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Skip:         nil,
-			Tags:         to.Ptr("string"),
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.DataVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Skip:         nil,
+		Tags:         to.Ptr("string"),
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/list.json")
@@ -5114,12 +4813,7 @@ func (testsuite *MockTestSuite) TestDataVersions_Delete() {
 	})
 	client, err := armmachinelearningservices.NewDataVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/delete.json")
 }
 
@@ -5131,12 +4825,7 @@ func (testsuite *MockTestSuite) TestDataVersions_Get() {
 	})
 	client, err := armmachinelearningservices.NewDataVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DataVersionBaseData{
@@ -5179,26 +4868,20 @@ func (testsuite *MockTestSuite) TestDataVersions_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewDataVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.DataVersionBaseData{
-			Properties: &armmachinelearningservices.URIFileDataVersion{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				DataType:    to.Ptr(armmachinelearningservices.DataTypeURIFile),
-				DataURI:     to.Ptr("string"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.DataVersionBaseData{
+		Properties: &armmachinelearningservices.URIFileDataVersion{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			DataType:    to.Ptr(armmachinelearningservices.DataTypeURIFile),
+			DataURI:     to.Ptr("string"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/DataVersionBase/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DataVersionBaseData{
@@ -5241,17 +4924,15 @@ func (testsuite *MockTestSuite) TestDatastores_List() {
 	})
 	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
-			Count:     to.Ptr[int32](1),
-			IsDefault: to.Ptr(false),
-			Names: []string{
-				"string"},
-			SearchText: to.Ptr("string"),
-			OrderBy:    to.Ptr("string"),
-			OrderByAsc: to.Ptr(false),
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
+		Count:     to.Ptr[int32](1),
+		IsDefault: to.Ptr(false),
+		Names: []string{
+			"string"},
+		SearchText: to.Ptr("string"),
+		OrderBy:    to.Ptr("string"),
+		OrderByAsc: to.Ptr(false),
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/list.json")
@@ -5303,11 +4984,7 @@ func (testsuite *MockTestSuite) TestDatastores_Delete() {
 	})
 	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/delete.json")
 }
 
@@ -5319,11 +4996,7 @@ func (testsuite *MockTestSuite) TestDatastores_Get() {
 	})
 	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DatastoreData{
@@ -5369,32 +5042,27 @@ func (testsuite *MockTestSuite) TestDatastores_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.DatastoreData{
-			Properties: &armmachinelearningservices.AzureDataLakeGen1Datastore{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
-					CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
-					AuthorityURL:    to.Ptr("string"),
-					ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
-					ResourceURL:     to.Ptr("string"),
-					Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
-						SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
-						ClientSecret: to.Ptr("string"),
-					},
-					TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
-				},
-				DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen1),
-				StoreName:     to.Ptr("string"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureDataLakeGen1Datastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
+				AuthorityURL:    to.Ptr("string"),
+				ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
+				ResourceURL:     to.Ptr("string"),
+				Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
+					SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
+					ClientSecret: to.Ptr("string"),
+				},
+				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen1),
+			StoreName:     to.Ptr("string"),
 		},
-		&armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DatastoreData{
@@ -5437,35 +5105,30 @@ func (testsuite *MockTestSuite) TestDatastores_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.DatastoreData{
-			Properties: &armmachinelearningservices.AzureDataLakeGen2Datastore{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
-					CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
-					AuthorityURL:    to.Ptr("string"),
-					ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
-					ResourceURL:     to.Ptr("string"),
-					Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
-						SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
-						ClientSecret: to.Ptr("string"),
-					},
-					TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
-				},
-				DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen2),
-				AccountName:   to.Ptr("string"),
-				Endpoint:      to.Ptr("string"),
-				Filesystem:    to.Ptr("string"),
-				Protocol:      to.Ptr("string"),
+	res, err = client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureDataLakeGen2Datastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
+				AuthorityURL:    to.Ptr("string"),
+				ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
+				ResourceURL:     to.Ptr("string"),
+				Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
+					SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
+					ClientSecret: to.Ptr("string"),
+				},
+				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen2),
+			AccountName:   to.Ptr("string"),
+			Endpoint:      to.Ptr("string"),
+			Filesystem:    to.Ptr("string"),
+			Protocol:      to.Ptr("string"),
 		},
-		&armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json")
 	// Response check
 	exampleRes = armmachinelearningservices.DatastoreData{
@@ -5511,31 +5174,26 @@ func (testsuite *MockTestSuite) TestDatastores_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.DatastoreData{
-			Properties: &armmachinelearningservices.AzureFileDatastore{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
-					CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
-					Secrets: &armmachinelearningservices.AccountKeyDatastoreSecrets{
-						SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
-						Key:         to.Ptr("string"),
-					},
-				},
-				DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureFile),
-				AccountName:   to.Ptr("string"),
-				Endpoint:      to.Ptr("string"),
-				FileShareName: to.Ptr("string"),
-				Protocol:      to.Ptr("string"),
+	res, err = client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureFileDatastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+				Secrets: &armmachinelearningservices.AccountKeyDatastoreSecrets{
+					SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
+					Key:         to.Ptr("string"),
+				},
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureFile),
+			AccountName:   to.Ptr("string"),
+			Endpoint:      to.Ptr("string"),
+			FileShareName: to.Ptr("string"),
+			Protocol:      to.Ptr("string"),
 		},
-		&armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json")
 	// Response check
 	exampleRes = armmachinelearningservices.DatastoreData{
@@ -5577,31 +5235,26 @@ func (testsuite *MockTestSuite) TestDatastores_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.DatastoreData{
-			Properties: &armmachinelearningservices.AzureBlobDatastore{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
-					CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
-					Secrets: &armmachinelearningservices.AccountKeyDatastoreSecrets{
-						SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
-						Key:         to.Ptr("string"),
-					},
-				},
-				DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureBlob),
-				AccountName:   to.Ptr("string"),
-				ContainerName: to.Ptr("string"),
-				Endpoint:      to.Ptr("core.windows.net"),
-				Protocol:      to.Ptr("https"),
+	res, err = client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureBlobDatastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+				Secrets: &armmachinelearningservices.AccountKeyDatastoreSecrets{
+					SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
+					Key:         to.Ptr("string"),
+				},
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureBlob),
+			AccountName:   to.Ptr("string"),
+			ContainerName: to.Ptr("string"),
+			Endpoint:      to.Ptr("core.windows.net"),
+			Protocol:      to.Ptr("https"),
 		},
-		&armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json")
 	// Response check
 	exampleRes = armmachinelearningservices.DatastoreData{
@@ -5647,11 +5300,7 @@ func (testsuite *MockTestSuite) TestDatastores_ListSecrets() {
 	})
 	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListSecrets(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err := client.ListSecrets(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/listSecrets.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DatastoresClientListSecretsResponse{
@@ -5675,11 +5324,9 @@ func (testsuite *MockTestSuite) TestEnvironmentContainers_List() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("testrg123",
-		"testworkspace",
-		&armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("testrg123", "testworkspace", &armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/list.json")
@@ -5723,11 +5370,7 @@ func (testsuite *MockTestSuite) TestEnvironmentContainers_Delete() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/delete.json")
 }
 
@@ -5739,11 +5382,7 @@ func (testsuite *MockTestSuite) TestEnvironmentContainers_Get() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"testrg123",
-		"testworkspace",
-		"testEnvironment",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "testworkspace", "testEnvironment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EnvironmentContainerData{
@@ -5781,26 +5420,21 @@ func (testsuite *MockTestSuite) TestEnvironmentContainers_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"testworkspace",
-		"testEnvironment",
-		armmachinelearningservices.EnvironmentContainerData{
-			Properties: &armmachinelearningservices.EnvironmentContainerDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"additionalProp1": to.Ptr("string"),
-					"additionalProp2": to.Ptr("string"),
-					"additionalProp3": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"additionalProp1": to.Ptr("string"),
-					"additionalProp2": to.Ptr("string"),
-					"additionalProp3": to.Ptr("string"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "testworkspace", "testEnvironment", armmachinelearningservices.EnvironmentContainerData{
+		Properties: &armmachinelearningservices.EnvironmentContainerDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"additionalProp1": to.Ptr("string"),
+				"additionalProp2": to.Ptr("string"),
+				"additionalProp3": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"additionalProp1": to.Ptr("string"),
+				"additionalProp2": to.Ptr("string"),
+				"additionalProp3": to.Ptr("string"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentContainer/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EnvironmentContainerData{
@@ -5844,14 +5478,11 @@ func (testsuite *MockTestSuite) TestEnvironmentVersions_List() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Skip:         nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Skip:         nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/list.json")
@@ -5919,12 +5550,7 @@ func (testsuite *MockTestSuite) TestEnvironmentVersions_Delete() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/delete.json")
 }
 
@@ -5936,12 +5562,7 @@ func (testsuite *MockTestSuite) TestEnvironmentVersions_Get() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EnvironmentVersionData{
@@ -6003,44 +5624,38 @@ func (testsuite *MockTestSuite) TestEnvironmentVersions_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewEnvironmentVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.EnvironmentVersionData{
-			Properties: &armmachinelearningservices.EnvironmentVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.EnvironmentVersionData{
+		Properties: &armmachinelearningservices.EnvironmentVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			Build: &armmachinelearningservices.BuildContext{
+				ContextURI:     to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
+				DockerfilePath: to.Ptr("prod/Dockerfile"),
+			},
+			CondaFile: to.Ptr("string"),
+			Image:     to.Ptr("docker.io/tensorflow/serving:latest"),
+			InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
+				LivenessRoute: &armmachinelearningservices.Route{
+					Path: to.Ptr("string"),
+					Port: to.Ptr[int32](1),
 				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
+				ReadinessRoute: &armmachinelearningservices.Route{
+					Path: to.Ptr("string"),
+					Port: to.Ptr[int32](1),
 				},
-				IsAnonymous: to.Ptr(false),
-				Build: &armmachinelearningservices.BuildContext{
-					ContextURI:     to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
-					DockerfilePath: to.Ptr("prod/Dockerfile"),
-				},
-				CondaFile: to.Ptr("string"),
-				Image:     to.Ptr("docker.io/tensorflow/serving:latest"),
-				InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
-					LivenessRoute: &armmachinelearningservices.Route{
-						Path: to.Ptr("string"),
-						Port: to.Ptr[int32](1),
-					},
-					ReadinessRoute: &armmachinelearningservices.Route{
-						Path: to.Ptr("string"),
-						Port: to.Ptr[int32](1),
-					},
-					ScoringRoute: &armmachinelearningservices.Route{
-						Path: to.Ptr("string"),
-						Port: to.Ptr[int32](1),
-					},
+				ScoringRoute: &armmachinelearningservices.Route{
+					Path: to.Ptr("string"),
+					Port: to.Ptr[int32](1),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/EnvironmentVersion/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EnvironmentVersionData{
@@ -6102,15 +5717,13 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 	})
 	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.JobsClientListOptions{Skip: nil,
-			JobType:      nil,
-			Tag:          nil,
-			ListViewType: nil,
-			Scheduled:    nil,
-			ScheduleID:   nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+		JobType:      nil,
+		Tag:          nil,
+		ListViewType: nil,
+		Scheduled:    nil,
+		ScheduleID:   nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/list.json")
@@ -6225,15 +5838,13 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager = client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.JobsClientListOptions{Skip: nil,
-			JobType:      to.Ptr("string"),
-			Tag:          to.Ptr("string"),
-			ListViewType: nil,
-			Scheduled:    nil,
-			ScheduleID:   nil,
-		})
+	pager = client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+		JobType:      to.Ptr("string"),
+		Tag:          to.Ptr("string"),
+		ListViewType: nil,
+		Scheduled:    nil,
+		ScheduleID:   nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/list.json")
@@ -6338,15 +5949,13 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager = client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.JobsClientListOptions{Skip: nil,
-			JobType:      to.Ptr("string"),
-			Tag:          to.Ptr("string"),
-			ListViewType: nil,
-			Scheduled:    nil,
-			ScheduleID:   nil,
-		})
+	pager = client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+		JobType:      to.Ptr("string"),
+		Tag:          to.Ptr("string"),
+		ListViewType: nil,
+		Scheduled:    nil,
+		ScheduleID:   nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/list.json")
@@ -6422,15 +6031,13 @@ func (testsuite *MockTestSuite) TestJobs_List() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager = client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.JobsClientListOptions{Skip: nil,
-			JobType:      to.Ptr("string"),
-			Tag:          to.Ptr("string"),
-			ListViewType: nil,
-			Scheduled:    nil,
-			ScheduleID:   nil,
-		})
+	pager = client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.JobsClientListOptions{Skip: nil,
+		JobType:      to.Ptr("string"),
+		Tag:          to.Ptr("string"),
+		ListViewType: nil,
+		Scheduled:    nil,
+		ScheduleID:   nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/list.json")
@@ -6535,11 +6142,7 @@ func (testsuite *MockTestSuite) TestJobs_Delete() {
 	})
 	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/delete.json")
@@ -6553,11 +6156,7 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 	})
 	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.JobBaseData{
@@ -6666,11 +6265,7 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err = client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/get.json")
 	// Response check
 	exampleRes = armmachinelearningservices.JobBaseData{
@@ -6769,11 +6364,7 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err = client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/get.json")
 	// Response check
 	exampleRes = armmachinelearningservices.JobBaseData{
@@ -6843,11 +6434,7 @@ func (testsuite *MockTestSuite) TestJobs_Get() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err = client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/get.json")
 	// Response check
 	exampleRes = armmachinelearningservices.JobBaseData{
@@ -6946,91 +6533,86 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.JobBaseData{
-			Properties: &armmachinelearningservices.AutoMLJob{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				ComputeID:      to.Ptr("string"),
-				DisplayName:    to.Ptr("string"),
-				ExperimentName: to.Ptr("string"),
-				Identity: &armmachinelearningservices.AmlToken{
-					IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
-				},
-				IsArchived: to.Ptr(false),
-				JobType:    to.Ptr(armmachinelearningservices.JobTypeAutoML),
-				Schedule: &armmachinelearningservices.CronSchedule{
-					EndTime:        to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t }()),
-					ScheduleStatus: to.Ptr(armmachinelearningservices.ScheduleStatusDisabled),
-					ScheduleType:   to.Ptr(armmachinelearningservices.ScheduleTypeCron),
-					StartTime:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t }()),
-					TimeZone:       to.Ptr("string"),
-					Expression:     to.Ptr("string"),
-				},
-				Services: map[string]*armmachinelearningservices.JobService{
-					"string": &armmachinelearningservices.JobService{
-						Endpoint:       to.Ptr("string"),
-						JobServiceType: to.Ptr("string"),
-						Port:           to.Ptr[int32](1),
-						Properties: map[string]*string{
-							"string": to.Ptr("string"),
-						},
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+		Properties: &armmachinelearningservices.AutoMLJob{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			ComputeID:      to.Ptr("string"),
+			DisplayName:    to.Ptr("string"),
+			ExperimentName: to.Ptr("string"),
+			Identity: &armmachinelearningservices.AmlToken{
+				IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+			},
+			IsArchived: to.Ptr(false),
+			JobType:    to.Ptr(armmachinelearningservices.JobTypeAutoML),
+			Schedule: &armmachinelearningservices.CronSchedule{
+				EndTime:        to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t }()),
+				ScheduleStatus: to.Ptr(armmachinelearningservices.ScheduleStatusDisabled),
+				ScheduleType:   to.Ptr(armmachinelearningservices.ScheduleTypeCron),
+				StartTime:      to.Ptr(func() time.Time { t, _ := time.Parse(time.RFC3339Nano, "2020-01-01T12:34:56.999Z"); return t }()),
+				TimeZone:       to.Ptr("string"),
+				Expression:     to.Ptr("string"),
+			},
+			Services: map[string]*armmachinelearningservices.JobService{
+				"string": &armmachinelearningservices.JobService{
+					Endpoint:       to.Ptr("string"),
+					JobServiceType: to.Ptr("string"),
+					Port:           to.Ptr[int32](1),
+					Properties: map[string]*string{
+						"string": to.Ptr("string"),
 					},
-				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Outputs: map[string]armmachinelearningservices.JobOutputClassification{
-					"string": &armmachinelearningservices.URIFileJobOutput{
-						Mode:          to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
-						URI:           to.Ptr("string"),
-						Description:   to.Ptr("string"),
-						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
-					},
-				},
-				Resources: &armmachinelearningservices.ResourceConfiguration{
-					InstanceCount: to.Ptr[int32](1),
-					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
-							"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
-						},
-					},
-				},
-				TaskDetails: &armmachinelearningservices.ImageClassification{
-					TaskType: to.Ptr(armmachinelearningservices.TaskTypeImageClassification),
-					DataSettings: &armmachinelearningservices.ImageVerticalDataSettings{
-						TargetColumnName: to.Ptr("string"),
-						TrainingData: &armmachinelearningservices.TrainingDataSettings{
-							Data: &armmachinelearningservices.MLTableJobInput{
-								URI:          to.Ptr("string"),
-								JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeMLTable),
-							},
-						},
-					},
-					LimitSettings: &armmachinelearningservices.ImageLimitSettings{
-						MaxTrials: to.Ptr[int32](2),
-					},
-					ModelSettings: &armmachinelearningservices.ImageModelSettingsClassification{
-						ValidationCropSize: to.Ptr[int32](2),
-					},
-					SearchSpace: []*armmachinelearningservices.ImageModelDistributionSettingsClassification{
-						{
-							ValidationCropSize: to.Ptr("choice(2, 360)"),
-						}},
 				},
 			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+				"string": &armmachinelearningservices.URIFileJobOutput{
+					Mode:          to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+					URI:           to.Ptr("string"),
+					Description:   to.Ptr("string"),
+					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+				},
+			},
+			Resources: &armmachinelearningservices.ResourceConfiguration{
+				InstanceCount: to.Ptr[int32](1),
+				InstanceType:  to.Ptr("string"),
+				Properties: map[string]interface{}{
+					"string": map[string]interface{}{
+						"9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad": nil,
+					},
+				},
+			},
+			TaskDetails: &armmachinelearningservices.ImageClassification{
+				TaskType: to.Ptr(armmachinelearningservices.TaskTypeImageClassification),
+				DataSettings: &armmachinelearningservices.ImageVerticalDataSettings{
+					TargetColumnName: to.Ptr("string"),
+					TrainingData: &armmachinelearningservices.TrainingDataSettings{
+						Data: &armmachinelearningservices.MLTableJobInput{
+							URI:          to.Ptr("string"),
+							JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeMLTable),
+						},
+					},
+				},
+				LimitSettings: &armmachinelearningservices.ImageLimitSettings{
+					MaxTrials: to.Ptr[int32](2),
+				},
+				ModelSettings: &armmachinelearningservices.ImageModelSettingsClassification{
+					ValidationCropSize: to.Ptr[int32](2),
+				},
+				SearchSpace: []*armmachinelearningservices.ImageModelDistributionSettingsClassification{
+					{
+						ValidationCropSize: to.Ptr("choice(2, 360)"),
+					}},
+			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/AutoMLJob/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.JobBaseData{
@@ -7139,78 +6721,73 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.JobBaseData{
-			Properties: &armmachinelearningservices.CommandJob{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				ComputeID:      to.Ptr("string"),
-				DisplayName:    to.Ptr("string"),
-				ExperimentName: to.Ptr("string"),
-				Identity: &armmachinelearningservices.AmlToken{
-					IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
-				},
-				JobType: to.Ptr(armmachinelearningservices.JobTypeCommand),
-				Services: map[string]*armmachinelearningservices.JobService{
-					"string": &armmachinelearningservices.JobService{
-						Endpoint:       to.Ptr("string"),
-						JobServiceType: to.Ptr("string"),
-						Port:           to.Ptr[int32](1),
-						Properties: map[string]*string{
-							"string": to.Ptr("string"),
-						},
+	res, err = client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+		Properties: &armmachinelearningservices.CommandJob{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			ComputeID:      to.Ptr("string"),
+			DisplayName:    to.Ptr("string"),
+			ExperimentName: to.Ptr("string"),
+			Identity: &armmachinelearningservices.AmlToken{
+				IdentityType: to.Ptr(armmachinelearningservices.IdentityConfigurationTypeAMLToken),
+			},
+			JobType: to.Ptr(armmachinelearningservices.JobTypeCommand),
+			Services: map[string]*armmachinelearningservices.JobService{
+				"string": &armmachinelearningservices.JobService{
+					Endpoint:       to.Ptr("string"),
+					JobServiceType: to.Ptr("string"),
+					Port:           to.Ptr[int32](1),
+					Properties: map[string]*string{
+						"string": to.Ptr("string"),
 					},
 				},
-				CodeID:  to.Ptr("string"),
-				Command: to.Ptr("string"),
-				Distribution: &armmachinelearningservices.TensorFlow{
-					DistributionType:     to.Ptr(armmachinelearningservices.DistributionTypeTensorFlow),
-					ParameterServerCount: to.Ptr[int32](1),
-					WorkerCount:          to.Ptr[int32](1),
+			},
+			CodeID:  to.Ptr("string"),
+			Command: to.Ptr("string"),
+			Distribution: &armmachinelearningservices.TensorFlow{
+				DistributionType:     to.Ptr(armmachinelearningservices.DistributionTypeTensorFlow),
+				ParameterServerCount: to.Ptr[int32](1),
+				WorkerCount:          to.Ptr[int32](1),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Inputs: map[string]armmachinelearningservices.JobInputClassification{
+				"string": &armmachinelearningservices.LiteralJobInput{
+					Description:  to.Ptr("string"),
+					JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+					Value:        to.Ptr("string"),
 				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
+			},
+			Limits: &armmachinelearningservices.CommandJobLimits{
+				JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeCommand),
+				Timeout:       to.Ptr("PT5M"),
+			},
+			Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+				"string": &armmachinelearningservices.URIFileJobOutput{
+					Mode:          to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
+					URI:           to.Ptr("string"),
+					Description:   to.Ptr("string"),
+					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
 				},
-				Inputs: map[string]armmachinelearningservices.JobInputClassification{
-					"string": &armmachinelearningservices.LiteralJobInput{
-						Description:  to.Ptr("string"),
-						JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
-						Value:        to.Ptr("string"),
-					},
-				},
-				Limits: &armmachinelearningservices.CommandJobLimits{
-					JobLimitsType: to.Ptr(armmachinelearningservices.JobLimitsTypeCommand),
-					Timeout:       to.Ptr("PT5M"),
-				},
-				Outputs: map[string]armmachinelearningservices.JobOutputClassification{
-					"string": &armmachinelearningservices.URIFileJobOutput{
-						Mode:          to.Ptr(armmachinelearningservices.OutputDeliveryModeReadWriteMount),
-						URI:           to.Ptr("string"),
-						Description:   to.Ptr("string"),
-						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
-					},
-				},
-				Resources: &armmachinelearningservices.ResourceConfiguration{
-					InstanceCount: to.Ptr[int32](1),
-					InstanceType:  to.Ptr("string"),
-					Properties: map[string]interface{}{
-						"string": map[string]interface{}{
-							"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
-						},
+			},
+			Resources: &armmachinelearningservices.ResourceConfiguration{
+				InstanceCount: to.Ptr[int32](1),
+				InstanceType:  to.Ptr("string"),
+				Properties: map[string]interface{}{
+					"string": map[string]interface{}{
+						"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/CommandJob/createOrUpdate.json")
 	// Response check
 	exampleRes = armmachinelearningservices.JobBaseData{
@@ -7309,52 +6886,47 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.JobBaseData{
-			Properties: &armmachinelearningservices.PipelineJob{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				ComputeID:      to.Ptr("string"),
-				DisplayName:    to.Ptr("string"),
-				ExperimentName: to.Ptr("string"),
-				JobType:        to.Ptr(armmachinelearningservices.JobTypePipeline),
-				Services: map[string]*armmachinelearningservices.JobService{
-					"string": &armmachinelearningservices.JobService{
-						Endpoint:       to.Ptr("string"),
-						JobServiceType: to.Ptr("string"),
-						Port:           to.Ptr[int32](1),
-						Properties: map[string]*string{
-							"string": to.Ptr("string"),
-						},
-					},
-				},
-				Inputs: map[string]armmachinelearningservices.JobInputClassification{
-					"string": &armmachinelearningservices.LiteralJobInput{
-						Description:  to.Ptr("string"),
-						JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
-						Value:        to.Ptr("string"),
-					},
-				},
-				Outputs: map[string]armmachinelearningservices.JobOutputClassification{
-					"string": &armmachinelearningservices.URIFileJobOutput{
-						Mode:          to.Ptr(armmachinelearningservices.OutputDeliveryModeUpload),
-						URI:           to.Ptr("string"),
-						Description:   to.Ptr("string"),
-						JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
-					},
-				},
-				Settings: map[string]interface{}{},
+	res, err = client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+		Properties: &armmachinelearningservices.PipelineJob{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			ComputeID:      to.Ptr("string"),
+			DisplayName:    to.Ptr("string"),
+			ExperimentName: to.Ptr("string"),
+			JobType:        to.Ptr(armmachinelearningservices.JobTypePipeline),
+			Services: map[string]*armmachinelearningservices.JobService{
+				"string": &armmachinelearningservices.JobService{
+					Endpoint:       to.Ptr("string"),
+					JobServiceType: to.Ptr("string"),
+					Port:           to.Ptr[int32](1),
+					Properties: map[string]*string{
+						"string": to.Ptr("string"),
+					},
+				},
+			},
+			Inputs: map[string]armmachinelearningservices.JobInputClassification{
+				"string": &armmachinelearningservices.LiteralJobInput{
+					Description:  to.Ptr("string"),
+					JobInputType: to.Ptr(armmachinelearningservices.JobInputTypeLiteral),
+					Value:        to.Ptr("string"),
+				},
+			},
+			Outputs: map[string]armmachinelearningservices.JobOutputClassification{
+				"string": &armmachinelearningservices.URIFileJobOutput{
+					Mode:          to.Ptr(armmachinelearningservices.OutputDeliveryModeUpload),
+					URI:           to.Ptr("string"),
+					Description:   to.Ptr("string"),
+					JobOutputType: to.Ptr(armmachinelearningservices.JobOutputTypeURIFile),
+				},
+			},
+			Settings: map[string]interface{}{},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/PipelineJob/createOrUpdate.json")
 	// Response check
 	exampleRes = armmachinelearningservices.JobBaseData{
@@ -7424,78 +6996,73 @@ func (testsuite *MockTestSuite) TestJobs_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.JobBaseData{
-			Properties: &armmachinelearningservices.SweepJob{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				ComputeID:      to.Ptr("string"),
-				DisplayName:    to.Ptr("string"),
-				ExperimentName: to.Ptr("string"),
-				JobType:        to.Ptr(armmachinelearningservices.JobTypeSweep),
-				Services: map[string]*armmachinelearningservices.JobService{
-					"string": &armmachinelearningservices.JobService{
-						Endpoint:       to.Ptr("string"),
-						JobServiceType: to.Ptr("string"),
-						Port:           to.Ptr[int32](1),
-						Properties: map[string]*string{
-							"string": to.Ptr("string"),
-						},
-					},
-				},
-				EarlyTermination: &armmachinelearningservices.MedianStoppingPolicy{
-					DelayEvaluation:    to.Ptr[int32](1),
-					EvaluationInterval: to.Ptr[int32](1),
-					PolicyType:         to.Ptr(armmachinelearningservices.EarlyTerminationPolicyTypeMedianStopping),
-				},
-				Limits: &armmachinelearningservices.SweepJobLimits{
-					JobLimitsType:       to.Ptr(armmachinelearningservices.JobLimitsTypeSweep),
-					MaxConcurrentTrials: to.Ptr[int32](1),
-					MaxTotalTrials:      to.Ptr[int32](1),
-					TrialTimeout:        to.Ptr("PT1S"),
-				},
-				Objective: &armmachinelearningservices.Objective{
-					Goal:          to.Ptr(armmachinelearningservices.GoalMinimize),
-					PrimaryMetric: to.Ptr("string"),
-				},
-				SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
-					SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
-				},
-				SearchSpace: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
-				Trial: &armmachinelearningservices.TrialComponent{
-					CodeID:  to.Ptr("string"),
-					Command: to.Ptr("string"),
-					Distribution: &armmachinelearningservices.Mpi{
-						DistributionType:        to.Ptr(armmachinelearningservices.DistributionTypeMpi),
-						ProcessCountPerInstance: to.Ptr[int32](1),
-					},
-					EnvironmentID: to.Ptr("string"),
-					EnvironmentVariables: map[string]*string{
+	res, err = client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.JobBaseData{
+		Properties: &armmachinelearningservices.SweepJob{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			ComputeID:      to.Ptr("string"),
+			DisplayName:    to.Ptr("string"),
+			ExperimentName: to.Ptr("string"),
+			JobType:        to.Ptr(armmachinelearningservices.JobTypeSweep),
+			Services: map[string]*armmachinelearningservices.JobService{
+				"string": &armmachinelearningservices.JobService{
+					Endpoint:       to.Ptr("string"),
+					JobServiceType: to.Ptr("string"),
+					Port:           to.Ptr[int32](1),
+					Properties: map[string]*string{
 						"string": to.Ptr("string"),
 					},
-					Resources: &armmachinelearningservices.ResourceConfiguration{
-						InstanceCount: to.Ptr[int32](1),
-						InstanceType:  to.Ptr("string"),
-						Properties: map[string]interface{}{
-							"string": map[string]interface{}{
-								"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
-							},
+				},
+			},
+			EarlyTermination: &armmachinelearningservices.MedianStoppingPolicy{
+				DelayEvaluation:    to.Ptr[int32](1),
+				EvaluationInterval: to.Ptr[int32](1),
+				PolicyType:         to.Ptr(armmachinelearningservices.EarlyTerminationPolicyTypeMedianStopping),
+			},
+			Limits: &armmachinelearningservices.SweepJobLimits{
+				JobLimitsType:       to.Ptr(armmachinelearningservices.JobLimitsTypeSweep),
+				MaxConcurrentTrials: to.Ptr[int32](1),
+				MaxTotalTrials:      to.Ptr[int32](1),
+				TrialTimeout:        to.Ptr("PT1S"),
+			},
+			Objective: &armmachinelearningservices.Objective{
+				Goal:          to.Ptr(armmachinelearningservices.GoalMinimize),
+				PrimaryMetric: to.Ptr("string"),
+			},
+			SamplingAlgorithm: &armmachinelearningservices.GridSamplingAlgorithm{
+				SamplingAlgorithmType: to.Ptr(armmachinelearningservices.SamplingAlgorithmTypeGrid),
+			},
+			SearchSpace: map[string]interface{}{
+				"string": map[string]interface{}{},
+			},
+			Trial: &armmachinelearningservices.TrialComponent{
+				CodeID:  to.Ptr("string"),
+				Command: to.Ptr("string"),
+				Distribution: &armmachinelearningservices.Mpi{
+					DistributionType:        to.Ptr(armmachinelearningservices.DistributionTypeMpi),
+					ProcessCountPerInstance: to.Ptr[int32](1),
+				},
+				EnvironmentID: to.Ptr("string"),
+				EnvironmentVariables: map[string]*string{
+					"string": to.Ptr("string"),
+				},
+				Resources: &armmachinelearningservices.ResourceConfiguration{
+					InstanceCount: to.Ptr[int32](1),
+					InstanceType:  to.Ptr("string"),
+					Properties: map[string]interface{}{
+						"string": map[string]interface{}{
+							"e6b6493e-7d5e-4db3-be1e-306ec641327e": nil,
 						},
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/SweepJob/createOrUpdate.json")
 	// Response check
 	exampleRes = armmachinelearningservices.JobBaseData{
@@ -7594,11 +7161,7 @@ func (testsuite *MockTestSuite) TestJobs_Cancel() {
 	})
 	client, err := armmachinelearningservices.NewJobsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Cancel(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	_, err = client.Cancel(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Job/cancel.json")
 }
 
@@ -7610,12 +7173,10 @@ func (testsuite *MockTestSuite) TestModelContainers_List() {
 	})
 	client, err := armmachinelearningservices.NewModelContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("testrg123",
-		"workspace123",
-		&armmachinelearningservices.ModelContainersClientListOptions{Skip: nil,
-			Count:        nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("testrg123", "workspace123", &armmachinelearningservices.ModelContainersClientListOptions{Skip: nil,
+		Count:        nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/list.json")
@@ -7659,11 +7220,7 @@ func (testsuite *MockTestSuite) TestModelContainers_Delete() {
 	})
 	client, err := armmachinelearningservices.NewModelContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"workspace123",
-		"testContainer",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "workspace123", "testContainer", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/delete.json")
 }
 
@@ -7675,11 +7232,7 @@ func (testsuite *MockTestSuite) TestModelContainers_Get() {
 	})
 	client, err := armmachinelearningservices.NewModelContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"testrg123",
-		"workspace123",
-		"testContainer",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "workspace123", "testContainer", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ModelContainerData{
@@ -7717,20 +7270,15 @@ func (testsuite *MockTestSuite) TestModelContainers_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewModelContainersClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"workspace123",
-		"testContainer",
-		armmachinelearningservices.ModelContainerData{
-			Properties: &armmachinelearningservices.ModelContainerDetails{
-				Description: to.Ptr("Model container description"),
-				Tags: map[string]*string{
-					"tag1": to.Ptr("value1"),
-					"tag2": to.Ptr("value2"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "workspace123", "testContainer", armmachinelearningservices.ModelContainerData{
+		Properties: &armmachinelearningservices.ModelContainerDetails{
+			Description: to.Ptr("Model container description"),
+			Tags: map[string]*string{
+				"tag1": to.Ptr("value1"),
+				"tag2": to.Ptr("value2"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelContainer/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ModelContainerData{
@@ -7768,20 +7316,17 @@ func (testsuite *MockTestSuite) TestModelVersions_List() {
 	})
 	client, err := armmachinelearningservices.NewModelVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.ModelVersionsClientListOptions{Skip: nil,
-			OrderBy:      to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Version:      to.Ptr("string"),
-			Description:  to.Ptr("string"),
-			Offset:       to.Ptr[int32](1),
-			Tags:         to.Ptr("string"),
-			Properties:   to.Ptr("string"),
-			Feed:         nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.ModelVersionsClientListOptions{Skip: nil,
+		OrderBy:      to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Version:      to.Ptr("string"),
+		Description:  to.Ptr("string"),
+		Offset:       to.Ptr[int32](1),
+		Tags:         to.Ptr("string"),
+		Properties:   to.Ptr("string"),
+		Feed:         nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/list.json")
@@ -7837,12 +7382,7 @@ func (testsuite *MockTestSuite) TestModelVersions_Delete() {
 	})
 	client, err := armmachinelearningservices.NewModelVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/delete.json")
 }
 
@@ -7854,12 +7394,7 @@ func (testsuite *MockTestSuite) TestModelVersions_Get() {
 	})
 	client, err := armmachinelearningservices.NewModelVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ModelVersionData{
@@ -7909,33 +7444,27 @@ func (testsuite *MockTestSuite) TestModelVersions_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewModelVersionsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.ModelVersionData{
-			Properties: &armmachinelearningservices.ModelVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				Flavors: map[string]*armmachinelearningservices.FlavorData{
-					"string": &armmachinelearningservices.FlavorData{
-						Data: map[string]*string{
-							"string": to.Ptr("string"),
-						},
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.ModelVersionData{
+		Properties: &armmachinelearningservices.ModelVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			Flavors: map[string]*armmachinelearningservices.FlavorData{
+				"string": &armmachinelearningservices.FlavorData{
+					Data: map[string]*string{
+						"string": to.Ptr("string"),
 					},
 				},
-				ModelType: to.Ptr(armmachinelearningservices.ModelTypeCustomModel),
-				ModelURI:  to.Ptr("string"),
 			},
+			ModelType: to.Ptr(armmachinelearningservices.ModelTypeCustomModel),
+			ModelURI:  to.Ptr("string"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/ModelVersion/createOrUpdate.json")
 	// Response check
 	exampleRes := armmachinelearningservices.ModelVersionData{
@@ -7985,16 +7514,14 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_List() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
-			Count:       to.Ptr[int32](1),
-			ComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
-			Skip:        nil,
-			Tags:        to.Ptr("string"),
-			Properties:  to.Ptr("string"),
-			OrderBy:     to.Ptr(armmachinelearningservices.OrderStringCreatedAtDesc),
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
+		Count:       to.Ptr[int32](1),
+		ComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+		Skip:        nil,
+		Tags:        to.Ptr("string"),
+		Properties:  to.Ptr("string"),
+		OrderBy:     to.Ptr(armmachinelearningservices.OrderStringCreatedAtDesc),
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/list.json")
@@ -8066,11 +7593,7 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_Delete() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/delete.json")
@@ -8084,11 +7607,7 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_Get() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.OnlineEndpointData{
@@ -8154,34 +7673,29 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_Update() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialOnlineEndpoint{
-				Traffic: map[string]*int32{
-					"string": to.Ptr[int32](1),
-				},
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialOnlineEndpoint{
+			Traffic: map[string]*int32{
+				"string": to.Ptr[int32](1),
+			},
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/update.json")
@@ -8249,40 +7763,35 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.OnlineEndpointData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.OnlineEndpointDetails{
-				Description: to.Ptr("string"),
-				AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Compute: to.Ptr("string"),
-				Traffic: map[string]*int32{
-					"string": to.Ptr[int32](1),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.OnlineEndpointData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.OnlineEndpointDetails{
+			Description: to.Ptr("string"),
+			AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Compute: to.Ptr("string"),
+			Traffic: map[string]*int32{
+				"string": to.Ptr[int32](1),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/createOrUpdate.json")
@@ -8350,11 +7859,7 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_ListKeys() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListKeys(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/listKeys.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EndpointAuthKeys{
@@ -8376,15 +7881,10 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_RegenerateKeys() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRegenerateKeys(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.RegenerateEndpointKeysRequest{
-			KeyType:  to.Ptr(armmachinelearningservices.KeyTypePrimary),
-			KeyValue: to.Ptr("string"),
-		},
-		nil)
+	poller, err := client.BeginRegenerateKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.RegenerateEndpointKeysRequest{
+		KeyType:  to.Ptr(armmachinelearningservices.KeyTypePrimary),
+		KeyValue: to.Ptr("string"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/regenerateKeys.json")
@@ -8398,11 +7898,7 @@ func (testsuite *MockTestSuite) TestOnlineEndpoints_GetToken() {
 	})
 	client, err := armmachinelearningservices.NewOnlineEndpointsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetToken(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.GetToken(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineEndpoint/getToken.json")
 	// Response check
 	exampleRes := armmachinelearningservices.EndpointAuthToken{
@@ -8426,13 +7922,10 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_List() {
 	})
 	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		&armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:  to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:  to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/list.json")
@@ -8537,12 +8030,7 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Delete() {
 	})
 	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"testrg123",
-		"workspace123",
-		"testEndpoint",
-		"testDeployment",
-		nil)
+	poller, err := client.BeginDelete(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/delete.json")
@@ -8556,12 +8044,7 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Get() {
 	})
 	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json")
 	// Response check
 	exampleRes := armmachinelearningservices.OnlineDeploymentData{
@@ -8657,12 +8140,7 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Get() {
 	})
 	client, err = armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err = client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	res, err = client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json")
 	// Response check
 	exampleRes = armmachinelearningservices.OnlineDeploymentData{
@@ -8756,33 +8234,27 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Update() {
 	})
 	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialKubernetesOnlineDeployment{
-				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialKubernetesOnlineDeployment{
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json")
@@ -8880,33 +8352,27 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_Update() {
 	})
 	client, err = armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err = client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialManagedOnlineDeployment{
-				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialManagedOnlineDeployment{
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json")
@@ -9002,76 +8468,70 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 	})
 	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.OnlineDeploymentData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				AppInsightsEnabled:  to.Ptr(false),
-				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
-				InstanceType:        to.Ptr("string"),
-				LivenessProbe: &armmachinelearningservices.ProbeSettings{
-					FailureThreshold: to.Ptr[int32](1),
-					InitialDelay:     to.Ptr("PT5M"),
-					Period:           to.Ptr("PT5M"),
-					SuccessThreshold: to.Ptr[int32](1),
-					Timeout:          to.Ptr("PT5M"),
-				},
-				Model:          to.Ptr("string"),
-				ModelMountPath: to.Ptr("string"),
-				RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
-					MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
-					MaxQueueWait:                     to.Ptr("PT5M"),
-					RequestTimeout:                   to.Ptr("PT5M"),
-				},
-				ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
-					ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
-				},
-				ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
-					ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
-						CPU:    to.Ptr("\"1\""),
-						Gpu:    to.Ptr("\"1\""),
-						Memory: to.Ptr("\"2Gi\""),
-					},
-					ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
-						CPU:    to.Ptr("\"1\""),
-						Gpu:    to.Ptr("\"1\""),
-						Memory: to.Ptr("\"2Gi\""),
-					},
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			AppInsightsEnabled:  to.Ptr(false),
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+			InstanceType:        to.Ptr("string"),
+			LivenessProbe: &armmachinelearningservices.ProbeSettings{
+				FailureThreshold: to.Ptr[int32](1),
+				InitialDelay:     to.Ptr("PT5M"),
+				Period:           to.Ptr("PT5M"),
+				SuccessThreshold: to.Ptr[int32](1),
+				Timeout:          to.Ptr("PT5M"),
+			},
+			Model:          to.Ptr("string"),
+			ModelMountPath: to.Ptr("string"),
+			RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+				MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+				MaxQueueWait:                     to.Ptr("PT5M"),
+				RequestTimeout:                   to.Ptr("PT5M"),
+			},
+			ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+				ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+			},
+			ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
+				ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
+					CPU:    to.Ptr("\"1\""),
+					Gpu:    to.Ptr("\"1\""),
+					Memory: to.Ptr("\"2Gi\""),
+				},
+				ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
+					CPU:    to.Ptr("\"1\""),
+					Gpu:    to.Ptr("\"1\""),
+					Memory: to.Ptr("\"2Gi\""),
+				},
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json")
@@ -9169,71 +8629,65 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_CreateOrUpdate() {
 	})
 	client, err = armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.OnlineDeploymentData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.ManagedOnlineDeployment{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				AppInsightsEnabled:  to.Ptr(false),
-				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
-				InstanceType:        to.Ptr("string"),
-				LivenessProbe: &armmachinelearningservices.ProbeSettings{
-					FailureThreshold: to.Ptr[int32](1),
-					InitialDelay:     to.Ptr("PT5M"),
-					Period:           to.Ptr("PT5M"),
-					SuccessThreshold: to.Ptr[int32](1),
-					Timeout:          to.Ptr("PT5M"),
-				},
-				Model:          to.Ptr("string"),
-				ModelMountPath: to.Ptr("string"),
-				ReadinessProbe: &armmachinelearningservices.ProbeSettings{
-					FailureThreshold: to.Ptr[int32](30),
-					InitialDelay:     to.Ptr("PT1S"),
-					Period:           to.Ptr("PT10S"),
-					SuccessThreshold: to.Ptr[int32](1),
-					Timeout:          to.Ptr("PT2S"),
-				},
-				RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
-					MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
-					MaxQueueWait:                     to.Ptr("PT5M"),
-					RequestTimeout:                   to.Ptr("PT5M"),
-				},
-				ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
-					ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err = client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.ManagedOnlineDeployment{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			AppInsightsEnabled:  to.Ptr(false),
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+			InstanceType:        to.Ptr("string"),
+			LivenessProbe: &armmachinelearningservices.ProbeSettings{
+				FailureThreshold: to.Ptr[int32](1),
+				InitialDelay:     to.Ptr("PT5M"),
+				Period:           to.Ptr("PT5M"),
+				SuccessThreshold: to.Ptr[int32](1),
+				Timeout:          to.Ptr("PT5M"),
+			},
+			Model:          to.Ptr("string"),
+			ModelMountPath: to.Ptr("string"),
+			ReadinessProbe: &armmachinelearningservices.ProbeSettings{
+				FailureThreshold: to.Ptr[int32](30),
+				InitialDelay:     to.Ptr("PT1S"),
+				Period:           to.Ptr("PT10S"),
+				SuccessThreshold: to.Ptr[int32](1),
+				Timeout:          to.Ptr("PT2S"),
+			},
+			RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+				MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+				MaxQueueWait:                     to.Ptr("PT5M"),
+				RequestTimeout:                   to.Ptr("PT5M"),
+			},
+			ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+				ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json")
@@ -9329,16 +8783,10 @@ func (testsuite *MockTestSuite) TestOnlineDeployments_GetLogs() {
 	})
 	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.GetLogs(ctx,
-		"testrg123",
-		"workspace123",
-		"testEndpoint",
-		"testDeployment",
-		armmachinelearningservices.DeploymentLogsRequest{
-			ContainerType: to.Ptr(armmachinelearningservices.ContainerTypeStorageInitializer),
-			Tail:          to.Ptr[int32](0),
-		},
-		nil)
+	res, err := client.GetLogs(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", armmachinelearningservices.DeploymentLogsRequest{
+		ContainerType: to.Ptr(armmachinelearningservices.ContainerTypeStorageInitializer),
+		Tail:          to.Ptr[int32](0),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/getLogs.json")
 	// Response check
 	exampleRes := armmachinelearningservices.DeploymentLogs{
@@ -9359,9 +8807,7 @@ func (testsuite *MockTestSuite) TestWorkspaceFeatures_List() {
 	})
 	client, err := armmachinelearningservices.NewWorkspaceFeaturesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"testworkspace",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "testworkspace", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/WorkspaceFeature/list.json")

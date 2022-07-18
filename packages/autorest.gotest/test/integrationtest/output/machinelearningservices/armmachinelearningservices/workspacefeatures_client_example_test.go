@@ -27,9 +27,7 @@ func ExampleWorkspaceFeaturesClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"testworkspace",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "testworkspace", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

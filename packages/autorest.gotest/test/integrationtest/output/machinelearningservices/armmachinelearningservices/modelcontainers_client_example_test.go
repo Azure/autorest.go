@@ -28,12 +28,10 @@ func ExampleModelContainersClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123",
-		"workspace123",
-		&armmachinelearningservices.ModelContainersClientListOptions{Skip: nil,
-			Count:        nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("testrg123", "workspace123", &armmachinelearningservices.ModelContainersClientListOptions{Skip: nil,
+		Count:        nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -57,11 +55,7 @@ func ExampleModelContainersClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"workspace123",
-		"testContainer",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "workspace123", "testContainer", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -78,11 +72,7 @@ func ExampleModelContainersClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"testrg123",
-		"workspace123",
-		"testContainer",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "workspace123", "testContainer", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -101,20 +91,15 @@ func ExampleModelContainersClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"workspace123",
-		"testContainer",
-		armmachinelearningservices.ModelContainerData{
-			Properties: &armmachinelearningservices.ModelContainerDetails{
-				Description: to.Ptr("Model container description"),
-				Tags: map[string]*string{
-					"tag1": to.Ptr("value1"),
-					"tag2": to.Ptr("value2"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "workspace123", "testContainer", armmachinelearningservices.ModelContainerData{
+		Properties: &armmachinelearningservices.ModelContainerDetails{
+			Description: to.Ptr("Model container description"),
+			Tags: map[string]*string{
+				"tag1": to.Ptr("value1"),
+				"tag2": to.Ptr("value2"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

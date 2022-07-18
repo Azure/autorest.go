@@ -28,10 +28,7 @@ func ExampleMonitoringSettingsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -50,17 +47,13 @@ func ExampleMonitoringSettingsClient_BeginUpdatePut() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePut(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.MonitoringSettingResource{
-			Properties: &armappplatform.MonitoringSettingProperties{
-				AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
-				AppInsightsSamplingRate:       to.Ptr[float64](10),
-				TraceEnabled:                  to.Ptr(true),
-			},
+	poller, err := client.BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
+		Properties: &armappplatform.MonitoringSettingProperties{
+			AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+			AppInsightsSamplingRate:       to.Ptr[float64](10),
+			TraceEnabled:                  to.Ptr(true),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -83,17 +76,13 @@ func ExampleMonitoringSettingsClient_BeginUpdatePatch() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePatch(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.MonitoringSettingResource{
-			Properties: &armappplatform.MonitoringSettingProperties{
-				AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
-				AppInsightsSamplingRate:       to.Ptr[float64](10),
-				TraceEnabled:                  to.Ptr(true),
-			},
+	poller, err := client.BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
+		Properties: &armappplatform.MonitoringSettingProperties{
+			AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+			AppInsightsSamplingRate:       to.Ptr[float64](10),
+			TraceEnabled:                  to.Ptr(true),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

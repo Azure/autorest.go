@@ -28,9 +28,7 @@ func ExampleCodeContainersClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123",
-		"testworkspace",
-		&armmachinelearningservices.CodeContainersClientListOptions{Skip: nil})
+	pager := client.NewListPager("testrg123", "testworkspace", &armmachinelearningservices.CodeContainersClientListOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -54,11 +52,7 @@ func ExampleCodeContainersClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -75,11 +69,7 @@ func ExampleCodeContainersClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -98,20 +88,15 @@ func ExampleCodeContainersClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		armmachinelearningservices.CodeContainerData{
-			Properties: &armmachinelearningservices.CodeContainerDetails{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"tag1": to.Ptr("value1"),
-					"tag2": to.Ptr("value2"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "testworkspace", "testContainer", armmachinelearningservices.CodeContainerData{
+		Properties: &armmachinelearningservices.CodeContainerDetails{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"tag1": to.Ptr("value1"),
+				"tag2": to.Ptr("value2"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -28,11 +28,7 @@ func ExampleAppsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		&armappplatform.AppsClientGetOptions{SyncStatus: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", &armappplatform.AppsClientGetOptions{SyncStatus: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -51,29 +47,24 @@ func ExampleAppsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		armappplatform.AppResource{
-			Location: to.Ptr("eastus"),
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("mydeployment1"),
-				EnableEndToEndTLS:    to.Ptr(false),
-				Fqdn:                 to.Ptr("myapp.mydomain.com"),
-				HTTPSOnly:            to.Ptr(false),
-				PersistentDisk: &armappplatform.PersistentDisk{
-					MountPath: to.Ptr("/mypersistentdisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
-				Public: to.Ptr(true),
-				TemporaryDisk: &armappplatform.TemporaryDisk{
-					MountPath: to.Ptr("/mytemporarydisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", armappplatform.AppResource{
+		Location: to.Ptr("eastus"),
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr("myapp.mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -96,11 +87,7 @@ func ExampleAppsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -121,32 +108,27 @@ func ExampleAppsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		armappplatform.AppResource{
-			Identity: &armappplatform.ManagedIdentityProperties{
-				Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", armappplatform.AppResource{
+		Identity: &armappplatform.ManagedIdentityProperties{
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+		},
+		Location: to.Ptr("eastus"),
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr("myapp.mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
 			},
-			Location: to.Ptr("eastus"),
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("mydeployment1"),
-				EnableEndToEndTLS:    to.Ptr(false),
-				Fqdn:                 to.Ptr("myapp.mydomain.com"),
-				HTTPSOnly:            to.Ptr(false),
-				PersistentDisk: &armappplatform.PersistentDisk{
-					MountPath: to.Ptr("/mypersistentdisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
-				Public: to.Ptr(true),
-				TemporaryDisk: &armappplatform.TemporaryDisk{
-					MountPath: to.Ptr("/mytemporarydisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -169,9 +151,7 @@ func ExampleAppsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myservice", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -182,6 +162,25 @@ func ExampleAppsClient_NewListPager() {
 			_ = v
 		}
 	}
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_GetResourceUploadUrl.json
+func ExampleAppsClient_GetResourceUploadURL() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.GetResourceUploadURL(ctx, "myResourceGroup", "myservice", "myapp", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json
@@ -195,14 +194,9 @@ func ExampleAppsClient_ValidateDomain() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ValidateDomain(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		armappplatform.CustomDomainValidatePayload{
-			Name: to.Ptr("mydomain.io"),
-		},
-		nil)
+	res, err := client.ValidateDomain(ctx, "myResourceGroup", "myservice", "myapp", armappplatform.CustomDomainValidatePayload{
+		Name: to.Ptr("mydomain.io"),
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

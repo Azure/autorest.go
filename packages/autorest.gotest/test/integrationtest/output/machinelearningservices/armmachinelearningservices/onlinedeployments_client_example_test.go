@@ -28,13 +28,10 @@ func ExampleOnlineDeploymentsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		&armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:  to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "testEndpointName", &armmachinelearningservices.OnlineDeploymentsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:  to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -58,12 +55,7 @@ func ExampleOnlineDeploymentsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"testrg123",
-		"workspace123",
-		"testEndpoint",
-		"testDeployment",
-		nil)
+	poller, err := client.BeginDelete(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -74,7 +66,7 @@ func ExampleOnlineDeploymentsClient_BeginDelete() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
-func ExampleOnlineDeploymentsClient_Get() {
+func ExampleOnlineDeploymentsClient_Get_get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -84,12 +76,26 @@ func ExampleOnlineDeploymentsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+func ExampleOnlineDeploymentsClient_Get_get() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -98,7 +104,7 @@ func ExampleOnlineDeploymentsClient_Get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
-func ExampleOnlineDeploymentsClient_BeginUpdate() {
+func ExampleOnlineDeploymentsClient_BeginUpdate_update() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -108,33 +114,70 @@ func ExampleOnlineDeploymentsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialKubernetesOnlineDeployment{
-				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialKubernetesOnlineDeployment{
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
+func ExampleOnlineDeploymentsClient_BeginUpdate_update() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.PartialOnlineDeploymentPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
+			},
+		},
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialManagedOnlineDeployment{
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -147,7 +190,7 @@ func ExampleOnlineDeploymentsClient_BeginUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
-func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate() {
+func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -157,76 +200,151 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		"testDeploymentName",
-		armmachinelearningservices.OnlineDeploymentData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
-				Description: to.Ptr("string"),
-				CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
-					CodeID:        to.Ptr("string"),
-					ScoringScript: to.Ptr("string"),
-				},
-				EnvironmentID: to.Ptr("string"),
-				EnvironmentVariables: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				AppInsightsEnabled:  to.Ptr(false),
-				EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
-				InstanceType:        to.Ptr("string"),
-				LivenessProbe: &armmachinelearningservices.ProbeSettings{
-					FailureThreshold: to.Ptr[int32](1),
-					InitialDelay:     to.Ptr("PT5M"),
-					Period:           to.Ptr("PT5M"),
-					SuccessThreshold: to.Ptr[int32](1),
-					Timeout:          to.Ptr("PT5M"),
-				},
-				Model:          to.Ptr("string"),
-				ModelMountPath: to.Ptr("string"),
-				RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
-					MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
-					MaxQueueWait:                     to.Ptr("PT5M"),
-					RequestTimeout:                   to.Ptr("PT5M"),
-				},
-				ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
-					ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
-				},
-				ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
-					ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
-						CPU:    to.Ptr("\"1\""),
-						Gpu:    to.Ptr("\"1\""),
-						Memory: to.Ptr("\"2Gi\""),
-					},
-					ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
-						CPU:    to.Ptr("\"1\""),
-						Gpu:    to.Ptr("\"1\""),
-						Memory: to.Ptr("\"2Gi\""),
-					},
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.KubernetesOnlineDeployment{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			AppInsightsEnabled:  to.Ptr(false),
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeKubernetes),
+			InstanceType:        to.Ptr("string"),
+			LivenessProbe: &armmachinelearningservices.ProbeSettings{
+				FailureThreshold: to.Ptr[int32](1),
+				InitialDelay:     to.Ptr("PT5M"),
+				Period:           to.Ptr("PT5M"),
+				SuccessThreshold: to.Ptr[int32](1),
+				Timeout:          to.Ptr("PT5M"),
+			},
+			Model:          to.Ptr("string"),
+			ModelMountPath: to.Ptr("string"),
+			RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+				MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+				MaxQueueWait:                     to.Ptr("PT5M"),
+				RequestTimeout:                   to.Ptr("PT5M"),
+			},
+			ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+				ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+			},
+			ContainerResourceRequirements: &armmachinelearningservices.ContainerResourceRequirements{
+				ContainerResourceLimits: &armmachinelearningservices.ContainerResourceSettings{
+					CPU:    to.Ptr("\"1\""),
+					Gpu:    to.Ptr("\"1\""),
+					Memory: to.Ptr("\"2Gi\""),
+				},
+				ContainerResourceRequests: &armmachinelearningservices.ContainerResourceSettings{
+					CPU:    to.Ptr("\"1\""),
+					Gpu:    to.Ptr("\"1\""),
+					Memory: to.Ptr("\"2Gi\""),
+				},
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
+func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdate() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", armmachinelearningservices.OnlineDeploymentData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
+			},
+		},
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.ManagedOnlineDeployment{
+			Description: to.Ptr("string"),
+			CodeConfiguration: &armmachinelearningservices.CodeConfiguration{
+				CodeID:        to.Ptr("string"),
+				ScoringScript: to.Ptr("string"),
+			},
+			EnvironmentID: to.Ptr("string"),
+			EnvironmentVariables: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			AppInsightsEnabled:  to.Ptr(false),
+			EndpointComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+			InstanceType:        to.Ptr("string"),
+			LivenessProbe: &armmachinelearningservices.ProbeSettings{
+				FailureThreshold: to.Ptr[int32](1),
+				InitialDelay:     to.Ptr("PT5M"),
+				Period:           to.Ptr("PT5M"),
+				SuccessThreshold: to.Ptr[int32](1),
+				Timeout:          to.Ptr("PT5M"),
+			},
+			Model:          to.Ptr("string"),
+			ModelMountPath: to.Ptr("string"),
+			ReadinessProbe: &armmachinelearningservices.ProbeSettings{
+				FailureThreshold: to.Ptr[int32](30),
+				InitialDelay:     to.Ptr("PT1S"),
+				Period:           to.Ptr("PT10S"),
+				SuccessThreshold: to.Ptr[int32](1),
+				Timeout:          to.Ptr("PT2S"),
+			},
+			RequestSettings: &armmachinelearningservices.OnlineRequestSettings{
+				MaxConcurrentRequestsPerInstance: to.Ptr[int32](1),
+				MaxQueueWait:                     to.Ptr("PT5M"),
+				RequestTimeout:                   to.Ptr("PT5M"),
+			},
+			ScaleSettings: &armmachinelearningservices.DefaultScaleSettings{
+				ScaleType: to.Ptr(armmachinelearningservices.ScaleTypeDefault),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -249,19 +367,65 @@ func ExampleOnlineDeploymentsClient_GetLogs() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetLogs(ctx,
-		"testrg123",
-		"workspace123",
-		"testEndpoint",
-		"testDeployment",
-		armmachinelearningservices.DeploymentLogsRequest{
-			ContainerType: to.Ptr(armmachinelearningservices.ContainerTypeStorageInitializer),
-			Tail:          to.Ptr[int32](0),
-		},
-		nil)
+	res, err := client.GetLogs(ctx, "testrg123", "workspace123", "testEndpoint", "testDeployment", armmachinelearningservices.DeploymentLogsRequest{
+		ContainerType: to.Ptr(armmachinelearningservices.ContainerTypeStorageInitializer),
+		Tail:          to.Ptr[int32](0),
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
 	// TODO: use response item
 	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
+func ExampleOnlineDeploymentsClient_NewListSKUsPager_listSkus() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	pager := client.NewListSKUsPager("test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", &armmachinelearningservices.OnlineDeploymentsClientListSKUsOptions{Count: to.Ptr[int32](1),
+		Skip: nil,
+	})
+	for pager.More() {
+		nextResult, err := pager.NextPage(ctx)
+		if err != nil {
+			log.Fatalf("failed to advance page: %v", err)
+		}
+		for _, v := range nextResult.Value {
+			// TODO: use page item
+			_ = v
+		}
+	}
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
+func ExampleOnlineDeploymentsClient_NewListSKUsPager_listSkus() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewOnlineDeploymentsClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	pager := client.NewListSKUsPager("test-rg", "my-aml-workspace", "testEndpointName", "testDeploymentName", &armmachinelearningservices.OnlineDeploymentsClientListSKUsOptions{Count: to.Ptr[int32](1),
+		Skip: nil,
+	})
+	for pager.More() {
+		nextResult, err := pager.NextPage(ctx)
+		if err != nil {
+			log.Fatalf("failed to advance page: %v", err)
+		}
+		for _, v := range nextResult.Value {
+			// TODO: use page item
+			_ = v
+		}
+	}
 }

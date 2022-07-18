@@ -28,11 +28,7 @@ func ExampleVirtualMachineScaleSetVMsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMsClientBeginDeleteOptions{ForceDeletion: to.Ptr(true)})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -53,11 +49,7 @@ func ExampleVirtualMachineScaleSetVMsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"{vmss-name}",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "{vmss-name}", "0", &armcompute.VirtualMachineScaleSetVMsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -76,11 +68,7 @@ func ExampleVirtualMachineScaleSetVMsClient_GetInstanceView() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetInstanceView(ctx,
-		"myResourceGroup",
-		"myVirtualMachineScaleSet",
-		"0",
-		nil)
+	res, err := client.GetInstanceView(ctx, "myResourceGroup", "myVirtualMachineScaleSet", "0", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -99,11 +87,7 @@ func ExampleVirtualMachineScaleSetVMsClient_RetrieveBootDiagnosticsData() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.RetrieveBootDiagnosticsData(ctx,
-		"ResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
+	res, err := client.RetrieveBootDiagnosticsData(ctx, "ResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMsClientRetrieveBootDiagnosticsDataOptions{SasURIExpirationTimeInMinutes: to.Ptr[int32](60)})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -122,11 +106,7 @@ func ExampleVirtualMachineScaleSetVMsClient_SimulateEviction() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.SimulateEviction(ctx,
-		"ResourceGroup",
-		"VmScaleSetName",
-		"InstanceId",
-		nil)
+	_, err = client.SimulateEviction(ctx, "ResourceGroup", "VmScaleSetName", "InstanceId", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -143,16 +123,11 @@ func ExampleVirtualMachineScaleSetVMsClient_BeginRunCommand() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRunCommand(ctx,
-		"myResourceGroup",
-		"myVirtualMachineScaleSet",
-		"0",
-		armcompute.RunCommandInput{
-			CommandID: to.Ptr("RunPowerShellScript"),
-			Script: []*string{
-				to.Ptr("# Test multi-line string\r\nWrite-Host Hello World!")},
-		},
-		nil)
+	poller, err := client.BeginRunCommand(ctx, "myResourceGroup", "myVirtualMachineScaleSet", "0", armcompute.RunCommandInput{
+		CommandID: to.Ptr("RunPowerShellScript"),
+		Script: []*string{
+			to.Ptr("# Test multi-line string\r\nWrite-Host Hello World!")},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -28,11 +28,9 @@ func ExampleEnvironmentContainersClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123",
-		"testworkspace",
-		&armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("testrg123", "testworkspace", &armmachinelearningservices.EnvironmentContainersClientListOptions{Skip: nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -56,11 +54,7 @@ func ExampleEnvironmentContainersClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"testrg123",
-		"testworkspace",
-		"testContainer",
-		nil)
+	_, err = client.Delete(ctx, "testrg123", "testworkspace", "testContainer", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -77,11 +71,7 @@ func ExampleEnvironmentContainersClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"testrg123",
-		"testworkspace",
-		"testEnvironment",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "testworkspace", "testEnvironment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -100,26 +90,21 @@ func ExampleEnvironmentContainersClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"testrg123",
-		"testworkspace",
-		"testEnvironment",
-		armmachinelearningservices.EnvironmentContainerData{
-			Properties: &armmachinelearningservices.EnvironmentContainerDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"additionalProp1": to.Ptr("string"),
-					"additionalProp2": to.Ptr("string"),
-					"additionalProp3": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"additionalProp1": to.Ptr("string"),
-					"additionalProp2": to.Ptr("string"),
-					"additionalProp3": to.Ptr("string"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "testrg123", "testworkspace", "testEnvironment", armmachinelearningservices.EnvironmentContainerData{
+		Properties: &armmachinelearningservices.EnvironmentContainerDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"additionalProp1": to.Ptr("string"),
+				"additionalProp2": to.Ptr("string"),
+				"additionalProp3": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"additionalProp1": to.Ptr("string"),
+				"additionalProp2": to.Ptr("string"),
+				"additionalProp3": to.Ptr("string"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

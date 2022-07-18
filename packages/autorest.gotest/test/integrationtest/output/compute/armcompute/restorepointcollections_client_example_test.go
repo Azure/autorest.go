@@ -28,21 +28,17 @@ func ExampleRestorePointCollectionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myRpc",
-		armcompute.RestorePointCollection{
-			Location: to.Ptr("norwayeast"),
-			Tags: map[string]*string{
-				"myTag1": to.Ptr("tagValue1"),
-			},
-			Properties: &armcompute.RestorePointCollectionProperties{
-				Source: &armcompute.RestorePointCollectionSourceProperties{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
-				},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myRpc", armcompute.RestorePointCollection{
+		Location: to.Ptr("norwayeast"),
+		Tags: map[string]*string{
+			"myTag1": to.Ptr("tagValue1"),
+		},
+		Properties: &armcompute.RestorePointCollectionProperties{
+			Source: &armcompute.RestorePointCollectionSourceProperties{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -51,7 +47,7 @@ func ExampleRestorePointCollectionsClient_CreateOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollection.json
-func ExampleRestorePointCollectionsClient_Get() {
+func ExampleRestorePointCollectionsClient_Get_getRestorePointCollection() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -61,10 +57,26 @@ func ExampleRestorePointCollectionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myRpc",
-		&armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myRpc", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetRestorePointCollectionWithContainedRestorePoints.json
+func ExampleRestorePointCollectionsClient_Get_getRestorePointCollectionWithContainedRestorePoints() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armcompute.NewRestorePointCollectionsClient("{subscription-id}", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.Get(ctx, "myResourceGroup", "rpcName", &armcompute.RestorePointCollectionsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -83,8 +95,7 @@ func ExampleRestorePointCollectionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		nil)
+	pager := client.NewListPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

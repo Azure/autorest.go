@@ -27,8 +27,7 @@ func ExampleRuntimeVersionsClient_ListRuntimeVersions() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListRuntimeVersions(ctx,
-		nil)
+	res, err := client.ListRuntimeVersions(ctx, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

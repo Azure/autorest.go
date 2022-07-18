@@ -28,24 +28,19 @@ func ExampleGalleryImagesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		armcompute.GalleryImage{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.GalleryImageProperties{
-				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
-				Identifier: &armcompute.GalleryImageIdentifier{
-					Offer:     to.Ptr("myOfferName"),
-					Publisher: to.Ptr("myPublisherName"),
-					SKU:       to.Ptr("mySkuName"),
-				},
-				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-				OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImage{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.GalleryImageProperties{
+			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+			Identifier: &armcompute.GalleryImageIdentifier{
+				Offer:     to.Ptr("myOfferName"),
+				Publisher: to.Ptr("myPublisherName"),
+				SKU:       to.Ptr("mySkuName"),
 			},
+			OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+			OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -68,23 +63,18 @@ func ExampleGalleryImagesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		armcompute.GalleryImageUpdate{
-			Properties: &armcompute.GalleryImageProperties{
-				HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
-				Identifier: &armcompute.GalleryImageIdentifier{
-					Offer:     to.Ptr("myOfferName"),
-					Publisher: to.Ptr("myPublisherName"),
-					SKU:       to.Ptr("mySkuName"),
-				},
-				OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
-				OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", armcompute.GalleryImageUpdate{
+		Properties: &armcompute.GalleryImageProperties{
+			HyperVGeneration: to.Ptr(armcompute.HyperVGenerationV1),
+			Identifier: &armcompute.GalleryImageIdentifier{
+				Offer:     to.Ptr("myOfferName"),
+				Publisher: to.Ptr("myPublisherName"),
+				SKU:       to.Ptr("mySkuName"),
 			},
+			OSState: to.Ptr(armcompute.OperatingSystemStateTypesGeneralized),
+			OSType:  to.Ptr(armcompute.OperatingSystemTypesWindows),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -107,11 +97,7 @@ func ExampleGalleryImagesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -130,11 +116,7 @@ func ExampleGalleryImagesClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myGalleryName",
-		"myGalleryImageName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myGalleryName", "myGalleryImageName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -155,9 +137,7 @@ func ExampleGalleryImagesClient_NewListByGalleryPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByGalleryPager("myResourceGroup",
-		"myGalleryName",
-		nil)
+	pager := client.NewListByGalleryPager("myResourceGroup", "myGalleryName", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

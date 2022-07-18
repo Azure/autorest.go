@@ -28,10 +28,7 @@ func ExampleWorkspacesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	res, err := client.Get(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -50,49 +47,45 @@ func ExampleWorkspacesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"workspace-1234",
-		"testworkspace",
-		armmachinelearningservices.Workspace{
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Location: to.Ptr("eastus2euap"),
-			Properties: &armmachinelearningservices.WorkspaceProperties{
-				Description:         to.Ptr("test description"),
-				ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
-				ContainerRegistry:   to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
-				Encryption: &armmachinelearningservices.EncryptionProperty{
-					Identity: &armmachinelearningservices.IdentityForCmk{
-						UserAssignedIdentity: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"),
-					},
-					KeyVaultProperties: &armmachinelearningservices.EncryptionKeyVaultProperties{
-						IdentityClientID: to.Ptr(""),
-						KeyIdentifier:    to.Ptr("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb"),
-						KeyVaultArmID:    to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
-					},
-					Status: to.Ptr(armmachinelearningservices.EncryptionStatusEnabled),
-				},
-				FriendlyName: to.Ptr("HelloName"),
-				HbiWorkspace: to.Ptr(false),
-				KeyVault:     to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
-				SharedPrivateLinkResources: []*armmachinelearningservices.SharedPrivateLinkResource{
-					{
-						Name: to.Ptr("testdbresource"),
-						Properties: &armmachinelearningservices.SharedPrivateLinkResourceProperty{
-							GroupID:               to.Ptr("Sql"),
-							PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql"),
-							RequestMessage:        to.Ptr("Please approve"),
-							Status:                to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
-						},
-					}},
-				StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.Workspace{
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssignedUserAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Location: to.Ptr("eastus2euap"),
+		Properties: &armmachinelearningservices.WorkspaceProperties{
+			Description:         to.Ptr("test description"),
+			ApplicationInsights: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights"),
+			ContainerRegistry:   to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry"),
+			Encryption: &armmachinelearningservices.EncryptionProperty{
+				Identity: &armmachinelearningservices.IdentityForCmk{
+					UserAssignedIdentity: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testuai"),
+				},
+				KeyVaultProperties: &armmachinelearningservices.EncryptionKeyVaultProperties{
+					IdentityClientID: to.Ptr(""),
+					KeyIdentifier:    to.Ptr("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb"),
+					KeyVaultArmID:    to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+				},
+				Status: to.Ptr(armmachinelearningservices.EncryptionStatusEnabled),
+			},
+			FriendlyName: to.Ptr("HelloName"),
+			HbiWorkspace: to.Ptr(false),
+			KeyVault:     to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"),
+			SharedPrivateLinkResources: []*armmachinelearningservices.SharedPrivateLinkResource{
+				{
+					Name: to.Ptr("testdbresource"),
+					Properties: &armmachinelearningservices.SharedPrivateLinkResourceProperty{
+						GroupID:               to.Ptr("Sql"),
+						PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql"),
+						RequestMessage:        to.Ptr("Please approve"),
+						Status:                to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
+					},
+				}},
+			StorageAccount: to.Ptr("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -115,10 +108,7 @@ func ExampleWorkspacesClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	poller, err := client.BeginDelete(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -139,17 +129,13 @@ func ExampleWorkspacesClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"workspace-1234",
-		"testworkspace",
-		armmachinelearningservices.WorkspaceUpdateParameters{
-			Properties: &armmachinelearningservices.WorkspacePropertiesUpdateParameters{
-				Description:         to.Ptr("new description"),
-				FriendlyName:        to.Ptr("New friendly name"),
-				PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
-			},
+	poller, err := client.BeginUpdate(ctx, "workspace-1234", "testworkspace", armmachinelearningservices.WorkspaceUpdateParameters{
+		Properties: &armmachinelearningservices.WorkspacePropertiesUpdateParameters{
+			Description:         to.Ptr("new description"),
+			FriendlyName:        to.Ptr("New friendly name"),
+			PublicNetworkAccess: to.Ptr(armmachinelearningservices.PublicNetworkAccessDisabled),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -172,8 +158,7 @@ func ExampleWorkspacesClient_NewListByResourceGroupPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("workspace-1234",
-		&armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
+	pager := client.NewListByResourceGroupPager("workspace-1234", &armmachinelearningservices.WorkspacesClientListByResourceGroupOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -197,23 +182,20 @@ func ExampleWorkspacesClient_BeginDiagnose() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDiagnose(ctx,
-		"workspace-1234",
-		"testworkspace",
-		&armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
-			Value: &armmachinelearningservices.DiagnoseRequestProperties{
-				ApplicationInsights: map[string]interface{}{},
-				ContainerRegistry:   map[string]interface{}{},
-				DNSResolution:       map[string]interface{}{},
-				KeyVault:            map[string]interface{}{},
-				Nsg:                 map[string]interface{}{},
-				Others:              map[string]interface{}{},
-				ResourceLock:        map[string]interface{}{},
-				StorageAccount:      map[string]interface{}{},
-				Udr:                 map[string]interface{}{},
-			},
+	poller, err := client.BeginDiagnose(ctx, "workspace-1234", "testworkspace", &armmachinelearningservices.WorkspacesClientBeginDiagnoseOptions{Parameters: &armmachinelearningservices.DiagnoseWorkspaceParameters{
+		Value: &armmachinelearningservices.DiagnoseRequestProperties{
+			ApplicationInsights: map[string]interface{}{},
+			ContainerRegistry:   map[string]interface{}{},
+			DNSResolution:       map[string]interface{}{},
+			KeyVault:            map[string]interface{}{},
+			Nsg:                 map[string]interface{}{},
+			Others:              map[string]interface{}{},
+			ResourceLock:        map[string]interface{}{},
+			StorageAccount:      map[string]interface{}{},
+			Udr:                 map[string]interface{}{},
 		},
-		})
+	},
+	})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -236,10 +218,7 @@ func ExampleWorkspacesClient_ListKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	res, err := client.ListKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -258,10 +237,7 @@ func ExampleWorkspacesClient_BeginResyncKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginResyncKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	poller, err := client.BeginResyncKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -306,10 +282,7 @@ func ExampleWorkspacesClient_ListNotebookAccessToken() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListNotebookAccessToken(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	res, err := client.ListNotebookAccessToken(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -328,10 +301,7 @@ func ExampleWorkspacesClient_BeginPrepareNotebook() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginPrepareNotebook(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	poller, err := client.BeginPrepareNotebook(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -354,10 +324,7 @@ func ExampleWorkspacesClient_ListStorageAccountKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListStorageAccountKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	res, err := client.ListStorageAccountKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -376,10 +343,7 @@ func ExampleWorkspacesClient_ListNotebookKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListNotebookKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		nil)
+	res, err := client.ListNotebookKeys(ctx, "testrg123", "workspaces123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -398,10 +362,7 @@ func ExampleWorkspacesClient_ListOutboundNetworkDependenciesEndpoints() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListOutboundNetworkDependenciesEndpoints(ctx,
-		"workspace-1234",
-		"testworkspace",
-		nil)
+	res, err := client.ListOutboundNetworkDependenciesEndpoints(ctx, "workspace-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

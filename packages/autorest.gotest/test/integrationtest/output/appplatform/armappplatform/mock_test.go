@@ -76,10 +76,7 @@ func (testsuite *MockTestSuite) TestServices_Get() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Get.json")
 	// Response check
 	exampleRes := armappplatform.ServiceResource{
@@ -146,21 +143,17 @@ func (testsuite *MockTestSuite) TestServices_CreateOrUpdate() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ServiceResource{
-			Location: to.Ptr("eastus"),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
-			},
-			Properties: &armappplatform.ClusterResourceProperties{},
-			SKU: &armappplatform.SKU{
-				Name: to.Ptr("S0"),
-				Tier: to.Ptr("Standard"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
+		Location: to.Ptr("eastus"),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
 		},
-		nil)
+		Properties: &armappplatform.ClusterResourceProperties{},
+		SKU: &armappplatform.SKU{
+			Name: to.Ptr("S0"),
+			Tier: to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json")
@@ -226,29 +219,25 @@ func (testsuite *MockTestSuite) TestServices_CreateOrUpdate() {
 	})
 	client, err = armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err = client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ServiceResource{
-			Location: to.Ptr("eastus"),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
-			},
-			Properties: &armappplatform.ClusterResourceProperties{
-				NetworkProfile: &armappplatform.NetworkProfile{
-					AppNetworkResourceGroup:            to.Ptr("my-app-network-rg"),
-					AppSubnetID:                        to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/apps"),
-					ServiceCidr:                        to.Ptr("10.8.0.0/16,10.244.0.0/16,10.245.0.1/16"),
-					ServiceRuntimeNetworkResourceGroup: to.Ptr("my-service-runtime-network-rg"),
-					ServiceRuntimeSubnetID:             to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime"),
-				},
-			},
-			SKU: &armappplatform.SKU{
-				Name: to.Ptr("S0"),
-				Tier: to.Ptr("Standard"),
+	poller, err = client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
+		Location: to.Ptr("eastus"),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Properties: &armappplatform.ClusterResourceProperties{
+			NetworkProfile: &armappplatform.NetworkProfile{
+				AppNetworkResourceGroup:            to.Ptr("my-app-network-rg"),
+				AppSubnetID:                        to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/apps"),
+				ServiceCidr:                        to.Ptr("10.8.0.0/16,10.244.0.0/16,10.245.0.1/16"),
+				ServiceRuntimeNetworkResourceGroup: to.Ptr("my-service-runtime-network-rg"),
+				ServiceRuntimeSubnetID:             to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/serviceRuntime"),
 			},
 		},
-		nil)
+		SKU: &armappplatform.SKU{
+			Name: to.Ptr("S0"),
+			Tier: to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json")
 	res, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json")
@@ -321,10 +310,7 @@ func (testsuite *MockTestSuite) TestServices_Delete() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Delete.json")
@@ -338,21 +324,17 @@ func (testsuite *MockTestSuite) TestServices_Update() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ServiceResource{
-			Location: to.Ptr("eastus"),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
-			},
-			Properties: &armappplatform.ClusterResourceProperties{},
-			SKU: &armappplatform.SKU{
-				Name: to.Ptr("S0"),
-				Tier: to.Ptr("Standard"),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", armappplatform.ServiceResource{
+		Location: to.Ptr("eastus"),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
 		},
-		nil)
+		Properties: &armappplatform.ClusterResourceProperties{},
+		SKU: &armappplatform.SKU{
+			Name: to.Ptr("S0"),
+			Tier: to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_Update.json")
@@ -421,10 +403,7 @@ func (testsuite *MockTestSuite) TestServices_ListTestKeys() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListTestKeys(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.ListTestKeys(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_ListTestKeys.json")
 	// Response check
 	exampleRes := armappplatform.TestKeys{
@@ -449,13 +428,9 @@ func (testsuite *MockTestSuite) TestServices_RegenerateTestKey() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.RegenerateTestKey(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.RegenerateTestKeyRequestPayload{
-			KeyType: to.Ptr(armappplatform.TestKeyTypePrimary),
-		},
-		nil)
+	res, err := client.RegenerateTestKey(ctx, "myResourceGroup", "myservice", armappplatform.RegenerateTestKeyRequestPayload{
+		KeyType: to.Ptr(armappplatform.TestKeyTypePrimary),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_RegenerateTestKey.json")
 	// Response check
 	exampleRes := armappplatform.TestKeys{
@@ -480,10 +455,7 @@ func (testsuite *MockTestSuite) TestServices_DisableTestEndpoint() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	_, err = client.DisableTestEndpoint(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	_, err = client.DisableTestEndpoint(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_DisableTestEndpoint.json")
 }
 
@@ -495,10 +467,7 @@ func (testsuite *MockTestSuite) TestServices_EnableTestEndpoint() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.EnableTestEndpoint(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.EnableTestEndpoint(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_EnableTestEndpoint.json")
 	// Response check
 	exampleRes := armappplatform.TestKeys{
@@ -523,13 +492,10 @@ func (testsuite *MockTestSuite) TestServices_CheckNameAvailability() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.CheckNameAvailability(ctx,
-		"eastus",
-		armappplatform.NameAvailabilityParameters{
-			Name: to.Ptr("myservice"),
-			Type: to.Ptr("Microsoft.AppPlatform/Spring"),
-		},
-		nil)
+	res, err := client.CheckNameAvailability(ctx, "eastus", armappplatform.NameAvailabilityParameters{
+		Name: to.Ptr("myservice"),
+		Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CheckNameAvailability.json")
 	// Response check
 	exampleRes := armappplatform.NameAvailability{
@@ -625,8 +591,7 @@ func (testsuite *MockTestSuite) TestServices_List() {
 	})
 	client, err := armappplatform.NewServicesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		nil)
+	pager := client.NewListPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_List.json")
@@ -699,10 +664,7 @@ func (testsuite *MockTestSuite) TestConfigServers_Get() {
 	})
 	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Get.json")
 	// Response check
 	exampleRes := armappplatform.ConfigServerResource{
@@ -736,22 +698,18 @@ func (testsuite *MockTestSuite) TestConfigServers_UpdatePut() {
 	})
 	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdatePut(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ConfigServerResource{
-			Properties: &armappplatform.ConfigServerProperties{
-				ConfigServer: &armappplatform.ConfigServerSettings{
-					GitProperty: &armappplatform.ConfigServerGitProperty{
-						Label: to.Ptr("master"),
-						SearchPaths: []*string{
-							to.Ptr("/")},
-						URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
-					},
+	poller, err := client.BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
+		Properties: &armappplatform.ConfigServerProperties{
+			ConfigServer: &armappplatform.ConfigServerSettings{
+				GitProperty: &armappplatform.ConfigServerGitProperty{
+					Label: to.Ptr("master"),
+					SearchPaths: []*string{
+						to.Ptr("/")},
+					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePut.json")
@@ -787,22 +745,18 @@ func (testsuite *MockTestSuite) TestConfigServers_UpdatePatch() {
 	})
 	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdatePatch(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ConfigServerResource{
-			Properties: &armappplatform.ConfigServerProperties{
-				ConfigServer: &armappplatform.ConfigServerSettings{
-					GitProperty: &armappplatform.ConfigServerGitProperty{
-						Label: to.Ptr("master"),
-						SearchPaths: []*string{
-							to.Ptr("/")},
-						URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
-					},
+	poller, err := client.BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
+		Properties: &armappplatform.ConfigServerProperties{
+			ConfigServer: &armappplatform.ConfigServerSettings{
+				GitProperty: &armappplatform.ConfigServerGitProperty{
+					Label: to.Ptr("master"),
+					SearchPaths: []*string{
+						to.Ptr("/")},
+					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_UpdatePatch.json")
@@ -838,18 +792,14 @@ func (testsuite *MockTestSuite) TestConfigServers_Validate() {
 	})
 	client, err := armappplatform.NewConfigServersClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginValidate(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ConfigServerSettings{
-			GitProperty: &armappplatform.ConfigServerGitProperty{
-				Label: to.Ptr("master"),
-				SearchPaths: []*string{
-					to.Ptr("/")},
-				URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
-			},
+	poller, err := client.BeginValidate(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerSettings{
+		GitProperty: &armappplatform.ConfigServerGitProperty{
+			Label: to.Ptr("master"),
+			SearchPaths: []*string{
+				to.Ptr("/")},
+			URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/ConfigServers_Validate.json")
@@ -872,10 +822,7 @@ func (testsuite *MockTestSuite) TestMonitoringSettings_Get() {
 	})
 	client, err := armappplatform.NewMonitoringSettingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_Get.json")
 	// Response check
 	exampleRes := armappplatform.MonitoringSettingResource{
@@ -907,17 +854,13 @@ func (testsuite *MockTestSuite) TestMonitoringSettings_UpdatePut() {
 	})
 	client, err := armappplatform.NewMonitoringSettingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdatePut(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.MonitoringSettingResource{
-			Properties: &armappplatform.MonitoringSettingProperties{
-				AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
-				AppInsightsSamplingRate:       to.Ptr[float64](10),
-				TraceEnabled:                  to.Ptr(true),
-			},
+	poller, err := client.BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
+		Properties: &armappplatform.MonitoringSettingProperties{
+			AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+			AppInsightsSamplingRate:       to.Ptr[float64](10),
+			TraceEnabled:                  to.Ptr(true),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePut.json")
@@ -951,17 +894,13 @@ func (testsuite *MockTestSuite) TestMonitoringSettings_UpdatePatch() {
 	})
 	client, err := armappplatform.NewMonitoringSettingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdatePatch(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.MonitoringSettingResource{
-			Properties: &armappplatform.MonitoringSettingProperties{
-				AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
-				AppInsightsSamplingRate:       to.Ptr[float64](10),
-				TraceEnabled:                  to.Ptr(true),
-			},
+	poller, err := client.BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.MonitoringSettingResource{
+		Properties: &armappplatform.MonitoringSettingProperties{
+			AppInsightsInstrumentationKey: to.Ptr("00000000-0000-0000-0000-000000000000"),
+			AppInsightsSamplingRate:       to.Ptr[float64](10),
+			TraceEnabled:                  to.Ptr(true),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/MonitoringSettings_UpdatePatch.json")
@@ -995,11 +934,7 @@ func (testsuite *MockTestSuite) TestApps_Get() {
 	})
 	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		&armappplatform.AppsClientGetOptions{SyncStatus: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", &armappplatform.AppsClientGetOptions{SyncStatus: nil})
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Get.json")
 	// Response check
 	exampleRes := armappplatform.AppResource{
@@ -1046,29 +981,24 @@ func (testsuite *MockTestSuite) TestApps_CreateOrUpdate() {
 	})
 	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		armappplatform.AppResource{
-			Location: to.Ptr("eastus"),
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("mydeployment1"),
-				EnableEndToEndTLS:    to.Ptr(false),
-				Fqdn:                 to.Ptr("myapp.mydomain.com"),
-				HTTPSOnly:            to.Ptr(false),
-				PersistentDisk: &armappplatform.PersistentDisk{
-					MountPath: to.Ptr("/mypersistentdisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
-				Public: to.Ptr(true),
-				TemporaryDisk: &armappplatform.TemporaryDisk{
-					MountPath: to.Ptr("/mytemporarydisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", armappplatform.AppResource{
+		Location: to.Ptr("eastus"),
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr("myapp.mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_CreateOrUpdate.json")
@@ -1117,11 +1047,7 @@ func (testsuite *MockTestSuite) TestApps_Delete() {
 	})
 	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Delete.json")
@@ -1135,32 +1061,27 @@ func (testsuite *MockTestSuite) TestApps_Update() {
 	})
 	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		armappplatform.AppResource{
-			Identity: &armappplatform.ManagedIdentityProperties{
-				Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", armappplatform.AppResource{
+		Identity: &armappplatform.ManagedIdentityProperties{
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+		},
+		Location: to.Ptr("eastus"),
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr("myapp.mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
 			},
-			Location: to.Ptr("eastus"),
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("mydeployment1"),
-				EnableEndToEndTLS:    to.Ptr(false),
-				Fqdn:                 to.Ptr("myapp.mydomain.com"),
-				HTTPSOnly:            to.Ptr(false),
-				PersistentDisk: &armappplatform.PersistentDisk{
-					MountPath: to.Ptr("/mypersistentdisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
-				Public: to.Ptr(true),
-				TemporaryDisk: &armappplatform.TemporaryDisk{
-					MountPath: to.Ptr("/mytemporarydisk"),
-					SizeInGB:  to.Ptr[int32](2),
-				},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_Update.json")
@@ -1209,9 +1130,7 @@ func (testsuite *MockTestSuite) TestApps_List() {
 	})
 	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myservice", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_List.json")
@@ -1264,14 +1183,9 @@ func (testsuite *MockTestSuite) TestApps_ValidateDomain() {
 	})
 	client, err := armappplatform.NewAppsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ValidateDomain(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		armappplatform.CustomDomainValidatePayload{
-			Name: to.Ptr("mydomain.io"),
-		},
-		nil)
+	res, err := client.ValidateDomain(ctx, "myResourceGroup", "myservice", "myapp", armappplatform.CustomDomainValidatePayload{
+		Name: to.Ptr("mydomain.io"),
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Apps_ValidateDomain.json")
 	// Response check
 	exampleRes := armappplatform.CustomDomainValidateResult{
@@ -1293,12 +1207,7 @@ func (testsuite *MockTestSuite) TestBindings_Get() {
 	})
 	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Get.json")
 	// Response check
 	exampleRes := armappplatform.BindingResource{
@@ -1333,22 +1242,16 @@ func (testsuite *MockTestSuite) TestBindings_CreateOrUpdate() {
 	})
 	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		armappplatform.BindingResource{
-			Properties: &armappplatform.BindingResourceProperties{
-				BindingParameters: map[string]interface{}{
-					"apiType":      "SQL",
-					"databaseName": "db1",
-				},
-				Key:        to.Ptr("xxxx"),
-				ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
+		Properties: &armappplatform.BindingResourceProperties{
+			BindingParameters: map[string]interface{}{
+				"apiType":      "SQL",
+				"databaseName": "db1",
 			},
+			Key:        to.Ptr("xxxx"),
+			ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_CreateOrUpdate.json")
@@ -1385,12 +1288,7 @@ func (testsuite *MockTestSuite) TestBindings_Delete() {
 	})
 	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Delete.json")
@@ -1404,21 +1302,15 @@ func (testsuite *MockTestSuite) TestBindings_Update() {
 	})
 	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		armappplatform.BindingResource{
-			Properties: &armappplatform.BindingResourceProperties{
-				BindingParameters: map[string]interface{}{
-					"apiType":      "SQL",
-					"databaseName": "db1",
-				},
-				Key: to.Ptr("xxxx"),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
+		Properties: &armappplatform.BindingResourceProperties{
+			BindingParameters: map[string]interface{}{
+				"apiType":      "SQL",
+				"databaseName": "db1",
 			},
+			Key: to.Ptr("xxxx"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_Update.json")
@@ -1455,10 +1347,7 @@ func (testsuite *MockTestSuite) TestBindings_List() {
 	})
 	client, err := armappplatform.NewBindingsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		"myapp",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Bindings_List.json")
@@ -1499,11 +1388,7 @@ func (testsuite *MockTestSuite) TestCertificates_Get() {
 	})
 	client, err := armappplatform.NewCertificatesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"mycertificate",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "mycertificate", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Get.json")
 	// Response check
 	exampleRes := armappplatform.CertificateResource{
@@ -1541,18 +1426,13 @@ func (testsuite *MockTestSuite) TestCertificates_CreateOrUpdate() {
 	})
 	client, err := armappplatform.NewCertificatesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"mycertificate",
-		armappplatform.CertificateResource{
-			Properties: &armappplatform.CertificateProperties{
-				CertVersion:      to.Ptr("08a219d06d874795a96db47e06fbb01e"),
-				KeyVaultCertName: to.Ptr("mycert"),
-				VaultURI:         to.Ptr("https://myvault.vault.azure.net"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "mycertificate", armappplatform.CertificateResource{
+		Properties: &armappplatform.CertificateProperties{
+			CertVersion:      to.Ptr("08a219d06d874795a96db47e06fbb01e"),
+			KeyVaultCertName: to.Ptr("mycert"),
+			VaultURI:         to.Ptr("https://myvault.vault.azure.net"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_CreateOrUpdate.json")
@@ -1592,11 +1472,7 @@ func (testsuite *MockTestSuite) TestCertificates_Delete() {
 	})
 	client, err := armappplatform.NewCertificatesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"mycertificate",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "mycertificate", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_Delete.json")
@@ -1610,9 +1486,7 @@ func (testsuite *MockTestSuite) TestCertificates_List() {
 	})
 	client, err := armappplatform.NewCertificatesClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"myService",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myService", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Certificates_List.json")
@@ -1656,12 +1530,7 @@ func (testsuite *MockTestSuite) TestCustomDomains_Get() {
 	})
 	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Get.json")
 	// Response check
 	exampleRes := armappplatform.CustomDomainResource{
@@ -1689,18 +1558,12 @@ func (testsuite *MockTestSuite) TestCustomDomains_CreateOrUpdate() {
 	})
 	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		armappplatform.CustomDomainResource{
-			Properties: &armappplatform.CustomDomainProperties{
-				CertName:   to.Ptr("mycert"),
-				Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
+		Properties: &armappplatform.CustomDomainProperties{
+			CertName:   to.Ptr("mycert"),
+			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_CreateOrUpdate.json")
@@ -1730,12 +1593,7 @@ func (testsuite *MockTestSuite) TestCustomDomains_Delete() {
 	})
 	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Delete.json")
@@ -1749,18 +1607,12 @@ func (testsuite *MockTestSuite) TestCustomDomains_Update() {
 	})
 	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		armappplatform.CustomDomainResource{
-			Properties: &armappplatform.CustomDomainProperties{
-				CertName:   to.Ptr("mycert"),
-				Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
+		Properties: &armappplatform.CustomDomainProperties{
+			CertName:   to.Ptr("mycert"),
+			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_Update.json")
@@ -1790,10 +1642,7 @@ func (testsuite *MockTestSuite) TestCustomDomains_List() {
 	})
 	client, err := armappplatform.NewCustomDomainsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		"myapp",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/CustomDomains_List.json")
@@ -1827,12 +1676,7 @@ func (testsuite *MockTestSuite) TestDeployments_Get() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Get.json")
 	// Response check
 	exampleRes := armappplatform.DeploymentResource{
@@ -1888,31 +1732,25 @@ func (testsuite *MockTestSuite) TestDeployments_CreateOrUpdate() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		armappplatform.DeploymentResource{
-			Properties: &armappplatform.DeploymentResourceProperties{
-				DeploymentSettings: &armappplatform.DeploymentSettings{
-					CPU: to.Ptr[int32](1),
-					EnvironmentVariables: map[string]*string{
-						"env": to.Ptr("test"),
-					},
-					JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
-					MemoryInGB:     to.Ptr[int32](3),
-					RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
+		Properties: &armappplatform.DeploymentResourceProperties{
+			DeploymentSettings: &armappplatform.DeploymentSettings{
+				CPU: to.Ptr[int32](1),
+				EnvironmentVariables: map[string]*string{
+					"env": to.Ptr("test"),
 				},
-				Source: &armappplatform.UserSourceInfo{
-					Type:             to.Ptr(armappplatform.UserSourceTypeSource),
-					ArtifactSelector: to.Ptr("sub-module-1"),
-					RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
-					Version:          to.Ptr("1.0"),
-				},
+				JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
+				MemoryInGB:     to.Ptr[int32](3),
+				RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+			},
+			Source: &armappplatform.UserSourceInfo{
+				Type:             to.Ptr(armappplatform.UserSourceTypeSource),
+				ArtifactSelector: to.Ptr("sub-module-1"),
+				RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+				Version:          to.Ptr("1.0"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json")
@@ -1970,12 +1808,7 @@ func (testsuite *MockTestSuite) TestDeployments_Delete() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Delete.json")
@@ -1989,22 +1822,16 @@ func (testsuite *MockTestSuite) TestDeployments_Update() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		armappplatform.DeploymentResource{
-			Properties: &armappplatform.DeploymentResourceProperties{
-				Source: &armappplatform.UserSourceInfo{
-					Type:             to.Ptr(armappplatform.UserSourceTypeSource),
-					ArtifactSelector: to.Ptr("sub-module-1"),
-					RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
-					Version:          to.Ptr("1.0"),
-				},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
+		Properties: &armappplatform.DeploymentResourceProperties{
+			Source: &armappplatform.UserSourceInfo{
+				Type:             to.Ptr(armappplatform.UserSourceTypeSource),
+				ArtifactSelector: to.Ptr("sub-module-1"),
+				RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+				Version:          to.Ptr("1.0"),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json")
 	res, err := poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Update.json")
@@ -2062,10 +1889,7 @@ func (testsuite *MockTestSuite) TestDeployments_List() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		"myapp",
-		&armappplatform.DeploymentsClientListOptions{Version: []string{}})
+	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", &armappplatform.DeploymentsClientListOptions{Version: []string{}})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_List.json")
@@ -2127,9 +1951,7 @@ func (testsuite *MockTestSuite) TestDeployments_ListForCluster() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	pager := client.NewListForClusterPager("myResourceGroup",
-		"myservice",
-		&armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
+	pager := client.NewListForClusterPager("myResourceGroup", "myservice", &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		testsuite.Require().NoError(err, "Failed to advance page for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_ListForCluster.json")
@@ -2191,12 +2013,7 @@ func (testsuite *MockTestSuite) TestDeployments_Start() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginStart(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginStart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Start.json")
@@ -2210,12 +2027,7 @@ func (testsuite *MockTestSuite) TestDeployments_Stop() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginStop(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginStop(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Stop.json")
@@ -2229,12 +2041,7 @@ func (testsuite *MockTestSuite) TestDeployments_Restart() {
 	})
 	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	poller, err := client.BeginRestart(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginRestart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json")
 	_, err = poller.PollUntilDone(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get LRO result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_Restart.json")
@@ -2284,8 +2091,7 @@ func (testsuite *MockTestSuite) TestRuntimeVersions_ListRuntimeVersions() {
 	})
 	client, err := armappplatform.NewRuntimeVersionsClient(testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
-	res, err := client.ListRuntimeVersions(ctx,
-		nil)
+	res, err := client.ListRuntimeVersions(ctx, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/RuntimeVersions_ListRuntimeVersions.json")
 	// Response check
 	exampleRes := armappplatform.AvailableRuntimeVersions{

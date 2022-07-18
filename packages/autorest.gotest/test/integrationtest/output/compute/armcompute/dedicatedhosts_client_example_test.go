@@ -28,23 +28,18 @@ func ExampleDedicatedHostsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDedicatedHostGroup",
-		"myDedicatedHost",
-		armcompute.DedicatedHost{
-			Location: to.Ptr("westus"),
-			Tags: map[string]*string{
-				"department": to.Ptr("HR"),
-			},
-			Properties: &armcompute.DedicatedHostProperties{
-				PlatformFaultDomain: to.Ptr[int32](1),
-			},
-			SKU: &armcompute.SKU{
-				Name: to.Ptr("DSv3-Type1"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDedicatedHostGroup", "myDedicatedHost", armcompute.DedicatedHost{
+		Location: to.Ptr("westus"),
+		Tags: map[string]*string{
+			"department": to.Ptr("HR"),
 		},
-		nil)
+		Properties: &armcompute.DedicatedHostProperties{
+			PlatformFaultDomain: to.Ptr[int32](1),
+		},
+		SKU: &armcompute.SKU{
+			Name: to.Ptr("DSv3-Type1"),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -67,11 +62,7 @@ func ExampleDedicatedHostsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myDedicatedHostGroup",
-		"myHost",
-		&armcompute.DedicatedHostsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myDedicatedHostGroup", "myHost", &armcompute.DedicatedHostsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

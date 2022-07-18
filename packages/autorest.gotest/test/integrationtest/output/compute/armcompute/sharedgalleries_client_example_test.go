@@ -27,8 +27,7 @@ func ExampleSharedGalleriesClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myLocation",
-		&armcompute.SharedGalleriesClientListOptions{SharedTo: nil})
+	pager := client.NewListPager("myLocation", &armcompute.SharedGalleriesClientListOptions{SharedTo: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -52,10 +51,7 @@ func ExampleSharedGalleriesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myLocation",
-		"galleryUniqueName",
-		nil)
+	res, err := client.Get(ctx, "myLocation", "galleryUniqueName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

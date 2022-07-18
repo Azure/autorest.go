@@ -28,20 +28,16 @@ func ExampleAvailabilitySetsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myAvailabilitySet",
-		armcompute.AvailabilitySet{
-			Location: to.Ptr("westus"),
-			AdditionalProperties: map[string]*string{
-				"anyProperty": to.Ptr("fakeValue"),
-			},
-			Properties: &armcompute.AvailabilitySetProperties{
-				PlatformFaultDomainCount:  to.Ptr[int32](2),
-				PlatformUpdateDomainCount: to.Ptr[int32](20),
-			},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "myAvailabilitySet", armcompute.AvailabilitySet{
+		Location: to.Ptr("westus"),
+		AdditionalProperties: map[string]*string{
+			"anyProperty": to.Ptr("fakeValue"),
 		},
-		nil)
+		Properties: &armcompute.AvailabilitySetProperties{
+			PlatformFaultDomainCount:  to.Ptr[int32](2),
+			PlatformUpdateDomainCount: to.Ptr[int32](20),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

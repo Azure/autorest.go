@@ -28,17 +28,15 @@ func ExampleDatastoresClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
-			Count:     to.Ptr[int32](1),
-			IsDefault: to.Ptr(false),
-			Names: []string{
-				"string"},
-			SearchText: to.Ptr("string"),
-			OrderBy:    to.Ptr("string"),
-			OrderByAsc: to.Ptr(false),
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.DatastoresClientListOptions{Skip: nil,
+		Count:     to.Ptr[int32](1),
+		IsDefault: to.Ptr(false),
+		Names: []string{
+			"string"},
+		SearchText: to.Ptr("string"),
+		OrderBy:    to.Ptr("string"),
+		OrderByAsc: to.Ptr(false),
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -62,11 +60,7 @@ func ExampleDatastoresClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -83,11 +77,7 @@ func ExampleDatastoresClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -96,7 +86,7 @@ func ExampleDatastoresClient_Get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
-func ExampleDatastoresClient_CreateOrUpdate() {
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -106,32 +96,145 @@ func ExampleDatastoresClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		armmachinelearningservices.DatastoreData{
-			Properties: &armmachinelearningservices.AzureDataLakeGen1Datastore{
-				Description: to.Ptr("string"),
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
-					CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
-					AuthorityURL:    to.Ptr("string"),
-					ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
-					ResourceURL:     to.Ptr("string"),
-					Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
-						SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
-						ClientSecret: to.Ptr("string"),
-					},
-					TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
-				},
-				DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen1),
-				StoreName:     to.Ptr("string"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureDataLakeGen1Datastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
+				AuthorityURL:    to.Ptr("string"),
+				ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
+				ResourceURL:     to.Ptr("string"),
+				Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
+					SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
+					ClientSecret: to.Ptr("string"),
+				},
+				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen1),
+			StoreName:     to.Ptr("string"),
 		},
-		&armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureDataLakeGen2Datastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Credentials: &armmachinelearningservices.ServicePrincipalDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeServicePrincipal),
+				AuthorityURL:    to.Ptr("string"),
+				ClientID:        to.Ptr("00000000-1111-2222-3333-444444444444"),
+				ResourceURL:     to.Ptr("string"),
+				Secrets: &armmachinelearningservices.ServicePrincipalDatastoreSecrets{
+					SecretsType:  to.Ptr(armmachinelearningservices.SecretsTypeServicePrincipal),
+					ClientSecret: to.Ptr("string"),
+				},
+				TenantID: to.Ptr("00000000-1111-2222-3333-444444444444"),
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureDataLakeGen2),
+			AccountName:   to.Ptr("string"),
+			Endpoint:      to.Ptr("string"),
+			Filesystem:    to.Ptr("string"),
+			Protocol:      to.Ptr("string"),
+		},
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureFileDatastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+				Secrets: &armmachinelearningservices.AccountKeyDatastoreSecrets{
+					SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
+					Key:         to.Ptr("string"),
+				},
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureFile),
+			AccountName:   to.Ptr("string"),
+			Endpoint:      to.Ptr("string"),
+			FileShareName: to.Ptr("string"),
+			Protocol:      to.Ptr("string"),
+		},
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewDatastoresClient("00000000-1111-2222-3333-444444444444", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", armmachinelearningservices.DatastoreData{
+		Properties: &armmachinelearningservices.AzureBlobDatastore{
+			Description: to.Ptr("string"),
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Credentials: &armmachinelearningservices.AccountKeyDatastoreCredentials{
+				CredentialsType: to.Ptr(armmachinelearningservices.CredentialsTypeAccountKey),
+				Secrets: &armmachinelearningservices.AccountKeyDatastoreSecrets{
+					SecretsType: to.Ptr(armmachinelearningservices.SecretsTypeAccountKey),
+					Key:         to.Ptr("string"),
+				},
+			},
+			DatastoreType: to.Ptr(armmachinelearningservices.DatastoreTypeAzureBlob),
+			AccountName:   to.Ptr("string"),
+			ContainerName: to.Ptr("string"),
+			Endpoint:      to.Ptr("core.windows.net"),
+			Protocol:      to.Ptr("https"),
+		},
+	}, &armmachinelearningservices.DatastoresClientCreateOrUpdateOptions{SkipValidation: to.Ptr(false)})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -150,11 +253,7 @@ func ExampleDatastoresClient_ListSecrets() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListSecrets(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		nil)
+	res, err := client.ListSecrets(ctx, "test-rg", "my-aml-workspace", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

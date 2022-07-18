@@ -28,9 +28,7 @@ func ExamplePrivateEndpointConnectionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"mySignalRService",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "mySignalRService", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -54,11 +52,7 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	res, err := client.Get(ctx, "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e", "myResourceGroup", "mySignalRService", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -77,22 +71,17 @@ func ExamplePrivateEndpointConnectionsClient_Update() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Update(ctx,
-		"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-		"myResourceGroup",
-		"mySignalRService",
-		armsignalr.PrivateEndpointConnection{
-			Properties: &armsignalr.PrivateEndpointConnectionProperties{
-				PrivateEndpoint: &armsignalr.PrivateEndpoint{
-					ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-				},
-				PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-					ActionsRequired: to.Ptr("None"),
-					Status:          to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-				},
+	res, err := client.Update(ctx, "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e", "myResourceGroup", "mySignalRService", armsignalr.PrivateEndpointConnection{
+		Properties: &armsignalr.PrivateEndpointConnectionProperties{
+			PrivateEndpoint: &armsignalr.PrivateEndpoint{
+				ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+			},
+			PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+				ActionsRequired: to.Ptr("None"),
+				Status:          to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -111,11 +100,7 @@ func ExamplePrivateEndpointConnectionsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-		"myResourceGroup",
-		"mySignalRService",
-		nil)
+	poller, err := client.BeginDelete(ctx, "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e", "myResourceGroup", "mySignalRService", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

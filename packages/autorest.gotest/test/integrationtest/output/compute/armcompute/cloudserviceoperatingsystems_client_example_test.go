@@ -27,10 +27,7 @@ func ExampleCloudServiceOperatingSystemsClient_GetOSVersion() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetOSVersion(ctx,
-		"westus2",
-		"WA-GUEST-OS-3.90_202010-02",
-		nil)
+	res, err := client.GetOSVersion(ctx, "westus2", "WA-GUEST-OS-3.90_202010-02", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -49,8 +46,7 @@ func ExampleCloudServiceOperatingSystemsClient_NewListOSVersionsPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListOSVersionsPager("westus2",
-		nil)
+	pager := client.NewListOSVersionsPager("westus2", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -74,10 +70,7 @@ func ExampleCloudServiceOperatingSystemsClient_GetOSFamily() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetOSFamily(ctx,
-		"westus2",
-		"3",
-		nil)
+	res, err := client.GetOSFamily(ctx, "westus2", "3", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -96,8 +89,7 @@ func ExampleCloudServiceOperatingSystemsClient_NewListOSFamiliesPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListOSFamiliesPager("westus2",
-		nil)
+	pager := client.NewListOSFamiliesPager("westus2", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
