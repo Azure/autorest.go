@@ -16,11 +16,15 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
     // no polymorphic types
     return '';
   }
+  const discriminators = <Array<ObjectSchema>>session.model.language.go!.discriminators.filter((d: ObjectSchema) => !d.language.go!.omitType);
+  if (discriminators.length === 0) {
+    // all polymorphic types omitted
+    return '';
+  }
   let text = await contentPreamble(session);
   const imports = new ImportManager();
   imports.add('encoding/json');
   text += imports.text();
-  const discriminators = <Array<ObjectSchema>>session.model.language.go!.discriminators;
   // add any sub-hierarchies (SalmonType, SharkType in the test server) to the list
   for (const disc of values(discriminators)) {
     for (const val of values(disc.discriminator!.all)) {
