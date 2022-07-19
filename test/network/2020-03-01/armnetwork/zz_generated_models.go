@@ -1593,20 +1593,6 @@ type AvailableServiceAliasesResult struct {
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 }
 
-// AzureAsyncOperationResult - The response body contains the status of the specified asynchronous operation, indicating whether
-// it has succeeded, is in progress, or has failed. Note that this status is distinct from the HTTP
-// status code returned for the Get Operation Status operation itself. If the asynchronous operation succeeded, the response
-// body includes the HTTP status code for the successful request. If the
-// asynchronous operation failed, the response body includes the HTTP status code for the failed request and error information
-// regarding the failure.
-type AzureAsyncOperationResult struct {
-	// Details of the error occurred during specified asynchronous operation.
-	Error *Error `json:"error,omitempty"`
-
-	// Status of the Azure async operation.
-	Status *NetworkOperationStatus `json:"status,omitempty"`
-}
-
 // AzureFirewall - Azure Firewall resource.
 type AzureFirewall struct {
 	// Resource ID.
@@ -2443,27 +2429,6 @@ type BgpSettings struct {
 type CheckPrivateLinkServiceVisibilityRequest struct {
 	// The alias of the private link service.
 	PrivateLinkServiceAlias *string `json:"privateLinkServiceAlias,omitempty"`
-}
-
-// CloudError - An error response from the service.
-type CloudError struct {
-	// Cloud error body.
-	Error *CloudErrorBody `json:"error,omitempty"`
-}
-
-// CloudErrorBody - An error response from the service.
-type CloudErrorBody struct {
-	// An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-	Code *string `json:"code,omitempty"`
-
-	// A list of additional details about the error.
-	Details []*CloudErrorBody `json:"details,omitempty"`
-
-	// A message describing the error, intended to be suitable for display in a user interface.
-	Message *string `json:"message,omitempty"`
-
-	// The target of the particular error. For example, the name of the property in error.
-	Target *string `json:"target,omitempty"`
 }
 
 type Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties struct {
@@ -3457,42 +3422,6 @@ type EndpointServicesListResult struct {
 
 	// List of available endpoint services in a region.
 	Value []*EndpointServiceResult `json:"value,omitempty"`
-}
-
-// Error - Common error representation.
-type Error struct {
-	// Error code.
-	Code *string `json:"code,omitempty"`
-
-	// Error details.
-	Details []*ErrorDetails `json:"details,omitempty"`
-
-	// Inner error message.
-	InnerError *string `json:"innerError,omitempty"`
-
-	// Error message.
-	Message *string `json:"message,omitempty"`
-
-	// Error target.
-	Target *string `json:"target,omitempty"`
-}
-
-// ErrorDetails - Common error details representation.
-type ErrorDetails struct {
-	// Error code.
-	Code *string `json:"code,omitempty"`
-
-	// Error message.
-	Message *string `json:"message,omitempty"`
-
-	// Error target.
-	Target *string `json:"target,omitempty"`
-}
-
-// ErrorResponse - The error object.
-type ErrorResponse struct {
-	// The error details object.
-	Error *ErrorDetails `json:"error,omitempty"`
 }
 
 // EvaluatedNetworkSecurityGroup - Results of network security group evaluation.
@@ -7473,42 +7402,6 @@ type PacketCapturesClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PatchRouteFilter - Route Filter Resource.
-type PatchRouteFilter struct {
-	// Resource ID.
-	ID *string `json:"id,omitempty"`
-
-	// Properties of the route filter.
-	Properties *RouteFilterPropertiesFormat `json:"properties,omitempty"`
-
-	// Resource tags.
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// PatchRouteFilterRule - Route Filter Rule Resource.
-type PatchRouteFilterRule struct {
-	// Resource ID.
-	ID *string `json:"id,omitempty"`
-
-	// Properties of the route filter rule.
-	Properties *RouteFilterRulePropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty" azure:"ro"`
-}
-
 // PeerExpressRouteCircuitConnection - Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
 type PeerExpressRouteCircuitConnection struct {
 	// Resource ID.
@@ -8514,24 +8407,6 @@ type ReferencedPublicIPAddress struct {
 	ID *string `json:"id,omitempty"`
 }
 
-// Resource - Common resource representation.
-type Resource struct {
-	// Resource ID.
-	ID *string `json:"id,omitempty"`
-
-	// Resource location.
-	Location *string `json:"location,omitempty"`
-
-	// Resource tags.
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // ResourceNavigationLink resource.
 type ResourceNavigationLink struct {
 	// Resource ID.
@@ -8574,12 +8449,6 @@ type ResourceNavigationLinksListResult struct {
 
 	// READ-ONLY; The URL to get the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// ResourceSet - The base resource set for visibility and auto-approval.
-type ResourceSet struct {
-	// The list of subscriptions.
-	Subscriptions []*string `json:"subscriptions,omitempty"`
 }
 
 // RetentionPolicyParameters - Parameters that define the retention policy for flow log.
@@ -10526,12 +10395,6 @@ type VPNSite struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// VPNSiteID - VpnSite Resource.
-type VPNSiteID struct {
-	// READ-ONLY; The resource-uri of the vpn-site for which config is to be fetched.
-	VPNSite *string `json:"vpnSite,omitempty" azure:"ro"`
 }
 
 // VPNSiteLink - VpnSiteLink Resource.

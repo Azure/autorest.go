@@ -9,67 +9,6 @@
 
 package errorsgroup
 
-type Animal struct {
-	AniType *string `json:"aniType,omitempty"`
-}
-
-type AnimalNotFound struct {
-	// REQUIRED
-	WhatNotFound *string `json:"whatNotFound,omitempty"`
-	Name         *string `json:"name,omitempty"`
-	Reason       *string `json:"reason,omitempty"`
-	SomeBaseProp *string `json:"someBaseProp,omitempty"`
-}
-
-// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type AnimalNotFound.
-func (a *AnimalNotFound) GetNotFoundErrorBase() *NotFoundErrorBase {
-	return &NotFoundErrorBase{
-		Reason:       a.Reason,
-		WhatNotFound: a.WhatNotFound,
-		SomeBaseProp: a.SomeBaseProp,
-	}
-}
-
-type BaseError struct {
-	SomeBaseProp *string `json:"someBaseProp,omitempty"`
-}
-
-type LinkNotFound struct {
-	// REQUIRED
-	WhatNotFound   *string `json:"whatNotFound,omitempty"`
-	Reason         *string `json:"reason,omitempty"`
-	SomeBaseProp   *string `json:"someBaseProp,omitempty"`
-	WhatSubAddress *string `json:"whatSubAddress,omitempty"`
-}
-
-// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type LinkNotFound.
-func (l *LinkNotFound) GetNotFoundErrorBase() *NotFoundErrorBase {
-	return &NotFoundErrorBase{
-		Reason:       l.Reason,
-		WhatNotFound: l.WhatNotFound,
-		SomeBaseProp: l.SomeBaseProp,
-	}
-}
-
-// NotFoundErrorBaseClassification provides polymorphic access to related types.
-// Call the interface's GetNotFoundErrorBase() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
-type NotFoundErrorBaseClassification interface {
-	// GetNotFoundErrorBase returns the NotFoundErrorBase content of the underlying type.
-	GetNotFoundErrorBase() *NotFoundErrorBase
-}
-
-type NotFoundErrorBase struct {
-	// REQUIRED
-	WhatNotFound *string `json:"whatNotFound,omitempty"`
-	Reason       *string `json:"reason,omitempty"`
-	SomeBaseProp *string `json:"someBaseProp,omitempty"`
-}
-
-// GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type NotFoundErrorBase.
-func (n *NotFoundErrorBase) GetNotFoundErrorBase() *NotFoundErrorBase { return n }
-
 type Pet struct {
 	AniType *string `json:"aniType,omitempty"`
 
@@ -81,29 +20,6 @@ type PetAction struct {
 	// action feedback
 	ActionResponse *string `json:"actionResponse,omitempty"`
 }
-
-// PetActionErrorClassification provides polymorphic access to related types.
-// Call the interface's GetPetActionError() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
-type PetActionErrorClassification interface {
-	// GetPetActionError returns the PetActionError content of the underlying type.
-	GetPetActionError() *PetActionError
-}
-
-type PetActionError struct {
-	// REQUIRED
-	ErrorType *string `json:"errorType,omitempty"`
-
-	// action feedback
-	ActionResponse *string `json:"actionResponse,omitempty"`
-
-	// the error message
-	ErrorMessage *string `json:"errorMessage,omitempty"`
-}
-
-// GetPetActionError implements the PetActionErrorClassification interface for type PetActionError.
-func (p *PetActionError) GetPetActionError() *PetActionError { return p }
 
 // PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 type PetClientDoSomethingOptions struct {
@@ -121,75 +37,3 @@ type PetClientHasModelsParamOptions struct {
 	// value in call
 	Models *string
 }
-
-type PetHungryOrThirstyError struct {
-	// REQUIRED
-	ErrorType *string `json:"errorType,omitempty"`
-
-	// action feedback
-	ActionResponse *string `json:"actionResponse,omitempty"`
-
-	// the error message
-	ErrorMessage *string `json:"errorMessage,omitempty"`
-
-	// is the pet hungry or thirsty or both
-	HungryOrThirsty *string `json:"hungryOrThirsty,omitempty"`
-
-	// why is the pet sad
-	Reason *string `json:"reason,omitempty"`
-}
-
-// GetPetActionError implements the PetActionErrorClassification interface for type PetHungryOrThirstyError.
-func (p *PetHungryOrThirstyError) GetPetActionError() *PetActionError {
-	return &PetActionError{
-		ErrorType:      p.ErrorType,
-		ErrorMessage:   p.ErrorMessage,
-		ActionResponse: p.ActionResponse,
-	}
-}
-
-// GetPetSadError implements the PetSadErrorClassification interface for type PetHungryOrThirstyError.
-func (p *PetHungryOrThirstyError) GetPetSadError() *PetSadError {
-	return &PetSadError{
-		Reason:         p.Reason,
-		ErrorType:      p.ErrorType,
-		ErrorMessage:   p.ErrorMessage,
-		ActionResponse: p.ActionResponse,
-	}
-}
-
-// PetSadErrorClassification provides polymorphic access to related types.
-// Call the interface's GetPetSadError() method to access the common type.
-// Use a type switch to determine the concrete type.  The possible types are:
-// - *PetHungryOrThirstyError, *PetSadError
-type PetSadErrorClassification interface {
-	PetActionErrorClassification
-	// GetPetSadError returns the PetSadError content of the underlying type.
-	GetPetSadError() *PetSadError
-}
-
-type PetSadError struct {
-	// REQUIRED
-	ErrorType *string `json:"errorType,omitempty"`
-
-	// action feedback
-	ActionResponse *string `json:"actionResponse,omitempty"`
-
-	// the error message
-	ErrorMessage *string `json:"errorMessage,omitempty"`
-
-	// why is the pet sad
-	Reason *string `json:"reason,omitempty"`
-}
-
-// GetPetActionError implements the PetActionErrorClassification interface for type PetSadError.
-func (p *PetSadError) GetPetActionError() *PetActionError {
-	return &PetActionError{
-		ErrorType:      p.ErrorType,
-		ErrorMessage:   p.ErrorMessage,
-		ActionResponse: p.ActionResponse,
-	}
-}
-
-// GetPetSadError implements the PetSadErrorClassification interface for type PetSadError.
-func (p *PetSadError) GetPetSadError() *PetSadError { return p }

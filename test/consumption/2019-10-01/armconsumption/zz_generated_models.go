@@ -399,38 +399,6 @@ type CurrentSpend struct {
 	Unit *string `json:"unit,omitempty" azure:"ro"`
 }
 
-// DownloadProperties - The properties of the price sheet download.
-type DownloadProperties struct {
-	// READ-ONLY; The link (url) to download the pricesheet.
-	DownloadURL *string `json:"downloadUrl,omitempty" azure:"ro"`
-
-	// READ-ONLY; Download link validity.
-	ValidTill *string `json:"validTill,omitempty" azure:"ro"`
-}
-
-// ErrorDetails - The details of the error.
-type ErrorDetails struct {
-	// READ-ONLY; Error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; Error message indicating why the operation failed.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
-// ErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason is provided
-// in the error message.
-// Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
-// header.
-//
-//
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
-// header.
-type ErrorResponse struct {
-	// The details of the error.
-	Error *ErrorDetails `json:"error,omitempty"`
-}
-
 // EventProperties - The event properties.
 type EventProperties struct {
 	// The type of event.
@@ -599,29 +567,6 @@ type ForecastsListResult struct {
 	Value []*Forecast `json:"value,omitempty" azure:"ro"`
 }
 
-// HighCasedErrorDetails - The details of the error.
-type HighCasedErrorDetails struct {
-	// READ-ONLY; Error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; Error message indicating why the operation failed.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
-// HighCasedErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason
-// is provided in the error message.
-// Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
-// header.
-//
-//
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
-// header.
-type HighCasedErrorResponse struct {
-	// The details of the error.
-	Error *HighCasedErrorDetails `json:"error,omitempty"`
-}
-
 // LegacyChargeSummary - Legacy charge summary.
 type LegacyChargeSummary struct {
 	// REQUIRED; Specifies the kind of charge summary.
@@ -772,24 +717,6 @@ type LegacyReservationRecommendationProperties struct {
 
 	// READ-ONLY; The total amount of cost with reserved instances.
 	TotalCostWithReservedInstances *float64 `json:"totalCostWithReservedInstances,omitempty" azure:"ro"`
-}
-
-// LegacyReservationTransaction - Legacy Reservation transaction resource.
-type LegacyReservationTransaction struct {
-	// The properties of a legacy reservation transaction.
-	Properties *LegacyReservationTransactionProperties `json:"properties,omitempty"`
-
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource tags.
-	Tags []*string `json:"tags,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // LegacyReservationTransactionProperties - The properties of a legacy reservation transaction.
@@ -2016,22 +1943,6 @@ type PriceSheetResult struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// ProxyResource - The Resource model definition.
-type ProxyResource struct {
-	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
-	// the latest version or not.
-	ETag *string `json:"eTag,omitempty"`
-
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // Reseller details
 type Reseller struct {
 	// READ-ONLY; Reseller Description.
@@ -2429,21 +2340,6 @@ type ReservationTransaction struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// ReservationTransactionResource - The Resource model definition.
-type ReservationTransactionResource struct {
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource tags.
-	Tags []*string `json:"tags,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 // ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
 // method.
 type ReservationTransactionsClientListByBillingProfileOptions struct {
@@ -2522,33 +2418,6 @@ type ReservationsSummariesClientListOptions struct {
 	ReservationOrderID *string
 	// Start date. Required only when querying with billing profile
 	StartDate *string
-}
-
-// Resource - The Resource model definition.
-type Resource struct {
-	// READ-ONLY; Resource etag.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource Id.
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource tags.
-	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// ResourceAttributes - The Resource model definition.
-type ResourceAttributes struct {
-	// READ-ONLY; Resource location
-	Location *string `json:"location,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource sku
-	SKU *string `json:"sku,omitempty" azure:"ro"`
 }
 
 // SKUProperty - The Sku property

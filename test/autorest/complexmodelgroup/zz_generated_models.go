@@ -44,11 +44,6 @@ type ComplexModelClientUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // Product - The product documentation.
 type Product struct {
 	// Capacity of product. For example, 4 people.

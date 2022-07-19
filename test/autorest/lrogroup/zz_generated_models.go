@@ -9,11 +9,6 @@
 
 package lrogroup
 
-type CloudError struct {
-	Code    *int32  `json:"code,omitempty"`
-	Message *string `json:"message,omitempty"`
-}
-
 // LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
 // method.
 type LRORetrysClientBeginDelete202Retry200Options struct {
@@ -603,21 +598,6 @@ type LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions struct {
 	ResumeToken string
 }
 
-type OperationResult struct {
-	Error *OperationResultError `json:"error,omitempty"`
-
-	// The status of the request
-	Status *OperationResultStatus `json:"status,omitempty"`
-}
-
-type OperationResultError struct {
-	// The error code for an operation failure
-	Code *int32 `json:"code,omitempty"`
-
-	// The detailed arror message
-	Message *string `json:"message,omitempty"`
-}
-
 type Product struct {
 	// Resource Location
 	Location   *string            `json:"location,omitempty"`
@@ -643,23 +623,6 @@ type ProductProperties struct {
 	ProvisioningStateValues *ProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
 }
 
-type Resource struct {
-	// Resource Location
-	Location *string `json:"location,omitempty"`
-
-	// Dictionary of
-	Tags map[string]*string `json:"tags,omitempty"`
-
-	// READ-ONLY; Resource Id
-	ID *string `json:"id,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource Name
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; Resource Type
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
 type SKU struct {
 	ID   *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
@@ -677,9 +640,4 @@ type SubProductProperties struct {
 
 	// READ-ONLY
 	ProvisioningStateValues *SubProductPropertiesProvisioningStateValues `json:"provisioningStateValues,omitempty" azure:"ro"`
-}
-
-type SubResource struct {
-	// READ-ONLY; Sub Resource Id
-	ID *string `json:"id,omitempty" azure:"ro"`
 }

@@ -7,7 +7,7 @@ import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema, BinarySchema, StringSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, hasAdditionalProperties, isBinaryResponseOperation, isMultiRespOperation, isTypePassedByValue, isObjectSchema, isSchemaResponse, isLROOperation, isOutputOnly, isPageableOperation, isArraySchema, isDictionarySchema, aggregateProperties } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
 import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
@@ -22,6 +22,7 @@ export async function transform(host: AutorestExtensionHost) {
     // run the namer first, so that any transformations are applied on proper names
     await namer(session);
     await process(session);
+    await labelUnreferencedTypes(session);
 
     // output the model to the pipeline
     host.writeFile({
@@ -937,4 +938,97 @@ function parseComments(comment: string): string {
     wordwrap: 200,
     tables: true,
   });
+}
+
+
+// This function try to label all unreferenced types before doing transform.
+async function labelUnreferencedTypes(session: Session<CodeModel>) {
+  const model = session.model;
+
+  const isRemoveUnreferencedTypes = await session.getValue('remove-unreferenced-types', false);
+
+  if (!isRemoveUnreferencedTypes) return;
+
+  const referencedTypes = new Set<Schema>();
+
+  iterateOperations(model, referencedTypes);
+
+  labelOmitTypes(model.schemas.choices, referencedTypes);
+  labelOmitTypes(model.schemas.sealedChoices, referencedTypes);
+  labelOmitTypes(model.schemas.objects, referencedTypes);
+}
+
+// This function help to label omit types according to the referencedTypes set.
+function labelOmitTypes<Type extends Schema>(modelSchemas: Array<Type> | undefined, referencedSet: Set<Type>) {
+  if (modelSchemas){
+    for (const schema of modelSchemas){
+      if (!referencedSet.has(schema)){
+        schema.language.go!.omitType = true;
+      }
+    }
+  }
+}
+
+// This function iterate all the operations in all operation groups and try to find all the referenced types (including choices, sealedChoices and objects).
+// For each operation, we will aggregate all the parameters' type of the operation and put them into the referencedTypes set.
+// Also, all responses body types and header types will be put into the referencedTypes set.
+// Some special cases: exceptions response types, x-ms-odata types.
+function iterateOperations(model: CodeModel, referencedTypes: Set<Schema>) {
+  for (const group of values(model.operationGroups)) {
+    for (const op of values(group.operations)) {
+      for (const param of values(aggregateParameters(op))) {
+        dfsSchema(param.schema, referencedTypes);
+      }
+      // We do not use error responses' definition to unmarshal response. So exceptions will be ignored.
+      // const responses = values(op.responses).concat(values(op.exceptions));
+      const responses = values(op.responses);
+      for (const resp of values(responses)) {
+        if (isSchemaResponse(resp)) {
+          dfsSchema(resp.schema, referencedTypes);
+        }
+        const httpResponse = <HttpResponse>resp.protocol.http;
+        for (const header of values(httpResponse.headers)) {
+          dfsSchema(header.schema, referencedTypes);
+        }
+      }
+      // Such odata definition is not used directly in operation. But it seems the model is a detailed definition for some string param. Reserve for now.
+      if (op.extensions?.['x-ms-odata']) {
+        const schemaParts = op.extensions['x-ms-odata'].split('/');
+        const schema = values(model.schemas.objects).where((o) => o.language.default.name === schemaParts[schemaParts.length - 1]).first();
+        if (schema) {
+          dfsSchema(schema, referencedTypes);
+        }
+      }
+    }
+  }
+}
+
+// This function will do a depth first search for the root types.
+// All visited types will be put into referencedTypes set.
+// Objects children/parents will also be searched.
+function dfsSchema(schema: Schema, referencedTypes: Set<Schema>) {
+  if (referencedTypes.has(schema)) return;
+  referencedTypes.add(schema);
+  if (isObjectSchema(schema)) {
+    const allProps = aggregateProperties(schema);
+    for (const prop of allProps){
+      dfsSchema(prop.schema, referencedTypes);
+    }
+    // If schema is a discriminator, then reserve all the children
+    if (schema.discriminator) {
+      for (const child of values(schema.children?.all)) {
+        dfsSchema(child, referencedTypes);
+      }
+    }
+    // If schema is has allOf, then reserve all the parents
+    for (const parent of values(schema.parents?.immediate)) {
+      if (isObjectSchema(parent) && parent.discriminator) {
+        dfsSchema(parent, referencedTypes);
+      }
+    }
+  } else if (isArraySchema(schema)) {
+    dfsSchema(schema.elementType, referencedTypes);
+  } else if (isDictionarySchema(schema)) {
+    dfsSchema(schema.elementType, referencedTypes);
+  }
 }

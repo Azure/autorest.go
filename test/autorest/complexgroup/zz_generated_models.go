@@ -89,13 +89,6 @@ type ByteWrapper struct {
 	Field []byte `json:"field,omitempty"`
 }
 
-type Cat struct {
-	Color *string `json:"color,omitempty"`
-	Hates []*Dog  `json:"hates,omitempty"`
-	ID    *int32  `json:"id,omitempty"`
-	Name  *string `json:"name,omitempty"`
-}
-
 type Cookiecuttershark struct {
 	// REQUIRED
 	Birthday *time.Time `json:"birthday,omitempty"`
@@ -238,11 +231,6 @@ type DurationWrapper struct {
 	Field *string `json:"field,omitempty"`
 }
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // FishClassification provides polymorphic access to related types.
 // Call the interface's GetFish() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -373,11 +361,6 @@ func (m *MyDerivedType) GetMyBaseType() *MyBaseType {
 		PropB1: m.PropB1,
 		Helper: m.Helper,
 	}
-}
-
-type Pet struct {
-	ID   *int32  `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
 }
 
 // PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid

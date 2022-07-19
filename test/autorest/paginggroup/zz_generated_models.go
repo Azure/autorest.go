@@ -22,11 +22,6 @@ type ODataProductResult struct {
 	Values        []*Product `json:"values,omitempty"`
 }
 
-type OperationResult struct {
-	// The status of the request
-	Status *OperationResultStatus `json:"status,omitempty"`
-}
-
 // PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
 type PagingClientBeginGetMultiplePagesLROOptions struct {

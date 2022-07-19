@@ -74,6 +74,9 @@ function getEnums(schemas: Schemas): EnumEntry[] {
   // group all enum categories into a single array so they can be sorted
   const enums = new Array<EnumEntry>();
   for (const choice of values(schemas.choices)) {
+    if (choice.language.go!.omitType) {
+      continue;
+    }
     choice.choices.sort((a: ChoiceValue, b: ChoiceValue) => { return sortAscending(a.language.go!.name, b.language.go!.name); });
     const entry = new EnumEntry(choice.language.go!.name, choice.choiceType.language.go!.name, choice.language.go!.possibleValuesFunc, choice.choices);
     if (hasDescription(choice.language.go!)) {
@@ -82,6 +85,9 @@ function getEnums(schemas: Schemas): EnumEntry[] {
     enums.push(entry);
   }
   for (const choice of values(schemas.sealedChoices)) {
+    if (choice.language.go!.omitType) {
+      continue;
+    }
     if (choice.choices.length === 1) {
       continue;
     }
