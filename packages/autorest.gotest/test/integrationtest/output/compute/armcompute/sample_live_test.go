@@ -65,10 +65,7 @@ func (testsuite *SampleTestSuite) Prepare() {
 	// From step Delete-proximity-placement-group
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.resourceName,
-		nil)
+	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
 	testsuite.Require().NoError(err)
 }
 
@@ -117,80 +114,69 @@ func (testsuite *SampleTestSuite) TestMicrosoftSignalrserviceBasicCrud() {
 	// From step Create-or-Update-a-proximity-placement-group
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.resourceName,
-		armcompute.ProximityPlacementGroup{
-			Location: to.Ptr(testsuite.location),
-			Properties: &armcompute.ProximityPlacementGroupProperties{
-				ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
-			},
+	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, armcompute.ProximityPlacementGroup{
+		Location: to.Ptr(testsuite.location),
+		Properties: &armcompute.ProximityPlacementGroupProperties{
+			ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	fakeScenarioVar = *proximityPlacementGroupsClientCreateOrUpdateResponse.ID
 
 	// From step Delete-proximity_placement_group
-	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.resourceName,
-		nil)
+	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Create_a_vm_with_Host_Encryption_using_encryptionAtHost_property
 	virtualMachinesClient, err := armcompute.NewVirtualMachinesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	testsuite.fakeStepVar = "signalrswaggertest6"
-	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr(testsuite.location),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr(testsuite.fakeStepVar),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr(testsuite.location),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr(testsuite.fakeStepVar),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/" + testsuite.subscriptionId + "/resourceGroups/" + testsuite.resourceGroupName + "/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				SecurityProfile: &armcompute.SecurityProfile{
-					EncryptionAtHost: to.Ptr(true),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr(fakeScenarioVar),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/" + testsuite.subscriptionId + "/resourceGroups/" + testsuite.resourceGroupName + "/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			SecurityProfile: &armcompute.SecurityProfile{
+				EncryptionAtHost: to.Ptr(true),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr(fakeScenarioVar),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, virtualMachinesClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
@@ -200,9 +186,6 @@ func (testsuite *SampleTestSuite) TestMicrosoftSignalrserviceDeleteonly() {
 	// From step Delete_proximity_placement_group
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.resourceName,
-		nil)
+	_, err = proximityPlacementGroupsClient.Delete(testsuite.ctx, testsuite.resourceGroupName, testsuite.resourceName, nil)
 	testsuite.Require().NoError(err)
 }

@@ -9954,14 +9954,14 @@ testModel:
                   rawValue: 2021-06-01-preview
                   language: *ref_353
                 parameter: *ref_173
-            clientParametersOutput: ''
-            clientParametersPlaceholderOutput: ''
+            clientParametersOutput: []
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_367
             methodParameters: []
-            methodParametersOutput: nil
-            methodParametersPlaceholderOutput: nil
+            methodParametersOutput:
+              - paramName: options
+                paramOutput: nil
             opName: NewListPager
             operation: *ref_354
             operationGroup: *ref_355
@@ -10056,8 +10056,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -10080,22 +10081,19 @@ testModel:
                       language: *ref_371
                   language: *ref_372
                 parameter: *ref_184
-            methodParametersOutput: |-
-              ctx,
-              "eastus",
-              armsignalr.NameAvailabilityParameters{
-              Name: to.Ptr("mySignalRService"),
-              Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-              },
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "eastus",
-              armsignalr.NameAvailabilityParameters{
-              Name: to.Ptr("mySignalRService"),
-              Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-              },
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: location
+                paramOutput: '"eastus"'
+              - paramName: parameters
+                paramOutput: |-
+                  armsignalr.NameAvailabilityParameters{
+                  Name: to.Ptr("mySignalRService"),
+                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+                  }
+              - paramName: options
+                paramOutput: nil
             opName: CheckNameAvailability
             operation: *ref_373
             operationGroup: *ref_374
@@ -10147,14 +10145,16 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_444
             methodParameters: []
-            methodParametersOutput: nil
-            methodParametersPlaceholderOutput: nil
+            methodParametersOutput:
+              - paramName: options
+                paramOutput: nil
             opName: NewListBySubscriptionPager
             operation: *ref_379
             operationGroup: *ref_374
@@ -10813,8 +10813,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_448
@@ -10824,12 +10825,11 @@ testModel:
                   rawValue: myResourceGroup
                   language: *ref_445
                 parameter: *ref_199
-            methodParametersOutput: |-
-              "myResourceGroup",
-              nil
-            methodParametersPlaceholderOutput: |-
-              "myResourceGroup",
-              nil
+            methodParametersOutput:
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: options
+                paramOutput: nil
             opName: NewListByResourceGroupPager
             operation: *ref_446
             operationGroup: *ref_374
@@ -11488,8 +11488,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -11503,16 +11504,15 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_450
                 parameter: *ref_206
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: Get
             operation: *ref_451
             operationGroup: *ref_374
@@ -12158,8 +12158,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -12416,178 +12417,98 @@ testModel:
                       language: *ref_440
                   language: *ref_462
                 parameter: *ref_212
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.ResourceInfo{
-              Location: to.Ptr("eastus"),
-              Tags: map[string]*string{
-              "key1": to.Ptr("value1"),
-              },
-              Identity: &armsignalr.ManagedIdentity{
-              Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-              },
-              Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-              Properties: &armsignalr.Properties{
-              Cors: &armsignalr.CorsSettings{
-              AllowedOrigins: []*string{
-              to.Ptr("https://foo.com"),
-              to.Ptr("https://bar.com")},
-              },
-              DisableAADAuth: to.Ptr(false),
-              DisableLocalAuth: to.Ptr(false),
-              Features: []*armsignalr.Feature{
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("Serverless"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("True"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              }},
-              NetworkACLs: &armsignalr.NetworkACLs{
-              DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-              PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-              {
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-              Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-              }},
-              PublicNetwork: &armsignalr.NetworkACL{
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-              },
-              },
-              PublicNetworkAccess: to.Ptr("Enabled"),
-              TLS: &armsignalr.TLSSettings{
-              ClientCertEnabled: to.Ptr(false),
-              },
-              Upstream: &armsignalr.ServerlessUpstreamSettings{
-              Templates: []*armsignalr.UpstreamTemplate{
-              {
-              Auth: &armsignalr.UpstreamAuthSettings{
-              Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-              ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-              Resource: to.Ptr("api://example"),
-              },
-              },
-              CategoryPattern: to.Ptr("*"),
-              EventPattern: to.Ptr("connect,disconnect"),
-              HubPattern: to.Ptr("*"),
-              URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-              }},
-              },
-              },
-              SKU: &armsignalr.ResourceSKU{
-              Name: to.Ptr("Standard_S1"),
-              Capacity: to.Ptr[int32](1),
-              Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-              },
-              },
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.ResourceInfo{
-              Location: to.Ptr("eastus"),
-              Tags: map[string]*string{
-              "key1": to.Ptr("value1"),
-              },
-              Identity: &armsignalr.ManagedIdentity{
-              Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-              },
-              Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-              Properties: &armsignalr.Properties{
-              Cors: &armsignalr.CorsSettings{
-              AllowedOrigins: []*string{
-              to.Ptr("https://foo.com"),
-              to.Ptr("https://bar.com")},
-              },
-              DisableAADAuth: to.Ptr(false),
-              DisableLocalAuth: to.Ptr(false),
-              Features: []*armsignalr.Feature{
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("Serverless"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("True"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              }},
-              NetworkACLs: &armsignalr.NetworkACLs{
-              DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-              PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-              {
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-              Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-              }},
-              PublicNetwork: &armsignalr.NetworkACL{
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-              },
-              },
-              PublicNetworkAccess: to.Ptr("Enabled"),
-              TLS: &armsignalr.TLSSettings{
-              ClientCertEnabled: to.Ptr(false),
-              },
-              Upstream: &armsignalr.ServerlessUpstreamSettings{
-              Templates: []*armsignalr.UpstreamTemplate{
-              {
-              Auth: &armsignalr.UpstreamAuthSettings{
-              Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-              ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-              Resource: to.Ptr("api://example"),
-              },
-              },
-              CategoryPattern: to.Ptr("*"),
-              EventPattern: to.Ptr("connect,disconnect"),
-              HubPattern: to.Ptr("*"),
-              URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-              }},
-              },
-              },
-              SKU: &armsignalr.ResourceSKU{
-              Name: to.Ptr("Standard_S1"),
-              Capacity: to.Ptr[int32](1),
-              Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-              },
-              },
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: parameters
+                paramOutput: |-
+                  armsignalr.ResourceInfo{
+                  Location: to.Ptr("eastus"),
+                  Tags: map[string]*string{
+                  "key1": to.Ptr("value1"),
+                  },
+                  Identity: &armsignalr.ManagedIdentity{
+                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+                  },
+                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+                  Properties: &armsignalr.Properties{
+                  Cors: &armsignalr.CorsSettings{
+                  AllowedOrigins: []*string{
+                  to.Ptr("https://foo.com"),
+                  to.Ptr("https://bar.com")},
+                  },
+                  DisableAADAuth: to.Ptr(false),
+                  DisableLocalAuth: to.Ptr(false),
+                  Features: []*armsignalr.Feature{
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("Serverless"),
+                  },
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("True"),
+                  },
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("False"),
+                  },
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("False"),
+                  }},
+                  NetworkACLs: &armsignalr.NetworkACLs{
+                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+                  {
+                  Allow: []*armsignalr.SignalRRequestType{
+                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+                  Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+                  }},
+                  PublicNetwork: &armsignalr.NetworkACL{
+                  Allow: []*armsignalr.SignalRRequestType{
+                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+                  },
+                  },
+                  PublicNetworkAccess: to.Ptr("Enabled"),
+                  TLS: &armsignalr.TLSSettings{
+                  ClientCertEnabled: to.Ptr(false),
+                  },
+                  Upstream: &armsignalr.ServerlessUpstreamSettings{
+                  Templates: []*armsignalr.UpstreamTemplate{
+                  {
+                  Auth: &armsignalr.UpstreamAuthSettings{
+                  Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+                  ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+                  Resource: to.Ptr("api://example"),
+                  },
+                  },
+                  CategoryPattern: to.Ptr("*"),
+                  EventPattern: to.Ptr("connect,disconnect"),
+                  HubPattern: to.Ptr("*"),
+                  URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
+                  }},
+                  },
+                  },
+                  SKU: &armsignalr.ResourceSKU{
+                  Name: to.Ptr("Standard_S1"),
+                  Capacity: to.Ptr[int32](1),
+                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+                  },
+                  }
+              - paramName: options
+                paramOutput: nil
             opName: BeginCreateOrUpdate
             operation: *ref_463
             operationGroup: *ref_374
@@ -13622,8 +13543,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -13637,16 +13559,15 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_469
                 parameter: *ref_224
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: BeginDelete
             operation: *ref_470
             operationGroup: *ref_374
@@ -13677,8 +13598,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -13935,178 +13857,98 @@ testModel:
                       language: *ref_440
                   language: *ref_474
                 parameter: *ref_230
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.ResourceInfo{
-              Location: to.Ptr("eastus"),
-              Tags: map[string]*string{
-              "key1": to.Ptr("value1"),
-              },
-              Identity: &armsignalr.ManagedIdentity{
-              Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-              },
-              Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-              Properties: &armsignalr.Properties{
-              Cors: &armsignalr.CorsSettings{
-              AllowedOrigins: []*string{
-              to.Ptr("https://foo.com"),
-              to.Ptr("https://bar.com")},
-              },
-              DisableAADAuth: to.Ptr(false),
-              DisableLocalAuth: to.Ptr(false),
-              Features: []*armsignalr.Feature{
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("Serverless"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("True"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              }},
-              NetworkACLs: &armsignalr.NetworkACLs{
-              DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-              PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-              {
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-              Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-              }},
-              PublicNetwork: &armsignalr.NetworkACL{
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-              },
-              },
-              PublicNetworkAccess: to.Ptr("Enabled"),
-              TLS: &armsignalr.TLSSettings{
-              ClientCertEnabled: to.Ptr(false),
-              },
-              Upstream: &armsignalr.ServerlessUpstreamSettings{
-              Templates: []*armsignalr.UpstreamTemplate{
-              {
-              Auth: &armsignalr.UpstreamAuthSettings{
-              Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-              ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-              Resource: to.Ptr("api://example"),
-              },
-              },
-              CategoryPattern: to.Ptr("*"),
-              EventPattern: to.Ptr("connect,disconnect"),
-              HubPattern: to.Ptr("*"),
-              URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-              }},
-              },
-              },
-              SKU: &armsignalr.ResourceSKU{
-              Name: to.Ptr("Standard_S1"),
-              Capacity: to.Ptr[int32](1),
-              Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-              },
-              },
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.ResourceInfo{
-              Location: to.Ptr("eastus"),
-              Tags: map[string]*string{
-              "key1": to.Ptr("value1"),
-              },
-              Identity: &armsignalr.ManagedIdentity{
-              Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-              },
-              Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-              Properties: &armsignalr.Properties{
-              Cors: &armsignalr.CorsSettings{
-              AllowedOrigins: []*string{
-              to.Ptr("https://foo.com"),
-              to.Ptr("https://bar.com")},
-              },
-              DisableAADAuth: to.Ptr(false),
-              DisableLocalAuth: to.Ptr(false),
-              Features: []*armsignalr.Feature{
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("Serverless"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("True"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              },
-              {
-              Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-              Properties: map[string]*string{
-              },
-              Value: to.Ptr("False"),
-              }},
-              NetworkACLs: &armsignalr.NetworkACLs{
-              DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-              PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-              {
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-              Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-              }},
-              PublicNetwork: &armsignalr.NetworkACL{
-              Allow: []*armsignalr.SignalRRequestType{
-              to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-              },
-              },
-              PublicNetworkAccess: to.Ptr("Enabled"),
-              TLS: &armsignalr.TLSSettings{
-              ClientCertEnabled: to.Ptr(false),
-              },
-              Upstream: &armsignalr.ServerlessUpstreamSettings{
-              Templates: []*armsignalr.UpstreamTemplate{
-              {
-              Auth: &armsignalr.UpstreamAuthSettings{
-              Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-              ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-              Resource: to.Ptr("api://example"),
-              },
-              },
-              CategoryPattern: to.Ptr("*"),
-              EventPattern: to.Ptr("connect,disconnect"),
-              HubPattern: to.Ptr("*"),
-              URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-              }},
-              },
-              },
-              SKU: &armsignalr.ResourceSKU{
-              Name: to.Ptr("Standard_S1"),
-              Capacity: to.Ptr[int32](1),
-              Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-              },
-              },
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: parameters
+                paramOutput: |-
+                  armsignalr.ResourceInfo{
+                  Location: to.Ptr("eastus"),
+                  Tags: map[string]*string{
+                  "key1": to.Ptr("value1"),
+                  },
+                  Identity: &armsignalr.ManagedIdentity{
+                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+                  },
+                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+                  Properties: &armsignalr.Properties{
+                  Cors: &armsignalr.CorsSettings{
+                  AllowedOrigins: []*string{
+                  to.Ptr("https://foo.com"),
+                  to.Ptr("https://bar.com")},
+                  },
+                  DisableAADAuth: to.Ptr(false),
+                  DisableLocalAuth: to.Ptr(false),
+                  Features: []*armsignalr.Feature{
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("Serverless"),
+                  },
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("True"),
+                  },
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("False"),
+                  },
+                  {
+                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+                  Properties: map[string]*string{
+                  },
+                  Value: to.Ptr("False"),
+                  }},
+                  NetworkACLs: &armsignalr.NetworkACLs{
+                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+                  {
+                  Allow: []*armsignalr.SignalRRequestType{
+                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+                  Name: to.Ptr("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+                  }},
+                  PublicNetwork: &armsignalr.NetworkACL{
+                  Allow: []*armsignalr.SignalRRequestType{
+                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+                  },
+                  },
+                  PublicNetworkAccess: to.Ptr("Enabled"),
+                  TLS: &armsignalr.TLSSettings{
+                  ClientCertEnabled: to.Ptr(false),
+                  },
+                  Upstream: &armsignalr.ServerlessUpstreamSettings{
+                  Templates: []*armsignalr.UpstreamTemplate{
+                  {
+                  Auth: &armsignalr.UpstreamAuthSettings{
+                  Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+                  ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+                  Resource: to.Ptr("api://example"),
+                  },
+                  },
+                  CategoryPattern: to.Ptr("*"),
+                  EventPattern: to.Ptr("connect,disconnect"),
+                  HubPattern: to.Ptr("*"),
+                  URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
+                  }},
+                  },
+                  },
+                  SKU: &armsignalr.ResourceSKU{
+                  Name: to.Ptr("Standard_S1"),
+                  Capacity: to.Ptr[int32](1),
+                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+                  },
+                  }
+              - paramName: options
+                paramOutput: nil
             opName: BeginUpdate
             operation: *ref_475
             operationGroup: *ref_374
@@ -14755,8 +14597,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -14770,16 +14613,15 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_479
                 parameter: *ref_242
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: ListKeys
             operation: *ref_480
             operationGroup: *ref_374
@@ -14816,8 +14658,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -14841,22 +14684,20 @@ testModel:
                       language: *ref_484
                   language: *ref_485
                 parameter: *ref_250
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.RegenerateKeyParameters{
-              KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-              },
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.RegenerateKeyParameters{
-              KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-              },
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: parameters
+                paramOutput: |-
+                  armsignalr.RegenerateKeyParameters{
+                  KeyType: to.Ptr(armsignalr.KeyTypePrimary),
+                  }
+              - paramName: options
+                paramOutput: nil
             opName: BeginRegenerateKey
             operation: *ref_486
             operationGroup: *ref_374
@@ -14890,8 +14731,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -14905,16 +14747,15 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_490
                 parameter: *ref_262
-            methodParametersOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: BeginRestart
             operation: *ref_491
             operationGroup: *ref_374
@@ -14944,8 +14785,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_506
@@ -14955,12 +14797,11 @@ testModel:
                   rawValue: eastus
                   language: *ref_493
                 parameter: *ref_268
-            methodParametersOutput: |-
-              "eastus",
-              nil
-            methodParametersPlaceholderOutput: |-
-              "eastus",
-              nil
+            methodParametersOutput:
+              - paramName: location
+                paramOutput: '"eastus"'
+              - paramName: options
+                paramOutput: nil
             opName: NewListPager
             operation: *ref_494
             operationGroup: *ref_495
@@ -15090,8 +14931,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_513
@@ -15106,14 +14948,13 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_508
                 parameter: *ref_276
-            methodParametersOutput: |-
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: NewListPager
             operation: *ref_509
             operationGroup: *ref_510
@@ -15290,8 +15131,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -15310,18 +15152,17 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_516
                 parameter: *ref_285
-            methodParametersOutput: |-
-              ctx,
-              "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: privateEndpointConnectionName
+                paramOutput: '"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"'
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: Get
             operation: *ref_517
             operationGroup: *ref_510
@@ -15485,8 +15326,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -15538,40 +15380,30 @@ testModel:
                       language: *ref_416
                   language: *ref_522
                 parameter: *ref_291
-            methodParametersOutput: |-
-              ctx,
-              "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.PrivateEndpointConnection{
-              Properties: &armsignalr.PrivateEndpointConnectionProperties{
-              PrivateEndpoint: &armsignalr.PrivateEndpoint{
-              ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-              },
-              PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-              ActionsRequired: to.Ptr("None"),
-              Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-              },
-              },
-              },
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.PrivateEndpointConnection{
-              Properties: &armsignalr.PrivateEndpointConnectionProperties{
-              PrivateEndpoint: &armsignalr.PrivateEndpoint{
-              ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
-              },
-              PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
-              ActionsRequired: to.Ptr("None"),
-              Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
-              },
-              },
-              },
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: privateEndpointConnectionName
+                paramOutput: '"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"'
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: parameters
+                paramOutput: |-
+                  armsignalr.PrivateEndpointConnection{
+                  Properties: &armsignalr.PrivateEndpointConnectionProperties{
+                  PrivateEndpoint: &armsignalr.PrivateEndpoint{
+                  ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint"),
+                  },
+                  PrivateLinkServiceConnectionState: &armsignalr.PrivateLinkServiceConnectionState{
+                  ActionsRequired: to.Ptr("None"),
+                  Status: to.Ptr(armsignalr.PrivateLinkServiceConnectionStatusApproved),
+                  },
+                  },
+                  }
+              - paramName: options
+                paramOutput: nil
             opName: Update
             operation: *ref_523
             operationGroup: *ref_510
@@ -15736,8 +15568,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -15756,18 +15589,17 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_528
                 parameter: *ref_303
-            methodParametersOutput: |-
-              ctx,
-              "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: privateEndpointConnectionName
+                paramOutput: '"mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e"'
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: BeginDelete
             operation: *ref_529
             operationGroup: *ref_510
@@ -15798,8 +15630,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_548
@@ -15814,14 +15647,13 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_532
                 parameter: *ref_310
-            methodParametersOutput: |-
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: NewListPager
             operation: *ref_533
             operationGroup: *ref_534
@@ -15962,8 +15794,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             isPageable: *ref_561
@@ -15978,14 +15811,13 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_550
                 parameter: *ref_318
-            methodParametersOutput: |-
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: NewListPager
             operation: *ref_551
             operationGroup: *ref_552
@@ -16089,8 +15921,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: false
             isMultiRespOperation: false
             methodParameters:
@@ -16109,18 +15942,17 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_564
                 parameter: *ref_327
-            methodParametersOutput: |-
-              ctx,
-              "upstream",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "upstream",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: sharedPrivateLinkResourceName
+                paramOutput: '"upstream"'
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: Get
             operation: *ref_565
             operationGroup: *ref_552
@@ -16214,8 +16046,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -16257,32 +16090,26 @@ testModel:
                       language: *ref_558
                   language: *ref_570
                 parameter: *ref_333
-            methodParametersOutput: |-
-              ctx,
-              "upstream",
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.SharedPrivateLinkResource{
-              Properties: &armsignalr.SharedPrivateLinkResourceProperties{
-              GroupID: to.Ptr("sites"),
-              PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
-              RequestMessage: to.Ptr("Please approve"),
-              },
-              },
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "upstream",
-              "myResourceGroup",
-              "mySignalRService",
-              armsignalr.SharedPrivateLinkResource{
-              Properties: &armsignalr.SharedPrivateLinkResourceProperties{
-              GroupID: to.Ptr("sites"),
-              PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
-              RequestMessage: to.Ptr("Please approve"),
-              },
-              },
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: sharedPrivateLinkResourceName
+                paramOutput: '"upstream"'
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: parameters
+                paramOutput: |-
+                  armsignalr.SharedPrivateLinkResource{
+                  Properties: &armsignalr.SharedPrivateLinkResourceProperties{
+                  GroupID: to.Ptr("sites"),
+                  PrivateLinkResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
+                  RequestMessage: to.Ptr("Please approve"),
+                  },
+                  }
+              - paramName: options
+                paramOutput: nil
             opName: BeginCreateOrUpdate
             operation: *ref_571
             operationGroup: *ref_552
@@ -16431,8 +16258,9 @@ testModel:
                   rawValue: 00000000-0000-0000-0000-000000000000
                   language: *ref_368
                 parameter: *ref_182
-            clientParametersOutput: '"00000000-0000-0000-0000-000000000000"'
-            clientParametersPlaceholderOutput: '"00000000-0000-0000-0000-000000000000"'
+            clientParametersOutput:
+              - paramName: subscriptionID
+                paramOutput: '"00000000-0000-0000-0000-000000000000"'
             isLRO: true
             isMultiRespOperation: false
             methodParameters:
@@ -16451,18 +16279,17 @@ testModel:
                   rawValue: mySignalRService
                   language: *ref_577
                 parameter: *ref_347
-            methodParametersOutput: |-
-              ctx,
-              "upstream",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
-            methodParametersPlaceholderOutput: |-
-              ctx,
-              "upstream",
-              "myResourceGroup",
-              "mySignalRService",
-              nil
+            methodParametersOutput:
+              - paramName: ctx
+                paramOutput: ctx
+              - paramName: sharedPrivateLinkResourceName
+                paramOutput: '"upstream"'
+              - paramName: resourceGroupName
+                paramOutput: '"myResourceGroup"'
+              - paramName: resourceName
+                paramOutput: '"mySignalRService"'
+              - paramName: options
+                paramOutput: nil
             opName: BeginDelete
             operation: *ref_578
             operationGroup: *ref_552
@@ -16557,7 +16384,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: false
                 isMultiRespOperation: false
                 methodParameters:
@@ -16580,14 +16409,19 @@ testModel:
                           language: *ref_371
                       language: *ref_372
                     parameter: *ref_184
-                methodParametersOutput: |-
-                  ctx,
-                  location,
-                  armsignalr.NameAvailabilityParameters{
-                  Name: to.Ptr(resourceName),
-                  Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-                  },
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: location
+                    paramOutput: location
+                  - paramName: parameters
+                    paramOutput: |-
+                      armsignalr.NameAvailabilityParameters{
+                      Name: to.Ptr(resourceName),
+                      Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+                      }
+                  - paramName: options
+                    paramOutput: nil
                 opName: CheckNameAvailability
                 operation: *ref_373
                 operationGroup: *ref_374
@@ -16667,7 +16501,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: true
                 isMultiRespOperation: false
                 methodParameters:
@@ -16924,92 +16760,98 @@ testModel:
                           language: *ref_440
                       language: *ref_462
                     parameter: *ref_212
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  armsignalr.ResourceInfo{
-                  Location: to.Ptr(location),
-                  Tags: map[string]*string{
-                  "key1": to.Ptr("value1"),
-                  },
-                  Identity: &armsignalr.ManagedIdentity{
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-                  },
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-                  Properties: &armsignalr.Properties{
-                  Cors: &armsignalr.CorsSettings{
-                  AllowedOrigins: []*string{
-                  to.Ptr("https://foo.com"),
-                  to.Ptr("https://bar.com")},
-                  },
-                  DisableAADAuth: to.Ptr(false),
-                  DisableLocalAuth: to.Ptr(false),
-                  Features: []*armsignalr.Feature{
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("Serverless"),
-                  },
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("True"),
-                  },
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("False"),
-                  },
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("False"),
-                  }},
-                  NetworkACLs: &armsignalr.NetworkACLs{
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-                  {
-                  Allow: []*armsignalr.SignalRRequestType{
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-                  }},
-                  PublicNetwork: &armsignalr.NetworkACL{
-                  Allow: []*armsignalr.SignalRRequestType{
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-                  },
-                  },
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-                  TLS: &armsignalr.TLSSettings{
-                  ClientCertEnabled: to.Ptr(false),
-                  },
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-                  Templates: []*armsignalr.UpstreamTemplate{
-                  {
-                  Auth: &armsignalr.UpstreamAuthSettings{
-                  Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-                  ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-                  Resource: to.Ptr("api://example"),
-                  },
-                  },
-                  CategoryPattern: to.Ptr("*"),
-                  EventPattern: to.Ptr("connect,disconnect"),
-                  HubPattern: to.Ptr("*"),
-                  URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-                  }},
-                  },
-                  },
-                  SKU: &armsignalr.ResourceSKU{
-                  Name: to.Ptr("Standard_S1"),
-                  Capacity: to.Ptr[int32](1),
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-                  },
-                  },
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: parameters
+                    paramOutput: |-
+                      armsignalr.ResourceInfo{
+                      Location: to.Ptr(location),
+                      Tags: map[string]*string{
+                      "key1": to.Ptr("value1"),
+                      },
+                      Identity: &armsignalr.ManagedIdentity{
+                      Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+                      },
+                      Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+                      Properties: &armsignalr.Properties{
+                      Cors: &armsignalr.CorsSettings{
+                      AllowedOrigins: []*string{
+                      to.Ptr("https://foo.com"),
+                      to.Ptr("https://bar.com")},
+                      },
+                      DisableAADAuth: to.Ptr(false),
+                      DisableLocalAuth: to.Ptr(false),
+                      Features: []*armsignalr.Feature{
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("Serverless"),
+                      },
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("True"),
+                      },
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("False"),
+                      },
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("False"),
+                      }},
+                      NetworkACLs: &armsignalr.NetworkACLs{
+                      DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+                      PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+                      {
+                      Allow: []*armsignalr.SignalRRequestType{
+                      to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+                      Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+                      }},
+                      PublicNetwork: &armsignalr.NetworkACL{
+                      Allow: []*armsignalr.SignalRRequestType{
+                      to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+                      },
+                      },
+                      PublicNetworkAccess: to.Ptr("Enabled"),
+                      TLS: &armsignalr.TLSSettings{
+                      ClientCertEnabled: to.Ptr(false),
+                      },
+                      Upstream: &armsignalr.ServerlessUpstreamSettings{
+                      Templates: []*armsignalr.UpstreamTemplate{
+                      {
+                      Auth: &armsignalr.UpstreamAuthSettings{
+                      Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+                      ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+                      Resource: to.Ptr("api://example"),
+                      },
+                      },
+                      CategoryPattern: to.Ptr("*"),
+                      EventPattern: to.Ptr("connect,disconnect"),
+                      HubPattern: to.Ptr("*"),
+                      URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
+                      }},
+                      },
+                      },
+                      SKU: &armsignalr.ResourceSKU{
+                      Name: to.Ptr("Standard_S1"),
+                      Capacity: to.Ptr[int32](1),
+                      Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+                      },
+                      }
+                  - paramName: options
+                    paramOutput: nil
                 opName: BeginCreateOrUpdate
                 operation: *ref_463
                 operationGroup: *ref_374
@@ -17812,7 +17654,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: false
                 isMultiRespOperation: false
                 methodParameters:
@@ -17826,11 +17670,15 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_450
                     parameter: *ref_206
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: options
+                    paramOutput: nil
                 opName: Get
                 operation: *ref_451
                 operationGroup: *ref_374
@@ -18579,7 +18427,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: true
                 isMultiRespOperation: false
                 methodParameters:
@@ -18836,92 +18686,98 @@ testModel:
                           language: *ref_440
                       language: *ref_474
                     parameter: *ref_230
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  armsignalr.ResourceInfo{
-                  Location: to.Ptr(location),
-                  Tags: map[string]*string{
-                  "key1": to.Ptr("value1"),
-                  },
-                  Identity: &armsignalr.ManagedIdentity{
-                  Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-                  },
-                  Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-                  Properties: &armsignalr.Properties{
-                  Cors: &armsignalr.CorsSettings{
-                  AllowedOrigins: []*string{
-                  to.Ptr("https://foo.com"),
-                  to.Ptr("https://bar.com")},
-                  },
-                  DisableAADAuth: to.Ptr(false),
-                  DisableLocalAuth: to.Ptr(false),
-                  Features: []*armsignalr.Feature{
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("Serverless"),
-                  },
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("True"),
-                  },
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("False"),
-                  },
-                  {
-                  Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-                  Properties: map[string]*string{
-                  },
-                  Value: to.Ptr("False"),
-                  }},
-                  NetworkACLs: &armsignalr.NetworkACLs{
-                  DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-                  PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-                  {
-                  Allow: []*armsignalr.SignalRRequestType{
-                  to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-                  Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-                  }},
-                  PublicNetwork: &armsignalr.NetworkACL{
-                  Allow: []*armsignalr.SignalRRequestType{
-                  to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-                  },
-                  },
-                  PublicNetworkAccess: to.Ptr("Enabled"),
-                  TLS: &armsignalr.TLSSettings{
-                  ClientCertEnabled: to.Ptr(false),
-                  },
-                  Upstream: &armsignalr.ServerlessUpstreamSettings{
-                  Templates: []*armsignalr.UpstreamTemplate{
-                  {
-                  Auth: &armsignalr.UpstreamAuthSettings{
-                  Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-                  ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-                  Resource: to.Ptr("api://example"),
-                  },
-                  },
-                  CategoryPattern: to.Ptr("*"),
-                  EventPattern: to.Ptr("connect,disconnect"),
-                  HubPattern: to.Ptr("*"),
-                  URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
-                  }},
-                  },
-                  },
-                  SKU: &armsignalr.ResourceSKU{
-                  Name: to.Ptr("Standard_S1"),
-                  Capacity: to.Ptr[int32](1),
-                  Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
-                  },
-                  },
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: parameters
+                    paramOutput: |-
+                      armsignalr.ResourceInfo{
+                      Location: to.Ptr(location),
+                      Tags: map[string]*string{
+                      "key1": to.Ptr("value1"),
+                      },
+                      Identity: &armsignalr.ManagedIdentity{
+                      Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+                      },
+                      Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+                      Properties: &armsignalr.Properties{
+                      Cors: &armsignalr.CorsSettings{
+                      AllowedOrigins: []*string{
+                      to.Ptr("https://foo.com"),
+                      to.Ptr("https://bar.com")},
+                      },
+                      DisableAADAuth: to.Ptr(false),
+                      DisableLocalAuth: to.Ptr(false),
+                      Features: []*armsignalr.Feature{
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsServiceMode),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("Serverless"),
+                      },
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("True"),
+                      },
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("False"),
+                      },
+                      {
+                      Flag: to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+                      Properties: map[string]*string{
+                      },
+                      Value: to.Ptr("False"),
+                      }},
+                      NetworkACLs: &armsignalr.NetworkACLs{
+                      DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+                      PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
+                      {
+                      Allow: []*armsignalr.SignalRRequestType{
+                      to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+                      Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+                      }},
+                      PublicNetwork: &armsignalr.NetworkACL{
+                      Allow: []*armsignalr.SignalRRequestType{
+                      to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
+                      },
+                      },
+                      PublicNetworkAccess: to.Ptr("Enabled"),
+                      TLS: &armsignalr.TLSSettings{
+                      ClientCertEnabled: to.Ptr(false),
+                      },
+                      Upstream: &armsignalr.ServerlessUpstreamSettings{
+                      Templates: []*armsignalr.UpstreamTemplate{
+                      {
+                      Auth: &armsignalr.UpstreamAuthSettings{
+                      Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+                      ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+                      Resource: to.Ptr("api://example"),
+                      },
+                      },
+                      CategoryPattern: to.Ptr("*"),
+                      EventPattern: to.Ptr("connect,disconnect"),
+                      HubPattern: to.Ptr("*"),
+                      URLTemplate: to.Ptr("https://example.com/chat/api/connect"),
+                      }},
+                      },
+                      },
+                      SKU: &armsignalr.ResourceSKU{
+                      Name: to.Ptr("Standard_S1"),
+                      Capacity: to.Ptr[int32](1),
+                      Tier: to.Ptr(armsignalr.SignalRSKUTierStandard),
+                      },
+                      }
+                  - paramName: options
+                    paramOutput: nil
                 opName: BeginUpdate
                 operation: *ref_475
                 operationGroup: *ref_374
@@ -19724,7 +19580,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: false
                 isMultiRespOperation: false
                 methodParameters:
@@ -19738,11 +19596,15 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_479
                     parameter: *ref_242
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: options
+                    paramOutput: nil
                 opName: ListKeys
                 operation: *ref_480
                 operationGroup: *ref_374
@@ -19800,7 +19662,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: true
                 isMultiRespOperation: false
                 methodParameters:
@@ -19824,14 +19688,20 @@ testModel:
                           language: *ref_484
                       language: *ref_485
                     parameter: *ref_250
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  armsignalr.RegenerateKeyParameters{
-                  KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-                  },
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: parameters
+                    paramOutput: |-
+                      armsignalr.RegenerateKeyParameters{
+                      KeyType: to.Ptr(armsignalr.KeyTypePrimary),
+                      }
+                  - paramName: options
+                    paramOutput: nil
                 opName: BeginRegenerateKey
                 operation: *ref_486
                 operationGroup: *ref_374
@@ -19880,7 +19750,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: true
                 isMultiRespOperation: false
                 methodParameters:
@@ -19894,11 +19766,15 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_490
                     parameter: *ref_262
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: options
+                    paramOutput: nil
                 opName: BeginRestart
                 operation: *ref_491
                 operationGroup: *ref_374
@@ -19945,7 +19821,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: false
                 isMultiRespOperation: false
                 isPageable: *ref_506
@@ -19955,9 +19833,11 @@ testModel:
                       rawValue: $(location)
                       language: *ref_493
                     parameter: *ref_268
-                methodParametersOutput: |-
-                  location,
-                  nil
+                methodParametersOutput:
+                  - paramName: location
+                    paramOutput: location
+                  - paramName: options
+                    paramOutput: nil
                 opName: NewListPager
                 operation: *ref_494
                 operationGroup: *ref_495
@@ -20123,7 +20003,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: false
                 isMultiRespOperation: false
                 isPageable: *ref_448
@@ -20133,9 +20015,11 @@ testModel:
                       rawValue: $(resourceGroupName)
                       language: *ref_445
                     parameter: *ref_199
-                methodParametersOutput: |-
-                  resourceGroupName,
-                  nil
+                methodParametersOutput:
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: options
+                    paramOutput: nil
                 opName: NewListByResourceGroupPager
                 operation: *ref_446
                 operationGroup: *ref_374
@@ -20897,12 +20781,16 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: false
                 isMultiRespOperation: false
                 isPageable: *ref_444
                 methodParameters: []
-                methodParametersOutput: nil
+                methodParametersOutput:
+                  - paramName: options
+                    paramOutput: nil
                 opName: NewListBySubscriptionPager
                 operation: *ref_379
                 operationGroup: *ref_374
@@ -21658,12 +21546,14 @@ testModel:
                       rawValue: 2021-06-01-preview
                       language: *ref_353
                     parameter: *ref_173
-                clientParametersOutput: ''
+                clientParametersOutput: []
                 isLRO: false
                 isMultiRespOperation: false
                 isPageable: *ref_367
                 methodParameters: []
-                methodParametersOutput: nil
+                methodParametersOutput:
+                  - paramName: options
+                    paramOutput: nil
                 opName: NewListPager
                 operation: *ref_354
                 operationGroup: *ref_355
@@ -21786,7 +21676,9 @@ testModel:
                       rawValue: $(subscriptionId)
                       language: *ref_368
                     parameter: *ref_182
-                clientParametersOutput: subscriptionId
+                clientParametersOutput:
+                  - paramName: subscriptionID
+                    paramOutput: subscriptionId
                 isLRO: true
                 isMultiRespOperation: false
                 methodParameters:
@@ -21800,11 +21692,15 @@ testModel:
                       rawValue: $(resourceName)
                       language: *ref_469
                     parameter: *ref_224
-                methodParametersOutput: |-
-                  ctx,
-                  resourceGroupName,
-                  resourceName,
-                  nil
+                methodParametersOutput:
+                  - paramName: ctx
+                    paramOutput: ctx
+                  - paramName: resourceGroupName
+                    paramOutput: resourceGroupName
+                  - paramName: resourceName
+                    paramOutput: resourceName
+                  - paramName: options
+                    paramOutput: nil
                 opName: BeginDelete
                 operation: *ref_470
                 operationGroup: *ref_374

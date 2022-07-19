@@ -28,16 +28,14 @@ func ExampleOnlineEndpointsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
-			Count:       to.Ptr[int32](1),
-			ComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
-			Skip:        nil,
-			Tags:        to.Ptr("string"),
-			Properties:  to.Ptr("string"),
-			OrderBy:     to.Ptr(armmachinelearningservices.OrderStringCreatedAtDesc),
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.OnlineEndpointsClientListOptions{Name: to.Ptr("string"),
+		Count:       to.Ptr[int32](1),
+		ComputeType: to.Ptr(armmachinelearningservices.EndpointComputeTypeManaged),
+		Skip:        nil,
+		Tags:        to.Ptr("string"),
+		Properties:  to.Ptr("string"),
+		OrderBy:     to.Ptr(armmachinelearningservices.OrderStringCreatedAtDesc),
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -61,11 +59,7 @@ func ExampleOnlineEndpointsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	poller, err := client.BeginDelete(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -86,11 +80,7 @@ func ExampleOnlineEndpointsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -109,34 +99,29 @@ func ExampleOnlineEndpointsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialOnlineEndpointPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialOnlineEndpoint{
-				Traffic: map[string]*int32{
-					"string": to.Ptr[int32](1),
-				},
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialOnlineEndpoint{
+			Traffic: map[string]*int32{
+				"string": to.Ptr[int32](1),
+			},
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -159,40 +144,35 @@ func ExampleOnlineEndpointsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.OnlineEndpointData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.OnlineEndpointDetails{
-				Description: to.Ptr("string"),
-				AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Compute: to.Ptr("string"),
-				Traffic: map[string]*int32{
-					"string": to.Ptr[int32](1),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.OnlineEndpointData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.OnlineEndpointDetails{
+			Description: to.Ptr("string"),
+			AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Compute: to.Ptr("string"),
+			Traffic: map[string]*int32{
+				"string": to.Ptr[int32](1),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -215,11 +195,7 @@ func ExampleOnlineEndpointsClient_ListKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -238,15 +214,10 @@ func ExampleOnlineEndpointsClient_BeginRegenerateKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRegenerateKeys(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.RegenerateEndpointKeysRequest{
-			KeyType:  to.Ptr(armmachinelearningservices.KeyTypePrimary),
-			KeyValue: to.Ptr("string"),
-		},
-		nil)
+	poller, err := client.BeginRegenerateKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.RegenerateEndpointKeysRequest{
+		KeyType:  to.Ptr(armmachinelearningservices.KeyTypePrimary),
+		KeyValue: to.Ptr("string"),
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -267,11 +238,7 @@ func ExampleOnlineEndpointsClient_GetToken() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetToken(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.GetToken(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -28,12 +28,7 @@ func ExampleDeploymentsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -52,31 +47,25 @@ func ExampleDeploymentsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		armappplatform.DeploymentResource{
-			Properties: &armappplatform.DeploymentResourceProperties{
-				DeploymentSettings: &armappplatform.DeploymentSettings{
-					CPU: to.Ptr[int32](1),
-					EnvironmentVariables: map[string]*string{
-						"env": to.Ptr("test"),
-					},
-					JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
-					MemoryInGB:     to.Ptr[int32](3),
-					RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
+		Properties: &armappplatform.DeploymentResourceProperties{
+			DeploymentSettings: &armappplatform.DeploymentSettings{
+				CPU: to.Ptr[int32](1),
+				EnvironmentVariables: map[string]*string{
+					"env": to.Ptr("test"),
 				},
-				Source: &armappplatform.UserSourceInfo{
-					Type:             to.Ptr(armappplatform.UserSourceTypeSource),
-					ArtifactSelector: to.Ptr("sub-module-1"),
-					RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
-					Version:          to.Ptr("1.0"),
-				},
+				JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
+				MemoryInGB:     to.Ptr[int32](3),
+				RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+			},
+			Source: &armappplatform.UserSourceInfo{
+				Type:             to.Ptr(armappplatform.UserSourceTypeSource),
+				ArtifactSelector: to.Ptr("sub-module-1"),
+				RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+				Version:          to.Ptr("1.0"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -99,12 +88,7 @@ func ExampleDeploymentsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -125,22 +109,16 @@ func ExampleDeploymentsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		armappplatform.DeploymentResource{
-			Properties: &armappplatform.DeploymentResourceProperties{
-				Source: &armappplatform.UserSourceInfo{
-					Type:             to.Ptr(armappplatform.UserSourceTypeSource),
-					ArtifactSelector: to.Ptr("sub-module-1"),
-					RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
-					Version:          to.Ptr("1.0"),
-				},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", armappplatform.DeploymentResource{
+		Properties: &armappplatform.DeploymentResourceProperties{
+			Source: &armappplatform.UserSourceInfo{
+				Type:             to.Ptr(armappplatform.UserSourceTypeSource),
+				ArtifactSelector: to.Ptr("sub-module-1"),
+				RelativePath:     to.Ptr("resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc"),
+				Version:          to.Ptr("1.0"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -163,10 +141,7 @@ func ExampleDeploymentsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		"myapp",
-		&armappplatform.DeploymentsClientListOptions{Version: []string{}})
+	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", &armappplatform.DeploymentsClientListOptions{Version: []string{}})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -190,9 +165,7 @@ func ExampleDeploymentsClient_NewListForClusterPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListForClusterPager("myResourceGroup",
-		"myservice",
-		&armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
+	pager := client.NewListForClusterPager("myResourceGroup", "myservice", &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -216,12 +189,7 @@ func ExampleDeploymentsClient_BeginStart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStart(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginStart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -242,12 +210,7 @@ func ExampleDeploymentsClient_BeginStop() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStop(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginStop(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -268,12 +231,7 @@ func ExampleDeploymentsClient_BeginRestart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRestart(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydeployment",
-		nil)
+	poller, err := client.BeginRestart(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -281,4 +239,23 @@ func ExampleDeploymentsClient_BeginRestart() {
 	if err != nil {
 		log.Fatalf("failed to pull the result: %v", err)
 	}
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_GetLogFileUrl.json
+func ExampleDeploymentsClient_GetLogFileURL() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armappplatform.NewDeploymentsClient("00000000-0000-0000-0000-000000000000", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.GetLogFileURL(ctx, "myResourceGroup", "myservice", "myapp", "mydeployment", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
 }

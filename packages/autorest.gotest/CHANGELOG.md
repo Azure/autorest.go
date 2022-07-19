@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Wed, 08 Jun 2022 07:31:03 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Jul 2022 09:34:05 GMT and should not be manually modified.
+
+## 4.1.0
+Tue, 19 Jul 2022 09:34:05 GMT
+
+### Minor changes
+
+- Generate all the examples from swagger for operations.
 
 ## 4.0.2
 Wed, 08 Jun 2022 07:31:03 GMT

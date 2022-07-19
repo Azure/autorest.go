@@ -27,12 +27,7 @@ func ExampleCloudServicesUpdateDomainClient_BeginWalkUpdateDomain() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginWalkUpdateDomain(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		1,
-		armcompute.UpdateDomain{},
-		nil)
+	poller, err := client.BeginWalkUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, armcompute.UpdateDomain{}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -53,11 +48,7 @@ func ExampleCloudServicesUpdateDomainClient_GetUpdateDomain() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetUpdateDomain(ctx,
-		"ConstosoRG",
-		"{cs-name}",
-		1,
-		nil)
+	res, err := client.GetUpdateDomain(ctx, "ConstosoRG", "{cs-name}", 1, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -76,9 +67,7 @@ func ExampleCloudServicesUpdateDomainClient_NewListUpdateDomainsPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListUpdateDomainsPager("ConstosoRG",
-		"{cs-name}",
-		nil)
+	pager := client.NewListUpdateDomainsPager("ConstosoRG", "{cs-name}", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

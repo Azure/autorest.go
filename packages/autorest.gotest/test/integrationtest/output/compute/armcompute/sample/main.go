@@ -53,10 +53,7 @@ func prepare() {
 	if err != nil {
 		panic(err)
 	}
-	_, err = proximityPlacementGroupsClient.Delete(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	_, err = proximityPlacementGroupsClient.Delete(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -107,26 +104,19 @@ func microsoftSignalrserviceBasicCrudSample() {
 	if err != nil {
 		panic(err)
 	}
-	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(ctx,
-		resourceGroupName,
-		resourceName,
-		armcompute.ProximityPlacementGroup{
-			Location: to.Ptr(location),
-			Properties: &armcompute.ProximityPlacementGroupProperties{
-				ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
-			},
+	proximityPlacementGroupsClientCreateOrUpdateResponse, err := proximityPlacementGroupsClient.CreateOrUpdate(ctx, resourceGroupName, resourceName, armcompute.ProximityPlacementGroup{
+		Location: to.Ptr(location),
+		Properties: &armcompute.ProximityPlacementGroupProperties{
+			ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		panic(err)
 	}
 	fakeScenarioVar = *proximityPlacementGroupsClientCreateOrUpdateResponse.ID
 
 	// From step Delete-proximity_placement_group
-	_, err = proximityPlacementGroupsClient.Delete(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	_, err = proximityPlacementGroupsClient.Delete(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -137,56 +127,52 @@ func microsoftSignalrserviceBasicCrudSample() {
 		panic(err)
 	}
 	fakeStepVar := "signalrswaggertest6"
-	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(ctx,
-		resourceGroupName,
-		"myVM",
-		armcompute.VirtualMachine{
-			Location: to.Ptr(location),
-			Plan: &armcompute.Plan{
-				Name:      to.Ptr(fakeStepVar),
-				Product:   to.Ptr("windows-data-science-vm"),
-				Publisher: to.Ptr("microsoft-ads"),
+	virtualMachinesClientCreateOrUpdateResponsePoller, err := virtualMachinesClient.BeginCreateOrUpdate(ctx, resourceGroupName, "myVM", armcompute.VirtualMachine{
+		Location: to.Ptr(location),
+		Plan: &armcompute.Plan{
+			Name:      to.Ptr(fakeStepVar),
+			Product:   to.Ptr("windows-data-science-vm"),
+			Publisher: to.Ptr("microsoft-ads"),
+		},
+		Properties: &armcompute.VirtualMachineProperties{
+			HardwareProfile: &armcompute.HardwareProfile{
+				VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
 			},
-			Properties: &armcompute.VirtualMachineProperties{
-				HardwareProfile: &armcompute.HardwareProfile{
-					VMSize: to.Ptr(armcompute.VirtualMachineSizeTypesStandardDS1V2),
-				},
-				NetworkProfile: &armcompute.NetworkProfile{
-					NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
-						{
-							ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
-							Properties: &armcompute.NetworkInterfaceReferenceProperties{
-								Primary: to.Ptr(true),
-							},
-						}},
-				},
-				OSProfile: &armcompute.OSProfile{
-					AdminPassword: to.Ptr("{your-password}"),
-					AdminUsername: to.Ptr("{your-username}"),
-					ComputerName:  to.Ptr("myVM"),
-				},
-				SecurityProfile: &armcompute.SecurityProfile{
-					EncryptionAtHost: to.Ptr(true),
-				},
-				StorageProfile: &armcompute.StorageProfile{
-					ImageReference: &armcompute.ImageReference{
-						Offer:     to.Ptr("windows-data-science-vm"),
-						Publisher: to.Ptr(fakeScenarioVar),
-						SKU:       to.Ptr("windows2016"),
-						Version:   to.Ptr("latest"),
-					},
-					OSDisk: &armcompute.OSDisk{
-						Name:         to.Ptr("myVMosdisk"),
-						Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
-						CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
-						ManagedDisk: &armcompute.ManagedDiskParameters{
-							StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
+			NetworkProfile: &armcompute.NetworkProfile{
+				NetworkInterfaces: []*armcompute.NetworkInterfaceReference{
+					{
+						ID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}"),
+						Properties: &armcompute.NetworkInterfaceReferenceProperties{
+							Primary: to.Ptr(true),
 						},
+					}},
+			},
+			OSProfile: &armcompute.OSProfile{
+				AdminPassword: to.Ptr("{your-password}"),
+				AdminUsername: to.Ptr("{your-username}"),
+				ComputerName:  to.Ptr("myVM"),
+			},
+			SecurityProfile: &armcompute.SecurityProfile{
+				EncryptionAtHost: to.Ptr(true),
+			},
+			StorageProfile: &armcompute.StorageProfile{
+				ImageReference: &armcompute.ImageReference{
+					Offer:     to.Ptr("windows-data-science-vm"),
+					Publisher: to.Ptr(fakeScenarioVar),
+					SKU:       to.Ptr("windows2016"),
+					Version:   to.Ptr("latest"),
+				},
+				OSDisk: &armcompute.OSDisk{
+					Name:         to.Ptr("myVMosdisk"),
+					Caching:      to.Ptr(armcompute.CachingTypesReadOnly),
+					CreateOption: to.Ptr(armcompute.DiskCreateOptionTypesFromImage),
+					ManagedDisk: &armcompute.ManagedDiskParameters{
+						StorageAccountType: to.Ptr(armcompute.StorageAccountTypesStandardLRS),
 					},
 				},
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -201,10 +187,7 @@ func microsoftSignalrserviceDeleteonlySample() {
 	if err != nil {
 		panic(err)
 	}
-	_, err = proximityPlacementGroupsClient.Delete(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	_, err = proximityPlacementGroupsClient.Delete(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}

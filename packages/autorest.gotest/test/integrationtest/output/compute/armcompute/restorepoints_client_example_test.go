@@ -28,17 +28,12 @@ func ExampleRestorePointsClient_BeginCreate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreate(ctx,
-		"myResourceGroup",
-		"rpcName",
-		"rpName",
-		armcompute.RestorePoint{
-			ExcludeDisks: []*armcompute.APIEntityReference{
-				{
-					ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
-				}},
-		},
-		nil)
+	poller, err := client.BeginCreate(ctx, "myResourceGroup", "rpcName", "rpName", armcompute.RestorePoint{
+		ExcludeDisks: []*armcompute.APIEntityReference{
+			{
+				ID: to.Ptr("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vm8768_disk2_fe6ffde4f69b491ca33fb984d5bcd89f"),
+			}},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -59,11 +54,7 @@ func ExampleRestorePointsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"rpcName",
-		"rpName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "rpcName", "rpName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

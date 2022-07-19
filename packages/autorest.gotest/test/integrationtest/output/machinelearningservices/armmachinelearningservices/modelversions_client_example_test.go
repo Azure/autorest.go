@@ -28,20 +28,17 @@ func ExampleModelVersionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.ModelVersionsClientListOptions{Skip: nil,
-			OrderBy:      to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Version:      to.Ptr("string"),
-			Description:  to.Ptr("string"),
-			Offset:       to.Ptr[int32](1),
-			Tags:         to.Ptr("string"),
-			Properties:   to.Ptr("string"),
-			Feed:         nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.ModelVersionsClientListOptions{Skip: nil,
+		OrderBy:      to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Version:      to.Ptr("string"),
+		Description:  to.Ptr("string"),
+		Offset:       to.Ptr[int32](1),
+		Tags:         to.Ptr("string"),
+		Properties:   to.Ptr("string"),
+		Feed:         nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -65,12 +62,7 @@ func ExampleModelVersionsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -87,12 +79,7 @@ func ExampleModelVersionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -111,33 +98,27 @@ func ExampleModelVersionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.ModelVersionData{
-			Properties: &armmachinelearningservices.ModelVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				Flavors: map[string]*armmachinelearningservices.FlavorData{
-					"string": &armmachinelearningservices.FlavorData{
-						Data: map[string]*string{
-							"string": to.Ptr("string"),
-						},
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.ModelVersionData{
+		Properties: &armmachinelearningservices.ModelVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			Flavors: map[string]*armmachinelearningservices.FlavorData{
+				"string": &armmachinelearningservices.FlavorData{
+					Data: map[string]*string{
+						"string": to.Ptr("string"),
 					},
 				},
-				ModelType: to.Ptr(armmachinelearningservices.ModelTypeCustomModel),
-				ModelURI:  to.Ptr("string"),
 			},
+			ModelType: to.Ptr(armmachinelearningservices.ModelTypeCustomModel),
+			ModelURI:  to.Ptr("string"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

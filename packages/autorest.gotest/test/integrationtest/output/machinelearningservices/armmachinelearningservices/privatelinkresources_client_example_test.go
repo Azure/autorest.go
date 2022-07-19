@@ -27,10 +27,7 @@ func ExamplePrivateLinkResourcesClient_List() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.List(ctx,
-		"rg-1234",
-		"testworkspace",
-		nil)
+	res, err := client.List(ctx, "rg-1234", "testworkspace", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

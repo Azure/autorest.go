@@ -23,10 +23,8 @@ export class GoExampleModel extends ExampleModel {
     isLRO: boolean;
     isPageable: boolean;
     isMultiRespOperation: boolean;
-    methodParametersOutput: string;
-    methodParametersPlaceholderOutput: string;
-    clientParametersOutput: string;
-    clientParametersPlaceholderOutput: string;
+    methodParametersOutput: Array<ParameterOutput>;
+    clientParametersOutput: Array<ParameterOutput>;
     returnInfo: Array<string>;
     checkResponse: boolean;
     responseOutput: string;
@@ -35,4 +33,8 @@ export class GoExampleModel extends ExampleModel {
     responseTypePointer: boolean;
     pollerType: string;
     pageableItemName: string;
+}
+
+export class ParameterOutput {
+  public constructor(public paramName:string, public paramOutput:string){}
 }

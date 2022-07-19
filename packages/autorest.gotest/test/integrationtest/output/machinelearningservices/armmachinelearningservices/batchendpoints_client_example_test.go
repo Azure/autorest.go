@@ -28,11 +28,9 @@ func ExampleBatchEndpointsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		&armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", &armmachinelearningservices.BatchEndpointsClientListOptions{Count: to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -56,11 +54,7 @@ func ExampleBatchEndpointsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"resourceGroup-1234",
-		"testworkspace",
-		"testBatchEndpoint",
-		nil)
+	poller, err := client.BeginDelete(ctx, "resourceGroup-1234", "testworkspace", "testBatchEndpoint", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -81,11 +75,7 @@ func ExampleBatchEndpointsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -104,34 +94,29 @@ func ExampleBatchEndpointsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
-			Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]interface{}{
-					"string": map[string]interface{}{},
-				},
+	poller, err := client.BeginUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.PartialBatchEndpointPartialTrackedResource{
+		Identity: &armmachinelearningservices.PartialManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]interface{}{
+				"string": map[string]interface{}{},
 			},
-			Kind:     to.Ptr("string"),
-			Location: to.Ptr("string"),
-			Properties: &armmachinelearningservices.PartialBatchEndpoint{
-				Defaults: &armmachinelearningservices.BatchEndpointDefaults{
-					DeploymentName: to.Ptr("string"),
-				},
-			},
-			SKU: &armmachinelearningservices.PartialSKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
-			},
-			Tags: map[string]*string{},
 		},
-		nil)
+		Kind:     to.Ptr("string"),
+		Location: to.Ptr("string"),
+		Properties: &armmachinelearningservices.PartialBatchEndpoint{
+			Defaults: &armmachinelearningservices.BatchEndpointDefaults{
+				DeploymentName: to.Ptr("string"),
+			},
+		},
+		SKU: &armmachinelearningservices.PartialSKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+		Tags: map[string]*string{},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -154,39 +139,34 @@ func ExampleBatchEndpointsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		armmachinelearningservices.BatchEndpointData{
-			Location: to.Ptr("string"),
-			Tags:     map[string]*string{},
-			Identity: &armmachinelearningservices.ManagedServiceIdentity{
-				Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
-				UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
-					"string": &armmachinelearningservices.UserAssignedIdentity{},
-				},
-			},
-			Kind: to.Ptr("string"),
-			Properties: &armmachinelearningservices.BatchEndpointDetails{
-				Description: to.Ptr("string"),
-				AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Defaults: &armmachinelearningservices.BatchEndpointDefaults{
-					DeploymentName: to.Ptr("string"),
-				},
-			},
-			SKU: &armmachinelearningservices.SKU{
-				Name:     to.Ptr("string"),
-				Capacity: to.Ptr[int32](1),
-				Family:   to.Ptr("string"),
-				Size:     to.Ptr("string"),
-				Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+	poller, err := client.BeginCreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "testEndpointName", armmachinelearningservices.BatchEndpointData{
+		Location: to.Ptr("string"),
+		Tags:     map[string]*string{},
+		Identity: &armmachinelearningservices.ManagedServiceIdentity{
+			Type: to.Ptr(armmachinelearningservices.ManagedServiceIdentityTypeSystemAssigned),
+			UserAssignedIdentities: map[string]*armmachinelearningservices.UserAssignedIdentity{
+				"string": &armmachinelearningservices.UserAssignedIdentity{},
 			},
 		},
-		nil)
+		Kind: to.Ptr("string"),
+		Properties: &armmachinelearningservices.BatchEndpointDetails{
+			Description: to.Ptr("string"),
+			AuthMode:    to.Ptr(armmachinelearningservices.EndpointAuthModeAMLToken),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Defaults: &armmachinelearningservices.BatchEndpointDefaults{
+				DeploymentName: to.Ptr("string"),
+			},
+		},
+		SKU: &armmachinelearningservices.SKU{
+			Name:     to.Ptr("string"),
+			Capacity: to.Ptr[int32](1),
+			Family:   to.Ptr("string"),
+			Size:     to.Ptr("string"),
+			Tier:     to.Ptr(armmachinelearningservices.SKUTierFree),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -209,11 +189,7 @@ func ExampleBatchEndpointsClient_ListKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"testEndpointName",
-		nil)
+	res, err := client.ListKeys(ctx, "test-rg", "my-aml-workspace", "testEndpointName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -28,9 +28,7 @@ func ExampleComputeClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("testrg123",
-		"workspaces123",
-		&armmachinelearningservices.ComputeClientListOptions{Skip: nil})
+	pager := client.NewListPager("testrg123", "workspaces123", &armmachinelearningservices.ComputeClientListOptions{Skip: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -44,7 +42,7 @@ func ExampleComputeClient_NewListPager() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
-func ExampleComputeClient_Get() {
+func ExampleComputeClient_Get_aKSCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -54,11 +52,64 @@ func ExampleComputeClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
+func ExampleComputeClient_Get_amlCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
+func ExampleComputeClient_Get_kubernetesCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
+func ExampleComputeClient_Get_computeInstance() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	res, err := client.Get(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -67,7 +118,7 @@ func ExampleComputeClient_Get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate() {
+func ExampleComputeClient_BeginCreateOrUpdate_kubernetesCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -77,39 +128,279 @@ func ExampleComputeClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ComputeResource{
-			Properties: &armmachinelearningservices.Kubernetes{
-				Description: to.Ptr("some compute"),
-				ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
-				ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
-				Properties: &armmachinelearningservices.KubernetesProperties{
-					DefaultInstanceType: to.Ptr("defaultInstanceType"),
-					InstanceTypes: map[string]*armmachinelearningservices.InstanceTypeSchema{
-						"defaultInstanceType": &armmachinelearningservices.InstanceTypeSchema{
-							Resources: &armmachinelearningservices.InstanceTypeSchemaResources{
-								Limits: map[string]*string{
-									"cpu":            to.Ptr("1"),
-									"memory":         to.Ptr("4Gi"),
-									"nvidia.com/gpu": nil,
-								},
-								Requests: map[string]*string{
-									"cpu":            to.Ptr("1"),
-									"memory":         to.Ptr("4Gi"),
-									"nvidia.com/gpu": nil,
-								},
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.Kubernetes{
+			Description: to.Ptr("some compute"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeKubernetes),
+			ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+			Properties: &armmachinelearningservices.KubernetesProperties{
+				DefaultInstanceType: to.Ptr("defaultInstanceType"),
+				InstanceTypes: map[string]*armmachinelearningservices.InstanceTypeSchema{
+					"defaultInstanceType": &armmachinelearningservices.InstanceTypeSchema{
+						Resources: &armmachinelearningservices.InstanceTypeSchemaResources{
+							Limits: map[string]*string{
+								"cpu":            to.Ptr("1"),
+								"memory":         to.Ptr("4Gi"),
+								"nvidia.com/gpu": nil,
+							},
+							Requests: map[string]*string{
+								"cpu":            to.Ptr("1"),
+								"memory":         to.Ptr("4Gi"),
+								"nvidia.com/gpu": nil,
 							},
 						},
 					},
-					Namespace: to.Ptr("default"),
+				},
+				Namespace: to.Ptr("default"),
+			},
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
+func ExampleComputeClient_BeginCreateOrUpdate_basicAmlCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AmlCompute{
+			Properties: &armmachinelearningservices.AmlComputeProperties{
+				EnableNodePublicIP:          to.Ptr(true),
+				IsolatedNetwork:             to.Ptr(false),
+				OSType:                      to.Ptr(armmachinelearningservices.OsTypeWindows),
+				RemoteLoginPortPublicAccess: to.Ptr(armmachinelearningservices.RemoteLoginPortPublicAccessNotSpecified),
+				ScaleSettings: &armmachinelearningservices.ScaleSettings{
+					MaxNodeCount:                to.Ptr[int32](1),
+					MinNodeCount:                to.Ptr[int32](0),
+					NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
+				},
+				VirtualMachineImage: &armmachinelearningservices.VirtualMachineImage{
+					ID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myImageGallery/images/myImageDefinition/versions/0.0.1"),
+				},
+				VMPriority: to.Ptr(armmachinelearningservices.VMPriorityDedicated),
+				VMSize:     to.Ptr("STANDARD_NC6"),
+			},
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
+func ExampleComputeClient_BeginCreateOrUpdate_basicDataFactoryCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.DataFactory{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeDataFactory),
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
+func ExampleComputeClient_BeginCreateOrUpdate_basicAKSCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AKS{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
+func ExampleComputeClient_BeginCreateOrUpdate_computeInstance() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.ComputeInstance{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+			Properties: &armmachinelearningservices.ComputeInstanceProperties{
+				ApplicationSharingPolicy:         to.Ptr(armmachinelearningservices.ApplicationSharingPolicyPersonal),
+				ComputeInstanceAuthorizationType: to.Ptr(armmachinelearningservices.ComputeInstanceAuthorizationTypePersonal),
+				PersonalComputeInstanceSettings: &armmachinelearningservices.PersonalComputeInstanceSettings{
+					AssignedUser: &armmachinelearningservices.AssignedUser{
+						ObjectID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+						TenantID: to.Ptr("00000000-0000-0000-0000-000000000000"),
+					},
+				},
+				SSHSettings: &armmachinelearningservices.ComputeInstanceSSHSettings{
+					SSHPublicAccess: to.Ptr(armmachinelearningservices.SSHPublicAccessDisabled),
+				},
+				Subnet: &armmachinelearningservices.ResourceID{
+					ID: to.Ptr("test-subnet-resource-id"),
+				},
+				VMSize: to.Ptr("STANDARD_NC6"),
+			},
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
+func ExampleComputeClient_BeginCreateOrUpdate_computeInstanceMinimal() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.ComputeInstance{
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeComputeInstance),
+			Properties: &armmachinelearningservices.ComputeInstanceProperties{
+				VMSize: to.Ptr("STANDARD_NC6"),
+			},
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
+func ExampleComputeClient_BeginCreateOrUpdate_amlCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AmlCompute{
+			Properties: &armmachinelearningservices.AmlComputeProperties{
+				ScaleSettings: &armmachinelearningservices.ScaleSettings{
+					MaxNodeCount:                to.Ptr[int32](4),
+					MinNodeCount:                to.Ptr[int32](4),
+					NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
 				},
 			},
-			Location: to.Ptr("eastus"),
+			Description: to.Ptr("some compute"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAmlCompute),
 		},
-		nil)
+		Location: to.Ptr("eastus"),
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
+func ExampleComputeClient_BeginCreateOrUpdate_aKSCompute() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armmachinelearningservices.NewComputeClient("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ComputeResource{
+		Properties: &armmachinelearningservices.AKS{
+			Properties: &armmachinelearningservices.AKSSchemaProperties{
+				AgentCount: to.Ptr[int32](4),
+			},
+			Description: to.Ptr("some compute"),
+			ComputeType: to.Ptr(armmachinelearningservices.ComputeTypeAKS),
+			ResourceID:  to.Ptr("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
+		},
+		Location: to.Ptr("eastus"),
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -132,22 +423,17 @@ func ExampleComputeClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.ClusterUpdateParameters{
-			Properties: &armmachinelearningservices.ClusterUpdateProperties{
-				Properties: &armmachinelearningservices.ScaleSettingsInformation{
-					ScaleSettings: &armmachinelearningservices.ScaleSettings{
-						MaxNodeCount:                to.Ptr[int32](4),
-						MinNodeCount:                to.Ptr[int32](4),
-						NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
-					},
+	poller, err := client.BeginUpdate(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.ClusterUpdateParameters{
+		Properties: &armmachinelearningservices.ClusterUpdateProperties{
+			Properties: &armmachinelearningservices.ScaleSettingsInformation{
+				ScaleSettings: &armmachinelearningservices.ScaleSettings{
+					MaxNodeCount:                to.Ptr[int32](4),
+					MinNodeCount:                to.Ptr[int32](4),
+					NodeIdleTimeBeforeScaleDown: to.Ptr("PT5M"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -170,12 +456,7 @@ func ExampleComputeClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		armmachinelearningservices.UnderlyingResourceActionDelete,
-		nil)
+	poller, err := client.BeginDelete(ctx, "testrg123", "workspaces123", "compute123", armmachinelearningservices.UnderlyingResourceActionDelete, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -196,10 +477,7 @@ func ExampleComputeClient_NewListNodesPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListNodesPager("testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	pager := client.NewListNodesPager("testrg123", "workspaces123", "compute123", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -223,11 +501,7 @@ func ExampleComputeClient_ListKeys() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.ListKeys(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	res, err := client.ListKeys(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -246,11 +520,7 @@ func ExampleComputeClient_BeginStart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStart(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	poller, err := client.BeginStart(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -271,11 +541,7 @@ func ExampleComputeClient_BeginStop() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginStop(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	poller, err := client.BeginStop(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -296,11 +562,7 @@ func ExampleComputeClient_BeginRestart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRestart(ctx,
-		"testrg123",
-		"workspaces123",
-		"compute123",
-		nil)
+	poller, err := client.BeginRestart(ctx, "testrg123", "workspaces123", "compute123", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

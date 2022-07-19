@@ -28,14 +28,11 @@ func ExampleEnvironmentVersionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Skip:         nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.EnvironmentVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Skip:         nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -59,12 +56,7 @@ func ExampleEnvironmentVersionsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -81,12 +73,7 @@ func ExampleEnvironmentVersionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -105,44 +92,38 @@ func ExampleEnvironmentVersionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.EnvironmentVersionData{
-			Properties: &armmachinelearningservices.EnvironmentVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.EnvironmentVersionData{
+		Properties: &armmachinelearningservices.EnvironmentVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			Build: &armmachinelearningservices.BuildContext{
+				ContextURI:     to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
+				DockerfilePath: to.Ptr("prod/Dockerfile"),
+			},
+			CondaFile: to.Ptr("string"),
+			Image:     to.Ptr("docker.io/tensorflow/serving:latest"),
+			InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
+				LivenessRoute: &armmachinelearningservices.Route{
+					Path: to.Ptr("string"),
+					Port: to.Ptr[int32](1),
 				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
+				ReadinessRoute: &armmachinelearningservices.Route{
+					Path: to.Ptr("string"),
+					Port: to.Ptr[int32](1),
 				},
-				IsAnonymous: to.Ptr(false),
-				Build: &armmachinelearningservices.BuildContext{
-					ContextURI:     to.Ptr("https://storage-account.blob.core.windows.net/azureml/DockerBuildContext/95ddede6b9b8c4e90472db3acd0a8d28/"),
-					DockerfilePath: to.Ptr("prod/Dockerfile"),
-				},
-				CondaFile: to.Ptr("string"),
-				Image:     to.Ptr("docker.io/tensorflow/serving:latest"),
-				InferenceConfig: &armmachinelearningservices.InferenceContainerProperties{
-					LivenessRoute: &armmachinelearningservices.Route{
-						Path: to.Ptr("string"),
-						Port: to.Ptr[int32](1),
-					},
-					ReadinessRoute: &armmachinelearningservices.Route{
-						Path: to.Ptr("string"),
-						Port: to.Ptr[int32](1),
-					},
-					ScoringRoute: &armmachinelearningservices.Route{
-						Path: to.Ptr("string"),
-						Port: to.Ptr[int32](1),
-					},
+				ScoringRoute: &armmachinelearningservices.Route{
+					Path: to.Ptr("string"),
+					Port: to.Ptr[int32](1),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

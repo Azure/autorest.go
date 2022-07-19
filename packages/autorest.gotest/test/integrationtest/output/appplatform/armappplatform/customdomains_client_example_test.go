@@ -28,12 +28,7 @@ func ExampleCustomDomainsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -52,18 +47,12 @@ func ExampleCustomDomainsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		armappplatform.CustomDomainResource{
-			Properties: &armappplatform.CustomDomainProperties{
-				CertName:   to.Ptr("mycert"),
-				Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
+		Properties: &armappplatform.CustomDomainProperties{
+			CertName:   to.Ptr("mycert"),
+			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -86,12 +75,7 @@ func ExampleCustomDomainsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -112,18 +96,12 @@ func ExampleCustomDomainsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mydomain.com",
-		armappplatform.CustomDomainResource{
-			Properties: &armappplatform.CustomDomainProperties{
-				CertName:   to.Ptr("mycert"),
-				Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mydomain.com", armappplatform.CustomDomainResource{
+		Properties: &armappplatform.CustomDomainProperties{
+			CertName:   to.Ptr("mycert"),
+			Thumbprint: to.Ptr("934367bf1c97033f877db0f15cb1b586957d3133"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -146,10 +124,7 @@ func ExampleCustomDomainsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		"myapp",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

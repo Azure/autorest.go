@@ -28,13 +28,10 @@ func ExampleCodeVersionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.CodeVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:  to.Ptr[int32](1),
-			Skip: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.CodeVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:  to.Ptr[int32](1),
+		Skip: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -58,12 +55,7 @@ func ExampleCodeVersionsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -80,12 +72,7 @@ func ExampleCodeVersionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -104,25 +91,19 @@ func ExampleCodeVersionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.CodeVersionData{
-			Properties: &armmachinelearningservices.CodeVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				CodeURI:     to.Ptr("https://blobStorage/folderName"),
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.CodeVersionData{
+		Properties: &armmachinelearningservices.CodeVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
 			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			CodeURI:     to.Ptr("https://blobStorage/folderName"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

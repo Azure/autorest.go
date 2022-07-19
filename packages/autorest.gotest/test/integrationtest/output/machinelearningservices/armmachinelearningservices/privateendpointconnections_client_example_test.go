@@ -28,9 +28,7 @@ func ExamplePrivateEndpointConnectionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("rg-1234",
-		"testworkspace",
-		nil)
+	pager := client.NewListPager("rg-1234", "testworkspace", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -54,11 +52,7 @@ func ExamplePrivateEndpointConnectionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"rg-1234",
-		"testworkspace",
-		"{privateEndpointConnectionName}",
-		nil)
+	res, err := client.Get(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -77,19 +71,14 @@ func ExamplePrivateEndpointConnectionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"rg-1234",
-		"testworkspace",
-		"{privateEndpointConnectionName}",
-		armmachinelearningservices.PrivateEndpointConnection{
-			Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
-				PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
-					Description: to.Ptr("Auto-Approved"),
-					Status:      to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
-				},
+	res, err := client.CreateOrUpdate(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", armmachinelearningservices.PrivateEndpointConnection{
+		Properties: &armmachinelearningservices.PrivateEndpointConnectionProperties{
+			PrivateLinkServiceConnectionState: &armmachinelearningservices.PrivateLinkServiceConnectionState{
+				Description: to.Ptr("Auto-Approved"),
+				Status:      to.Ptr(armmachinelearningservices.PrivateEndpointServiceConnectionStatusApproved),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -108,11 +97,7 @@ func ExamplePrivateEndpointConnectionsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"rg-1234",
-		"testworkspace",
-		"{privateEndpointConnectionName}",
-		nil)
+	_, err = client.Delete(ctx, "rg-1234", "testworkspace", "{privateEndpointConnectionName}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -28,11 +28,9 @@ func ExampleWorkspaceConnectionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("resourceGroup-1",
-		"workspace-1",
-		&armmachinelearningservices.WorkspaceConnectionsClientListOptions{Target: to.Ptr("www.facebook.com"),
-			Category: to.Ptr("ACR"),
-		})
+	pager := client.NewListPager("resourceGroup-1", "workspace-1", &armmachinelearningservices.WorkspaceConnectionsClientListOptions{Target: to.Ptr("www.facebook.com"),
+		Category: to.Ptr("ACR"),
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -56,19 +54,14 @@ func ExampleWorkspaceConnectionsClient_Create() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Create(ctx,
-		"resourceGroup-1",
-		"workspace-1",
-		"connection-1",
-		armmachinelearningservices.WorkspaceConnection{
-			Properties: &armmachinelearningservices.WorkspaceConnectionProps{
-				AuthType: to.Ptr("PAT"),
-				Category: to.Ptr("ACR"),
-				Target:   to.Ptr("www.facebook.com"),
-				Value:    to.Ptr("secrets"),
-			},
+	res, err := client.Create(ctx, "resourceGroup-1", "workspace-1", "connection-1", armmachinelearningservices.WorkspaceConnection{
+		Properties: &armmachinelearningservices.WorkspaceConnectionProps{
+			AuthType: to.Ptr("PAT"),
+			Category: to.Ptr("ACR"),
+			Target:   to.Ptr("www.facebook.com"),
+			Value:    to.Ptr("secrets"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -87,11 +80,7 @@ func ExampleWorkspaceConnectionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"resourceGroup-1",
-		"workspace-1",
-		"connection-1",
-		nil)
+	res, err := client.Get(ctx, "resourceGroup-1", "workspace-1", "connection-1", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -110,11 +99,7 @@ func ExampleWorkspaceConnectionsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"resourceGroup-1",
-		"workspace-1",
-		"connection-1",
-		nil)
+	_, err = client.Delete(ctx, "resourceGroup-1", "workspace-1", "connection-1", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

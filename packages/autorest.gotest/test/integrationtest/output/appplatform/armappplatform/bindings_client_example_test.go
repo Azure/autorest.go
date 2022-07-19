@@ -28,12 +28,7 @@ func ExampleBindingsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -52,22 +47,16 @@ func ExampleBindingsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		armappplatform.BindingResource{
-			Properties: &armappplatform.BindingResourceProperties{
-				BindingParameters: map[string]interface{}{
-					"apiType":      "SQL",
-					"databaseName": "db1",
-				},
-				Key:        to.Ptr("xxxx"),
-				ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
+		Properties: &armappplatform.BindingResourceProperties{
+			BindingParameters: map[string]interface{}{
+				"apiType":      "SQL",
+				"databaseName": "db1",
 			},
+			Key:        to.Ptr("xxxx"),
+			ResourceID: to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -90,12 +79,7 @@ func ExampleBindingsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -116,21 +100,15 @@ func ExampleBindingsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"myapp",
-		"mybinding",
-		armappplatform.BindingResource{
-			Properties: &armappplatform.BindingResourceProperties{
-				BindingParameters: map[string]interface{}{
-					"apiType":      "SQL",
-					"databaseName": "db1",
-				},
-				Key: to.Ptr("xxxx"),
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myservice", "myapp", "mybinding", armappplatform.BindingResource{
+		Properties: &armappplatform.BindingResourceProperties{
+			BindingParameters: map[string]interface{}{
+				"apiType":      "SQL",
+				"databaseName": "db1",
 			},
+			Key: to.Ptr("xxxx"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -153,10 +131,7 @@ func ExampleBindingsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"myservice",
-		"myapp",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myservice", "myapp", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

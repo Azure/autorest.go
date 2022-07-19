@@ -82,99 +82,92 @@ func signalrSample() {
 	if err != nil {
 		panic(err)
 	}
-	_, err = client.CheckNameAvailability(ctx,
-		location,
-		armsignalr.NameAvailabilityParameters{
-			Name: to.Ptr(resourceName),
-			Type: to.Ptr("Microsoft.SignalRService/SignalR"),
-		},
-		nil)
+	_, err = client.CheckNameAvailability(ctx, location, armsignalr.NameAvailabilityParameters{
+		Name: to.Ptr(resourceName),
+		Type: to.Ptr("Microsoft.SignalRService/SignalR"),
+	}, nil)
 	if err != nil {
 		panic(err)
 	}
 
 	// From step SignalR_CreateOrUpdate
-	clientCreateOrUpdateResponsePoller, err := client.BeginCreateOrUpdate(ctx,
-		resourceGroupName,
-		resourceName,
-		armsignalr.ResourceInfo{
-			Location: to.Ptr(location),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
+	clientCreateOrUpdateResponsePoller, err := client.BeginCreateOrUpdate(ctx, resourceGroupName, resourceName, armsignalr.ResourceInfo{
+		Location: to.Ptr(location),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Identity: &armsignalr.ManagedIdentity{
+			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		},
+		Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		Properties: &armsignalr.Properties{
+			Cors: &armsignalr.CorsSettings{
+				AllowedOrigins: []*string{
+					to.Ptr("https://foo.com"),
+					to.Ptr("https://bar.com")},
 			},
-			Identity: &armsignalr.ManagedIdentity{
-				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-			},
-			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-			Properties: &armsignalr.Properties{
-				Cors: &armsignalr.CorsSettings{
-					AllowedOrigins: []*string{
-						to.Ptr("https://foo.com"),
-						to.Ptr("https://bar.com")},
+			DisableAADAuth:   to.Ptr(false),
+			DisableLocalAuth: to.Ptr(false),
+			Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("Serverless"),
 				},
-				DisableAADAuth:   to.Ptr(false),
-				DisableLocalAuth: to.Ptr(false),
-				Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("True"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				}},
+			NetworkACLs: &armsignalr.NetworkACLs{
+				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
 					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("Serverless"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("True"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					}},
-				NetworkACLs: &armsignalr.NetworkACLs{
-					DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-					PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-						{
-							Allow: []*armsignalr.SignalRRequestType{
-								to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-							Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-						}},
-					PublicNetwork: &armsignalr.NetworkACL{
 						Allow: []*armsignalr.SignalRRequestType{
-							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-					},
-				},
-				PublicNetworkAccess: to.Ptr("Enabled"),
-				TLS: &armsignalr.TLSSettings{
-					ClientCertEnabled: to.Ptr(false),
-				},
-				Upstream: &armsignalr.ServerlessUpstreamSettings{
-					Templates: []*armsignalr.UpstreamTemplate{
-						{
-							Auth: &armsignalr.UpstreamAuthSettings{
-								Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-								ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-									Resource: to.Ptr("api://example"),
-								},
-							},
-							CategoryPattern: to.Ptr("*"),
-							EventPattern:    to.Ptr("connect,disconnect"),
-							HubPattern:      to.Ptr("*"),
-							URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
-						}},
+							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+						Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+					}},
+				PublicNetwork: &armsignalr.NetworkACL{
+					Allow: []*armsignalr.SignalRRequestType{
+						to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
 				},
 			},
-			SKU: &armsignalr.ResourceSKU{
-				Name:     to.Ptr("Standard_S1"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+			PublicNetworkAccess: to.Ptr("Enabled"),
+			TLS: &armsignalr.TLSSettings{
+				ClientCertEnabled: to.Ptr(false),
+			},
+			Upstream: &armsignalr.ServerlessUpstreamSettings{
+				Templates: []*armsignalr.UpstreamTemplate{
+					{
+						Auth: &armsignalr.UpstreamAuthSettings{
+							Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+							ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+								Resource: to.Ptr("api://example"),
+							},
+						},
+						CategoryPattern: to.Ptr("*"),
+						EventPattern:    to.Ptr("connect,disconnect"),
+						HubPattern:      to.Ptr("*"),
+						URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
+					}},
 			},
 		},
-		nil)
+		SKU: &armsignalr.ResourceSKU{
+			Name:     to.Ptr("Standard_S1"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+		},
+	}, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -184,96 +177,89 @@ func signalrSample() {
 	}
 
 	// From step SignalR_Get
-	_, err = client.Get(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	_, err = client.Get(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}
 
 	// From step SignalR_Update
-	clientUpdateResponsePoller, err := client.BeginUpdate(ctx,
-		resourceGroupName,
-		resourceName,
-		armsignalr.ResourceInfo{
-			Location: to.Ptr(location),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
+	clientUpdateResponsePoller, err := client.BeginUpdate(ctx, resourceGroupName, resourceName, armsignalr.ResourceInfo{
+		Location: to.Ptr(location),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
+		},
+		Identity: &armsignalr.ManagedIdentity{
+			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
+		},
+		Kind: to.Ptr(armsignalr.ServiceKindSignalR),
+		Properties: &armsignalr.Properties{
+			Cors: &armsignalr.CorsSettings{
+				AllowedOrigins: []*string{
+					to.Ptr("https://foo.com"),
+					to.Ptr("https://bar.com")},
 			},
-			Identity: &armsignalr.ManagedIdentity{
-				Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
-			},
-			Kind: to.Ptr(armsignalr.ServiceKindSignalR),
-			Properties: &armsignalr.Properties{
-				Cors: &armsignalr.CorsSettings{
-					AllowedOrigins: []*string{
-						to.Ptr("https://foo.com"),
-						to.Ptr("https://bar.com")},
+			DisableAADAuth:   to.Ptr(false),
+			DisableLocalAuth: to.Ptr(false),
+			Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("Serverless"),
 				},
-				DisableAADAuth:   to.Ptr(false),
-				DisableLocalAuth: to.Ptr(false),
-				Features: []*armsignalr.Feature{
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("True"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				},
+				{
+					Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
+					Properties: map[string]*string{},
+					Value:      to.Ptr("False"),
+				}},
+			NetworkACLs: &armsignalr.NetworkACLs{
+				DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
+				PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
 					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsServiceMode),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("Serverless"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableConnectivityLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("True"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableMessagingLogs),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					},
-					{
-						Flag:       to.Ptr(armsignalr.FeatureFlagsEnableLiveTrace),
-						Properties: map[string]*string{},
-						Value:      to.Ptr("False"),
-					}},
-				NetworkACLs: &armsignalr.NetworkACLs{
-					DefaultAction: to.Ptr(armsignalr.ACLActionDeny),
-					PrivateEndpoints: []*armsignalr.PrivateEndpointACL{
-						{
-							Allow: []*armsignalr.SignalRRequestType{
-								to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
-							Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
-						}},
-					PublicNetwork: &armsignalr.NetworkACL{
 						Allow: []*armsignalr.SignalRRequestType{
-							to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
-					},
-				},
-				PublicNetworkAccess: to.Ptr("Enabled"),
-				TLS: &armsignalr.TLSSettings{
-					ClientCertEnabled: to.Ptr(false),
-				},
-				Upstream: &armsignalr.ServerlessUpstreamSettings{
-					Templates: []*armsignalr.UpstreamTemplate{
-						{
-							Auth: &armsignalr.UpstreamAuthSettings{
-								Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
-								ManagedIdentity: &armsignalr.ManagedIdentitySettings{
-									Resource: to.Ptr("api://example"),
-								},
-							},
-							CategoryPattern: to.Ptr("*"),
-							EventPattern:    to.Ptr("connect,disconnect"),
-							HubPattern:      to.Ptr("*"),
-							URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
-						}},
+							to.Ptr(armsignalr.SignalRRequestTypeServerConnection)},
+						Name: to.Ptr(resourceName + ".1fa229cd-bf3f-47f0-8c49-afb36723997e"),
+					}},
+				PublicNetwork: &armsignalr.NetworkACL{
+					Allow: []*armsignalr.SignalRRequestType{
+						to.Ptr(armsignalr.SignalRRequestTypeClientConnection)},
 				},
 			},
-			SKU: &armsignalr.ResourceSKU{
-				Name:     to.Ptr("Standard_S1"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+			PublicNetworkAccess: to.Ptr("Enabled"),
+			TLS: &armsignalr.TLSSettings{
+				ClientCertEnabled: to.Ptr(false),
+			},
+			Upstream: &armsignalr.ServerlessUpstreamSettings{
+				Templates: []*armsignalr.UpstreamTemplate{
+					{
+						Auth: &armsignalr.UpstreamAuthSettings{
+							Type: to.Ptr(armsignalr.UpstreamAuthTypeManagedIdentity),
+							ManagedIdentity: &armsignalr.ManagedIdentitySettings{
+								Resource: to.Ptr("api://example"),
+							},
+						},
+						CategoryPattern: to.Ptr("*"),
+						EventPattern:    to.Ptr("connect,disconnect"),
+						HubPattern:      to.Ptr("*"),
+						URLTemplate:     to.Ptr("https://example.com/chat/api/connect"),
+					}},
 			},
 		},
-		nil)
+		SKU: &armsignalr.ResourceSKU{
+			Name:     to.Ptr("Standard_S1"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr(armsignalr.SignalRSKUTierStandard),
+		},
+	}, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -283,22 +269,15 @@ func signalrSample() {
 	}
 
 	// From step SignalR_ListKeys
-	_, err = client.ListKeys(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	_, err = client.ListKeys(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}
 
 	// From step SignalR_RegenerateKey
-	clientRegenerateKeyResponsePoller, err := client.BeginRegenerateKey(ctx,
-		resourceGroupName,
-		resourceName,
-		armsignalr.RegenerateKeyParameters{
-			KeyType: to.Ptr(armsignalr.KeyTypePrimary),
-		},
-		nil)
+	clientRegenerateKeyResponsePoller, err := client.BeginRegenerateKey(ctx, resourceGroupName, resourceName, armsignalr.RegenerateKeyParameters{
+		KeyType: to.Ptr(armsignalr.KeyTypePrimary),
+	}, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -308,10 +287,7 @@ func signalrSample() {
 	}
 
 	// From step SignalR_Restart
-	clientRestartResponsePoller, err := client.BeginRestart(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	clientRestartResponsePoller, err := client.BeginRestart(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -325,8 +301,7 @@ func signalrSample() {
 	if err != nil {
 		panic(err)
 	}
-	usagesClientNewListPagerPager := usagesClient.NewListPager(location,
-		nil)
+	usagesClientNewListPagerPager := usagesClient.NewListPager(location, nil)
 	for usagesClientNewListPagerPager.More() {
 		_, err := usagesClientNewListPagerPager.NextPage(ctx)
 		if err != nil {
@@ -336,8 +311,7 @@ func signalrSample() {
 	}
 
 	// From step SignalR_ListByResourceGroup
-	clientNewListByResourceGroupPagerPager := client.NewListByResourceGroupPager(resourceGroupName,
-		nil)
+	clientNewListByResourceGroupPagerPager := client.NewListByResourceGroupPager(resourceGroupName, nil)
 	for clientNewListByResourceGroupPagerPager.More() {
 		_, err := clientNewListByResourceGroupPagerPager.NextPage(ctx)
 		if err != nil {
@@ -371,10 +345,7 @@ func signalrSample() {
 	}
 
 	// From step SignalR_Delete
-	clientDeleteResponsePoller, err := client.BeginDelete(ctx,
-		resourceGroupName,
-		resourceName,
-		nil)
+	clientDeleteResponsePoller, err := client.BeginDelete(ctx, resourceGroupName, resourceName, nil)
 	if err != nil {
 		panic(err)
 	}

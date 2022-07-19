@@ -28,14 +28,11 @@ func ExampleComponentVersionsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("test-rg",
-		"my-aml-workspace",
-		"string",
-		&armmachinelearningservices.ComponentVersionsClientListOptions{OrderBy: to.Ptr("string"),
-			Top:          to.Ptr[int32](1),
-			Skip:         nil,
-			ListViewType: nil,
-		})
+	pager := client.NewListPager("test-rg", "my-aml-workspace", "string", &armmachinelearningservices.ComponentVersionsClientListOptions{OrderBy: to.Ptr("string"),
+		Top:          to.Ptr[int32](1),
+		Skip:         nil,
+		ListViewType: nil,
+	})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -59,12 +56,7 @@ func ExampleComponentVersionsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	_, err = client.Delete(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -81,12 +73,7 @@ func ExampleComponentVersionsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		nil)
+	res, err := client.Get(ctx, "test-rg", "my-aml-workspace", "string", "string", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -105,27 +92,21 @@ func ExampleComponentVersionsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"test-rg",
-		"my-aml-workspace",
-		"string",
-		"string",
-		armmachinelearningservices.ComponentVersionData{
-			Properties: &armmachinelearningservices.ComponentVersionDetails{
-				Description: to.Ptr("string"),
-				Properties: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				Tags: map[string]*string{
-					"string": to.Ptr("string"),
-				},
-				IsAnonymous: to.Ptr(false),
-				ComponentSpec: map[string]interface{}{
-					"8ced901b-d826-477d-bfef-329da9672513": nil,
-				},
+	res, err := client.CreateOrUpdate(ctx, "test-rg", "my-aml-workspace", "string", "string", armmachinelearningservices.ComponentVersionData{
+		Properties: &armmachinelearningservices.ComponentVersionDetails{
+			Description: to.Ptr("string"),
+			Properties: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			Tags: map[string]*string{
+				"string": to.Ptr("string"),
+			},
+			IsAnonymous: to.Ptr(false),
+			ComponentSpec: map[string]interface{}{
+				"8ced901b-d826-477d-bfef-329da9672513": nil,
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

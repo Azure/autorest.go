@@ -18,7 +18,7 @@ import (
 )
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSetWithKeyVaultFromADifferentSubscription.json
-func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate() {
+func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate_createADiskEncryptionSetWithKeyVaultFromADifferentSubscription() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -28,22 +28,55 @@ func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSet{
-			Location: to.Ptr("West US"),
-			Identity: &armcompute.EncryptionSetIdentity{
-				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
-			},
-			Properties: &armcompute.EncryptionSetProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}"),
-				},
-				EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
+		Location: to.Ptr("West US"),
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
-		nil)
+		Properties: &armcompute.EncryptionSetProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/{key}"),
+			},
+			EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateADiskEncryptionSet.json
+func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate_createADiskEncryptionSet() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSet{
+		Location: to.Ptr("West US"),
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+		},
+		Properties: &armcompute.EncryptionSetProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/{key}"),
+				SourceVault: &armcompute.SourceVault{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+				},
+			},
+			EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -56,7 +89,7 @@ func ExampleDiskEncryptionSetsClient_BeginCreateOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled.json
-func ExampleDiskEncryptionSetsClient_BeginUpdate() {
+func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSetWithRotationToLatestKeyVersionEnabled() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -66,22 +99,89 @@ func ExampleDiskEncryptionSetsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		armcompute.DiskEncryptionSetUpdate{
-			Identity: &armcompute.EncryptionSetIdentity{
-				Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
-			},
-			Properties: &armcompute.DiskEncryptionSetUpdateProperties{
-				ActiveKey: &armcompute.KeyForDiskEncryptionSet{
-					KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
-				},
-				EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
-				RotationToLatestKeyVersionEnabled: to.Ptr(true),
-			},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
 		},
-		nil)
+		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
+			},
+			EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+			RotationToLatestKeyVersionEnabled: to.Ptr(true),
+		},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress.json
+func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSetWithRotationToLatestKeyVersionEnabledInProgress() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+		Identity: &armcompute.EncryptionSetIdentity{
+			Type: to.Ptr(armcompute.DiskEncryptionSetIdentityTypeSystemAssigned),
+		},
+		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvaultdifferentsub.vault-int.azure-int.net/keys/keyName/keyVersion1"),
+			},
+			EncryptionType:                    to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+			RotationToLatestKeyVersionEnabled: to.Ptr(true),
+		},
+	}, nil)
+	if err != nil {
+		log.Fatalf("failed to finish the request: %v", err)
+	}
+	res, err := poller.PollUntilDone(ctx, nil)
+	if err != nil {
+		log.Fatalf("failed to pull the result: %v", err)
+	}
+	// TODO: use response item
+	_ = res
+}
+
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateADiskEncryptionSet.json
+func ExampleDiskEncryptionSetsClient_BeginUpdate_updateADiskEncryptionSet() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf("failed to obtain a credential: %v", err)
+	}
+	ctx := context.Background()
+	client, err := armcompute.NewDiskEncryptionSetsClient("{subscription-id}", cred, nil)
+	if err != nil {
+		log.Fatalf("failed to create client: %v", err)
+	}
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myDiskEncryptionSet", armcompute.DiskEncryptionSetUpdate{
+		Properties: &armcompute.DiskEncryptionSetUpdateProperties{
+			ActiveKey: &armcompute.KeyForDiskEncryptionSet{
+				KeyURL: to.Ptr("https://myvmvault.vault-int.azure-int.net/keys/keyName/keyVersion"),
+				SourceVault: &armcompute.SourceVault{
+					ID: to.Ptr("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/myVMVault"),
+				},
+			},
+			EncryptionType: to.Ptr(armcompute.DiskEncryptionSetTypeEncryptionAtRestWithCustomerKey),
+		},
+		Tags: map[string]*string{
+			"department": to.Ptr("Development"),
+			"project":    to.Ptr("Encryption"),
+		},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -104,10 +204,7 @@ func ExampleDiskEncryptionSetsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -126,10 +223,7 @@ func ExampleDiskEncryptionSetsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myDiskEncryptionSet",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myDiskEncryptionSet", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -150,8 +244,7 @@ func ExampleDiskEncryptionSetsClient_NewListByResourceGroupPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -199,9 +292,7 @@ func ExampleDiskEncryptionSetsClient_NewListAssociatedResourcesPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListAssociatedResourcesPager("myResourceGroup",
-		"myDiskEncryptionSet",
-		nil)
+	pager := client.NewListAssociatedResourcesPager("myResourceGroup", "myDiskEncryptionSet", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

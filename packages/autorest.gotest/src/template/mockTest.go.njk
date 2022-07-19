@@ -78,17 +78,17 @@ func (testsuite *MockTestSuite) Test{{exampleGroup.operationGroup.language.go.na
     })
 	{%- endif %}
 	{%- if loop.first %}
-	client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{example.clientParametersOutput + ", " if example.clientParametersOutput else ""}}testsuite.cred, &testsuite.options)
+	client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, "Failed to create client")
     {%- else %}
-    client, err = {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{example.clientParametersOutput + ", " if example.clientParametersOutput else ""}}testsuite.cred, &testsuite.options)
+    client, err = {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, "Failed to create client")
     {%- endif %}
 	{%- if example.returnInfo.length == 2 %}
         {%- if example.isLRO %}
-            poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{example.methodParametersOutput}})
+            poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
         {%- else %}
-            {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if loop.first and example.checkResponse %}:{% endif %}= client.{{example.opName}}({{example.methodParametersOutput}})
+            {% if example.checkResponse %}res{% else %}_{% endif %}, err {% if loop.first and example.checkResponse %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
         {%- endif %}
         testsuite.Require().NoError(err, "Failed to get result for example {{example.originalFile}}")
         {%- if example.isLRO %}
@@ -96,7 +96,7 @@ func (testsuite *MockTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             testsuite.Require().NoError(err, "Failed to get LRO result for example {{example.originalFile}}")
         {%- endif %}
     {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
-        pager {% if loop.first %}:{% endif %}= client.{{example.opName}}({{example.methodParametersOutput}})
+        pager {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
         for pager.More() {
             {% if example.checkResponse and verifyResponse%}nextResult{% else %}_{% endif %}, err := pager.NextPage(ctx)
             testsuite.Require().NoError(err, "Failed to advance page for example {{example.originalFile}}")
@@ -111,7 +111,7 @@ func (testsuite *MockTestSuite) Test{{exampleGroup.operationGroup.language.go.na
             {%- endif %}
         }
     {%- else %}
-        client.{{example.opName}}({{example.methodParametersOutput}})
+        client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
     {%- endif %}
 
     {%- if example.isLRO and example.isPageable and example.checkResponse %}

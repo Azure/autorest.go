@@ -28,16 +28,12 @@ func ExampleProximityPlacementGroupsClient_CreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-		"myResourceGroup",
-		"$(resourceName)",
-		armcompute.ProximityPlacementGroup{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.ProximityPlacementGroupProperties{
-				ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
-			},
+	res, err := client.CreateOrUpdate(ctx, "myResourceGroup", "$(resourceName)", armcompute.ProximityPlacementGroup{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.ProximityPlacementGroupProperties{
+			ProximityPlacementGroupType: to.Ptr(armcompute.ProximityPlacementGroupTypeStandard),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -56,15 +52,11 @@ func ExampleProximityPlacementGroupsClient_Update() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Update(ctx,
-		"myResourceGroup",
-		"myProximityPlacementGroup",
-		armcompute.ProximityPlacementGroupUpdate{
-			Tags: map[string]*string{
-				"additionalProp1": to.Ptr("string"),
-			},
+	res, err := client.Update(ctx, "myResourceGroup", "myProximityPlacementGroup", armcompute.ProximityPlacementGroupUpdate{
+		Tags: map[string]*string{
+			"additionalProp1": to.Ptr("string"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -83,10 +75,7 @@ func ExampleProximityPlacementGroupsClient_Delete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	_, err = client.Delete(ctx,
-		"myResourceGroup",
-		"$(resourceName)",
-		nil)
+	_, err = client.Delete(ctx, "myResourceGroup", "$(resourceName)", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -103,10 +92,7 @@ func ExampleProximityPlacementGroupsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myProximityPlacementGroup",
-		&armcompute.ProximityPlacementGroupsClientGetOptions{IncludeColocationStatus: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myProximityPlacementGroup", &armcompute.ProximityPlacementGroupsClientGetOptions{IncludeColocationStatus: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -149,8 +135,7 @@ func ExampleProximityPlacementGroupsClient_NewListByResourceGroupPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByResourceGroupPager("myResourceGroup",
-		nil)
+	pager := client.NewListByResourceGroupPager("myResourceGroup", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

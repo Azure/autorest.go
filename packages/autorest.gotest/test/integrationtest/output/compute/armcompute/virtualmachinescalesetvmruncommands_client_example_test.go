@@ -28,33 +28,27 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		armcompute.VirtualMachineRunCommand{
-			Location: to.Ptr("West US"),
-			Properties: &armcompute.VirtualMachineRunCommandProperties{
-				AsyncExecution: to.Ptr(false),
-				Parameters: []*armcompute.RunCommandInputParameter{
-					{
-						Name:  to.Ptr("param1"),
-						Value: to.Ptr("value1"),
-					},
-					{
-						Name:  to.Ptr("param2"),
-						Value: to.Ptr("value2"),
-					}},
-				RunAsPassword: to.Ptr("<runAsPassword>"),
-				RunAsUser:     to.Ptr("user1"),
-				Source: &armcompute.VirtualMachineRunCommandScriptSource{
-					Script: to.Ptr("Write-Host Hello World!"),
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", armcompute.VirtualMachineRunCommand{
+		Location: to.Ptr("West US"),
+		Properties: &armcompute.VirtualMachineRunCommandProperties{
+			AsyncExecution: to.Ptr(false),
+			Parameters: []*armcompute.RunCommandInputParameter{
+				{
+					Name:  to.Ptr("param1"),
+					Value: to.Ptr("value1"),
 				},
-				TimeoutInSeconds: to.Ptr[int32](3600),
+				{
+					Name:  to.Ptr("param2"),
+					Value: to.Ptr("value2"),
+				}},
+			RunAsPassword: to.Ptr("<runAsPassword>"),
+			RunAsUser:     to.Ptr("user1"),
+			Source: &armcompute.VirtualMachineRunCommandScriptSource{
+				Script: to.Ptr("Write-Host Hello World!"),
 			},
+			TimeoutInSeconds: to.Ptr[int32](3600),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -77,19 +71,13 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_BeginUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdate(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		armcompute.VirtualMachineRunCommandUpdate{
-			Properties: &armcompute.VirtualMachineRunCommandProperties{
-				Source: &armcompute.VirtualMachineRunCommandScriptSource{
-					Script: to.Ptr("Write-Host Script Source Updated!"),
-				},
+	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", armcompute.VirtualMachineRunCommandUpdate{
+		Properties: &armcompute.VirtualMachineRunCommandProperties{
+			Source: &armcompute.VirtualMachineRunCommandScriptSource{
+				Script: to.Ptr("Write-Host Script Source Updated!"),
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -112,12 +100,7 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -138,12 +121,7 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		"myRunCommand",
-		&armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "myResourceGroup", "myvmScaleSet", "0", "myRunCommand", &armcompute.VirtualMachineScaleSetVMRunCommandsClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -162,10 +140,7 @@ func ExampleVirtualMachineScaleSetVMRunCommandsClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"myvmScaleSet",
-		"0",
-		&armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions{Expand: nil})
+	pager := client.NewListPager("myResourceGroup", "myvmScaleSet", "0", &armcompute.VirtualMachineScaleSetVMRunCommandsClientListOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

@@ -237,124 +237,86 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Services_CheckNameAvailability
 	servicesClient, err := armappplatform.NewServicesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	_, err = servicesClient.CheckNameAvailability(testsuite.ctx,
-		testsuite.location,
-		armappplatform.NameAvailabilityParameters{
-			Name: to.Ptr(testsuite.serviceName),
-			Type: to.Ptr("Microsoft.AppPlatform/Spring"),
-		},
-		nil)
+	_, err = servicesClient.CheckNameAvailability(testsuite.ctx, testsuite.location, armappplatform.NameAvailabilityParameters{
+		Name: to.Ptr(testsuite.serviceName),
+		Type: to.Ptr("Microsoft.AppPlatform/Spring"),
+	}, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_CreateOrUpdate
-	servicesClientCreateOrUpdateResponsePoller, err := servicesClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.ServiceResource{
-			Location: to.Ptr(testsuite.location),
-			Tags: map[string]*string{
-				"key1": to.Ptr("value1"),
-			},
-			Properties: &armappplatform.ClusterResourceProperties{},
-			SKU: &armappplatform.SKU{
-				Name: to.Ptr("S0"),
-				Tier: to.Ptr("Standard"),
-			},
+	servicesClientCreateOrUpdateResponsePoller, err := servicesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ServiceResource{
+		Location: to.Ptr(testsuite.location),
+		Tags: map[string]*string{
+			"key1": to.Ptr("value1"),
 		},
-		nil)
+		Properties: &armappplatform.ClusterResourceProperties{},
+		SKU: &armappplatform.SKU{
+			Name: to.Ptr("S0"),
+			Tier: to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, servicesClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Services_Get
-	_, err = servicesClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	_, err = servicesClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_Update
-	servicesClientUpdateResponsePoller, err := servicesClient.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.ServiceResource{
-			Tags: map[string]*string{
-				"created-by": to.Ptr("api-test"),
-				"hello":      to.Ptr("world"),
-			},
-			SKU: &armappplatform.SKU{
-				Name: to.Ptr("S0"),
-				Tier: to.Ptr("Standard"),
-			},
+	servicesClientUpdateResponsePoller, err := servicesClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ServiceResource{
+		Tags: map[string]*string{
+			"created-by": to.Ptr("api-test"),
+			"hello":      to.Ptr("world"),
 		},
-		nil)
+		SKU: &armappplatform.SKU{
+			Name: to.Ptr("S0"),
+			Tier: to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, servicesClientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Services_DisableTestEndpoint
-	_, err = servicesClient.DisableTestEndpoint(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	_, err = servicesClient.DisableTestEndpoint(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_EnableTestEndpoint
-	_, err = servicesClient.EnableTestEndpoint(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	_, err = servicesClient.EnableTestEndpoint(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_RegenerateTestKey
-	_, err = servicesClient.RegenerateTestKey(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.RegenerateTestKeyRequestPayload{
-			KeyType: to.Ptr(armappplatform.TestKeyTypePrimary),
-		},
-		nil)
+	_, err = servicesClient.RegenerateTestKey(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.RegenerateTestKeyRequestPayload{
+		KeyType: to.Ptr(armappplatform.TestKeyTypePrimary),
+	}, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Services_ListTestKeys
-	_, err = servicesClient.ListTestKeys(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	_, err = servicesClient.ListTestKeys(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_CreateOrUpdate
 	certificatesClient, err := armappplatform.NewCertificatesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	certificateName := "asc-certificate"
-	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		certificateName,
-		armappplatform.CertificateResource{
-			Properties: &armappplatform.CertificateProperties{
-				KeyVaultCertName: to.Ptr("pfx-cert"),
-				VaultURI:         to.Ptr("https://integration-test-prod.vault.azure.net/"),
-			},
+	certificatesClientCreateOrUpdateResponsePoller, err := certificatesClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, certificateName, armappplatform.CertificateResource{
+		Properties: &armappplatform.CertificateProperties{
+			KeyVaultCertName: to.Ptr("pfx-cert"),
+			VaultURI:         to.Ptr("https://integration-test-prod.vault.azure.net/"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, certificatesClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_Get
 	certificateName = "asc-certificate"
-	_, err = certificatesClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		certificateName,
-		nil)
+	_, err = certificatesClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, certificateName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_List
-	certificatesClientNewListPager := certificatesClient.NewListPager(testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	certificatesClientNewListPager := certificatesClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, nil)
 	for certificatesClientNewListPager.More() {
 		_, err := certificatesClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -364,103 +326,77 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step ConfigServers_Validate
 	configServersClient, err := armappplatform.NewConfigServersClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	configServersClientValidateResponsePoller, err := configServersClient.BeginValidate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.ConfigServerSettings{
-			GitProperty: &armappplatform.ConfigServerGitProperty{
-				Label: to.Ptr("master"),
-				SearchPaths: []*string{
-					to.Ptr("/")},
-				URI: to.Ptr("https://github.com/VSChina/asc-config-server-test-public.git"),
-			},
+	configServersClientValidateResponsePoller, err := configServersClient.BeginValidate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerSettings{
+		GitProperty: &armappplatform.ConfigServerGitProperty{
+			Label: to.Ptr("master"),
+			SearchPaths: []*string{
+				to.Ptr("/")},
+			URI: to.Ptr("https://github.com/VSChina/asc-config-server-test-public.git"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, configServersClientValidateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step ConfigServers_UpdatePut
-	configServersClientUpdatePutResponsePoller, err := configServersClient.BeginUpdatePut(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.ConfigServerResource{
-			Properties: &armappplatform.ConfigServerProperties{
-				ConfigServer: &armappplatform.ConfigServerSettings{
-					GitProperty: &armappplatform.ConfigServerGitProperty{
-						Label: to.Ptr("master"),
-						SearchPaths: []*string{
-							to.Ptr("/")},
-						URI: to.Ptr("https://github.com/VSChina/asc-config-server-test-public.git"),
-					},
+	configServersClientUpdatePutResponsePoller, err := configServersClient.BeginUpdatePut(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerResource{
+		Properties: &armappplatform.ConfigServerProperties{
+			ConfigServer: &armappplatform.ConfigServerSettings{
+				GitProperty: &armappplatform.ConfigServerGitProperty{
+					Label: to.Ptr("master"),
+					SearchPaths: []*string{
+						to.Ptr("/")},
+					URI: to.Ptr("https://github.com/VSChina/asc-config-server-test-public.git"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, configServersClientUpdatePutResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step ConfigServers_UpdatePatch
-	configServersClientUpdatePatchResponsePoller, err := configServersClient.BeginUpdatePatch(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.ConfigServerResource{
-			Properties: &armappplatform.ConfigServerProperties{
-				ConfigServer: &armappplatform.ConfigServerSettings{
-					GitProperty: &armappplatform.ConfigServerGitProperty{
-						URI: to.Ptr("https://github.com/azure-samples/spring-petclinic-microservices-config"),
-					},
+	configServersClientUpdatePatchResponsePoller, err := configServersClient.BeginUpdatePatch(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ConfigServerResource{
+		Properties: &armappplatform.ConfigServerProperties{
+			ConfigServer: &armappplatform.ConfigServerSettings{
+				GitProperty: &armappplatform.ConfigServerGitProperty{
+					URI: to.Ptr("https://github.com/azure-samples/spring-petclinic-microservices-config"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, configServersClientUpdatePatchResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step ConfigServers_Get
-	_, err = configServersClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	_, err = configServersClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step MonitoringSettings_UpdatePut
 	monitoringSettingsClient, err := armappplatform.NewMonitoringSettingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	monitoringSettingsClientUpdatePutResponsePoller, err := monitoringSettingsClient.BeginUpdatePut(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.MonitoringSettingResource{
-			Properties: &armappplatform.MonitoringSettingProperties{
-				AppInsightsInstrumentationKey: to.Ptr(testsuite.insightsInstrumentationKey),
-				AppInsightsSamplingRate:       to.Ptr[float64](50),
-				TraceEnabled:                  to.Ptr(true),
-			},
+	monitoringSettingsClientUpdatePutResponsePoller, err := monitoringSettingsClient.BeginUpdatePut(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.MonitoringSettingResource{
+		Properties: &armappplatform.MonitoringSettingProperties{
+			AppInsightsInstrumentationKey: to.Ptr(testsuite.insightsInstrumentationKey),
+			AppInsightsSamplingRate:       to.Ptr[float64](50),
+			TraceEnabled:                  to.Ptr(true),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, monitoringSettingsClientUpdatePutResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step MonitoringSettings_Get
-	_, err = monitoringSettingsClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	_, err = monitoringSettingsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step MonitoringSettings_UpdatePatch
-	monitoringSettingsClientUpdatePatchResponsePoller, err := monitoringSettingsClient.BeginUpdatePatch(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		armappplatform.MonitoringSettingResource{
-			Properties: &armappplatform.MonitoringSettingProperties{
-				AppInsightsSamplingRate: to.Ptr[float64](100),
-			},
+	monitoringSettingsClientUpdatePatchResponsePoller, err := monitoringSettingsClient.BeginUpdatePatch(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.MonitoringSettingResource{
+		Properties: &armappplatform.MonitoringSettingProperties{
+			AppInsightsSamplingRate: to.Ptr[float64](100),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, monitoringSettingsClientUpdatePatchResponsePoller)
 	testsuite.Require().NoError(err)
@@ -468,137 +404,105 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Apps_Create
 	appsClient, err := armappplatform.NewAppsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
-	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		armappplatform.AppResource{
-			Identity: &armappplatform.ManagedIdentityProperties{
-				Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-				PrincipalID: to.Ptr("principalid"),
-				TenantID:    to.Ptr("tenantid"),
-			},
-			Location: to.Ptr(testsuite.location),
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("mydeployment1"),
-				EnableEndToEndTLS:    to.Ptr(false),
-				Fqdn:                 to.Ptr(testsuite.appName + ".mydomain.com"),
-				HTTPSOnly:            to.Ptr(false),
-				Public:               to.Ptr(false),
-			},
+	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
+		Identity: &armappplatform.ManagedIdentityProperties{
+			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+			PrincipalID: to.Ptr("principalid"),
+			TenantID:    to.Ptr("tenantid"),
 		},
-		nil)
+		Location: to.Ptr(testsuite.location),
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(testsuite.appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			Public:               to.Ptr(false),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Get
-	_, err = appsClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		&armappplatform.AppsClientGetOptions{SyncStatus: nil})
+	_, err = appsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, &armappplatform.AppsClientGetOptions{SyncStatus: nil})
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_CreateOrUpdate_Default
 	deploymentsClient, err := armappplatform.NewDeploymentsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	deploymentName := "default"
-	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		armappplatform.DeploymentResource{
-			Properties: &armappplatform.DeploymentResourceProperties{
-				DeploymentSettings: &armappplatform.DeploymentSettings{
-					CPU: to.Ptr[int32](1),
-					EnvironmentVariables: map[string]*string{
-						"env": to.Ptr("test"),
-					},
-					JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
-					MemoryInGB:     to.Ptr[int32](3),
-					RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	deploymentsClientCreateOrUpdateResponsePoller, err := deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, armappplatform.DeploymentResource{
+		Properties: &armappplatform.DeploymentResourceProperties{
+			DeploymentSettings: &armappplatform.DeploymentSettings{
+				CPU: to.Ptr[int32](1),
+				EnvironmentVariables: map[string]*string{
+					"env": to.Ptr("test"),
 				},
-				Source: &armappplatform.UserSourceInfo{
-					Type:             to.Ptr(armappplatform.UserSourceTypeJar),
-					ArtifactSelector: to.Ptr("sub-module-1"),
-					RelativePath:     to.Ptr("<default>"),
-					Version:          to.Ptr("1.0"),
-				},
+				JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
+				MemoryInGB:     to.Ptr[int32](3),
+				RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
 			},
-			SKU: &armappplatform.SKU{
-				Name:     to.Ptr("S0"),
-				Capacity: to.Ptr[int32](1),
-				Tier:     to.Ptr("Standard"),
+			Source: &armappplatform.UserSourceInfo{
+				Type:             to.Ptr(armappplatform.UserSourceTypeJar),
+				ArtifactSelector: to.Ptr("sub-module-1"),
+				RelativePath:     to.Ptr("<default>"),
+				Version:          to.Ptr("1.0"),
 			},
 		},
-		nil)
+		SKU: &armappplatform.SKU{
+			Name:     to.Ptr("S0"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Get
 	deploymentName = "default"
-	_, err = deploymentsClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		nil)
+	_, err = deploymentsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update_ActiveDeployment
-	appsClientUpdateResponsePoller, err := appsClient.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		armappplatform.AppResource{
-			Identity: &armappplatform.ManagedIdentityProperties{
-				Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-				PrincipalID: to.Ptr("principalid"),
-				TenantID:    to.Ptr("tenantid"),
-			},
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("default"),
-			},
+	appsClientUpdateResponsePoller, err := appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
+		Identity: &armappplatform.ManagedIdentityProperties{
+			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+			PrincipalID: to.Ptr("principalid"),
+			TenantID:    to.Ptr("tenantid"),
 		},
-		nil)
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("default"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update_Disk
-	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		armappplatform.AppResource{
-			Identity: &armappplatform.ManagedIdentityProperties{
-				Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-				PrincipalID: to.Ptr("principalid"),
-				TenantID:    to.Ptr("tenantid"),
+	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
+		Identity: &armappplatform.ManagedIdentityProperties{
+			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+			PrincipalID: to.Ptr("principalid"),
+			TenantID:    to.Ptr("tenantid"),
+		},
+		Properties: &armappplatform.AppResourceProperties{
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/data"),
+				SizeInGB:  to.Ptr[int32](10),
 			},
-			Properties: &armappplatform.AppResourceProperties{
-				PersistentDisk: &armappplatform.PersistentDisk{
-					MountPath: to.Ptr("/data"),
-					SizeInGB:  to.Ptr[int32](10),
-				},
-				TemporaryDisk: &armappplatform.TemporaryDisk{
-					MountPath: to.Ptr("/tmpdisk"),
-					SizeInGB:  to.Ptr[int32](3),
-				},
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/tmpdisk"),
+				SizeInGB:  to.Ptr[int32](3),
 			},
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_List
-	appsClientNewListPager := appsClient.NewListPager(testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	appsClientNewListPager := appsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, nil)
 	for appsClientNewListPager.More() {
 		_, err := appsClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -609,63 +513,43 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	bindingsClient, err := armappplatform.NewBindingsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	bindingName := "mysql-binding"
-	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		bindingName,
-		armappplatform.BindingResource{
-			Properties: &armappplatform.BindingResourceProperties{
-				BindingParameters: map[string]interface{}{
-					"databaseName": "mysqldb",
-					"username":     "test",
-				},
-				Key:        to.Ptr(testsuite.mysqlKey),
-				ResourceID: to.Ptr("/subscriptions/b46590cb-a111-4b84-935f-c305aaf1f424/resourceGroups/mary-west/providers/Microsoft.DBforMySQL/servers/fake-sql"),
+	bindingsClientCreateOrUpdateResponsePoller, err := bindingsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, armappplatform.BindingResource{
+		Properties: &armappplatform.BindingResourceProperties{
+			BindingParameters: map[string]interface{}{
+				"databaseName": "mysqldb",
+				"username":     "test",
 			},
+			Key:        to.Ptr(testsuite.mysqlKey),
+			ResourceID: to.Ptr("/subscriptions/b46590cb-a111-4b84-935f-c305aaf1f424/resourceGroups/mary-west/providers/Microsoft.DBforMySQL/servers/fake-sql"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, bindingsClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_Update
 	bindingName = "mysql-binding"
-	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		bindingName,
-		armappplatform.BindingResource{
-			Properties: &armappplatform.BindingResourceProperties{
-				BindingParameters: map[string]interface{}{
-					"databaseName": "mysqldb2",
-					"username":     "test2",
-				},
-				Key:        to.Ptr(testsuite.mysqlKey),
-				ResourceID: to.Ptr("/subscriptions/" + testsuite.subscriptionId + "/resourceGroups/" + testsuite.resourceGroupName + "/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, armappplatform.BindingResource{
+		Properties: &armappplatform.BindingResourceProperties{
+			BindingParameters: map[string]interface{}{
+				"databaseName": "mysqldb2",
+				"username":     "test2",
 			},
+			Key:        to.Ptr(testsuite.mysqlKey),
+			ResourceID: to.Ptr("/subscriptions/" + testsuite.subscriptionId + "/resourceGroups/" + testsuite.resourceGroupName + "/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, bindingsClientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_Get
 	bindingName = "mysql-binding"
-	_, err = bindingsClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		bindingName,
-		nil)
+	_, err = bindingsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Bindings_List
-	bindingsClientNewListPager := bindingsClient.NewListPager(testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		nil)
+	bindingsClientNewListPager := bindingsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	for bindingsClientNewListPager.More() {
 		_, err := bindingsClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -674,78 +558,48 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Bindings_Delete
 	bindingName = "mysql-binding"
-	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		bindingName,
-		nil)
+	bindingsClientDeleteResponsePoller, err := bindingsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, bindingsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_ValidateDomain
-	_, err = appsClient.ValidateDomain(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		armappplatform.CustomDomainValidatePayload{
-			Name: to.Ptr(testsuite.customDomainName),
-		},
-		nil)
+	_, err = appsClient.ValidateDomain(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.CustomDomainValidatePayload{
+		Name: to.Ptr(testsuite.customDomainName),
+	}, nil)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_CreateOrUpdate
 	customDomainsClient, err := armappplatform.NewCustomDomainsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	domainName := testsuite.dnsCname + "." + testsuite.customDomainName
-	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		domainName,
-		armappplatform.CustomDomainResource{
-			Properties: &armappplatform.CustomDomainProperties{
-				CertName: to.Ptr("asc-certificate"),
-			},
+	customDomainsClientCreateOrUpdateResponsePoller, err := customDomainsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, armappplatform.CustomDomainResource{
+		Properties: &armappplatform.CustomDomainProperties{
+			CertName: to.Ptr("asc-certificate"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, customDomainsClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Update
 	domainName = testsuite.dnsCname + "." + testsuite.customDomainName
-	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		domainName,
-		armappplatform.CustomDomainResource{
-			Properties: &armappplatform.CustomDomainProperties{
-				CertName: to.Ptr("asc-certificate"),
-			},
+	customDomainsClientUpdateResponsePoller, err := customDomainsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, armappplatform.CustomDomainResource{
+		Properties: &armappplatform.CustomDomainProperties{
+			CertName: to.Ptr("asc-certificate"),
 		},
-		nil)
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, customDomainsClientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Get
 	domainName = testsuite.dnsCname + "." + testsuite.customDomainName
-	_, err = customDomainsClient.Get(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		domainName,
-		nil)
+	_, err = customDomainsClient.Get(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_List
-	customDomainsClientNewListPager := customDomainsClient.NewListPager(testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		nil)
+	customDomainsClientNewListPager := customDomainsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	for customDomainsClientNewListPager.More() {
 		_, err := customDomainsClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -753,11 +607,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Apps_GetResourceUploadUrl
-	appsClientGetResourceUploadURLResponse, err := appsClient.GetResourceUploadURL(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		nil)
+	appsClientGetResourceUploadURLResponse, err := appsClient.GetResourceUploadURL(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	testsuite.Require().NoError(err)
 	relativePath = *appsClientGetResourceUploadURLResponse.RelativePath
 	uploadUrl = *appsClientGetResourceUploadURLResponse.UploadURL
@@ -825,111 +675,77 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Deployments_CreateOrUpdate
 	deploymentName = "blue"
-	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		armappplatform.DeploymentResource{
-			Properties: &armappplatform.DeploymentResourceProperties{
-				DeploymentSettings: &armappplatform.DeploymentSettings{
-					CPU: to.Ptr[int32](1),
-					EnvironmentVariables: map[string]*string{
-						"env": to.Ptr("test"),
-					},
-					JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
-					MemoryInGB:     to.Ptr[int32](3),
-					RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
+	deploymentsClientCreateOrUpdateResponsePoller, err = deploymentsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, armappplatform.DeploymentResource{
+		Properties: &armappplatform.DeploymentResourceProperties{
+			DeploymentSettings: &armappplatform.DeploymentSettings{
+				CPU: to.Ptr[int32](1),
+				EnvironmentVariables: map[string]*string{
+					"env": to.Ptr("test"),
 				},
-				Source: &armappplatform.UserSourceInfo{
-					Type:             to.Ptr(armappplatform.UserSourceTypeJar),
-					ArtifactSelector: to.Ptr("sub-module-1"),
-					RelativePath:     to.Ptr(relativePath),
-					Version:          to.Ptr("1.0"),
-				},
+				JvmOptions:     to.Ptr("-Xms1G -Xmx3G"),
+				MemoryInGB:     to.Ptr[int32](3),
+				RuntimeVersion: to.Ptr(armappplatform.RuntimeVersionJava8),
 			},
-			SKU: &armappplatform.SKU{
-				Name:     to.Ptr("S0"),
-				Capacity: to.Ptr[int32](2),
-				Tier:     to.Ptr("Standard"),
+			Source: &armappplatform.UserSourceInfo{
+				Type:             to.Ptr(armappplatform.UserSourceTypeJar),
+				ArtifactSelector: to.Ptr("sub-module-1"),
+				RelativePath:     to.Ptr(relativePath),
+				Version:          to.Ptr("1.0"),
 			},
 		},
-		nil)
+		SKU: &armappplatform.SKU{
+			Name:     to.Ptr("S0"),
+			Capacity: to.Ptr[int32](2),
+			Tier:     to.Ptr("Standard"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Update
-	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		armappplatform.AppResource{
-			Identity: &armappplatform.ManagedIdentityProperties{
-				Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-				PrincipalID: to.Ptr("principalid"),
-				TenantID:    to.Ptr("tenantid"),
-			},
-			Properties: &armappplatform.AppResourceProperties{
-				ActiveDeploymentName: to.Ptr("blue"),
-			},
+	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
+		Identity: &armappplatform.ManagedIdentityProperties{
+			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
+			PrincipalID: to.Ptr("principalid"),
+			TenantID:    to.Ptr("tenantid"),
 		},
-		nil)
+		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("blue"),
+		},
+	}, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Restart
 	deploymentName = "blue"
-	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		nil)
+	deploymentsClientRestartResponsePoller, err := deploymentsClient.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientRestartResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Stop
 	deploymentName = "blue"
-	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		nil)
+	deploymentsClientStopResponsePoller, err := deploymentsClient.BeginStop(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientStopResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_Start
 	deploymentName = "blue"
-	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		nil)
+	deploymentsClientStartResponsePoller, err := deploymentsClient.BeginStart(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientStartResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_GetLogFileUrl
 	deploymentName = "blue"
-	_, err = deploymentsClient.GetLogFileURL(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		nil)
+	_, err = deploymentsClient.GetLogFileURL(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
 	testsuite.Require().NoError(err)
 
 	// From step Deployments_List
-	deploymentsClientNewListPager := deploymentsClient.NewListPager(testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		&armappplatform.DeploymentsClientListOptions{Version: []string{}})
+	deploymentsClientNewListPager := deploymentsClient.NewListPager(testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, &armappplatform.DeploymentsClientListOptions{Version: []string{}})
 	for deploymentsClientNewListPager.More() {
 		_, err := deploymentsClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -937,9 +753,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Deployments_ListForCluster
-	deploymentsClientNewListForClusterPager := deploymentsClient.NewListForClusterPager(testsuite.resourceGroupName,
-		testsuite.serviceName,
-		&armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
+	deploymentsClientNewListForClusterPager := deploymentsClient.NewListForClusterPager(testsuite.resourceGroupName, testsuite.serviceName, &armappplatform.DeploymentsClientListForClusterOptions{Version: []string{}})
 	for deploymentsClientNewListForClusterPager.More() {
 		_, err := deploymentsClientNewListForClusterPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -947,8 +761,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	}
 
 	// From step Services_List
-	servicesClientNewListPager := servicesClient.NewListPager(testsuite.resourceGroupName,
-		nil)
+	servicesClientNewListPager := servicesClient.NewListPager(testsuite.resourceGroupName, nil)
 	for servicesClientNewListPager.More() {
 		_, err := servicesClientNewListPager.NextPage(testsuite.ctx)
 		testsuite.Require().NoError(err)
@@ -965,55 +778,34 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Deployments_Delete
 	deploymentName = "blue"
-	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		deploymentName,
-		nil)
+	deploymentsClientDeleteResponsePoller, err := deploymentsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, deploymentName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, deploymentsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step CustomDomains_Delete
 	domainName = testsuite.dnsCname + "." + testsuite.customDomainName
-	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		domainName,
-		nil)
+	customDomainsClientDeleteResponsePoller, err := customDomainsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, domainName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, customDomainsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Apps_Delete
 	testsuite.appName = "app01"
-	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		testsuite.appName,
-		nil)
+	appsClientDeleteResponsePoller, err := appsClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, appsClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Certificates_Delete
 	certificateName = "asc-certificate"
-	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		certificateName,
-		nil)
+	certificatesClientDeleteResponsePoller, err := certificatesClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, certificateName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, certificatesClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)
 
 	// From step Services_Delete
-	servicesClientDeleteResponsePoller, err := servicesClient.BeginDelete(testsuite.ctx,
-		testsuite.resourceGroupName,
-		testsuite.serviceName,
-		nil)
+	servicesClientDeleteResponsePoller, err := servicesClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, nil)
 	testsuite.Require().NoError(err)
 	_, err = testutil.PollForTest(testsuite.ctx, servicesClientDeleteResponsePoller)
 	testsuite.Require().NoError(err)

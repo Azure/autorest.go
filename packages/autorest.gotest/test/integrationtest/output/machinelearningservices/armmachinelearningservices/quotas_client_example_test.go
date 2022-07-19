@@ -28,24 +28,21 @@ func ExampleQuotasClient_Update() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Update(ctx,
-		"eastus",
-		armmachinelearningservices.QuotaUpdateParameters{
-			Value: []*armmachinelearningservices.QuotaBaseProperties{
-				{
-					Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
-					ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
-					Limit: to.Ptr[int64](100),
-					Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
-				},
-				{
-					Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
-					ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
-					Limit: to.Ptr[int64](200),
-					Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
-				}},
-		},
-		nil)
+	res, err := client.Update(ctx, "eastus", armmachinelearningservices.QuotaUpdateParameters{
+		Value: []*armmachinelearningservices.QuotaBaseProperties{
+			{
+				Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
+				ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+				Limit: to.Ptr[int64](100),
+				Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
+			},
+			{
+				Type:  to.Ptr("Microsoft.MachineLearningServices/workspaces/quotas"),
+				ID:    to.Ptr("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs"),
+				Limit: to.Ptr[int64](200),
+				Unit:  to.Ptr(armmachinelearningservices.QuotaUnitCount),
+			}},
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -64,8 +61,7 @@ func ExampleQuotasClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("eastus",
-		nil)
+	pager := client.NewListPager("eastus", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

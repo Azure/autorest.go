@@ -28,10 +28,7 @@ func ExampleConfigServersClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -50,22 +47,18 @@ func ExampleConfigServersClient_BeginUpdatePut() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePut(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ConfigServerResource{
-			Properties: &armappplatform.ConfigServerProperties{
-				ConfigServer: &armappplatform.ConfigServerSettings{
-					GitProperty: &armappplatform.ConfigServerGitProperty{
-						Label: to.Ptr("master"),
-						SearchPaths: []*string{
-							to.Ptr("/")},
-						URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
-					},
+	poller, err := client.BeginUpdatePut(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
+		Properties: &armappplatform.ConfigServerProperties{
+			ConfigServer: &armappplatform.ConfigServerSettings{
+				GitProperty: &armappplatform.ConfigServerGitProperty{
+					Label: to.Ptr("master"),
+					SearchPaths: []*string{
+						to.Ptr("/")},
+					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -88,22 +81,18 @@ func ExampleConfigServersClient_BeginUpdatePatch() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginUpdatePatch(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ConfigServerResource{
-			Properties: &armappplatform.ConfigServerProperties{
-				ConfigServer: &armappplatform.ConfigServerSettings{
-					GitProperty: &armappplatform.ConfigServerGitProperty{
-						Label: to.Ptr("master"),
-						SearchPaths: []*string{
-							to.Ptr("/")},
-						URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
-					},
+	poller, err := client.BeginUpdatePatch(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerResource{
+		Properties: &armappplatform.ConfigServerProperties{
+			ConfigServer: &armappplatform.ConfigServerSettings{
+				GitProperty: &armappplatform.ConfigServerGitProperty{
+					Label: to.Ptr("master"),
+					SearchPaths: []*string{
+						to.Ptr("/")},
+					URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
 				},
 			},
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -126,18 +115,14 @@ func ExampleConfigServersClient_BeginValidate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginValidate(ctx,
-		"myResourceGroup",
-		"myservice",
-		armappplatform.ConfigServerSettings{
-			GitProperty: &armappplatform.ConfigServerGitProperty{
-				Label: to.Ptr("master"),
-				SearchPaths: []*string{
-					to.Ptr("/")},
-				URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
-			},
+	poller, err := client.BeginValidate(ctx, "myResourceGroup", "myservice", armappplatform.ConfigServerSettings{
+		GitProperty: &armappplatform.ConfigServerGitProperty{
+			Label: to.Ptr("master"),
+			SearchPaths: []*string{
+				to.Ptr("/")},
+			URI: to.Ptr("https://github.com/fake-user/fake-repository.git"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

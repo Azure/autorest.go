@@ -25,7 +25,6 @@ import (
 )
 
 
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Create.json
 func ExampleExtensionsClient_Create() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -37,18 +36,11 @@ func ExampleExtensionsClient_Create() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	_, err = client.Create(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+	_, err = client.Create(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Get.json
 func ExampleExtensionsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -60,20 +52,13 @@ func ExampleExtensionsClient_Get() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.Get(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+	res, err := client.Get(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Update.json
 func ExampleExtensionsClient_Update() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -85,20 +70,13 @@ func ExampleExtensionsClient_Update() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.Update(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+	res, err := client.Update(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Delete.json
 func ExampleExtensionsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -110,18 +88,11 @@ func ExampleExtensionsClient_Delete() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	_, err = client.Delete(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+	_, err = client.Delete(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_ListByFarmBeats.json
 func ExampleExtensionsClient_NewListByFarmBeatsPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -133,9 +104,7 @@ func ExampleExtensionsClient_NewListByFarmBeatsPager() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	pager := client.NewListByFarmBeatsPager(\\"examples-rg\\",
-\\"examples-farmbeatsResourceName\\",
-&armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
+	pager := client.NewListByFarmBeatsPager(\\"examples-rg\\", \\"examples-farmbeatsResourceName\\", &armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
 ExtensionCategories: []string{},
 MaxPageSize: nil,
 SkipToken: nil,
@@ -151,8 +120,6 @@ SkipToken: nil,
 		}
 	}
 }
-
-
 ",
   "farmbeatsextensions_client_example_test.go": "//go:build go1.18
 // +build go1.18
@@ -175,7 +142,6 @@ import (
 	\\"reflect\\"
 	\\"time\\"
 )
-
 
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_List.json
@@ -206,9 +172,6 @@ MaxPageSize: nil,
 		}
 	}
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_Get.json
 func ExampleFarmBeatsExtensionsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -220,17 +183,13 @@ func ExampleFarmBeatsExtensionsClient_Get() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.Get(ctx,
-\\"DTN.ContentServices\\",
-nil)
+	res, err := client.Get(ctx, \\"DTN.ContentServices\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
 ",
   "farmbeatsmodels_client_example_test.go": "//go:build go1.18
 // +build go1.18
@@ -255,7 +214,6 @@ import (
 )
 
 
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Get.json
 func ExampleFarmBeatsModelsClient_Get() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -267,19 +225,13 @@ func ExampleFarmBeatsModelsClient_Get() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.Get(ctx,
-\\"examples-rg\\",
-\\"examples-farmBeatsResourceName\\",
-nil)
+	res, err := client.Get(ctx, \\"examples-rg\\", \\"examples-farmBeatsResourceName\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_CreateOrUpdate.json
 func ExampleFarmBeatsModelsClient_CreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -291,26 +243,19 @@ func ExampleFarmBeatsModelsClient_CreateOrUpdate() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.CreateOrUpdate(ctx,
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-armagrifood.FarmBeats{
+	res, err := client.CreateOrUpdate(ctx, \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", armagrifood.FarmBeats{
 Tags: map[string]*string{
 \\"key1\\": to.Ptr(\\"value1\\"),
 \\"key2\\": to.Ptr(\\"value2\\"),
 },
 Location: to.Ptr(\\"eastus2\\"),
-},
-nil)
+}, nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json
 func ExampleFarmBeatsModelsClient_Update() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -322,25 +267,18 @@ func ExampleFarmBeatsModelsClient_Update() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.Update(ctx,
-\\"examples-farmBeatsResourceName\\",
-\\"examples-rg\\",
-armagrifood.FarmBeatsUpdateRequestModel{
+	res, err := client.Update(ctx, \\"examples-farmBeatsResourceName\\", \\"examples-rg\\", armagrifood.FarmBeatsUpdateRequestModel{
 Tags: map[string]*string{
 \\"key1\\": to.Ptr(\\"value1\\"),
 \\"key2\\": to.Ptr(\\"value2\\"),
 },
-},
-nil)
+}, nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Delete.json
 func ExampleFarmBeatsModelsClient_Delete() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -352,17 +290,11 @@ func ExampleFarmBeatsModelsClient_Delete() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	_, err = client.Delete(ctx,
-\\"examples-rg\\",
-\\"examples-farmBeatsResourceName\\",
-nil)
+	_, err = client.Delete(ctx, \\"examples-rg\\", \\"examples-farmBeatsResourceName\\", nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListBySubscription.json
 func ExampleFarmBeatsModelsClient_NewListBySubscriptionPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -388,9 +320,6 @@ SkipToken: nil,
 		}
 	}
 }
-
-
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListByResourceGroup.json
 func ExampleFarmBeatsModelsClient_NewListByResourceGroupPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -402,8 +331,7 @@ func ExampleFarmBeatsModelsClient_NewListByResourceGroupPager() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	pager := client.NewListByResourceGroupPager(\\"examples-rg\\",
-&armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
+	pager := client.NewListByResourceGroupPager(\\"examples-rg\\", &armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
 SkipToken: nil,
 })
 	for pager.More() {
@@ -417,8 +345,6 @@ SkipToken: nil,
 		}
 	}
 }
-
-
 ",
   "locations_client_example_test.go": "//go:build go1.18
 // +build go1.18
@@ -443,9 +369,8 @@ import (
 )
 
 
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json
-func ExampleLocationsClient_CheckNameAvailability() {
+func ExampleLocationsClient_CheckNameAvailability_locations_CheckNameAvailability_AlreadyExists() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf(\\"failed to obtain a credential: %v\\", err)
@@ -455,20 +380,37 @@ func ExampleLocationsClient_CheckNameAvailability() {
     if err != nil {
 		log.Fatalf(\\"failed to create client: %v\\", err)
 	}
-	res, err := client.CheckNameAvailability(ctx,
-armagrifood.CheckNameAvailabilityRequest{
+	res, err := client.CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
 Name: to.Ptr(\\"existingaccountname\\"),
 Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
-},
-nil)
+}, nil)
 	if err != nil {
 		log.Fatalf(\\"failed to finish the request: %v\\", err)
 	}
     // TODO: use response item
     _ = res
 }
-
-
+// Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_Available.json
+func ExampleLocationsClient_CheckNameAvailability_locations_CheckNameAvailability_Available() {
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
+	if err != nil {
+		log.Fatalf(\\"failed to obtain a credential: %v\\", err)
+	}
+	ctx := context.Background()
+	client, err := armagrifood.NewLocationsClient(\\"11111111-2222-3333-4444-555555555555\\", cred, nil)
+    if err != nil {
+		log.Fatalf(\\"failed to create client: %v\\", err)
+	}
+	res, err := client.CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
+Name: to.Ptr(\\"newaccountname\\"),
+Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
+}, nil)
+	if err != nil {
+		log.Fatalf(\\"failed to finish the request: %v\\", err)
+	}
+    // TODO: use response item
+    _ = res
+}
 ",
   "mock_test.go": "//go:build go1.18
 // +build go1.18
@@ -548,11 +490,7 @@ func (testsuite *MockTestSuite) TestExtensions_Create() {ctx := context.Backgrou
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Create.json
 	client, err := armagrifood.NewExtensionsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            _, err = client.Create(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+            _, err = client.Create(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Create.json\\")
 }
 
@@ -561,11 +499,7 @@ func (testsuite *MockTestSuite) TestExtensions_Get() {ctx := context.Background(
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Get.json
 	client, err := armagrifood.NewExtensionsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.Get(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+            res, err := client.Get(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Get.json\\")
 }
 
@@ -574,11 +508,7 @@ func (testsuite *MockTestSuite) TestExtensions_Update() {ctx := context.Backgrou
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Update.json
 	client, err := armagrifood.NewExtensionsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.Update(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+            res, err := client.Update(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Update.json\\")
 }
 
@@ -587,11 +517,7 @@ func (testsuite *MockTestSuite) TestExtensions_Delete() {ctx := context.Backgrou
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Delete.json
 	client, err := armagrifood.NewExtensionsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            _, err = client.Delete(ctx,
-\\"provider.extension\\",
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-nil)
+            _, err = client.Delete(ctx, \\"provider.extension\\", \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Delete.json\\")
 }
 
@@ -600,9 +526,7 @@ func (testsuite *MockTestSuite) TestExtensions_ListByFarmBeats() {ctx := context
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_ListByFarmBeats.json
 	client, err := armagrifood.NewExtensionsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-        pager := client.NewListByFarmBeatsPager(\\"examples-rg\\",
-\\"examples-farmbeatsResourceName\\",
-&armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
+        pager := client.NewListByFarmBeatsPager(\\"examples-rg\\", \\"examples-farmbeatsResourceName\\", &armagrifood.ExtensionsClientListByFarmBeatsOptions{ExtensionIDs: []string{},
 ExtensionCategories: []string{},
 MaxPageSize: nil,
 SkipToken: nil,
@@ -635,9 +559,7 @@ func (testsuite *MockTestSuite) TestFarmBeatsExtensions_Get() {ctx := context.Ba
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_Get.json
 	client, err := armagrifood.NewFarmBeatsExtensionsClient(testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.Get(ctx,
-\\"DTN.ContentServices\\",
-nil)
+            res, err := client.Get(ctx, \\"DTN.ContentServices\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsExtensions_Get.json\\")
 }
 
@@ -646,10 +568,7 @@ func (testsuite *MockTestSuite) TestFarmBeatsModels_Get() {ctx := context.Backgr
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Get.json
 	client, err := armagrifood.NewFarmBeatsModelsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.Get(ctx,
-\\"examples-rg\\",
-\\"examples-farmBeatsResourceName\\",
-nil)
+            res, err := client.Get(ctx, \\"examples-rg\\", \\"examples-farmBeatsResourceName\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Get.json\\")
 }
 
@@ -658,17 +577,13 @@ func (testsuite *MockTestSuite) TestFarmBeatsModels_CreateOrUpdate() {ctx := con
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_CreateOrUpdate.json
 	client, err := armagrifood.NewFarmBeatsModelsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.CreateOrUpdate(ctx,
-\\"examples-farmbeatsResourceName\\",
-\\"examples-rg\\",
-armagrifood.FarmBeats{
+            res, err := client.CreateOrUpdate(ctx, \\"examples-farmbeatsResourceName\\", \\"examples-rg\\", armagrifood.FarmBeats{
 Tags: map[string]*string{
 \\"key1\\": to.Ptr(\\"value1\\"),
 \\"key2\\": to.Ptr(\\"value2\\"),
 },
 Location: to.Ptr(\\"eastus2\\"),
-},
-nil)
+}, nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_CreateOrUpdate.json\\")
 }
 
@@ -677,16 +592,12 @@ func (testsuite *MockTestSuite) TestFarmBeatsModels_Update() {ctx := context.Bac
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json
 	client, err := armagrifood.NewFarmBeatsModelsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.Update(ctx,
-\\"examples-farmBeatsResourceName\\",
-\\"examples-rg\\",
-armagrifood.FarmBeatsUpdateRequestModel{
+            res, err := client.Update(ctx, \\"examples-farmBeatsResourceName\\", \\"examples-rg\\", armagrifood.FarmBeatsUpdateRequestModel{
 Tags: map[string]*string{
 \\"key1\\": to.Ptr(\\"value1\\"),
 \\"key2\\": to.Ptr(\\"value2\\"),
 },
-},
-nil)
+}, nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json\\")
 }
 
@@ -695,10 +606,7 @@ func (testsuite *MockTestSuite) TestFarmBeatsModels_Delete() {ctx := context.Bac
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Delete.json
 	client, err := armagrifood.NewFarmBeatsModelsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            _, err = client.Delete(ctx,
-\\"examples-rg\\",
-\\"examples-farmBeatsResourceName\\",
-nil)
+            _, err = client.Delete(ctx, \\"examples-rg\\", \\"examples-farmBeatsResourceName\\", nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Delete.json\\")
 }
 
@@ -721,8 +629,7 @@ func (testsuite *MockTestSuite) TestFarmBeatsModels_ListByResourceGroup() {ctx :
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListByResourceGroup.json
 	client, err := armagrifood.NewFarmBeatsModelsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-        pager := client.NewListByResourceGroupPager(\\"examples-rg\\",
-&armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
+        pager := client.NewListByResourceGroupPager(\\"examples-rg\\", &armagrifood.FarmBeatsModelsClientListByResourceGroupOptions{MaxPageSize: nil,
 SkipToken: nil,
 })
         for pager.More() {
@@ -736,24 +643,20 @@ func (testsuite *MockTestSuite) TestLocations_CheckNameAvailability() {ctx := co
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json
 	client, err := armagrifood.NewLocationsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err := client.CheckNameAvailability(ctx,
-armagrifood.CheckNameAvailabilityRequest{
+            res, err := client.CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
 Name: to.Ptr(\\"existingaccountname\\"),
 Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
-},
-nil)
+}, nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json\\")
 
     
     // From example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_Available.json
     client, err = armagrifood.NewLocationsClient(\\"11111111-2222-3333-4444-555555555555\\", testsuite.cred, &testsuite.options)
 	testsuite.Require().NoError(err, \\"Failed to create client\\")
-            res, err = client.CheckNameAvailability(ctx,
-armagrifood.CheckNameAvailabilityRequest{
+            res, err = client.CheckNameAvailability(ctx, armagrifood.CheckNameAvailabilityRequest{
 Name: to.Ptr(\\"newaccountname\\"),
 Type: to.Ptr(\\"Microsoft.AgFoodPlatform/farmBeats\\"),
-},
-nil)
+}, nil)
         testsuite.Require().NoError(err, \\"Failed to get result for example specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Locations_CheckNameAvailability_Available.json\\")
 }
 
@@ -792,7 +695,6 @@ import (
 )
 
 
-
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Operations_List.json
 func ExampleOperationsClient_NewListPager() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
@@ -816,8 +718,6 @@ func ExampleOperationsClient_NewListPager() {
 		}
 	}
 }
-
-
 ",
 }
 `;
@@ -930,21 +830,15 @@ var err error
     // From step SignalR_CheckNameAvailability
     signalRClient, err := test.NewSignalRClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)
-                _, err = signalRClient.CheckNameAvailability(testsuite.ctx,
-testsuite.location,
-test.NameAvailabilityParameters{
+                _, err = signalRClient.CheckNameAvailability(testsuite.ctx, testsuite.location, test.NameAvailabilityParameters{
 Name: to.Ptr(resourceName),
 Type: to.Ptr(\\"Microsoft.SignalRService/SignalR\\"),
-},
-nil)
+}, nil)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_CreateOrUpdate
-                signalRClientCreateOrUpdateResponsePoller, err:= signalRClient.BeginCreateOrUpdate(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-test.ResourceInfo{
+                signalRClientCreateOrUpdateResponsePoller, err:= signalRClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, test.ResourceInfo{
 Location: to.Ptr(testsuite.location),
 Tags: map[string]*string{
 \\"key1\\": to.Ptr(\\"value1\\"),
@@ -1024,26 +918,19 @@ Name: to.Ptr(\\"Standard_S1\\"),
 Capacity: to.Ptr[int32](1),
 Tier: to.Ptr(test.SignalRSKUTierStandard),
 },
-},
-nil)
+}, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientCreateOrUpdateResponsePoller)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_Get
-                _, err = signalRClient.Get(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-nil)
+                _, err = signalRClient.Get(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_Update
-                signalRClientUpdateResponsePoller, err:= signalRClient.BeginUpdate(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-test.ResourceInfo{
+                signalRClientUpdateResponsePoller, err:= signalRClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, test.ResourceInfo{
 Location: to.Ptr(testsuite.location),
 Tags: map[string]*string{
 \\"key1\\": to.Ptr(\\"value1\\"),
@@ -1123,39 +1010,28 @@ Name: to.Ptr(\\"Standard_S1\\"),
 Capacity: to.Ptr[int32](1),
 Tier: to.Ptr(test.SignalRSKUTierStandard),
 },
-},
-nil)
+}, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientUpdateResponsePoller)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_ListKeys
-                _, err = signalRClient.ListKeys(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-nil)
+                _, err = signalRClient.ListKeys(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_RegenerateKey
-                signalRClientRegenerateKeyResponsePoller, err:= signalRClient.BeginRegenerateKey(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-test.RegenerateKeyParameters{
+                signalRClientRegenerateKeyResponsePoller, err:= signalRClient.BeginRegenerateKey(testsuite.ctx, testsuite.resourceGroupName, resourceName, test.RegenerateKeyParameters{
 KeyType: to.Ptr(test.KeyTypePrimary),
-},
-nil)
+}, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientRegenerateKeyResponsePoller)
             testsuite.Require().NoError(err)
 
     
     // From step SignalR_Restart
-                signalRClientRestartResponsePoller, err:= signalRClient.BeginRestart(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-nil)
+                signalRClientRestartResponsePoller, err:= signalRClient.BeginRestart(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientRestartResponsePoller)
             testsuite.Require().NoError(err)
@@ -1164,8 +1040,7 @@ nil)
     // From step Usages_List
     usagesClient, err := test.NewUsagesClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)
-            usagesClientNewListPager:= usagesClient.NewListPager(testsuite.location,
-nil)
+            usagesClientNewListPager:= usagesClient.NewListPager(testsuite.location, nil)
             for usagesClientNewListPager.More() {
                 _, err := usagesClientNewListPager.NextPage(testsuite.ctx)
                 testsuite.Require().NoError(err)
@@ -1174,8 +1049,7 @@ nil)
 
     
     // From step SignalR_ListByResourceGroup
-            signalRClientNewListByResourceGroupPager:= signalRClient.NewListByResourceGroupPager(testsuite.resourceGroupName,
-nil)
+            signalRClientNewListByResourceGroupPager:= signalRClient.NewListByResourceGroupPager(testsuite.resourceGroupName, nil)
             for signalRClientNewListByResourceGroupPager.More() {
                 _, err := signalRClientNewListByResourceGroupPager.NextPage(testsuite.ctx)
                 testsuite.Require().NoError(err)
@@ -1204,10 +1078,7 @@ nil)
 
     
     // From step SignalR_Delete
-                signalRClientDeleteResponsePoller, err:= signalRClient.BeginDelete(testsuite.ctx,
-testsuite.resourceGroupName,
-resourceName,
-nil)
+                signalRClientDeleteResponsePoller, err:= signalRClient.BeginDelete(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
             testsuite.Require().NoError(err)
             _, err = testutil.PollForTest(testsuite.ctx, signalRClientDeleteResponsePoller)
             testsuite.Require().NoError(err)

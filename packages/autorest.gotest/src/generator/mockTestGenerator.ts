@@ -19,7 +19,7 @@ import {
 import { BaseCodeGenerator, BaseDataRender } from './baseGenerator';
 import { Config } from '../common/constant';
 import { ExampleParameter, ExampleValue } from '@autorest/testmodeler/dist/src/core/model';
-import { GoExampleModel, GoMockTestDefinitionModel } from '../common/model';
+import { GoExampleModel, GoMockTestDefinitionModel, ParameterOutput } from '../common/model';
 import { GoHelper } from '../util/goHelper';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { elementByValueForParam } from '@autorest/go/dist/generator/helpers';
@@ -150,15 +150,14 @@ export class MockTestDataRender extends BaseDataRender {
     }
 
     // get GO code of all parameters for one operation invoke
-    protected toParametersOutput(paramsSig: Array<[string, string, Parameter | GroupProperty]>, exampleParameters: Array<ExampleParameter>, isClient = false): string {
+    protected toParametersOutput(paramsSig: Array<[string, string, Parameter | GroupProperty]>, exampleParameters: Array<ExampleParameter>, isClient = false): Array<ParameterOutput> {
       return paramsSig
         .map(([paramName, typeName, parameter]) => {
           if (paramName === 'ctx') {
-            return 'ctx';
+            return new ParameterOutput('ctx', 'ctx');
           }
-          return this.genParameterOutput(paramName, typeName, parameter, exampleParameters, isClient);
-        })
-        .join(',\n');
+          return new ParameterOutput(paramName, this.genParameterOutput(paramName, typeName, parameter, exampleParameters, isClient));
+        });
     }
 
     // get GO code of single parameter for one operation invoke
@@ -450,6 +449,14 @@ export class MockTestDataRender extends BaseDataRender {
 
 export class MockTestCodeGenerator extends BaseCodeGenerator {
   public generateCode(extraParam: Record<string, unknown> = {}): void {
-    this.renderAndWrite(this.context.codeModel.testModel.mockTest, 'mockTest.go.njk', `${this.getFilePrefix(Config.testFilePrefix)}mock_test.go`, extraParam);
+    this.renderAndWrite(
+      this.context.codeModel.testModel.mockTest, 
+      'mockTest.go.njk', 
+      `${this.getFilePrefix(Config.testFilePrefix)}mock_test.go`, 
+      extraParam,
+      {
+        getParamsValue: (params: Array<ParameterOutput>) => { return params.map((p)=>{return p.paramOutput;}).join(', '); },
+      },
+    );
   }
 }

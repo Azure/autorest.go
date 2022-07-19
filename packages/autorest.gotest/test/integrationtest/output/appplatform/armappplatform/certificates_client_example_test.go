@@ -28,11 +28,7 @@ func ExampleCertificatesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"myservice",
-		"mycertificate",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "myservice", "mycertificate", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -51,18 +47,13 @@ func ExampleCertificatesClient_BeginCreateOrUpdate() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginCreateOrUpdate(ctx,
-		"myResourceGroup",
-		"myservice",
-		"mycertificate",
-		armappplatform.CertificateResource{
-			Properties: &armappplatform.CertificateProperties{
-				CertVersion:      to.Ptr("08a219d06d874795a96db47e06fbb01e"),
-				KeyVaultCertName: to.Ptr("mycert"),
-				VaultURI:         to.Ptr("https://myvault.vault.azure.net"),
-			},
+	poller, err := client.BeginCreateOrUpdate(ctx, "myResourceGroup", "myservice", "mycertificate", armappplatform.CertificateResource{
+		Properties: &armappplatform.CertificateProperties{
+			CertVersion:      to.Ptr("08a219d06d874795a96db47e06fbb01e"),
+			KeyVaultCertName: to.Ptr("mycert"),
+			VaultURI:         to.Ptr("https://myvault.vault.azure.net"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -85,11 +76,7 @@ func ExampleCertificatesClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"myResourceGroup",
-		"myservice",
-		"mycertificate",
-		nil)
+	poller, err := client.BeginDelete(ctx, "myResourceGroup", "myservice", "mycertificate", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -110,9 +97,7 @@ func ExampleCertificatesClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("myResourceGroup",
-		"myService",
-		nil)
+	pager := client.NewListPager("myResourceGroup", "myService", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

@@ -27,11 +27,7 @@ func ExampleCloudServiceRolesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"{role-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	res, err := client.Get(ctx, "{role-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -50,9 +46,7 @@ func ExampleCloudServiceRolesClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("ConstosoRG",
-		"{cs-name}",
-		nil)
+	pager := client.NewListPager("ConstosoRG", "{cs-name}", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

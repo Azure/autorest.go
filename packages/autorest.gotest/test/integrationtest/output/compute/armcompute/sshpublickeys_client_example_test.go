@@ -28,16 +28,12 @@ func ExampleSSHPublicKeysClient_Create() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Create(ctx,
-		"myResourceGroup",
-		"mySshPublicKeyName",
-		armcompute.SSHPublicKeyResource{
-			Location: to.Ptr("westus"),
-			Properties: &armcompute.SSHPublicKeyResourceProperties{
-				PublicKey: to.Ptr("{ssh-rsa public key}"),
-			},
+	res, err := client.Create(ctx, "myResourceGroup", "mySshPublicKeyName", armcompute.SSHPublicKeyResource{
+		Location: to.Ptr("westus"),
+		Properties: &armcompute.SSHPublicKeyResourceProperties{
+			PublicKey: to.Ptr("{ssh-rsa public key}"),
 		},
-		nil)
+	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -56,10 +52,7 @@ func ExampleSSHPublicKeysClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"mySshPublicKeyName",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -78,10 +71,7 @@ func ExampleSSHPublicKeysClient_GenerateKeyPair() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GenerateKeyPair(ctx,
-		"myResourceGroup",
-		"mySshPublicKeyName",
-		nil)
+	res, err := client.GenerateKeyPair(ctx, "myResourceGroup", "mySshPublicKeyName", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}

@@ -8,7 +8,7 @@ import * as path from 'path';
 import { BaseCodeGenerator } from './baseGenerator';
 import { Config } from '../common/constant';
 import { ExampleParameter, ExampleValue, OutputVariableModelType, StepRestCallModel, TestDefinitionModel, TestScenarioModel } from '@autorest/testmodeler/dist/src/core/model';
-import { GoExampleModel } from '../common/model';
+import { GoExampleModel, ParameterOutput } from '../common/model';
 import { GoHelper } from '../util/goHelper';
 import { GroupProperty, Parameter } from '@autorest/codemodel';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
@@ -187,15 +187,14 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       }
     }
 
-    protected toParametersOutput(paramsSig: Array<[string, string, Parameter | GroupProperty]>, exampleParameters: Array<ExampleParameter>, isClient = false): string {
+    protected toParametersOutput(paramsSig: Array<[string, string, Parameter | GroupProperty]>, exampleParameters: Array<ExampleParameter>, isClient = false): Array<ParameterOutput> {
       return paramsSig
         .map(([paramName, typeName, parameter]) => {
           if (paramName === 'ctx') {
-            return this.packagePrefixForGlobalVariables + 'ctx';
+            return new ParameterOutput('ctx', this.packagePrefixForGlobalVariables + 'ctx');
           }
-          return this.genParameterOutput(paramName, typeName, parameter, exampleParameters, isClient);
-        })
-        .join(',\n');
+          return new ParameterOutput(paramName, this.genParameterOutput(paramName, typeName, parameter, exampleParameters, isClient));
+        });
     }
 
     // For some method which has no subscriptionId param but client has, oav will not do the variable replacement. So we need to specific handle it.
@@ -293,6 +292,7 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
               //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
               return Helper.uncapitalize(typeName.split('.').join('*').split('*').pop());
             },
+            getParamsValue: (params: Array<ParameterOutput>) => { return params.map((p)=>{return p.paramOutput;}).join(', '); },
           },
         );
       }

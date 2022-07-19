@@ -27,12 +27,7 @@ func ExampleDiskRestorePointClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"myResourceGroup",
-		"rpc",
-		"vmrp",
-		"TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745",
-		nil)
+	res, err := client.Get(ctx, "myResourceGroup", "rpc", "vmrp", "TestDisk45ceb03433006d1baee0_b70cd924-3362-4a80-93c2-9415eaa12745", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -51,10 +46,7 @@ func ExampleDiskRestorePointClient_NewListByRestorePointPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListByRestorePointPager("myResourceGroup",
-		"rpc",
-		"vmrp",
-		nil)
+	pager := client.NewListByRestorePointPager("myResourceGroup", "rpc", "vmrp", nil)
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {

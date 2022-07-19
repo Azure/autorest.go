@@ -27,11 +27,7 @@ func ExampleCloudServiceRoleInstancesClient_BeginDelete() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginDelete(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginDelete(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -52,11 +48,7 @@ func ExampleCloudServiceRoleInstancesClient_Get() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.Get(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServiceRoleInstancesClientGetOptions{Expand: nil})
+	res, err := client.Get(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", &armcompute.CloudServiceRoleInstancesClientGetOptions{Expand: nil})
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -75,11 +67,7 @@ func ExampleCloudServiceRoleInstancesClient_GetInstanceView() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	res, err := client.GetInstanceView(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	res, err := client.GetInstanceView(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -98,9 +86,7 @@ func ExampleCloudServiceRoleInstancesClient_NewListPager() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	pager := client.NewListPager("ConstosoRG",
-		"{cs-name}",
-		&armcompute.CloudServiceRoleInstancesClientListOptions{Expand: nil})
+	pager := client.NewListPager("ConstosoRG", "{cs-name}", &armcompute.CloudServiceRoleInstancesClientListOptions{Expand: nil})
 	for pager.More() {
 		nextResult, err := pager.NextPage(ctx)
 		if err != nil {
@@ -124,11 +110,7 @@ func ExampleCloudServiceRoleInstancesClient_BeginRestart() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRestart(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginRestart(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -149,11 +131,7 @@ func ExampleCloudServiceRoleInstancesClient_BeginReimage() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginReimage(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginReimage(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
@@ -174,11 +152,7 @@ func ExampleCloudServiceRoleInstancesClient_BeginRebuild() {
 	if err != nil {
 		log.Fatalf("failed to create client: %v", err)
 	}
-	poller, err := client.BeginRebuild(ctx,
-		"{roleInstance-name}",
-		"ConstosoRG",
-		"{cs-name}",
-		nil)
+	poller, err := client.BeginRebuild(ctx, "{roleInstance-name}", "ConstosoRG", "{cs-name}", nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)
 	}
