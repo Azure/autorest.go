@@ -69,6 +69,7 @@ func (testsuite *SampleTestSuite) Prepare() {
 	testsuite.Require().NoError(err)
 }
 
+// Microsoft.SignalRService/Basic_CRUD
 func (testsuite *SampleTestSuite) TestScenario0() {
 	fakeScenarioVar := "signalrswaggertest5"
 	resourceName := testsuite.resourceName
@@ -181,6 +182,8 @@ func (testsuite *SampleTestSuite) TestScenario0() {
 	_, err = testutil.PollForTest(testsuite.ctx, virtualMachinesClientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
 }
+
+// Microsoft.SignalRService/DeleteOnly
 func (testsuite *SampleTestSuite) TestScenario1() {
 	var err error
 	// From step Delete_proximity_placement_group

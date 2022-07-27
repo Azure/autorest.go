@@ -59,6 +59,7 @@ func prepare() {
 	}
 }
 
+// Microsoft.SignalRService/Basic_CRUD
 func scenario0Sample() {
 	fakeScenarioVar := "signalrswaggertest5"
 	resourceName := resourceName
@@ -181,6 +182,8 @@ func scenario0Sample() {
 		panic(err)
 	}
 }
+
+// Microsoft.SignalRService/DeleteOnly
 func scenario1Sample() {
 	// From step Delete_proximity_placement_group
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(subscriptionId, cred, nil)

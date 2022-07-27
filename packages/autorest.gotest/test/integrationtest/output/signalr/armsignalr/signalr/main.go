@@ -43,6 +43,7 @@ func main() {
 	deleteResourceGroup()
 }
 
+// Microsoft.SignalRService/Basic_CRUD
 func signalrSample() {
 	var resourceName string
 	// From step Generate_Unique_Name

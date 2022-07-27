@@ -230,6 +230,7 @@ func (testsuite *SpringTestSuite) Prepare() {
 	testsuite.Require().NoError(err)
 }
 
+// Microsoft.AppPlatform/Spring
 func (testsuite *SpringTestSuite) TestSpring() {
 	var relativePath string
 	var uploadUrl string

@@ -203,6 +203,7 @@ func prepare() {
 	_ = createDeployment("Add_Dns_Cname_Record", &deployment)
 }
 
+// Microsoft.AppPlatform/Spring
 func springSample() {
 	var relativePath string
 	var uploadUrl string
