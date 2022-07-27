@@ -25,8 +25,10 @@ type {{testCaseName}}TestSuite struct {
 	cred    azcore.TokenCredential
 	options *arm.ClientOptions
 
-	{%- for name, value in variablesOutput %}
-    {{name}} string
+	{%- for name, variable in variablesOutput %}
+    {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
+    {{name}} {{variable.type}}
+    {%- endif %}
     {%- endfor %}
     {%- for variable, _ in requiredVariablesDefault %}
     {{variable}} string
@@ -37,19 +39,19 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 
-    {%- for name, value in variablesOutput %}
-    {%- if value !== "<newDefinedVariable>" and value !== "testsuite." + name %}
-        testsuite.{{name}} = {{value}}
+    {%- for name, variable in variablesOutput %}
+    {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
+    {%- if variable.value !== undefined and variable.value !== "testsuite." + name %}
+        testsuite.{{name}} = {{variable.value}}
+    {%- endif %}
     {%- endif %}
     {%- endfor %}
     {%- for variable, _ in requiredVariablesDefault %}
-    {%- if not variables.hasOwnProperty(variable) %}
         {%- if variable === "subscriptionId" %}
         testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "")
         {%- else %}
         testsuite.{{variable}} = testutil.GetEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
         {%- endif %}
-    {%- endif %}
     {%- endfor %}
 
     testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/{{rpName}}/{{packageName}}/testdata")
@@ -87,17 +89,18 @@ func (testsuite *{{testCaseName}}TestSuite) Prepare() {
 {%- endif %}
 
 {% for testScenario in scenarios %}
+// {{testScenario.description}}
 func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.capitalize(jsFunc.toCamelCase(testScenario.scenario))}}() {
 	{%- for variable, value in testScenario.requiredVariablesDefault %}
 	{%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
     {{variable}} := testutil.GetEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{value}}")
 	{%- endif %}
 	{%- endfor %}
-	{%- for name, value in testScenario.variablesOutput %}
-    {%- if value === "<newDefinedVariable>" %}
-    var {{name}} string
+	{%- for name, variable in testScenario.variablesOutput %}
+    {%- if variable.value === undefined %}
+    var {{name}} {{variable.type}}
     {%- else %}
-    {{name}} := {{value}}
+    {{name}} := {{variable.value}}
     {%- endif %}
 	{%- endfor %}
 	

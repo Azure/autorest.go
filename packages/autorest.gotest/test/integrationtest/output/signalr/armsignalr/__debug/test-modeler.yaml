@@ -6637,7 +6637,7 @@ operationGroups:
           - *ref_223
           - *ref_224
         responses:
-          - language: &ref_615
+          - language: &ref_622
               default:
                 name: ''
                 description: Success. The response indicates the resource is already deleted.
@@ -7602,7 +7602,7 @@ operationGroups:
           - *ref_261
           - *ref_262
         responses:
-          - language:
+          - language: &ref_619
               default:
                 name: ''
                 description: Accepted. The response indicates the restart operation is performed in the background.
@@ -14239,8 +14239,10 @@ testModel:
         operation: *ref_614
         operationGroup: *ref_596
   scenarioTests:
-    - &ref_630
+    - &ref_625
       _filePath: Microsoft.SignalRService\preview\2021-06-01-preview\scenarios\signalR.yaml
+      _swaggerFilePaths:
+        - Microsoft.SignalRService/preview/2021-06-01-preview/signalr.json
       cleanUpSteps: []
       prepareSteps: []
       requiredVariables:
@@ -14252,9 +14254,18 @@ testModel:
         subscriptionId: 00000000-00000000-00000000-00000000
       scenarios:
         - description: Microsoft.SignalRService/Basic_CRUD
-          _resolvedSteps:
-            - &ref_617
-              type: armTemplateDeployment
+          _scenarioDef: *ref_625
+          requiredVariables:
+            - subscriptionId
+            - location
+          requiredVariablesDefault:
+            location: westus
+            subscriptionId: 00000000-00000000-00000000-00000000
+          scenario: SignalR
+          secretVariables: []
+          shareScope: true
+          steps:
+            - type: armTemplateDeployment
               armTemplate: ./peArmTemplate/Generate_Unique_name_template.json
               armTemplatePayload:
                 $schema: https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#
@@ -14276,12 +14287,12 @@ testModel:
               secretVariables: []
               step: Generate_Unique_Name
               variables: {}
-            - &ref_618
-              type: restCall
+            - type: restCall
               operationId: SignalR_CheckNameAvailability
+              description: SignalR_CheckNameAvailability
               exampleFile: ../examples/SignalR_CheckNameAvailability.json
               exampleModel:
-                name: SignalR_CheckNameAvailability
+                name: ../examples/SignalR_CheckNameAvailability.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -14335,38 +14346,32 @@ testModel:
                           rawValue: AlreadyExists
                           language: *ref_416
                       language: *ref_414
-                    headers: {}
-              exampleName: SignalR_CheckNameAvailability
-              expectedResponse:
-                message: The name is already taken. Please try a different name.
-                nameAvailable: false
-                reason: AlreadyExists
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 location: $(location)
                 parameters:
                   name: $(resourceName)
                   type: Microsoft.SignalRService/SignalR
                 subscriptionId: $(subscriptionId)
-              requestUpdate:
-                - replace: /parameters/name
-                  value: $(resourceName)
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_CheckNameAvailability
               variables: {}
-            - &ref_619
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    message: The name is already taken. Please try a different name.
+                    nameAvailable: false
+                    reason: AlreadyExists
+            - type: restCall
               operationId: SignalR_CreateOrUpdate
+              description: SignalR_CreateOrUpdate
               exampleFile: ../examples/SignalR_CreateOrUpdate.json
               exampleModel:
-                name: SignalR_CreateOrUpdate
+                name: ../examples/SignalR_CreateOrUpdate.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -15021,94 +15026,401 @@ testModel:
                               language: *ref_440
                           language: *ref_480
                       language: *ref_502
-                    headers: {}
-              exampleName: SignalR_CreateOrUpdate
-              expectedResponse:
-                name: $(resourceName)
-                type: Microsoft.SignalRService/SignalR
-                id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)
-                identity:
-                  type: SystemAssigned
-                  principalId: $(subscriptionId)
-                  tenantId: $(subscriptionId)
-                kind: SignalR
-                location: eastus
-                properties:
-                  cors:
-                    allowedOrigins:
-                      - https://foo.com
-                      - https://bar.com
-                  disableAadAuth: false
-                  disableLocalAuth: false
-                  externalIP: 10.0.0.1
-                  features:
-                    - flag: ServiceMode
-                      properties: {}
-                      value: Serverless
-                    - flag: EnableConnectivityLogs
-                      properties: {}
-                      value: 'True'
-                    - flag: EnableMessagingLogs
-                      properties: {}
-                      value: 'False'
-                    - flag: EnableLiveTrace
-                      properties: {}
-                      value: 'False'
-                  hostName: $(resourceName).service.signalr.net
-                  networkACLs:
-                    defaultAction: Deny
-                    privateEndpoints:
-                      - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                        allow:
-                          - ServerConnection
-                    publicNetwork:
-                      allow:
-                        - ClientConnection
-                  privateEndpointConnections:
-                    - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                      type: Microsoft.SignalRService/SignalR/privateEndpointConnections
-                      id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)/privateEndpointConnections/$(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                  '201':
+                    body:
+                      schema: *ref_53
+                      parentsValue:
+                        TrackedResource:
+                          schema: *ref_81
+                          parentsValue:
+                            Resource:
+                              schema: *ref_55
+                              parentsValue: {}
+                              properties:
+                                name:
+                                  schema: *ref_83
+                                  rawValue: mySignalRService
+                                  language: *ref_452
+                                type:
+                                  schema: *ref_84
+                                  rawValue: Microsoft.SignalRService/SignalR
+                                  language: *ref_453
+                                id:
+                                  schema: *ref_82
+                                  rawValue: /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService
+                                  language: *ref_451
+                              language: *ref_450
+                          properties:
+                            location:
+                              schema: *ref_85
+                              rawValue: eastus
+                              language: *ref_482
+                            tags:
+                              schema: *ref_86
+                              properties:
+                                key1:
+                                  schema: *ref_1
+                                  rawValue: value1
+                              language: *ref_483
+                          language: *ref_481
                       properties:
-                        privateEndpoint:
-                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
-                        privateLinkServiceConnectionState:
-                          actionsRequired: None
-                          status: Approved
-                        provisioningState: Succeeded
-                      systemData:
-                        createdAt: '2015-02-03T04:05:06Z'
-                        createdBy: string
-                        createdByType: User
-                        lastModifiedAt: '2015-02-03T04:05:06Z'
-                        lastModifiedBy: string
-                        lastModifiedByType: User
-                  provisioningState: Succeeded
-                  publicNetworkAccess: Enabled
-                  publicPort: 443
-                  serverPort: 443
-                  tls:
-                    clientCertEnabled: true
-                  upstream:
-                    templates:
-                      - urlTemplate: http://foo.com
-                  version: '1.0'
-                sku:
-                  name: Standard_S1
-                  capacity: 1
-                  size: S1
-                  tier: Standard
-                systemData:
-                  createdAt: '2015-02-03T04:05:06Z'
-                  createdBy: string
-                  createdByType: User
-                  lastModifiedAt: '2015-02-03T04:05:06Z'
-                  lastModifiedBy: string
-                  lastModifiedByType: User
-                tags:
-                  key1: value1
+                        identity:
+                          schema: *ref_136
+                          parentsValue: {}
+                          properties:
+                            type:
+                              schema: *ref_117
+                              rawValue: SystemAssigned
+                              language: *ref_477
+                            principalId:
+                              schema: *ref_119
+                              rawValue: 00000000-0000-0000-0000-000000000000
+                              language: *ref_478
+                            tenantId:
+                              schema: *ref_120
+                              rawValue: 00000000-0000-0000-0000-000000000000
+                              language: *ref_479
+                          language: *ref_476
+                        kind:
+                          schema: *ref_116
+                          rawValue: SignalR
+                          language: *ref_475
+                        properties:
+                          schema: *ref_123
+                          parentsValue: {}
+                          properties:
+                            cors:
+                              schema: *ref_130
+                              parentsValue: {}
+                              properties:
+                                allowedOrigins:
+                                  schema: *ref_159
+                                  elements:
+                                    - schema: *ref_101
+                                      rawValue: https://foo.com
+                                    - schema: *ref_101
+                                      rawValue: https://bar.com
+                                  language: *ref_461
+                              language: *ref_460
+                            disableAadAuth:
+                              schema: *ref_115
+                              rawValue: false
+                              language: *ref_474
+                            disableLocalAuth:
+                              schema: *ref_114
+                              rawValue: false
+                              language: *ref_473
+                            externalIP:
+                              schema: *ref_92
+                              rawValue: 10.0.0.1
+                              language: *ref_429
+                            features:
+                              schema: *ref_158
+                              elements:
+                                - schema: *ref_129
+                                  parentsValue: {}
+                                  properties:
+                                    flag:
+                                      schema: *ref_98
+                                      rawValue: ServiceMode
+                                      language: *ref_457
+                                    properties:
+                                      schema: *ref_100
+                                      properties: {}
+                                      language: *ref_459
+                                    value:
+                                      schema: *ref_99
+                                      rawValue: Serverless
+                                      language: *ref_458
+                                - schema: *ref_129
+                                  parentsValue: {}
+                                  properties:
+                                    flag:
+                                      schema: *ref_98
+                                      rawValue: EnableConnectivityLogs
+                                      language: *ref_457
+                                    properties:
+                                      schema: *ref_100
+                                      properties: {}
+                                      language: *ref_459
+                                    value:
+                                      schema: *ref_99
+                                      rawValue: 'True'
+                                      language: *ref_458
+                                - schema: *ref_129
+                                  parentsValue: {}
+                                  properties:
+                                    flag:
+                                      schema: *ref_98
+                                      rawValue: EnableMessagingLogs
+                                      language: *ref_457
+                                    properties:
+                                      schema: *ref_100
+                                      properties: {}
+                                      language: *ref_459
+                                    value:
+                                      schema: *ref_99
+                                      rawValue: 'False'
+                                      language: *ref_458
+                                - schema: *ref_129
+                                  parentsValue: {}
+                                  properties:
+                                    flag:
+                                      schema: *ref_98
+                                      rawValue: EnableLiveTrace
+                                      language: *ref_457
+                                    properties:
+                                      schema: *ref_100
+                                      properties: {}
+                                      language: *ref_459
+                                    value:
+                                      schema: *ref_99
+                                      rawValue: 'False'
+                                      language: *ref_458
+                              language: *ref_456
+                            hostName:
+                              schema: *ref_93
+                              rawValue: mysignalrservice.service.signalr.net
+                              language: *ref_430
+                            networkACLs:
+                              schema: *ref_135
+                              parentsValue: {}
+                              properties:
+                                defaultAction:
+                                  schema: *ref_108
+                                  rawValue: Deny
+                                  language: *ref_466
+                                privateEndpoints:
+                                  schema: *ref_163
+                                  elements:
+                                    - schema: *ref_111
+                                      parentsValue:
+                                        NetworkACL:
+                                          schema: *ref_109
+                                          parentsValue: {}
+                                          properties:
+                                            allow:
+                                              schema: *ref_161
+                                              elements:
+                                                - schema: *ref_112
+                                                  rawValue: ServerConnection
+                                              language: *ref_468
+                                          language: *ref_471
+                                      properties:
+                                        name:
+                                          schema: *ref_110
+                                          rawValue: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                                          language: *ref_470
+                                  language: *ref_469
+                                publicNetwork:
+                                  schema: *ref_109
+                                  parentsValue: {}
+                                  properties:
+                                    allow:
+                                      schema: *ref_161
+                                      elements:
+                                        - schema: *ref_112
+                                          rawValue: ClientConnection
+                                      language: *ref_468
+                                  language: *ref_467
+                              language: *ref_465
+                            privateEndpointConnections:
+                              schema: *ref_156
+                              elements:
+                                - schema: *ref_78
+                                  parentsValue:
+                                    ProxyResource:
+                                      schema: *ref_54
+                                      parentsValue:
+                                        Resource:
+                                          schema: *ref_55
+                                          parentsValue: {}
+                                          properties:
+                                            name:
+                                              schema: *ref_83
+                                              rawValue: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                                              language: *ref_452
+                                            type:
+                                              schema: *ref_84
+                                              rawValue: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                                              language: *ref_453
+                                            id:
+                                              schema: *ref_82
+                                              rawValue: >-
+                                                /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                                              language: *ref_451
+                                          language: *ref_450
+                                      properties: {}
+                                      language: *ref_449
+                                  properties:
+                                    properties:
+                                      schema: *ref_124
+                                      parentsValue: {}
+                                      properties:
+                                        privateEndpoint:
+                                          schema: *ref_125
+                                          parentsValue: {}
+                                          properties:
+                                            id:
+                                              schema: *ref_62
+                                              rawValue: /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                                              language: *ref_445
+                                          language: *ref_444
+                                        privateLinkServiceConnectionState:
+                                          schema: *ref_126
+                                          parentsValue: {}
+                                          properties:
+                                            actionsRequired:
+                                              schema: *ref_65
+                                              rawValue: None
+                                              language: *ref_448
+                                            status:
+                                              schema: *ref_63
+                                              rawValue: Approved
+                                              language: *ref_447
+                                          language: *ref_446
+                                        provisioningState:
+                                          schema: *ref_61
+                                          rawValue: Succeeded
+                                          language: *ref_443
+                                      language: *ref_442
+                                    systemData:
+                                      schema: *ref_66
+                                      parentsValue: {}
+                                      properties:
+                                        createdAt:
+                                          schema: *ref_58
+                                          rawValue: '2015-02-03T04:05:06Z'
+                                          language: *ref_438
+                                        createdBy:
+                                          schema: *ref_56
+                                          rawValue: string
+                                          language: *ref_436
+                                        createdByType:
+                                          schema: *ref_57
+                                          rawValue: User
+                                          language: *ref_437
+                                        lastModifiedAt:
+                                          schema: *ref_60
+                                          rawValue: '2015-02-03T04:05:06Z'
+                                          language: *ref_441
+                                        lastModifiedBy:
+                                          schema: *ref_59
+                                          rawValue: string
+                                          language: *ref_439
+                                        lastModifiedByType:
+                                          schema: *ref_57
+                                          rawValue: User
+                                          language: *ref_440
+                                      language: *ref_435
+                              language: *ref_434
+                            provisioningState:
+                              schema: *ref_61
+                              rawValue: Succeeded
+                              language: *ref_428
+                            publicNetworkAccess:
+                              schema: *ref_113
+                              rawValue: Enabled
+                              language: *ref_472
+                            publicPort:
+                              schema: *ref_94
+                              rawValue: 443
+                              language: *ref_431
+                            serverPort:
+                              schema: *ref_95
+                              rawValue: 443
+                              language: *ref_432
+                            tls:
+                              schema: *ref_128
+                              parentsValue: {}
+                              properties:
+                                clientCertEnabled:
+                                  schema: *ref_97
+                                  rawValue: true
+                                  language: *ref_455
+                              language: *ref_454
+                            upstream:
+                              schema: *ref_131
+                              parentsValue: {}
+                              properties:
+                                templates:
+                                  schema: *ref_160
+                                  elements:
+                                    - schema: *ref_132
+                                      parentsValue: {}
+                                      properties:
+                                        urlTemplate:
+                                          schema: *ref_105
+                                          rawValue: http://foo.com
+                                          language: *ref_464
+                                  language: *ref_463
+                              language: *ref_462
+                            version:
+                              schema: *ref_96
+                              rawValue: '1.0'
+                              language: *ref_433
+                          language: *ref_427
+                        sku:
+                          schema: *ref_122
+                          parentsValue: {}
+                          properties:
+                            name:
+                              schema: *ref_87
+                              rawValue: Standard_S1
+                              language: *ref_423
+                            capacity:
+                              schema: *ref_91
+                              rawValue: 1
+                              language: *ref_426
+                            size:
+                              schema: *ref_89
+                              rawValue: S1
+                              language: *ref_425
+                            tier:
+                              schema: *ref_88
+                              rawValue: Standard
+                              language: *ref_424
+                          language: *ref_422
+                        systemData:
+                          schema: *ref_66
+                          parentsValue: {}
+                          properties:
+                            createdAt:
+                              schema: *ref_58
+                              rawValue: '2015-02-03T04:05:06Z'
+                              language: *ref_438
+                            createdBy:
+                              schema: *ref_56
+                              rawValue: string
+                              language: *ref_436
+                            createdByType:
+                              schema: *ref_57
+                              rawValue: User
+                              language: *ref_437
+                            lastModifiedAt:
+                              schema: *ref_60
+                              rawValue: '2015-02-03T04:05:06Z'
+                              language: *ref_441
+                            lastModifiedBy:
+                              schema: *ref_59
+                              rawValue: string
+                              language: *ref_439
+                            lastModifiedByType:
+                              schema: *ref_57
+                              rawValue: User
+                              language: *ref_440
+                          language: *ref_480
+                      language: *ref_503
+                    headers: &ref_615
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                  '202':
+                    headers: &ref_616
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 parameters:
                   identity:
@@ -15166,21 +15478,190 @@ testModel:
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_CreateOrUpdate
               variables: {}
-            - &ref_620
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    name: $(resourceName)
+                    type: Microsoft.SignalRService/SignalR
+                    id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)
+                    identity:
+                      type: SystemAssigned
+                      principalId: $(subscriptionId)
+                      tenantId: $(subscriptionId)
+                    kind: SignalR
+                    location: eastus
+                    properties:
+                      cors:
+                        allowedOrigins:
+                          - https://foo.com
+                          - https://bar.com
+                      disableAadAuth: false
+                      disableLocalAuth: false
+                      externalIP: 10.0.0.1
+                      features:
+                        - flag: ServiceMode
+                          properties: {}
+                          value: Serverless
+                        - flag: EnableConnectivityLogs
+                          properties: {}
+                          value: 'True'
+                        - flag: EnableMessagingLogs
+                          properties: {}
+                          value: 'False'
+                        - flag: EnableLiveTrace
+                          properties: {}
+                          value: 'False'
+                      hostName: $(resourceName).service.signalr.net
+                      networkACLs:
+                        defaultAction: Deny
+                        privateEndpoints:
+                          - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                            allow:
+                              - ServerConnection
+                        publicNetwork:
+                          allow:
+                            - ClientConnection
+                      privateEndpointConnections:
+                        - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          type: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)/privateEndpointConnections/$(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          properties:
+                            privateEndpoint:
+                              id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                            privateLinkServiceConnectionState:
+                              actionsRequired: None
+                              status: Approved
+                            provisioningState: Succeeded
+                          systemData:
+                            createdAt: '2015-02-03T04:05:06Z'
+                            createdBy: string
+                            createdByType: User
+                            lastModifiedAt: '2015-02-03T04:05:06Z'
+                            lastModifiedBy: string
+                            lastModifiedByType: User
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Enabled
+                      publicPort: 443
+                      serverPort: 443
+                      tls:
+                        clientCertEnabled: true
+                      upstream:
+                        templates:
+                          - urlTemplate: http://foo.com
+                      version: '1.0'
+                    sku:
+                      name: Standard_S1
+                      capacity: 1
+                      size: S1
+                      tier: Standard
+                    systemData:
+                      createdAt: '2015-02-03T04:05:06Z'
+                      createdBy: string
+                      createdByType: User
+                      lastModifiedAt: '2015-02-03T04:05:06Z'
+                      lastModifiedBy: string
+                      lastModifiedByType: User
+                    tags:
+                      key1: value1
+                '201':
+                  body:
+                    name: mySignalRService
+                    type: Microsoft.SignalRService/SignalR
+                    id: /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService
+                    identity:
+                      type: SystemAssigned
+                      principalId: 00000000-0000-0000-0000-000000000000
+                      tenantId: 00000000-0000-0000-0000-000000000000
+                    kind: SignalR
+                    location: eastus
+                    properties:
+                      cors:
+                        allowedOrigins:
+                          - https://foo.com
+                          - https://bar.com
+                      disableAadAuth: false
+                      disableLocalAuth: false
+                      externalIP: 10.0.0.1
+                      features:
+                        - flag: ServiceMode
+                          properties: {}
+                          value: Serverless
+                        - flag: EnableConnectivityLogs
+                          properties: {}
+                          value: 'True'
+                        - flag: EnableMessagingLogs
+                          properties: {}
+                          value: 'False'
+                        - flag: EnableLiveTrace
+                          properties: {}
+                          value: 'False'
+                      hostName: mysignalrservice.service.signalr.net
+                      networkACLs:
+                        defaultAction: Deny
+                        privateEndpoints:
+                          - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                            allow:
+                              - ServerConnection
+                        publicNetwork:
+                          allow:
+                            - ClientConnection
+                      privateEndpointConnections:
+                        - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          type: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                          id: >-
+                            /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          properties:
+                            privateEndpoint:
+                              id: /subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                            privateLinkServiceConnectionState:
+                              actionsRequired: None
+                              status: Approved
+                            provisioningState: Succeeded
+                          systemData:
+                            createdAt: '2015-02-03T04:05:06Z'
+                            createdBy: string
+                            createdByType: User
+                            lastModifiedAt: '2015-02-03T04:05:06Z'
+                            lastModifiedBy: string
+                            lastModifiedByType: User
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Enabled
+                      publicPort: 443
+                      serverPort: 443
+                      tls:
+                        clientCertEnabled: true
+                      upstream:
+                        templates:
+                          - urlTemplate: http://foo.com
+                      version: '1.0'
+                    sku:
+                      name: Standard_S1
+                      capacity: 1
+                      size: S1
+                      tier: Standard
+                    systemData:
+                      createdAt: '2015-02-03T04:05:06Z'
+                      createdBy: string
+                      createdByType: User
+                      lastModifiedAt: '2015-02-03T04:05:06Z'
+                      lastModifiedBy: string
+                      lastModifiedByType: User
+                    tags:
+                      key1: value1
+                  headers: *ref_615
+                '202':
+                  headers: *ref_616
+            - type: restCall
               operationId: SignalR_Get
+              description: SignalR_Get
               exampleFile: ../examples/SignalR_Get.json
               exampleModel:
-                name: SignalR_Get
+                name: ../examples/SignalR_Get.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -15592,113 +16073,109 @@ testModel:
                               language: *ref_440
                           language: *ref_480
                       language: *ref_490
-                    headers: {}
-              exampleName: SignalR_Get
-              expectedResponse:
-                name: $(resourceName)
-                type: Microsoft.SignalRService/SignalR
-                id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)
-                identity:
-                  type: SystemAssigned
-                  principalId: $(subscriptionId)
-                  tenantId: $(subscriptionId)
-                kind: SignalR
-                location: eastus
-                properties:
-                  cors:
-                    allowedOrigins:
-                      - https://foo.com
-                      - https://bar.com
-                  disableAadAuth: false
-                  disableLocalAuth: false
-                  externalIP: 10.0.0.1
-                  features:
-                    - flag: ServiceMode
-                      properties: {}
-                      value: Serverless
-                    - flag: EnableConnectivityLogs
-                      properties: {}
-                      value: 'True'
-                    - flag: EnableMessagingLogs
-                      properties: {}
-                      value: 'False'
-                    - flag: EnableLiveTrace
-                      properties: {}
-                      value: 'False'
-                  hostName: $(resourceName).service.signalr.net
-                  networkACLs:
-                    defaultAction: Deny
-                    privateEndpoints:
-                      - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                        allow:
-                          - ServerConnection
-                    publicNetwork:
-                      allow:
-                        - ClientConnection
-                  privateEndpointConnections:
-                    - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                      type: Microsoft.SignalRService/SignalR/privateEndpointConnections
-                      id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)/privateEndpointConnections/$(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                      properties:
-                        privateEndpoint:
-                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
-                        privateLinkServiceConnectionState:
-                          actionsRequired: None
-                          status: Approved
-                        provisioningState: Succeeded
-                      systemData:
-                        createdAt: '2015-02-03T04:05:06Z'
-                        createdBy: string
-                        createdByType: User
-                        lastModifiedAt: '2015-02-03T04:05:06Z'
-                        lastModifiedBy: string
-                        lastModifiedByType: User
-                  provisioningState: Succeeded
-                  publicNetworkAccess: Enabled
-                  publicPort: 443
-                  serverPort: 443
-                  tls:
-                    clientCertEnabled: true
-                  upstream:
-                    templates:
-                      - urlTemplate: http://foo.com
-                  version: '1.0'
-                sku:
-                  name: Standard_S1
-                  capacity: 1
-                  size: S1
-                  tier: Standard
-                systemData:
-                  createdAt: '2015-02-03T04:05:06Z'
-                  createdBy: string
-                  createdByType: User
-                  lastModifiedAt: '2015-02-03T04:05:06Z'
-                  lastModifiedBy: string
-                  lastModifiedByType: User
-                tags:
-                  key1: value1
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_Get
               variables: {}
-            - &ref_621
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    name: $(resourceName)
+                    type: Microsoft.SignalRService/SignalR
+                    id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)
+                    identity:
+                      type: SystemAssigned
+                      principalId: $(subscriptionId)
+                      tenantId: $(subscriptionId)
+                    kind: SignalR
+                    location: eastus
+                    properties:
+                      cors:
+                        allowedOrigins:
+                          - https://foo.com
+                          - https://bar.com
+                      disableAadAuth: false
+                      disableLocalAuth: false
+                      externalIP: 10.0.0.1
+                      features:
+                        - flag: ServiceMode
+                          properties: {}
+                          value: Serverless
+                        - flag: EnableConnectivityLogs
+                          properties: {}
+                          value: 'True'
+                        - flag: EnableMessagingLogs
+                          properties: {}
+                          value: 'False'
+                        - flag: EnableLiveTrace
+                          properties: {}
+                          value: 'False'
+                      hostName: $(resourceName).service.signalr.net
+                      networkACLs:
+                        defaultAction: Deny
+                        privateEndpoints:
+                          - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                            allow:
+                              - ServerConnection
+                        publicNetwork:
+                          allow:
+                            - ClientConnection
+                      privateEndpointConnections:
+                        - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          type: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)/privateEndpointConnections/$(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          properties:
+                            privateEndpoint:
+                              id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                            privateLinkServiceConnectionState:
+                              actionsRequired: None
+                              status: Approved
+                            provisioningState: Succeeded
+                          systemData:
+                            createdAt: '2015-02-03T04:05:06Z'
+                            createdBy: string
+                            createdByType: User
+                            lastModifiedAt: '2015-02-03T04:05:06Z'
+                            lastModifiedBy: string
+                            lastModifiedByType: User
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Enabled
+                      publicPort: 443
+                      serverPort: 443
+                      tls:
+                        clientCertEnabled: true
+                      upstream:
+                        templates:
+                          - urlTemplate: http://foo.com
+                      version: '1.0'
+                    sku:
+                      name: Standard_S1
+                      capacity: 1
+                      size: S1
+                      tier: Standard
+                    systemData:
+                      createdAt: '2015-02-03T04:05:06Z'
+                      createdBy: string
+                      createdByType: User
+                      lastModifiedAt: '2015-02-03T04:05:06Z'
+                      lastModifiedBy: string
+                      lastModifiedByType: User
+                    tags:
+                      key1: value1
+            - type: restCall
               operationId: SignalR_Update
+              description: SignalR_Update
               exampleFile: ../examples/SignalR_Update.json
               exampleModel:
-                name: SignalR_Update
+                name: ../examples/SignalR_Update.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16353,94 +16830,13 @@ testModel:
                               language: *ref_440
                           language: *ref_480
                       language: *ref_514
-                    headers: {}
-              exampleName: SignalR_Update
-              expectedResponse:
-                name: $(resourceName)
-                type: Microsoft.SignalRService/SignalR
-                id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)
-                identity:
-                  type: SystemAssigned
-                  principalId: $(subscriptionId)
-                  tenantId: $(subscriptionId)
-                kind: SignalR
-                location: eastus
-                properties:
-                  cors:
-                    allowedOrigins:
-                      - https://foo.com
-                      - https://bar.com
-                  disableAadAuth: false
-                  disableLocalAuth: false
-                  externalIP: 10.0.0.1
-                  features:
-                    - flag: ServiceMode
-                      properties: {}
-                      value: Serverless
-                    - flag: EnableConnectivityLogs
-                      properties: {}
-                      value: 'True'
-                    - flag: EnableMessagingLogs
-                      properties: {}
-                      value: 'False'
-                    - flag: EnableLiveTrace
-                      properties: {}
-                      value: 'False'
-                  hostName: $(resourceName).service.signalr.net
-                  networkACLs:
-                    defaultAction: Deny
-                    privateEndpoints:
-                      - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                        allow:
-                          - ServerConnection
-                    publicNetwork:
-                      allow:
-                        - ClientConnection
-                  privateEndpointConnections:
-                    - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                      type: Microsoft.SignalRService/SignalR/privateEndpointConnections
-                      id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)/privateEndpointConnections/$(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
-                      properties:
-                        privateEndpoint:
-                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
-                        privateLinkServiceConnectionState:
-                          actionsRequired: None
-                          status: Approved
-                        provisioningState: Succeeded
-                      systemData:
-                        createdAt: '2015-02-03T04:05:06Z'
-                        createdBy: string
-                        createdByType: User
-                        lastModifiedAt: '2015-02-03T04:05:06Z'
-                        lastModifiedBy: string
-                        lastModifiedByType: User
-                  provisioningState: Succeeded
-                  publicNetworkAccess: Enabled
-                  publicPort: 443
-                  serverPort: 443
-                  tls:
-                    clientCertEnabled: true
-                  upstream:
-                    templates:
-                      - urlTemplate: http://foo.com
-                  version: '1.0'
-                sku:
-                  name: Standard_S1
-                  capacity: 1
-                  size: S1
-                  tier: Standard
-                systemData:
-                  createdAt: '2015-02-03T04:05:06Z'
-                  createdBy: string
-                  createdByType: User
-                  lastModifiedAt: '2015-02-03T04:05:06Z'
-                  lastModifiedBy: string
-                  lastModifiedByType: User
-                tags:
-                  key1: value1
+                  '202':
+                    headers: &ref_617
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 parameters:
                   identity:
@@ -16498,21 +16894,104 @@ testModel:
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_Update
               variables: {}
-            - &ref_622
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    name: $(resourceName)
+                    type: Microsoft.SignalRService/SignalR
+                    id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)
+                    identity:
+                      type: SystemAssigned
+                      principalId: $(subscriptionId)
+                      tenantId: $(subscriptionId)
+                    kind: SignalR
+                    location: eastus
+                    properties:
+                      cors:
+                        allowedOrigins:
+                          - https://foo.com
+                          - https://bar.com
+                      disableAadAuth: false
+                      disableLocalAuth: false
+                      externalIP: 10.0.0.1
+                      features:
+                        - flag: ServiceMode
+                          properties: {}
+                          value: Serverless
+                        - flag: EnableConnectivityLogs
+                          properties: {}
+                          value: 'True'
+                        - flag: EnableMessagingLogs
+                          properties: {}
+                          value: 'False'
+                        - flag: EnableLiveTrace
+                          properties: {}
+                          value: 'False'
+                      hostName: $(resourceName).service.signalr.net
+                      networkACLs:
+                        defaultAction: Deny
+                        privateEndpoints:
+                          - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                            allow:
+                              - ServerConnection
+                        publicNetwork:
+                          allow:
+                            - ClientConnection
+                      privateEndpointConnections:
+                        - name: $(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          type: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/$(resourceName)/privateEndpointConnections/$(resourceName).1fa229cd-bf3f-47f0-8c49-afb36723997e
+                          properties:
+                            privateEndpoint:
+                              id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                            privateLinkServiceConnectionState:
+                              actionsRequired: None
+                              status: Approved
+                            provisioningState: Succeeded
+                          systemData:
+                            createdAt: '2015-02-03T04:05:06Z'
+                            createdBy: string
+                            createdByType: User
+                            lastModifiedAt: '2015-02-03T04:05:06Z'
+                            lastModifiedBy: string
+                            lastModifiedByType: User
+                      provisioningState: Succeeded
+                      publicNetworkAccess: Enabled
+                      publicPort: 443
+                      serverPort: 443
+                      tls:
+                        clientCertEnabled: true
+                      upstream:
+                        templates:
+                          - urlTemplate: http://foo.com
+                      version: '1.0'
+                    sku:
+                      name: Standard_S1
+                      capacity: 1
+                      size: S1
+                      tier: Standard
+                    systemData:
+                      createdAt: '2015-02-03T04:05:06Z'
+                      createdBy: string
+                      createdByType: User
+                      lastModifiedAt: '2015-02-03T04:05:06Z'
+                      lastModifiedBy: string
+                      lastModifiedByType: User
+                    tags:
+                      key1: value1
+                '202':
+                  headers: *ref_617
+            - type: restCall
               operationId: SignalR_ListKeys
+              description: SignalR_ListKeys
               exampleFile: ../examples/SignalR_ListKeys.json
               exampleModel:
-                name: SignalR_ListKeys
+                name: ../examples/SignalR_ListKeys.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16545,31 +17024,27 @@ testModel:
                       parentsValue: {}
                       properties: {}
                       language: *ref_519
-                    headers: {}
-              exampleName: SignalR_ListKeys
-              expectedResponse: {}
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_ListKeys
               variables: {}
-            - &ref_623
-              type: restCall
+              responses:
+                '200':
+                  body: {}
+            - type: restCall
               operationId: SignalR_RegenerateKey
+              description: SignalR_RegenerateKey
               exampleFile: ../examples/SignalR_RegenerateKey.json
               exampleModel:
-                name: SignalR_RegenerateKey
+                name: ../examples/SignalR_RegenerateKey.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16605,33 +17080,40 @@ testModel:
                 operation: *ref_527
                 operationGroup: *ref_419
                 originalFile: ''
-                responses: {}
-              exampleName: SignalR_RegenerateKey
-              expectedResponse: {}
+                responses:
+                  '202':
+                    body:
+                      schema: *ref_243
+                      parentsValue: {}
+                      properties: {}
+                      language: *ref_525
+                    headers: &ref_618
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 parameters:
                   keyType: Primary
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_RegenerateKey
               variables: {}
-            - &ref_624
-              type: restCall
+              responses:
+                '202':
+                  body: {}
+                  headers: *ref_618
+            - type: restCall
               operationId: SignalR_Restart
+              description: SignalR_Restart
               exampleFile: ../examples/SignalR_Restart.json
               exampleModel:
-                name: SignalR_Restart
+                name: ../examples/SignalR_Restart.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16657,31 +17139,38 @@ testModel:
                 operation: *ref_531
                 operationGroup: *ref_419
                 originalFile: ''
-                responses: {}
-              exampleName: SignalR_Restart
-              expectedResponse: {}
+                responses:
+                  '202':
+                    body:
+                      rawValue: &ref_620 {}
+                      language: *ref_619
+                    headers: &ref_621
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                  '204': {}
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_Restart
               variables: {}
-            - &ref_625
-              type: restCall
+              responses:
+                '202':
+                  body: *ref_620
+                  headers: *ref_621
+                '204': {}
+            - type: restCall
               operationId: Usages_List
+              description: Usages_List
               exampleFile: ../examples/Usages_List.json
               exampleModel:
-                name: Usages_List
+                name: ../examples/Usages_List.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -16781,46 +17270,42 @@ testModel:
                                   language: *ref_541
                           language: *ref_534
                       language: *ref_533
-                    headers: {}
-              exampleName: Usages_List
-              expectedResponse:
-                nextLink: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
-                value:
-                  - name:
-                      localizedValue: Usage1
-                      value: Usage1
-                    currentValue: 0
-                    id: /subscriptions/$(subscriptionId)/providers/Microsoft.SignalRService/locations/$(location)/usages/Usage1
-                    limit: 100
-                    unit: Count
-                  - name:
-                      localizedValue: Usage2
-                      value: Usage2
-                    currentValue: 0
-                    id: /subscriptions/$(subscriptionId)/providers/Microsoft.SignalRService/locations/$(location)/usages/Usage2
-                    limit: 100
-                    unit: Count
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 location: $(location)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: Usages_List
               variables: {}
-            - &ref_626
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    nextLink: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToMoreResults...
+                    value:
+                      - name:
+                          localizedValue: Usage1
+                          value: Usage1
+                        currentValue: 0
+                        id: /subscriptions/$(subscriptionId)/providers/Microsoft.SignalRService/locations/$(location)/usages/Usage1
+                        limit: 100
+                        unit: Count
+                      - name:
+                          localizedValue: Usage2
+                          value: Usage2
+                        currentValue: 0
+                        id: /subscriptions/$(subscriptionId)/providers/Microsoft.SignalRService/locations/$(location)/usages/Usage2
+                        limit: 100
+                        unit: Count
+            - type: restCall
               operationId: SignalR_ListByResourceGroup
+              description: SignalR_ListByResourceGroup
               exampleFile: ../examples/SignalR_ListByResourceGroup.json
               exampleModel:
-                name: SignalR_ListByResourceGroup
+                name: ../examples/SignalR_ListByResourceGroup.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -17234,113 +17719,110 @@ testModel:
                                   language: *ref_480
                           language: *ref_421
                       language: *ref_486
-                    headers: {}
-              exampleName: SignalR_ListByResourceGroup
-              expectedResponse:
-                value:
-                  - name: mySignalRService
-                    type: Microsoft.SignalRService/SignalR
-                    id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/mySignalRService
-                    identity:
-                      type: SystemAssigned
-                      principalId: $(subscriptionId)
-                      tenantId: $(subscriptionId)
-                    kind: SignalR
-                    location: eastus
-                    properties:
-                      cors:
-                        allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
-                      disableAadAuth: false
-                      disableLocalAuth: false
-                      externalIP: 10.0.0.1
-                      features:
-                        - flag: ServiceMode
-                          properties: {}
-                          value: Serverless
-                        - flag: EnableConnectivityLogs
-                          properties: {}
-                          value: 'True'
-                        - flag: EnableMessagingLogs
-                          properties: {}
-                          value: 'False'
-                        - flag: EnableLiveTrace
-                          properties: {}
-                          value: 'False'
-                      hostName: mysignalrservice.service.signalr.net
-                      networkACLs:
-                        defaultAction: Deny
-                        privateEndpoints:
-                          - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
-                            allow:
-                              - ServerConnection
-                        publicNetwork:
-                          allow:
-                            - ClientConnection
-                      privateEndpointConnections:
-                        - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
-                          type: Microsoft.SignalRService/SignalR/privateEndpointConnections
-                          id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
-                          properties:
-                            privateEndpoint:
-                              id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
-                            privateLinkServiceConnectionState:
-                              actionsRequired: None
-                              status: Approved
-                            provisioningState: Succeeded
-                          systemData:
-                            createdAt: '2015-02-03T04:05:06Z'
-                            createdBy: string
-                            createdByType: User
-                            lastModifiedAt: '2015-02-03T04:05:06Z'
-                            lastModifiedBy: string
-                            lastModifiedByType: User
-                      provisioningState: Succeeded
-                      publicNetworkAccess: Enabled
-                      publicPort: 443
-                      serverPort: 443
-                      tls:
-                        clientCertEnabled: true
-                      upstream:
-                        templates:
-                          - urlTemplate: http://foo.com
-                      version: '1.0'
-                    sku:
-                      name: Standard_S1
-                      capacity: 1
-                      size: S1
-                      tier: Standard
-                    systemData:
-                      createdAt: '2015-02-03T04:05:06Z'
-                      createdBy: string
-                      createdByType: User
-                      lastModifiedAt: '2015-02-03T04:05:06Z'
-                      lastModifiedBy: string
-                      lastModifiedByType: User
-                    tags:
-                      key1: value1
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 resourceGroupName: $(resourceGroupName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_ListByResourceGroup
               variables: {}
-            - &ref_627
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: mySignalRService
+                        type: Microsoft.SignalRService/SignalR
+                        id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/mySignalRService
+                        identity:
+                          type: SystemAssigned
+                          principalId: $(subscriptionId)
+                          tenantId: $(subscriptionId)
+                        kind: SignalR
+                        location: eastus
+                        properties:
+                          cors:
+                            allowedOrigins:
+                              - https://foo.com
+                              - https://bar.com
+                          disableAadAuth: false
+                          disableLocalAuth: false
+                          externalIP: 10.0.0.1
+                          features:
+                            - flag: ServiceMode
+                              properties: {}
+                              value: Serverless
+                            - flag: EnableConnectivityLogs
+                              properties: {}
+                              value: 'True'
+                            - flag: EnableMessagingLogs
+                              properties: {}
+                              value: 'False'
+                            - flag: EnableLiveTrace
+                              properties: {}
+                              value: 'False'
+                          hostName: mysignalrservice.service.signalr.net
+                          networkACLs:
+                            defaultAction: Deny
+                            privateEndpoints:
+                              - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                                allow:
+                                  - ServerConnection
+                            publicNetwork:
+                              allow:
+                                - ClientConnection
+                          privateEndpointConnections:
+                            - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                              type: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                              id: >-
+                                /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                              properties:
+                                privateEndpoint:
+                                  id: /subscriptions/$(subscriptionId)/resourcegroups/$(resourceGroupName)/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                                privateLinkServiceConnectionState:
+                                  actionsRequired: None
+                                  status: Approved
+                                provisioningState: Succeeded
+                              systemData:
+                                createdAt: '2015-02-03T04:05:06Z'
+                                createdBy: string
+                                createdByType: User
+                                lastModifiedAt: '2015-02-03T04:05:06Z'
+                                lastModifiedBy: string
+                                lastModifiedByType: User
+                          provisioningState: Succeeded
+                          publicNetworkAccess: Enabled
+                          publicPort: 443
+                          serverPort: 443
+                          tls:
+                            clientCertEnabled: true
+                          upstream:
+                            templates:
+                              - urlTemplate: http://foo.com
+                          version: '1.0'
+                        sku:
+                          name: Standard_S1
+                          capacity: 1
+                          size: S1
+                          tier: Standard
+                        systemData:
+                          createdAt: '2015-02-03T04:05:06Z'
+                          createdBy: string
+                          createdByType: User
+                          lastModifiedAt: '2015-02-03T04:05:06Z'
+                          lastModifiedBy: string
+                          lastModifiedByType: User
+                        tags:
+                          key1: value1
+            - type: restCall
               operationId: SignalR_ListBySubscription
+              description: SignalR_ListBySubscription
               exampleFile: ../examples/SignalR_ListBySubscription.json
               exampleModel:
-                name: SignalR_ListBySubscription
+                name: ../examples/SignalR_ListBySubscription.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -17749,112 +18231,108 @@ testModel:
                                   language: *ref_480
                           language: *ref_421
                       language: *ref_420
-                    headers: {}
-              exampleName: SignalR_ListBySubscription
-              expectedResponse:
-                value:
-                  - name: mySignalRService
-                    type: Microsoft.SignalRService/SignalR
-                    id: /subscriptions/$(subscriptionId)/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService
-                    identity:
-                      type: SystemAssigned
-                      principalId: $(subscriptionId)
-                      tenantId: $(subscriptionId)
-                    kind: SignalR
-                    location: eastus
-                    properties:
-                      cors:
-                        allowedOrigins:
-                          - https://foo.com
-                          - https://bar.com
-                      disableAadAuth: false
-                      disableLocalAuth: false
-                      externalIP: 10.0.0.1
-                      features:
-                        - flag: ServiceMode
-                          properties: {}
-                          value: Serverless
-                        - flag: EnableConnectivityLogs
-                          properties: {}
-                          value: 'True'
-                        - flag: EnableMessagingLogs
-                          properties: {}
-                          value: 'False'
-                        - flag: EnableLiveTrace
-                          properties: {}
-                          value: 'False'
-                      hostName: mysignalrservice.service.signalr.net
-                      networkACLs:
-                        defaultAction: Deny
-                        privateEndpoints:
-                          - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
-                            allow:
-                              - ServerConnection
-                        publicNetwork:
-                          allow:
-                            - ClientConnection
-                      privateEndpointConnections:
-                        - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
-                          type: Microsoft.SignalRService/SignalR/privateEndpointConnections
-                          id: /subscriptions/$(subscriptionId)/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
-                          properties:
-                            privateEndpoint:
-                              id: /subscriptions/$(subscriptionId)/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
-                            privateLinkServiceConnectionState:
-                              actionsRequired: None
-                              status: Approved
-                            provisioningState: Succeeded
-                          systemData:
-                            createdAt: '2015-02-03T04:05:06Z'
-                            createdBy: string
-                            createdByType: User
-                            lastModifiedAt: '2015-02-03T04:05:06Z'
-                            lastModifiedBy: string
-                            lastModifiedByType: User
-                      provisioningState: Succeeded
-                      publicNetworkAccess: Enabled
-                      publicPort: 443
-                      serverPort: 443
-                      tls:
-                        clientCertEnabled: true
-                      upstream:
-                        templates:
-                          - urlTemplate: http://foo.com
-                      version: '1.0'
-                    sku:
-                      name: Standard_S1
-                      capacity: 1
-                      size: S1
-                      tier: Standard
-                    systemData:
-                      createdAt: '2015-02-03T04:05:06Z'
-                      createdBy: string
-                      createdByType: User
-                      lastModifiedAt: '2015-02-03T04:05:06Z'
-                      lastModifiedBy: string
-                      lastModifiedByType: User
-                    tags:
-                      key1: value1
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_ListBySubscription
               variables: {}
-            - &ref_628
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    value:
+                      - name: mySignalRService
+                        type: Microsoft.SignalRService/SignalR
+                        id: /subscriptions/$(subscriptionId)/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService
+                        identity:
+                          type: SystemAssigned
+                          principalId: $(subscriptionId)
+                          tenantId: $(subscriptionId)
+                        kind: SignalR
+                        location: eastus
+                        properties:
+                          cors:
+                            allowedOrigins:
+                              - https://foo.com
+                              - https://bar.com
+                          disableAadAuth: false
+                          disableLocalAuth: false
+                          externalIP: 10.0.0.1
+                          features:
+                            - flag: ServiceMode
+                              properties: {}
+                              value: Serverless
+                            - flag: EnableConnectivityLogs
+                              properties: {}
+                              value: 'True'
+                            - flag: EnableMessagingLogs
+                              properties: {}
+                              value: 'False'
+                            - flag: EnableLiveTrace
+                              properties: {}
+                              value: 'False'
+                          hostName: mysignalrservice.service.signalr.net
+                          networkACLs:
+                            defaultAction: Deny
+                            privateEndpoints:
+                              - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                                allow:
+                                  - ServerConnection
+                            publicNetwork:
+                              allow:
+                                - ClientConnection
+                          privateEndpointConnections:
+                            - name: mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                              type: Microsoft.SignalRService/SignalR/privateEndpointConnections
+                              id: /subscriptions/$(subscriptionId)/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/SignalR/mySignalRService/privateEndpointConnections/mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e
+                              properties:
+                                privateEndpoint:
+                                  id: /subscriptions/$(subscriptionId)/resourcegroups/myResourceGroup/providers/Microsoft.Network/privateEndpoints/myPrivateEndpoint
+                                privateLinkServiceConnectionState:
+                                  actionsRequired: None
+                                  status: Approved
+                                provisioningState: Succeeded
+                              systemData:
+                                createdAt: '2015-02-03T04:05:06Z'
+                                createdBy: string
+                                createdByType: User
+                                lastModifiedAt: '2015-02-03T04:05:06Z'
+                                lastModifiedBy: string
+                                lastModifiedByType: User
+                          provisioningState: Succeeded
+                          publicNetworkAccess: Enabled
+                          publicPort: 443
+                          serverPort: 443
+                          tls:
+                            clientCertEnabled: true
+                          upstream:
+                            templates:
+                              - urlTemplate: http://foo.com
+                          version: '1.0'
+                        sku:
+                          name: Standard_S1
+                          capacity: 1
+                          size: S1
+                          tier: Standard
+                        systemData:
+                          createdAt: '2015-02-03T04:05:06Z'
+                          createdBy: string
+                          createdByType: User
+                          lastModifiedAt: '2015-02-03T04:05:06Z'
+                          lastModifiedBy: string
+                          lastModifiedByType: User
+                        tags:
+                          key1: value1
+            - type: restCall
               operationId: Operations_List
+              description: Operations_List
               exampleFile: ../examples/Operations_List.json
               exampleModel:
-                name: Operations_List
+                name: ../examples/Operations_List.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -17917,38 +18395,34 @@ testModel:
                                   language: *ref_405
                           language: *ref_397
                       language: *ref_396
-                    headers: {}
-              exampleName: Operations_List
-              expectedResponse:
-                nextLink: providers/Microsoft.SignalRService?$skipToken={opaqueString}
-                value:
-                  - name: Microsoft.SignalRService/SignalR/read
-                    display:
-                      description: View the resource settings and configurations in the management portal or through API
-                      operation: Manage SignalR (read-only)
-                      provider: Microsoft.SignalRService
-                      resource: SignalR
-                    isDataAction: false
-                    properties: {}
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: Operations_List
               variables: {}
-            - &ref_629
-              type: restCall
+              responses:
+                '200':
+                  body:
+                    nextLink: providers/Microsoft.SignalRService?$skipToken={opaqueString}
+                    value:
+                      - name: Microsoft.SignalRService/SignalR/read
+                        display:
+                          description: View the resource settings and configurations in the management portal or through API
+                          operation: Manage SignalR (read-only)
+                          provider: Microsoft.SignalRService
+                          resource: SignalR
+                        isDataAction: false
+                        properties: {}
+            - type: restCall
               operationId: SignalR_Delete
+              description: SignalR_Delete
               exampleFile: ../examples/SignalR_Delete.json
               exampleModel:
-                name: SignalR_Delete
+                name: ../examples/SignalR_Delete.json
                 clientParameters:
                   - exampleValue:
                       schema: *ref_171
@@ -17977,53 +18451,34 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_616 {}
-                      language: *ref_615
-                    headers: {}
-              exampleName: SignalR_Delete
-              expectedResponse: *ref_616
+                      rawValue: &ref_623 {}
+                      language: *ref_622
+                  '202':
+                    headers: &ref_624
+                      Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
+                      Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
+                  '204': {}
               outputVariables: {}
               outputVariablesModel: {}
-              requestParameters:
+              parameters:
                 api-version: 2021-06-01-preview
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
                 subscriptionId: $(subscriptionId)
-              requestUpdate: []
               requiredVariables: []
               requiredVariablesDefault: {}
-              resourceUpdate: []
-              responseUpdate: []
               secretVariables: []
-              statusCode: 200
               step: SignalR_Delete
               variables: {}
-          _scenarioDef: *ref_630
-          requiredVariables:
-            - subscriptionId
-            - location
-          requiredVariablesDefault:
-            location: westus
-            subscriptionId: 00000000-00000000-00000000-00000000
-          scenario: SignalR
-          secretVariables: []
-          shareScope: true
-          steps:
-            - *ref_617
-            - *ref_618
-            - *ref_619
-            - *ref_620
-            - *ref_621
-            - *ref_622
-            - *ref_623
-            - *ref_624
-            - *ref_625
-            - *ref_626
-            - *ref_627
-            - *ref_628
-            - *ref_629
+              responses:
+                '200':
+                  body: *ref_623
+                '202':
+                  headers: *ref_624
+                '204': {}
           variables:
-            resourceName: $(resourceName)
+            resourceName:
+              type: string
       scope: ResourceGroup
       secretVariables: []
       useArmTemplate: true

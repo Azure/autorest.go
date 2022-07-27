@@ -1750,6 +1750,11 @@ func (testsuite *MockTestSuite) TestDeployments_CreateOrUpdate() {
 				Version:          to.Ptr("1.0"),
 			},
 		},
+		SKU: &armappplatform.SKU{
+			Name:     to.Ptr("S0"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr("Standard"),
+		},
 	}, nil)
 	testsuite.Require().NoError(err, "Failed to get result for example specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Deployments_CreateOrUpdate.json")
 	res, err := poller.PollUntilDone(ctx, nil)

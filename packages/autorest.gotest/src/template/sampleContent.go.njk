@@ -14,8 +14,8 @@
         {%- set _ = allVariables.push(clientVariable) %}
         {%- endif %}
     {%- endif %}
-    {%- for name, value in step.variablesOutput %}
-    {{name}} {%- if allVariables.indexOf(name)<0 %}:{%- set _ = allVariables.push(name) %}{%- endif %}= {{value}}
+    {%- for name, variable in step.variablesOutput %}
+    {{name}} {%- if allVariables.indexOf(name)<0 %}:{%- set _ = allVariables.push(name) %}{%- endif %}= {{variable.value}}
     {%- endfor %}
     {%- if step.type == "restCall" %}		
         {%- if example.checkResponse %}

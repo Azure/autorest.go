@@ -42,8 +42,8 @@ func main() {
 	}
 	createResourceGroup()
 	prepare()
-	microsoftSignalrserviceBasicCrudSample()
-	microsoftSignalrserviceDeleteonlySample()
+	scenario0Sample()
+	scenario1Sample()
 	deleteResourceGroup()
 }
 
@@ -59,7 +59,7 @@ func prepare() {
 	}
 }
 
-func microsoftSignalrserviceBasicCrudSample() {
+func scenario0Sample() {
 	fakeScenarioVar := "signalrswaggertest5"
 	resourceName := resourceName
 	// From step Generate_Unique_Name
@@ -181,7 +181,7 @@ func microsoftSignalrserviceBasicCrudSample() {
 		panic(err)
 	}
 }
-func microsoftSignalrserviceDeleteonlySample() {
+func scenario1Sample() {
 	// From step Delete_proximity_placement_group
 	proximityPlacementGroupsClient, err := armcompute.NewProximityPlacementGroupsClient(subscriptionId, cred, nil)
 	if err != nil {

@@ -79,9 +79,9 @@ export function getSchemaResponse(op: Operation): SchemaResponse | undefined {
     // perform the comparison by name as some responses have different objects for the same underlying response type
     if (
       isSchemaResponse(response) &&
-            !values(schemaResponses)
-              .where((sr) => sr.schema.language.go!.name === response.schema.language.go!.name)
-              .any()
+      !values(schemaResponses)
+        .where((sr) => sr.schema.language.go!.name === response.schema.language.go!.name)
+        .any()
     ) {
       schemaResponses.push(response);
     }

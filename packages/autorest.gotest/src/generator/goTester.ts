@@ -19,7 +19,7 @@ export async function processRequest(host: AutorestExtensionHost): Promise<void>
   const session = await TestCodeModeler.getSessionFromHost(host);
   const config = new TestConfig(await session.getValue(''), configDefaults);
   if (config.getValue(Config.exportCodemodel)) {
-    Helper.addCodeModelDump(session, 'go-tester-pre.yaml');
+    Helper.addCodeModelDump(session, 'go-tester-pre.yaml', false);
   }
 
   const context = new GenerateContext(host, session.model, config);
@@ -53,9 +53,9 @@ export async function processRequest(host: AutorestExtensionHost): Promise<void>
     const sampleCodeGenerator = new SampleCodeGenerator(context);
     sampleCodeGenerator.generateCode(extraParam);
   }
-  await Helper.outputToModelerfour(host, session);
+  await Helper.outputToModelerfour(host, session, false);
   if (config.getValue(Config.exportCodemodel)) {
-    Helper.addCodeModelDump(session, 'go-tester.yaml');
+    Helper.addCodeModelDump(session, 'go-tester.yaml', false);
   }
   Helper.dump(host);
 }

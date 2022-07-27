@@ -65,6 +65,11 @@ func ExampleDeploymentsClient_BeginCreateOrUpdate() {
 				Version:          to.Ptr("1.0"),
 			},
 		},
+		SKU: &armappplatform.SKU{
+			Name:     to.Ptr("S0"),
+			Capacity: to.Ptr[int32](1),
+			Tier:     to.Ptr("Standard"),
+		},
 	}, nil)
 	if err != nil {
 		log.Fatalf("failed to finish the request: %v", err)

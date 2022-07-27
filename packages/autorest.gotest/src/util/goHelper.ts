@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 
 export class GoHelper {
-  public static obejctToString(rawValue: any): string {
+  public static objectToString(rawValue: any): string {
     let ret = 'map[string]interface{}{\n';
     for (const [key, value] of Object.entries(rawValue)) {
       if (_.isArray(value)) {
@@ -16,7 +16,7 @@ export class GoHelper {
         ret += ',\n';
       } else if (_.isObject(value)) {
         ret += `"${key}":`;
-        ret += this.obejctToString(value);
+        ret += this.objectToString(value);
         ret += ',\n';
       } else if (_.isString(value)) {
         if (value.startsWith('<parsedVariable>')) {
@@ -43,7 +43,7 @@ export class GoHelper {
         ret += this.arrayToString(item);
         ret += ',\n';
       } else if (_.isObject(item)) {
-        ret += this.obejctToString(item);
+        ret += this.objectToString(item);
         ret += ',\n';
       } else if (_.isString(item)) {
         ret += `${Helper.quotedEscapeString(item)},\n`;

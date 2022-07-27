@@ -10,8 +10,7 @@ import { MockTestDataRender } from './mockTestGenerator';
 import { ParameterOutput } from '../common/model';
 import path = require('path');
 
-export class ExampleDataRender extends MockTestDataRender {
-}
+export class ExampleDataRender extends MockTestDataRender {}
 
 export class ExampleCodeGenerator extends BaseCodeGenerator {
   public generateCode(extraParam: Record<string, unknown> = {}): void {
@@ -33,8 +32,14 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
         `${this.getFilePrefix(Config.exampleFilePrefix)}${exampleModel.operationGroup.language.go.name.toLowerCase()}_client_example_test.go`,
         extraParam,
         {
-          getParamsValue: (params: Array<ParameterOutput>) => { return params.map((p)=>{return p.paramOutput;}).join(', '); },
-          getExampleSuffix: (exampleFilename: string) => { 
+          getParamsValue: (params: Array<ParameterOutput>) => {
+            return params
+              .map((p) => {
+                return p.paramOutput;
+              })
+              .join(', ');
+          },
+          getExampleSuffix: (exampleFilename: string) => {
             const name = path.parse(exampleFilename).name;
             return name.charAt(0).toLowerCase() + name.slice(1);
           },

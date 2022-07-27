@@ -789,7 +789,7 @@ func TestSignalrTestSuite(t *testing.T) {
 
 
 func (testsuite *SignalrTestSuite) TestSignalr() {
-    var resourceName string
+    var resourceName 
 var err error
     // From step Generate_Unique_Name
     template:= map[string]interface{}{
