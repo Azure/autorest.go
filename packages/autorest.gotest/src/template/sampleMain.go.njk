@@ -22,21 +22,21 @@ var (
     err            error
 	ctx            context.Context
 	cred           azcore.TokenCredential
-{%- for name, value in variablesOutput %}
-{%- if value === "<newDefinedVariable>" %}
-    {{name}} string
+{%- for name, variable in variablesOutput %}
+{%- if not requiredVariablesDefault.hasOwnProperty(name) %}
+{%- if variable.value === undefined %}
+    {{name}} {{variable.type}}
 {%- else %}
-    {{name}} = {{value}}
+    {{name}} = {{variable.value}}
+{%- endif %}
 {%- endif %}
 {%- endfor %}
 {%- for variable, _ in requiredVariablesDefault %}
-{%- if not variables.hasOwnProperty(variable) %}
     {%- if variable === "subscriptionId" %}
     subscriptionId = getEnv("AZURE_SUBSCRIPTION_ID", "")
     {%- else %}
     {{variable}} = getEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
     {%- endif %}
-{%- endif %}
 {%- endfor %}
 )
 
@@ -72,17 +72,18 @@ func prepare() {
 {%- endif %}
 
 {% for testScenario in scenarios %}
+// {{testScenario.description}}
 func {{jsFunc.toCamelCase(testScenario.scenario)}}Sample() {
 	{%- for variable, value in testScenario.requiredVariablesDefault %}
 	{%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
     {{variable}} := getEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}, "{{value}}")
 	{%- endif %}
 	{%- endfor %}
-	{%- for name, value in testScenario.variablesOutput %}
-    {%- if value === "<newDefinedVariable>" %}
-    var {{name}} string
+	{%- for name, variable in testScenario.variablesOutput %}
+    {%- if variable.value === undefined %}
+    var {{name}} {{variable.type}}
     {%- else %}
-    {{name}} := {{value}}
+    {{name}} := {{variable.value}}
     {%- endif %}
 	{%- endfor %}
 	

@@ -12,20 +12,19 @@ import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { ScenarioTestDataRender } from './scenarioTestGenerator';
 import { TestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
 import { ParameterOutput } from '../common/model';
-import { map } from 'lodash';
 
 export class SampleDataRender extends ScenarioTestDataRender {
-    packagePrefixForGlobalVariables = '';
+  packagePrefixForGlobalVariables = '';
 
-    public renderData(): void {
-      for (const testDef of this.context.codeModel.testModel.scenarioTests) {
-        this.generateSampleData(testDef);
-      }
+  public renderData(): void {
+    for (const testDef of this.context.codeModel.testModel.scenarioTests) {
+      this.generateSampleData(testDef);
     }
+  }
 
-    protected generateSampleData(testDef: TestDefinitionModel): void {
-      super.generateScenarioTestData(testDef);
-    }
+  protected generateSampleData(testDef: TestDefinitionModel): void {
+    super.generateScenarioTestData(testDef);
+  }
 }
 
 export class SampleCodeGenerator extends BaseCodeGenerator {
@@ -65,7 +64,13 @@ export class SampleCodeGenerator extends BaseCodeGenerator {
               //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
               return Helper.uncapitalize(typeName.split('.').join('*').split('*').pop());
             },
-            getParamsValue: (params: Array<ParameterOutput>) => { return params.map((p)=>{return p.paramOutput;}).join(', '); },
+            getParamsValue: (params: Array<ParameterOutput>) => {
+              return params
+                .map((p) => {
+                  return p.paramOutput;
+                })
+                .join(', ');
+            },
           },
         );
       }

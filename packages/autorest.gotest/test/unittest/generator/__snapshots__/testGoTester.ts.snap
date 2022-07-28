@@ -788,8 +788,9 @@ func TestSignalrTestSuite(t *testing.T) {
 }
 
 
+// Microsoft.SignalRService/Basic_CRUD
 func (testsuite *SignalrTestSuite) TestSignalr() {
-    var resourceName string
+    var resourceName 
 var err error
     // From step Generate_Unique_Name
     template:= map[string]interface{}{

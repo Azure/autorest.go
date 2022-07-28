@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.2.0",
+      "tag": "@autorest/gotest_v4.2.0",
+      "date": "Wed, 27 Jul 2022 02:15:06 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Support API scenario 1.2."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.1.0",
       "tag": "@autorest/gotest_v4.1.0",
       "date": "Tue, 19 Jul 2022 09:34:05 GMT",

@@ -201,11 +201,11 @@ func (testsuite *SpringTestSuite) Prepare() {
 						},
 						map[string]interface{}{
 							"name":  "dnsCname",
-							"value": "asc",
+							"value": testsuite.dnsCname,
 						},
 						map[string]interface{}{
 							"name":  "dnsCnameAlias",
-							"value": testsuite.serviceName + ".azuremicroservices.io",
+							"value": testsuite.serviceName + testsuite.ascDomainName,
 						},
 					},
 					"forceUpdateTag":    "[parameters('utcValue')]",
@@ -230,6 +230,7 @@ func (testsuite *SpringTestSuite) Prepare() {
 	testsuite.Require().NoError(err)
 }
 
+// Microsoft.AppPlatform/Spring
 func (testsuite *SpringTestSuite) TestSpring() {
 	var relativePath string
 	var uploadUrl string
@@ -265,10 +266,12 @@ func (testsuite *SpringTestSuite) TestSpring() {
 
 	// From step Services_Update
 	servicesClientUpdateResponsePoller, err := servicesClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.ServiceResource{
+		Location: to.Ptr(testsuite.location),
 		Tags: map[string]*string{
 			"created-by": to.Ptr("api-test"),
 			"hello":      to.Ptr("world"),
 		},
+		Properties: &armappplatform.ClusterResourceProperties{},
 		SKU: &armappplatform.SKU{
 			Name: to.Ptr("S0"),
 			Tier: to.Ptr("Standard"),
@@ -394,7 +397,9 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step MonitoringSettings_UpdatePatch
 	monitoringSettingsClientUpdatePatchResponsePoller, err := monitoringSettingsClient.BeginUpdatePatch(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
-			AppInsightsSamplingRate: to.Ptr[float64](100),
+			AppInsightsInstrumentationKey: to.Ptr(testsuite.subscriptionId),
+			AppInsightsSamplingRate:       to.Ptr[float64](100),
+			TraceEnabled:                  to.Ptr(true),
 		},
 	}, nil)
 	testsuite.Require().NoError(err)
@@ -405,11 +410,6 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	appsClient, err := armappplatform.NewAppsClient(testsuite.subscriptionId, testsuite.cred, testsuite.options)
 	testsuite.Require().NoError(err)
 	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
-		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
-		},
 		Location: to.Ptr(testsuite.location),
 		Properties: &armappplatform.AppResourceProperties{
 			ActiveDeploymentName: to.Ptr("mydeployment1"),
@@ -467,12 +467,23 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Apps_Update_ActiveDeployment
 	appsClientUpdateResponsePoller, err := appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
 		},
+		Location: to.Ptr(testsuite.location),
 		Properties: &armappplatform.AppResourceProperties{
 			ActiveDeploymentName: to.Ptr("default"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(testsuite.appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
 		},
 	}, nil)
 	testsuite.Require().NoError(err)
@@ -482,15 +493,19 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Apps_Update_Disk
 	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
 		},
+		Location: to.Ptr(testsuite.location),
 		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(testsuite.appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
 			PersistentDisk: &armappplatform.PersistentDisk{
 				MountPath: to.Ptr("/data"),
 				SizeInGB:  to.Ptr[int32](10),
 			},
+			Public: to.Ptr(true),
 			TemporaryDisk: &armappplatform.TemporaryDisk{
 				MountPath: to.Ptr("/tmpdisk"),
 				SizeInGB:  to.Ptr[int32](3),
@@ -535,8 +550,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 				"databaseName": "mysqldb2",
 				"username":     "test2",
 			},
-			Key:        to.Ptr(testsuite.mysqlKey),
-			ResourceID: to.Ptr("/subscriptions/" + testsuite.subscriptionId + "/resourceGroups/" + testsuite.resourceGroupName + "/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+			Key: to.Ptr(testsuite.mysqlKey),
 		},
 	}, nil)
 	testsuite.Require().NoError(err)
@@ -706,12 +720,23 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	// From step Apps_Update
 	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
 		},
+		Location: to.Ptr(testsuite.location),
 		Properties: &armappplatform.AppResourceProperties{
 			ActiveDeploymentName: to.Ptr("blue"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(testsuite.appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
 		},
 	}, nil)
 	testsuite.Require().NoError(err)
@@ -870,7 +895,7 @@ func (testsuite *SpringTestSuite) Cleanup() {
 						},
 						map[string]interface{}{
 							"name":  "dnsCname",
-							"value": "asc",
+							"value": testsuite.dnsCname,
 						},
 						map[string]interface{}{
 							"name":  "dnsZoneName",

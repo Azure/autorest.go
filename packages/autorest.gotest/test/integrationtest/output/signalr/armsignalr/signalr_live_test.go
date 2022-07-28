@@ -55,6 +55,7 @@ func TestSignalrTestSuite(t *testing.T) {
 	suite.Run(t, new(SignalrTestSuite))
 }
 
+// Microsoft.SignalRService/Basic_CRUD
 func (testsuite *SignalrTestSuite) TestSignalr() {
 	var resourceName string
 	var err error

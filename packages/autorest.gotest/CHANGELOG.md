@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Tue, 19 Jul 2022 09:34:05 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 02:15:06 GMT and should not be manually modified.
+
+## 4.2.0
+Wed, 27 Jul 2022 02:15:06 GMT
+
+### Minor changes
+
+- Support API scenario 1.2.
 
 ## 4.1.0
 Tue, 19 Jul 2022 09:34:05 GMT

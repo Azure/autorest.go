@@ -175,11 +175,11 @@ func prepare() {
 						},
 						map[string]interface{}{
 							"name":  "dnsCname",
-							"value": "asc",
+							"value": dnsCname,
 						},
 						map[string]interface{}{
 							"name":  "dnsCnameAlias",
-							"value": serviceName + ".azuremicroservices.io",
+							"value": serviceName + ascDomainName,
 						},
 					},
 					"forceUpdateTag":    "[parameters('utcValue')]",
@@ -203,6 +203,7 @@ func prepare() {
 	_ = createDeployment("Add_Dns_Cname_Record", &deployment)
 }
 
+// Microsoft.AppPlatform/Spring
 func springSample() {
 	var relativePath string
 	var uploadUrl string
@@ -247,10 +248,12 @@ func springSample() {
 
 	// From step Services_Update
 	servicesClientUpdateResponsePoller, err := servicesClient.BeginUpdate(ctx, resourceGroupName, serviceName, armappplatform.ServiceResource{
+		Location: to.Ptr(location),
 		Tags: map[string]*string{
 			"created-by": to.Ptr("api-test"),
 			"hello":      to.Ptr("world"),
 		},
+		Properties: &armappplatform.ClusterResourceProperties{},
 		SKU: &armappplatform.SKU{
 			Name: to.Ptr("S0"),
 			Tier: to.Ptr("Standard"),
@@ -422,7 +425,9 @@ func springSample() {
 	// From step MonitoringSettings_UpdatePatch
 	monitoringSettingsClientUpdatePatchResponsePoller, err := monitoringSettingsClient.BeginUpdatePatch(ctx, resourceGroupName, serviceName, armappplatform.MonitoringSettingResource{
 		Properties: &armappplatform.MonitoringSettingProperties{
-			AppInsightsSamplingRate: to.Ptr[float64](100),
+			AppInsightsInstrumentationKey: to.Ptr(subscriptionId),
+			AppInsightsSamplingRate:       to.Ptr[float64](100),
+			TraceEnabled:                  to.Ptr(true),
 		},
 	}, nil)
 	if err != nil {
@@ -439,11 +444,6 @@ func springSample() {
 		panic(err)
 	}
 	appsClientCreateOrUpdateResponsePoller, err := appsClient.BeginCreateOrUpdate(ctx, resourceGroupName, serviceName, appName, armappplatform.AppResource{
-		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
-		},
 		Location: to.Ptr(location),
 		Properties: &armappplatform.AppResourceProperties{
 			ActiveDeploymentName: to.Ptr("mydeployment1"),
@@ -515,12 +515,23 @@ func springSample() {
 	// From step Apps_Update_ActiveDeployment
 	appsClientUpdateResponsePoller, err := appsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
 		},
+		Location: to.Ptr(location),
 		Properties: &armappplatform.AppResourceProperties{
 			ActiveDeploymentName: to.Ptr("default"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
 		},
 	}, nil)
 	if err != nil {
@@ -534,15 +545,19 @@ func springSample() {
 	// From step Apps_Update_Disk
 	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
 		},
+		Location: to.Ptr(location),
 		Properties: &armappplatform.AppResourceProperties{
+			ActiveDeploymentName: to.Ptr("mydeployment1"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
 			PersistentDisk: &armappplatform.PersistentDisk{
 				MountPath: to.Ptr("/data"),
 				SizeInGB:  to.Ptr[int32](10),
 			},
+			Public: to.Ptr(true),
 			TemporaryDisk: &armappplatform.TemporaryDisk{
 				MountPath: to.Ptr("/tmpdisk"),
 				SizeInGB:  to.Ptr[int32](3),
@@ -599,8 +614,7 @@ func springSample() {
 				"databaseName": "mysqldb2",
 				"username":     "test2",
 			},
-			Key:        to.Ptr(mysqlKey),
-			ResourceID: to.Ptr("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.DocumentDB/databaseAccounts/my-cosmosdb-1"),
+			Key: to.Ptr(mysqlKey),
 		},
 	}, nil)
 	if err != nil {
@@ -803,12 +817,23 @@ func springSample() {
 	// From step Apps_Update
 	appsClientUpdateResponsePoller, err = appsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, armappplatform.AppResource{
 		Identity: &armappplatform.ManagedIdentityProperties{
-			Type:        to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
-			PrincipalID: to.Ptr("principalid"),
-			TenantID:    to.Ptr("tenantid"),
+			Type: to.Ptr(armappplatform.ManagedIdentityTypeSystemAssigned),
 		},
+		Location: to.Ptr(location),
 		Properties: &armappplatform.AppResourceProperties{
 			ActiveDeploymentName: to.Ptr("blue"),
+			EnableEndToEndTLS:    to.Ptr(false),
+			Fqdn:                 to.Ptr(appName + ".mydomain.com"),
+			HTTPSOnly:            to.Ptr(false),
+			PersistentDisk: &armappplatform.PersistentDisk{
+				MountPath: to.Ptr("/mypersistentdisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
+			Public: to.Ptr(true),
+			TemporaryDisk: &armappplatform.TemporaryDisk{
+				MountPath: to.Ptr("/mytemporarydisk"),
+				SizeInGB:  to.Ptr[int32](2),
+			},
 		},
 	}, nil)
 	if err != nil {
@@ -1020,7 +1045,7 @@ func cleanup() {
 						},
 						map[string]interface{}{
 							"name":  "dnsCname",
-							"value": "asc",
+							"value": dnsCname,
 						},
 						map[string]interface{}{
 							"name":  "dnsZoneName",
