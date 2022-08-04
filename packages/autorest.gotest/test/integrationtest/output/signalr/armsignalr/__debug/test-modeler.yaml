@@ -6959,6 +6959,7 @@ operationGroups:
                     capacity: 1
                     tier: Standard
                   tags:
+                    $(subscriptionId): $(subscriptionId)
                     key1: value1
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService
@@ -12437,6 +12438,9 @@ testModel:
                         tags:
                           schema: *ref_86
                           properties:
+                            $(subscriptionId):
+                              schema: *ref_1
+                              rawValue: $(subscriptionId)
                             key1:
                               schema: *ref_1
                               rawValue: value1
@@ -15418,8 +15422,13 @@ testModel:
                     headers: &ref_616
                       Azure-AsyncOperation: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationStatus...
                       Location: https://management.azure.com/subscriptions/subid/providers/Microsoft.SignalRService/...pathToOperationResult...
-              outputVariables: {}
-              outputVariablesModel: {}
+              outputVariables:
+                signalRId:
+                  fromResponse: /id
+              outputVariablesModel:
+                signalRId:
+                  - type: object
+                    languages: *ref_451
               parameters:
                 api-version: 2021-06-01-preview
                 parameters:
@@ -16212,6 +16221,9 @@ testModel:
                             tags:
                               schema: *ref_86
                               properties:
+                                $(subscriptionId):
+                                  schema: *ref_1
+                                  rawValue: $(subscriptionId)
                                 key1:
                                   schema: *ref_1
                                   rawValue: value1
@@ -16890,6 +16902,7 @@ testModel:
                     capacity: 1
                     tier: Standard
                   tags:
+                    $(subscriptionId): $(subscriptionId)
                     key1: value1
                 resourceGroupName: $(resourceGroupName)
                 resourceName: $(resourceName)
@@ -18478,6 +18491,8 @@ testModel:
                 '204': {}
           variables:
             resourceName:
+              type: string
+            signalRId:
               type: string
       scope: ResourceGroup
       secretVariables: []

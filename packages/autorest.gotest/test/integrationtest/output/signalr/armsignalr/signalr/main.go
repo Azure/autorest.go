@@ -172,10 +172,12 @@ func signalrSample() {
 	if err != nil {
 		panic(err)
 	}
-	_, err = clientCreateOrUpdateResponsePoller.PollUntilDone(ctx, nil)
+	var clientCreateOrUpdateResponse armsignalr.ClientCreateOrUpdateResponse
+	clientCreateOrUpdateResponse, err = clientCreateOrUpdateResponsePoller.PollUntilDone(ctx, nil)
 	if err != nil {
 		panic(err)
 	}
+	signalRId = *clientCreateOrUpdateResponse.ID
 
 	// From step SignalR_Get
 	_, err = client.Get(ctx, resourceGroupName, resourceName, nil)
@@ -187,7 +189,8 @@ func signalrSample() {
 	clientUpdateResponsePoller, err := client.BeginUpdate(ctx, resourceGroupName, resourceName, armsignalr.ResourceInfo{
 		Location: to.Ptr(location),
 		Tags: map[string]*string{
-			"key1": to.Ptr("value1"),
+			subscriptionId: to.Ptr(subscriptionId),
+			"key1":         to.Ptr("value1"),
 		},
 		Identity: &armsignalr.ManagedIdentity{
 			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),
