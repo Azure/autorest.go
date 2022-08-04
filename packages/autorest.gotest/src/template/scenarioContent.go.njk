@@ -39,7 +39,7 @@ var err error
             {%- set _ = allVariables.push(resVariable) %}
             {%- endif %}
             {%- endif %}
-            {% if example.checkResponse %}{{resVariable}}{%- else %}_{%- endif %}, err = testutil.PollForTest(testsuite.ctx, {{pollerVariable}})
+            {% if example.checkResponse %}{{resVariable}}{%- else %}_{%- endif %}, err = *testutil.PollForTest(testsuite.ctx, {{pollerVariable}})
             testsuite.Require().NoError(err)
             {%- endif %}
         {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
