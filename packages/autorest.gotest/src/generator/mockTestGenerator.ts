@@ -321,7 +321,7 @@ export class MockTestDataRender extends BaseDataRender {
       let output = `${ptr}map[string]${elementPtr}${GoHelper.addPackage(elementTypeName, this.context.packageName)}{\n`;
       for (const [key, value] of Object.entries(exampleValue.properties || {})) {
         // for polymorphism map value, value should be a pointer
-        output += `"${key}": ${this.exampleValueToString(value, exampleValue.schema.language.go.elementIsPtr || elementIsPolymorphism)},\n`;
+        output += `${this.getStringValue(key)}: ${this.exampleValueToString(value, exampleValue.schema.language.go.elementIsPtr || elementIsPolymorphism)},\n`;
       }
       output += '}';
       return output;

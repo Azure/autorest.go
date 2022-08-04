@@ -35,11 +35,11 @@ var err error
             {%- if example.isLRO %}
             {%- if example.checkResponse %}
             {%- if allVariables.indexOf(resVariable)<0 %}
-            var {{resVariable}} {{packageName}}.{{example.operationGroup.language.go.clientName}}{{example.operation.language.go.name}}Response
+            var {{resVariable}} *{{packageName}}.{{example.operationGroup.language.go.clientName}}{{example.operation.language.go.name}}Response
             {%- set _ = allVariables.push(resVariable) %}
             {%- endif %}
             {%- endif %}
-            {% if example.checkResponse %}{{resVariable}}{%- else %}_{%- endif %}, err = *testutil.PollForTest(testsuite.ctx, {{pollerVariable}})
+            {% if example.checkResponse %}{{resVariable}}{%- else %}_{%- endif %}, err = testutil.PollForTest(testsuite.ctx, {{pollerVariable}})
             testsuite.Require().NoError(err)
             {%- endif %}
         {%- elif  (example.returnInfo.length == 1) and (example.isPageable) %}
