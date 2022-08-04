@@ -16,7 +16,6 @@ export async function processRequest(host: AutorestExtensionHost): Promise<void>
   for (const outputFile of files) {
     if (outputFile.endsWith('.go')) {
       const pathName = path.join(testConfig.getValue(Config.outputFolder), outputFile);
-      Helper.execSync(`go fmt ${pathName}`);
       Helper.execSync(`goimports -w ${pathName}`);
     }
   }
