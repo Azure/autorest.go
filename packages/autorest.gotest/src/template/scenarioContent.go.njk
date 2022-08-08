@@ -35,7 +35,7 @@ var err error
             {%- if example.isLRO %}
             {%- if example.checkResponse %}
             {%- if allVariables.indexOf(resVariable)<0 %}
-            var {{resVariable}} {{packageName}}.{{example.operationGroup.language.go.clientName}}{{example.operation.language.go.name}}Response
+            var {{resVariable}} *{{packageName}}.{{example.operationGroup.language.go.clientName}}{{example.operation.language.go.name}}Response
             {%- set _ = allVariables.push(resVariable) %}
             {%- endif %}
             {%- endif %}

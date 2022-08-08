@@ -80,7 +80,8 @@
       },
       "location": "eastus",
       "tags": {
-        "key1": "value1"
+        "key1": "value1",
+        "$(subscriptionId)": "$(subscriptionId)"
       }
     },
     "api-version": "2021-06-01-preview",

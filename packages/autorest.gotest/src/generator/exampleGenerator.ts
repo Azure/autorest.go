@@ -26,10 +26,15 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
         continue;
       }
 
+      let fileName = exampleModel.operationGroup.language.go!.clientName.toLowerCase();
+      if (fileName !== 'client') {
+        fileName = fileName.substring(0, fileName.length-6) + '_client';
+      }
+
       this.renderAndWrite(
         { exampleGroups: exampleGroups },
         'exampleTest.go.njk',
-        `${this.getFilePrefix(Config.exampleFilePrefix)}${exampleModel.operationGroup.language.go.name.toLowerCase()}_client_example_test.go`,
+        `${this.getFilePrefix(Config.exampleFilePrefix)}${fileName}_example_test.go`,
         extraParam,
         {
           getParamsValue: (params: Array<ParameterOutput>) => {

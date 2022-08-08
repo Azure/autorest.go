@@ -1,7 +1,7 @@
 dependencies:
   '@autorest/codemodel': 4.18.2
   '@autorest/extension-base': 3.4.4
-  '@autorest/testmodeler': 2.3.0_eslint@6.6.0
+  '@autorest/testmodeler': 2.3.1_eslint@6.6.0
   '@azure-tools/async-io': 3.0.252
   '@azure-tools/codegen': 2.9.1
   '@azure-tools/linq': 3.1.261
@@ -108,7 +108,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6KWlY9rvFZt2qBA0/9N1efB81tZ57rpnzO6L/nkqV882JKEJA4RPJmf5H0cY5TrA4OEVDuMoZoHlT7bu8SvtIQ==
-  /@autorest/testmodeler/2.3.0_eslint@6.6.0:
+  /@autorest/testmodeler/2.3.1_eslint@6.6.0:
     dependencies:
       '@autorest/codemodel': 4.18.2
       '@autorest/extension-base': 3.4.4
@@ -128,7 +128,7 @@ packages:
     peerDependencies:
       eslint: '*'
     resolution:
-      integrity: sha512-eY+uo6XG5R86X+pNlxuiFZgtwbI9a1YdFdE2dTRfwiDMrfRoFlCsK/m7GSMqD3W1XnZFFJKTfQlvlRLnItu1PQ==
+      integrity: sha512-VIeL4Zwq1K2nxxLOruiSkrCszMS9iwu+R3pUNC3nCqrHRDWuHuPf8LyhhmnEKOwrVhlIt/pEEM3dKetUQNh5Tw==
   /@azure-tools/async-io/3.0.252:
     dependencies:
       '@azure-tools/tasks': 3.0.252
@@ -9935,7 +9935,7 @@ packages:
     dependencies:
       '@autorest/codemodel': 4.18.2
       '@autorest/extension-base': 3.4.4
-      '@autorest/testmodeler': 2.3.0_eslint@6.6.0
+      '@autorest/testmodeler': 2.3.1_eslint@6.6.0
       '@azure-tools/codegen': 2.9.1
       '@azure-tools/linq': 3.1.263
       '@types/jest': 26.0.24
@@ -9965,14 +9965,14 @@ packages:
     dev: false
     name: '@rush-temp/gotest'
     resolution:
-      integrity: sha512-alq5k5DpmenS1cTzF24DeE7K2kwf/XbwjbnTvEe/DocSypKqVVTVlItu/GkDYLxCUQPjikMvoobB7FHvMSxpCA==
+      integrity: sha512-i9bYbxd3VxwfHX+N6skOnjHLE817+OsnSEKSoARz9Dio+0OKNcabGWwgbOTV7yFBjMN66RDQIpR8e0nGvKafCg==
       tarball: 'file:projects/gotest.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
   '@autorest/codemodel': ~4.18.2
   '@autorest/extension-base': ~3.4.4
-  '@autorest/testmodeler': ~2.3.0
+  '@autorest/testmodeler': ~2.3.1
   '@azure-tools/async-io': ~3.0.0
   '@azure-tools/codegen': ~2.9.1
   '@azure-tools/linq': ~3.1.0

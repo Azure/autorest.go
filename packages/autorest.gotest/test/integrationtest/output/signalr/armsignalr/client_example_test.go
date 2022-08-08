@@ -240,7 +240,8 @@ func ExampleClient_BeginUpdate() {
 	poller, err := client.BeginUpdate(ctx, "myResourceGroup", "mySignalRService", armsignalr.ResourceInfo{
 		Location: to.Ptr("eastus"),
 		Tags: map[string]*string{
-			"key1": to.Ptr("value1"),
+			"$(subscriptionId)": to.Ptr("$(subscriptionId)"),
+			"key1":              to.Ptr("value1"),
 		},
 		Identity: &armsignalr.ManagedIdentity{
 			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),

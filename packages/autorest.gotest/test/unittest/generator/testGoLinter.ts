@@ -10,7 +10,7 @@ describe('processRequest of go-linter', () => {
     jest.restoreAllMocks();
   });
 
-  it('call go-fmt on go outputFiles only', async () => {
+  it('call goimports on go outputFiles only', async () => {
     const outputFolder = 'mocked-folder';
     const files = ['mocked-file1.go', 'mocked-file2.yaml', 'mocked-file3.go'];
     await processRequest(<any>{
@@ -26,9 +26,9 @@ describe('processRequest of go-linter', () => {
 
     for (const file of files) {
       if (file.endsWith('.go')) {
-        expect(Helper.execSync).toHaveBeenCalledWith(`go fmt ${path.join(outputFolder, file)}`);
+        expect(Helper.execSync).toHaveBeenCalledWith(`goimports -w ${path.join(outputFolder, file)}`);
       } else {
-        expect(Helper.execSync).not.toHaveBeenCalledWith(`go fmt ${path.join(outputFolder, file)}`);
+        expect(Helper.execSync).not.toHaveBeenCalledWith(`goimports -w ${path.join(outputFolder, file)}`);
       }
     }
   });

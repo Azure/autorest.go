@@ -6949,6 +6949,7 @@ operationGroups:
                     capacity: 1
                     tier: Standard
                   tags:
+                    $(subscriptionId): $(subscriptionId)
                     key1: value1
                 resourceGroupName: myResourceGroup
                 resourceName: mySignalRService

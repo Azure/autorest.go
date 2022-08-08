@@ -2,6 +2,24 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.2.1",
+      "tag": "@autorest/gotest_v4.2.1",
+      "date": "Thu, 04 Aug 2022 09:20:24 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix wrong parse for map key value with variable."
+          },
+          {
+            "comment": "Fix wrong pointer return for LRO test."
+          },
+          {
+            "comment": "Remove useless gofmt for testgen lint process."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.2.0",
       "tag": "@autorest/gotest_v4.2.0",
       "date": "Wed, 27 Jul 2022 02:15:06 GMT",

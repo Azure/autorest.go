@@ -180,8 +180,10 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 		},
 	}, nil)
 	testsuite.Require().NoError(err)
-	_, err = testutil.PollForTest(testsuite.ctx, clientCreateOrUpdateResponsePoller)
+	var clientCreateOrUpdateResponse *armsignalr.ClientCreateOrUpdateResponse
+	clientCreateOrUpdateResponse, err = testutil.PollForTest(testsuite.ctx, clientCreateOrUpdateResponsePoller)
 	testsuite.Require().NoError(err)
+	signalRId = *clientCreateOrUpdateResponse.ID
 
 	// From step SignalR_Get
 	_, err = client.Get(testsuite.ctx, testsuite.resourceGroupName, resourceName, nil)
@@ -191,7 +193,8 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 	clientUpdateResponsePoller, err := client.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, resourceName, armsignalr.ResourceInfo{
 		Location: to.Ptr(testsuite.location),
 		Tags: map[string]*string{
-			"key1": to.Ptr("value1"),
+			testsuite.subscriptionId: to.Ptr(testsuite.subscriptionId),
+			"key1":                   to.Ptr("value1"),
 		},
 		Identity: &armsignalr.ManagedIdentity{
 			Type: to.Ptr(armsignalr.ManagedIdentityTypeSystemAssigned),

@@ -22,6 +22,9 @@ scenarios:
       #     Also, some validations like for keys kike IP or pec ID needs to be suppressed
       - step: SignalR_CreateOrUpdate
         exampleFile: ../examples/SignalR_CreateOrUpdate.json
+        outputVariables:
+          signalRId:
+            fromResponse: /id
 
       - step: SignalR_Get
         exampleFile: ../examples/SignalR_Get.json

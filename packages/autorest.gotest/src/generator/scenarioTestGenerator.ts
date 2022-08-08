@@ -10,7 +10,7 @@ import { Config } from '../common/constant';
 import { ExampleParameter, ExampleValue, OutputVariableModelType, StepRestCallModel, TestDefinitionModel, TestScenarioModel } from '@autorest/testmodeler/dist/src/core/model';
 import { GoExampleModel, ParameterOutput, VariableOutput } from '../common/model';
 import { GoHelper } from '../util/goHelper';
-import { GroupProperty, Parameter } from '@autorest/codemodel';
+import { GroupProperty, Parameter, Schema, SchemaType } from '@autorest/codemodel';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestDataRender } from './mockTestGenerator';
 import { OavStepType } from '@autorest/testmodeler/dist/src/common/constant';
@@ -242,7 +242,7 @@ export class ScenarioTestDataRender extends MockTestDataRender {
     return new VariableOutput(type, value);
   }
 
-  protected getStringValue(rawValue: string): string {
+  protected getStringValue(rawValue: any): string {
     if (typeof rawValue === 'string') {
       return this.parseOavVariable(rawValue, { ...this.parentVariables, ...this.currentVariables }).join(' + ');
     } else {
