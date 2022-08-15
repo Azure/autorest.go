@@ -83,4 +83,7 @@ help-content:
       - key: honor-body-placement
         type: boolean
         description: When true, optional body parameters are treated as such for PATCH and PUT operations.
+      - key: remove-non-reference-schema
+        type: boolean
+        description: When true, non-reference schema will be removed from the generated code.
 ```
