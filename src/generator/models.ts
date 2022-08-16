@@ -116,7 +116,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
 function generateStructs(modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    if (obj.language.go!.omitType) {
+    if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
       continue;
     }
     const structDef = generateStruct(modelImports, obj.language.go!, aggregateProperties(obj));
