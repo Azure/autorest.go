@@ -97,15 +97,6 @@ type GeoJSONObject struct {
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
 func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
 
-// GeoJSONObjectNamedCollection - A named collection of GeoJSON object
-type GeoJSONObjectNamedCollection struct {
-	// Name of the collection
-	CollectionName *string `json:"collectionName,omitempty"`
-
-	// Dictionary of
-	Objects map[string]GeoJSONObjectClassification `json:"objects,omitempty"`
-}
-
 // ListItem - Detailed information for the alias.
 type ListItem struct {
 	// READ-ONLY; The id for the alias.

@@ -392,6 +392,7 @@
       }
     },
     "GeoJsonObjectNamedCollection": {
+      "x-ms-external": true,
       "description": "A named collection of `GeoJSON` object",
       "type": "object",
       "properties": {
