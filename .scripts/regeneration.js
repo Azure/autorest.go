@@ -114,7 +114,7 @@ const keyvault = fullPath('test/keyvault/7.2/azkeyvault/autorest.md');
 generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault');
 
 const consumption = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/consumption/resource-manager/readme.md';
-generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true --remove-unreferenced-types');
+generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true --remove-unreferenced-types --ignore-precision');
 
 const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autorest.md');
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-unreferenced-types');

@@ -44,7 +44,7 @@ type AmountWithExchangeRate struct {
 	ExchangeRate *float64 `json:"exchangeRate,omitempty" azure:"ro"`
 
 	// READ-ONLY; Exchange rate month.
-	ExchangeRateMonth *float32 `json:"exchangeRateMonth,omitempty" azure:"ro"`
+	ExchangeRateMonth *float64 `json:"exchangeRateMonth,omitempty" azure:"ro"`
 
 	// READ-ONLY; Amount.
 	Value *float64 `json:"value,omitempty" azure:"ro"`
@@ -683,7 +683,7 @@ type LegacyReservationRecommendationProperties struct {
 	InstanceFlexibilityGroup *string `json:"instanceFlexibilityGroup,omitempty" azure:"ro"`
 
 	// READ-ONLY; The instance Flexibility Ratio.
-	InstanceFlexibilityRatio *float32 `json:"instanceFlexibilityRatio,omitempty" azure:"ro"`
+	InstanceFlexibilityRatio *float64 `json:"instanceFlexibilityRatio,omitempty" azure:"ro"`
 
 	// READ-ONLY; The number of days of usage to look back for recommendation.
 	LookBackPeriod *string `json:"lookBackPeriod,omitempty" azure:"ro"`
@@ -701,7 +701,7 @@ type LegacyReservationRecommendationProperties struct {
 	RecommendedQuantity *float64 `json:"recommendedQuantity,omitempty" azure:"ro"`
 
 	// READ-ONLY; The recommended Quantity Normalized.
-	RecommendedQuantityNormalized *float32 `json:"recommendedQuantityNormalized,omitempty" azure:"ro"`
+	RecommendedQuantityNormalized *float64 `json:"recommendedQuantityNormalized,omitempty" azure:"ro"`
 
 	// READ-ONLY; The azure resource type.
 	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
@@ -1195,7 +1195,7 @@ type MarketplacesClientListOptions struct {
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the most recent N marketplaces.
-	Top *int32
+	Top *int64
 }
 
 // MarketplacesListResult - Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological
@@ -1387,13 +1387,13 @@ type ModernReservationRecommendationProperties struct {
 	InstanceFlexibilityGroup *string `json:"instanceFlexibilityGroup,omitempty" azure:"ro"`
 
 	// READ-ONLY; The instance Flexibility Ratio.
-	InstanceFlexibilityRatio *float32 `json:"instanceFlexibilityRatio,omitempty" azure:"ro"`
+	InstanceFlexibilityRatio *float64 `json:"instanceFlexibilityRatio,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource Location.
 	Location *string `json:"location,omitempty" azure:"ro"`
 
 	// READ-ONLY; The number of days of usage to look back for recommendation.
-	LookBackPeriod *int32 `json:"lookBackPeriod,omitempty" azure:"ro"`
+	LookBackPeriod *int64 `json:"lookBackPeriod,omitempty" azure:"ro"`
 
 	// READ-ONLY; The meter id (GUID)
 	MeterID *string `json:"meterId,omitempty" azure:"ro"`
@@ -1408,7 +1408,7 @@ type ModernReservationRecommendationProperties struct {
 	RecommendedQuantity *float64 `json:"recommendedQuantity,omitempty" azure:"ro"`
 
 	// READ-ONLY; The recommended Quantity Normalized.
-	RecommendedQuantityNormalized *float32 `json:"recommendedQuantityNormalized,omitempty" azure:"ro"`
+	RecommendedQuantityNormalized *float64 `json:"recommendedQuantityNormalized,omitempty" azure:"ro"`
 
 	// READ-ONLY; The Azure resource type.
 	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
@@ -1864,7 +1864,7 @@ type PriceSheetClientGetByBillingPeriodOptions struct {
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the top N results.
-	Top *int32
+	Top *int64
 }
 
 // PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
@@ -1877,7 +1877,7 @@ type PriceSheetClientGetOptions struct {
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the top N results.
-	Top *int32
+	Top *int64
 }
 
 // PriceSheetModel - price sheet result. It contains the pricesheet associated with billing period
@@ -2067,25 +2067,25 @@ func (r *ReservationRecommendation) GetReservationRecommendation() *ReservationR
 // ReservationRecommendationDetailsCalculatedSavingsProperties - Details of estimated savings.
 type ReservationRecommendationDetailsCalculatedSavingsProperties struct {
 	// The number of reserved units used to calculate savings. Always 1 for virtual machines.
-	ReservedUnitCount *float32 `json:"reservedUnitCount,omitempty"`
+	ReservedUnitCount *float64 `json:"reservedUnitCount,omitempty"`
 
 	// READ-ONLY; The cost without reservation.
-	OnDemandCost *float32 `json:"onDemandCost,omitempty" azure:"ro"`
+	OnDemandCost *float64 `json:"onDemandCost,omitempty" azure:"ro"`
 
 	// READ-ONLY; The difference between total reservation cost and reservation cost.
-	OverageCost *float32 `json:"overageCost,omitempty" azure:"ro"`
+	OverageCost *float64 `json:"overageCost,omitempty" azure:"ro"`
 
 	// READ-ONLY; The quantity for calculated savings.
-	Quantity *float32 `json:"quantity,omitempty" azure:"ro"`
+	Quantity *float64 `json:"quantity,omitempty" azure:"ro"`
 
 	// READ-ONLY; The exact cost of the estimated usage using reservation.
-	ReservationCost *float32 `json:"reservationCost,omitempty" azure:"ro"`
+	ReservationCost *float64 `json:"reservationCost,omitempty" azure:"ro"`
 
 	// READ-ONLY; The amount saved by purchasing the recommended quantity of reservation.
-	Savings *float32 `json:"savings,omitempty" azure:"ro"`
+	Savings *float64 `json:"savings,omitempty" azure:"ro"`
 
 	// READ-ONLY; The cost of the suggested quantity.
-	TotalReservationCost *float32 `json:"totalReservationCost,omitempty" azure:"ro"`
+	TotalReservationCost *float64 `json:"totalReservationCost,omitempty" azure:"ro"`
 }
 
 // ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
@@ -2151,7 +2151,7 @@ type ReservationRecommendationDetailsResourceProperties struct {
 	AppliedScopes []*string `json:"appliedScopes,omitempty" azure:"ro"`
 
 	// READ-ONLY; On demand rate of the resource.
-	OnDemandRate *float32 `json:"onDemandRate,omitempty" azure:"ro"`
+	OnDemandRate *float64 `json:"onDemandRate,omitempty" azure:"ro"`
 
 	// READ-ONLY; Azure product ex: StandardE8sv3 etc.
 	Product *string `json:"product,omitempty" azure:"ro"`
@@ -2160,7 +2160,7 @@ type ReservationRecommendationDetailsResourceProperties struct {
 	Region *string `json:"region,omitempty" azure:"ro"`
 
 	// READ-ONLY; Reservation rate of the resource.
-	ReservationRate *float32 `json:"reservationRate,omitempty" azure:"ro"`
+	ReservationRate *float64 `json:"reservationRate,omitempty" azure:"ro"`
 
 	// READ-ONLY; The azure resource type.
 	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
@@ -2172,10 +2172,10 @@ type ReservationRecommendationDetailsSavingsProperties struct {
 	CalculatedSavings []*ReservationRecommendationDetailsCalculatedSavingsProperties `json:"calculatedSavings,omitempty"`
 
 	// READ-ONLY; Number of days of usage to look back used for computing the recommendation.
-	LookBackPeriod *int32 `json:"lookBackPeriod,omitempty" azure:"ro"`
+	LookBackPeriod *int64 `json:"lookBackPeriod,omitempty" azure:"ro"`
 
 	// READ-ONLY; Number of recommended units of the resource.
-	RecommendedQuantity *float32 `json:"recommendedQuantity,omitempty" azure:"ro"`
+	RecommendedQuantity *float64 `json:"recommendedQuantity,omitempty" azure:"ro"`
 
 	// READ-ONLY; Term period of the reservation, ex: P1Y or P3Y.
 	ReservationOrderTerm *string `json:"reservationOrderTerm,omitempty" azure:"ro"`
@@ -2201,7 +2201,7 @@ type ReservationRecommendationDetailsUsageProperties struct {
 
 	// READ-ONLY; The breakdown of historical resource usage. The values are in the order of usage between the firstConsumptionDate
 	// and the lastConsumptionDate.
-	UsageData []*float32 `json:"usageData,omitempty" azure:"ro"`
+	UsageData []*float64 `json:"usageData,omitempty" azure:"ro"`
 
 	// READ-ONLY; The grain of the values represented in the usage data ex: hourly.
 	UsageGrain *string `json:"usageGrain,omitempty" azure:"ro"`
@@ -2525,7 +2525,7 @@ type UsageDetailsClientListOptions struct {
 	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the most recent N usageDetails.
-	Top *int32
+	Top *int64
 }
 
 // UsageDetailsListResult - Result of listing usage details. It contains a list of available usage details in reverse chronological

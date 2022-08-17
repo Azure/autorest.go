@@ -198,7 +198,7 @@ export function getParamName(param: Parameter): string {
   return paramName;
 }
 
-export function formatParamValue(param: Parameter, imports: ImportManager): string {
+export function formatParamValue(param: Parameter, imports: ImportManager, ignorePrecision: boolean): string {
   let separator = ',';
   switch (param.protocol.http?.style) {
     case SerializationStyle.PipeDelimited:
@@ -236,10 +236,10 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
         paramName = paramName.substring(1);
       }
   }
-  return formatValue(paramName, param.schema, imports);
+  return formatValue(paramName, param.schema, imports, ignorePrecision);
 }
 
-export function formatValue(paramName: string, schema: Schema, imports: ImportManager): string {
+export function formatValue(paramName: string, schema: Schema, imports: ImportManager, ignorePrecision: boolean): string {
   switch (schema.type) {
     case SchemaType.Array:
       throw new Error(`can't format array without parameter info`);
@@ -277,7 +277,7 @@ export function formatValue(paramName: string, schema: Schema, imports: ImportMa
       imports.add('strconv');
       const intSchema = <NumberSchema>schema;
       let intParam = paramName;
-      if (intSchema.precision === 32) {
+      if (intSchema.precision === 32 && !ignorePrecision) {
         intParam = `int64(${intParam})`;
       }
       return `strconv.FormatInt(${intParam}, 10)`;
@@ -285,7 +285,7 @@ export function formatValue(paramName: string, schema: Schema, imports: ImportMa
       imports.add('strconv');
       const numberSchema = <NumberSchema>schema;
       let floatParam = paramName;
-      if (numberSchema.precision === 32) {
+      if (numberSchema.precision === 32 && !ignorePrecision) {
         floatParam = `float64(${floatParam})`;
       }
       return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;

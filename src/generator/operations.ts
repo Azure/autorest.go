@@ -27,6 +27,7 @@ export class OperationGroupContent {
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
   const azureARM = <boolean>session.model.language.go!.azureARM;
   const forceExports = <boolean>session.model.language.go!.exportClients;
+  const ignorePrecision = await session.getValue('ignore-precision', false);
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
@@ -251,7 +252,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
               paramName = `options.${capitalize(hostParam.language.go!.name)}`;
             }
             clientText += `\tif ${paramName} == nil {\n`;
-            clientText += `\t\tdefaultValue := ${getClientDefaultValue(hostParam)}\n`;
+            clientText += `\t\tdefaultValue := ${getClientDefaultValue(hostParam, ignorePrecision)}\n`;
             clientText += `\t\t${paramName} = &defaultValue\n`;
             clientText += '\t}\n';
           }
@@ -282,7 +283,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         continue;
       }
       if (optionalParam.clientDefaultValue) {
-        clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam)},\n`;
+        clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam, ignorePrecision)},\n`;
       }
     }
     if (parameterizedURL !== '') {
@@ -339,10 +340,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         opText += generateLROBeginMethod(op, imports);
       }
       opText += generateOperation(op, imports);
-      opText += createProtocolRequest(group, op, imports);
+      opText += createProtocolRequest(group, op, imports, ignorePrecision);
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
-        opText += createProtocolResponse(op, imports);
+        opText += createProtocolResponse(op, imports, ignorePrecision);
       }
     }
 
@@ -359,7 +360,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
 // returns the clientDefaultValue of the specified param.
 // this is usually the value in quotes (i.e. a string) however
 // it could also be a constant.
-function getClientDefaultValue(param: Parameter): string {
+function getClientDefaultValue(param: Parameter, ignorePrecision: boolean): string {
   const getChoiceValue = function (choices: ChoiceValue[]): string {
     // find the corresponding const type name
     for (const choice of values(choices)) {
@@ -373,12 +374,12 @@ function getClientDefaultValue(param: Parameter): string {
     case SchemaType.Choice:
       return getChoiceValue((<ChoiceSchema>param.schema).choices);
     case SchemaType.Integer:
-      if ((<NumberSchema>param.schema).precision === 32) {
+      if ((<NumberSchema>param.schema).precision === 32 && !ignorePrecision) {
         return `int32(${param.clientDefaultValue})`;
       }
       return `int64(${param.clientDefaultValue})`;
     case SchemaType.Number:
-      if ((<NumberSchema>param.schema).precision === 32) {
+      if ((<NumberSchema>param.schema).precision === 32 && !ignorePrecision) {
         return `float32(${param.clientDefaultValue})`;
       }
       return `float64(${param.clientDefaultValue})`;
@@ -392,7 +393,7 @@ function getClientDefaultValue(param: Parameter): string {
 }
 
 // use this to generate the code that will help process values returned in response headers
-function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string, zeroResp: string): string {
+function formatHeaderResponseValue(propName: string, header: string, schema: Schema, imports: ImportManager, respObj: string, zeroResp: string, ignorePrecision: boolean): string {
   // dictionaries are handled slightly different so we do that first
   if (schema.type === SchemaType.Dictionary) {
     imports.add('strings');
@@ -452,7 +453,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     case SchemaType.Integer:
       imports.add('strconv');
       const intNum = <NumberSchema>schema;
-      if (intNum.precision === 32) {
+      if (intNum.precision === 32 && !ignorePrecision) {
         text += `\t\t${name}32, err := strconv.ParseInt(val, 10, 32)\n`;
         text += `\t\t${name} := int32(${name}32)\n`;
       } else {
@@ -462,7 +463,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     case SchemaType.Number:
       imports.add('strconv');
       const floatNum = <NumberSchema>schema;
-      if (floatNum.precision === 32) {
+      if (floatNum.precision === 32 && !ignorePrecision) {
         text += `\t\t${name}32, err := strconv.ParseFloat(val, 32)\n`;
         text += `\t\t${name} := float32(${name}32)\n`;
       } else {
@@ -650,7 +651,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   return text;
 }
 
-function createProtocolRequest(group: OperationGroup, op: Operation, imports: ImportManager): string {
+function createProtocolRequest(group: OperationGroup, op: Operation, imports: ImportManager, ignorePrecision: boolean): string {
   const info = <OperationNaming>op.language.go!;
   const name = info.protocolNaming.requestMethod;
   for (const param of values(aggregateParameters(op))) {
@@ -725,10 +726,10 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
         text += `\t\treturn nil, errors.New("parameter ${paramName} cannot be empty")\n`;
         text += '\t}\n';
       }
-      let paramValue = formatParamValue(pp, imports);
+      let paramValue = formatParamValue(pp, imports, ignorePrecision);
       if (!skipEncoding) {
         imports.add('net/url');
-        paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
+        paramValue = `url.PathEscape(${formatParamValue(pp, imports, ignorePrecision)})`;
       }
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
@@ -764,7 +765,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     const emitQueryParam = function (qp: Parameter, setter: string): string {
       let qpText = '';
       if (qp.clientDefaultValue && qp.implementation === ImplementationLocation.Method) {
-        qpText = emitClientSideDefault(qp, (name, val) => { return `\treqQP.Set(${name}, ${val})` }, imports);
+        qpText = emitClientSideDefault(qp, (name, val) => { return `\treqQP.Set(${name}, ${val})` }, imports, ignorePrecision);
       } else if (qp.required === true) {
         qpText = `\t${setter}\n`;
       } else if (qp.implementation === ImplementationLocation.Client) {
@@ -815,7 +816,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
           setter += '\t}';
         } else {
           // cannot initialize setter to this value as formatParamValue() can change imports
-          setter = `reqQP.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports)})`;
+          setter = `reqQP.Set("${qp.language.go!.serializedName}", ${formatParamValue(qp, imports, ignorePrecision)})`;
         }
         text += emitQueryParam(qp, setter);
       }
@@ -835,7 +836,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
           setter += `\t\tunencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+qv)\n`;
           setter += '\t}';
         } else {
-          setter = `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports)})`;
+          setter = `unencodedParams = append(unencodedParams, "${qp.language.go!.serializedName}="+${formatParamValue(qp, imports, ignorePrecision)})`;
         }
         text += emitQueryParam(qp, setter);
       }
@@ -854,14 +855,14 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       if (headerParam.clientDefaultValue && headerParam.implementation === ImplementationLocation.Method) {
         return emitClientSideDefault(headerParam, (name, val) => {
           return `${prefix}req.Raw().Header[${name}] = []string{${val}}`;
-        }, imports);
+        }, imports, ignorePrecision);
       } else if (header.schema.language.go!.headerCollectionPrefix) {
         let headerText = `${prefix}for k, v := range ${getParamName(headerParam)} {\n`;
         headerText += `${prefix}\treq.Raw().Header["${header.schema.language.go!.headerCollectionPrefix}"+k] = []string{v}\n`;
         headerText += `${prefix}}\n`;
         return headerText;
       } else {
-        return `${prefix}req.Raw().Header["${headerParam.language.go!.serializedName}"] = []string{${formatParamValue(headerParam, imports)}}\n`;
+        return `${prefix}req.Raw().Header["${headerParam.language.go!.serializedName}"] = []string{${formatParamValue(headerParam, imports, ignorePrecision)}}\n`;
       }
     }
     if (header.required || header.clientDefaultValue) {
@@ -987,13 +988,13 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   return text;
 }
 
-function emitClientSideDefault(param: Parameter, setterFormat: (name: string, val: string) => string, imports: ImportManager): string {
+function emitClientSideDefault(param: Parameter, setterFormat: (name: string, val: string) => string, imports: ImportManager, ignorePrecision: boolean): string {
   const defaultVar = uncapitalize(param.language.go!.name) + 'Default';
-  let text = `\t${defaultVar} := ${getClientDefaultValue(param)}\n`;
+  let text = `\t${defaultVar} := ${getClientDefaultValue(param, ignorePrecision)}\n`;
   text += `\tif options != nil && options.${capitalize(param.language.go!.name)} != nil {\n`;
   text += `\t\t${defaultVar} = *options.${capitalize(param.language.go!.name)}\n`;
   text += '}\n';
-  text += setterFormat(`"${param.language.go!.serializedName}"`, formatValue(defaultVar, param.schema, imports)) + '\n';
+  text += setterFormat(`"${param.language.go!.serializedName}"`, formatValue(defaultVar, param.schema, imports, ignorePrecision)) + '\n';
   return text;
 }
 
@@ -1092,7 +1093,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   return unmarshallerText;
 }
 
-function createProtocolResponse(op: Operation, imports: ImportManager): string {
+function createProtocolResponse(op: Operation, imports: ImportManager, ignorePrecision:boolean): string {
   if (!needsResponseHandler(op)) {
     return '';
   }
@@ -1109,7 +1110,7 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
       }
     }
     for (const headerVal of values(headerVals)) {
-      text += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${getResponseEnvelopeName(op)}{}`);
+      text += formatHeaderResponseValue(headerVal.language.go!.name, headerVal.language.go!.fromHeader, headerVal.schema, imports, 'result', `${getResponseEnvelopeName(op)}{}`, ignorePrecision);
     }
   }
   if (!isMultiRespOperation(op)) {

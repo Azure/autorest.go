@@ -95,7 +95,7 @@ func (client *PriceSheetClient) getCreateRequest(ctx context.Context, options *P
 		reqQP.Set("$skiptoken", *options.Skiptoken)
 	}
 	if options != nil && options.Top != nil {
-		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(*options.Top, 10))
 	}
 	reqQP.Set("api-version", "2019-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()
@@ -157,7 +157,7 @@ func (client *PriceSheetClient) getByBillingPeriodCreateRequest(ctx context.Cont
 		reqQP.Set("$skiptoken", *options.Skiptoken)
 	}
 	if options != nil && options.Top != nil {
-		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(*options.Top, 10))
 	}
 	reqQP.Set("api-version", "2019-10-01")
 	req.Raw().URL.RawQuery = reqQP.Encode()

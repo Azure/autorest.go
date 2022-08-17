@@ -83,4 +83,7 @@ help-content:
       - key: honor-body-placement
         type: boolean
         description: When true, optional body parameters are treated as such for PATCH and PUT operations.
+      - key: ignore-precision
+        type: boolean
+        description: When true, int64 and float64 will always be generated.
 ```

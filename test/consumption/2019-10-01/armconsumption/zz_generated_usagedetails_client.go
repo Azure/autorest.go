@@ -118,7 +118,7 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 		reqQP.Set("$skiptoken", *options.Skiptoken)
 	}
 	if options != nil && options.Top != nil {
-		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(*options.Top, 10))
 	}
 	reqQP.Set("api-version", "2019-10-01")
 	if options != nil && options.Metric != nil {

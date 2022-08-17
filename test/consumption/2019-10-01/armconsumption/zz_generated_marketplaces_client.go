@@ -105,7 +105,7 @@ func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope s
 		reqQP.Set("$filter", *options.Filter)
 	}
 	if options != nil && options.Top != nil {
-		reqQP.Set("$top", strconv.FormatInt(int64(*options.Top), 10))
+		reqQP.Set("$top", strconv.FormatInt(*options.Top, 10))
 	}
 	if options != nil && options.Skiptoken != nil {
 		reqQP.Set("$skiptoken", *options.Skiptoken)

@@ -42,11 +42,12 @@ export async function transform(host: AutorestExtensionHost) {
 async function process(session: Session<CodeModel>) {
   processOperationRequests(session);
   processOperationResponses(session);
+  const ignorePrecision = await session.getValue('ignore-precision', false);
   // fix up dictionary element types (additional properties)
   // this must happen before processing objects as we depend on the
   // schema type being an actual Go type.
   for (const dictionary of values(session.model.schemas.dictionaries)) {
-    dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, true);
+    dictionary.elementType.language.go!.name = schemaTypeToGoType(session.model, dictionary.elementType, true, ignorePrecision);
     dictionary.language.go!.elementIsPtr = !isTypePassedByValue(dictionary.elementType);
     if (dictionary.language.go!.description) {
       dictionary.language.go!.description = parseComments(dictionary.language.go!.description);
@@ -104,7 +105,7 @@ async function process(session: Session<CodeModel>) {
       }
       prop.language.go!.description = descriptionMods.join('; ');
       const details = <Language>prop.schema.language.go;
-      details.name = `${schemaTypeToGoType(session.model, prop.schema, true)}`;
+      details.name = `${schemaTypeToGoType(session.model, prop.schema, true, ignorePrecision)}`;
       if (prop.schema.type === SchemaType.Any || prop.schema.type === SchemaType.AnyObject || (isObjectSchema(prop.schema) && prop.schema.discriminator)) {
         prop.language.go!.byValue = true;
       } else if (prop.schema.type === SchemaType.DateTime) {
@@ -147,20 +148,20 @@ async function process(session: Session<CodeModel>) {
   }
   // fix up enum types
   for (const choice of values(session.model.schemas.choices)) {
-    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false, ignorePrecision);
     if (choice.language.go!.description) {
       choice.language.go!.description = parseComments(choice.language.go!.description);
     }
   }
   for (const choice of values(session.model.schemas.sealedChoices)) {
-    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false);
+    choice.choiceType.language.go!.name = schemaTypeToGoType(session.model, choice.choiceType, false, ignorePrecision);
     if (choice.language.go!.description) {
       choice.language.go!.description = parseComments(choice.language.go!.description);
     }
   }
 }
 
-function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
+function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean, ignorePrecision: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'interface{}';
@@ -170,7 +171,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const arraySchema = <ArraySchema>schema;
       arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arraySchema.elementType);
       const arrayElem = <Schema>arraySchema.elementType;
-      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody);
+      arrayElem.language.go!.name = schemaTypeToGoType(codeModel, arrayElem, inBody, ignorePrecision);
       if (<boolean>arraySchema.language.go!.elementIsPtr) {
         return `[]*${arrayElem.language.go!.name}`;
       }
@@ -185,7 +186,7 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       return 'rune';
     case SchemaType.Constant:
       let constSchema = <ConstantSchema>schema;
-      constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, inBody);
+      constSchema.valueType.language.go!.name = schemaTypeToGoType(codeModel, constSchema.valueType, inBody, ignorePrecision);
       return constSchema.valueType.language.go!.name;
     case SchemaType.DateTime:
       // header/query param values are parsed separately so they don't need custom types
@@ -212,18 +213,18 @@ function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolea
       const dictSchema = <DictionarySchema>schema;
       dictSchema.language.go!.elementIsPtr = !isTypePassedByValue(dictSchema.elementType);
       const dictElem = <Schema>dictSchema.elementType;
-      dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody);
+      dictElem.language.go!.name = schemaTypeToGoType(codeModel, dictElem, inBody, ignorePrecision);
       if (<boolean>dictSchema.language.go!.elementIsPtr) {
         return `map[string]*${dictElem.language.go!.name}`;
       }
       return `map[string]${dictElem.language.go!.name}`;
     case SchemaType.Integer:
-      if ((<NumberSchema>schema).precision === 32) {
+      if ((<NumberSchema>schema).precision === 32 && !ignorePrecision) {
         return 'int32';
       }
       return 'int64';
     case SchemaType.Number:
-      if ((<NumberSchema>schema).precision === 32) {
+      if ((<NumberSchema>schema).precision === 32 && !ignorePrecision) {
         return 'float32';
       }
       return 'float64';
@@ -293,7 +294,8 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 }
 
 // we will transform operation request parameter schema types to Go types
-function processOperationRequests(session: Session<CodeModel>) {
+async function processOperationRequests(session: Session<CodeModel>) {
+  const ignorePrecision = await session.getValue('ignore-precision', false);
   // pre-process multi-request operations as it can add operations to the operations
   // collection, and iterating over a modified collection yeilds incorrect results
   for (const group of values(session.model.operationGroups)) {
@@ -345,7 +347,7 @@ function processOperationRequests(session: Session<CodeModel>) {
       if (op.requests![0].protocol.http!.headers) {
         for (const header of values(op.requests![0].protocol.http!.headers)) {
           const head = <HttpHeader>header;
-          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false);
+          head.schema.language.go!.name = schemaTypeToGoType(session.model, head.schema, false, ignorePrecision);
         }
       }
       const opName = isLROOperation(op) ? 'Begin' + op.language.go!.name : op.language.go!.name;
@@ -400,7 +402,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           }
         }
         const inBody = param.protocol.http !== undefined && param.protocol.http!.in === 'body';
-        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody);
+        param.schema.language.go!.name = schemaTypeToGoType(session.model, param.schema, inBody, ignorePrecision);
         if (isTypePassedByValue(param.schema)) {
           param.language.go!.byValue = true;
         }
@@ -524,7 +526,8 @@ function createGroupProperty(name: string, description: string): GroupProperty {
   return gp;
 }
 
-function processOperationResponses(session: Session<CodeModel>) {
+async function processOperationResponses(session: Session<CodeModel>) {
+  const ignorePrecision = await session.getValue('ignore-precision', false);
   if (session.model.language.go!.responseEnvelopes === undefined) {
     session.model.language.go!.responseEnvelopes = new Array<Schema>();
   }
@@ -549,7 +552,7 @@ function processOperationResponses(session: Session<CodeModel>) {
             // callers read directly from the *http.Response.Body
             continue;
           }
-          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true);
+          resp.schema.language.go!.name = schemaTypeToGoType(session.model, resp.schema, true, ignorePrecision);
         }
         const marshallingFormat = getMarshallingFormat(resp.protocol);
         if (marshallingFormat !== 'na' && isSchemaResponse(resp)) {
@@ -558,7 +561,7 @@ function processOperationResponses(session: Session<CodeModel>) {
         // fix up schema types for header responses
         const httpResponse = <HttpResponse>resp.protocol.http;
         for (const header of values(httpResponse.headers)) {
-          header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false);
+          header.schema.language.go!.name = schemaTypeToGoType(session.model, header.schema, false, ignorePrecision);
           // check if this is a header collection
           if (header.extensions?.['x-ms-header-collection-prefix']) {
             header.schema.language.go!.headerCollectionPrefix = header.extensions['x-ms-header-collection-prefix'];
@@ -576,7 +579,7 @@ function processOperationResponses(session: Session<CodeModel>) {
       } else if (op.responses?.length !== filtered.length) {
         op.responses = filtered;
       }
-      createResponseEnvelope(session.model, group, op);
+      createResponseEnvelope(session.model, group, op, ignorePrecision);
     }
   }
 }
@@ -614,7 +617,7 @@ interface HttpHeaderWithDescription extends HttpHeader {
 const scalarResponsePropName = 'Value';
 
 // creates the response envelope type to be returned from an operation and updates the operation.
-function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation) {
+function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op: Operation, ignorePrecision:boolean) {
   // create the `type <type>Response struct` response
 
   // aggregate headers from all responses as all of them will go into the same result envelope
@@ -698,7 +701,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
       propName = response.schema.language.go!.name;
     } else if (response.schema.type === SchemaType.Array) {
       // for array types use the element type's name
-      propName = recursiveTypeName(response.schema);
+      propName = recursiveTypeName(response.schema, ignorePrecision);
     } else if (response.schema.type === SchemaType.Any) {
       propName = 'Interface';
     } else if (response.schema.type === SchemaType.AnyObject) {
@@ -811,7 +814,7 @@ function getMarshallingFormat(protocol: Protocols): 'json' | 'xml' | 'na' {
   }
 }
 
-function recursiveTypeName(schema: Schema): string {
+function recursiveTypeName(schema: Schema, ignorePrecision: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
       return 'Interface';
@@ -820,7 +823,7 @@ function recursiveTypeName(schema: Schema): string {
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       const arrayElem = <Schema>arraySchema.elementType;
-      return `${recursiveTypeName(arrayElem)}Array`;
+      return `${recursiveTypeName(arrayElem, ignorePrecision)}Array`;
     case SchemaType.Boolean:
       return 'Bool';
     case SchemaType.ByteArray:
@@ -838,14 +841,14 @@ function recursiveTypeName(schema: Schema): string {
     case SchemaType.Dictionary:
       const dictSchema = <DictionarySchema>schema;
       const dictElem = <Schema>dictSchema.elementType;
-      return `MapOf${recursiveTypeName(dictElem)}`;
+      return `MapOf${recursiveTypeName(dictElem, ignorePrecision)}`;
     case SchemaType.Integer:
-      if ((<NumberSchema>schema).precision === 32) {
+      if ((<NumberSchema>schema).precision === 32 && !ignorePrecision) {
         return 'Int32';
       }
       return 'Int64';
     case SchemaType.Number:
-      if ((<NumberSchema>schema).precision === 32) {
+      if ((<NumberSchema>schema).precision === 32 && !ignorePrecision) {
         return 'Float32';
       }
       return 'Float64';
