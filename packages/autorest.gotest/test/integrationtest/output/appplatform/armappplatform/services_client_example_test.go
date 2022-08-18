@@ -37,7 +37,7 @@ func ExampleServicesClient_Get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate.json
-func ExampleServicesClient_BeginCreateOrUpdate_services_CreateOrUpdate() {
+func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdate() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -70,7 +70,7 @@ func ExampleServicesClient_BeginCreateOrUpdate_services_CreateOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/appplatform/resource-manager/Microsoft.AppPlatform/preview/2020-11-01-preview/examples/Services_CreateOrUpdate_VNetInjection.json
-func ExampleServicesClient_BeginCreateOrUpdate_services_CreateOrUpdate_VNetInjection() {
+func ExampleServicesClient_BeginCreateOrUpdate_servicesCreateOrUpdateVNetInjection() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

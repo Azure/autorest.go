@@ -18,7 +18,7 @@ import (
 )
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2019-04-01/examples/ListAvailableResourceSkus.json
-func ExampleResourceSKUsClient_NewListPager_listAvailableResourceSkus() {
+func ExampleResourceSKUsClient_NewListPager_listsAllAvailableResourceSkUs() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -42,7 +42,7 @@ func ExampleResourceSKUsClient_NewListPager_listAvailableResourceSkus() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2019-04-01/examples/ListAvailableResourceSkusForARegion.json
-func ExampleResourceSKUsClient_NewListPager_listAvailableResourceSkusForARegion() {
+func ExampleResourceSKUsClient_NewListPager_listsAllAvailableResourceSkUsForTheSpecifiedRegion() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

@@ -8,7 +8,7 @@ import { Config } from '../common/constant';
 import { ExampleModel, MockTestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
 import { MockTestDataRender } from './mockTestGenerator';
 import { ParameterOutput } from '../common/model';
-import path = require('path');
+import { camelCase } from 'lodash';
 
 export class ExampleDataRender extends MockTestDataRender {}
 
@@ -44,9 +44,8 @@ export class ExampleCodeGenerator extends BaseCodeGenerator {
               })
               .join(', ');
           },
-          getExampleSuffix: (exampleFilename: string) => {
-            const name = path.parse(exampleFilename).name;
-            return name.charAt(0).toLowerCase() + name.slice(1);
+          getExampleSuffix: (exampleKey: string) => {
+            return camelCase(exampleKey);
           },
         },
       );

@@ -71,7 +71,7 @@ func ExampleDiskAccessesClient_BeginUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccessWithPrivateEndpoints.json
-func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessWithPrivateEndpoints() {
+func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResourceWithPrivateEndpoints() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -90,7 +90,7 @@ func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessWithPrivateEndp
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/GetInformationAboutADiskAccess.json
-func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccess() {
+func ExampleDiskAccessesClient_Get_getInformationAboutADiskAccessResource() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

@@ -18,7 +18,7 @@ import (
 )
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlobWithDiskEncryptionSet.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromABlobWithDiskEncryptionSet() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlobWithDiskEncryptionSetResource() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -55,7 +55,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromABlobWithDiskEncry
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromABlob.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromABlob() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromABlob() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -90,7 +90,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromABlob() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDiskWithDiskEncryptionSet.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromAManagedDiskWithDiskEncryptionSet() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAManagedDiskWithDiskEncryptionSetResource() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -129,7 +129,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromAManagedDiskWithDi
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAManagedDisk.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromAManagedDisk() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAManagedDisk() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -166,7 +166,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromAManagedDisk() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshotWithDiskEncryptionSet.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromASnapshotWithDiskEncryptionSet() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnapshotWithDiskEncryptionSetResource() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -205,7 +205,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromASnapshotWithDiskE
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromASnapshot.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromASnapshot() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromASnapshot() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -242,7 +242,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromASnapshot() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageFromAVM.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromAVM() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageFromAnExistingVirtualMachine() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -272,7 +272,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageFromAVM() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromABlob.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageThatIncludesADataDiskFromABlob() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatIncludesADataDiskFromABlob() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -312,7 +312,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageThatIncludesADataDiskF
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromAManagedDisk.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageThatIncludesADataDiskFromAManagedDisk() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatIncludesADataDiskFromAManagedDisk() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -356,7 +356,7 @@ func ExampleImagesClient_BeginCreateOrUpdate_createAnImageThatIncludesADataDiskF
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAnImageThatIncludesADataDiskFromASnapshot.json
-func ExampleImagesClient_BeginCreateOrUpdate_createAnImageThatIncludesADataDiskFromASnapshot() {
+func ExampleImagesClient_BeginCreateOrUpdate_createAVirtualMachineImageThatIncludesADataDiskFromASnapshot() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
