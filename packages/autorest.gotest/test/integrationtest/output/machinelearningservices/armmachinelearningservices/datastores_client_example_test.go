@@ -86,7 +86,7 @@ func ExampleDatastoresClient_Get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen1WServicePrincipal/createOrUpdate.json
-func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureDataLakeGen1WServicePrincipal() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -125,7 +125,7 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureDataLakeGen2WServicePrincipal/createOrUpdate.json
-func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureDataLakeGen2WServicePrincipal() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -167,7 +167,7 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureFileWAccountKey/createOrUpdate.json
-func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureFileStoreWAccountKey() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -205,7 +205,7 @@ func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Datastore/AzureBlobWAccountKey/createOrUpdate.json
-func ExampleDatastoresClient_CreateOrUpdate_createOrUpdate() {
+func ExampleDatastoresClient_CreateOrUpdate_createOrUpdateDatastoreAzureBlobWAccountKey() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

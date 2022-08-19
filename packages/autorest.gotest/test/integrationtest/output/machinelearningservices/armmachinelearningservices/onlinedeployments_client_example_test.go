@@ -66,7 +66,7 @@ func ExampleOnlineDeploymentsClient_BeginDelete() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
-func ExampleOnlineDeploymentsClient_Get_get() {
+func ExampleOnlineDeploymentsClient_Get_getKubernetesOnlineDeployment() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -85,7 +85,7 @@ func ExampleOnlineDeploymentsClient_Get_get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
-func ExampleOnlineDeploymentsClient_Get_get() {
+func ExampleOnlineDeploymentsClient_Get_getManagedOnlineDeployment() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -104,7 +104,7 @@ func ExampleOnlineDeploymentsClient_Get_get() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/update.json
-func ExampleOnlineDeploymentsClient_BeginUpdate_update() {
+func ExampleOnlineDeploymentsClient_BeginUpdate_updateKubernetesOnlineDeployment() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -147,7 +147,7 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_update() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/update.json
-func ExampleOnlineDeploymentsClient_BeginUpdate_update() {
+func ExampleOnlineDeploymentsClient_BeginUpdate_updateManagedOnlineDeployment() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -190,7 +190,7 @@ func ExampleOnlineDeploymentsClient_BeginUpdate_update() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
-func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdate() {
+func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateKubernetesOnlineDeployment() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -276,7 +276,7 @@ func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdate() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
-func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdate() {
+func ExampleOnlineDeploymentsClient_BeginCreateOrUpdate_createOrUpdateManagedOnlineDeployment() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -379,7 +379,7 @@ func ExampleOnlineDeploymentsClient_GetLogs() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/listSkus.json
-func ExampleOnlineDeploymentsClient_NewListSKUsPager_listSkus() {
+func ExampleOnlineDeploymentsClient_NewListSKUsPager_listKubernetesOnlineDeploymentSkus() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -405,7 +405,7 @@ func ExampleOnlineDeploymentsClient_NewListSKUsPager_listSkus() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/listSkus.json
-func ExampleOnlineDeploymentsClient_NewListSKUsPager_listSkus() {
+func ExampleOnlineDeploymentsClient_NewListSKUsPager_listManagedOnlineDeploymentSkus() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

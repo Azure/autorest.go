@@ -42,7 +42,7 @@ func ExampleComputeClient_NewListPager() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AKSCompute.json
-func ExampleComputeClient_Get_aKSCompute() {
+func ExampleComputeClient_Get_getAAksCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -61,7 +61,7 @@ func ExampleComputeClient_Get_aKSCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/AmlCompute.json
-func ExampleComputeClient_Get_amlCompute() {
+func ExampleComputeClient_Get_getAAmlCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -80,7 +80,7 @@ func ExampleComputeClient_Get_amlCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/KubernetesCompute.json
-func ExampleComputeClient_Get_kubernetesCompute() {
+func ExampleComputeClient_Get_getAKubernetesCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -99,7 +99,7 @@ func ExampleComputeClient_Get_kubernetesCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/get/ComputeInstance.json
-func ExampleComputeClient_Get_computeInstance() {
+func ExampleComputeClient_Get_getAnComputeInstance() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -118,7 +118,7 @@ func ExampleComputeClient_Get_computeInstance() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/KubernetesCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate_kubernetesCompute() {
+func ExampleComputeClient_BeginCreateOrUpdate_attachAKubernetesCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -168,7 +168,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_kubernetesCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAmlCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate_basicAmlCompute() {
+func ExampleComputeClient_BeginCreateOrUpdate_createAAmlCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -212,7 +212,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_basicAmlCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicDataFactoryCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate_basicDataFactoryCompute() {
+func ExampleComputeClient_BeginCreateOrUpdate_createADataFactoryCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -240,7 +240,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_basicDataFactoryCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/BasicAKSCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate_basicAKSCompute() {
+func ExampleComputeClient_BeginCreateOrUpdate_createAnAksCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -268,7 +268,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_basicAKSCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstance.json
-func ExampleComputeClient_BeginCreateOrUpdate_computeInstance() {
+func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -313,7 +313,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_computeInstance() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/ComputeInstanceMinimal.json
-func ExampleComputeClient_BeginCreateOrUpdate_computeInstanceMinimal() {
+func ExampleComputeClient_BeginCreateOrUpdate_createAnComputeInstanceComputeWithMinimalInputs() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -344,7 +344,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_computeInstanceMinimal() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AmlCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate_amlCompute() {
+func ExampleComputeClient_BeginCreateOrUpdate_updateAAmlCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -380,7 +380,7 @@ func ExampleComputeClient_BeginCreateOrUpdate_amlCompute() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2022-02-01-preview/examples/Compute/createOrUpdate/AKSCompute.json
-func ExampleComputeClient_BeginCreateOrUpdate_aKSCompute() {
+func ExampleComputeClient_BeginCreateOrUpdate_updateAnAksCompute() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

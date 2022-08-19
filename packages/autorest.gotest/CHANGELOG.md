@@ -1,6 +1,13 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Thu, 04 Aug 2022 09:20:24 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Aug 2022 02:39:29 GMT and should not be manually modified.
+
+## 4.2.2
+Fri, 19 Aug 2022 02:39:29 GMT
+
+### Patches
+
+- Fix illegal example funtion name.
 
 ## 4.2.1
 Thu, 04 Aug 2022 09:20:24 GMT

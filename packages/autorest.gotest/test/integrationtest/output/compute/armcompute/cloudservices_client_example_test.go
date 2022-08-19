@@ -18,7 +18,7 @@ import (
 )
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithMultiRole.json
-func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithMultiRole() {
+func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithMultipleRoles() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -84,7 +84,7 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithMultiR
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRole.json
-func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithSingleRole() {
+func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithSingleRole() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -142,7 +142,7 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithSingle
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndCertificate.json
-func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithSingleRoleAndCertificate() {
+func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithSingleRoleAndCertificateFromKeyVault() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -212,7 +212,7 @@ func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithSingle
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateCloudServiceWithSingleRoleAndRDP.json
-func ExampleCloudServicesClient_BeginCreateOrUpdate_createCloudServiceWithSingleRoleAndRDP() {
+func ExampleCloudServicesClient_BeginCreateOrUpdate_createNewCloudServiceWithSingleRoleAndRdpExtension() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

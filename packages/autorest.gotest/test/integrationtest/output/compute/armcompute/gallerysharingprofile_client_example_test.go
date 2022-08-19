@@ -18,7 +18,7 @@ import (
 )
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/AddToSharingProfileInAGallery.json
-func ExampleGallerySharingProfileClient_BeginUpdate_addToSharingProfileInAGallery() {
+func ExampleGallerySharingProfileClient_BeginUpdate_addSharingIdToTheSharingProfileOfAGallery() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -55,7 +55,7 @@ func ExampleGallerySharingProfileClient_BeginUpdate_addToSharingProfileInAGaller
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/examples/ResetSharingProfileInAGallery.json
-func ExampleGallerySharingProfileClient_BeginUpdate_resetSharingProfileInAGallery() {
+func ExampleGallerySharingProfileClient_BeginUpdate_resetSharingProfileOfAGallery() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

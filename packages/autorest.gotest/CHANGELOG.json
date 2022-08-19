@@ -2,6 +2,18 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.2.2",
+      "tag": "@autorest/gotest_v4.2.2",
+      "date": "Fri, 19 Aug 2022 02:39:29 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix illegal example funtion name."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.2.1",
       "tag": "@autorest/gotest_v4.2.1",
       "date": "Thu, 04 Aug 2022 09:20:24 GMT",

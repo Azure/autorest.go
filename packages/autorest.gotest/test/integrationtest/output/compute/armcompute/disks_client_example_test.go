@@ -18,7 +18,7 @@ import (
 )
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskAccess.json
-func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithDiskAccess() {
+func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDiskAccessResource() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -51,7 +51,7 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithDiskAccess() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithDiskEncryptionSet.json
-func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithDiskEncryptionSet() {
+func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskAndAssociateWithDiskEncryptionSet() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -213,7 +213,7 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAPlatformImage
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskFromAnExistingManagedDisk.json
-func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAnExistingManagedDisk() {
+func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskFromAnExistingManagedDiskInTheSameOrDifferentSubscription() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -281,7 +281,7 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSecurityProfil
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithSSDZRSAccountType.json
-func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSSDZRSAccountType() {
+func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithSsdZrsAccountType() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -412,7 +412,7 @@ func ExampleDisksClient_BeginCreateOrUpdate_createAnEmptyManagedDisk() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/CreateAManagedDiskWithLogicalSectorSize.json
-func ExampleDisksClient_BeginCreateOrUpdate_createAManagedDiskWithLogicalSectorSize() {
+func ExampleDisksClient_BeginCreateOrUpdate_createAnUltraManagedDiskWithLogicalSectorSize512E() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -588,7 +588,7 @@ func ExampleDisksClient_BeginUpdate_updateAManagedDiskToDisableBursting() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/examples/UpdateAManagedDiskToRemoveDiskAccess.json
-func ExampleDisksClient_BeginUpdate_updateAManagedDiskToRemoveDiskAccess() {
+func ExampleDisksClient_BeginUpdate_updateManagedDiskToRemoveDiskAccessResourceAssociation() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)

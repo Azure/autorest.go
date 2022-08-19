@@ -44,7 +44,7 @@ func ExampleVirtualMachinesClient_NewListByLocationPager() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingAssessmentModeOfImageDefault.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithPatchSettingAssessmentModeOfImageDefault() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSettingAssessmentModeOfImageDefault() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -110,7 +110,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithPatchSet
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModeOfImageDefault.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithPatchSettingModeOfImageDefault() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSettingPatchModeOfImageDefault() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -176,7 +176,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithPatchSet
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateALinuxVmWithPatchSettingModesOfAutomaticByPlatform.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithPatchSettingModesOfAutomaticByPlatform() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithAPatchSettingsPatchModeAndAssessmentModeSetToAutomaticByPlatform() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -243,7 +243,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createALinuxVmWithPatchSet
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithUefiSettings.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUefiSettings() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUefiSettingsOfSecureBootAndVTpm() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -310,7 +310,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUefiSettings(
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateOrUpdateAVmWithUserData.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createOrUpdateAVmWithUserData() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithUserData() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -457,7 +457,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithNetworkInterf
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingAssessmentModeOfImageDefault.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchSettingAssessmentModeOfImageDefault() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatchSettingAssessmentModeOfImageDefault() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -524,7 +524,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchS
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByOS.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchSettingModeOfAutomaticByOS() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatchSettingPatchModeOfAutomaticByOs() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -591,7 +591,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchS
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchSettingModeOfAutomaticByPlatformAndEnableHotPatchingTrue() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatchSettingPatchModeOfAutomaticByPlatformAndEnableHotpatchingSetToTrue() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -659,7 +659,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchS
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModeOfManual.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchSettingModeOfManual() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithAPatchSettingPatchModeOfManual() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -726,7 +726,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchS
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAWindowsVmWithPatchSettingModesOfAutomaticByPlatform.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchSettingModesOfAutomaticByPlatform() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAWindowsVmWithPatchSettingsPatchModeAndAssessmentModeSetToAutomaticByPlatform() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -1222,7 +1222,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmInAnAvailabilityS
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithDiskEncryptionSetResource.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithDiskEncryptionSetResource() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithDiskEncryptionSetResourceIdInTheOsDiskAndDataDisk() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -1308,7 +1308,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithDiskEncryptio
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithEncryptionAtHost.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEncryptionAtHost() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithHostEncryptionUsingEncryptionAtHostProperty() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -1513,7 +1513,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithAMarketplaceI
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithExtensionsTimeBudget.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithExtensionsTimeBudget() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithAnExtensionsTimeBudget() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -1717,7 +1717,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEmptyDataDisk
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithADiffOsDiskUsingDiffDiskPlacementAsCacheDisk() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDiskProvisioningInCacheDiskUsingPlacementProperty() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -1786,7 +1786,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithADiffOsDiskUs
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithADiffOsDiskUsingDiffDiskPlacementAsResourceDisk() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDiskProvisioningInResourceDiskUsingPlacementProperty() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -1855,7 +1855,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithADiffOsDiskUs
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/CreateAVmWithADiffOsDisk.json
-func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithADiffOsDisk() {
+func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithEphemeralOsDisk() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -2177,7 +2177,7 @@ func ExampleVirtualMachinesClient_BeginCreateOrUpdate_createAVmWithSshAuthentica
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMDetachDataDiskUsingToBeDetachedProperty.json
-func ExampleVirtualMachinesClient_BeginUpdate_updateVMDetachDataDiskUsingToBeDetachedProperty() {
+func ExampleVirtualMachinesClient_BeginUpdate_updateAVmByDetachingDataDisk() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -2249,7 +2249,7 @@ func ExampleVirtualMachinesClient_BeginUpdate_updateVMDetachDataDiskUsingToBeDet
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/UpdateVMForceDetachDataDisk.json
-func ExampleVirtualMachinesClient_BeginUpdate_updateVMForceDetachDataDisk() {
+func ExampleVirtualMachinesClient_BeginUpdate_updateAVmByForceDetachingDataDisk() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -2343,7 +2343,7 @@ func ExampleVirtualMachinesClient_BeginDelete() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachine.json
-func ExampleVirtualMachinesClient_Get_getVirtualMachine() {
+func ExampleVirtualMachinesClient_Get_getAVirtualMachine() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -2362,7 +2362,7 @@ func ExampleVirtualMachinesClient_Get_getVirtualMachine() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineAutoPlacedOnDedicatedHostGroup.json
-func ExampleVirtualMachinesClient_Get_getVirtualMachineAutoPlacedOnDedicatedHostGroup() {
+func ExampleVirtualMachinesClient_Get_getAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
@@ -2400,7 +2400,7 @@ func ExampleVirtualMachinesClient_InstanceView_getVirtualMachineInstanceView() {
 }
 
 // Generated from example definition: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/examples/GetVirtualMachineInstanceViewAutoPlacedOnDedicatedHostGroup.json
-func ExampleVirtualMachinesClient_InstanceView_getVirtualMachineInstanceViewAutoPlacedOnDedicatedHostGroup() {
+func ExampleVirtualMachinesClient_InstanceView_getInstanceViewOfAVirtualMachinePlacedOnADedicatedHostGroupThroughAutomaticPlacement() {
 	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		log.Fatalf("failed to obtain a credential: %v", err)
