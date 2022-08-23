@@ -91,7 +91,7 @@ func (e *ErrorResponse) UnmarshalJSON(data []byte) error {
 func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if g.FeatureType == nil {
-		g.FeatureType = to.Ptr("something")
+		g.FeatureType = to.Ptr("default-value")
 	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
@@ -140,7 +140,7 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	if g.FeatureType == nil {
-		g.FeatureType = to.Ptr("something")
+		g.FeatureType = to.Ptr("default-value")
 	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)

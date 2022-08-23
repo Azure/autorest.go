@@ -503,7 +503,7 @@
         "featureType": {
           "description": "The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value.",
           "type": "string",
-          "x-ms-client-default": "something"
+          "x-ms-client-default": "default-value"
         },
         "setting": {
           "description": "test enum with a default",
