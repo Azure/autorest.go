@@ -52,6 +52,9 @@ type GeoJSONFeature struct {
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
 	Properties interface{} `json:"properties,omitempty"`
+
+	// test enum with a default
+	Setting *DataSetting `json:"setting,omitempty"`
 }
 
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
@@ -72,6 +75,9 @@ type GeoJSONFeatureData struct {
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
 	Properties interface{} `json:"properties,omitempty"`
+
+	// test enum with a default
+	Setting *DataSetting `json:"setting,omitempty"`
 }
 
 // GeoJSONObjectClassification provides polymorphic access to related types.

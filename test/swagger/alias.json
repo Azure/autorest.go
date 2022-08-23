@@ -502,7 +502,21 @@
         },
         "featureType": {
           "description": "The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value.",
-          "type": "string"
+          "type": "string",
+          "x-ms-client-default": "something"
+        },
+        "setting": {
+          "description": "test enum with a default",
+          "type": "string",
+          "enum": [
+            "one",
+            "two",
+            "three"
+          ],
+          "x-ms-enum": {
+            "name": "DataSetting"
+          },
+          "x-ms-client-default": "two"
         }
       },
       "required": [

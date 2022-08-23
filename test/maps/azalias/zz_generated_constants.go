@@ -9,6 +9,24 @@
 
 package azalias
 
+// DataSetting - test enum with a default
+type DataSetting string
+
+const (
+	DataSettingOne   DataSetting = "one"
+	DataSettingTwo   DataSetting = "two"
+	DataSettingThree DataSetting = "three"
+)
+
+// PossibleDataSettingValues returns the possible values for the DataSetting const type.
+func PossibleDataSettingValues() []DataSetting {
+	return []DataSetting{
+		DataSettingOne,
+		DataSettingTwo,
+		DataSettingThree,
+	}
+}
+
 // GeoJSONObjectType - Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint,
 // LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
 // FeatureCollection.

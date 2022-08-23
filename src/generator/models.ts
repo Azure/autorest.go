@@ -8,7 +8,7 @@ import { capitalize, comment } from '@azure-tools/codegen';
 import { ByteArraySchema, CodeModel, ConstantSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { formatConstantValue, isArraySchema, isDictionarySchema, isObjectSchema, commentLength, aggregateProperties } from '../common/helpers';
-import { contentPreamble, sortAscending } from './helpers';
+import { contentPreamble, getClientDefaultValue, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, getXMLSerialization, StructDef, StructMethod } from './structs';
 
@@ -255,6 +255,10 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
     } else if (prop.schema.type === SchemaType.Constant) {
       marshaller += `\tobjectMap["${prop.serializedName}"] = ${formatConstantValue(<ConstantSchema>prop.schema)}\n`;
     } else {
+      if (prop.clientDefaultValue) {
+        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/to');
+        marshaller += `\tif ${receiver}.${prop.language.go!.name} == nil {\n\t\t${receiver}.${prop.language.go!.name} = to.Ptr(${getClientDefaultValue(prop)})\n\t}\n`;
+      }
       let populate = 'populate';
       let addr = '';
       if (prop.schema.language.go!.internalTimeType) {

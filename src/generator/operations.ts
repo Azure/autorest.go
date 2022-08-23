@@ -5,11 +5,11 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
-import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
+import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -354,41 +354,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     operations.push(new OperationGroupContent(group.language.go!.clientName, text));
   }
   return operations;
-}
-
-// returns the clientDefaultValue of the specified param.
-// this is usually the value in quotes (i.e. a string) however
-// it could also be a constant.
-function getClientDefaultValue(param: Parameter): string {
-  const getChoiceValue = function (choices: ChoiceValue[]): string {
-    // find the corresponding const type name
-    for (const choice of values(choices)) {
-      if (choice.value === param.clientDefaultValue) {
-        return choice.language.go!.name;
-      }
-    }
-    throw new Error(`failed to find matching constant for default value ${param.clientDefaultValue}`);
-  }
-  switch (param.schema.type) {
-    case SchemaType.Choice:
-      return getChoiceValue((<ChoiceSchema>param.schema).choices);
-    case SchemaType.Integer:
-      if ((<NumberSchema>param.schema).precision === 32) {
-        return `int32(${param.clientDefaultValue})`;
-      }
-      return `int64(${param.clientDefaultValue})`;
-    case SchemaType.Number:
-      if ((<NumberSchema>param.schema).precision === 32) {
-        return `float32(${param.clientDefaultValue})`;
-      }
-      return `float64(${param.clientDefaultValue})`;
-    case SchemaType.SealedChoice:
-      return getChoiceValue((<SealedChoiceSchema>param.schema).choices);
-    case SchemaType.String:
-      return `"${param.clientDefaultValue}"`;
-    default:
-      return param.clientDefaultValue;
-  }
 }
 
 // use this to generate the code that will help process values returned in response headers

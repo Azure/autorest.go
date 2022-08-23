@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"reflect"
 )
 
@@ -89,9 +90,16 @@ func (e *ErrorResponse) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type GeoJSONFeature.
 func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if g.FeatureType == nil {
+		g.FeatureType = to.Ptr("something")
+	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
 	populate(objectMap, "properties", &g.Properties)
+	if g.Setting == nil {
+		g.Setting = to.Ptr(DataSettingTwo)
+	}
+	populate(objectMap, "setting", g.Setting)
 	objectMap["type"] = GeoJSONObjectTypeGeoJSONFeature
 	return json.Marshal(objectMap)
 }
@@ -114,6 +122,9 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 		case "properties":
 			err = unpopulate(val, "Properties", &g.Properties)
 			delete(rawMsg, key)
+		case "setting":
+			err = unpopulate(val, "Setting", &g.Setting)
+			delete(rawMsg, key)
 		case "type":
 			err = unpopulate(val, "Type", &g.Type)
 			delete(rawMsg, key)
@@ -128,9 +139,16 @@ func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaller interface for type GeoJSONFeatureData.
 func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
+	if g.FeatureType == nil {
+		g.FeatureType = to.Ptr("something")
+	}
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
 	populate(objectMap, "properties", &g.Properties)
+	if g.Setting == nil {
+		g.Setting = to.Ptr(DataSettingTwo)
+	}
+	populate(objectMap, "setting", g.Setting)
 	return json.Marshal(objectMap)
 }
 
@@ -151,6 +169,9 @@ func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, "Properties", &g.Properties)
+			delete(rawMsg, key)
+		case "setting":
+			err = unpopulate(val, "Setting", &g.Setting)
 			delete(rawMsg, key)
 		}
 		if err != nil {
