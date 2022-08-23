@@ -59,6 +59,7 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 					Type:        to.Ptr(GeoJSONObjectTypeGeoJSONFeature),
 					ID:          to.Ptr("id/feature"),
 					FeatureType: to.Ptr("some type"),
+					Setting:     to.Ptr(DataSettingTwo),
 				},
 				"object": &GeoJSONObject{},
 			},
