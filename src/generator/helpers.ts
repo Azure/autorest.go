@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { aggregateParameters, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
-import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
+import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
 export const dateFormat = '2006-01-02';
@@ -291,6 +291,41 @@ export function formatValue(paramName: string, schema: Schema, imports: ImportMa
       return `strconv.FormatFloat(${floatParam}, 'f', -1, ${numberSchema.precision})`;
     default:
       return paramName;
+  }
+}
+
+// returns the clientDefaultValue of the specified param.
+// this is usually the value in quotes (i.e. a string) however
+// it could also be a constant.
+export function getClientDefaultValue(param: Parameter | Property): string {
+  const getChoiceValue = function (choices: ChoiceValue[]): string {
+    // find the corresponding const type name
+    for (const choice of values(choices)) {
+      if (choice.value === param.clientDefaultValue) {
+        return choice.language.go!.name;
+      }
+    }
+    throw new Error(`failed to find matching constant for default value ${param.clientDefaultValue}`);
+  }
+  switch (param.schema.type) {
+    case SchemaType.Choice:
+      return getChoiceValue((<ChoiceSchema>param.schema).choices);
+    case SchemaType.Integer:
+      if ((<NumberSchema>param.schema).precision === 32) {
+        return `int32(${param.clientDefaultValue})`;
+      }
+      return `int64(${param.clientDefaultValue})`;
+    case SchemaType.Number:
+      if ((<NumberSchema>param.schema).precision === 32) {
+        return `float32(${param.clientDefaultValue})`;
+      }
+      return `float64(${param.clientDefaultValue})`;
+    case SchemaType.SealedChoice:
+      return getChoiceValue((<SealedChoiceSchema>param.schema).choices);
+    case SchemaType.String:
+      return `"${param.clientDefaultValue}"`;
+    default:
+      return param.clientDefaultValue;
   }
 }
 
