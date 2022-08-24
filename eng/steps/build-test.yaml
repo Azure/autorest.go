@@ -101,4 +101,3 @@ steps:
           cd src/node_modules/@microsoft.azure/autorest.testserver;
           npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(azuresdk-github-pat) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
         displayName: "Publish AutoRest Test Server Coverage Report"
-        condition: succeededOrFailed()
