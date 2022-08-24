@@ -1,5 +1,6 @@
 parameters:
   GoTestPath: "$(system.defaultWorkingDirectory)/test"
+  PublishAutorestCoverage: false
 
 steps:
   - script: |
@@ -94,7 +95,7 @@ steps:
       testResultsFiles: ${{ parameters.GoTestPath }}/**/report.xml
       failTaskOnFailedTests: true
 
-  - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
+  - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.PublishAutorestCoverage, true))}}:
       - pwsh: |
           $currentVersion = node -p -e "require('./src/package.json').version";
           $currentVersion="$currentVersion-$(Build.BuildNumber)";
