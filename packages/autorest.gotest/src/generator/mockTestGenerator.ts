@@ -88,7 +88,7 @@ export class MockTestDataRender extends BaseDataRender {
     }
 
     example.checkResponse =
-      schemaResponse !== undefined && schemaResponse.protocol.http.statusCodes[0] === '200' && example.responses[schemaResponse.protocol.http.statusCodes[0]].body !== undefined;
+      schemaResponse !== undefined && schemaResponse.protocol.http.statusCodes[0] === '200' && example.responses[schemaResponse.protocol.http.statusCodes[0]]?.body !== undefined;
     example.isMultiRespOperation = isMultiRespOperation(op);
     if (example.checkResponse && this.context.testConfig.getValue(Config.verifyResponse)) {
       this.context.importManager.add('encoding/json');

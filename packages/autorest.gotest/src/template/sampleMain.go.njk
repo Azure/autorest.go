@@ -22,12 +22,17 @@ var (
     err            error
 	ctx            context.Context
 	cred           azcore.TokenCredential
+	letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 {%- for name, variable in variablesOutput %}
 {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
 {%- if variable.value === undefined %}
-    {{name}} {{variable.type}}
+    {{name}} string
 {%- else %}
-    {{name}} = {{variable.value}}
+    {%- if variable.type === "prefix-string" %}
+    {{name}} = generateAlphaNumericID({{variable.value}}, 6)
+		{%- else %}
+	{{name}} = {{variable.value}}
+		{%- endif %}
 {%- endif %}
 {%- endif %}
 {%- endfor %}
@@ -81,9 +86,14 @@ func {{jsFunc.toCamelCase(testScenario.scenario)}}Sample() {
 	{%- endfor %}
 	{%- for name, variable in testScenario.variablesOutput %}
     {%- if variable.value === undefined %}
-    var {{name}} {{variable.type}}
+    var {{name}} string
+
     {%- else %}
-    {{name}} := {{variable.value}}
+		{%- if variable.type === "prefix-string" %}
+    {{name}} := generateAlphaNumericID({{variable.value}}, 6)
+		{%- else %}
+	{{name}} := {{variable.value}}
+		{%- endif %}
     {%- endif %}
 	{%- endfor %}
 	
@@ -161,4 +171,13 @@ func createDeployment(deploymentName string, deployment *armresources.Deployment
 		panic(err)
 	}
 	return &res.DeploymentExtended
+}
+
+func generateAlphaNumericID(prefix string, length int) string {
+	rand.Seed(time.Now().Unix())
+	b := make([]rune, length)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+	return prefix + string(b)
 }

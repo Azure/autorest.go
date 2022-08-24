@@ -115,6 +115,9 @@ export class ScenarioTestDataRender extends MockTestDataRender {
     switch (step.type) {
       case OavStepType.restCall: {
         const example = <GoExampleModel>(<StepRestCallModel>step).exampleModel;
+        if (example === undefined) {
+          break;
+        }
         // request and response parse
         this.fillExampleOutput(example);
 
@@ -214,6 +217,9 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       type = 'string';
       if (variable.value !== undefined) {
         value = this.getStringValue(variable.value);
+      } else if (variable.prefix !== undefined) {
+        type = 'prefix-string';
+        value = this.getStringValue(variable.prefix);
       }
     } else if (variable.type === 'bool') {
       type = 'bool';

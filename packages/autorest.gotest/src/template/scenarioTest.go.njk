@@ -27,7 +27,11 @@ type {{testCaseName}}TestSuite struct {
 
 	{%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
+        {%- if variable.type === "prefix-string" %}
+    {{name}} string
+        {%- else %}
     {{name}} {{variable.type}}
+        {%- endif %}
     {%- endif %}
     {%- endfor %}
     {%- for variable, _ in requiredVariablesDefault %}
@@ -41,9 +45,13 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
 
     {%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
-    {%- if variable.value !== undefined and variable.value !== "testsuite." + name %}
+        {%- if variable.type === "prefix-string" %}
+        testsuite.{{name}} = testutil.GenerateAlphaNumericID(testsuite.T(), {{variable.value}}, 6)
+        {%- else %}
+            {%- if variable.value !== undefined and variable.value !== "testsuite." + name %}
         testsuite.{{name}} = {{variable.value}}
-    {%- endif %}
+            {%- endif %}
+        {%- endif %}
     {%- endif %}
     {%- endfor %}
     {%- for variable, _ in requiredVariablesDefault %}
@@ -100,7 +108,11 @@ func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.capitalize(jsFunc.toCam
     {%- if variable.value === undefined %}
     var {{name}} {{variable.type}}
     {%- else %}
+        {%- if variable.type === "prefix-string" %}
+    {{name}} := testutil.GenerateAlphaNumericID(testsuite.T(), {{variable.value}}, 6)
+        {%- else %}
     {{name}} := {{variable.value}}
+        {%- endif %}
     {%- endif %}
 	{%- endfor %}
 	

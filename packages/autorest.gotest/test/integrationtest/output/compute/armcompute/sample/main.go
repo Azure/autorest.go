@@ -27,8 +27,10 @@ var (
 	err               error
 	ctx               context.Context
 	cred              azcore.TokenCredential
+	letterRunes       = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	fakeStepVar       = "signalrswaggertest4"
 	resourceName      = "signalrswaggertest4"
+	testPrefix        = generateAlphaNumericID("test", 6)
 	location          = getEnv("LOCATION", "westus")
 	resourceGroupName = getEnv("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
 	subscriptionId    = getEnv("AZURE_SUBSCRIPTION_ID", "")
@@ -256,4 +258,13 @@ func createDeployment(deploymentName string, deployment *armresources.Deployment
 		panic(err)
 	}
 	return &res.DeploymentExtended
+}
+
+func generateAlphaNumericID(prefix string, length int) string {
+	rand.Seed(time.Now().Unix())
+	b := make([]rune, length)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+	return prefix + string(b)
 }

@@ -29,6 +29,7 @@ type SampleTestSuite struct {
 	options           *arm.ClientOptions
 	fakeStepVar       string
 	resourceName      string
+	testPrefix        string
 	location          string
 	resourceGroupName string
 	subscriptionId    string
@@ -39,6 +40,7 @@ func (testsuite *SampleTestSuite) SetupSuite() {
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 	testsuite.fakeStepVar = "signalrswaggertest4"
 	testsuite.resourceName = "signalrswaggertest4"
+	testsuite.testPrefix = testutil.GenerateAlphaNumericID(testsuite.T(), "test", 6)
 	testsuite.location = testutil.GetEnv("LOCATION", "westus")
 	testsuite.resourceGroupName = testutil.GetEnv("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
 	testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "")
