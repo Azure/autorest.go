@@ -2,6 +2,9 @@ scope: ResourceGroup
 variables:
   resourceName: signalrswaggertest4
   fakeStepVar: signalrswaggertest4
+  testPrefix:
+    type: string
+    prefix: test
 prepareSteps:
   - step: Delete-proximity-placement-group
     exampleFile: ../examples/DeleteAProximityPlacementGroup.json
