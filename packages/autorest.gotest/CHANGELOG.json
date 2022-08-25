@@ -2,6 +2,23 @@
   "name": "@autorest/gotest",
   "entries": [
     {
+      "version": "4.3.0",
+      "tag": "@autorest/gotest_v4.3.0",
+      "date": "Wed, 24 Aug 2022 06:43:47 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade to new testmodeler to support `operationId` step in API scenario."
+          }
+        ],
+        "minor": [
+          {
+            "comment": "Support variable with prefix string type for API scenario."
+          }
+        ]
+      }
+    },
+    {
       "version": "4.2.2",
       "tag": "@autorest/gotest_v4.2.2",
       "date": "Fri, 19 Aug 2022 02:39:29 GMT",

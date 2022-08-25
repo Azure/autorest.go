@@ -6,85 +6,85 @@
 package {{packageName}}_test
 
 import (
-	"context"
-	"fmt"
-	"net/http"
-	"testing"
+    "context"
+    "fmt"
+    "net/http"
+    "testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
     "github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
     "github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
-	"github.com/stretchr/testify/suite"
-	"golang.org/x/net/http2"
+    "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+    "github.com/stretchr/testify/suite"
+    "golang.org/x/net/http2"
 )
 {{imports}}
 
 type MockTestSuite struct {
-	suite.Suite
+    suite.Suite
 
-	cred              azcore.TokenCredential
-	options           arm.ClientOptions
+    cred              azcore.TokenCredential
+    options           arm.ClientOptions
 }
 
 func (testsuite *MockTestSuite) SetupSuite() {
-	mockHost := testutil.GetEnv("AZURE_VIRTUAL_SERVER_HOST", "https://localhost:8443")
+    mockHost := testutil.GetEnv("AZURE_VIRTUAL_SERVER_HOST", "https://localhost:8443")
 
-	tr := &http.Transport{}
-	err := http2.ConfigureTransport(tr)
-	testsuite.Require().NoError(err, "Failed to configure http2 transport")
-	tr.TLSClientConfig.InsecureSkipVerify = true
-	client := &http.Client{Transport: tr}
+    tr := &http.Transport{}
+    err := http2.ConfigureTransport(tr)
+    testsuite.Require().NoError(err, "Failed to configure http2 transport")
+    tr.TLSClientConfig.InsecureSkipVerify = true
+    client := &http.Client{Transport: tr}
 
-	testsuite.cred = &testutil.FakeCredential{}
+    testsuite.cred = &testutil.FakeCredential{}
 
-	testsuite.options = arm.ClientOptions{
-		ClientOptions: policy.ClientOptions{
-			Logging: policy.LogOptions{
-				IncludeBody: true,
-			},
-			Transport: client,
-			Cloud: cloud.Configuration{
-				Services: map[cloud.ServiceName]cloud.ServiceConfiguration{
-					cloud.ResourceManager: {
-						Audience: mockHost,
-						Endpoint: mockHost,
-					},
-				},
-			},
-		},
-	}
+    testsuite.options = arm.ClientOptions{
+        ClientOptions: policy.ClientOptions{
+            Logging: policy.LogOptions{
+                IncludeBody: true,
+            },
+            Transport: client,
+            Cloud: cloud.Configuration{
+                Services: map[cloud.ServiceName]cloud.ServiceConfiguration{
+                    cloud.ResourceManager: {
+                        Audience: mockHost,
+                        Endpoint: mockHost,
+                    },
+                },
+            },
+        },
+    }
 }
 
 func TestMockTest(t *testing.T) {
-	suite.Run(t, new(MockTestSuite))
+    suite.Run(t, new(MockTestSuite))
 }
 
 {% for exampleGroup in exampleGroups %}
 {% if exampleGroup.operation.language.default.name == exampleGroup.operation.language.go.name %}
 func (testsuite *MockTestSuite) Test{{exampleGroup.operationGroup.language.go.name}}_{{exampleGroup.operation.language.go.name}}() {
 {%- if exampleGroup.examples|length <=0 %}
-	testsuite.T().Skip("Warning: No test steps for this operation!")
+    testsuite.T().Skip("Warning: No test steps for this operation!")
 {%- else -%}
     ctx := context.Background()
 {%- endif %}
 {%- for example in exampleGroup.examples %}
     // From example {{example.originalFile}}
-	{%- if sendExampleId %}
-	ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
+    {%- if sendExampleId %}
+    ctx = runtime.WithHTTPHeader(ctx, map[string][]string{
         "example-id": {"{{example.name.split('\\').join('\\\\').split('"').join('\\"')}}"},
     })
-	{%- endif %}
-	{%- if loop.first %}
-	client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &testsuite.options)
+    {%- endif %}
+    {%- if loop.first %}
+    client, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &testsuite.options)
     testsuite.Require().NoError(err, "Failed to create client")
     {%- else %}
     client, err = {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, &testsuite.options)
-	testsuite.Require().NoError(err, "Failed to create client")
+    testsuite.Require().NoError(err, "Failed to create client")
     {%- endif %}
-	{%- if example.returnInfo.length == 2 %}
+    {%- if example.returnInfo.length == 2 %}
         {%- if example.isLRO %}
             poller, err {% if loop.first %}:{% endif %}= client.{{example.opName}}({{jsFunc.getParamsValue(example.methodParametersOutput)}})
         {%- else %}

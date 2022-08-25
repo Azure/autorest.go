@@ -53,46 +53,50 @@ clear-output-folder: false
 
 include-x-ms-examples-original-file: true
 modelerfour:
-    include-x-ms-examples-original-file: true
+  include-x-ms-examples-original-file: true
+
+testmodeler:
+  scenario:
+    codemodel-restcall-only: false
 
 version: 3.7.3
 
 use-extension:
-  "@autorest/go" : "4.0.0-preview.43"
-  "@autorest/testmodeler" : "2.3.0"
+  '@autorest/go': '4.0.0-preview.43'
+  '@autorest/testmodeler': '2.3.2'
 
 pipeline:
-    test-modeler:
-        input: 
-            - go-transform
-        output-artifact: source-file-test-modeler
-    go-tester:
-        input: test-modeler
-        output-artifact: source-file-go-tester
-    testmodeler/emitter:
-        input:
-            - test-modeler
-            - go-tester
-        scope: scope-testmodeler/emitter
-    go-linter:
-        input:
-            - go-tester
-            - testmodeler/emitter
+  test-modeler:
+    input:
+      - go-transform
+    output-artifact: source-file-test-modeler
+  go-tester:
+    input: test-modeler
+    output-artifact: source-file-go-tester
+  testmodeler/emitter:
+    input:
+      - test-modeler
+      - go-tester
+    scope: scope-testmodeler/emitter
+  go-linter:
+    input:
+      - go-tester
+      - testmodeler/emitter
 
 scope-testmodeler/emitter:
-    input-artifact:
-        - source-file-test-modeler
-        - source-file-go-tester
-    output-uri-expr: $key
+  input-artifact:
+    - source-file-test-modeler
+    - source-file-go-tester
+  output-uri-expr: $key
 ```
 
 ```yaml $(go) && !$(generate-sdk)
 pipeline:
-    go/emitter:
-        scope: scope-testmodeler/emitter
+  go/emitter:
+    scope: scope-testmodeler/emitter
 ```
 
 ```yaml $(debug)
 testmodeler:
-    export-codemodel: true
+  export-codemodel: true
 ```

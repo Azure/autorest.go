@@ -1,6 +1,17 @@
 # Change Log - @autorest/gotest
 
-This log was last generated on Fri, 19 Aug 2022 02:39:29 GMT and should not be manually modified.
+This log was last generated on Wed, 24 Aug 2022 06:43:47 GMT and should not be manually modified.
+
+## 4.3.0
+Wed, 24 Aug 2022 06:43:47 GMT
+
+### Minor changes
+
+- Support variable with prefix string type for API scenario.
+
+### Patches
+
+- Upgrade to new testmodeler to support `operationId` step in API scenario.
 
 ## 4.2.2
 Fri, 19 Aug 2022 02:39:29 GMT
