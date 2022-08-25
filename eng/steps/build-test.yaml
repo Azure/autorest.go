@@ -1,5 +1,6 @@
 parameters:
   GoTestPath: "$(system.defaultWorkingDirectory)/test"
+  PublishAutorestCoverage: false
 
 steps:
   - script: |
@@ -94,11 +95,10 @@ steps:
       testResultsFiles: ${{ parameters.GoTestPath }}/**/report.xml
       failTaskOnFailedTests: true
 
-  - ${{if ne(variables['Build.Reason'], 'PullRequest')}}:
+  - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.PublishAutorestCoverage, true))}}:
       - pwsh: |
           $currentVersion = node -p -e "require('./src/package.json').version";
           $currentVersion="$currentVersion-$(Build.BuildNumber)";
           cd src/node_modules/@microsoft.azure/autorest.testserver;
-          npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(azuresdk-github-pat) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
+          npm run coverage -- publish --repo=$(Build.Repository.Name) --ref=$(Build.SourceBranch) --githubToken=$(github-token) --azStorageAccount=$(storage-coverage-user) --azStorageAccessKey=$(storage-coverage-pass) --version=$currentVersion;
         displayName: "Publish AutoRest Test Server Coverage Report"
-        condition: succeededOrFailed()
