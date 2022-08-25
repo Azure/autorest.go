@@ -31,7 +31,7 @@ var err error
         {%- endif %}
     {%- endif %}
     {%- endfor %}
-    {%- if step.type == "restCall" %}		
+    {%- if step.type == "restCall" %}        
         {%- if example.checkResponse %}
             {%- set resVariable = jsFunc.genVariableName(example.returnInfo[0]) %}
         {%- endif %}
@@ -100,12 +100,12 @@ var err error
         {%- endfor %}
     }
     deployment {%- if firstDeployment %}:{%- set firstDeployment = false %}{%- endif %}= armresources.Deployment{
-		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
-		},
-	}
+        Properties: &armresources.DeploymentProperties{
+            Template:   template,
+            Parameters: params,
+            Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+        },
+    }
     {%- if step.armTemplatePayload.outputs %}
     deploymentExtend, err {%- if firstDeploymentOutput %}:{%- set firstDeploymentOutput = false %}{%- endif %}= testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "{{step.step}}", &deployment)
     testsuite.Require().NoError(err)

@@ -6,26 +6,26 @@
 package {{packageName}}_test
 
 import (
-	"context"
-	"testing"
+    "context"
+    "testing"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
     "github.com/Azure/azure-sdk-for-go/sdk/internal/recording"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
+    "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/testutil"
     "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
     "github.com/stretchr/testify/suite"
 )
 {{imports}}
 
 type {{testCaseName}}TestSuite struct {
-	suite.Suite
+    suite.Suite
 
-	ctx     context.Context
-	cred    azcore.TokenCredential
-	options *arm.ClientOptions
+    ctx     context.Context
+    cred    azcore.TokenCredential
+    options *arm.ClientOptions
 
-	{%- for name, variable in variablesOutput %}
+    {%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
         {%- if variable.type === "prefix-string" %}
     {{name}} string
@@ -40,8 +40,8 @@ type {{testCaseName}}TestSuite struct {
 }
 
 func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
-	testsuite.ctx = context.Background()
-	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
+    testsuite.ctx = context.Background()
+    testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 
     {%- for name, variable in variablesOutput %}
     {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
@@ -63,48 +63,48 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
     {%- endfor %}
 
     testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/{{rpName}}/{{packageName}}/testdata")
-	
+    
     {%- if scope.toLowerCase() == 'resourcegroup'%}
     resourceGroup, _, err := testutil.CreateResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.location)
-	testsuite.Require().NoError(err)
-	testsuite.resourceGroupName = *resourceGroup.Name
+    testsuite.Require().NoError(err)
+    testsuite.resourceGroupName = *resourceGroup.Name
     {%- endif %}
     {%- if prepareSteps.length > 0 %}
-	testsuite.Prepare()
+    testsuite.Prepare()
     {%- endif %}
 }
 
 func (testsuite *{{testCaseName}}TestSuite) TearDownSuite() {
     {%- if cleanUpSteps.length > 0 %}
-	testsuite.Cleanup()
+    testsuite.Cleanup()
     {%- endif %}
     {%- if scope.toLowerCase() == 'resourcegroup'%}
-	_, err := testutil.DeleteResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName)
-	testsuite.Require().NoError(err)
+    _, err := testutil.DeleteResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName)
+    testsuite.Require().NoError(err)
     {%- endif %}
-	testutil.StopRecording(testsuite.T())
+    testutil.StopRecording(testsuite.T())
 }
 
 func Test{{testCaseName}}TestSuite(t *testing.T) {
-	suite.Run(t, new({{testCaseName}}TestSuite))
+    suite.Run(t, new({{testCaseName}}TestSuite))
 }
 {%- if prepareSteps.length > 0 %}
 
 func (testsuite *{{testCaseName}}TestSuite) Prepare() {
-	{%- set steps = prepareSteps %}
-	{%- include "./scenarioContent.go.njk" %}
+    {%- set steps = prepareSteps %}
+    {%- include "./scenarioContent.go.njk" %}
 }
 {%- endif %}
 
 {% for testScenario in scenarios %}
 // {{testScenario.description}}
 func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.capitalize(jsFunc.toCamelCase(testScenario.scenario))}}() {
-	{%- for variable, value in testScenario.requiredVariablesDefault %}
-	{%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
+    {%- for variable, value in testScenario.requiredVariablesDefault %}
+    {%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
     {{variable}} := testutil.GetEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{value}}")
-	{%- endif %}
-	{%- endfor %}
-	{%- for name, variable in testScenario.variablesOutput %}
+    {%- endif %}
+    {%- endfor %}
+    {%- for name, variable in testScenario.variablesOutput %}
     {%- if variable.value === undefined %}
     var {{name}} {{variable.type}}
     {%- else %}
@@ -114,16 +114,16 @@ func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.capitalize(jsFunc.toCam
     {{name}} := {{variable.value}}
         {%- endif %}
     {%- endif %}
-	{%- endfor %}
-	
-	{%- set steps = testScenario.steps %}
-	{%- include "./scenarioContent.go.njk" %}
+    {%- endfor %}
+    
+    {%- set steps = testScenario.steps %}
+    {%- include "./scenarioContent.go.njk" %}
 }
 {%- endfor %}
 {%- if cleanUpSteps.length > 0 %}
 
 func (testsuite *{{testCaseName}}TestSuite) Cleanup() {
-	{%- set steps = cleanUpSteps %}
-	{%- include "./scenarioContent.go.njk" %}
+    {%- set steps = cleanUpSteps %}
+    {%- include "./scenarioContent.go.njk" %}
 }
 {%- endif %}

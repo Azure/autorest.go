@@ -6,13 +6,13 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"math/rand"
+    "context"
+    "fmt"
+    "math/rand"
 
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+    "github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
     "github.com/Azure/azure-sdk-for-go/sdk/azidentity"
     "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources"
 )
@@ -20,9 +20,9 @@ import (
 
 var (
     err            error
-	ctx            context.Context
-	cred           azcore.TokenCredential
-	letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    ctx            context.Context
+    cred           azcore.TokenCredential
+    letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 {%- for name, variable in variablesOutput %}
 {%- if not requiredVariablesDefault.hasOwnProperty(name) %}
 {%- if variable.value === undefined %}
@@ -30,9 +30,9 @@ var (
 {%- else %}
     {%- if variable.type === "prefix-string" %}
     {{name}} = generateAlphaNumericID({{variable.value}}, 6)
-		{%- else %}
-	{{name}} = {{variable.value}}
-		{%- endif %}
+        {%- else %}
+    {{name}} = {{variable.value}}
+        {%- endif %}
 {%- endif %}
 {%- endif %}
 {%- endfor %}
@@ -46,138 +46,138 @@ var (
 )
 
 func main() {
-	ctx = context.Background()
+    ctx = context.Background()
     cred, err = azidentity.NewDefaultAzureCredential(nil)
-	if err != nil {
-		panic(err)
-	}
+    if err != nil {
+        panic(err)
+    }
 
     {%- if scope.toLowerCase() == 'resourcegroup'%}
     createResourceGroup()
     {%- endif %}
     {%- if prepareSteps.length > 0 %}
-	prepare()
+    prepare()
     {%- endif %}
     {%- for testScenario in scenarios %}
-	{{jsFunc.toCamelCase(testScenario.scenario)}}Sample()
+    {{jsFunc.toCamelCase(testScenario.scenario)}}Sample()
     {%- endfor %}
     {%- if cleanUpSteps.length > 0 %}
-	cleanup()
+    cleanup()
     {%- endif %}
     {%- if scope.toLowerCase() == 'resourcegroup'%}
-	deleteResourceGroup()
+    deleteResourceGroup()
     {%- endif %}
 }
 {%- if prepareSteps.length > 0 %}
 
 func prepare() {
-	{%- set steps = prepareSteps %}
-	{%- include "./sampleContent.go.njk" %}
+    {%- set steps = prepareSteps %}
+    {%- include "./sampleContent.go.njk" %}
 }
 {%- endif %}
 
 {% for testScenario in scenarios %}
 // {{testScenario.description}}
 func {{jsFunc.toCamelCase(testScenario.scenario)}}Sample() {
-	{%- for variable, value in testScenario.requiredVariablesDefault %}
-	{%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
+    {%- for variable, value in testScenario.requiredVariablesDefault %}
+    {%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
     {{variable}} := getEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}, "{{value}}")
-	{%- endif %}
-	{%- endfor %}
-	{%- for name, variable in testScenario.variablesOutput %}
+    {%- endif %}
+    {%- endfor %}
+    {%- for name, variable in testScenario.variablesOutput %}
     {%- if variable.value === undefined %}
     var {{name}} string
 
     {%- else %}
-		{%- if variable.type === "prefix-string" %}
+        {%- if variable.type === "prefix-string" %}
     {{name}} := generateAlphaNumericID({{variable.value}}, 6)
-		{%- else %}
-	{{name}} := {{variable.value}}
-		{%- endif %}
+        {%- else %}
+    {{name}} := {{variable.value}}
+        {%- endif %}
     {%- endif %}
-	{%- endfor %}
-	
-	{%- set steps = testScenario.steps %}
-	{%- include "./sampleContent.go.njk" %}
+    {%- endfor %}
+    
+    {%- set steps = testScenario.steps %}
+    {%- include "./sampleContent.go.njk" %}
 }
 {%- endfor %}
 {%- if cleanUpSteps.length > 0 %}
 
 func cleanup() {
-	{%- set steps = cleanUpSteps %}
-	{%- include "./sampleContent.go.njk" %}
+    {%- set steps = cleanUpSteps %}
+    {%- include "./sampleContent.go.njk" %}
 }
 {%- endif %}
 {%- if scope.toLowerCase() == 'resourcegroup'%}
 
 func createResourceGroup() error {
-	rand.Seed(time.Now().UnixNano())
-	resourceGroupName = fmt.Sprintf("go-sdk-sample-%d", rand.Intn(1000))
-	rgClient, err := armresources.NewResourceGroupsClient(subscriptionId, cred, nil)
+    rand.Seed(time.Now().UnixNano())
+    resourceGroupName = fmt.Sprintf("go-sdk-sample-%d", rand.Intn(1000))
+    rgClient, err := armresources.NewResourceGroupsClient(subscriptionId, cred, nil)
     if err != nil {
-		panic(err)
-	}
-	param := armresources.ResourceGroup{
-		Location: to.Ptr(location),
-	}
-	_, err = rgClient.CreateOrUpdate(ctx, resourceGroupName, param, nil)
-	if err != nil {
-		panic(err)
-	}
-	return nil
+        panic(err)
+    }
+    param := armresources.ResourceGroup{
+        Location: to.Ptr(location),
+    }
+    _, err = rgClient.CreateOrUpdate(ctx, resourceGroupName, param, nil)
+    if err != nil {
+        panic(err)
+    }
+    return nil
 }
 
 func deleteResourceGroup() error {
-	rgClient, err := armresources.NewResourceGroupsClient(subscriptionId, cred, nil)
+    rgClient, err := armresources.NewResourceGroupsClient(subscriptionId, cred, nil)
     if err != nil {
-		panic(err)
-	}
-	pollerResponse, err := rgClient.BeginDelete(ctx, resourceGroupName, nil)
-	if err != nil {
-		panic(err)
-	}
-	_, err = pollerResponse.PollUntilDone(ctx, nil)
-	if err != nil {
-		panic(err)
-	}
-	return nil
+        panic(err)
+    }
+    pollerResponse, err := rgClient.BeginDelete(ctx, resourceGroupName, nil)
+    if err != nil {
+        panic(err)
+    }
+    _, err = pollerResponse.PollUntilDone(ctx, nil)
+    if err != nil {
+        panic(err)
+    }
+    return nil
 }
 {%- endif %}
 
 func getEnv(key, fallback string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-	return fallback
+    if value, ok := os.LookupEnv(key); ok {
+        return value
+    }
+    return fallback
 }
 
 func createDeployment(deploymentName string, deployment *armresources.Deployment) *armresources.DeploymentExtended {
-	deployClient, err := armresources.NewDeploymentsClient(subscriptionId, cred, nil)
+    deployClient, err := armresources.NewDeploymentsClient(subscriptionId, cred, nil)
     if err != nil {
-		panic(err)
-	}
-	poller, err := deployClient.BeginCreateOrUpdate(
-		ctx,
-		resourceGroupName,
-		deploymentName,
-		*deployment,
-		&armresources.DeploymentsClientBeginCreateOrUpdateOptions{},
-	)
-	if err != nil {
-		panic(err)
-	}
-	res, err := poller.PollUntilDone(ctx, nil)
-	if err != nil {
-		panic(err)
-	}
-	return &res.DeploymentExtended
+        panic(err)
+    }
+    poller, err := deployClient.BeginCreateOrUpdate(
+        ctx,
+        resourceGroupName,
+        deploymentName,
+        *deployment,
+        &armresources.DeploymentsClientBeginCreateOrUpdateOptions{},
+    )
+    if err != nil {
+        panic(err)
+    }
+    res, err := poller.PollUntilDone(ctx, nil)
+    if err != nil {
+        panic(err)
+    }
+    return &res.DeploymentExtended
 }
 
 func generateAlphaNumericID(prefix string, length int) string {
-	rand.Seed(time.Now().Unix())
-	b := make([]rune, length)
-	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
-	}
-	return prefix + string(b)
+    rand.Seed(time.Now().Unix())
+    b := make([]rune, length)
+    for i := range b {
+        b[i] = letterRunes[rand.Intn(len(letterRunes))]
+    }
+    return prefix + string(b)
 }
