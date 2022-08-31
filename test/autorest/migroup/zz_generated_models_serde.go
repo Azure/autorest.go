@@ -18,7 +18,7 @@ import (
 
 // MarshalJSON implements the json.Marshaller interface for type Cat.
 func (c Cat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "hisses", c.Hisses)
 	populate(objectMap, "likesMilk", c.LikesMilk)
 	populate(objectMap, "meows", c.Meows)
@@ -57,7 +57,7 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Feline.
 func (f Feline) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "hisses", f.Hisses)
 	populate(objectMap, "meows", f.Meows)
 	return json.Marshal(objectMap)
@@ -88,7 +88,7 @@ func (f *Feline) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Horse.
 func (h Horse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "isAShowHorse", h.IsAShowHorse)
 	populate(objectMap, "name", h.Name)
 	return json.Marshal(objectMap)
@@ -119,7 +119,7 @@ func (h *Horse) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Kitten.
 func (k Kitten) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "eatsMiceYet", k.EatsMiceYet)
 	populate(objectMap, "hisses", k.Hisses)
 	populate(objectMap, "likesMilk", k.LikesMilk)
@@ -162,7 +162,7 @@ func (k *Kitten) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Pet.
 func (p Pet) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "name", p.Name)
 	return json.Marshal(objectMap)
 }
@@ -187,7 +187,7 @@ func (p *Pet) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -197,7 +197,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}

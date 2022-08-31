@@ -676,7 +676,7 @@ type SmartSalmon struct {
 	Length *float32 `json:"length,omitempty"`
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
+	AdditionalProperties map[string]any
 	CollegeDegree        *string              `json:"college_degree,omitempty"`
 	Iswild               *bool                `json:"iswild,omitempty"`
 	Location             *string              `json:"location,omitempty"`

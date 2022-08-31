@@ -18,7 +18,7 @@ import (
 
 // MarshalJSON implements the json.Marshaller interface for type CatAPTrue.
 func (c CatAPTrue) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "friendly", c.Friendly)
 	populate(objectMap, "id", c.ID)
 	populate(objectMap, "name", c.Name)
@@ -54,10 +54,10 @@ func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if c.AdditionalProperties == nil {
-				c.AdditionalProperties = map[string]interface{}{}
+				c.AdditionalProperties = map[string]any{}
 			}
 			if val != nil {
-				var aux interface{}
+				var aux any
 				err = json.Unmarshal(val, &aux)
 				c.AdditionalProperties[key] = aux
 			}
@@ -72,7 +72,7 @@ func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type PetAPInProperties.
 func (p PetAPInProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "additionalProperties", p.AdditionalProperties)
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
@@ -111,7 +111,7 @@ func (p *PetAPInProperties) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type PetAPInPropertiesWithAPString.
 func (p PetAPInPropertiesWithAPString) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "additionalProperties", p.AdditionalProperties1)
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
@@ -169,7 +169,7 @@ func (p *PetAPInPropertiesWithAPString) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type PetAPObject.
 func (p PetAPObject) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
@@ -201,10 +201,10 @@ func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = map[string]interface{}{}
+				p.AdditionalProperties = map[string]any{}
 			}
 			if val != nil {
-				var aux interface{}
+				var aux any
 				err = json.Unmarshal(val, &aux)
 				p.AdditionalProperties[key] = aux
 			}
@@ -219,7 +219,7 @@ func (p *PetAPObject) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type PetAPString.
 func (p PetAPString) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
@@ -269,7 +269,7 @@ func (p *PetAPString) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type PetAPTrue.
 func (p PetAPTrue) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "id", p.ID)
 	populate(objectMap, "name", p.Name)
 	populate(objectMap, "status", p.Status)
@@ -301,10 +301,10 @@ func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if p.AdditionalProperties == nil {
-				p.AdditionalProperties = map[string]interface{}{}
+				p.AdditionalProperties = map[string]any{}
 			}
 			if val != nil {
-				var aux interface{}
+				var aux any
 				err = json.Unmarshal(val, &aux)
 				p.AdditionalProperties[key] = aux
 			}
@@ -317,7 +317,7 @@ func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -327,7 +327,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}

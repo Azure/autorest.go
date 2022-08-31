@@ -18,7 +18,7 @@ import (
 
 // MarshalJSON implements the json.Marshaller interface for type CatalogArray.
 func (c CatalogArray) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "productArray", c.ProductArray)
 	return json.Marshal(objectMap)
 }
@@ -45,7 +45,7 @@ func (c *CatalogArray) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type CatalogArrayOfDictionary.
 func (c CatalogArrayOfDictionary) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "productArrayOfDictionary", c.ProductArrayOfDictionary)
 	return json.Marshal(objectMap)
 }
@@ -72,7 +72,7 @@ func (c *CatalogArrayOfDictionary) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type CatalogDictionary.
 func (c CatalogDictionary) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "productDictionary", c.ProductDictionary)
 	return json.Marshal(objectMap)
 }
@@ -99,7 +99,7 @@ func (c *CatalogDictionary) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type CatalogDictionaryOfArray.
 func (c CatalogDictionaryOfArray) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "productDictionaryOfArray", c.ProductDictionaryOfArray)
 	return json.Marshal(objectMap)
 }
@@ -126,7 +126,7 @@ func (c *CatalogDictionaryOfArray) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Product.
 func (p Product) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "capacity", p.Capacity)
 	populate(objectMap, "description", p.Description)
 	populate(objectMap, "display_name", p.DisplayName)
@@ -167,7 +167,7 @@ func (p *Product) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -177,7 +177,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}

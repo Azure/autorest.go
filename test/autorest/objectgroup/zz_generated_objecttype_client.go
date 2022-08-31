@@ -75,7 +75,7 @@ func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTy
 // Generated from API version 1.0.0
 // putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
 // options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
-func (client *ObjectTypeClient) Put(ctx context.Context, putObject interface{}, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
+func (client *ObjectTypeClient) Put(ctx context.Context, putObject any, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
@@ -91,7 +91,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject interface{}, 
 }
 
 // putCreateRequest creates the Put request.
-func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject interface{}, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
+func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject any, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/objectType/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

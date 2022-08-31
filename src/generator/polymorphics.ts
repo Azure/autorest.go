@@ -80,7 +80,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
       text += '\tif rawMsg == nil {\n';
       text += '\t\treturn nil, nil\n';
       text += '\t}\n';
-      text += '\tvar m map[string]interface{}\n';
+      text += '\tvar m map[string]any\n';
       text += '\tif err := json.Unmarshal(rawMsg, &m); err != nil {\n';
       text += '\t\treturn nil, err\n';
       text += '\t}\n';

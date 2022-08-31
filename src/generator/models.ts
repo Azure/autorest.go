@@ -67,7 +67,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
     }
   }
   if (needsJSONPopulate) {
-    serdeTextBody += 'func populate(m map[string]interface{}, k string, v interface{}) {\n';
+    serdeTextBody += 'func populate(m map[string]any, k string, v any) {\n';
     serdeTextBody += '\tif v == nil {\n';
     serdeTextBody += '\t\treturn\n';
     serdeTextBody += '\t} else if azcore.IsNullValue(v) {\n';
@@ -79,7 +79,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   }
   if (needsJSONPopulateByteArray) {
     serdeImports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    serdeTextBody += 'func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {\n';
+    serdeTextBody += 'func populateByteArray(m map[string]any, k string, b []byte, f runtime.Base64Encoding) {\n';
     serdeTextBody += '\tif azcore.IsNullValue(b) {\n';
     serdeTextBody += '\t\tm[k] = nil\n';
     serdeTextBody += '\t} else if len(b) == 0 {\n';
@@ -91,7 +91,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   }
   if (needsJSONUnpopulate) {
     serdeImports.add('fmt');
-    serdeTextBody += 'func unpopulate(data json.RawMessage, fn string, v interface{}) error {\n';
+    serdeTextBody += 'func unpopulate(data json.RawMessage, fn string, v any) error {\n';
     serdeTextBody += '\tif data == nil {\n';
     serdeTextBody += '\t\treturn nil\n';
     serdeTextBody += '\t}\n';
@@ -214,7 +214,7 @@ if (!obj.discriminatorValue && (!structDef.Properties || structDef.Properties.le
   const typeName = structDef.Language.name;
   const receiver = structDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
-  marshaller += '\tobjectMap := make(map[string]interface{})\n';
+  marshaller += '\tobjectMap := make(map[string]any)\n';
   marshaller += generateJSONMarshallerBody(obj, structDef, imports);
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
@@ -264,7 +264,7 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       if (prop.schema.language.go!.internalTimeType) {
         populate += capitalize(prop.schema.language.go!.internalTimeType);
       } else if (prop.schema.type === SchemaType.Any) {
-        // for fields that are interface{} we pass their address so populate() IsNil() doesn't panic
+        // for fields that are any we pass their address so populate() IsNil() doesn't panic
         addr = '&';
       }
       marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${addr}${receiver}.${prop.language.go!.name})\n`;

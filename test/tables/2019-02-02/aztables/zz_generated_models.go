@@ -73,7 +73,7 @@ type ClientInsertEntityOptions struct {
 	// and return-content.
 	ResponsePreference *ResponseFormat
 	// The properties for the table entity.
-	TableEntityProperties map[string]interface{}
+	TableEntityProperties map[string]any
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
 }
@@ -207,7 +207,7 @@ type EntityQueryResponse struct {
 	ODataMetadata *string `json:"odata.metadata,omitempty"`
 
 	// List of table entities.
-	Value []map[string]interface{} `json:"value,omitempty"`
+	Value []map[string]any `json:"value,omitempty"`
 }
 
 type GeoReplication struct {

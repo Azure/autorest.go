@@ -53,7 +53,7 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 
 // MarshalJSON implements the json.Marshaller interface for type EntityQueryResponse.
 func (e EntityQueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "odata.metadata", e.ODataMetadata)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
@@ -113,7 +113,7 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 
 // MarshalJSON implements the json.Marshaller interface for type Properties.
 func (p Properties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "TableName", p.TableName)
 	return json.Marshal(objectMap)
 }
@@ -140,7 +140,7 @@ func (p *Properties) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type QueryResponse.
 func (q QueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "odata.metadata", q.ODataMetadata)
 	populate(objectMap, "value", q.Value)
 	return json.Marshal(objectMap)
@@ -171,7 +171,7 @@ func (q *QueryResponse) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Response.
 func (r Response) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "odata.editLink", r.ODataEditLink)
 	populate(objectMap, "odata.id", r.ODataID)
 	populate(objectMap, "odata.metadata", r.ODataMetadata)
@@ -214,7 +214,7 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type ResponseProperties.
 func (r ResponseProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "odata.editLink", r.ODataEditLink)
 	populate(objectMap, "odata.id", r.ODataID)
 	populate(objectMap, "odata.type", r.ODataType)
@@ -253,7 +253,7 @@ func (r *ResponseProperties) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type ServiceError.
 func (s ServiceError) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "Message", s.Message)
 	return json.Marshal(objectMap)
 }
@@ -294,7 +294,7 @@ func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	return e.EncodeElement(aux, start)
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -304,7 +304,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}

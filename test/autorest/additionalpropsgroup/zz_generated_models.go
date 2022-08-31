@@ -14,7 +14,7 @@ type CatAPTrue struct {
 	ID *int32 `json:"id,omitempty"`
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
+	AdditionalProperties map[string]any
 	Friendly             *bool   `json:"friendly,omitempty"`
 	Name                 *string `json:"name,omitempty"`
 
@@ -57,7 +57,7 @@ type PetAPObject struct {
 	ID *int32 `json:"id,omitempty"`
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
+	AdditionalProperties map[string]any
 	Name                 *string `json:"name,omitempty"`
 
 	// READ-ONLY
@@ -81,7 +81,7 @@ type PetAPTrue struct {
 	ID *int32 `json:"id,omitempty"`
 
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]interface{}
+	AdditionalProperties map[string]any
 	Name                 *string `json:"name,omitempty"`
 
 	// READ-ONLY

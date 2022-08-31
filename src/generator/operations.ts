@@ -935,7 +935,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += '\treturn req, nil\n';
     }
   } else if (mediaType === 'multipart') {
-    text += '\tif err := runtime.SetMultipartFormData(req, map[string]interface{}{\n';
+    text += '\tif err := runtime.SetMultipartFormData(req, map[string]any{\n';
     for (const param of values(aggregateParameters(op))) {
       if (param.isPartialBody) {
         text += `\t\t\t"${param.language.go!.name}": ${param.language.go!.name},\n`;

@@ -18,7 +18,7 @@ import (
 
 // MarshalJSON implements the json.Marshaller interface for type ChildProduct.
 func (c ChildProduct) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	objectMap["constProperty"] = "constant"
 	populate(objectMap, "count", c.Count)
 	return json.Marshal(objectMap)
@@ -49,7 +49,7 @@ func (c *ChildProduct) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type ConstantProduct.
 func (c ConstantProduct) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	objectMap["constProperty"] = "constant"
 	objectMap["constProperty2"] = "constant2"
 	return json.Marshal(objectMap)
@@ -80,7 +80,7 @@ func (c *ConstantProduct) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Product.
 func (p Product) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "capacity", p.Capacity)
 	populate(objectMap, "child", p.Child)
 	populate(objectMap, "constChild", p.ConstChild)
@@ -133,7 +133,7 @@ func (p *Product) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -143,7 +143,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}

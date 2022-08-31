@@ -19,7 +19,7 @@ import (
 
 // MarshalJSON implements the json.Marshaller interface for type ArrayWrapper.
 func (a ArrayWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "array", a.Array)
 	return json.Marshal(objectMap)
 }
@@ -46,7 +46,7 @@ func (a *ArrayWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Basic.
 func (b Basic) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "color", b.Color)
 	populate(objectMap, "id", b.ID)
 	populate(objectMap, "name", b.Name)
@@ -81,7 +81,7 @@ func (b *Basic) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type BooleanWrapper.
 func (b BooleanWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "field_false", b.FieldFalse)
 	populate(objectMap, "field_true", b.FieldTrue)
 	return json.Marshal(objectMap)
@@ -112,7 +112,7 @@ func (b *BooleanWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type ByteWrapper.
 func (b ByteWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populateByteArray(objectMap, "field", b.Field, runtime.Base64StdFormat)
 	return json.Marshal(objectMap)
 }
@@ -139,7 +139,7 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Cookiecuttershark.
 func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "age", c.Age)
 	populateTimeRFC3339(objectMap, "birthday", c.Birthday)
 	objectMap["fishtype"] = "cookiecuttershark"
@@ -186,7 +186,7 @@ func (c *Cookiecuttershark) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DateWrapper.
 func (d DateWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populateDateType(objectMap, "field", d.Field)
 	populateDateType(objectMap, "leap", d.Leap)
 	return json.Marshal(objectMap)
@@ -217,7 +217,7 @@ func (d *DateWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DatetimeWrapper.
 func (d DatetimeWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populateTimeRFC3339(objectMap, "field", d.Field)
 	populateTimeRFC3339(objectMap, "now", d.Now)
 	return json.Marshal(objectMap)
@@ -248,7 +248,7 @@ func (d *DatetimeWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Datetimerfc1123Wrapper.
 func (d Datetimerfc1123Wrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populateTimeRFC1123(objectMap, "field", d.Field)
 	populateTimeRFC1123(objectMap, "now", d.Now)
 	return json.Marshal(objectMap)
@@ -279,7 +279,7 @@ func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DictionaryWrapper.
 func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "defaultProgram", d.DefaultProgram)
 	return json.Marshal(objectMap)
 }
@@ -306,7 +306,7 @@ func (d *DictionaryWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Dog.
 func (d Dog) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "food", d.Food)
 	populate(objectMap, "id", d.ID)
 	populate(objectMap, "name", d.Name)
@@ -341,7 +341,7 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DotFish.
 func (d DotFish) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	objectMap["fish.type"] = d.FishType
 	populate(objectMap, "species", d.Species)
 	return json.Marshal(objectMap)
@@ -372,7 +372,7 @@ func (d *DotFish) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DotFishMarket.
 func (d DotFishMarket) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "fishes", d.Fishes)
 	populate(objectMap, "salmons", d.Salmons)
 	populate(objectMap, "sampleFish", d.SampleFish)
@@ -411,7 +411,7 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DotSalmon.
 func (d DotSalmon) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	objectMap["fish.type"] = "DotSalmon"
 	populate(objectMap, "iswild", d.Iswild)
 	populate(objectMap, "location", d.Location)
@@ -450,7 +450,7 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DoubleWrapper.
 func (d DoubleWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "field1", d.Field1)
 	populate(objectMap, "field_56_zeros_after_the_dot_and_negative_zero_before_dot_and_this_is_a_long_field_name_on_purpose", d.Field56ZerosAfterTheDotAndNegativeZeroBeforeDotAndThisIsALongFieldNameOnPurpose)
 	return json.Marshal(objectMap)
@@ -481,7 +481,7 @@ func (d *DoubleWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type DurationWrapper.
 func (d DurationWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "field", d.Field)
 	return json.Marshal(objectMap)
 }
@@ -508,7 +508,7 @@ func (d *DurationWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Fish.
 func (f Fish) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	objectMap["fishtype"] = f.Fishtype
 	populate(objectMap, "length", f.Length)
 	populate(objectMap, "siblings", f.Siblings)
@@ -547,7 +547,7 @@ func (f *Fish) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type FloatWrapper.
 func (f FloatWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "field1", f.Field1)
 	populate(objectMap, "field2", f.Field2)
 	return json.Marshal(objectMap)
@@ -578,7 +578,7 @@ func (f *FloatWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Goblinshark.
 func (g Goblinshark) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "age", g.Age)
 	populateTimeRFC3339(objectMap, "birthday", g.Birthday)
 	populate(objectMap, "color", g.Color)
@@ -633,7 +633,7 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type IntWrapper.
 func (i IntWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "field1", i.Field1)
 	populate(objectMap, "field2", i.Field2)
 	return json.Marshal(objectMap)
@@ -664,7 +664,7 @@ func (i *IntWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type LongWrapper.
 func (l LongWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "field1", l.Field1)
 	populate(objectMap, "field2", l.Field2)
 	return json.Marshal(objectMap)
@@ -695,7 +695,7 @@ func (l *LongWrapper) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type MyBaseHelperType.
 func (m MyBaseHelperType) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "propBH1", m.PropBH1)
 	return json.Marshal(objectMap)
 }
@@ -722,7 +722,7 @@ func (m *MyBaseHelperType) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type MyBaseType.
 func (m MyBaseType) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "helper", m.Helper)
 	objectMap["kind"] = m.Kind
 	populate(objectMap, "propB1", m.PropB1)
@@ -757,7 +757,7 @@ func (m *MyBaseType) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "helper", m.Helper)
 	objectMap["kind"] = MyKindKind1
 	populate(objectMap, "propB1", m.PropB1)
@@ -796,7 +796,7 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type ReadonlyObj.
 func (r ReadonlyObj) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "size", r.Size)
 	return json.Marshal(objectMap)
@@ -827,7 +827,7 @@ func (r *ReadonlyObj) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Salmon.
 func (s Salmon) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	objectMap["fishtype"] = "salmon"
 	populate(objectMap, "iswild", s.Iswild)
 	populate(objectMap, "length", s.Length)
@@ -874,7 +874,7 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "age", s.Age)
 	populateTimeRFC3339(objectMap, "birthday", s.Birthday)
 	objectMap["fishtype"] = "sawshark"
@@ -925,7 +925,7 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Shark.
 func (s Shark) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "age", s.Age)
 	populateTimeRFC3339(objectMap, "birthday", s.Birthday)
 	objectMap["fishtype"] = "shark"
@@ -972,7 +972,7 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type Siamese.
 func (s Siamese) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "breed", s.Breed)
 	populate(objectMap, "color", s.Color)
 	populate(objectMap, "hates", s.Hates)
@@ -1015,7 +1015,7 @@ func (s *Siamese) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type SmartSalmon.
 func (s SmartSalmon) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "college_degree", s.CollegeDegree)
 	objectMap["fishtype"] = "smart_salmon"
 	populate(objectMap, "iswild", s.Iswild)
@@ -1063,10 +1063,10 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 			delete(rawMsg, key)
 		default:
 			if s.AdditionalProperties == nil {
-				s.AdditionalProperties = map[string]interface{}{}
+				s.AdditionalProperties = map[string]any{}
 			}
 			if val != nil {
-				var aux interface{}
+				var aux any
 				err = json.Unmarshal(val, &aux)
 				s.AdditionalProperties[key] = aux
 			}
@@ -1081,7 +1081,7 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type StringWrapper.
 func (s StringWrapper) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "empty", s.Empty)
 	populate(objectMap, "field", s.Field)
 	populate(objectMap, "null", s.Null)
@@ -1114,7 +1114,7 @@ func (s *StringWrapper) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -1124,7 +1124,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.Base64Encoding) {
+func populateByteArray(m map[string]any, k string, b []byte, f runtime.Base64Encoding) {
 	if azcore.IsNullValue(b) {
 		m[k] = nil
 	} else if len(b) == 0 {
@@ -1134,7 +1134,7 @@ func populateByteArray(m map[string]interface{}, k string, b []byte, f runtime.B
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}
