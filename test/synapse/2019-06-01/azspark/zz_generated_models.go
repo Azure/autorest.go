@@ -278,11 +278,11 @@ type StatementOutput struct {
 	ExecutionCount *int32 `json:"execution_count,omitempty"`
 
 	// Anything
-	Data       interface{} `json:"data,omitempty"`
-	ErrorName  *string     `json:"ename,omitempty"`
-	ErrorValue *string     `json:"evalue,omitempty"`
-	Status     *string     `json:"status,omitempty"`
-	Traceback  []*string   `json:"traceback,omitempty"`
+	Data       any       `json:"data,omitempty"`
+	ErrorName  *string   `json:"ename,omitempty"`
+	ErrorValue *string   `json:"evalue,omitempty"`
+	Status     *string   `json:"status,omitempty"`
+	Traceback  []*string `json:"traceback,omitempty"`
 }
 
 // batchClientCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob method.

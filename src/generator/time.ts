@@ -108,7 +108,7 @@ func (t *timeRFC1123) UnmarshalText(data []byte) error {
     text +=
 `
 
-func populateTimeRFC1123(m map[string]interface{}, k string, t *time.Time) {
+func populateTimeRFC1123(m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return
 	} else if azcore.IsNullValue(t) {
@@ -198,7 +198,7 @@ func (t *timeRFC3339) Parse(layout, value string) error {
     text +=
 `
 
-func populateTimeRFC3339(m map[string]interface{}, k string, t *time.Time) {
+func populateTimeRFC3339(m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return
 	} else if azcore.IsNullValue(t) {
@@ -262,7 +262,7 @@ func (t timeUnix) String() string {
   if (needsPopulate) {
     text +=
 `
-func populateTimeUnix(m map[string]interface{}, k string, t *time.Time) {
+func populateTimeUnix(m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return
 	} else if azcore.IsNullValue(t) {
@@ -324,7 +324,7 @@ func (d *dateType) UnmarshalJSON(data []byte) (err error) {
   if (needsPopulate) {
     text +=
 `
-func populateDateType(m map[string]interface{}, k string, t *time.Time) {
+func populateDateType(m map[string]any, k string, t *time.Time) {
 	if t == nil {
 		return
 	} else if azcore.IsNullValue(t) {

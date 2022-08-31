@@ -18,7 +18,7 @@ import (
 
 // MarshalJSON implements the json.Marshaller interface for type B.
 func (b B) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "statusCode", b.StatusCode)
 	populate(objectMap, "textStatusCode", b.TextStatusCode)
 	return json.Marshal(objectMap)
@@ -49,7 +49,7 @@ func (b *B) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type C.
 func (c C) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "httpCode", c.HTTPCode)
 	return json.Marshal(objectMap)
 }
@@ -76,7 +76,7 @@ func (c *C) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type D.
 func (d D) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "httpStatusCode", d.HTTPStatusCode)
 	return json.Marshal(objectMap)
 }
@@ -103,7 +103,7 @@ func (d *D) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON implements the json.Marshaller interface for type MyException.
 func (m MyException) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
+	objectMap := make(map[string]any)
 	populate(objectMap, "statusCode", m.StatusCode)
 	return json.Marshal(objectMap)
 }
@@ -128,7 +128,7 @@ func (m *MyException) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func populate(m map[string]interface{}, k string, v interface{}) {
+func populate(m map[string]any, k string, v any) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
@@ -138,7 +138,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 	}
 }
 
-func unpopulate(data json.RawMessage, fn string, v interface{}) error {
+func unpopulate(data json.RawMessage, fn string, v any) error {
 	if data == nil {
 		return nil
 	}

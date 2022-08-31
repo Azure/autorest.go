@@ -37,7 +37,7 @@ func TestArrayStringCSVNull(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
 func TestArrayStringCsvValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringCSVValid(context.Background(), &QueriesClientArrayStringCSVValidOptions{
@@ -47,7 +47,7 @@ func TestArrayStringCsvValid(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the pipes-array format
 func TestArrayStringPipesValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringPipesValid(context.Background(), &QueriesClientArrayStringPipesValidOptions{
@@ -57,7 +57,7 @@ func TestArrayStringPipesValid(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the ssv-array format
 func TestArrayStringSsvValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringSsvValid(context.Background(), &QueriesClientArrayStringSsvValidOptions{
@@ -67,7 +67,7 @@ func TestArrayStringSsvValid(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the tsv-array format
 func TestArrayStringTsvValid(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ArrayStringTsvValid(context.Background(), &QueriesClientArrayStringTsvValidOptions{
@@ -77,7 +77,7 @@ func TestArrayStringTsvValid(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// ByteEmpty - Get '' as byte array
+// ByteEmpty - Get ” as byte array
 func TestByteEmpty(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.ByteEmpty(context.Background(), nil)
@@ -273,7 +273,7 @@ func TestGetTenBillion(t *testing.T) {
 	require.Zero(t, result)
 }
 
-// StringEmpty - Get ''
+// StringEmpty - Get ”
 func TestStringEmpty(t *testing.T) {
 	client := newQueriesClient()
 	result, err := client.StringEmpty(context.Background(), nil)

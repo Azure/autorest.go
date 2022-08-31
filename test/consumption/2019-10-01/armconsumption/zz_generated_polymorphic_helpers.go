@@ -15,7 +15,7 @@ func unmarshalChargeSummaryClassification(rawMsg json.RawMessage) (ChargeSummary
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func unmarshalReservationRecommendationClassification(rawMsg json.RawMessage) (R
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func unmarshalUsageDetailClassification(rawMsg json.RawMessage) (UsageDetailClas
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}

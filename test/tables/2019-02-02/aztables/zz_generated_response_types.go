@@ -99,7 +99,7 @@ type ClientInsertEntityResponse struct {
 	RequestID *string
 
 	// The other properties of the table entity.
-	Value map[string]interface{}
+	Value map[string]any
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string
@@ -160,7 +160,7 @@ type ClientQueryEntityWithPartitionAndRowKeyResponse struct {
 	RequestID *string
 
 	// The other properties of the table entity.
-	Value map[string]interface{}
+	Value map[string]any
 
 	// Version contains the information returned from the x-ms-version header response.
 	Version *string

@@ -163,9 +163,9 @@ async function process(session: Session<CodeModel>) {
 function schemaTypeToGoType(codeModel: CodeModel, schema: Schema, inBody: boolean): string {
   switch (schema.type) {
     case SchemaType.Any:
-      return 'interface{}';
+      return 'any';
     case SchemaType.AnyObject:
-      return 'map[string]interface{}';
+      return 'map[string]any';
     case SchemaType.Array:
       const arraySchema = <ArraySchema>schema;
       arraySchema.language.go!.elementIsPtr = !isTypePassedByValue(arraySchema.elementType);
@@ -745,7 +745,7 @@ function newObject(name: string, desc: string): ObjectSchema {
 function newAny(desc: string): AnySchema {
   const any = new AnySchema(desc);
   any.language.go = any.language.default;
-  any.language.go!.name = 'interface{}';
+  any.language.go!.name = 'any';
   return any;
 }
 

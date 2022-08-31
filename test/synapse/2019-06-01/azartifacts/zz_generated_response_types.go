@@ -127,7 +127,7 @@ type LibraryClientFlushResponse struct {
 // LibraryClientGetOperationResultResponse contains the response from method libraryClient.GetOperationResult.
 type LibraryClientGetOperationResultResponse struct {
 	// Possible types are LibraryResource, OperationResult
-	Value interface{}
+	Value any
 }
 
 // LibraryClientGetResponse contains the response from method libraryClient.Get.

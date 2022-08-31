@@ -15,7 +15,7 @@ func unmarshalDotFishClassification(rawMsg json.RawMessage) (DotFishClassificati
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func unmarshalFishClassification(rawMsg json.RawMessage) (FishClassification, er
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func unmarshalMyBaseTypeClassification(rawMsg json.RawMessage) (MyBaseTypeClassi
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ func unmarshalSalmonClassification(rawMsg json.RawMessage) (SalmonClassification
 	if rawMsg == nil {
 		return nil, nil
 	}
-	var m map[string]interface{}
+	var m map[string]any
 	if err := json.Unmarshal(rawMsg, &m); err != nil {
 		return nil, err
 	}

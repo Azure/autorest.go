@@ -426,19 +426,19 @@ type HTTPSuccessClientPut204Response struct {
 // MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse contains the response from method MultipleResponsesClient.Get200Model201ModelDefaultError200Valid.
 type MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse struct {
 	// Possible types are MyException, B
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse contains the response from method MultipleResponsesClient.Get200Model201ModelDefaultError201Valid.
 type MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse struct {
 	// Possible types are MyException, B
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse contains the response from method MultipleResponsesClient.Get200Model201ModelDefaultError400Valid.
 type MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse struct {
 	// Possible types are MyException, B
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse contains the response from method MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid.
@@ -484,25 +484,25 @@ type MultipleResponsesClientGet200ModelA200ValidResponse struct {
 // MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid.
 type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse struct {
 	// Possible types are MyException, C, D
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid.
 type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse struct {
 	// Possible types are MyException, C, D
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid.
 type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse struct {
 	// Possible types are MyException, C, D
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid.
 type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse struct {
 	// Possible types are MyException, C, D
-	Value interface{}
+	Value any
 }
 
 // MultipleResponsesClientGet200ModelA202ValidResponse contains the response from method MultipleResponsesClient.Get200ModelA202Valid.
