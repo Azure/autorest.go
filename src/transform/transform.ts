@@ -40,7 +40,7 @@ export async function transform(host: AutorestExtensionHost) {
 }
 
 async function process(session: Session<CodeModel>) {
-  processOperationRequests(session);
+  await processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
   // this must happen before processing objects as we depend on the
@@ -293,7 +293,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 }
 
 // we will transform operation request parameter schema types to Go types
-function processOperationRequests(session: Session<CodeModel>) {
+async function processOperationRequests(session: Session<CodeModel>) {
   // pre-process multi-request operations as it can add operations to the operations
   // collection, and iterating over a modified collection yeilds incorrect results
   for (const group of values(session.model.operationGroups)) {
@@ -301,15 +301,13 @@ function processOperationRequests(session: Session<CodeModel>) {
       if (op.language.go!.description) {
         op.language.go!.description = parseComments(op.language.go!.description);
       }
+      const mainBodyType = await session.getValue('main-body-type', KnownMediaType.Json);
       if (op.requests!.length > 1) {
-        let isFirst = true;
         for (const req of values(op.requests)) {
           const newOp = clone(op);
           newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
           let name = op.language.go!.name;
-          if (isFirst) {
-            isFirst = false;
-          } else {
+          if (req.protocol.http!.knownMediaType !== mainBodyType) {
             // if operation response body has more than one media types 
             // we create a new method for the non-first operation 
             // with the media type name as a suffix, e.g. FooAPIWithJSON()

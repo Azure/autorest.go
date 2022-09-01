@@ -7,7 +7,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 // DO NOT EDIT.
 
-package mediatypesgroup
+package mediatypesgroupwithconfig
 
 import "io"
 
@@ -15,27 +15,27 @@ import "io"
 // method.
 type MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions struct {
 	// Input parameter.
-	Input *SourcePath
+	Input io.ReadSeekCloser
 }
 
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithBinary
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
 // method.
-type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryOptions struct {
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions struct {
 	// Input parameter.
-	Input io.ReadSeekCloser
+	Input *SourcePath
 }
 
 // MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 type MediaTypesClientAnalyzeBodyOptions struct {
 	// Input parameter.
-	Input *SourcePath
+	Input io.ReadSeekCloser
 }
 
-// MediaTypesClientAnalyzeBodyWithBinaryOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithBinary
+// MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
 // method.
-type MediaTypesClientAnalyzeBodyWithBinaryOptions struct {
+type MediaTypesClientAnalyzeBodyWithJSONOptions struct {
 	// Input parameter.
-	Input io.ReadSeekCloser
+	Input *SourcePath
 }
 
 // MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
