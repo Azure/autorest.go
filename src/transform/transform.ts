@@ -302,17 +302,13 @@ function processOperationRequests(session: Session<CodeModel>) {
         op.language.go!.description = parseComments(op.language.go!.description);
       }
       if (op.requests!.length > 1) {
-        let isFirst = true;
         for (const req of values(op.requests)) {
           const newOp = clone(op);
           newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
           let name = op.language.go!.name;
-          if (isFirst) {
-            isFirst = false;
-          } else {
-            // if operation response body has more than one media types 
-            // we create a new method for the non-first operation 
-            // with the media type name as a suffix, e.g. FooAPIWithJSON()
+          // for the non-binary media types we create a new method with the
+          // media type name as a suffix, e.g. FooAPIWithJSON()
+          if (req.protocol.http!.knownMediaType !== KnownMediaType.Binary) {
             let suffix: string;
             switch (req.protocol.http!.knownMediaType) {
               case KnownMediaType.Json:
