@@ -23,7 +23,7 @@ func newBinaryGroupClient() *UploadClient {
 
 func TestBinary(t *testing.T) {
 	client := newBinaryGroupClient()
-	resp, err := client.Binary(context.Background(), streaming.NopCloser(bytes.NewReader([]byte{0xff, 0xfe, 0xfd})), nil)
+	resp, err := client.BinaryWithBinary(context.Background(), streaming.NopCloser(bytes.NewReader([]byte{0xff, 0xfe, 0xfd})), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }
@@ -31,7 +31,7 @@ func TestBinary(t *testing.T) {
 func TestFile(t *testing.T) {
 	client := newBinaryGroupClient()
 	jsonFile := strings.NewReader(`{ "more": "cowbell" }`)
-	resp, err := client.File(context.Background(), streaming.NopCloser(jsonFile), nil)
+	resp, err := client.FileWithBinary(context.Background(), streaming.NopCloser(jsonFile), nil)
 	require.NoError(t, err)
 	require.Zero(t, resp)
 }

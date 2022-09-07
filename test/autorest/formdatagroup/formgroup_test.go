@@ -37,7 +37,7 @@ func TestUploadFile(t *testing.T) {
 func TestUploadFileViaBody(t *testing.T) {
 	client := newFormdataClient()
 	s := strings.NewReader("the data")
-	resp, err := client.UploadFileViaBody(context.Background(), streaming.NopCloser(s), nil)
+	resp, err := client.UploadFileViaBodyWithBinary(context.Background(), streaming.NopCloser(s), nil)
 	require.NoError(t, err)
 	b, err := ioutil.ReadAll(resp.Body)
 	require.NoError(t, err)
