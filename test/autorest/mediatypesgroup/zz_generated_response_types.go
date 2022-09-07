@@ -14,8 +14,8 @@ type MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithBinary.
-type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse struct {
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON.
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse struct {
 	// placeholder for future response values
 }
 
@@ -24,8 +24,8 @@ type MediaTypesClientAnalyzeBodyResponse struct {
 	Value *string
 }
 
-// MediaTypesClientAnalyzeBodyWithBinaryResponse contains the response from method MediaTypesClient.AnalyzeBodyWithBinary.
-type MediaTypesClientAnalyzeBodyWithBinaryResponse struct {
+// MediaTypesClientAnalyzeBodyWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyWithJSON.
+type MediaTypesClientAnalyzeBodyWithJSONResponse struct {
 	Value *string
 }
 

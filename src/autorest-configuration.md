@@ -86,7 +86,4 @@ help-content:
       - key: remove-non-reference-schema
         type: boolean
         description: When true, non-reference schema will be removed from the generated code.
-      - key: main-body-type
-        type: string
-        description: When true, non-reference schema will be removed from the generated code.
 ```

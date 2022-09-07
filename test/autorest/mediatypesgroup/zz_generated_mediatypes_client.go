@@ -37,9 +37,10 @@ func NewMediaTypesClient(pl runtime.Pipeline) *MediaTypesClient {
 // AnalyzeBody - Analyze body, that could be different media types.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0-preview
+// contentType - Upload file type
 // options - MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
-func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
-	req, err := client.analyzeBodyCreateRequest(ctx, options)
+func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
+	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
@@ -54,15 +55,16 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, options *MediaT
 }
 
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
-func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
+	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Input != nil {
-		return req, runtime.MarshalAsJSON(req, *options.Input)
+		return req, req.SetBody(options.Input, string(contentType))
 	}
 	return req, nil
 }
@@ -80,10 +82,11 @@ func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *http.Response) (
 // type.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0-preview
+// contentType - Upload file type
 // options - MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
 // method.
-func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse, error) {
-	req, err := client.analyzeBodyNoAcceptHeaderCreateRequest(ctx, options)
+func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse, error) {
+	req, err := client.analyzeBodyNoAcceptHeaderCreateRequest(ctx, contentType, options)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
 	}
@@ -98,7 +101,42 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, o
 }
 
 // analyzeBodyNoAcceptHeaderCreateRequest creates the AnalyzeBodyNoAcceptHeader request.
-func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (*policy.Request, error) {
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/analyzeNoAccept"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header["Content-Type"] = []string{string(contentType)}
+	if options != nil && options.Input != nil {
+		return req, req.SetBody(options.Input, string(contentType))
+	}
+	return req, nil
+}
+
+// AnalyzeBodyNoAcceptHeaderWithJSON - Analyze body, that could be different media types. Adds to AnalyzeBody by not having
+// an accept type.
+// If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2.0-preview
+// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
+// method.
+func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse, error) {
+	req, err := client.analyzeBodyNoAcceptHeaderWithJSONCreateRequest(ctx, options)
+	if err != nil {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, runtime.NewResponseError(resp)
+	}
+	return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, nil
+}
+
+// analyzeBodyNoAcceptHeaderWithJSONCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithJSON request.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyzeNoAccept"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -110,83 +148,45 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx conte
 	return req, nil
 }
 
-// AnalyzeBodyNoAcceptHeaderWithBinary - Analyze body, that could be different media types. Adds to AnalyzeBody by not having
-// an accept type.
+// AnalyzeBodyWithJSON - Analyze body, that could be different media types.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2.0-preview
-// contentType - Upload file type
-// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithBinary
+// options - MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
 // method.
-func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithBinary(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse, error) {
-	req, err := client.analyzeBodyNoAcceptHeaderWithBinaryCreateRequest(ctx, contentType, options)
+func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
+	req, err := client.analyzeBodyWithJSONCreateRequest(ctx, options)
 	if err != nil {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse{}, runtime.NewResponseError(resp)
-	}
-	return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryResponse{}, nil
-}
-
-// analyzeBodyNoAcceptHeaderWithBinaryCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithBinary request.
-func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithBinaryCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryOptions) (*policy.Request, error) {
-	urlPath := "/mediatypes/analyzeNoAccept"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
-	if err != nil {
-		return nil, err
-	}
-	req.Raw().Header["Content-Type"] = []string{string(contentType)}
-	if options != nil && options.Input != nil {
-		return req, req.SetBody(options.Input, string(contentType))
-	}
-	return req, nil
-}
-
-// AnalyzeBodyWithBinary - Analyze body, that could be different media types.
-// If the operation fails it returns an *azcore.ResponseError type.
-// Generated from API version 2.0-preview
-// contentType - Upload file type
-// options - MediaTypesClientAnalyzeBodyWithBinaryOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithBinary
-// method.
-func (client *MediaTypesClient) AnalyzeBodyWithBinary(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyWithBinaryOptions) (MediaTypesClientAnalyzeBodyWithBinaryResponse, error) {
-	req, err := client.analyzeBodyWithBinaryCreateRequest(ctx, contentType, options)
-	if err != nil {
-		return MediaTypesClientAnalyzeBodyWithBinaryResponse{}, err
-	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return MediaTypesClientAnalyzeBodyWithBinaryResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientAnalyzeBodyWithBinaryResponse{}, runtime.NewResponseError(resp)
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, runtime.NewResponseError(resp)
 	}
-	return client.analyzeBodyWithBinaryHandleResponse(resp)
+	return client.analyzeBodyWithJSONHandleResponse(resp)
 }
 
-// analyzeBodyWithBinaryCreateRequest creates the AnalyzeBodyWithBinary request.
-func (client *MediaTypesClient) analyzeBodyWithBinaryCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyWithBinaryOptions) (*policy.Request, error) {
+// analyzeBodyWithJSONCreateRequest creates the AnalyzeBodyWithJSON request.
+func (client *MediaTypesClient) analyzeBodyWithJSONCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	req.Raw().Header["Content-Type"] = []string{string(contentType)}
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if options != nil && options.Input != nil {
-		return req, req.SetBody(options.Input, string(contentType))
+		return req, runtime.MarshalAsJSON(req, *options.Input)
 	}
 	return req, nil
 }
 
-// analyzeBodyWithBinaryHandleResponse handles the AnalyzeBodyWithBinary response.
-func (client *MediaTypesClient) analyzeBodyWithBinaryHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyWithBinaryResponse, error) {
-	result := MediaTypesClientAnalyzeBodyWithBinaryResponse{}
+// analyzeBodyWithJSONHandleResponse handles the AnalyzeBodyWithJSON response.
+func (client *MediaTypesClient) analyzeBodyWithJSONHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
+	result := MediaTypesClientAnalyzeBodyWithJSONResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientAnalyzeBodyWithBinaryResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
 	return result, nil
 }

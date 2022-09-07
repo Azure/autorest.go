@@ -35,7 +35,6 @@ const goMappings = {
     'integergroup': ['body-integer.json', '--remove-unreferenced-types'],
     'lrogroup': ['lro.json', '--remove-unreferenced-types'],
     'mediatypesgroup': ['media_types.json', '--remove-unreferenced-types'],
-    'mediatypesgroupwithconfig': ['media_types.json', '--remove-unreferenced-types', '--main-body-type=binary'],
     'migroup': ['multiple-inheritance.json', '--remove-unreferenced-types'],
     //'modelflatteninggroup': ['model-flattening.json'],
     'morecustombaseurigroup': ['custom-baseUrl-more-options.json', '--remove-unreferenced-types'],
