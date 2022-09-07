@@ -38,30 +38,31 @@ func newLibraryClient(endpoint string, pl runtime.Pipeline) *libraryClient {
 	return client
 }
 
-// Append - Append the content to the library resource created using the create operation. The maximum content size is 4MiB.
-// Content larger than 4MiB must be appended in 4MiB chunks
+// AppendWithBinary - Append the content to the library resource created using the create operation. The maximum content size
+// is 4MiB. Content larger than 4MiB must be appended in 4MiB chunks
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // libraryName - file name to upload. Minimum length of the filename should be 1 excluding the extension length.
 // content - Library file chunk.
-// options - libraryClientAppendOptions contains the optional parameters for the libraryClient.Append method.
-func (client *libraryClient) Append(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *libraryClientAppendOptions) (LibraryClientAppendResponse, error) {
-	req, err := client.appendCreateRequest(ctx, libraryName, content, options)
+// options - libraryClientAppendWithBinaryOptions contains the optional parameters for the libraryClient.AppendWithBinary
+// method.
+func (client *libraryClient) AppendWithBinary(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *libraryClientAppendWithBinaryOptions) (LibraryClientAppendWithBinaryResponse, error) {
+	req, err := client.appendWithBinaryCreateRequest(ctx, libraryName, content, options)
 	if err != nil {
-		return LibraryClientAppendResponse{}, err
+		return LibraryClientAppendWithBinaryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return LibraryClientAppendResponse{}, err
+		return LibraryClientAppendWithBinaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return LibraryClientAppendResponse{}, runtime.NewResponseError(resp)
+		return LibraryClientAppendWithBinaryResponse{}, runtime.NewResponseError(resp)
 	}
-	return LibraryClientAppendResponse{}, nil
+	return LibraryClientAppendWithBinaryResponse{}, nil
 }
 
-// appendCreateRequest creates the Append request.
-func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *libraryClientAppendOptions) (*policy.Request, error) {
+// appendWithBinaryCreateRequest creates the AppendWithBinary request.
+func (client *libraryClient) appendWithBinaryCreateRequest(ctx context.Context, libraryName string, content io.ReadSeekCloser, options *libraryClientAppendWithBinaryOptions) (*policy.Request, error) {
 	urlPath := "/libraries/{libraryName}"
 	if libraryName == "" {
 		return nil, errors.New("parameter libraryName cannot be empty")

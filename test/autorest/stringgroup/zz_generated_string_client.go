@@ -440,28 +440,28 @@ func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *S
 	return req, runtime.MarshalAsJSON(req, "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 }
 
-// PutNull - Set string value null
+// PutNullWithText - Set string value null
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // stringBody - string body
-// options - StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
-func (client *StringClient) PutNull(ctx context.Context, stringBody string, options *StringClientPutNullOptions) (StringClientPutNullResponse, error) {
-	req, err := client.putNullCreateRequest(ctx, stringBody, options)
+// options - StringClientPutNullWithTextOptions contains the optional parameters for the StringClient.PutNullWithText method.
+func (client *StringClient) PutNullWithText(ctx context.Context, stringBody string, options *StringClientPutNullWithTextOptions) (StringClientPutNullWithTextResponse, error) {
+	req, err := client.putNullWithTextCreateRequest(ctx, stringBody, options)
 	if err != nil {
-		return StringClientPutNullResponse{}, err
+		return StringClientPutNullWithTextResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringClientPutNullResponse{}, err
+		return StringClientPutNullWithTextResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutNullResponse{}, runtime.NewResponseError(resp)
+		return StringClientPutNullWithTextResponse{}, runtime.NewResponseError(resp)
 	}
-	return StringClientPutNullResponse{}, nil
+	return StringClientPutNullWithTextResponse{}, nil
 }
 
-// putNullCreateRequest creates the PutNull request.
-func (client *StringClient) putNullCreateRequest(ctx context.Context, stringBody string, options *StringClientPutNullOptions) (*policy.Request, error) {
+// putNullWithTextCreateRequest creates the PutNullWithText request.
+func (client *StringClient) putNullWithTextCreateRequest(ctx context.Context, stringBody string, options *StringClientPutNullWithTextOptions) (*policy.Request, error) {
 	urlPath := "/string/null"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

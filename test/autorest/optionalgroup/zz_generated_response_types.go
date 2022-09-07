@@ -54,8 +54,8 @@ type ExplicitClientPostOptionalStringHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// ExplicitClientPostOptionalStringParameterResponse contains the response from method ExplicitClient.PostOptionalStringParameter.
-type ExplicitClientPostOptionalStringParameterResponse struct {
+// ExplicitClientPostOptionalStringParameterWithTextResponse contains the response from method ExplicitClient.PostOptionalStringParameterWithText.
+type ExplicitClientPostOptionalStringParameterWithTextResponse struct {
 	// placeholder for future response values
 }
 
@@ -109,8 +109,8 @@ type ExplicitClientPostRequiredStringHeaderResponse struct {
 	// placeholder for future response values
 }
 
-// ExplicitClientPostRequiredStringParameterResponse contains the response from method ExplicitClient.PostRequiredStringParameter.
-type ExplicitClientPostRequiredStringParameterResponse struct {
+// ExplicitClientPostRequiredStringParameterWithTextResponse contains the response from method ExplicitClient.PostRequiredStringParameterWithText.
+type ExplicitClientPostRequiredStringParameterWithTextResponse struct {
 	// placeholder for future response values
 }
 
@@ -119,13 +119,13 @@ type ExplicitClientPostRequiredStringPropertyResponse struct {
 	// placeholder for future response values
 }
 
-// ExplicitClientPutOptionalBinaryBodyResponse contains the response from method ExplicitClient.PutOptionalBinaryBody.
-type ExplicitClientPutOptionalBinaryBodyResponse struct {
+// ExplicitClientPutOptionalBinaryBodyWithBinaryResponse contains the response from method ExplicitClient.PutOptionalBinaryBodyWithBinary.
+type ExplicitClientPutOptionalBinaryBodyWithBinaryResponse struct {
 	// placeholder for future response values
 }
 
-// ExplicitClientPutRequiredBinaryBodyResponse contains the response from method ExplicitClient.PutRequiredBinaryBody.
-type ExplicitClientPutRequiredBinaryBodyResponse struct {
+// ExplicitClientPutRequiredBinaryBodyWithBinaryResponse contains the response from method ExplicitClient.PutRequiredBinaryBodyWithBinary.
+type ExplicitClientPutRequiredBinaryBodyWithBinaryResponse struct {
 	// placeholder for future response values
 }
 
@@ -149,13 +149,13 @@ type ImplicitClientGetRequiredPathResponse struct {
 	// placeholder for future response values
 }
 
-// ImplicitClientPutOptionalBinaryBodyResponse contains the response from method ImplicitClient.PutOptionalBinaryBody.
-type ImplicitClientPutOptionalBinaryBodyResponse struct {
+// ImplicitClientPutOptionalBinaryBodyWithBinaryResponse contains the response from method ImplicitClient.PutOptionalBinaryBodyWithBinary.
+type ImplicitClientPutOptionalBinaryBodyWithBinaryResponse struct {
 	// placeholder for future response values
 }
 
-// ImplicitClientPutOptionalBodyResponse contains the response from method ImplicitClient.PutOptionalBody.
-type ImplicitClientPutOptionalBodyResponse struct {
+// ImplicitClientPutOptionalBodyWithTextResponse contains the response from method ImplicitClient.PutOptionalBodyWithText.
+type ImplicitClientPutOptionalBodyWithTextResponse struct {
 	// placeholder for future response values
 }
 

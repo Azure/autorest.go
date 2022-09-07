@@ -24097,8 +24097,8 @@ type integrationRuntimesClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// libraryClientAppendOptions contains the optional parameters for the libraryClient.Append method.
-type libraryClientAppendOptions struct {
+// libraryClientAppendWithBinaryOptions contains the optional parameters for the libraryClient.AppendWithBinary method.
+type libraryClientAppendWithBinaryOptions struct {
 	// Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current
 	// offset matches this value. Otherwise, the request fails with the
 	// AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed)

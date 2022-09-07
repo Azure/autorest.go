@@ -14,8 +14,9 @@ type FormdataClientUploadFileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody method.
-type FormdataClientUploadFileViaBodyOptions struct {
+// FormdataClientUploadFileViaBodyWithBinaryOptions contains the optional parameters for the FormdataClient.UploadFileViaBodyWithBinary
+// method.
+type FormdataClientUploadFileViaBodyWithBinaryOptions struct {
 	// placeholder for future optional parameters
 }
 

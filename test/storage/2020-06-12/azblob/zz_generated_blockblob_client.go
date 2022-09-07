@@ -518,125 +518,6 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
-// If the operation fails it returns an *azcore.ResponseError type.
-// Generated from API version 2020-06-12
-// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
-// to 64 bytes in size. For a given blob, the length of the value specified for the blockid
-// parameter must be the same size for each block.
-// contentLength - The length of the request.
-// body - Initial data
-// options - blockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockResponse, error) {
-	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
-	if err != nil {
-		return BlockBlobClientStageBlockResponse{}, err
-	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return BlockBlobClientStageBlockResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientStageBlockResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.stageBlockHandleResponse(resp)
-}
-
-// stageBlockCreateRequest creates the StageBlock request.
-func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", string(comp))
-	reqQP.Set("blockid", blockID)
-	if options != nil && options.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
-	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
-	if options != nil && options.TransactionalContentMD5 != nil {
-		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
-	}
-	if options != nil && options.TransactionalContentCRC64 != nil {
-		req.Raw().Header["x-ms-content-crc64"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentCRC64)}
-	}
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
-	}
-	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
-		req.Raw().Header["x-ms-encryption-key"] = []string{*cpkInfo.EncryptionKey}
-	}
-	if cpkInfo != nil && cpkInfo.EncryptionKeySHA256 != nil {
-		req.Raw().Header["x-ms-encryption-key-sha256"] = []string{*cpkInfo.EncryptionKeySHA256}
-	}
-	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
-		req.Raw().Header["x-ms-encryption-algorithm"] = []string{"AES256"}
-	}
-	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
-		req.Raw().Header["x-ms-encryption-scope"] = []string{*cpkScopeInfo.EncryptionScope}
-	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
-	if options != nil && options.RequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
-	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/octet-stream")
-}
-
-// stageBlockHandleResponse handles the StageBlock response.
-func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (BlockBlobClientStageBlockResponse, error) {
-	result := BlockBlobClientStageBlockResponse{}
-	if val := resp.Header.Get("Content-MD5"); val != "" {
-		contentMD5, err := base64.StdEncoding.DecodeString(val)
-		if err != nil {
-			return BlockBlobClientStageBlockResponse{}, err
-		}
-		result.ContentMD5 = contentMD5
-	}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
-	if val := resp.Header.Get("Date"); val != "" {
-		date, err := time.Parse(time.RFC1123, val)
-		if err != nil {
-			return BlockBlobClientStageBlockResponse{}, err
-		}
-		result.Date = &date
-	}
-	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
-		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
-		if err != nil {
-			return BlockBlobClientStageBlockResponse{}, err
-		}
-		result.XMSContentCRC64 = xMSContentCRC64
-	}
-	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
-		isServerEncrypted, err := strconv.ParseBool(val)
-		if err != nil {
-			return BlockBlobClientStageBlockResponse{}, err
-		}
-		result.IsServerEncrypted = &isServerEncrypted
-	}
-	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
-	}
-	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
-	}
-	return result, nil
-}
-
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents
 // are read from a URL.
 // If the operation fails it returns an *azcore.ResponseError type.
@@ -776,37 +657,158 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 	return result, nil
 }
 
-// Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob
-// overwrites any existing metadata on the blob. Partial updates are not supported with Put
+// StageBlockWithBinary - The Stage Block operation creates a new block to be committed as part of a blob
+// If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-06-12
+// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
+// to 64 bytes in size. For a given blob, the length of the value specified for the blockid
+// parameter must be the same size for each block.
+// contentLength - The length of the request.
+// body - Initial data
+// options - blockBlobClientStageBlockWithBinaryOptions contains the optional parameters for the blockBlobClient.StageBlockWithBinary
+// method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+func (client *blockBlobClient) StageBlockWithBinary(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockWithBinaryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockWithBinaryResponse, error) {
+	req, err := client.stageBlockWithBinaryCreateRequest(ctx, comp, blockID, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
+	if err != nil {
+		return BlockBlobClientStageBlockWithBinaryResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return BlockBlobClientStageBlockWithBinaryResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
+		return BlockBlobClientStageBlockWithBinaryResponse{}, runtime.NewResponseError(resp)
+	}
+	return client.stageBlockWithBinaryHandleResponse(resp)
+}
+
+// stageBlockWithBinaryCreateRequest creates the StageBlockWithBinary request.
+func (client *blockBlobClient) stageBlockWithBinaryCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockWithBinaryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("comp", string(comp))
+	reqQP.Set("blockid", blockID)
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
+	if options != nil && options.TransactionalContentMD5 != nil {
+		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
+	}
+	if options != nil && options.TransactionalContentCRC64 != nil {
+		req.Raw().Header["x-ms-content-crc64"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentCRC64)}
+	}
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
+		req.Raw().Header["x-ms-encryption-key"] = []string{*cpkInfo.EncryptionKey}
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionKeySHA256 != nil {
+		req.Raw().Header["x-ms-encryption-key-sha256"] = []string{*cpkInfo.EncryptionKeySHA256}
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Raw().Header["x-ms-encryption-algorithm"] = []string{"AES256"}
+	}
+	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
+		req.Raw().Header["x-ms-encryption-scope"] = []string{*cpkScopeInfo.EncryptionScope}
+	}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
+	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	return req, req.SetBody(body, "application/octet-stream")
+}
+
+// stageBlockWithBinaryHandleResponse handles the StageBlockWithBinary response.
+func (client *blockBlobClient) stageBlockWithBinaryHandleResponse(resp *http.Response) (BlockBlobClientStageBlockWithBinaryResponse, error) {
+	result := BlockBlobClientStageBlockWithBinaryResponse{}
+	if val := resp.Header.Get("Content-MD5"); val != "" {
+		contentMD5, err := base64.StdEncoding.DecodeString(val)
+		if err != nil {
+			return BlockBlobClientStageBlockWithBinaryResponse{}, err
+		}
+		result.ContentMD5 = contentMD5
+	}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return BlockBlobClientStageBlockWithBinaryResponse{}, err
+		}
+		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
+		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
+		if err != nil {
+			return BlockBlobClientStageBlockWithBinaryResponse{}, err
+		}
+		result.XMSContentCRC64 = xMSContentCRC64
+	}
+	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
+		isServerEncrypted, err := strconv.ParseBool(val)
+		if err != nil {
+			return BlockBlobClientStageBlockWithBinaryResponse{}, err
+		}
+		result.IsServerEncrypted = &isServerEncrypted
+	}
+	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
+		result.EncryptionKeySHA256 = &val
+	}
+	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
+		result.EncryptionScope = &val
+	}
+	return result, nil
+}
+
+// UploadWithBinary - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing
+// block blob overwrites any existing metadata on the blob. Partial updates are not supported with Put
 // Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of
 // the content of a block blob, use the Put Block List operation.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // contentLength - The length of the request.
 // body - Initial data
-// options - blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
+// options - blockBlobClientUploadWithBinaryOptions contains the optional parameters for the blockBlobClient.UploadWithBinary
+// method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadResponse, error) {
-	req, err := client.uploadCreateRequest(ctx, contentLength, body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+func (client *blockBlobClient) UploadWithBinary(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadWithBinaryOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadWithBinaryResponse, error) {
+	req, err := client.uploadWithBinaryCreateRequest(ctx, contentLength, body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobClientUploadResponse{}, err
+		return BlockBlobClientUploadWithBinaryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobClientUploadResponse{}, err
+		return BlockBlobClientUploadWithBinaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobClientUploadResponse{}, runtime.NewResponseError(resp)
+		return BlockBlobClientUploadWithBinaryResponse{}, runtime.NewResponseError(resp)
 	}
-	return client.uploadHandleResponse(resp)
+	return client.uploadWithBinaryHandleResponse(resp)
 }
 
-// uploadCreateRequest creates the Upload request.
-func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+// uploadWithBinaryCreateRequest creates the UploadWithBinary request.
+func (client *blockBlobClient) uploadWithBinaryCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadWithBinaryOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -897,23 +899,23 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 	return req, req.SetBody(body, "application/octet-stream")
 }
 
-// uploadHandleResponse handles the Upload response.
-func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (BlockBlobClientUploadResponse, error) {
-	result := BlockBlobClientUploadResponse{}
+// uploadWithBinaryHandleResponse handles the UploadWithBinary response.
+func (client *blockBlobClient) uploadWithBinaryHandleResponse(resp *http.Response) (BlockBlobClientUploadWithBinaryResponse, error) {
+	result := BlockBlobClientUploadWithBinaryResponse{}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadWithBinaryResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadWithBinaryResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -932,14 +934,14 @@ func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (BlockB
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadWithBinaryResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return BlockBlobClientUploadResponse{}, err
+			return BlockBlobClientUploadWithBinaryResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}

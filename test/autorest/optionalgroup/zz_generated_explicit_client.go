@@ -341,28 +341,28 @@ func (client *ExplicitClient) postOptionalStringHeaderCreateRequest(ctx context.
 	return req, nil
 }
 
-// PostOptionalStringParameter - Test explicitly optional string. Please put null.
+// PostOptionalStringParameterWithText - Test explicitly optional string. Please put null.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// options - ExplicitClientPostOptionalStringParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalStringParameter
+// options - ExplicitClientPostOptionalStringParameterWithTextOptions contains the optional parameters for the ExplicitClient.PostOptionalStringParameterWithText
 // method.
-func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, options *ExplicitClientPostOptionalStringParameterOptions) (ExplicitClientPostOptionalStringParameterResponse, error) {
-	req, err := client.postOptionalStringParameterCreateRequest(ctx, options)
+func (client *ExplicitClient) PostOptionalStringParameterWithText(ctx context.Context, options *ExplicitClientPostOptionalStringParameterWithTextOptions) (ExplicitClientPostOptionalStringParameterWithTextResponse, error) {
+	req, err := client.postOptionalStringParameterWithTextCreateRequest(ctx, options)
 	if err != nil {
-		return ExplicitClientPostOptionalStringParameterResponse{}, err
+		return ExplicitClientPostOptionalStringParameterWithTextResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ExplicitClientPostOptionalStringParameterResponse{}, err
+		return ExplicitClientPostOptionalStringParameterWithTextResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExplicitClientPostOptionalStringParameterResponse{}, runtime.NewResponseError(resp)
+		return ExplicitClientPostOptionalStringParameterWithTextResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostOptionalStringParameterResponse{}, nil
+	return ExplicitClientPostOptionalStringParameterWithTextResponse{}, nil
 }
 
-// postOptionalStringParameterCreateRequest creates the PostOptionalStringParameter request.
-func (client *ExplicitClient) postOptionalStringParameterCreateRequest(ctx context.Context, options *ExplicitClientPostOptionalStringParameterOptions) (*policy.Request, error) {
+// postOptionalStringParameterWithTextCreateRequest creates the PostOptionalStringParameterWithText request.
+func (client *ExplicitClient) postOptionalStringParameterWithTextCreateRequest(ctx context.Context, options *ExplicitClientPostOptionalStringParameterWithTextOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/optional/string/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -701,29 +701,29 @@ func (client *ExplicitClient) postRequiredStringHeaderCreateRequest(ctx context.
 	return req, nil
 }
 
-// PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before
-// the request is sent.
+// PostRequiredStringParameterWithText - Test explicitly required string. Please put null and the client library should throw
+// before the request is sent.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// options - ExplicitClientPostRequiredStringParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredStringParameter
+// options - ExplicitClientPostRequiredStringParameterWithTextOptions contains the optional parameters for the ExplicitClient.PostRequiredStringParameterWithText
 // method.
-func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string, options *ExplicitClientPostRequiredStringParameterOptions) (ExplicitClientPostRequiredStringParameterResponse, error) {
-	req, err := client.postRequiredStringParameterCreateRequest(ctx, bodyParameter, options)
+func (client *ExplicitClient) PostRequiredStringParameterWithText(ctx context.Context, bodyParameter string, options *ExplicitClientPostRequiredStringParameterWithTextOptions) (ExplicitClientPostRequiredStringParameterWithTextResponse, error) {
+	req, err := client.postRequiredStringParameterWithTextCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return ExplicitClientPostRequiredStringParameterResponse{}, err
+		return ExplicitClientPostRequiredStringParameterWithTextResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ExplicitClientPostRequiredStringParameterResponse{}, err
+		return ExplicitClientPostRequiredStringParameterWithTextResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExplicitClientPostRequiredStringParameterResponse{}, runtime.NewResponseError(resp)
+		return ExplicitClientPostRequiredStringParameterWithTextResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPostRequiredStringParameterResponse{}, nil
+	return ExplicitClientPostRequiredStringParameterWithTextResponse{}, nil
 }
 
-// postRequiredStringParameterCreateRequest creates the PostRequiredStringParameter request.
-func (client *ExplicitClient) postRequiredStringParameterCreateRequest(ctx context.Context, bodyParameter string, options *ExplicitClientPostRequiredStringParameterOptions) (*policy.Request, error) {
+// postRequiredStringParameterWithTextCreateRequest creates the PostRequiredStringParameterWithText request.
+func (client *ExplicitClient) postRequiredStringParameterWithTextCreateRequest(ctx context.Context, bodyParameter string, options *ExplicitClientPostRequiredStringParameterWithTextOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/requied/string/parameter"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -766,28 +766,28 @@ func (client *ExplicitClient) postRequiredStringPropertyCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, bodyParameter)
 }
 
-// PutOptionalBinaryBody - Test explicitly optional body parameter
+// PutOptionalBinaryBodyWithBinary - Test explicitly optional body parameter
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// options - ExplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody
+// options - ExplicitClientPutOptionalBinaryBodyWithBinaryOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBodyWithBinary
 // method.
-func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyOptions) (ExplicitClientPutOptionalBinaryBodyResponse, error) {
-	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, bodyParameter, options)
+func (client *ExplicitClient) PutOptionalBinaryBodyWithBinary(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyWithBinaryOptions) (ExplicitClientPutOptionalBinaryBodyWithBinaryResponse, error) {
+	req, err := client.putOptionalBinaryBodyWithBinaryCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return ExplicitClientPutOptionalBinaryBodyResponse{}, err
+		return ExplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ExplicitClientPutOptionalBinaryBodyResponse{}, err
+		return ExplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExplicitClientPutOptionalBinaryBodyResponse{}, runtime.NewResponseError(resp)
+		return ExplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPutOptionalBinaryBodyResponse{}, nil
+	return ExplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, nil
 }
 
-// putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
-func (client *ExplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyOptions) (*policy.Request, error) {
+// putOptionalBinaryBodyWithBinaryCreateRequest creates the PutOptionalBinaryBodyWithBinary request.
+func (client *ExplicitClient) putOptionalBinaryBodyWithBinaryCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutOptionalBinaryBodyWithBinaryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/explicit/optional/binary-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -797,28 +797,28 @@ func (client *ExplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Con
 	return req, req.SetBody(bodyParameter, "application/octet-stream")
 }
 
-// PutRequiredBinaryBody - Test explicitly required body parameter
+// PutRequiredBinaryBodyWithBinary - Test explicitly required body parameter
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// options - ExplicitClientPutRequiredBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBody
+// options - ExplicitClientPutRequiredBinaryBodyWithBinaryOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBodyWithBinary
 // method.
-func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutRequiredBinaryBodyOptions) (ExplicitClientPutRequiredBinaryBodyResponse, error) {
-	req, err := client.putRequiredBinaryBodyCreateRequest(ctx, bodyParameter, options)
+func (client *ExplicitClient) PutRequiredBinaryBodyWithBinary(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutRequiredBinaryBodyWithBinaryOptions) (ExplicitClientPutRequiredBinaryBodyWithBinaryResponse, error) {
+	req, err := client.putRequiredBinaryBodyWithBinaryCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return ExplicitClientPutRequiredBinaryBodyResponse{}, err
+		return ExplicitClientPutRequiredBinaryBodyWithBinaryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ExplicitClientPutRequiredBinaryBodyResponse{}, err
+		return ExplicitClientPutRequiredBinaryBodyWithBinaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExplicitClientPutRequiredBinaryBodyResponse{}, runtime.NewResponseError(resp)
+		return ExplicitClientPutRequiredBinaryBodyWithBinaryResponse{}, runtime.NewResponseError(resp)
 	}
-	return ExplicitClientPutRequiredBinaryBodyResponse{}, nil
+	return ExplicitClientPutRequiredBinaryBodyWithBinaryResponse{}, nil
 }
 
-// putRequiredBinaryBodyCreateRequest creates the PutRequiredBinaryBody request.
-func (client *ExplicitClient) putRequiredBinaryBodyCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutRequiredBinaryBodyOptions) (*policy.Request, error) {
+// putRequiredBinaryBodyWithBinaryCreateRequest creates the PutRequiredBinaryBodyWithBinary request.
+func (client *ExplicitClient) putRequiredBinaryBodyWithBinaryCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitClientPutRequiredBinaryBodyWithBinaryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/explicit/required/binary-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -104,8 +104,8 @@ type StringClientPutMBCSOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
-type StringClientPutNullOptions struct {
+// StringClientPutNullWithTextOptions contains the optional parameters for the StringClient.PutNullWithText method.
+type StringClientPutNullWithTextOptions struct {
 	// placeholder for future optional parameters
 }
 
