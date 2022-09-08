@@ -5103,9 +5103,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Lists all of the available REST API operations of the Microsoft.SignalRService provider.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all of the available REST API operations of the Microsoft.SignalRService provider.
             azureARM: true
             clientName: OperationsClient
             openApiType: arm
@@ -5532,9 +5530,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListBySubscription
-            description: |-
-              Handles requests to list all resources in a subscription.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in a subscription.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -5780,9 +5776,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListByResourceGroup
-            description: |-
-              Handles requests to list all resources in a resource group.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in a resource group.
             azureARM: true
             clientName: Client
             openApiType: arm
@@ -7860,9 +7854,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              List resource usage quotas by location.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List resource usage quotas by location.
             azureARM: true
             clientName: UsagesClient
             openApiType: arm
@@ -8076,9 +8068,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              List private endpoint connections
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List private endpoint connections
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -8965,9 +8955,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Get the private link resources that need to be created for a resource.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the private link resources that need to be created for a resource.
             azureARM: true
             clientName: PrivateLinkResourcesClient
             openApiType: arm
@@ -9172,9 +9160,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              List shared private link resources
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List shared private link resources
             azureARM: true
             clientName: SharedPrivateLinkResourcesClient
             openApiType: arm

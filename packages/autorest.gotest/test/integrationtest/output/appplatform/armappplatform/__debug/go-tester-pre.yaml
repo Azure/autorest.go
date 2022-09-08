@@ -9896,9 +9896,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListBySubscription
-            description: |-
-              Handles requests to list all resources in a subscription.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in a subscription.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -10097,9 +10095,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Handles requests to list all resources in a resource group.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in a resource group.
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
@@ -13150,9 +13146,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Handles requests to list all resources in a Service.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in a Service.
             azureARM: true
             clientName: AppsClient
             openApiType: arm
@@ -14924,9 +14918,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Handles requests to list all resources in an App.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in an App.
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
@@ -15894,9 +15886,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              List all the certificates of one user.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List all the certificates of one user.
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
@@ -17178,9 +17168,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              List the custom domains of one lifecycle application.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List the custom domains of one lifecycle application.
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
@@ -18672,9 +18660,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Handles requests to list all resources in an App.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Handles requests to list all resources in an App.
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -18906,9 +18892,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListForCluster
-            description: |-
-              List deployments for a certain service
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List deployments for a certain service
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
@@ -19964,9 +19948,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Lists all of the available REST API operations of the Microsoft.AppPlatform provider.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all of the available REST API operations of the Microsoft.AppPlatform provider.
             azureARM: true
             clientName: OperationsClient
             openApiType: arm
@@ -20300,9 +20282,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Lists all of the available skus of the Microsoft.AppPlatform provider.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all of the available skus of the Microsoft.AppPlatform provider.
             azureARM: true
             clientName: SKUsClient
             openApiType: arm
