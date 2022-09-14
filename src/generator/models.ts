@@ -25,7 +25,8 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   let modelText = await contentPreamble(session);
 
   // we do model generation first as it can add imports to the imports list
-  const structs = generateStructs(modelImports, serdeImports, session.model.schemas.objects);
+  const omitXMsExternal = await session.getValue('omit-x-ms-external', true);
+  const structs = generateStructs(omitXMsExternal, modelImports, serdeImports, session.model.schemas.objects);
   const paramGroups = <Array<GroupProperty>>session.model.language.go!.parameterGroups;
   for (const paramGroup of values(paramGroups)) {
     structs.push(generateParamGroupStruct(modelImports, paramGroup.schema.language.go!, paramGroup.originalParameter));
@@ -113,10 +114,10 @@ export async function generateModels(session: Session<CodeModel>): Promise<model
   };
 }
 
-function generateStructs(modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
+function generateStructs(omitXMsExternal: boolean, modelImports: ImportManager, serdeImports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    if (obj.language.go!.omitType || obj.extensions?.['x-ms-external']) {
+    if (obj.language.go!.omitType || (omitXMsExternal && obj.extensions?.['x-ms-external'])) {
       continue;
     }
     const structDef = generateStruct(modelImports, obj.language.go!, aggregateProperties(obj));

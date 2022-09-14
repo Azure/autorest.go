@@ -83,4 +83,7 @@ help-content:
       - key: honor-body-placement
         type: boolean
         description: When true, optional body parameters are treated as such for PATCH and PUT operations.
+      - key: omit-x-ms-external
+        type: boolean
+        description: When true, model with x-ms-external will not be generated.
 ```

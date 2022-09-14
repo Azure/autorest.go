@@ -120,6 +120,7 @@ const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autores
 generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--remove-unreferenced-types');
 
 generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
+generate("azalias2", 'test/swagger/alias.json', 'test/maps/azalias2', '--security=AzureKey --module="azalias2" --openapi-type="data-plane" --omit-x-ms-external=false');
 
 function should_generate(name) {
     if (filter !== undefined) {
