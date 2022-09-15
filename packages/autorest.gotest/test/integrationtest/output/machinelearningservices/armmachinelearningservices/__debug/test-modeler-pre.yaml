@@ -38590,9 +38590,7 @@ operationGroups:
               nextLinkName: null
           go:
             name: List
-            description: |-
-              Lists all of the available Azure Machine Learning Workspaces REST API operations.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all of the available Azure Machine Learning Workspaces REST API operations.
             azureARM: true
             clientName: OperationsClient
             openApiType: arm
@@ -39792,9 +39790,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListByResourceGroup
-            description: |-
-              Lists all the available machine learning workspaces under the specified resource group.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all the available machine learning workspaces under the specified resource group.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -40630,9 +40626,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListBySubscription
-            description: |-
-              Lists all the available machine learning workspaces under the specified subscription.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all the available machine learning workspaces under the specified subscription.
             azureARM: true
             clientName: WorkspacesClient
             openApiType: arm
@@ -42013,9 +42007,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Gets the current usage information as well as limits for AML resources for given subscription and location.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets the current usage information as well as limits for AML resources for given subscription and location.
             azureARM: true
             clientName: UsagesClient
             openApiType: arm
@@ -43099,9 +43091,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Gets the currently assigned Workspace Quotas based on VMFamily.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets the currently assigned Workspace Quotas based on VMFamily.
             azureARM: true
             clientName: QuotasClient
             openApiType: arm
@@ -43357,9 +43347,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Gets computes in specified workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Gets computes in specified workspace.
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -45046,9 +45034,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: ListNodes
-            description: |-
-              Get the details (e.g IP address, port etc) of all the compute nodes in the compute.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Get the details (e.g IP address, port etc) of all the compute nodes in the compute.
             azureARM: true
             clientName: ComputeClient
             openApiType: arm
@@ -46038,9 +46024,7 @@ operationGroups:
               nextLinkName: null
           go:
             name: List
-            description: |-
-              List all the private endpoint connections associated with the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List all the private endpoint connections associated with the workspace.
             azureARM: true
             clientName: PrivateEndpointConnectionsClient
             openApiType: arm
@@ -47131,9 +47115,7 @@ operationGroups:
               nextLinkName: null
           go:
             name: List
-            description: |-
-              List all connections under a AML workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List all connections under a AML workspace.
             azureARM: true
             clientName: WorkspaceConnectionsClient
             openApiType: arm
@@ -48020,9 +48002,7 @@ operationGroups:
             summary: Lists Batch inference endpoint in the workspace.
           go:
             name: List
-            description: |-
-              Lists Batch inference endpoint in the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists Batch inference endpoint in the workspace.
             azureARM: true
             clientName: BatchEndpointsClient
             openApiType: arm
@@ -49721,9 +49701,7 @@ operationGroups:
             summary: Lists Batch inference deployments in the workspace.
           go:
             name: List
-            description: |-
-              Lists Batch inference deployments in the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists Batch inference deployments in the workspace.
             azureARM: true
             clientName: BatchDeploymentsClient
             openApiType: arm
@@ -51337,9 +51315,7 @@ operationGroups:
             summary: List containers.
           go:
             name: List
-            description: |-
-              List containers.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List containers.
             azureARM: true
             clientName: CodeContainersClient
             openApiType: arm
@@ -52298,9 +52274,7 @@ operationGroups:
             summary: List versions.
           go:
             name: List
-            description: |-
-              List versions.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List versions.
             azureARM: true
             clientName: CodeVersionsClient
             openApiType: arm
@@ -53288,9 +53262,7 @@ operationGroups:
             summary: List component containers.
           go:
             name: List
-            description: |-
-              List component containers.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List component containers.
             azureARM: true
             clientName: ComponentContainersClient
             openApiType: arm
@@ -54275,9 +54247,7 @@ operationGroups:
             summary: List component versions.
           go:
             name: List
-            description: |-
-              List component versions.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List component versions.
             azureARM: true
             clientName: ComponentVersionsClient
             openApiType: arm
@@ -55289,9 +55259,7 @@ operationGroups:
             summary: List data containers.
           go:
             name: List
-            description: |-
-              List data containers.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List data containers.
             azureARM: true
             clientName: DataContainersClient
             openApiType: arm
@@ -56304,9 +56272,7 @@ operationGroups:
             summary: List data versions in the data container
           go:
             name: List
-            description: |-
-              List data versions in the data container
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List data versions in the data container
             azureARM: true
             clientName: DataVersionsClient
             openApiType: arm
@@ -57404,9 +57370,7 @@ operationGroups:
             summary: List datastores.
           go:
             name: List
-            description: |-
-              List datastores.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List datastores.
             azureARM: true
             clientName: DatastoresClient
             openApiType: arm
@@ -58825,9 +58789,7 @@ operationGroups:
             summary: List environment containers.
           go:
             name: List
-            description: |-
-              List environment containers.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List environment containers.
             azureARM: true
             clientName: EnvironmentContainersClient
             openApiType: arm
@@ -59834,9 +59796,7 @@ operationGroups:
             summary: List versions.
           go:
             name: List
-            description: |-
-              List versions.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List versions.
             azureARM: true
             clientName: EnvironmentVersionsClient
             openApiType: arm
@@ -61220,9 +61180,7 @@ operationGroups:
             summary: Lists Jobs in the workspace.
           go:
             name: List
-            description: |-
-              Lists Jobs in the workspace.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists Jobs in the workspace.
             azureARM: true
             clientName: JobsClient
             openApiType: arm
@@ -63313,9 +63271,7 @@ operationGroups:
             summary: List model containers.
           go:
             name: List
-            description: |-
-              List model containers.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List model containers.
             azureARM: true
             clientName: ModelContainersClient
             openApiType: arm
@@ -64410,9 +64366,7 @@ operationGroups:
             summary: List model versions.
           go:
             name: List
-            description: |-
-              List model versions.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List model versions.
             azureARM: true
             clientName: ModelVersionsClient
             openApiType: arm
@@ -65538,9 +65492,7 @@ operationGroups:
             summary: List Online Endpoints.
           go:
             name: List
-            description: |-
-              List Online Endpoints.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List Online Endpoints.
             azureARM: true
             clientName: OnlineEndpointsClient
             openApiType: arm
@@ -67705,9 +67657,7 @@ operationGroups:
             summary: List Inference Endpoint Deployments.
           go:
             name: List
-            description: |-
-              List Inference Endpoint Deployments.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List Inference Endpoint Deployments.
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -69978,9 +69928,7 @@ operationGroups:
             summary: List Inference Endpoint Deployment Skus.
           go:
             name: ListSKUs
-            description: |-
-              List Inference Endpoint Deployment Skus.
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: List Inference Endpoint Deployment Skus.
             azureARM: true
             clientName: OnlineDeploymentsClient
             openApiType: arm
@@ -70164,9 +70112,7 @@ operationGroups:
               nextLinkName: nextLink
           go:
             name: List
-            description: |-
-              Lists all enabled features for a workspace
-              If the operation fails it returns an *azcore.ResponseError type.
+            description: Lists all enabled features for a workspace
             azureARM: true
             clientName: WorkspaceFeaturesClient
             openApiType: arm

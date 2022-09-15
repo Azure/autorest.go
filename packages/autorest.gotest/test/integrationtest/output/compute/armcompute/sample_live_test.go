@@ -36,6 +36,8 @@ type SampleTestSuite struct {
 }
 
 func (testsuite *SampleTestSuite) SetupSuite() {
+	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/compute/armcompute/testdata")
+
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 	testsuite.fakeStepVar = "signalrswaggertest4"
@@ -43,9 +45,7 @@ func (testsuite *SampleTestSuite) SetupSuite() {
 	testsuite.testPrefix = testutil.GenerateAlphaNumericID(testsuite.T(), "test", 6)
 	testsuite.location = testutil.GetEnv("LOCATION", "westus")
 	testsuite.resourceGroupName = testutil.GetEnv("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
-	testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "")
-
-	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/compute/armcompute/testdata")
+	testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
 	resourceGroup, _, err := testutil.CreateResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.location)
 	testsuite.Require().NoError(err)
 	testsuite.resourceGroupName = *resourceGroup.Name
