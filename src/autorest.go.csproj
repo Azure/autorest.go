@@ -52,7 +52,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="YamlDotNet.Signed" Version="5.2.1" />
     <ProjectReference Include="../autorest.common/src/autorest.common.csproj" />
   </ItemGroup>
