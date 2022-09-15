@@ -44,6 +44,8 @@ type SpringTestSuite struct {
 }
 
 func (testsuite *SpringTestSuite) SetupSuite() {
+	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/appplatform/armappplatform/testdata")
+
 	testsuite.ctx = context.Background()
 	testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 	testsuite.appName = "app01"
@@ -57,10 +59,8 @@ func (testsuite *SpringTestSuite) SetupSuite() {
 	testsuite.location = testutil.GetEnv("LOCATION", "westus")
 	testsuite.mysqlKey = testutil.GetEnv("MYSQL_KEY", "")
 	testsuite.resourceGroupName = testutil.GetEnv("RESOURCE_GROUP_NAME", "scenarioTestTempGroup")
-	testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "")
+	testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
 	testsuite.userAssignedIdentity = testutil.GetEnv("USER_ASSIGNED_IDENTITY", "")
-
-	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/appplatform/armappplatform/testdata")
 	resourceGroup, _, err := testutil.CreateResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.location)
 	testsuite.Require().NoError(err)
 	testsuite.resourceGroupName = *resourceGroup.Name

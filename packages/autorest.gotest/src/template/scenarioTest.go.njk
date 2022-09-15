@@ -40,6 +40,8 @@ type {{testCaseName}}TestSuite struct {
 }
 
 func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
+    testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/{{rpName}}/{{packageName}}/testdata")
+    
     testsuite.ctx = context.Background()
     testsuite.cred, testsuite.options = testutil.GetCredAndClientOptions(testsuite.T())
 
@@ -56,14 +58,12 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
     {%- endfor %}
     {%- for variable, _ in requiredVariablesDefault %}
         {%- if variable === "subscriptionId" %}
-        testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "")
+        testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
         {%- else %}
         testsuite.{{variable}} = testutil.GetEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
         {%- endif %}
     {%- endfor %}
 
-    testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/{{rpName}}/{{packageName}}/testdata")
-    
     {%- if scope.toLowerCase() == 'resourcegroup'%}
     resourceGroup, _, err := testutil.CreateResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.location)
     testsuite.Require().NoError(err)
