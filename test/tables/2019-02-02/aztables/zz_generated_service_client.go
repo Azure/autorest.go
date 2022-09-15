@@ -11,6 +11,7 @@ package aztables
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -29,8 +30,23 @@ type ServiceClient struct {
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
 // endpoint - The URL of the service account or table that is the target of the desired operation.
 // version - Specifies the version of the operation to use for this request.
-// pl - the pipeline used for sending requests and handling responses.
-func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *ServiceClient {
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *azcore.ClientOptions) *ServiceClient {
+	if options == nil {
+		options = &azcore.ClientOptions{}
+	}
+	pOptions := &policy.ClientOptions{
+		Logging:          options.Logging,
+		Retry:            options.Retry,
+		Telemetry:        options.Telemetry,
+		Transport:        options.Transport,
+		PerCallPolicies:  options.PerCallPolicies,
+		PerRetryPolicies: options.PerRetryPolicies,
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://tables.azure.com/.default"}, nil)
+	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
 	client := &ServiceClient{
 		endpoint: endpoint,
 		version:  version,

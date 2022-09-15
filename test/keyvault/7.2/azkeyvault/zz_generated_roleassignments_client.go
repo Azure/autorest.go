@@ -12,6 +12,7 @@ package azkeyvault
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -26,8 +27,23 @@ type RoleAssignmentsClient struct {
 }
 
 // NewRoleAssignmentsClient creates a new instance of RoleAssignmentsClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
-func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewRoleAssignmentsClient(credential azcore.TokenCredential, options *azcore.ClientOptions) *RoleAssignmentsClient {
+	if options == nil {
+		options = &azcore.ClientOptions{}
+	}
+	pOptions := &policy.ClientOptions{
+		Logging:          options.Logging,
+		Retry:            options.Retry,
+		Telemetry:        options.Telemetry,
+		Transport:        options.Transport,
+		PerCallPolicies:  options.PerCallPolicies,
+		PerRetryPolicies: options.PerRetryPolicies,
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://vault.azure.net/.default"}, nil)
+	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
 	client := &RoleAssignmentsClient{
 		pl: pl,
 	}

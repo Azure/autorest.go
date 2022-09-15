@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,16 +20,33 @@ import (
 	"strings"
 )
 
-type dataFlowClient struct {
+// DataFlowClient contains the methods for the DataFlow group.
+// Don't use this type directly, use NewDataFlowClient() instead.
+type DataFlowClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newDataFlowClient creates a new instance of dataFlowClient with the specified values.
+// NewDataFlowClient creates a new instance of DataFlowClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// pl - the pipeline used for sending requests and handling responses.
-func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
-	client := &dataFlowClient{
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewDataFlowClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) *DataFlowClient {
+	if options == nil {
+		options = &azcore.ClientOptions{}
+	}
+	pOptions := &policy.ClientOptions{
+		Logging:          options.Logging,
+		Retry:            options.Retry,
+		Telemetry:        options.Telemetry,
+		Transport:        options.Transport,
+		PerCallPolicies:  options.PerCallPolicies,
+		PerRetryPolicies: options.PerRetryPolicies,
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
+	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	client := &DataFlowClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -40,9 +58,9 @@ func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
 // dataFlow - Data flow resource definition.
-// options - dataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the dataFlowClient.BeginCreateOrUpdateDataFlow
+// options - DataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlowClient.BeginCreateOrUpdateDataFlow
 // method.
-func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *dataFlowClientBeginCreateOrUpdateDataFlowOptions) (*runtime.Poller[DataFlowClientCreateOrUpdateDataFlowResponse], error) {
+func (client *DataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowClientBeginCreateOrUpdateDataFlowOptions) (*runtime.Poller[DataFlowClientCreateOrUpdateDataFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 		if err != nil {
@@ -57,7 +75,7 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *dataFlowClientBeginCreateOrUpdateDataFlowOptions) (*http.Response, error) {
+func (client *DataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowClientBeginCreateOrUpdateDataFlowOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
 		return nil, err
@@ -73,7 +91,7 @@ func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFl
 }
 
 // createOrUpdateDataFlowCreateRequest creates the CreateOrUpdateDataFlow request.
-func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *dataFlowClientBeginCreateOrUpdateDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowClientBeginCreateOrUpdateDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
 		return nil, errors.New("parameter dataFlowName cannot be empty")
@@ -97,9 +115,9 @@ func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
-// options - dataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the dataFlowClient.BeginDeleteDataFlow
+// options - DataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the DataFlowClient.BeginDeleteDataFlow
 // method.
-func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientBeginDeleteDataFlowOptions) (*runtime.Poller[DataFlowClientDeleteDataFlowResponse], error) {
+func (client *DataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*runtime.Poller[DataFlowClientDeleteDataFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteDataFlow(ctx, dataFlowName, options)
 		if err != nil {
@@ -114,7 +132,7 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 // DeleteDataFlow - Deletes a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientBeginDeleteDataFlowOptions) (*http.Response, error) {
+func (client *DataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*http.Response, error) {
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return nil, err
@@ -130,7 +148,7 @@ func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName s
 }
 
 // deleteDataFlowCreateRequest creates the DeleteDataFlow request.
-func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *dataFlowClientBeginDeleteDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
 		return nil, errors.New("parameter dataFlowName cannot be empty")
@@ -151,8 +169,8 @@ func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
-// options - dataFlowClientGetDataFlowOptions contains the optional parameters for the dataFlowClient.GetDataFlow method.
-func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientGetDataFlowOptions) (DataFlowClientGetDataFlowResponse, error) {
+// options - DataFlowClientGetDataFlowOptions contains the optional parameters for the DataFlowClient.GetDataFlow method.
+func (client *DataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientGetDataFlowOptions) (DataFlowClientGetDataFlowResponse, error) {
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
 		return DataFlowClientGetDataFlowResponse{}, err
@@ -168,7 +186,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 }
 
 // getDataFlowCreateRequest creates the GetDataFlow request.
-func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *dataFlowClientGetDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowClient) getDataFlowCreateRequest(ctx context.Context, dataFlowName string, options *DataFlowClientGetDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}"
 	if dataFlowName == "" {
 		return nil, errors.New("parameter dataFlowName cannot be empty")
@@ -189,7 +207,7 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 }
 
 // getDataFlowHandleResponse handles the GetDataFlow response.
-func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (DataFlowClientGetDataFlowResponse, error) {
+func (client *DataFlowClient) getDataFlowHandleResponse(resp *http.Response) (DataFlowClientGetDataFlowResponse, error) {
 	result := DataFlowClientGetDataFlowResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowResource); err != nil {
 		return DataFlowClientGetDataFlowResponse{}, err
@@ -199,9 +217,9 @@ func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (Da
 
 // NewGetDataFlowsByWorkspacePager - Lists data flows.
 // Generated from API version 2019-06-01-preview
-// options - dataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
+// options - DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlowClient.GetDataFlowsByWorkspace
 // method.
-func (client *dataFlowClient) NewGetDataFlowsByWorkspacePager(options *dataFlowClientGetDataFlowsByWorkspaceOptions) *runtime.Pager[DataFlowClientGetDataFlowsByWorkspaceResponse] {
+func (client *DataFlowClient) NewGetDataFlowsByWorkspacePager(options *DataFlowClientGetDataFlowsByWorkspaceOptions) *runtime.Pager[DataFlowClientGetDataFlowsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DataFlowClientGetDataFlowsByWorkspaceResponse]{
 		More: func(page DataFlowClientGetDataFlowsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -230,7 +248,7 @@ func (client *dataFlowClient) NewGetDataFlowsByWorkspacePager(options *dataFlowC
 }
 
 // getDataFlowsByWorkspaceCreateRequest creates the GetDataFlowsByWorkspace request.
-func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *dataFlowClientGetDataFlowsByWorkspaceOptions) (*policy.Request, error) {
+func (client *DataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowClientGetDataFlowsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/dataflows"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -244,7 +262,7 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.C
 }
 
 // getDataFlowsByWorkspaceHandleResponse handles the GetDataFlowsByWorkspace response.
-func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.Response) (DataFlowClientGetDataFlowsByWorkspaceResponse, error) {
+func (client *DataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.Response) (DataFlowClientGetDataFlowsByWorkspaceResponse, error) {
 	result := DataFlowClientGetDataFlowsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowListResponse); err != nil {
 		return DataFlowClientGetDataFlowsByWorkspaceResponse{}, err
@@ -257,9 +275,9 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.R
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
 // request - proposed new name.
-// options - dataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the dataFlowClient.BeginRenameDataFlow
+// options - DataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the DataFlowClient.BeginRenameDataFlow
 // method.
-func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *dataFlowClientBeginRenameDataFlowOptions) (*runtime.Poller[DataFlowClientRenameDataFlowResponse], error) {
+func (client *DataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*runtime.Poller[DataFlowClientRenameDataFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renameDataFlow(ctx, dataFlowName, request, options)
 		if err != nil {
@@ -274,7 +292,7 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 // RenameDataFlow - Renames a dataflow.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *dataFlowClientBeginRenameDataFlowOptions) (*http.Response, error) {
+func (client *DataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*http.Response, error) {
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)
 	if err != nil {
 		return nil, err
@@ -290,7 +308,7 @@ func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName s
 }
 
 // renameDataFlowCreateRequest creates the RenameDataFlow request.
-func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *dataFlowClientBeginRenameDataFlowOptions) (*policy.Request, error) {
+func (client *DataFlowClient) renameDataFlowCreateRequest(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/dataflows/{dataFlowName}/rename"
 	if dataFlowName == "" {
 		return nil, errors.New("parameter dataFlowName cannot be empty")

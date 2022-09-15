@@ -9,378 +9,378 @@
 
 package azartifacts
 
-// BigDataPoolsClientGetResponse contains the response from method bigDataPoolsClient.Get.
+// BigDataPoolsClientGetResponse contains the response from method BigDataPoolsClient.Get.
 type BigDataPoolsClientGetResponse struct {
 	BigDataPoolResourceInfo
 }
 
-// BigDataPoolsClientListResponse contains the response from method bigDataPoolsClient.List.
+// BigDataPoolsClientListResponse contains the response from method BigDataPoolsClient.List.
 type BigDataPoolsClientListResponse struct {
 	BigDataPoolResourceInfoListResult
 }
 
-// DataFlowClientCreateOrUpdateDataFlowResponse contains the response from method dataFlowClient.CreateOrUpdateDataFlow.
+// DataFlowClientCreateOrUpdateDataFlowResponse contains the response from method DataFlowClient.CreateOrUpdateDataFlow.
 type DataFlowClientCreateOrUpdateDataFlowResponse struct {
 	DataFlowResource
 }
 
-// DataFlowClientDeleteDataFlowResponse contains the response from method dataFlowClient.DeleteDataFlow.
+// DataFlowClientDeleteDataFlowResponse contains the response from method DataFlowClient.DeleteDataFlow.
 type DataFlowClientDeleteDataFlowResponse struct {
 	// placeholder for future response values
 }
 
-// DataFlowClientGetDataFlowResponse contains the response from method dataFlowClient.GetDataFlow.
+// DataFlowClientGetDataFlowResponse contains the response from method DataFlowClient.GetDataFlow.
 type DataFlowClientGetDataFlowResponse struct {
 	DataFlowResource
 }
 
-// DataFlowClientGetDataFlowsByWorkspaceResponse contains the response from method dataFlowClient.GetDataFlowsByWorkspace.
+// DataFlowClientGetDataFlowsByWorkspaceResponse contains the response from method DataFlowClient.GetDataFlowsByWorkspace.
 type DataFlowClientGetDataFlowsByWorkspaceResponse struct {
 	DataFlowListResponse
 }
 
-// DataFlowClientRenameDataFlowResponse contains the response from method dataFlowClient.RenameDataFlow.
+// DataFlowClientRenameDataFlowResponse contains the response from method DataFlowClient.RenameDataFlow.
 type DataFlowClientRenameDataFlowResponse struct {
 	// placeholder for future response values
 }
 
-// DataFlowDebugSessionClientAddDataFlowResponse contains the response from method dataFlowDebugSessionClient.AddDataFlow.
+// DataFlowDebugSessionClientAddDataFlowResponse contains the response from method DataFlowDebugSessionClient.AddDataFlow.
 type DataFlowDebugSessionClientAddDataFlowResponse struct {
 	AddDataFlowToDebugSessionResponse
 }
 
-// DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse contains the response from method dataFlowDebugSessionClient.CreateDataFlowDebugSession.
+// DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse contains the response from method DataFlowDebugSessionClient.CreateDataFlowDebugSession.
 type DataFlowDebugSessionClientCreateDataFlowDebugSessionResponse struct {
 	CreateDataFlowDebugSessionResponse
 }
 
-// DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse contains the response from method dataFlowDebugSessionClient.DeleteDataFlowDebugSession.
+// DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse contains the response from method DataFlowDebugSessionClient.DeleteDataFlowDebugSession.
 type DataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse struct {
 	// placeholder for future response values
 }
 
-// DataFlowDebugSessionClientExecuteCommandResponse contains the response from method dataFlowDebugSessionClient.ExecuteCommand.
+// DataFlowDebugSessionClientExecuteCommandResponse contains the response from method DataFlowDebugSessionClient.ExecuteCommand.
 type DataFlowDebugSessionClientExecuteCommandResponse struct {
 	DataFlowDebugCommandResponse
 }
 
-// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse contains the response from method dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace.
+// DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse contains the response from method DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace.
 type DataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse struct {
 	QueryDataFlowDebugSessionsResponse
 }
 
-// DatasetClientCreateOrUpdateDatasetResponse contains the response from method datasetClient.CreateOrUpdateDataset.
+// DatasetClientCreateOrUpdateDatasetResponse contains the response from method DatasetClient.CreateOrUpdateDataset.
 type DatasetClientCreateOrUpdateDatasetResponse struct {
 	DatasetResource
 }
 
-// DatasetClientDeleteDatasetResponse contains the response from method datasetClient.DeleteDataset.
+// DatasetClientDeleteDatasetResponse contains the response from method DatasetClient.DeleteDataset.
 type DatasetClientDeleteDatasetResponse struct {
 	// placeholder for future response values
 }
 
-// DatasetClientGetDatasetResponse contains the response from method datasetClient.GetDataset.
+// DatasetClientGetDatasetResponse contains the response from method DatasetClient.GetDataset.
 type DatasetClientGetDatasetResponse struct {
 	DatasetResource
 }
 
-// DatasetClientGetDatasetsByWorkspaceResponse contains the response from method datasetClient.GetDatasetsByWorkspace.
+// DatasetClientGetDatasetsByWorkspaceResponse contains the response from method DatasetClient.GetDatasetsByWorkspace.
 type DatasetClientGetDatasetsByWorkspaceResponse struct {
 	DatasetListResponse
 }
 
-// DatasetClientRenameDatasetResponse contains the response from method datasetClient.RenameDataset.
+// DatasetClientRenameDatasetResponse contains the response from method DatasetClient.RenameDataset.
 type DatasetClientRenameDatasetResponse struct {
 	// placeholder for future response values
 }
 
-// IntegrationRuntimesClientGetResponse contains the response from method integrationRuntimesClient.Get.
+// IntegrationRuntimesClientGetResponse contains the response from method IntegrationRuntimesClient.Get.
 type IntegrationRuntimesClientGetResponse struct {
 	IntegrationRuntimeResource
 }
 
-// IntegrationRuntimesClientListResponse contains the response from method integrationRuntimesClient.List.
+// IntegrationRuntimesClientListResponse contains the response from method IntegrationRuntimesClient.List.
 type IntegrationRuntimesClientListResponse struct {
 	IntegrationRuntimeListResponse
 }
 
-// LibraryClientAppendResponse contains the response from method libraryClient.Append.
+// LibraryClientAppendResponse contains the response from method LibraryClient.Append.
 type LibraryClientAppendResponse struct {
 	// placeholder for future response values
 }
 
-// LibraryClientCreateResponse contains the response from method libraryClient.Create.
+// LibraryClientCreateResponse contains the response from method LibraryClient.Create.
 type LibraryClientCreateResponse struct {
 	LibraryResourceInfo
 }
 
-// LibraryClientDeleteResponse contains the response from method libraryClient.Delete.
+// LibraryClientDeleteResponse contains the response from method LibraryClient.Delete.
 type LibraryClientDeleteResponse struct {
 	LibraryResourceInfo
 }
 
-// LibraryClientFlushResponse contains the response from method libraryClient.Flush.
+// LibraryClientFlushResponse contains the response from method LibraryClient.Flush.
 type LibraryClientFlushResponse struct {
 	LibraryResourceInfo
 }
 
-// LibraryClientGetOperationResultResponse contains the response from method libraryClient.GetOperationResult.
+// LibraryClientGetOperationResultResponse contains the response from method LibraryClient.GetOperationResult.
 type LibraryClientGetOperationResultResponse struct {
 	// Possible types are LibraryResource, OperationResult
 	Value any
 }
 
-// LibraryClientGetResponse contains the response from method libraryClient.Get.
+// LibraryClientGetResponse contains the response from method LibraryClient.Get.
 type LibraryClientGetResponse struct {
 	LibraryResource
 }
 
-// LibraryClientListResponse contains the response from method libraryClient.List.
+// LibraryClientListResponse contains the response from method LibraryClient.List.
 type LibraryClientListResponse struct {
 	LibraryListResponse
 }
 
-// LinkedServiceClientCreateOrUpdateLinkedServiceResponse contains the response from method linkedServiceClient.CreateOrUpdateLinkedService.
+// LinkedServiceClientCreateOrUpdateLinkedServiceResponse contains the response from method LinkedServiceClient.CreateOrUpdateLinkedService.
 type LinkedServiceClientCreateOrUpdateLinkedServiceResponse struct {
 	LinkedServiceResource
 }
 
-// LinkedServiceClientDeleteLinkedServiceResponse contains the response from method linkedServiceClient.DeleteLinkedService.
+// LinkedServiceClientDeleteLinkedServiceResponse contains the response from method LinkedServiceClient.DeleteLinkedService.
 type LinkedServiceClientDeleteLinkedServiceResponse struct {
 	// placeholder for future response values
 }
 
-// LinkedServiceClientGetLinkedServiceResponse contains the response from method linkedServiceClient.GetLinkedService.
+// LinkedServiceClientGetLinkedServiceResponse contains the response from method LinkedServiceClient.GetLinkedService.
 type LinkedServiceClientGetLinkedServiceResponse struct {
 	LinkedServiceResource
 }
 
-// LinkedServiceClientGetLinkedServicesByWorkspaceResponse contains the response from method linkedServiceClient.GetLinkedServicesByWorkspace.
+// LinkedServiceClientGetLinkedServicesByWorkspaceResponse contains the response from method LinkedServiceClient.GetLinkedServicesByWorkspace.
 type LinkedServiceClientGetLinkedServicesByWorkspaceResponse struct {
 	LinkedServiceListResponse
 }
 
-// LinkedServiceClientRenameLinkedServiceResponse contains the response from method linkedServiceClient.RenameLinkedService.
+// LinkedServiceClientRenameLinkedServiceResponse contains the response from method LinkedServiceClient.RenameLinkedService.
 type LinkedServiceClientRenameLinkedServiceResponse struct {
 	// placeholder for future response values
 }
 
-// NotebookClientCreateOrUpdateNotebookResponse contains the response from method notebookClient.CreateOrUpdateNotebook.
+// NotebookClientCreateOrUpdateNotebookResponse contains the response from method NotebookClient.CreateOrUpdateNotebook.
 type NotebookClientCreateOrUpdateNotebookResponse struct {
 	NotebookResource
 }
 
-// NotebookClientDeleteNotebookResponse contains the response from method notebookClient.DeleteNotebook.
+// NotebookClientDeleteNotebookResponse contains the response from method NotebookClient.DeleteNotebook.
 type NotebookClientDeleteNotebookResponse struct {
 	// placeholder for future response values
 }
 
-// NotebookClientGetNotebookResponse contains the response from method notebookClient.GetNotebook.
+// NotebookClientGetNotebookResponse contains the response from method NotebookClient.GetNotebook.
 type NotebookClientGetNotebookResponse struct {
 	NotebookResource
 }
 
-// NotebookClientGetNotebookSummaryByWorkSpaceResponse contains the response from method notebookClient.GetNotebookSummaryByWorkSpace.
+// NotebookClientGetNotebookSummaryByWorkSpaceResponse contains the response from method NotebookClient.GetNotebookSummaryByWorkSpace.
 type NotebookClientGetNotebookSummaryByWorkSpaceResponse struct {
 	NotebookListResponse
 }
 
-// NotebookClientGetNotebooksByWorkspaceResponse contains the response from method notebookClient.GetNotebooksByWorkspace.
+// NotebookClientGetNotebooksByWorkspaceResponse contains the response from method NotebookClient.GetNotebooksByWorkspace.
 type NotebookClientGetNotebooksByWorkspaceResponse struct {
 	NotebookListResponse
 }
 
-// NotebookClientRenameNotebookResponse contains the response from method notebookClient.RenameNotebook.
+// NotebookClientRenameNotebookResponse contains the response from method NotebookClient.RenameNotebook.
 type NotebookClientRenameNotebookResponse struct {
 	// placeholder for future response values
 }
 
-// PipelineClientCreateOrUpdatePipelineResponse contains the response from method pipelineClient.CreateOrUpdatePipeline.
+// PipelineClientCreateOrUpdatePipelineResponse contains the response from method PipelineClient.CreateOrUpdatePipeline.
 type PipelineClientCreateOrUpdatePipelineResponse struct {
 	PipelineResource
 }
 
-// PipelineClientCreatePipelineRunResponse contains the response from method pipelineClient.CreatePipelineRun.
+// PipelineClientCreatePipelineRunResponse contains the response from method PipelineClient.CreatePipelineRun.
 type PipelineClientCreatePipelineRunResponse struct {
 	CreateRunResponse
 }
 
-// PipelineClientDeletePipelineResponse contains the response from method pipelineClient.DeletePipeline.
+// PipelineClientDeletePipelineResponse contains the response from method PipelineClient.DeletePipeline.
 type PipelineClientDeletePipelineResponse struct {
 	// placeholder for future response values
 }
 
-// PipelineClientGetPipelineResponse contains the response from method pipelineClient.GetPipeline.
+// PipelineClientGetPipelineResponse contains the response from method PipelineClient.GetPipeline.
 type PipelineClientGetPipelineResponse struct {
 	PipelineResource
 }
 
-// PipelineClientGetPipelinesByWorkspaceResponse contains the response from method pipelineClient.GetPipelinesByWorkspace.
+// PipelineClientGetPipelinesByWorkspaceResponse contains the response from method PipelineClient.GetPipelinesByWorkspace.
 type PipelineClientGetPipelinesByWorkspaceResponse struct {
 	PipelineListResponse
 }
 
-// PipelineClientRenamePipelineResponse contains the response from method pipelineClient.RenamePipeline.
+// PipelineClientRenamePipelineResponse contains the response from method PipelineClient.RenamePipeline.
 type PipelineClientRenamePipelineResponse struct {
 	// placeholder for future response values
 }
 
-// PipelineRunClientCancelPipelineRunResponse contains the response from method pipelineRunClient.CancelPipelineRun.
+// PipelineRunClientCancelPipelineRunResponse contains the response from method PipelineRunClient.CancelPipelineRun.
 type PipelineRunClientCancelPipelineRunResponse struct {
 	// placeholder for future response values
 }
 
-// PipelineRunClientGetPipelineRunResponse contains the response from method pipelineRunClient.GetPipelineRun.
+// PipelineRunClientGetPipelineRunResponse contains the response from method PipelineRunClient.GetPipelineRun.
 type PipelineRunClientGetPipelineRunResponse struct {
 	PipelineRun
 }
 
-// PipelineRunClientQueryActivityRunsResponse contains the response from method pipelineRunClient.QueryActivityRuns.
+// PipelineRunClientQueryActivityRunsResponse contains the response from method PipelineRunClient.QueryActivityRuns.
 type PipelineRunClientQueryActivityRunsResponse struct {
 	ActivityRunsQueryResponse
 }
 
-// PipelineRunClientQueryPipelineRunsByWorkspaceResponse contains the response from method pipelineRunClient.QueryPipelineRunsByWorkspace.
+// PipelineRunClientQueryPipelineRunsByWorkspaceResponse contains the response from method PipelineRunClient.QueryPipelineRunsByWorkspace.
 type PipelineRunClientQueryPipelineRunsByWorkspaceResponse struct {
 	PipelineRunsQueryResponse
 }
 
-// SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
+// SQLPoolsClientGetResponse contains the response from method SQLPoolsClient.Get.
+type SQLPoolsClientGetResponse struct {
+	SQLPool
+}
+
+// SQLPoolsClientListResponse contains the response from method SQLPoolsClient.List.
+type SQLPoolsClientListResponse struct {
+	SQLPoolInfoListResult
+}
+
+// SQLScriptClientCreateOrUpdateSQLScriptResponse contains the response from method SQLScriptClient.CreateOrUpdateSQLScript.
+type SQLScriptClientCreateOrUpdateSQLScriptResponse struct {
+	SQLScriptResource
+}
+
+// SQLScriptClientDeleteSQLScriptResponse contains the response from method SQLScriptClient.DeleteSQLScript.
+type SQLScriptClientDeleteSQLScriptResponse struct {
+	// placeholder for future response values
+}
+
+// SQLScriptClientGetSQLScriptResponse contains the response from method SQLScriptClient.GetSQLScript.
+type SQLScriptClientGetSQLScriptResponse struct {
+	SQLScriptResource
+}
+
+// SQLScriptClientGetSQLScriptsByWorkspaceResponse contains the response from method SQLScriptClient.GetSQLScriptsByWorkspace.
+type SQLScriptClientGetSQLScriptsByWorkspaceResponse struct {
+	SQLScriptsListResponse
+}
+
+// SQLScriptClientRenameSQLScriptResponse contains the response from method SQLScriptClient.RenameSQLScript.
+type SQLScriptClientRenameSQLScriptResponse struct {
+	// placeholder for future response values
+}
+
+// SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition.
 type SparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse struct {
 	SparkJobDefinitionResource
 }
 
-// SparkJobDefinitionClientDebugSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.DebugSparkJobDefinition.
+// SparkJobDefinitionClientDebugSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.DebugSparkJobDefinition.
 type SparkJobDefinitionClientDebugSparkJobDefinitionResponse struct {
 	SparkBatchJob
 }
 
-// SparkJobDefinitionClientDeleteSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.DeleteSparkJobDefinition.
+// SparkJobDefinitionClientDeleteSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.DeleteSparkJobDefinition.
 type SparkJobDefinitionClientDeleteSparkJobDefinitionResponse struct {
 	// placeholder for future response values
 }
 
-// SparkJobDefinitionClientExecuteSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.ExecuteSparkJobDefinition.
+// SparkJobDefinitionClientExecuteSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.ExecuteSparkJobDefinition.
 type SparkJobDefinitionClientExecuteSparkJobDefinitionResponse struct {
 	SparkBatchJob
 }
 
-// SparkJobDefinitionClientGetSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.GetSparkJobDefinition.
+// SparkJobDefinitionClientGetSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.GetSparkJobDefinition.
 type SparkJobDefinitionClientGetSparkJobDefinitionResponse struct {
 	SparkJobDefinitionResource
 }
 
-// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse contains the response from method sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace.
+// SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse contains the response from method SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace.
 type SparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse struct {
 	SparkJobDefinitionsListResponse
 }
 
-// SparkJobDefinitionClientRenameSparkJobDefinitionResponse contains the response from method sparkJobDefinitionClient.RenameSparkJobDefinition.
+// SparkJobDefinitionClientRenameSparkJobDefinitionResponse contains the response from method SparkJobDefinitionClient.RenameSparkJobDefinition.
 type SparkJobDefinitionClientRenameSparkJobDefinitionResponse struct {
 	// placeholder for future response values
 }
 
-// SqlPoolsClientGetResponse contains the response from method sqlPoolsClient.Get.
-type SqlPoolsClientGetResponse struct {
-	SQLPool
-}
-
-// SqlPoolsClientListResponse contains the response from method sqlPoolsClient.List.
-type SqlPoolsClientListResponse struct {
-	SQLPoolInfoListResult
-}
-
-// SqlScriptClientCreateOrUpdateSQLScriptResponse contains the response from method sqlScriptClient.CreateOrUpdateSQLScript.
-type SqlScriptClientCreateOrUpdateSQLScriptResponse struct {
-	SQLScriptResource
-}
-
-// SqlScriptClientDeleteSQLScriptResponse contains the response from method sqlScriptClient.DeleteSQLScript.
-type SqlScriptClientDeleteSQLScriptResponse struct {
-	// placeholder for future response values
-}
-
-// SqlScriptClientGetSQLScriptResponse contains the response from method sqlScriptClient.GetSQLScript.
-type SqlScriptClientGetSQLScriptResponse struct {
-	SQLScriptResource
-}
-
-// SqlScriptClientGetSQLScriptsByWorkspaceResponse contains the response from method sqlScriptClient.GetSQLScriptsByWorkspace.
-type SqlScriptClientGetSQLScriptsByWorkspaceResponse struct {
-	SQLScriptsListResponse
-}
-
-// SqlScriptClientRenameSQLScriptResponse contains the response from method sqlScriptClient.RenameSQLScript.
-type SqlScriptClientRenameSQLScriptResponse struct {
-	// placeholder for future response values
-}
-
-// TriggerClientCreateOrUpdateTriggerResponse contains the response from method triggerClient.CreateOrUpdateTrigger.
+// TriggerClientCreateOrUpdateTriggerResponse contains the response from method TriggerClient.CreateOrUpdateTrigger.
 type TriggerClientCreateOrUpdateTriggerResponse struct {
 	TriggerResource
 }
 
-// TriggerClientDeleteTriggerResponse contains the response from method triggerClient.DeleteTrigger.
+// TriggerClientDeleteTriggerResponse contains the response from method TriggerClient.DeleteTrigger.
 type TriggerClientDeleteTriggerResponse struct {
 	// placeholder for future response values
 }
 
-// TriggerClientGetEventSubscriptionStatusResponse contains the response from method triggerClient.GetEventSubscriptionStatus.
+// TriggerClientGetEventSubscriptionStatusResponse contains the response from method TriggerClient.GetEventSubscriptionStatus.
 type TriggerClientGetEventSubscriptionStatusResponse struct {
 	TriggerSubscriptionOperationStatus
 }
 
-// TriggerClientGetTriggerResponse contains the response from method triggerClient.GetTrigger.
+// TriggerClientGetTriggerResponse contains the response from method TriggerClient.GetTrigger.
 type TriggerClientGetTriggerResponse struct {
 	TriggerResource
 }
 
-// TriggerClientGetTriggersByWorkspaceResponse contains the response from method triggerClient.GetTriggersByWorkspace.
+// TriggerClientGetTriggersByWorkspaceResponse contains the response from method TriggerClient.GetTriggersByWorkspace.
 type TriggerClientGetTriggersByWorkspaceResponse struct {
 	TriggerListResponse
 }
 
-// TriggerClientStartTriggerResponse contains the response from method triggerClient.StartTrigger.
+// TriggerClientStartTriggerResponse contains the response from method TriggerClient.StartTrigger.
 type TriggerClientStartTriggerResponse struct {
 	// placeholder for future response values
 }
 
-// TriggerClientStopTriggerResponse contains the response from method triggerClient.StopTrigger.
+// TriggerClientStopTriggerResponse contains the response from method TriggerClient.StopTrigger.
 type TriggerClientStopTriggerResponse struct {
 	// placeholder for future response values
 }
 
-// TriggerClientSubscribeTriggerToEventsResponse contains the response from method triggerClient.SubscribeTriggerToEvents.
+// TriggerClientSubscribeTriggerToEventsResponse contains the response from method TriggerClient.SubscribeTriggerToEvents.
 type TriggerClientSubscribeTriggerToEventsResponse struct {
 	TriggerSubscriptionOperationStatus
 }
 
-// TriggerClientUnsubscribeTriggerFromEventsResponse contains the response from method triggerClient.UnsubscribeTriggerFromEvents.
+// TriggerClientUnsubscribeTriggerFromEventsResponse contains the response from method TriggerClient.UnsubscribeTriggerFromEvents.
 type TriggerClientUnsubscribeTriggerFromEventsResponse struct {
 	TriggerSubscriptionOperationStatus
 }
 
-// TriggerRunClientCancelTriggerInstanceResponse contains the response from method triggerRunClient.CancelTriggerInstance.
+// TriggerRunClientCancelTriggerInstanceResponse contains the response from method TriggerRunClient.CancelTriggerInstance.
 type TriggerRunClientCancelTriggerInstanceResponse struct {
 	// placeholder for future response values
 }
 
-// TriggerRunClientQueryTriggerRunsByWorkspaceResponse contains the response from method triggerRunClient.QueryTriggerRunsByWorkspace.
+// TriggerRunClientQueryTriggerRunsByWorkspaceResponse contains the response from method TriggerRunClient.QueryTriggerRunsByWorkspace.
 type TriggerRunClientQueryTriggerRunsByWorkspaceResponse struct {
 	TriggerRunsQueryResponse
 }
 
-// TriggerRunClientRerunTriggerInstanceResponse contains the response from method triggerRunClient.RerunTriggerInstance.
+// TriggerRunClientRerunTriggerInstanceResponse contains the response from method TriggerRunClient.RerunTriggerInstance.
 type TriggerRunClientRerunTriggerInstanceResponse struct {
 	// placeholder for future response values
 }
 
-// WorkspaceClientGetResponse contains the response from method workspaceClient.Get.
+// WorkspaceClientGetResponse contains the response from method WorkspaceClient.Get.
 type WorkspaceClientGetResponse struct {
 	Workspace
 }
 
-// WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse contains the response from method workspaceGitRepoManagementClient.GetGitHubAccessToken.
+// WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse contains the response from method WorkspaceGitRepoManagementClient.GetGitHubAccessToken.
 type WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse struct {
 	GitHubAccessTokenResponse
 }

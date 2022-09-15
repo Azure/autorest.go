@@ -11,6 +11,7 @@ package azspark
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,17 +20,34 @@ import (
 	"strings"
 )
 
-type batchClient struct {
+// BatchClient contains the methods for the SparkBatch group.
+// Don't use this type directly, use NewBatchClient() instead.
+type BatchClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newBatchClient creates a new instance of batchClient with the specified values.
+// NewBatchClient creates a new instance of BatchClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // livyAPIVersion - Valid api-version for the request.
 // sparkPoolName - Name of the spark pool.
-// pl - the pipeline used for sending requests and handling responses.
-func newBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, pl runtime.Pipeline) *batchClient {
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, credential azcore.TokenCredential, options *azcore.ClientOptions) *BatchClient {
+	if options == nil {
+		options = &azcore.ClientOptions{}
+	}
+	pOptions := &policy.ClientOptions{
+		Logging:          options.Logging,
+		Retry:            options.Retry,
+		Telemetry:        options.Telemetry,
+		Transport:        options.Transport,
+		PerCallPolicies:  options.PerCallPolicies,
+		PerRetryPolicies: options.PerRetryPolicies,
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
+	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
 	if livyAPIVersion == nil {
@@ -38,7 +56,7 @@ func newBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName strin
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
-	client := &batchClient{
+	client := &BatchClient{
 		endpoint: hostURL,
 		pl:       pl,
 	}
@@ -49,9 +67,9 @@ func newBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName strin
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01-preview
 // batchID - Identifier for the batch job.
-// options - batchClientCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob
+// options - BatchClientCancelSparkBatchJobOptions contains the optional parameters for the BatchClient.CancelSparkBatchJob
 // method.
-func (client *batchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *batchClientCancelSparkBatchJobOptions) (BatchClientCancelSparkBatchJobResponse, error) {
+func (client *BatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientCancelSparkBatchJobOptions) (BatchClientCancelSparkBatchJobResponse, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
 		return BatchClientCancelSparkBatchJobResponse{}, err
@@ -67,7 +85,7 @@ func (client *batchClient) CancelSparkBatchJob(ctx context.Context, batchID int3
 }
 
 // cancelSparkBatchJobCreateRequest creates the CancelSparkBatchJob request.
-func (client *batchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *batchClientCancelSparkBatchJobOptions) (*policy.Request, error) {
+func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *BatchClientCancelSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
@@ -81,9 +99,9 @@ func (client *batchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01-preview
 // sparkBatchJobOptions - Livy compatible batch job request payload.
-// options - batchClientCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob
+// options - BatchClientCreateSparkBatchJobOptions contains the optional parameters for the BatchClient.CreateSparkBatchJob
 // method.
-func (client *batchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions BatchJobOptions, options *batchClientCreateSparkBatchJobOptions) (BatchClientCreateSparkBatchJobResponse, error) {
+func (client *BatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions BatchJobOptions, options *BatchClientCreateSparkBatchJobOptions) (BatchClientCreateSparkBatchJobResponse, error) {
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
 		return BatchClientCreateSparkBatchJobResponse{}, err
@@ -99,7 +117,7 @@ func (client *batchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJo
 }
 
 // createSparkBatchJobCreateRequest creates the CreateSparkBatchJob request.
-func (client *batchClient) createSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions BatchJobOptions, options *batchClientCreateSparkBatchJobOptions) (*policy.Request, error) {
+func (client *BatchClient) createSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions BatchJobOptions, options *BatchClientCreateSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/batches"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -115,7 +133,7 @@ func (client *batchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 }
 
 // createSparkBatchJobHandleResponse handles the CreateSparkBatchJob response.
-func (client *batchClient) createSparkBatchJobHandleResponse(resp *http.Response) (BatchClientCreateSparkBatchJobResponse, error) {
+func (client *BatchClient) createSparkBatchJobHandleResponse(resp *http.Response) (BatchClientCreateSparkBatchJobResponse, error) {
 	result := BatchClientCreateSparkBatchJobResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
 		return BatchClientCreateSparkBatchJobResponse{}, err
@@ -127,8 +145,8 @@ func (client *batchClient) createSparkBatchJobHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01-preview
 // batchID - Identifier for the batch job.
-// options - batchClientGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
-func (client *batchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *batchClientGetSparkBatchJobOptions) (BatchClientGetSparkBatchJobResponse, error) {
+// options - BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
+func (client *BatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientGetSparkBatchJobOptions) (BatchClientGetSparkBatchJobResponse, error) {
 	req, err := client.getSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
 		return BatchClientGetSparkBatchJobResponse{}, err
@@ -144,7 +162,7 @@ func (client *batchClient) GetSparkBatchJob(ctx context.Context, batchID int32, 
 }
 
 // getSparkBatchJobCreateRequest creates the GetSparkBatchJob request.
-func (client *batchClient) getSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *batchClientGetSparkBatchJobOptions) (*policy.Request, error) {
+func (client *BatchClient) getSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *BatchClientGetSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
@@ -161,7 +179,7 @@ func (client *batchClient) getSparkBatchJobCreateRequest(ctx context.Context, ba
 }
 
 // getSparkBatchJobHandleResponse handles the GetSparkBatchJob response.
-func (client *batchClient) getSparkBatchJobHandleResponse(resp *http.Response) (BatchClientGetSparkBatchJobResponse, error) {
+func (client *BatchClient) getSparkBatchJobHandleResponse(resp *http.Response) (BatchClientGetSparkBatchJobResponse, error) {
 	result := BatchClientGetSparkBatchJobResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
 		return BatchClientGetSparkBatchJobResponse{}, err
@@ -172,8 +190,8 @@ func (client *batchClient) getSparkBatchJobHandleResponse(resp *http.Response) (
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-11-01-preview
-// options - batchClientGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
-func (client *batchClient) GetSparkBatchJobs(ctx context.Context, options *batchClientGetSparkBatchJobsOptions) (BatchClientGetSparkBatchJobsResponse, error) {
+// options - BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
+func (client *BatchClient) GetSparkBatchJobs(ctx context.Context, options *BatchClientGetSparkBatchJobsOptions) (BatchClientGetSparkBatchJobsResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {
 		return BatchClientGetSparkBatchJobsResponse{}, err
@@ -189,7 +207,7 @@ func (client *batchClient) GetSparkBatchJobs(ctx context.Context, options *batch
 }
 
 // getSparkBatchJobsCreateRequest creates the GetSparkBatchJobs request.
-func (client *batchClient) getSparkBatchJobsCreateRequest(ctx context.Context, options *batchClientGetSparkBatchJobsOptions) (*policy.Request, error) {
+func (client *BatchClient) getSparkBatchJobsCreateRequest(ctx context.Context, options *BatchClientGetSparkBatchJobsOptions) (*policy.Request, error) {
 	urlPath := "/batches"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -211,7 +229,7 @@ func (client *batchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 }
 
 // getSparkBatchJobsHandleResponse handles the GetSparkBatchJobs response.
-func (client *batchClient) getSparkBatchJobsHandleResponse(resp *http.Response) (BatchClientGetSparkBatchJobsResponse, error) {
+func (client *BatchClient) getSparkBatchJobsHandleResponse(resp *http.Response) (BatchClientGetSparkBatchJobsResponse, error) {
 	result := BatchClientGetSparkBatchJobsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJobCollection); err != nil {
 		return BatchClientGetSparkBatchJobsResponse{}, err
