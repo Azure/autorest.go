@@ -104,8 +104,8 @@ type IntegrationRuntimesClientListResponse struct {
 	IntegrationRuntimeListResponse
 }
 
-// LibraryClientAppendWithBinaryResponse contains the response from method libraryClient.AppendWithBinary.
-type LibraryClientAppendWithBinaryResponse struct {
+// LibraryClientAppendResponse contains the response from method libraryClient.Append.
+type LibraryClientAppendResponse struct {
 	// placeholder for future response values
 }
 

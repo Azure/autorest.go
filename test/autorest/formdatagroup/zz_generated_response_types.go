@@ -17,8 +17,8 @@ type FormdataClientUploadFileResponse struct {
 	Body io.ReadCloser
 }
 
-// FormdataClientUploadFileViaBodyWithBinaryResponse contains the response from method FormdataClient.UploadFileViaBodyWithBinary.
-type FormdataClientUploadFileViaBodyWithBinaryResponse struct {
+// FormdataClientUploadFileViaBodyResponse contains the response from method FormdataClient.UploadFileViaBody.
+type FormdataClientUploadFileViaBodyResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 }

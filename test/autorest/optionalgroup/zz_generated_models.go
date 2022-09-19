@@ -81,9 +81,9 @@ type ExplicitClientPostOptionalStringHeaderOptions struct {
 	BodyParameter *string
 }
 
-// ExplicitClientPostOptionalStringParameterWithTextOptions contains the optional parameters for the ExplicitClient.PostOptionalStringParameterWithText
+// ExplicitClientPostOptionalStringParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalStringParameter
 // method.
-type ExplicitClientPostOptionalStringParameterWithTextOptions struct {
+type ExplicitClientPostOptionalStringParameterOptions struct {
 	BodyParameter *string
 }
 
@@ -147,9 +147,9 @@ type ExplicitClientPostRequiredStringHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitClientPostRequiredStringParameterWithTextOptions contains the optional parameters for the ExplicitClient.PostRequiredStringParameterWithText
+// ExplicitClientPostRequiredStringParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredStringParameter
 // method.
-type ExplicitClientPostRequiredStringParameterWithTextOptions struct {
+type ExplicitClientPostRequiredStringParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -159,15 +159,15 @@ type ExplicitClientPostRequiredStringPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitClientPutOptionalBinaryBodyWithBinaryOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBodyWithBinary
+// ExplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody
 // method.
-type ExplicitClientPutOptionalBinaryBodyWithBinaryOptions struct {
+type ExplicitClientPutOptionalBinaryBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitClientPutRequiredBinaryBodyWithBinaryOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBodyWithBinary
+// ExplicitClientPutRequiredBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBody
 // method.
-type ExplicitClientPutRequiredBinaryBodyWithBinaryOptions struct {
+type ExplicitClientPutRequiredBinaryBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -193,15 +193,14 @@ type ImplicitClientGetRequiredPathOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImplicitClientPutOptionalBinaryBodyWithBinaryOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBodyWithBinary
+// ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 // method.
-type ImplicitClientPutOptionalBinaryBodyWithBinaryOptions struct {
+type ImplicitClientPutOptionalBinaryBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImplicitClientPutOptionalBodyWithTextOptions contains the optional parameters for the ImplicitClient.PutOptionalBodyWithText
-// method.
-type ImplicitClientPutOptionalBodyWithTextOptions struct {
+// ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody method.
+type ImplicitClientPutOptionalBodyOptions struct {
 	// placeholder for future optional parameters
 }
 

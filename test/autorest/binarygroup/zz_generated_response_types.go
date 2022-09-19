@@ -9,12 +9,12 @@
 
 package binarygroup
 
-// UploadClientBinaryWithBinaryResponse contains the response from method UploadClient.BinaryWithBinary.
-type UploadClientBinaryWithBinaryResponse struct {
+// UploadClientBinaryResponse contains the response from method UploadClient.Binary.
+type UploadClientBinaryResponse struct {
 	// placeholder for future response values
 }
 
-// UploadClientFileWithBinaryResponse contains the response from method UploadClient.FileWithBinary.
-type UploadClientFileWithBinaryResponse struct {
+// UploadClientFileResponse contains the response from method UploadClient.File.
+type UploadClientFileResponse struct {
 	// placeholder for future response values
 }

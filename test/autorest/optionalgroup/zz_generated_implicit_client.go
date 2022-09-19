@@ -186,28 +186,28 @@ func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// PutOptionalBinaryBodyWithBinary - Test implicitly optional body parameter
+// PutOptionalBinaryBody - Test implicitly optional body parameter
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// options - ImplicitClientPutOptionalBinaryBodyWithBinaryOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBodyWithBinary
+// options - ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 // method.
-func (client *ImplicitClient) PutOptionalBinaryBodyWithBinary(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ImplicitClientPutOptionalBinaryBodyWithBinaryOptions) (ImplicitClientPutOptionalBinaryBodyWithBinaryResponse, error) {
-	req, err := client.putOptionalBinaryBodyWithBinaryCreateRequest(ctx, bodyParameter, options)
+func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ImplicitClientPutOptionalBinaryBodyOptions) (ImplicitClientPutOptionalBinaryBodyResponse, error) {
+	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return ImplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, err
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, err
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, runtime.NewResponseError(resp)
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientPutOptionalBinaryBodyWithBinaryResponse{}, nil
+	return ImplicitClientPutOptionalBinaryBodyResponse{}, nil
 }
 
-// putOptionalBinaryBodyWithBinaryCreateRequest creates the PutOptionalBinaryBodyWithBinary request.
-func (client *ImplicitClient) putOptionalBinaryBodyWithBinaryCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ImplicitClientPutOptionalBinaryBodyWithBinaryOptions) (*policy.Request, error) {
+// putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
+func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ImplicitClientPutOptionalBinaryBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/binary-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -217,28 +217,28 @@ func (client *ImplicitClient) putOptionalBinaryBodyWithBinaryCreateRequest(ctx c
 	return req, req.SetBody(bodyParameter, "application/octet-stream")
 }
 
-// PutOptionalBodyWithText - Test implicitly optional body parameter
+// PutOptionalBody - Test implicitly optional body parameter
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// options - ImplicitClientPutOptionalBodyWithTextOptions contains the optional parameters for the ImplicitClient.PutOptionalBodyWithText
+// options - ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody
 // method.
-func (client *ImplicitClient) PutOptionalBodyWithText(ctx context.Context, bodyParameter string, options *ImplicitClientPutOptionalBodyWithTextOptions) (ImplicitClientPutOptionalBodyWithTextResponse, error) {
-	req, err := client.putOptionalBodyWithTextCreateRequest(ctx, bodyParameter, options)
+func (client *ImplicitClient) PutOptionalBody(ctx context.Context, bodyParameter string, options *ImplicitClientPutOptionalBodyOptions) (ImplicitClientPutOptionalBodyResponse, error) {
+	req, err := client.putOptionalBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
-		return ImplicitClientPutOptionalBodyWithTextResponse{}, err
+		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitClientPutOptionalBodyWithTextResponse{}, err
+		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitClientPutOptionalBodyWithTextResponse{}, runtime.NewResponseError(resp)
+		return ImplicitClientPutOptionalBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return ImplicitClientPutOptionalBodyWithTextResponse{}, nil
+	return ImplicitClientPutOptionalBodyResponse{}, nil
 }
 
-// putOptionalBodyWithTextCreateRequest creates the PutOptionalBodyWithText request.
-func (client *ImplicitClient) putOptionalBodyWithTextCreateRequest(ctx context.Context, bodyParameter string, options *ImplicitClientPutOptionalBodyWithTextOptions) (*policy.Request, error) {
+// putOptionalBodyCreateRequest creates the PutOptionalBody request.
+func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, bodyParameter string, options *ImplicitClientPutOptionalBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

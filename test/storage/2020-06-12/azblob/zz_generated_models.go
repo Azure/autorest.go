@@ -23,7 +23,7 @@ type AccessPolicy struct {
 	Start *time.Time `xml:"Start"`
 }
 
-// AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlockWithBinary method.
+// AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock method.
 type AppendPositionAccessConditions struct {
 	// Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare.
 	// Append Block will succeed only if the append position is equal to this number. If
@@ -543,7 +543,7 @@ type RetentionPolicy struct {
 	Days *int32 `xml:"Days"`
 }
 
-// SequenceNumberAccessConditions contains a group of parameters for the pageBlobClient.UploadPagesWithBinary method.
+// SequenceNumberAccessConditions contains a group of parameters for the pageBlobClient.UploadPages method.
 type SequenceNumberAccessConditions struct {
 	// Specify this header value to operate only on a blob if it has the specified sequence number.
 	IfSequenceNumberEqualTo *int64
@@ -683,9 +683,8 @@ type appendBlobClientAppendBlockFromURLOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// appendBlobClientAppendBlockWithBinaryOptions contains the optional parameters for the appendBlobClient.AppendBlockWithBinary
-// method.
-type appendBlobClientAppendBlockWithBinaryOptions struct {
+// appendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
+type appendBlobClientAppendBlockOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -821,9 +820,8 @@ type blockBlobClientStageBlockFromURLOptions struct {
 	Timeout *int32
 }
 
-// blockBlobClientStageBlockWithBinaryOptions contains the optional parameters for the blockBlobClient.StageBlockWithBinary
-// method.
-type blockBlobClientStageBlockWithBinaryOptions struct {
+// blockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock method.
+type blockBlobClientStageBlockOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -836,8 +834,8 @@ type blockBlobClientStageBlockWithBinaryOptions struct {
 	TransactionalContentMD5 []byte
 }
 
-// blockBlobClientUploadWithBinaryOptions contains the optional parameters for the blockBlobClient.UploadWithBinary method.
-type blockBlobClientUploadWithBinaryOptions struct {
+// blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
+type blockBlobClientUploadOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
 	// Specifies the date time when the blobs immutability policy is set to expire.
@@ -1536,9 +1534,8 @@ type containerClientSetMetadataOptions struct {
 	Timeout *int32
 }
 
-// containerClientSubmitBatchWithBinaryOptions contains the optional parameters for the containerClient.SubmitBatchWithBinary
-// method.
-type containerClientSubmitBatchWithBinaryOptions struct {
+// containerClientSubmitBatchOptions contains the optional parameters for the containerClient.SubmitBatch method.
+type containerClientSubmitBatchOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
@@ -1787,9 +1784,8 @@ type pageBlobClientUploadPagesFromURLOptions struct {
 	Timeout *int32
 }
 
-// pageBlobClientUploadPagesWithBinaryOptions contains the optional parameters for the pageBlobClient.UploadPagesWithBinary
-// method.
-type pageBlobClientUploadPagesWithBinaryOptions struct {
+// pageBlobClientUploadPagesOptions contains the optional parameters for the pageBlobClient.UploadPages method.
+type pageBlobClientUploadPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
@@ -1900,9 +1896,8 @@ type serviceClientSetPropertiesOptions struct {
 	Timeout *int32
 }
 
-// serviceClientSubmitBatchWithBinaryOptions contains the optional parameters for the serviceClient.SubmitBatchWithBinary
-// method.
-type serviceClientSubmitBatchWithBinaryOptions struct {
+// serviceClientSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
+type serviceClientSubmitBatchOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string

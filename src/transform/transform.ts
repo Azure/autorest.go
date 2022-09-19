@@ -302,7 +302,7 @@ async function processOperationRequests(session: Session<CodeModel>) {
         op.language.go!.description = parseComments(op.language.go!.description);
       }
 
-      const normalizeOperationName = await session.getValue('normalize-operation-name', true);
+      const normalizeOperationName = await session.getValue('normalize-operation-name', false);
       
       if (!normalizeOperationName){
         // previous operation naming logic: keep original name if only one body type, and add suffix for operation with non-binary body type if more than one body type

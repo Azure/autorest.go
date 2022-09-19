@@ -1421,32 +1421,31 @@ func (client *containerClient) setMetadataHandleResponse(resp *http.Response) (C
 	return result, nil
 }
 
-// SubmitBatchWithBinary - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+// SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2020-06-12
 // contentLength - The length of the request.
 // multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
 // value: multipart/mixed; boundary=batch_
 // body - Initial data
-// options - containerClientSubmitBatchWithBinaryOptions contains the optional parameters for the containerClient.SubmitBatchWithBinary
-// method.
-func (client *containerClient) SubmitBatchWithBinary(ctx context.Context, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *containerClientSubmitBatchWithBinaryOptions) (ContainerClientSubmitBatchWithBinaryResponse, error) {
-	req, err := client.submitBatchWithBinaryCreateRequest(ctx, restype, comp, contentLength, multipartContentType, body, options)
+// options - containerClientSubmitBatchOptions contains the optional parameters for the containerClient.SubmitBatch method.
+func (client *containerClient) SubmitBatch(ctx context.Context, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *containerClientSubmitBatchOptions) (ContainerClientSubmitBatchResponse, error) {
+	req, err := client.submitBatchCreateRequest(ctx, restype, comp, contentLength, multipartContentType, body, options)
 	if err != nil {
-		return ContainerClientSubmitBatchWithBinaryResponse{}, err
+		return ContainerClientSubmitBatchResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ContainerClientSubmitBatchWithBinaryResponse{}, err
+		return ContainerClientSubmitBatchResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ContainerClientSubmitBatchWithBinaryResponse{}, runtime.NewResponseError(resp)
+		return ContainerClientSubmitBatchResponse{}, runtime.NewResponseError(resp)
 	}
-	return client.submitBatchWithBinaryHandleResponse(resp)
+	return client.submitBatchHandleResponse(resp)
 }
 
-// submitBatchWithBinaryCreateRequest creates the SubmitBatchWithBinary request.
-func (client *containerClient) submitBatchWithBinaryCreateRequest(ctx context.Context, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *containerClientSubmitBatchWithBinaryOptions) (*policy.Request, error) {
+// submitBatchCreateRequest creates the SubmitBatch request.
+func (client *containerClient) submitBatchCreateRequest(ctx context.Context, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *containerClientSubmitBatchOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -1469,9 +1468,9 @@ func (client *containerClient) submitBatchWithBinaryCreateRequest(ctx context.Co
 	return req, req.SetBody(body, "application/xml")
 }
 
-// submitBatchWithBinaryHandleResponse handles the SubmitBatchWithBinary response.
-func (client *containerClient) submitBatchWithBinaryHandleResponse(resp *http.Response) (ContainerClientSubmitBatchWithBinaryResponse, error) {
-	result := ContainerClientSubmitBatchWithBinaryResponse{Body: resp.Body}
+// submitBatchHandleResponse handles the SubmitBatch response.
+func (client *containerClient) submitBatchHandleResponse(resp *http.Response) (ContainerClientSubmitBatchResponse, error) {
+	result := ContainerClientSubmitBatchResponse{Body: resp.Body}
 	if val := resp.Header.Get("Content-Type"); val != "" {
 		result.ContentType = &val
 	}

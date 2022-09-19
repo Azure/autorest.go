@@ -71,29 +71,29 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 	return req, nil
 }
 
-// UploadFileViaBodyWithBinary - Upload file
+// UploadFileViaBody - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // fileContent - File to upload.
-// options - FormdataClientUploadFileViaBodyWithBinaryOptions contains the optional parameters for the FormdataClient.UploadFileViaBodyWithBinary
+// options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
 // method.
-func (client *FormdataClient) UploadFileViaBodyWithBinary(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyWithBinaryOptions) (FormdataClientUploadFileViaBodyWithBinaryResponse, error) {
-	req, err := client.uploadFileViaBodyWithBinaryCreateRequest(ctx, fileContent, options)
+func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (FormdataClientUploadFileViaBodyResponse, error) {
+	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return FormdataClientUploadFileViaBodyWithBinaryResponse{}, err
+		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FormdataClientUploadFileViaBodyWithBinaryResponse{}, err
+		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFileViaBodyWithBinaryResponse{}, runtime.NewResponseError(resp)
+		return FormdataClientUploadFileViaBodyResponse{}, runtime.NewResponseError(resp)
 	}
-	return FormdataClientUploadFileViaBodyWithBinaryResponse{Body: resp.Body}, nil
+	return FormdataClientUploadFileViaBodyResponse{Body: resp.Body}, nil
 }
 
-// uploadFileViaBodyWithBinaryCreateRequest creates the UploadFileViaBodyWithBinary request.
-func (client *FormdataClient) uploadFileViaBodyWithBinaryCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyWithBinaryOptions) (*policy.Request, error) {
+// uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
+func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

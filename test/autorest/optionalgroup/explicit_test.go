@@ -83,7 +83,7 @@ func TestExplicitPostOptionalStringHeader(t *testing.T) {
 
 func TestExplicitPostOptionalStringParameter(t *testing.T) {
 	client := newExplicitClient()
-	result, err := client.PostOptionalStringParameterWithText(context.Background(), nil)
+	result, err := client.PostOptionalStringParameter(context.Background(), nil)
 	require.NoError(t, err)
 	require.Zero(t, result)
 }
@@ -178,7 +178,7 @@ func TestExplicitPostRequiredStringHeader(t *testing.T) {
 func TestExplicitPostRequiredStringParameter(t *testing.T) {
 	t.Skip("cannot set nil for string in Go")
 	client := newExplicitClient()
-	result, err := client.PostRequiredStringParameterWithText(context.Background(), "", nil)
+	result, err := client.PostRequiredStringParameter(context.Background(), "", nil)
 	require.Error(t, err)
 	require.Zero(t, result)
 }

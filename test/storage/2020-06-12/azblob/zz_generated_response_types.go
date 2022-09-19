@@ -53,8 +53,8 @@ type AppendBlobClientAppendBlockFromURLResponse struct {
 	XMSContentCRC64 []byte
 }
 
-// AppendBlobClientAppendBlockWithBinaryResponse contains the response from method appendBlobClient.AppendBlockWithBinary.
-type AppendBlobClientAppendBlockWithBinaryResponse struct {
+// AppendBlobClientAppendBlockResponse contains the response from method appendBlobClient.AppendBlock.
+type AppendBlobClientAppendBlockResponse struct {
 	// BlobAppendOffset contains the information returned from the x-ms-blob-append-offset header response.
 	BlobAppendOffset *string
 
@@ -288,8 +288,8 @@ type BlockBlobClientStageBlockFromURLResponse struct {
 	XMSContentCRC64 []byte
 }
 
-// BlockBlobClientStageBlockWithBinaryResponse contains the response from method blockBlobClient.StageBlockWithBinary.
-type BlockBlobClientStageBlockWithBinaryResponse struct {
+// BlockBlobClientStageBlockResponse contains the response from method blockBlobClient.StageBlock.
+type BlockBlobClientStageBlockResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -318,8 +318,8 @@ type BlockBlobClientStageBlockWithBinaryResponse struct {
 	XMSContentCRC64 []byte
 }
 
-// BlockBlobClientUploadWithBinaryResponse contains the response from method blockBlobClient.UploadWithBinary.
-type BlockBlobClientUploadWithBinaryResponse struct {
+// BlockBlobClientUploadResponse contains the response from method blockBlobClient.Upload.
+type BlockBlobClientUploadResponse struct {
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -1632,8 +1632,8 @@ type ContainerClientSetMetadataResponse struct {
 	Version *string
 }
 
-// ContainerClientSubmitBatchWithBinaryResponse contains the response from method containerClient.SubmitBatchWithBinary.
-type ContainerClientSubmitBatchWithBinaryResponse struct {
+// ContainerClientSubmitBatchResponse contains the response from method containerClient.SubmitBatch.
+type ContainerClientSubmitBatchResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 
@@ -1991,8 +1991,8 @@ type PageBlobClientUploadPagesFromURLResponse struct {
 	XMSContentCRC64 []byte
 }
 
-// PageBlobClientUploadPagesWithBinaryResponse contains the response from method pageBlobClient.UploadPagesWithBinary.
-type PageBlobClientUploadPagesWithBinaryResponse struct {
+// PageBlobClientUploadPagesResponse contains the response from method pageBlobClient.UploadPages.
+type PageBlobClientUploadPagesResponse struct {
 	// BlobSequenceNumber contains the information returned from the x-ms-blob-sequence-number header response.
 	BlobSequenceNumber *int64
 
@@ -2140,8 +2140,8 @@ type ServiceClientSetPropertiesResponse struct {
 	Version *string
 }
 
-// ServiceClientSubmitBatchWithBinaryResponse contains the response from method serviceClient.SubmitBatchWithBinary.
-type ServiceClientSubmitBatchWithBinaryResponse struct {
+// ServiceClientSubmitBatchResponse contains the response from method serviceClient.SubmitBatch.
+type ServiceClientSubmitBatchResponse struct {
 	// Body contains the streaming response.
 	Body io.ReadCloser
 

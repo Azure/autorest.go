@@ -39,6 +39,168 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 	return client
 }
 
+// AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append
+// Block operation is permitted only if the blob was created with x-ms-blob-type set to
+// AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
+// If the operation fails it returns an *azcore.ResponseError type.
+// Generated from API version 2020-06-12
+// contentLength - The length of the request.
+// body - Initial data
+// options - appendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
+// method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+func (client *appendBlobClient) AppendBlock(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientAppendBlockResponse, error) {
+	req, err := client.appendBlockCreateRequest(ctx, comp, contentLength, body, options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+	if err != nil {
+		return AppendBlobClientAppendBlockResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return AppendBlobClientAppendBlockResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusCreated) {
+		return AppendBlobClientAppendBlockResponse{}, runtime.NewResponseError(resp)
+	}
+	return client.appendBlockHandleResponse(resp)
+}
+
+// appendBlockCreateRequest creates the AppendBlock request.
+func (client *appendBlobClient) appendBlockCreateRequest(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	reqQP := req.Raw().URL.Query()
+	reqQP.Set("comp", string(comp))
+	if options != nil && options.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
+	}
+	req.Raw().URL.RawQuery = reqQP.Encode()
+	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
+	if options != nil && options.TransactionalContentMD5 != nil {
+		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
+	}
+	if options != nil && options.TransactionalContentCRC64 != nil {
+		req.Raw().Header["x-ms-content-crc64"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentCRC64)}
+	}
+	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
+		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
+	}
+	if appendPositionAccessConditions != nil && appendPositionAccessConditions.MaxSize != nil {
+		req.Raw().Header["x-ms-blob-condition-maxsize"] = []string{strconv.FormatInt(*appendPositionAccessConditions.MaxSize, 10)}
+	}
+	if appendPositionAccessConditions != nil && appendPositionAccessConditions.AppendPosition != nil {
+		req.Raw().Header["x-ms-blob-condition-appendpos"] = []string{strconv.FormatInt(*appendPositionAccessConditions.AppendPosition, 10)}
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
+		req.Raw().Header["x-ms-encryption-key"] = []string{*cpkInfo.EncryptionKey}
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionKeySHA256 != nil {
+		req.Raw().Header["x-ms-encryption-key-sha256"] = []string{*cpkInfo.EncryptionKeySHA256}
+	}
+	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
+		req.Raw().Header["x-ms-encryption-algorithm"] = []string{"AES256"}
+	}
+	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
+		req.Raw().Header["x-ms-encryption-scope"] = []string{*cpkScopeInfo.EncryptionScope}
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
+		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
+		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
+		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
+		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
+	}
+	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
+		req.Raw().Header["x-ms-if-tags"] = []string{*modifiedAccessConditions.IfTags}
+	}
+	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
+	if options != nil && options.RequestID != nil {
+		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
+	}
+	req.Raw().Header["Accept"] = []string{"application/xml"}
+	return req, req.SetBody(body, "application/octet-stream")
+}
+
+// appendBlockHandleResponse handles the AppendBlock response.
+func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (AppendBlobClientAppendBlockResponse, error) {
+	result := AppendBlobClientAppendBlockResponse{}
+	if val := resp.Header.Get("ETag"); val != "" {
+		result.ETag = &val
+	}
+	if val := resp.Header.Get("Last-Modified"); val != "" {
+		lastModified, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return AppendBlobClientAppendBlockResponse{}, err
+		}
+		result.LastModified = &lastModified
+	}
+	if val := resp.Header.Get("Content-MD5"); val != "" {
+		contentMD5, err := base64.StdEncoding.DecodeString(val)
+		if err != nil {
+			return AppendBlobClientAppendBlockResponse{}, err
+		}
+		result.ContentMD5 = contentMD5
+	}
+	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
+		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
+		if err != nil {
+			return AppendBlobClientAppendBlockResponse{}, err
+		}
+		result.XMSContentCRC64 = xMSContentCRC64
+	}
+	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
+		result.ClientRequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-request-id"); val != "" {
+		result.RequestID = &val
+	}
+	if val := resp.Header.Get("x-ms-version"); val != "" {
+		result.Version = &val
+	}
+	if val := resp.Header.Get("Date"); val != "" {
+		date, err := time.Parse(time.RFC1123, val)
+		if err != nil {
+			return AppendBlobClientAppendBlockResponse{}, err
+		}
+		result.Date = &date
+	}
+	if val := resp.Header.Get("x-ms-blob-append-offset"); val != "" {
+		result.BlobAppendOffset = &val
+	}
+	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
+		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
+		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
+		if err != nil {
+			return AppendBlobClientAppendBlockResponse{}, err
+		}
+		result.BlobCommittedBlockCount = &blobCommittedBlockCount
+	}
+	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
+		isServerEncrypted, err := strconv.ParseBool(val)
+		if err != nil {
+			return AppendBlobClientAppendBlockResponse{}, err
+		}
+		result.IsServerEncrypted = &isServerEncrypted
+	}
+	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
+		result.EncryptionKeySHA256 = &val
+	}
+	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
+		result.EncryptionScope = &val
+	}
+	return result, nil
+}
+
 // AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where
 // the contents are read from a source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
@@ -51,7 +213,7 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlockWithBinary
+// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
@@ -216,169 +378,6 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 			return AppendBlobClientAppendBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
-	}
-	return result, nil
-}
-
-// AppendBlockWithBinary - The Append Block operation commits a new block of data to the end of an existing append blob. The
-// Append Block operation is permitted only if the blob was created with x-ms-blob-type set to
-// AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
-// If the operation fails it returns an *azcore.ResponseError type.
-// Generated from API version 2020-06-12
-// contentLength - The length of the request.
-// body - Initial data
-// options - appendBlobClientAppendBlockWithBinaryOptions contains the optional parameters for the appendBlobClient.AppendBlockWithBinary
-// method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlockWithBinary
-// method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *appendBlobClient) AppendBlockWithBinary(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockWithBinaryOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientAppendBlockWithBinaryResponse, error) {
-	req, err := client.appendBlockWithBinaryCreateRequest(ctx, comp, contentLength, body, options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
-	if err != nil {
-		return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-	}
-	resp, err := client.pl.Do(req)
-	if err != nil {
-		return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-	}
-	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return AppendBlobClientAppendBlockWithBinaryResponse{}, runtime.NewResponseError(resp)
-	}
-	return client.appendBlockWithBinaryHandleResponse(resp)
-}
-
-// appendBlockWithBinaryCreateRequest creates the AppendBlockWithBinary request.
-func (client *appendBlobClient) appendBlockWithBinaryCreateRequest(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockWithBinaryOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
-	if err != nil {
-		return nil, err
-	}
-	reqQP := req.Raw().URL.Query()
-	reqQP.Set("comp", string(comp))
-	if options != nil && options.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
-	}
-	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.Raw().Header["Content-Length"] = []string{strconv.FormatInt(contentLength, 10)}
-	if options != nil && options.TransactionalContentMD5 != nil {
-		req.Raw().Header["Content-MD5"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentMD5)}
-	}
-	if options != nil && options.TransactionalContentCRC64 != nil {
-		req.Raw().Header["x-ms-content-crc64"] = []string{base64.StdEncoding.EncodeToString(options.TransactionalContentCRC64)}
-	}
-	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
-		req.Raw().Header["x-ms-lease-id"] = []string{*leaseAccessConditions.LeaseID}
-	}
-	if appendPositionAccessConditions != nil && appendPositionAccessConditions.MaxSize != nil {
-		req.Raw().Header["x-ms-blob-condition-maxsize"] = []string{strconv.FormatInt(*appendPositionAccessConditions.MaxSize, 10)}
-	}
-	if appendPositionAccessConditions != nil && appendPositionAccessConditions.AppendPosition != nil {
-		req.Raw().Header["x-ms-blob-condition-appendpos"] = []string{strconv.FormatInt(*appendPositionAccessConditions.AppendPosition, 10)}
-	}
-	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
-		req.Raw().Header["x-ms-encryption-key"] = []string{*cpkInfo.EncryptionKey}
-	}
-	if cpkInfo != nil && cpkInfo.EncryptionKeySHA256 != nil {
-		req.Raw().Header["x-ms-encryption-key-sha256"] = []string{*cpkInfo.EncryptionKeySHA256}
-	}
-	if cpkInfo != nil && cpkInfo.EncryptionAlgorithm != nil {
-		req.Raw().Header["x-ms-encryption-algorithm"] = []string{"AES256"}
-	}
-	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
-		req.Raw().Header["x-ms-encryption-scope"] = []string{*cpkScopeInfo.EncryptionScope}
-	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
-		req.Raw().Header["If-Modified-Since"] = []string{modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123)}
-	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfUnmodifiedSince != nil {
-		req.Raw().Header["If-Unmodified-Since"] = []string{modifiedAccessConditions.IfUnmodifiedSince.Format(time.RFC1123)}
-	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfMatch != nil {
-		req.Raw().Header["If-Match"] = []string{*modifiedAccessConditions.IfMatch}
-	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfNoneMatch != nil {
-		req.Raw().Header["If-None-Match"] = []string{*modifiedAccessConditions.IfNoneMatch}
-	}
-	if modifiedAccessConditions != nil && modifiedAccessConditions.IfTags != nil {
-		req.Raw().Header["x-ms-if-tags"] = []string{*modifiedAccessConditions.IfTags}
-	}
-	req.Raw().Header["x-ms-version"] = []string{string(client.version)}
-	if options != nil && options.RequestID != nil {
-		req.Raw().Header["x-ms-client-request-id"] = []string{*options.RequestID}
-	}
-	req.Raw().Header["Accept"] = []string{"application/xml"}
-	return req, req.SetBody(body, "application/octet-stream")
-}
-
-// appendBlockWithBinaryHandleResponse handles the AppendBlockWithBinary response.
-func (client *appendBlobClient) appendBlockWithBinaryHandleResponse(resp *http.Response) (AppendBlobClientAppendBlockWithBinaryResponse, error) {
-	result := AppendBlobClientAppendBlockWithBinaryResponse{}
-	if val := resp.Header.Get("ETag"); val != "" {
-		result.ETag = &val
-	}
-	if val := resp.Header.Get("Last-Modified"); val != "" {
-		lastModified, err := time.Parse(time.RFC1123, val)
-		if err != nil {
-			return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-		}
-		result.LastModified = &lastModified
-	}
-	if val := resp.Header.Get("Content-MD5"); val != "" {
-		contentMD5, err := base64.StdEncoding.DecodeString(val)
-		if err != nil {
-			return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-		}
-		result.ContentMD5 = contentMD5
-	}
-	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
-		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
-		if err != nil {
-			return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-		}
-		result.XMSContentCRC64 = xMSContentCRC64
-	}
-	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
-		result.ClientRequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-request-id"); val != "" {
-		result.RequestID = &val
-	}
-	if val := resp.Header.Get("x-ms-version"); val != "" {
-		result.Version = &val
-	}
-	if val := resp.Header.Get("Date"); val != "" {
-		date, err := time.Parse(time.RFC1123, val)
-		if err != nil {
-			return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-		}
-		result.Date = &date
-	}
-	if val := resp.Header.Get("x-ms-blob-append-offset"); val != "" {
-		result.BlobAppendOffset = &val
-	}
-	if val := resp.Header.Get("x-ms-blob-committed-block-count"); val != "" {
-		blobCommittedBlockCount32, err := strconv.ParseInt(val, 10, 32)
-		blobCommittedBlockCount := int32(blobCommittedBlockCount32)
-		if err != nil {
-			return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-		}
-		result.BlobCommittedBlockCount = &blobCommittedBlockCount
-	}
-	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
-		isServerEncrypted, err := strconv.ParseBool(val)
-		if err != nil {
-			return AppendBlobClientAppendBlockWithBinaryResponse{}, err
-		}
-		result.IsServerEncrypted = &isServerEncrypted
-	}
-	if val := resp.Header.Get("x-ms-encryption-key-sha256"); val != "" {
-		result.EncryptionKeySHA256 = &val
-	}
-	if val := resp.Header.Get("x-ms-encryption-scope"); val != "" {
-		result.EncryptionScope = &val
 	}
 	return result, nil
 }
@@ -556,7 +555,7 @@ func (client *appendBlobClient) createHandleResponse(resp *http.Response) (Appen
 // options - appendBlobClientSealOptions contains the optional parameters for the appendBlobClient.Seal method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlockWithBinary
+// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
 // method.
 func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, options *appendBlobClientSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobClientSealResponse, error) {
 	req, err := client.sealCreateRequest(ctx, comp, options, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)

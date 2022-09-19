@@ -99,8 +99,8 @@ type StringClientPutMBCSResponse struct {
 	// placeholder for future response values
 }
 
-// StringClientPutNullWithTextResponse contains the response from method StringClient.PutNullWithText.
-type StringClientPutNullWithTextResponse struct {
+// StringClientPutNullResponse contains the response from method StringClient.PutNull.
+type StringClientPutNullResponse struct {
 	// placeholder for future response values
 }
 
