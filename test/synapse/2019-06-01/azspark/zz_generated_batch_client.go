@@ -27,27 +27,23 @@ type BatchClient struct {
 	pl       runtime.Pipeline
 }
 
+// BatchClientOptions contains the optional settings for Client.
+type BatchClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewBatchClient creates a new instance of BatchClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // livyAPIVersion - Valid api-version for the request.
 // sparkPoolName - Name of the spark pool.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, credential azcore.TokenCredential, options *azcore.ClientOptions) *BatchClient {
+func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, credential azcore.TokenCredential, options *BatchClientOptions) *BatchClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &BatchClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
 	if livyAPIVersion == nil {

@@ -109,6 +109,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let optionsType = 'azcore.ClientOptions';
     if (azureARM) {
       optionsType = 'arm.ClientOptions';
+    } else if (hasOauth2Security) {
+      optionsType = `${clientName}Options`;
     }
 
     // if there are any optional client params, create a client options struct and put them there.
@@ -125,6 +127,15 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       for (const param of values(optionalParams)) {
         clientText += `\t${capitalize(param.language.go!.name)} ${formatParameterTypeName(param)}\n`;
       }
+      clientText += '}\n\n';
+    }
+
+    
+    // if data plan and has oauth credential, generate the client level client option for extensibility
+    if (!azureARM && hasOauth2Security) {
+      clientText += `// ${clientName}Options contains the optional settings for Client.\n`;
+      clientText += `type ${clientName}Options struct {\n`;
+      clientText += `\tazcore.ClientOptions\n`;
       clientText += '}\n\n';
     }
 
@@ -218,17 +229,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\t}\n';
     } else if (hasOauth2Security) {
       const scopes = getOAuth2SecuritySchema(session.model.security).scopes.map(s => `"${s}"`);
-      clientText += '\tpOptions := &policy.ClientOptions{\n'
-      clientText += '\t\tLogging:          options.Logging,\n';
-      clientText += '\t\tRetry:            options.Retry,\n';
-      clientText += '\t\tTelemetry:        options.Telemetry,\n';
-      clientText += '\t\tTransport:        options.Transport,\n';
-      clientText += '\t\tPerCallPolicies:  options.PerCallPolicies,\n';
-      clientText += '\t\tPerRetryPolicies: options.PerRetryPolicies,\n';
-      clientText += '\t}\n';
       clientText += `\tauthPolicy := runtime.NewBearerTokenPolicy(credential, []string{${scopes.join(', ')}}, nil)\n`
-      clientText += "\toptions.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)\n"
-      clientText += '\tpl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)\n';
+      clientText += '\tpl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)\n';
     }
     let parameterizedURL = '';
     if (group.language.go!.hostParams && !group.language.go!.complexHostParams) {

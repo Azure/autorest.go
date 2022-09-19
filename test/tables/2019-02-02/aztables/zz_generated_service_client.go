@@ -27,26 +27,22 @@ type ServiceClient struct {
 	pl       runtime.Pipeline
 }
 
+// ServiceClientOptions contains the optional settings for Client.
+type ServiceClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
 // endpoint - The URL of the service account or table that is the target of the desired operation.
 // version - Specifies the version of the operation to use for this request.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *azcore.ClientOptions) *ServiceClient {
+func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *ServiceClientOptions) *ServiceClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &ServiceClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://tables.azure.com/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &ServiceClient{
 		endpoint: endpoint,
 		version:  version,

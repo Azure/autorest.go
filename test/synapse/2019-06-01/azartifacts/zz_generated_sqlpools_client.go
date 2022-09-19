@@ -27,25 +27,21 @@ type SQLPoolsClient struct {
 	pl       runtime.Pipeline
 }
 
+// SQLPoolsClientOptions contains the optional settings for Client.
+type SQLPoolsClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewSQLPoolsClient creates a new instance of SQLPoolsClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewSQLPoolsClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) *SQLPoolsClient {
+func NewSQLPoolsClient(endpoint string, credential azcore.TokenCredential, options *SQLPoolsClientOptions) *SQLPoolsClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &SQLPoolsClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &SQLPoolsClient{
 		endpoint: endpoint,
 		pl:       pl,

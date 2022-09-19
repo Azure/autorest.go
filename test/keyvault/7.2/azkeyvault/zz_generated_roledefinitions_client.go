@@ -26,24 +26,20 @@ type RoleDefinitionsClient struct {
 	pl runtime.Pipeline
 }
 
+// RoleDefinitionsClientOptions contains the optional settings for Client.
+type RoleDefinitionsClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewRoleDefinitionsClient creates a new instance of RoleDefinitionsClient with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewRoleDefinitionsClient(credential azcore.TokenCredential, options *azcore.ClientOptions) *RoleDefinitionsClient {
+func NewRoleDefinitionsClient(credential azcore.TokenCredential, options *RoleDefinitionsClientOptions) *RoleDefinitionsClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &RoleDefinitionsClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://vault.azure.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &RoleDefinitionsClient{
 		pl: pl,
 	}

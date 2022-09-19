@@ -27,24 +27,20 @@ type Client struct {
 	pl runtime.Pipeline
 }
 
+// ClientOptions contains the optional settings for Client.
+type ClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewClient creates a new instance of Client with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewClient(credential azcore.TokenCredential, options *azcore.ClientOptions) *Client {
+func NewClient(credential azcore.TokenCredential, options *ClientOptions) *Client {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &ClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://vault.azure.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &Client{
 		pl: pl,
 	}

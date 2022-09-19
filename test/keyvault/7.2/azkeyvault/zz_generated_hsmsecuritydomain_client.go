@@ -24,24 +24,20 @@ type HSMSecurityDomainClient struct {
 	pl runtime.Pipeline
 }
 
+// HSMSecurityDomainClientOptions contains the optional settings for Client.
+type HSMSecurityDomainClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewHSMSecurityDomainClient creates a new instance of HSMSecurityDomainClient with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewHSMSecurityDomainClient(credential azcore.TokenCredential, options *azcore.ClientOptions) *HSMSecurityDomainClient {
+func NewHSMSecurityDomainClient(credential azcore.TokenCredential, options *HSMSecurityDomainClientOptions) *HSMSecurityDomainClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &HSMSecurityDomainClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://vault.azure.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &HSMSecurityDomainClient{
 		pl: pl,
 	}

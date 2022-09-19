@@ -27,25 +27,21 @@ type DatasetClient struct {
 	pl       runtime.Pipeline
 }
 
+// DatasetClientOptions contains the optional settings for Client.
+type DatasetClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewDatasetClient creates a new instance of DatasetClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewDatasetClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) *DatasetClient {
+func NewDatasetClient(endpoint string, credential azcore.TokenCredential, options *DatasetClientOptions) *DatasetClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &DatasetClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &DatasetClient{
 		endpoint: endpoint,
 		pl:       pl,

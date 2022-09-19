@@ -27,25 +27,21 @@ type IntegrationRuntimesClient struct {
 	pl       runtime.Pipeline
 }
 
+// IntegrationRuntimesClientOptions contains the optional settings for Client.
+type IntegrationRuntimesClientOptions struct {
+	azcore.ClientOptions
+}
+
 // NewIntegrationRuntimesClient creates a new instance of IntegrationRuntimesClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewIntegrationRuntimesClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) *IntegrationRuntimesClient {
+func NewIntegrationRuntimesClient(endpoint string, credential azcore.TokenCredential, options *IntegrationRuntimesClientOptions) *IntegrationRuntimesClient {
 	if options == nil {
-		options = &azcore.ClientOptions{}
-	}
-	pOptions := &policy.ClientOptions{
-		Logging:          options.Logging,
-		Retry:            options.Retry,
-		Telemetry:        options.Telemetry,
-		Transport:        options.Transport,
-		PerCallPolicies:  options.PerCallPolicies,
-		PerRetryPolicies: options.PerRetryPolicies,
+		options = &IntegrationRuntimesClientOptions{}
 	}
 	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
-	options.PerRetryPolicies = append(options.PerRetryPolicies, authPolicy)
-	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, pOptions)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &IntegrationRuntimesClient{
 		endpoint: endpoint,
 		pl:       pl,
