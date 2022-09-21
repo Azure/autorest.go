@@ -26,11 +26,6 @@ type RoleDefinitionsClient struct {
 	pl runtime.Pipeline
 }
 
-// RoleDefinitionsClientOptions contains the optional settings for Client.
-type RoleDefinitionsClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewRoleDefinitionsClient creates a new instance of RoleDefinitionsClient with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.

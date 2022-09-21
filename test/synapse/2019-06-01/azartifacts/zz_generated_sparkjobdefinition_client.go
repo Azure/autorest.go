@@ -27,11 +27,6 @@ type SparkJobDefinitionClient struct {
 	pl       runtime.Pipeline
 }
 
-// SparkJobDefinitionClientOptions contains the optional settings for Client.
-type SparkJobDefinitionClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewSparkJobDefinitionClient creates a new instance of SparkJobDefinitionClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

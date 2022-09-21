@@ -110,6 +110,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (azureARM) {
       optionsType = 'arm.ClientOptions';
     } else if (hasOauth2Security) {
+      // data plane with Oauth2Security should have a hand-written `ClientOptions` 
       optionsType = `${clientName}Options`;
     }
 
@@ -130,14 +131,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '}\n\n';
     }
 
-    
-    // if data plan and has oauth credential, generate the client level client option for extensibility
-    if (!azureARM && hasOauth2Security) {
-      clientText += `// ${clientName}Options contains the optional settings for Client.\n`;
-      clientText += `type ${clientName}Options struct {\n`;
-      clientText += `\tazcore.ClientOptions\n`;
-      clientText += '}\n\n';
-    }
 
     // generate client constructor
     // build constructor params

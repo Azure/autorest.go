@@ -27,11 +27,6 @@ type BatchClient struct {
 	pl       runtime.Pipeline
 }
 
-// BatchClientOptions contains the optional settings for Client.
-type BatchClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewBatchClient creates a new instance of BatchClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // livyAPIVersion - Valid api-version for the request.

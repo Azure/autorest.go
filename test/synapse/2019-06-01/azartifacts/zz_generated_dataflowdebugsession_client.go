@@ -24,11 +24,6 @@ type DataFlowDebugSessionClient struct {
 	pl       runtime.Pipeline
 }
 
-// DataFlowDebugSessionClientOptions contains the optional settings for Client.
-type DataFlowDebugSessionClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewDataFlowDebugSessionClient creates a new instance of DataFlowDebugSessionClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

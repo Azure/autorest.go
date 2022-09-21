@@ -30,11 +30,6 @@ type LibraryClient struct {
 	pl       runtime.Pipeline
 }
 
-// LibraryClientOptions contains the optional settings for Client.
-type LibraryClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewLibraryClient creates a new instance of LibraryClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

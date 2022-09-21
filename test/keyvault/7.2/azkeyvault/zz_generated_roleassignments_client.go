@@ -26,11 +26,6 @@ type RoleAssignmentsClient struct {
 	pl runtime.Pipeline
 }
 
-// RoleAssignmentsClientOptions contains the optional settings for Client.
-type RoleAssignmentsClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewRoleAssignmentsClient creates a new instance of RoleAssignmentsClient with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.

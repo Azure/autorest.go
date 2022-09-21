@@ -27,11 +27,6 @@ type Client struct {
 	pl runtime.Pipeline
 }
 
-// ClientOptions contains the optional settings for Client.
-type ClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewClient creates a new instance of Client with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.

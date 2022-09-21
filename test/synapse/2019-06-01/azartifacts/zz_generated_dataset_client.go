@@ -27,11 +27,6 @@ type DatasetClient struct {
 	pl       runtime.Pipeline
 }
 
-// DatasetClientOptions contains the optional settings for Client.
-type DatasetClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewDatasetClient creates a new instance of DatasetClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

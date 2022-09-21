@@ -24,11 +24,6 @@ type WorkspaceClient struct {
 	pl       runtime.Pipeline
 }
 
-// WorkspaceClientOptions contains the optional settings for Client.
-type WorkspaceClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewWorkspaceClient creates a new instance of WorkspaceClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

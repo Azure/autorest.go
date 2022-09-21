@@ -28,11 +28,6 @@ type PipelineRunClient struct {
 	pl       runtime.Pipeline
 }
 
-// PipelineRunClientOptions contains the optional settings for Client.
-type PipelineRunClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewPipelineRunClient creates a new instance of PipelineRunClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

@@ -24,11 +24,6 @@ type WorkspaceGitRepoManagementClient struct {
 	pl       runtime.Pipeline
 }
 
-// WorkspaceGitRepoManagementClientOptions contains the optional settings for Client.
-type WorkspaceGitRepoManagementClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewWorkspaceGitRepoManagementClient creates a new instance of WorkspaceGitRepoManagementClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

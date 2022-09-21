@@ -31,11 +31,6 @@ type Client struct {
 	pl       runtime.Pipeline
 }
 
-// ClientOptions contains the optional settings for Client.
-type ClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewClient creates a new instance of Client with the specified values.
 // endpoint - The URL of the service account or table that is the target of the desired operation.
 // version - Specifies the version of the operation to use for this request.

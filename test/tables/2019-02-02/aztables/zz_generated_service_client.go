@@ -27,11 +27,6 @@ type ServiceClient struct {
 	pl       runtime.Pipeline
 }
 
-// ServiceClientOptions contains the optional settings for Client.
-type ServiceClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
 // endpoint - The URL of the service account or table that is the target of the desired operation.
 // version - Specifies the version of the operation to use for this request.

@@ -27,11 +27,6 @@ type SessionClient struct {
 	pl       runtime.Pipeline
 }
 
-// SessionClientOptions contains the optional settings for Client.
-type SessionClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewSessionClient creates a new instance of SessionClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // livyAPIVersion - Valid api-version for the request.

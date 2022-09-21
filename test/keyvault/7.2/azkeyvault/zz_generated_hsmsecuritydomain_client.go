@@ -24,11 +24,6 @@ type HSMSecurityDomainClient struct {
 	pl runtime.Pipeline
 }
 
-// HSMSecurityDomainClientOptions contains the optional settings for Client.
-type HSMSecurityDomainClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewHSMSecurityDomainClient creates a new instance of HSMSecurityDomainClient with the specified values.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.

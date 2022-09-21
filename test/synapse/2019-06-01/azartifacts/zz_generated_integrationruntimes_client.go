@@ -27,11 +27,6 @@ type IntegrationRuntimesClient struct {
 	pl       runtime.Pipeline
 }
 
-// IntegrationRuntimesClientOptions contains the optional settings for Client.
-type IntegrationRuntimesClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewIntegrationRuntimesClient creates a new instance of IntegrationRuntimesClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.

@@ -27,11 +27,6 @@ type TriggerRunClient struct {
 	pl       runtime.Pipeline
 }
 
-// TriggerRunClientOptions contains the optional settings for Client.
-type TriggerRunClientOptions struct {
-	azcore.ClientOptions
-}
-
 // NewTriggerRunClient creates a new instance of TriggerRunClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // credential - used to authorize requests. Usually a credential from azidentity.
