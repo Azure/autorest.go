@@ -10,12 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// BatchClientOptions contains the optional settings for Client.
+// BatchClientOptions contains the optional settings for NewBatchClient.
 type BatchClientOptions struct {
 	azcore.ClientOptions
 }
 
-// SessionClientOptions contains the optional settings for Client.
+// SessionClientOptions contains the optional settings for NewSessionClient.
 type SessionClientOptions struct {
 	azcore.ClientOptions
 }

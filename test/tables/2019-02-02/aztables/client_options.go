@@ -10,12 +10,12 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// ClientOptions contains the optional settings for Client.
+// ClientOptions contains the optional settings for NewClient.
 type ClientOptions struct {
 	azcore.ClientOptions
 }
 
-// ServiceClientOptions contains the optional settings for Client.
+// ServiceClientOptions contains the optional settings for NewServiceClient.
 type ServiceClientOptions struct {
 	azcore.ClientOptions
 }

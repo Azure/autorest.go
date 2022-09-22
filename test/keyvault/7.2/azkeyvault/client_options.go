@@ -10,22 +10,22 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 )
 
-// ClientOptions contains the optional settings for Client.
+// ClientOptions contains the optional settings for NewClient.
 type ClientOptions struct {
 	azcore.ClientOptions
 }
 
-// HSMSecurityDomainClientOptions contains the optional settings for Client.
+// HSMSecurityDomainClientOptions contains the optional settings for NewHSMSecurityDomainClient.
 type HSMSecurityDomainClientOptions struct {
 	azcore.ClientOptions
 }
 
-// RoleAssignmentsClientOptions contains the optional settings for Client.
+// RoleAssignmentsClientOptions contains the optional settings for NewRoleAssignmentsClient.
 type RoleAssignmentsClientOptions struct {
 	azcore.ClientOptions
 }
 
-// RoleDefinitionsClientOptions contains the optional settings for Client.
+// RoleDefinitionsClientOptions contains the optional settings for NewRoleDefinitionsClient.
 type RoleDefinitionsClientOptions struct {
 	azcore.ClientOptions
 }
