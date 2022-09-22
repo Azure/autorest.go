@@ -11,21 +11,30 @@ package azartifacts
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
-type workspaceGitRepoManagementClient struct {
+// WorkspaceGitRepoManagementClient contains the methods for the WorkspaceGitRepoManagement group.
+// Don't use this type directly, use NewWorkspaceGitRepoManagementClient() instead.
+type WorkspaceGitRepoManagementClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newWorkspaceGitRepoManagementClient creates a new instance of workspaceGitRepoManagementClient with the specified values.
+// NewWorkspaceGitRepoManagementClient creates a new instance of WorkspaceGitRepoManagementClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// pl - the pipeline used for sending requests and handling responses.
-func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *workspaceGitRepoManagementClient {
-	client := &workspaceGitRepoManagementClient{
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewWorkspaceGitRepoManagementClient(endpoint string, credential azcore.TokenCredential, options *WorkspaceGitRepoManagementClientOptions) *WorkspaceGitRepoManagementClient {
+	if options == nil {
+		options = &WorkspaceGitRepoManagementClientOptions{}
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
+	client := &WorkspaceGitRepoManagementClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -35,9 +44,9 @@ func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *
 // GetGitHubAccessToken - Get the GitHub access token.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-// options - workspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the workspaceGitRepoManagementClient.GetGitHubAccessToken
+// options - WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
 // method.
-func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *workspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
+func (client *WorkspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {
 		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
@@ -53,7 +62,7 @@ func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context
 }
 
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *workspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (*policy.Request, error) {
+func (client *WorkspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (*policy.Request, error) {
 	urlPath := "/getGitHubAccessToken"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -70,7 +79,7 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 }
 
 // getGitHubAccessTokenHandleResponse handles the GetGitHubAccessToken response.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
+func (client *WorkspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
 	result := WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GitHubAccessTokenResponse); err != nil {
 		return WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err

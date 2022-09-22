@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
 import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
-import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength } from '../common/helpers';
+import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength, hasOAuth2SecurityDefinition, getOAuth2SecuritySchema } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
 import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
@@ -27,6 +27,7 @@ export class OperationGroupContent {
 export async function generateOperations(session: Session<CodeModel>): Promise<OperationGroupContent[]> {
   const azureARM = <boolean>session.model.language.go!.azureARM;
   const forceExports = <boolean>session.model.language.go!.exportClients;
+  const hasOauth2Security = hasOAuth2SecurityDefinition(session.model.security)
   // generate protocol operations
   const operations = new Array<OperationGroupContent>();
   for (const group of values(session.model.operationGroups)) {
@@ -48,7 +49,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let clientText = '';
     let clientName = group.language.go!.clientName;
     const clientCtor = group.language.go!.clientCtorName;
-    if (azureARM || forceExports) {
+    if (azureARM || forceExports || hasOauth2Security) {
       clientText += `// ${clientName} contains the methods for the ${group.language.go!.name} group.\n`;
       clientText += `// Don't use this type directly, use ${clientCtor}() instead.\n`;
     }
@@ -108,6 +109,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     let optionsType = 'azcore.ClientOptions';
     if (azureARM) {
       optionsType = 'arm.ClientOptions';
+    } else if (hasOauth2Security) {
+      // data plane with Oauth2Security should have a hand-written `ClientOptions` 
+      optionsType = `${clientName}Options`;
     }
 
     // if there are any optional client params, create a client options struct and put them there.
@@ -126,6 +130,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
       clientText += '}\n\n';
     }
+
 
     // generate client constructor
     // build constructor params
@@ -178,8 +183,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       emitClientParams();
 
       // add the final param
-      if (azureARM) {
+      if (hasOauth2Security) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
+        methodParams.push('credential azcore.TokenCredential');
+        paramDocs.push('// credential - used to authorize requests. Usually a credential from azidentity.');
         methodParams.push(`options *${optionsType}`);
         paramDocs.push('// options - pass nil to accept the default values.');
       } else {
@@ -198,8 +205,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     } else {
       clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
     }
-    if (azureARM) {
-      // data-plane doesn't take client options
+    if (azureARM || hasOauth2Security) {
+      // data-plane without Oauth2 auth doesn't take client options
       clientText += '\tif options == nil {\n';
       clientText += `\t\toptions = &${optionsType}{}\n`;
       clientText += '\t}\n';
@@ -213,6 +220,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += "\tif err != nil {\n"
       clientText += '\t\treturn nil, err\n';
       clientText += '\t}\n';
+    } else if (hasOauth2Security) {
+      const scopes = getOAuth2SecuritySchema(session.model.security).scopes.map(s => `"${s}"`);
+      clientText += `\tauthPolicy := runtime.NewBearerTokenPolicy(credential, []string{${scopes.join(', ')}}, nil)\n`
+      clientText += '\tpl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)\n';
     }
     let parameterizedURL = '';
     if (group.language.go!.hostParams && !group.language.go!.complexHostParams) {
@@ -296,13 +307,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     if (azureARM) {
       clientText += `\t\t${group.language.go!.hostParamName}: ep,\n`;
       clientText += `pl: pl,\n`;
-    } else if (azureARM) {
-      let clientOpts = 'options'
-      if (optionsType != 'azcore.ClientOptions') {
-        // optionsType is a generated type which embeds azcore.ClientOptions
-        clientOpts = '&options.ClientOptions'
-      }
-      clientText += `\t\tpl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, ${clientOpts}),\n`;
     } else {
       clientText += '\t\tpl: pl,\n';
     }

@@ -11,21 +11,30 @@ package azartifacts
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
 )
 
-type workspaceClient struct {
+// WorkspaceClient contains the methods for the Workspace group.
+// Don't use this type directly, use NewWorkspaceClient() instead.
+type WorkspaceClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newWorkspaceClient creates a new instance of workspaceClient with the specified values.
+// NewWorkspaceClient creates a new instance of WorkspaceClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// pl - the pipeline used for sending requests and handling responses.
-func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
-	client := &workspaceClient{
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewWorkspaceClient(endpoint string, credential azcore.TokenCredential, options *WorkspaceClientOptions) *WorkspaceClient {
+	if options == nil {
+		options = &WorkspaceClientOptions{}
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
+	client := &WorkspaceClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -35,8 +44,8 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 // Get - Get Workspace
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-// options - workspaceClientGetOptions contains the optional parameters for the workspaceClient.Get method.
-func (client *workspaceClient) Get(ctx context.Context, options *workspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
+// options - WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
+func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
 		return WorkspaceClientGetResponse{}, err
@@ -52,7 +61,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *workspaceClient
 }
 
 // getCreateRequest creates the Get request.
-func (client *workspaceClient) getCreateRequest(ctx context.Context, options *workspaceClientGetOptions) (*policy.Request, error) {
+func (client *WorkspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceClientGetOptions) (*policy.Request, error) {
 	urlPath := "/workspace"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -66,7 +75,7 @@ func (client *workspaceClient) getCreateRequest(ctx context.Context, options *wo
 }
 
 // getHandleResponse handles the Get response.
-func (client *workspaceClient) getHandleResponse(resp *http.Response) (WorkspaceClientGetResponse, error) {
+func (client *WorkspaceClient) getHandleResponse(resp *http.Response) (WorkspaceClientGetResponse, error) {
 	result := WorkspaceClientGetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
 		return WorkspaceClientGetResponse{}, err

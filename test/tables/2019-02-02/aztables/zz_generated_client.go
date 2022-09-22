@@ -13,6 +13,7 @@ import (
 	"context"
 	"encoding/xml"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -33,8 +34,14 @@ type Client struct {
 // NewClient creates a new instance of Client with the specified values.
 // endpoint - The URL of the service account or table that is the target of the desired operation.
 // version - Specifies the version of the operation to use for this request.
-// pl - the pipeline used for sending requests and handling responses.
-func NewClient(endpoint string, version Enum0, pl runtime.Pipeline) *Client {
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *ClientOptions) *Client {
+	if options == nil {
+		options = &ClientOptions{}
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://tables.azure.com/.default"}, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
 	client := &Client{
 		endpoint: endpoint,
 		version:  version,

@@ -9,6 +9,11 @@
 
 package azkeyvault
 
+const (
+	moduleName    = "azkeyvault"
+	moduleVersion = "v0.1.0"
+)
+
 // ActionType - The type of the action.
 type ActionType string
 

@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,16 +21,24 @@ import (
 	"strings"
 )
 
-type pipelineRunClient struct {
+// PipelineRunClient contains the methods for the PipelineRun group.
+// Don't use this type directly, use NewPipelineRunClient() instead.
+type PipelineRunClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newPipelineRunClient creates a new instance of pipelineRunClient with the specified values.
+// NewPipelineRunClient creates a new instance of PipelineRunClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// pl - the pipeline used for sending requests and handling responses.
-func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClient {
-	client := &pipelineRunClient{
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewPipelineRunClient(endpoint string, credential azcore.TokenCredential, options *PipelineRunClientOptions) *PipelineRunClient {
+	if options == nil {
+		options = &PipelineRunClientOptions{}
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
+	client := &PipelineRunClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -40,9 +49,9 @@ func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClie
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // runID - The pipeline run identifier.
-// options - pipelineRunClientCancelPipelineRunOptions contains the optional parameters for the pipelineRunClient.CancelPipelineRun
+// options - PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the PipelineRunClient.CancelPipelineRun
 // method.
-func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID string, options *pipelineRunClientCancelPipelineRunOptions) (PipelineRunClientCancelPipelineRunResponse, error) {
+func (client *PipelineRunClient) CancelPipelineRun(ctx context.Context, runID string, options *PipelineRunClientCancelPipelineRunOptions) (PipelineRunClientCancelPipelineRunResponse, error) {
 	req, err := client.cancelPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
 		return PipelineRunClientCancelPipelineRunResponse{}, err
@@ -58,7 +67,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 }
 
 // cancelPipelineRunCreateRequest creates the CancelPipelineRun request.
-func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runID string, options *pipelineRunClientCancelPipelineRunOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunClientCancelPipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelineruns/{runId}/cancel"
 	if runID == "" {
 		return nil, errors.New("parameter runID cannot be empty")
@@ -82,9 +91,9 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // runID - The pipeline run identifier.
-// options - pipelineRunClientGetPipelineRunOptions contains the optional parameters for the pipelineRunClient.GetPipelineRun
+// options - PipelineRunClientGetPipelineRunOptions contains the optional parameters for the PipelineRunClient.GetPipelineRun
 // method.
-func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID string, options *pipelineRunClientGetPipelineRunOptions) (PipelineRunClientGetPipelineRunResponse, error) {
+func (client *PipelineRunClient) GetPipelineRun(ctx context.Context, runID string, options *PipelineRunClientGetPipelineRunOptions) (PipelineRunClientGetPipelineRunResponse, error) {
 	req, err := client.getPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
 		return PipelineRunClientGetPipelineRunResponse{}, err
@@ -100,7 +109,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 }
 
 // getPipelineRunCreateRequest creates the GetPipelineRun request.
-func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *pipelineRunClientGetPipelineRunOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) getPipelineRunCreateRequest(ctx context.Context, runID string, options *PipelineRunClientGetPipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelineruns/{runId}"
 	if runID == "" {
 		return nil, errors.New("parameter runID cannot be empty")
@@ -118,7 +127,7 @@ func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 }
 
 // getPipelineRunHandleResponse handles the GetPipelineRun response.
-func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Response) (PipelineRunClientGetPipelineRunResponse, error) {
+func (client *PipelineRunClient) getPipelineRunHandleResponse(resp *http.Response) (PipelineRunClientGetPipelineRunResponse, error) {
 	result := PipelineRunClientGetPipelineRunResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRun); err != nil {
 		return PipelineRunClientGetPipelineRunResponse{}, err
@@ -132,9 +141,9 @@ func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Respons
 // pipelineName - The pipeline name.
 // runID - The pipeline run identifier.
 // filterParameters - Parameters to filter the activity runs.
-// options - pipelineRunClientQueryActivityRunsOptions contains the optional parameters for the pipelineRunClient.QueryActivityRuns
+// options - PipelineRunClientQueryActivityRunsOptions contains the optional parameters for the PipelineRunClient.QueryActivityRuns
 // method.
-func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *pipelineRunClientQueryActivityRunsOptions) (PipelineRunClientQueryActivityRunsResponse, error) {
+func (client *PipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunClientQueryActivityRunsOptions) (PipelineRunClientQueryActivityRunsResponse, error) {
 	req, err := client.queryActivityRunsCreateRequest(ctx, pipelineName, runID, filterParameters, options)
 	if err != nil {
 		return PipelineRunClientQueryActivityRunsResponse{}, err
@@ -150,7 +159,7 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 }
 
 // queryActivityRunsCreateRequest creates the QueryActivityRuns request.
-func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *pipelineRunClientQueryActivityRunsOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) queryActivityRunsCreateRequest(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunClientQueryActivityRunsOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/pipelineruns/{runId}/queryActivityruns"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -172,7 +181,7 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 }
 
 // queryActivityRunsHandleResponse handles the QueryActivityRuns response.
-func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Response) (PipelineRunClientQueryActivityRunsResponse, error) {
+func (client *PipelineRunClient) queryActivityRunsHandleResponse(resp *http.Response) (PipelineRunClientQueryActivityRunsResponse, error) {
 	result := PipelineRunClientQueryActivityRunsResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ActivityRunsQueryResponse); err != nil {
 		return PipelineRunClientQueryActivityRunsResponse{}, err
@@ -184,9 +193,9 @@ func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Resp
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // filterParameters - Parameters to filter the pipeline run.
-// options - pipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the pipelineRunClient.QueryPipelineRunsByWorkspace
+// options - PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRunClient.QueryPipelineRunsByWorkspace
 // method.
-func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *pipelineRunClientQueryPipelineRunsByWorkspaceOptions) (PipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
+func (client *PipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunClientQueryPipelineRunsByWorkspaceOptions) (PipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
 	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
 		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err
@@ -202,7 +211,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 }
 
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
-func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *pipelineRunClientQueryPipelineRunsByWorkspaceOptions) (*policy.Request, error) {
+func (client *PipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunClientQueryPipelineRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryPipelineRuns"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -216,7 +225,7 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 }
 
 // queryPipelineRunsByWorkspaceHandleResponse handles the QueryPipelineRunsByWorkspace response.
-func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *http.Response) (PipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
+func (client *PipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *http.Response) (PipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
 	result := PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRunsQueryResponse); err != nil {
 		return PipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err

@@ -12,6 +12,7 @@ package azartifacts
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,16 +20,24 @@ import (
 	"strings"
 )
 
-type datasetClient struct {
+// DatasetClient contains the methods for the Dataset group.
+// Don't use this type directly, use NewDatasetClient() instead.
+type DatasetClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newDatasetClient creates a new instance of datasetClient with the specified values.
+// NewDatasetClient creates a new instance of DatasetClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// pl - the pipeline used for sending requests and handling responses.
-func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
-	client := &datasetClient{
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
+func NewDatasetClient(endpoint string, credential azcore.TokenCredential, options *DatasetClientOptions) *DatasetClient {
+	if options == nil {
+		options = &DatasetClientOptions{}
+	}
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{"https://dev.azuresynapse.net/.default"}, nil)
+	pl := runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{PerRetry: []policy.Policy{authPolicy}}, &options.ClientOptions)
+	client := &DatasetClient{
 		endpoint: endpoint,
 		pl:       pl,
 	}
@@ -40,9 +49,9 @@ func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
 // Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
 // dataset - Dataset resource definition.
-// options - datasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the datasetClient.BeginCreateOrUpdateDataset
+// options - DatasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the DatasetClient.BeginCreateOrUpdateDataset
 // method.
-func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (*runtime.Poller[DatasetClientCreateOrUpdateDatasetResponse], error) {
+func (client *DatasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetClientBeginCreateOrUpdateDatasetOptions) (*runtime.Poller[DatasetClientCreateOrUpdateDatasetResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
 		if err != nil {
@@ -57,7 +66,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 // CreateOrUpdateDataset - Creates or updates a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
+func (client *DatasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetClientBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
 		return nil, err
@@ -73,7 +82,7 @@ func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetN
 }
 
 // createOrUpdateDatasetCreateRequest creates the CreateOrUpdateDataset request.
-func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (*policy.Request, error) {
+func (client *DatasetClient) createOrUpdateDatasetCreateRequest(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetClientBeginCreateOrUpdateDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
@@ -97,9 +106,9 @@ func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
-// options - datasetClientBeginDeleteDatasetOptions contains the optional parameters for the datasetClient.BeginDeleteDataset
+// options - DatasetClientBeginDeleteDatasetOptions contains the optional parameters for the DatasetClient.BeginDeleteDataset
 // method.
-func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (*runtime.Poller[DatasetClientDeleteDatasetResponse], error) {
+func (client *DatasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *DatasetClientBeginDeleteDatasetOptions) (*runtime.Poller[DatasetClientDeleteDatasetResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteDataset(ctx, datasetName, options)
 		if err != nil {
@@ -114,7 +123,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 // DeleteDataset - Deletes a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (*http.Response, error) {
+func (client *DatasetClient) deleteDataset(ctx context.Context, datasetName string, options *DatasetClientBeginDeleteDatasetOptions) (*http.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return nil, err
@@ -130,7 +139,7 @@ func (client *datasetClient) deleteDataset(ctx context.Context, datasetName stri
 }
 
 // deleteDatasetCreateRequest creates the DeleteDataset request.
-func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (*policy.Request, error) {
+func (client *DatasetClient) deleteDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetClientBeginDeleteDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
@@ -151,8 +160,8 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
-// options - datasetClientGetDatasetOptions contains the optional parameters for the datasetClient.GetDataset method.
-func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *datasetClientGetDatasetOptions) (DatasetClientGetDatasetResponse, error) {
+// options - DatasetClientGetDatasetOptions contains the optional parameters for the DatasetClient.GetDataset method.
+func (client *DatasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetClientGetDatasetOptions) (DatasetClientGetDatasetResponse, error) {
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
 		return DatasetClientGetDatasetResponse{}, err
@@ -168,7 +177,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 }
 
 // getDatasetCreateRequest creates the GetDataset request.
-func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datasetName string, options *datasetClientGetDatasetOptions) (*policy.Request, error) {
+func (client *DatasetClient) getDatasetCreateRequest(ctx context.Context, datasetName string, options *DatasetClientGetDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
@@ -189,7 +198,7 @@ func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datase
 }
 
 // getDatasetHandleResponse handles the GetDataset response.
-func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (DatasetClientGetDatasetResponse, error) {
+func (client *DatasetClient) getDatasetHandleResponse(resp *http.Response) (DatasetClientGetDatasetResponse, error) {
 	result := DatasetClientGetDatasetResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetResource); err != nil {
 		return DatasetClientGetDatasetResponse{}, err
@@ -199,9 +208,9 @@ func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (Data
 
 // NewGetDatasetsByWorkspacePager - Lists datasets.
 // Generated from API version 2019-06-01-preview
-// options - datasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
+// options - DatasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the DatasetClient.GetDatasetsByWorkspace
 // method.
-func (client *datasetClient) NewGetDatasetsByWorkspacePager(options *datasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[DatasetClientGetDatasetsByWorkspaceResponse] {
+func (client *DatasetClient) NewGetDatasetsByWorkspacePager(options *DatasetClientGetDatasetsByWorkspaceOptions) *runtime.Pager[DatasetClientGetDatasetsByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DatasetClientGetDatasetsByWorkspaceResponse]{
 		More: func(page DatasetClientGetDatasetsByWorkspaceResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
@@ -230,7 +239,7 @@ func (client *datasetClient) NewGetDatasetsByWorkspacePager(options *datasetClie
 }
 
 // getDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
-func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, options *datasetClientGetDatasetsByWorkspaceOptions) (*policy.Request, error) {
+func (client *DatasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetClientGetDatasetsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/datasets"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -244,7 +253,7 @@ func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Con
 }
 
 // getDatasetsByWorkspaceHandleResponse handles the GetDatasetsByWorkspace response.
-func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Response) (DatasetClientGetDatasetsByWorkspaceResponse, error) {
+func (client *DatasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Response) (DatasetClientGetDatasetsByWorkspaceResponse, error) {
 	result := DatasetClientGetDatasetsByWorkspaceResponse{}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetListResponse); err != nil {
 		return DatasetClientGetDatasetsByWorkspaceResponse{}, err
@@ -257,9 +266,9 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Res
 // Generated from API version 2019-06-01-preview
 // datasetName - The dataset name.
 // request - proposed new name.
-// options - datasetClientBeginRenameDatasetOptions contains the optional parameters for the datasetClient.BeginRenameDataset
+// options - DatasetClientBeginRenameDatasetOptions contains the optional parameters for the DatasetClient.BeginRenameDataset
 // method.
-func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (*runtime.Poller[DatasetClientRenameDatasetResponse], error) {
+func (client *DatasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetClientBeginRenameDatasetOptions) (*runtime.Poller[DatasetClientRenameDatasetResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renameDataset(ctx, datasetName, request, options)
 		if err != nil {
@@ -274,7 +283,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 // RenameDataset - Renames a dataset.
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2019-06-01-preview
-func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (*http.Response, error) {
+func (client *DatasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetClientBeginRenameDatasetOptions) (*http.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
 		return nil, err
@@ -290,7 +299,7 @@ func (client *datasetClient) renameDataset(ctx context.Context, datasetName stri
 }
 
 // renameDatasetCreateRequest creates the RenameDataset request.
-func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (*policy.Request, error) {
+func (client *DatasetClient) renameDatasetCreateRequest(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetClientBeginRenameDatasetOptions) (*policy.Request, error) {
 	urlPath := "/datasets/{datasetName}/rename"
 	if datasetName == "" {
 		return nil, errors.New("parameter datasetName cannot be empty")
