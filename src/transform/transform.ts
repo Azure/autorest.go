@@ -40,7 +40,7 @@ export async function transform(host: AutorestExtensionHost) {
 }
 
 async function process(session: Session<CodeModel>) {
-  processOperationRequests(session);
+  await processOperationRequests(session);
   processOperationResponses(session);
   // fix up dictionary element types (additional properties)
   // this must happen before processing objects as we depend on the
@@ -293,7 +293,7 @@ function recursiveAddMarshallingFormat(schema: Schema, marshallingFormat: 'json'
 }
 
 // we will transform operation request parameter schema types to Go types
-function processOperationRequests(session: Session<CodeModel>) {
+async function processOperationRequests(session: Session<CodeModel>) {
   // pre-process multi-request operations as it can add operations to the operations
   // collection, and iterating over a modified collection yeilds incorrect results
   for (const group of values(session.model.operationGroups)) {
@@ -301,35 +301,20 @@ function processOperationRequests(session: Session<CodeModel>) {
       if (op.language.go!.description) {
         op.language.go!.description = parseComments(op.language.go!.description);
       }
-      if (op.requests!.length > 1) {
-        for (const req of values(op.requests)) {
-          const newOp = clone(op);
-          newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
-          let name = op.language.go!.name;
+
+      const normalizeOperationName = await session.getValue('normalize-operation-name', false);
+
+      // previous operation naming logic: keep original name if only one body type, and add suffix for operation with non-binary body type if more than one body type
+      // new normalized operation naming logic: add suffix for operation with unstructured body type and keep original name for operation with structured body type 
+      if (!normalizeOperationName){
+        if (op.requests!.length > 1) {
           // for the non-binary media types we create a new method with the
           // media type name as a suffix, e.g. FooAPIWithJSON()
-          if (req.protocol.http!.knownMediaType !== KnownMediaType.Binary) {
-            let suffix: string;
-            switch (req.protocol.http!.knownMediaType) {
-              case KnownMediaType.Json:
-                suffix = 'JSON';
-                break;
-              case KnownMediaType.Xml:
-                suffix = 'XML';
-                break;
-              default:
-                suffix = capitalize(req.protocol.http!.knownMediaType);
-            }
-            name = name + 'With' + suffix;
-          }
-          newOp.language.go!.name = name;
-          newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
-          group.addOperation(newOp);
-          if (req.language.go!.description) {
-            req.language.go!.description = parseComments(req.language.go!.description);
-          }
+          separateOperationByRequestsProtocol(group, op, [KnownMediaType.Binary]);
         }
-        group.operations.splice(group.operations.indexOf(op), 1);
+      } else {
+        // add suffix to binary/text, suppose there will be only one structured media type
+        separateOperationByRequestsProtocol(group, op, [KnownMediaType.Json, KnownMediaType.Xml, KnownMediaType.Form, KnownMediaType.Multipart]);
       }
     }
   }
@@ -1031,4 +1016,34 @@ function dfsSchema(schema: Schema, referencedTypes: Set<Schema>) {
   } else if (isDictionarySchema(schema)) {
     dfsSchema(schema.elementType, referencedTypes);
   }
+}
+
+function separateOperationByRequestsProtocol(group: OperationGroup, op: Operation, defaultTypes: Array<KnownMediaType>) {
+  for (const req of values(op.requests)) {
+    const newOp = <Operation>{...op};
+    newOp.language = clone(op.language)
+    newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
+    let name = op.language.go!.name;
+    if (req.protocol.http!.knownMediaType && !defaultTypes.includes(req.protocol.http!.knownMediaType)) {
+      let suffix: string;
+      switch (req.protocol.http!.knownMediaType) {
+        case KnownMediaType.Json:
+          suffix = 'JSON';
+          break;
+        case KnownMediaType.Xml:
+          suffix = 'XML';
+          break;
+        default:
+          suffix = capitalize(req.protocol.http!.knownMediaType);
+      }
+      name = name + 'With' + suffix;
+    }
+    newOp.language.go!.name = name;
+    newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
+    group.addOperation(newOp);
+    if (req.language.go!.description) {
+      req.language.go!.description = parseComments(req.language.go!.description);
+    }
+  }
+  group.operations.splice(group.operations.indexOf(op), 1);
 }

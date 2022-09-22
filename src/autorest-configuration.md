@@ -83,4 +83,10 @@ help-content:
       - key: honor-body-placement
         type: boolean
         description: When true, optional body parameters are treated as such for PATCH and PUT operations.
+      - key: remove-non-reference-schema
+        type: boolean
+        description: When true, non-reference schema will be removed from the generated code.
+      - key: normalize-operation-name
+        type: boolean
+        description: When true, add suffix for operation with unstructured body type and keep original name for operation with structured body type. When false, keep original name if only one body type, and add suffix for operation with non-binary body type if more than one body type.
 ```
