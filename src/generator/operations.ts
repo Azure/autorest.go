@@ -206,7 +206,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
     }
     if (azureARM || hasOauth2Security) {
-      // data-plane doesn't take client options
+      // data-plane without Oauth2 auth doesn't take client options
       clientText += '\tif options == nil {\n';
       clientText += `\t\toptions = &${optionsType}{}\n`;
       clientText += '\t}\n';
@@ -331,7 +331,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\treturn client\n';
     }
     clientText += '}\n\n';
-    
+
     // generate operations
     let opText = '';
     group.operations.sort((a: Operation, b: Operation) => { return sortAscending(a.language.go!.name, b.language.go!.name) });
