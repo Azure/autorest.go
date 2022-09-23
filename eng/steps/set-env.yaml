@@ -1,6 +1,6 @@
 parameters:
   NodeVersion: "16.x"
-  GoVersion: "18.0"
+  GoVersion: "1.19.1"
 
 steps:
   - task: NodeTool@0

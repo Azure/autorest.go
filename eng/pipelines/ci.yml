@@ -24,7 +24,7 @@ jobs:
       matrix:
         Linux_Go118:
           vm.image: "ubuntu-18.04"
-          go.version: "1.18"
+          go.version: "1.19.1"
 
     pool:
       vmImage: "$(vm.image)"
