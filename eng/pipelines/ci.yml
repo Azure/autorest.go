@@ -22,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        Linux_Go118:
+        Linux_Go119:
           vm.image: "ubuntu-18.04"
           go.version: "1.19.1"
 
