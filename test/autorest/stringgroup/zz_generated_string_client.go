@@ -112,7 +112,7 @@ func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Respons
 	return result, nil
 }
 
-// GetEmpty - Get empty string value value ''
+// GetEmpty - Get empty string value value ”
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - StringClientGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
@@ -380,7 +380,7 @@ func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsByteArray(req, stringBody, runtime.Base64URLFormat)
 }
 
-// PutEmpty - Set string value empty ''
+// PutEmpty - Set string value empty ”
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - StringClientPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.

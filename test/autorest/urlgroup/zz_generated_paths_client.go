@@ -36,10 +36,10 @@ func NewPathsClient(pl runtime.Pipeline) *PathsClient {
 	return client
 }
 
-// ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
-// arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
 // options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (PathsClientArrayCSVInPathResponse, error) {
 	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
@@ -100,7 +100,7 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 	return req, nil
 }
 
-// ByteEmpty - Get '' as byte array
+// ByteEmpty - Get ” as byte array
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
@@ -707,7 +707,7 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// StringEmpty - Get ''
+// StringEmpty - Get ”
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.

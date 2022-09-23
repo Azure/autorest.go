@@ -107,7 +107,7 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
+// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
@@ -181,7 +181,7 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 	return req, nil
 }
 
-// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
+// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the pipes-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
@@ -218,7 +218,7 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
+// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the ssv-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
@@ -255,7 +255,7 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
+// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the tsv-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
@@ -292,7 +292,7 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// ByteEmpty - Get '' as byte array
+// ByteEmpty - Get ” as byte array
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - QueriesClientByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
@@ -1113,7 +1113,7 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
-// StringEmpty - Get ''
+// StringEmpty - Get ”
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - QueriesClientStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
