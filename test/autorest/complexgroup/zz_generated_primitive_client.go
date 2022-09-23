@@ -775,7 +775,7 @@ func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complex
 // PutString - Put complex types with string properties
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 2016-02-29
-// complexBody - Please put 'goodrequest', '', and null
+// complexBody - Please put 'goodrequest', ”, and null
 // options - PrimitiveClientPutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
 func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (PrimitiveClientPutStringResponse, error) {
 	req, err := client.putStringCreateRequest(ctx, complexBody, options)

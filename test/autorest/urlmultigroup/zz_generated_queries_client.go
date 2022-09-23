@@ -107,7 +107,7 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array
+// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the mult-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0

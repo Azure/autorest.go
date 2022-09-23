@@ -31,7 +31,7 @@ func NewByteClient(pl runtime.Pipeline) *ByteClient {
 	return client
 }
 
-// GetEmpty - Get empty byte value ''
+// GetEmpty - Get empty byte value ”
 // If the operation fails it returns an *azcore.ResponseError type.
 // Generated from API version 1.0.0
 // options - ByteClientGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
