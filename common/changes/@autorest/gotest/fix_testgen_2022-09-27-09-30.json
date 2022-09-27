@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@autorest/gotest",
+      "comment": "Fix wrong camel and snake method.",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@autorest/gotest"
+}
