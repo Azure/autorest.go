@@ -40,12 +40,12 @@ func main() {
 		panic(err)
 	}
 	createResourceGroup()
-	signalrSample()
+	signalRSample()
 	deleteResourceGroup()
 }
 
 // Microsoft.SignalRService/Basic_CRUD
-func signalrSample() {
+func signalRSample() {
 	var resourceName string
 	// From step Generate_Unique_Name
 	template := map[string]interface{}{

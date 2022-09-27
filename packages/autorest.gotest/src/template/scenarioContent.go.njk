@@ -9,7 +9,7 @@ var err error
 {%- else %}
     {%- if step.type == "restCall" %}
         {%- set example = step.exampleModel %}
-        {%- set clientVariable = jsFunc.uncapitalize(example.operationGroup.language.go.clientName) %}
+        {%- set clientVariable = jsFunc.lowerFirst(example.operationGroup.language.go.clientName) %}
         {%- if allVariables.indexOf(clientVariable)<0 %}
     {{clientVariable}}, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)

@@ -9,8 +9,8 @@ import { BaseCodeGenerator } from './baseGenerator';
 import { Config } from '../common/constant';
 import { ExampleParameter, ExampleValue, OutputVariableModelType, StepRestCallModel, TestDefinitionModel, TestScenarioModel } from '@autorest/testmodeler/dist/src/core/model';
 import { GoExampleModel, ParameterOutput, VariableOutput } from '../common/model';
-import { GoHelper } from '../util/goHelper';
-import { GroupProperty, Parameter, Schema, SchemaType } from '@autorest/codemodel';
+import { camelCase, snakeCase, upperFirst, lowerFirst } from 'lodash';
+import { GroupProperty, Parameter } from '@autorest/codemodel';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestDataRender } from './mockTestGenerator';
 import { OavStepType } from '@autorest/testmodeler/dist/src/common/constant';
@@ -292,15 +292,15 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
           ...testDef.variables,
         });
         this.renderAndWrite(
-          { ...testDef, testCaseName: Helper.capitalize(Helper.toCamelCase(filename)) },
+          { ...testDef, testCaseName: upperFirst(camelCase(filename)) },
           'scenarioTest.go.njk',
           `${this.getFilePrefix(Config.testFilePrefix)}${filename.toLowerCase()}_live_test.go`,
           extraParam,
           {
-            toSnakeCase: Helper.toSnakeCase,
-            uncapitalize: Helper.uncapitalize,
-            toCamelCase: Helper.toCamelCase,
-            capitalize: Helper.capitalize,
+            snakeCase: snakeCase,
+            lowerFirst: lowerFirst,
+            camelCase: camelCase,
+            upperFirst: upperFirst,
             quotedEscapeString: Helper.quotedEscapeString,
             genVariableName: (typeName: string) => {
               // This function generate variable instance name from variable type name
@@ -308,7 +308,7 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
               //   1) VirtualMachineResponse  --> virtualMachineResponse
               //   2) armCompute.VirtualMachineResponse  --> virtualMachineResponse   // remove package name
               //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
-              return Helper.uncapitalize(typeName.split('.').join('*').split('*').pop());
+              return lowerFirst(typeName.split('.').join('*').split('*').pop());
             },
             getParamsValue: (params: Array<ParameterOutput>) => {
               return params

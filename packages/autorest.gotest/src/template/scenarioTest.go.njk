@@ -60,7 +60,7 @@ func (testsuite *{{testCaseName}}TestSuite) SetupSuite() {
         {%- if variable === "subscriptionId" %}
         testsuite.subscriptionId = testutil.GetEnv("AZURE_SUBSCRIPTION_ID", "00000000-00000000-00000000-00000000")
         {%- else %}
-        testsuite.{{variable}} = testutil.GetEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
+        testsuite.{{variable}} = testutil.GetEnv("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
         {%- endif %}
     {%- endfor %}
 
@@ -98,10 +98,10 @@ func (testsuite *{{testCaseName}}TestSuite) Prepare() {
 
 {% for testScenario in scenarios %}
 // {{testScenario.description}}
-func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.capitalize(jsFunc.toCamelCase(testScenario.scenario))}}() {
+func (testsuite *{{testCaseName}}TestSuite) Test{{jsFunc.upperFirst(jsFunc.camelCase(testScenario.scenario))}}() {
     {%- for variable, value in testScenario.requiredVariablesDefault %}
     {%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
-    {{variable}} := testutil.GetEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{value}}")
+    {{variable}} := testutil.GetEnv("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{value}}")
     {%- endif %}
     {%- endfor %}
     {%- for name, variable in testScenario.variablesOutput %}
