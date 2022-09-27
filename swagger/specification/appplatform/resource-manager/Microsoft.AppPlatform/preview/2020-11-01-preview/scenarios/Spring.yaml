@@ -201,7 +201,7 @@ scenarios:
           - replace: /bindingResource/properties/key
             value: $(mysqlKey)
           - replace: /bindingResource/properties/bindingParameters
-            value: { "databaseName": "mysqldb", "username": "test" }
+            value: { "databaseName": "mysqldb", "username": $(mysqlKey) }
 
       - step: Bindings_Update # PATCH
         exampleFile: ../examples/Bindings_Update.json
@@ -211,7 +211,7 @@ scenarios:
           - replace: /bindingResource/properties/key
             value: $(mysqlKey)
           - replace: /bindingResource/properties/bindingParameters
-            value: { "databaseName": "mysqldb2", "username": "test2" }
+            value: { "anotherLayer": { "databaseName": "mysqldb2", "username": $(mysqlKey) } }
 
       - step: Bindings_Get
         exampleFile: ../examples/Bindings_Get.json

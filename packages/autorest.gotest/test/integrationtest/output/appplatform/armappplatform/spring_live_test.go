@@ -101,12 +101,10 @@ func (testsuite *SpringTestSuite) Prepare() {
 			"serviceNameLong": "[concat(parameters('serviceNamePrefix'), uniqueString(resourceGroup().id))]",
 		},
 	}
-	params := map[string]interface{}{}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend, err := testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "Generate_Unique_ServiceName", &deployment)
@@ -148,12 +146,10 @@ func (testsuite *SpringTestSuite) Prepare() {
 			},
 		},
 	}
-	params = map[string]interface{}{}
 	deployment = armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend, err = testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "Create_Application_Insight_Instance", &deployment)
@@ -167,7 +163,7 @@ func (testsuite *SpringTestSuite) Prepare() {
 		"parameters": map[string]interface{}{
 			"userAssignedIdentity": map[string]interface{}{
 				"type":         "string",
-				"defaultValue": "$(userAssignedIdentity)",
+				"defaultValue": testsuite.userAssignedIdentity,
 			},
 			"utcValue": map[string]interface{}{
 				"type":         "string",
@@ -216,14 +212,10 @@ func (testsuite *SpringTestSuite) Prepare() {
 			},
 		},
 	}
-	params = map[string]interface{}{
-		"userAssignedIdentity": map[string]interface{}{"value": testsuite.userAssignedIdentity},
-	}
 	deployment = armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	_, err = testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "Add_Dns_Cname_Record", &deployment)
@@ -532,7 +524,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
 				"databaseName": "mysqldb",
-				"username":     "test",
+				"username":     testsuite.mysqlKey,
 			},
 			Key:        to.Ptr(testsuite.mysqlKey),
 			ResourceID: to.Ptr("/subscriptions/b46590cb-a111-4b84-935f-c305aaf1f424/resourceGroups/mary-west/providers/Microsoft.DBforMySQL/servers/fake-sql"),
@@ -547,8 +539,10 @@ func (testsuite *SpringTestSuite) TestSpring() {
 	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(testsuite.ctx, testsuite.resourceGroupName, testsuite.serviceName, testsuite.appName, bindingName, armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
-				"databaseName": "mysqldb2",
-				"username":     "test2",
+				"anotherLayer": map[string]interface{}{
+					"databaseName": "mysqldb2",
+					"username":     testsuite.mysqlKey,
+				},
 			},
 			Key: to.Ptr(testsuite.mysqlKey),
 		},
@@ -633,7 +627,7 @@ func (testsuite *SpringTestSuite) TestSpring() {
 		"parameters": map[string]interface{}{
 			"userAssignedIdentity": map[string]interface{}{
 				"type":         "string",
-				"defaultValue": "$(userAssignedIdentity)",
+				"defaultValue": testsuite.userAssignedIdentity,
 			},
 			"utcValue": map[string]interface{}{
 				"type":         "string",
@@ -674,14 +668,10 @@ func (testsuite *SpringTestSuite) TestSpring() {
 			},
 		},
 	}
-	params := map[string]interface{}{
-		"userAssignedIdentity": map[string]interface{}{"value": testsuite.userAssignedIdentity},
-	}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	_, err = testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "Upload_File", &deployment)
@@ -865,7 +855,7 @@ func (testsuite *SpringTestSuite) Cleanup() {
 		"parameters": map[string]interface{}{
 			"userAssignedIdentity": map[string]interface{}{
 				"type":         "string",
-				"defaultValue": "$(userAssignedIdentity)",
+				"defaultValue": testsuite.userAssignedIdentity,
 			},
 			"utcValue": map[string]interface{}{
 				"type":         "string",
@@ -910,14 +900,10 @@ func (testsuite *SpringTestSuite) Cleanup() {
 			},
 		},
 	}
-	params := map[string]interface{}{
-		"userAssignedIdentity": map[string]interface{}{"value": testsuite.userAssignedIdentity},
-	}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	_, err = testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "delete_cname_record", &deployment)

@@ -814,12 +814,9 @@ var err error
 },
 },
 }
-    params:= map[string]interface{}{
-    }
     deployment:= armresources.Deployment{
         Properties: &armresources.DeploymentProperties{
             Template:   template,
-            Parameters: params,
             Mode:       to.Ptr(armresources.DeploymentModeIncremental),
         },
     }

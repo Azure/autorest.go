@@ -7787,7 +7787,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1273
+            optionalParamGroup: &ref_1276
               schema:
                 type: object
                 language:
@@ -7809,7 +7809,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1322
+            responseEnv: &ref_1325
               type: object
               properties:
                 - &ref_289
@@ -8286,7 +8286,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1274
+            optionalParamGroup: &ref_1277
               schema:
                 type: object
                 language:
@@ -8323,7 +8323,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1323
+            responseEnv: &ref_1326
               type: object
               properties:
                 - &ref_300
@@ -8423,7 +8423,7 @@ operationGroups:
           - *ref_302
           - *ref_303
         responses:
-          - language: &ref_1270
+          - language: &ref_1273
               default:
                 name: ''
                 description: Accepted. The response indicates the delete operation is performed in the background.
@@ -8490,7 +8490,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1275
+            optionalParamGroup: &ref_1278
               schema:
                 type: object
                 language:
@@ -8527,7 +8527,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1324
+            responseEnv: &ref_1327
               type: object
               language:
                 default: &ref_308
@@ -8795,7 +8795,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1276
+            optionalParamGroup: &ref_1279
               schema:
                 type: object
                 language:
@@ -8832,7 +8832,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1325
+            responseEnv: &ref_1328
               type: object
               properties:
                 - &ref_318
@@ -8992,7 +8992,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1277
+            optionalParamGroup: &ref_1280
               schema:
                 type: object
                 language:
@@ -9014,7 +9014,7 @@ operationGroups:
               internalMethod: listTestKeys
               requestMethod: listTestKeysCreateRequest
               responseMethod: listTestKeysHandleResponse
-            responseEnv: &ref_1326
+            responseEnv: &ref_1329
               type: object
               properties:
                 - &ref_326
@@ -9197,7 +9197,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1278
+            optionalParamGroup: &ref_1281
               schema:
                 type: object
                 language:
@@ -9219,7 +9219,7 @@ operationGroups:
               internalMethod: regenerateTestKey
               requestMethod: regenerateTestKeyCreateRequest
               responseMethod: regenerateTestKeyHandleResponse
-            responseEnv: &ref_1327
+            responseEnv: &ref_1330
               type: object
               properties:
                 - &ref_336
@@ -9368,7 +9368,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1279
+            optionalParamGroup: &ref_1282
               schema:
                 type: object
                 language:
@@ -9390,7 +9390,7 @@ operationGroups:
               internalMethod: disableTestEndpoint
               requestMethod: disableTestEndpointCreateRequest
               responseMethod: disableTestEndpointHandleResponse
-            responseEnv: &ref_1328
+            responseEnv: &ref_1331
               type: object
               language:
                 default: &ref_342
@@ -9535,7 +9535,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1280
+            optionalParamGroup: &ref_1283
               schema:
                 type: object
                 language:
@@ -9557,7 +9557,7 @@ operationGroups:
               internalMethod: enableTestEndpoint
               requestMethod: enableTestEndpointCreateRequest
               responseMethod: enableTestEndpointHandleResponse
-            responseEnv: &ref_1329
+            responseEnv: &ref_1332
               type: object
               properties:
                 - &ref_348
@@ -9721,7 +9721,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1281
+            optionalParamGroup: &ref_1284
               schema:
                 type: object
                 language:
@@ -9743,7 +9743,7 @@ operationGroups:
               internalMethod: checkNameAvailability
               requestMethod: checkNameAvailabilityCreateRequest
               responseMethod: checkNameAvailabilityHandleResponse
-            responseEnv: &ref_1330
+            responseEnv: &ref_1333
               type: object
               properties:
                 - &ref_358
@@ -9900,7 +9900,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1282
+            optionalParamGroup: &ref_1285
               schema:
                 type: object
                 language:
@@ -9924,7 +9924,7 @@ operationGroups:
               internalMethod: listBySubscription
               requestMethod: listBySubscriptionCreateRequest
               responseMethod: listBySubscriptionHandleResponse
-            responseEnv: &ref_1331
+            responseEnv: &ref_1334
               type: object
               properties:
                 - &ref_364
@@ -10099,7 +10099,7 @@ operationGroups:
             azureARM: true
             clientName: ServicesClient
             openApiType: arm
-            optionalParamGroup: &ref_1283
+            optionalParamGroup: &ref_1286
               schema:
                 type: object
                 language:
@@ -10123,7 +10123,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1332
+            responseEnv: &ref_1335
               type: object
               properties:
                 - &ref_370
@@ -10303,7 +10303,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1284
+            optionalParamGroup: &ref_1287
               schema:
                 type: object
                 language:
@@ -10325,7 +10325,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1333
+            responseEnv: &ref_1336
               type: object
               properties:
                 - &ref_377
@@ -10551,7 +10551,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1285
+            optionalParamGroup: &ref_1288
               schema:
                 type: object
                 language:
@@ -10588,7 +10588,7 @@ operationGroups:
               internalMethod: updatePut
               requestMethod: updatePutCreateRequest
               responseMethod: updatePutHandleResponse
-            responseEnv: &ref_1334
+            responseEnv: &ref_1337
               type: object
               properties:
                 - &ref_388
@@ -10820,7 +10820,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1286
+            optionalParamGroup: &ref_1289
               schema:
                 type: object
                 language:
@@ -10857,7 +10857,7 @@ operationGroups:
               internalMethod: updatePatch
               requestMethod: updatePatchCreateRequest
               responseMethod: updatePatchHandleResponse
-            responseEnv: &ref_1335
+            responseEnv: &ref_1338
               type: object
               properties:
                 - &ref_399
@@ -11066,7 +11066,7 @@ operationGroups:
             azureARM: true
             clientName: ConfigServersClient
             openApiType: arm
-            optionalParamGroup: &ref_1287
+            optionalParamGroup: &ref_1290
               schema:
                 type: object
                 language:
@@ -11103,7 +11103,7 @@ operationGroups:
               internalMethod: validate
               requestMethod: validateCreateRequest
               responseMethod: validateHandleResponse
-            responseEnv: &ref_1336
+            responseEnv: &ref_1339
               type: object
               properties:
                 - &ref_411
@@ -11283,7 +11283,7 @@ operationGroups:
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1288
+            optionalParamGroup: &ref_1291
               schema:
                 type: object
                 language:
@@ -11305,7 +11305,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1337
+            responseEnv: &ref_1340
               type: object
               properties:
                 - &ref_418
@@ -11526,7 +11526,7 @@ operationGroups:
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1289
+            optionalParamGroup: &ref_1292
               schema:
                 type: object
                 language:
@@ -11563,7 +11563,7 @@ operationGroups:
               internalMethod: updatePut
               requestMethod: updatePutCreateRequest
               responseMethod: updatePutHandleResponse
-            responseEnv: &ref_1338
+            responseEnv: &ref_1341
               type: object
               properties:
                 - &ref_429
@@ -11790,7 +11790,7 @@ operationGroups:
             azureARM: true
             clientName: MonitoringSettingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1290
+            optionalParamGroup: &ref_1293
               schema:
                 type: object
                 language:
@@ -11827,7 +11827,7 @@ operationGroups:
               internalMethod: updatePatch
               requestMethod: updatePatchCreateRequest
               responseMethod: updatePatchHandleResponse
-            responseEnv: &ref_1339
+            responseEnv: &ref_1342
               type: object
               properties:
                 - &ref_440
@@ -12078,7 +12078,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1340
+            responseEnv: &ref_1343
               type: object
               properties:
                 - &ref_450
@@ -12393,7 +12393,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1291
+            optionalParamGroup: &ref_1294
               schema:
                 type: object
                 language:
@@ -12430,7 +12430,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1341
+            responseEnv: &ref_1344
               type: object
               properties:
                 - &ref_462
@@ -12547,7 +12547,7 @@ operationGroups:
           - *ref_465
           - *ref_466
         responses:
-          - language: &ref_1266
+          - language: &ref_1269
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -12625,7 +12625,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1292
+            optionalParamGroup: &ref_1295
               schema:
                 type: object
                 language:
@@ -12662,7 +12662,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1342
+            responseEnv: &ref_1345
               type: object
               language:
                 default: &ref_471
@@ -12932,7 +12932,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1293
+            optionalParamGroup: &ref_1296
               schema:
                 type: object
                 language:
@@ -12969,7 +12969,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1343
+            responseEnv: &ref_1346
               type: object
               properties:
                 - &ref_482
@@ -13150,7 +13150,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1294
+            optionalParamGroup: &ref_1297
               schema:
                 type: object
                 language:
@@ -13174,7 +13174,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1344
+            responseEnv: &ref_1347
               type: object
               properties:
                 - &ref_490
@@ -13349,7 +13349,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1295
+            optionalParamGroup: &ref_1298
               schema:
                 type: object
                 language:
@@ -13371,7 +13371,7 @@ operationGroups:
               internalMethod: getResourceUploadURL
               requestMethod: getResourceUploadURLCreateRequest
               responseMethod: getResourceUploadURLHandleResponse
-            responseEnv: &ref_1345
+            responseEnv: &ref_1348
               type: object
               properties:
                 - &ref_499
@@ -13569,7 +13569,7 @@ operationGroups:
             azureARM: true
             clientName: AppsClient
             openApiType: arm
-            optionalParamGroup: &ref_1296
+            optionalParamGroup: &ref_1299
               schema:
                 type: object
                 language:
@@ -13591,7 +13591,7 @@ operationGroups:
               internalMethod: validateDomain
               requestMethod: validateDomainCreateRequest
               responseMethod: validateDomainHandleResponse
-            responseEnv: &ref_1346
+            responseEnv: &ref_1349
               type: object
               properties:
                 - &ref_511
@@ -13812,7 +13812,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1297
+            optionalParamGroup: &ref_1300
               schema:
                 type: object
                 language:
@@ -13834,7 +13834,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1347
+            responseEnv: &ref_1350
               type: object
               properties:
                 - &ref_520
@@ -14141,7 +14141,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1298
+            optionalParamGroup: &ref_1301
               schema:
                 type: object
                 language:
@@ -14178,7 +14178,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1348
+            responseEnv: &ref_1351
               type: object
               properties:
                 - &ref_533
@@ -14312,7 +14312,7 @@ operationGroups:
           - *ref_537
           - *ref_538
         responses:
-          - language: &ref_1249
+          - language: &ref_1252
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -14391,7 +14391,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1299
+            optionalParamGroup: &ref_1302
               schema:
                 type: object
                 language:
@@ -14428,7 +14428,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1349
+            responseEnv: &ref_1352
               type: object
               language:
                 default: &ref_543
@@ -14693,7 +14693,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1300
+            optionalParamGroup: &ref_1303
               schema:
                 type: object
                 language:
@@ -14730,7 +14730,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1350
+            responseEnv: &ref_1353
               type: object
               properties:
                 - &ref_555
@@ -14922,7 +14922,7 @@ operationGroups:
             azureARM: true
             clientName: BindingsClient
             openApiType: arm
-            optionalParamGroup: &ref_1301
+            optionalParamGroup: &ref_1304
               schema:
                 type: object
                 language:
@@ -14946,7 +14946,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1351
+            responseEnv: &ref_1354
               type: object
               properties:
                 - &ref_564
@@ -15150,7 +15150,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1302
+            optionalParamGroup: &ref_1305
               schema:
                 type: object
                 language:
@@ -15172,7 +15172,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1352
+            responseEnv: &ref_1355
               type: object
               properties:
                 - &ref_572
@@ -15459,7 +15459,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1303
+            optionalParamGroup: &ref_1306
               schema:
                 type: object
                 language:
@@ -15496,7 +15496,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1353
+            responseEnv: &ref_1356
               type: object
               properties:
                 - &ref_584
@@ -15613,7 +15613,7 @@ operationGroups:
           - *ref_587
           - *ref_588
         responses:
-          - language: &ref_1268
+          - language: &ref_1271
               default:
                 name: ''
                 description: Success. The response indicates the certificate deleted.
@@ -15691,7 +15691,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1304
+            optionalParamGroup: &ref_1307
               schema:
                 type: object
                 language:
@@ -15728,7 +15728,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1354
+            responseEnv: &ref_1357
               type: object
               language:
                 default: &ref_593
@@ -15890,7 +15890,7 @@ operationGroups:
             azureARM: true
             clientName: CertificatesClient
             openApiType: arm
-            optionalParamGroup: &ref_1305
+            optionalParamGroup: &ref_1308
               schema:
                 type: object
                 language:
@@ -15914,7 +15914,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1355
+            responseEnv: &ref_1358
               type: object
               properties:
                 - &ref_600
@@ -16126,7 +16126,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1306
+            optionalParamGroup: &ref_1309
               schema:
                 type: object
                 language:
@@ -16148,7 +16148,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1356
+            responseEnv: &ref_1359
               type: object
               properties:
                 - &ref_609
@@ -16422,7 +16422,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1307
+            optionalParamGroup: &ref_1310
               schema:
                 type: object
                 language:
@@ -16459,7 +16459,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1357
+            responseEnv: &ref_1360
               type: object
               properties:
                 - &ref_622
@@ -16593,7 +16593,7 @@ operationGroups:
           - *ref_626
           - *ref_627
         responses:
-          - language: &ref_1264
+          - language: &ref_1267
               default:
                 name: ''
                 description: Success. The response indicates the custom domain deleted.
@@ -16672,7 +16672,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1308
+            optionalParamGroup: &ref_1311
               schema:
                 type: object
                 language:
@@ -16709,7 +16709,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1358
+            responseEnv: &ref_1361
               type: object
               language:
                 default: &ref_632
@@ -16951,7 +16951,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1309
+            optionalParamGroup: &ref_1312
               schema:
                 type: object
                 language:
@@ -16988,7 +16988,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1359
+            responseEnv: &ref_1362
               type: object
               properties:
                 - &ref_644
@@ -17172,7 +17172,7 @@ operationGroups:
             azureARM: true
             clientName: CustomDomainsClient
             openApiType: arm
-            optionalParamGroup: &ref_1310
+            optionalParamGroup: &ref_1313
               schema:
                 type: object
                 language:
@@ -17196,7 +17196,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1360
+            responseEnv: &ref_1363
               type: object
               properties:
                 - &ref_653
@@ -17430,7 +17430,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1311
+            optionalParamGroup: &ref_1314
               schema:
                 type: object
                 language:
@@ -17452,7 +17452,7 @@ operationGroups:
               internalMethod: get
               requestMethod: getCreateRequest
               responseMethod: getHandleResponse
-            responseEnv: &ref_1361
+            responseEnv: &ref_1364
               type: object
               properties:
                 - &ref_662
@@ -17807,7 +17807,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1312
+            optionalParamGroup: &ref_1315
               schema:
                 type: object
                 language:
@@ -17844,7 +17844,7 @@ operationGroups:
               internalMethod: createOrUpdate
               requestMethod: createOrUpdateCreateRequest
               responseMethod: createOrUpdateHandleResponse
-            responseEnv: &ref_1362
+            responseEnv: &ref_1365
               type: object
               properties:
                 - &ref_675
@@ -17978,7 +17978,7 @@ operationGroups:
           - *ref_679
           - *ref_680
         responses:
-          - language: &ref_1262
+          - language: &ref_1265
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -18057,7 +18057,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1313
+            optionalParamGroup: &ref_1316
               schema:
                 type: object
                 language:
@@ -18094,7 +18094,7 @@ operationGroups:
               internalMethod: deleteOperation
               requestMethod: deleteCreateRequest
               responseMethod: deleteHandleResponse
-            responseEnv: &ref_1363
+            responseEnv: &ref_1366
               type: object
               language:
                 default: &ref_685
@@ -18384,7 +18384,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1314
+            optionalParamGroup: &ref_1317
               schema:
                 type: object
                 language:
@@ -18421,7 +18421,7 @@ operationGroups:
               internalMethod: update
               requestMethod: updateCreateRequest
               responseMethod: updateHandleResponse
-            responseEnv: &ref_1364
+            responseEnv: &ref_1367
               type: object
               properties:
                 - &ref_697
@@ -18671,7 +18671,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1365
+            responseEnv: &ref_1368
               type: object
               properties:
                 - &ref_709
@@ -18903,7 +18903,7 @@ operationGroups:
               internalMethod: listForCluster
               requestMethod: listForClusterCreateRequest
               responseMethod: listForClusterHandleResponse
-            responseEnv: &ref_1366
+            responseEnv: &ref_1369
               type: object
               properties:
                 - &ref_719
@@ -19036,7 +19036,7 @@ operationGroups:
           - *ref_723
           - *ref_724
         responses:
-          - language: &ref_1259
+          - language: &ref_1262
               default:
                 name: ''
                 description: Success.
@@ -19105,7 +19105,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1315
+            optionalParamGroup: &ref_1318
               schema:
                 type: object
                 language:
@@ -19142,7 +19142,7 @@ operationGroups:
               internalMethod: start
               requestMethod: startCreateRequest
               responseMethod: startHandleResponse
-            responseEnv: &ref_1367
+            responseEnv: &ref_1370
               type: object
               language:
                 default: &ref_729
@@ -19262,7 +19262,7 @@ operationGroups:
           - *ref_732
           - *ref_733
         responses:
-          - language: &ref_1256
+          - language: &ref_1259
               default:
                 name: ''
                 description: Success.
@@ -19331,7 +19331,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1316
+            optionalParamGroup: &ref_1319
               schema:
                 type: object
                 language:
@@ -19368,7 +19368,7 @@ operationGroups:
               internalMethod: stop
               requestMethod: stopCreateRequest
               responseMethod: stopHandleResponse
-            responseEnv: &ref_1368
+            responseEnv: &ref_1371
               type: object
               language:
                 default: &ref_738
@@ -19488,7 +19488,7 @@ operationGroups:
           - *ref_741
           - *ref_742
         responses:
-          - language: &ref_1253
+          - language: &ref_1256
               default:
                 name: ''
                 description: Success.
@@ -19557,7 +19557,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1317
+            optionalParamGroup: &ref_1320
               schema:
                 type: object
                 language:
@@ -19594,7 +19594,7 @@ operationGroups:
               internalMethod: restart
               requestMethod: restartCreateRequest
               responseMethod: restartHandleResponse
-            responseEnv: &ref_1369
+            responseEnv: &ref_1372
               type: object
               language:
                 default: &ref_747
@@ -19785,7 +19785,7 @@ operationGroups:
             azureARM: true
             clientName: DeploymentsClient
             openApiType: arm
-            optionalParamGroup: &ref_1318
+            optionalParamGroup: &ref_1321
               schema:
                 type: object
                 language:
@@ -19807,7 +19807,7 @@ operationGroups:
               internalMethod: getLogFileURL
               requestMethod: getLogFileURLCreateRequest
               responseMethod: getLogFileURLHandleResponse
-            responseEnv: &ref_1370
+            responseEnv: &ref_1373
               type: object
               properties:
                 - &ref_756
@@ -19952,7 +19952,7 @@ operationGroups:
             azureARM: true
             clientName: OperationsClient
             openApiType: arm
-            optionalParamGroup: &ref_1319
+            optionalParamGroup: &ref_1322
               schema:
                 type: object
                 language:
@@ -19976,7 +19976,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1371
+            responseEnv: &ref_1374
               type: object
               properties:
                 - &ref_762
@@ -20115,7 +20115,7 @@ operationGroups:
             azureARM: true
             clientName: RuntimeVersionsClient
             openApiType: arm
-            optionalParamGroup: &ref_1320
+            optionalParamGroup: &ref_1323
               schema:
                 type: object
                 language:
@@ -20137,7 +20137,7 @@ operationGroups:
               internalMethod: listRuntimeVersions
               requestMethod: listRuntimeVersionsCreateRequest
               responseMethod: listRuntimeVersionsHandleResponse
-            responseEnv: &ref_1372
+            responseEnv: &ref_1375
               type: object
               properties:
                 - &ref_768
@@ -20286,7 +20286,7 @@ operationGroups:
             azureARM: true
             clientName: SKUsClient
             openApiType: arm
-            optionalParamGroup: &ref_1321
+            optionalParamGroup: &ref_1324
               schema:
                 type: object
                 language:
@@ -20310,7 +20310,7 @@ operationGroups:
               internalMethod: listOperation
               requestMethod: listCreateRequest
               responseMethod: listHandleResponse
-            responseEnv: &ref_1373
+            responseEnv: &ref_1376
               type: object
               properties:
                 - &ref_774
@@ -35239,7 +35239,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35307,7 +35307,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35381,7 +35381,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35455,7 +35455,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35500,7 +35500,7 @@ testModel:
                   properties:
                     bindingParameters:
                       databaseName: mysqldb
-                      username: test
+                      username: $(mysqlKey)
                     createdAt: null
                     generatedProperties: null
                     key: $(mysqlKey)
@@ -35526,7 +35526,7 @@ testModel:
                     properties:
                       bindingParameters:
                         databaseName: mysqldb
-                        username: test
+                        username: $(mysqlKey)
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35545,7 +35545,7 @@ testModel:
                     properties:
                       bindingParameters:
                         databaseName: mysqldb
-                        username: test
+                        username: $(mysqlKey)
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35564,7 +35564,7 @@ testModel:
                     properties:
                       bindingParameters:
                         databaseName: mysqldb
-                        username: test
+                        username: $(mysqlKey)
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35624,12 +35624,11 @@ testModel:
                             bindingParameters:
                               schema: *ref_56
                               properties:
-                                databaseName:
+                                anotherLayer:
                                   schema: *ref_2
-                                  rawValue: mysqldb2
-                                username:
-                                  schema: *ref_2
-                                  rawValue: test2
+                                  rawValue: &ref_1248
+                                    databaseName: mysqldb2
+                                    username: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35688,12 +35687,11 @@ testModel:
                             bindingParameters:
                               schema: *ref_56
                               properties:
-                                databaseName:
+                                anotherLayer:
                                   schema: *ref_2
-                                  rawValue: mysqldb2
-                                username:
-                                  schema: *ref_2
-                                  rawValue: test2
+                                  rawValue: &ref_1249
+                                    databaseName: mysqldb2
+                                    username: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35762,12 +35760,11 @@ testModel:
                             bindingParameters:
                               schema: *ref_56
                               properties:
-                                databaseName:
+                                anotherLayer:
                                   schema: *ref_2
-                                  rawValue: mysqldb2
-                                username:
-                                  schema: *ref_2
-                                  rawValue: test2
+                                  rawValue: &ref_1250
+                                    databaseName: mysqldb2
+                                    username: $(mysqlKey)
                               language: *ref_996
                             createdAt:
                               schema: *ref_58
@@ -35802,7 +35799,7 @@ testModel:
                               language: *ref_1002
                           language: *ref_1003
                       language: *ref_1027
-                    headers: &ref_1248
+                    headers: &ref_1251
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
@@ -35816,8 +35813,7 @@ testModel:
                 bindingResource:
                   properties:
                     bindingParameters:
-                      databaseName: mysqldb2
-                      username: test2
+                      anotherLayer: *ref_1248
                     createdAt: null
                     generatedProperties: null
                     key: $(mysqlKey)
@@ -35841,8 +35837,7 @@ testModel:
                     id: /subscriptions/$(subscriptionId)/resourceGroups/$(resourceGroupName)/providers/Microsoft.AppPlatform/Spring/$(serviceName)/apps/$(appName)/bindings/$(bindingName)
                     properties:
                       bindingParameters:
-                        databaseName: mysqldb2
-                        username: test2
+                        anotherLayer: *ref_1249
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35860,8 +35855,7 @@ testModel:
                     id: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding
                     properties:
                       bindingParameters:
-                        databaseName: mysqldb2
-                        username: test2
+                        anotherLayer: *ref_1250
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35872,7 +35866,7 @@ testModel:
                       resourceName: my-cosmosdb-1
                       resourceType: Microsoft.DocumentDB
                       updatedAt: '2019-01-01T12:34:56.000Z'
-                  headers: *ref_1248
+                  headers: *ref_1251
             - type: restCall
               operationId: Bindings_Get
               description: Bindings_Get
@@ -36212,8 +36206,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1250 {}
-                      language: *ref_1249
+                      rawValue: &ref_1253 {}
+                      language: *ref_1252
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -36235,7 +36229,7 @@ testModel:
                   value: mysql-binding
               responses:
                 '200':
-                  body: *ref_1250
+                  body: *ref_1253
                 '202': {}
                 '204': {}
             - type: restCall
@@ -36683,7 +36677,7 @@ testModel:
                               language: *ref_1077
                           language: *ref_1079
                       language: *ref_1102
-                    headers: &ref_1251
+                    headers: &ref_1254
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
@@ -36725,7 +36719,7 @@ testModel:
                     properties:
                       appName: myapp
                       certName: asc-certificate
-                  headers: *ref_1251
+                  headers: *ref_1254
             - type: restCall
               operationId: CustomDomains_Get
               description: CustomDomains_Get
@@ -38086,7 +38080,7 @@ testModel:
                               language: *ref_946
                           language: *ref_947
                       language: *ref_967
-                    headers: &ref_1252
+                    headers: &ref_1255
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
@@ -38173,7 +38167,7 @@ testModel:
                         mountPath: /mytemporarydisk
                         sizeInGB: 2
                       url: myapp.myservice.azuremicroservices.io
-                  headers: *ref_1252
+                  headers: *ref_1255
             - type: restCall
               operationId: Deployments_Restart
               description: Deployments_Restart
@@ -38218,10 +38212,10 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1254 {}
-                      language: *ref_1253
+                      rawValue: &ref_1257 {}
+                      language: *ref_1256
                   '202':
-                    headers: &ref_1255
+                    headers: &ref_1258
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
@@ -38242,9 +38236,9 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1254
+                  body: *ref_1257
                 '202':
-                  headers: *ref_1255
+                  headers: *ref_1258
             - type: restCall
               operationId: Deployments_Stop
               description: Deployments_Stop
@@ -38289,10 +38283,10 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1257 {}
-                      language: *ref_1256
+                      rawValue: &ref_1260 {}
+                      language: *ref_1259
                   '202':
-                    headers: &ref_1258
+                    headers: &ref_1261
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
@@ -38313,9 +38307,9 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1257
+                  body: *ref_1260
                 '202':
-                  headers: *ref_1258
+                  headers: *ref_1261
             - type: restCall
               operationId: Deployments_Start
               description: Deployments_Start
@@ -38360,10 +38354,10 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1260 {}
-                      language: *ref_1259
+                      rawValue: &ref_1263 {}
+                      language: *ref_1262
                   '202':
-                    headers: &ref_1261
+                    headers: &ref_1264
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
@@ -38384,9 +38378,9 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1260
+                  body: *ref_1263
                 '202':
-                  headers: *ref_1261
+                  headers: *ref_1264
             - type: restCall
               operationId: Deployments_GetLogFileUrl
               description: Deployments_GetLogFileUrl
@@ -39435,8 +39429,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1263 {}
-                      language: *ref_1262
+                      rawValue: &ref_1266 {}
+                      language: *ref_1265
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39458,7 +39452,7 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1263
+                  body: *ref_1266
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39505,8 +39499,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1265 {}
-                      language: *ref_1264
+                      rawValue: &ref_1268 {}
+                      language: *ref_1267
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39528,7 +39522,7 @@ testModel:
                   value: $(dnsCname).$(customDomainName)
               responses:
                 '200':
-                  body: *ref_1265
+                  body: *ref_1268
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39570,8 +39564,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1267 {}
-                      language: *ref_1266
+                      rawValue: &ref_1270 {}
+                      language: *ref_1269
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39592,7 +39586,7 @@ testModel:
                   value: app01
               responses:
                 '200':
-                  body: *ref_1267
+                  body: *ref_1270
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39634,8 +39628,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1269 {}
-                      language: *ref_1268
+                      rawValue: &ref_1272 {}
+                      language: *ref_1271
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39656,7 +39650,7 @@ testModel:
                   value: asc-certificate
               responses:
                 '200':
-                  body: *ref_1269
+                  body: *ref_1272
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39693,9 +39687,9 @@ testModel:
                 responses:
                   '202':
                     body:
-                      rawValue: &ref_1271 {}
-                      language: *ref_1270
-                    headers: &ref_1272
+                      rawValue: &ref_1274 {}
+                      language: *ref_1273
+                    headers: &ref_1275
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
                   '204': {}
               outputVariables: {}
@@ -39712,8 +39706,8 @@ testModel:
               variables: {}
               responses:
                 '202':
-                  body: *ref_1271
-                  headers: *ref_1272
+                  body: *ref_1274
+                  headers: *ref_1275
                 '204': {}
             - type: restCall
               operationId: Skus_List
@@ -39993,9 +39987,6 @@ language:
     openApiType: arm
     packageName: armappplatform
     parameterGroups:
-      - *ref_1273
-      - *ref_1274
-      - *ref_1275
       - *ref_1276
       - *ref_1277
       - *ref_1278
@@ -40011,10 +40002,10 @@ language:
       - *ref_1288
       - *ref_1289
       - *ref_1290
-      - *ref_448
       - *ref_1291
       - *ref_1292
       - *ref_1293
+      - *ref_448
       - *ref_1294
       - *ref_1295
       - *ref_1296
@@ -40036,19 +40027,19 @@ language:
       - *ref_1312
       - *ref_1313
       - *ref_1314
-      - *ref_707
-      - *ref_717
       - *ref_1315
       - *ref_1316
       - *ref_1317
+      - *ref_707
+      - *ref_717
       - *ref_1318
       - *ref_1319
       - *ref_1320
       - *ref_1321
-    responseEnvelopes:
       - *ref_1322
       - *ref_1323
       - *ref_1324
+    responseEnvelopes:
       - *ref_1325
       - *ref_1326
       - *ref_1327
@@ -40098,5 +40089,8 @@ language:
       - *ref_1371
       - *ref_1372
       - *ref_1373
+      - *ref_1374
+      - *ref_1375
+      - *ref_1376
 protocol:
   http: {}

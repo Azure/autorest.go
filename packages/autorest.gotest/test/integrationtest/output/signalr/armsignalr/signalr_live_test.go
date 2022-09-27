@@ -80,12 +80,10 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 			},
 		},
 	}
-	params := map[string]interface{}{}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend, err := testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "Generate_Unique_Name", &deployment)

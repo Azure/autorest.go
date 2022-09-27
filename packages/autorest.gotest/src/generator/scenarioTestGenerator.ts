@@ -145,24 +145,8 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       }
       case OavStepType.armTemplate: {
         const copyOfPayload = _.cloneDeep(step.armTemplatePayload);
-        // environment variables & arguments parse
-        if (copyOfPayload.resources) {
-          copyOfPayload.resources.forEach((t) => {
-            (t.properties['environmentVariables'] || []).forEach((e) => {
-              if (e.value) {
-                e.value = '<parsedVariable>' + this.getStringValue(e.value);
-              } else {
-                e.secureValue = '<parsedVariable>' + this.getStringValue(e.secureValue);
-              }
-            });
-            if (t.properties['arguments']) {
-              t.properties['arguments'] = this.getStringValue(t.properties['arguments']);
-            }
-          });
-        }
-
         // template parse
-        step['armTemplateOutput'] = GoHelper.objectToString(copyOfPayload);
+        step['armTemplateOutput'] = this.objectToString(copyOfPayload);
 
         break;
       }
@@ -234,12 +218,12 @@ export class ScenarioTestDataRender extends MockTestDataRender {
     } else if (variable.type === 'array') {
       type = '[]interface{}';
       if (variable.value !== undefined) {
-        value = GoHelper.arrayToString(variable.value);
+        value = this.arrayToString(variable.value);
       }
     } else if (variable.type === 'object' || variable.type === 'secureObject') {
       type = 'map[string]interface{}';
       if (variable.value !== undefined) {
-        value = GoHelper.objectToString(variable.value);
+        value = this.objectToString(variable.value);
       }
     }
     if (replaceGlobal && variable.value === undefined && Object.prototype.hasOwnProperty.call(this.globalVariables, key)) {

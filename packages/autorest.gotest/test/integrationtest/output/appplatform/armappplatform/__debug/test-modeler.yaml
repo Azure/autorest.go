@@ -8423,7 +8423,7 @@ operationGroups:
           - *ref_302
           - *ref_303
         responses:
-          - language: &ref_1370
+          - language: &ref_1373
               default:
                 name: ''
                 description: Accepted. The response indicates the delete operation is performed in the background.
@@ -12547,7 +12547,7 @@ operationGroups:
           - *ref_465
           - *ref_466
         responses:
-          - language: &ref_1366
+          - language: &ref_1369
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -14312,7 +14312,7 @@ operationGroups:
           - *ref_537
           - *ref_538
         responses:
-          - language: &ref_1349
+          - language: &ref_1352
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -15613,7 +15613,7 @@ operationGroups:
           - *ref_587
           - *ref_588
         responses:
-          - language: &ref_1368
+          - language: &ref_1371
               default:
                 name: ''
                 description: Success. The response indicates the certificate deleted.
@@ -16593,7 +16593,7 @@ operationGroups:
           - *ref_626
           - *ref_627
         responses:
-          - language: &ref_1364
+          - language: &ref_1367
               default:
                 name: ''
                 description: Success. The response indicates the custom domain deleted.
@@ -17978,7 +17978,7 @@ operationGroups:
           - *ref_679
           - *ref_680
         responses:
-          - language: &ref_1362
+          - language: &ref_1365
               default:
                 name: ''
                 description: Success. The response indicates the resource is deleted.
@@ -19036,7 +19036,7 @@ operationGroups:
           - *ref_723
           - *ref_724
         responses:
-          - language: &ref_1359
+          - language: &ref_1362
               default:
                 name: ''
                 description: Success.
@@ -19262,7 +19262,7 @@ operationGroups:
           - *ref_732
           - *ref_733
         responses:
-          - language: &ref_1356
+          - language: &ref_1359
               default:
                 name: ''
                 description: Success.
@@ -19488,7 +19488,7 @@ operationGroups:
           - *ref_741
           - *ref_742
         responses:
-          - language: &ref_1353
+          - language: &ref_1356
               default:
                 name: ''
                 description: Success.
@@ -28769,7 +28769,7 @@ testModel:
         operation: *ref_1338
         operationGroup: *ref_1339
   scenarioTests:
-    - &ref_1373
+    - &ref_1376
       _filePath: Microsoft.AppPlatform\preview\2020-11-01-preview\scenarios\Spring.yaml
       _swaggerFilePaths:
         - Microsoft.AppPlatform/preview/2020-11-01-preview/appplatform.json
@@ -28973,7 +28973,7 @@ testModel:
         userAssignedIdentity: ''
       scenarios:
         - description: Microsoft.AppPlatform/Spring
-          _scenarioDef: *ref_1373
+          _scenarioDef: *ref_1376
           requiredVariables:
             - customDomainName
             - mysqlKey
@@ -35239,7 +35239,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35307,7 +35307,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35381,7 +35381,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35455,7 +35455,7 @@ testModel:
                                   rawValue: mysqldb
                                 username:
                                   schema: *ref_2
-                                  rawValue: test
+                                  rawValue: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35500,7 +35500,7 @@ testModel:
                   properties:
                     bindingParameters:
                       databaseName: mysqldb
-                      username: test
+                      username: $(mysqlKey)
                     createdAt: null
                     generatedProperties: null
                     key: $(mysqlKey)
@@ -35526,7 +35526,7 @@ testModel:
                     properties:
                       bindingParameters:
                         databaseName: mysqldb
-                        username: test
+                        username: $(mysqlKey)
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35545,7 +35545,7 @@ testModel:
                     properties:
                       bindingParameters:
                         databaseName: mysqldb
-                        username: test
+                        username: $(mysqlKey)
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35564,7 +35564,7 @@ testModel:
                     properties:
                       bindingParameters:
                         databaseName: mysqldb
-                        username: test
+                        username: $(mysqlKey)
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35624,12 +35624,11 @@ testModel:
                             bindingParameters:
                               schema: *ref_56
                               properties:
-                                databaseName:
+                                anotherLayer:
                                   schema: *ref_2
-                                  rawValue: mysqldb2
-                                username:
-                                  schema: *ref_2
-                                  rawValue: test2
+                                  rawValue: &ref_1348
+                                    databaseName: mysqldb2
+                                    username: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35688,12 +35687,11 @@ testModel:
                             bindingParameters:
                               schema: *ref_56
                               properties:
-                                databaseName:
+                                anotherLayer:
                                   schema: *ref_2
-                                  rawValue: mysqldb2
-                                username:
-                                  schema: *ref_2
-                                  rawValue: test2
+                                  rawValue: &ref_1349
+                                    databaseName: mysqldb2
+                                    username: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35762,12 +35760,11 @@ testModel:
                             bindingParameters:
                               schema: *ref_56
                               properties:
-                                databaseName:
+                                anotherLayer:
                                   schema: *ref_2
-                                  rawValue: mysqldb2
-                                username:
-                                  schema: *ref_2
-                                  rawValue: test2
+                                  rawValue: &ref_1350
+                                    databaseName: mysqldb2
+                                    username: $(mysqlKey)
                               language: *ref_1100
                             createdAt:
                               schema: *ref_58
@@ -35802,7 +35799,7 @@ testModel:
                               language: *ref_1103
                           language: *ref_1096
                       language: *ref_1127
-                    headers: &ref_1348
+                    headers: &ref_1351
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
@@ -35816,8 +35813,7 @@ testModel:
                 bindingResource:
                   properties:
                     bindingParameters:
-                      databaseName: mysqldb2
-                      username: test2
+                      anotherLayer: *ref_1348
                     createdAt: null
                     generatedProperties: null
                     key: $(mysqlKey)
@@ -35841,8 +35837,7 @@ testModel:
                     id: /subscriptions/$(subscriptionId)/resourceGroups/$(resourceGroupName)/providers/Microsoft.AppPlatform/Spring/$(serviceName)/apps/$(appName)/bindings/$(bindingName)
                     properties:
                       bindingParameters:
-                        databaseName: mysqldb2
-                        username: test2
+                        anotherLayer: *ref_1349
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35860,8 +35855,7 @@ testModel:
                     id: /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/apps/myapp/bindings/mybinding
                     properties:
                       bindingParameters:
-                        databaseName: mysqldb2
-                        username: test2
+                        anotherLayer: *ref_1350
                       createdAt: '2019-01-01T12:34:56.000Z'
                       generatedProperties: |-
                         spring.datasource.url=jdbc:mysql://localhost:3306/test
@@ -35872,7 +35866,7 @@ testModel:
                       resourceName: my-cosmosdb-1
                       resourceType: Microsoft.DocumentDB
                       updatedAt: '2019-01-01T12:34:56.000Z'
-                  headers: *ref_1348
+                  headers: *ref_1351
             - type: restCall
               operationId: Bindings_Get
               description: Bindings_Get
@@ -36212,8 +36206,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1350 {}
-                      language: *ref_1349
+                      rawValue: &ref_1353 {}
+                      language: *ref_1352
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -36235,7 +36229,7 @@ testModel:
                   value: mysql-binding
               responses:
                 '200':
-                  body: *ref_1350
+                  body: *ref_1353
                 '202': {}
                 '204': {}
             - type: restCall
@@ -36683,7 +36677,7 @@ testModel:
                               language: *ref_1179
                           language: *ref_1176
                       language: *ref_1202
-                    headers: &ref_1351
+                    headers: &ref_1354
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
@@ -36725,7 +36719,7 @@ testModel:
                     properties:
                       appName: myapp
                       certName: asc-certificate
-                  headers: *ref_1351
+                  headers: *ref_1354
             - type: restCall
               operationId: CustomDomains_Get
               description: CustomDomains_Get
@@ -38086,7 +38080,7 @@ testModel:
                               language: *ref_1030
                           language: *ref_1028
                       language: *ref_1067
-                    headers: &ref_1352
+                    headers: &ref_1355
                       Azure-AsyncOperation: >-
                         https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/locations/eastus/operationResults/00000000-0000-0000-0000-000000000000/Spring/default?api-version=2020-11-01-preview
                       Location: >-
@@ -38173,7 +38167,7 @@ testModel:
                         mountPath: /mytemporarydisk
                         sizeInGB: 2
                       url: myapp.myservice.azuremicroservices.io
-                  headers: *ref_1352
+                  headers: *ref_1355
             - type: restCall
               operationId: Deployments_Restart
               description: Deployments_Restart
@@ -38218,10 +38212,10 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1354 {}
-                      language: *ref_1353
+                      rawValue: &ref_1357 {}
+                      language: *ref_1356
                   '202':
-                    headers: &ref_1355
+                    headers: &ref_1358
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
@@ -38242,9 +38236,9 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1354
+                  body: *ref_1357
                 '202':
-                  headers: *ref_1355
+                  headers: *ref_1358
             - type: restCall
               operationId: Deployments_Stop
               description: Deployments_Stop
@@ -38289,10 +38283,10 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1357 {}
-                      language: *ref_1356
+                      rawValue: &ref_1360 {}
+                      language: *ref_1359
                   '202':
-                    headers: &ref_1358
+                    headers: &ref_1361
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
@@ -38313,9 +38307,9 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1357
+                  body: *ref_1360
                 '202':
-                  headers: *ref_1358
+                  headers: *ref_1361
             - type: restCall
               operationId: Deployments_Start
               description: Deployments_Start
@@ -38360,10 +38354,10 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1360 {}
-                      language: *ref_1359
+                      rawValue: &ref_1363 {}
+                      language: *ref_1362
                   '202':
-                    headers: &ref_1361
+                    headers: &ref_1364
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
               outputVariables: {}
               outputVariablesModel: {}
@@ -38384,9 +38378,9 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1360
+                  body: *ref_1363
                 '202':
-                  headers: *ref_1361
+                  headers: *ref_1364
             - type: restCall
               operationId: Deployments_GetLogFileUrl
               description: Deployments_GetLogFileUrl
@@ -39435,8 +39429,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1363 {}
-                      language: *ref_1362
+                      rawValue: &ref_1366 {}
+                      language: *ref_1365
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39458,7 +39452,7 @@ testModel:
                   value: blue
               responses:
                 '200':
-                  body: *ref_1363
+                  body: *ref_1366
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39505,8 +39499,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1365 {}
-                      language: *ref_1364
+                      rawValue: &ref_1368 {}
+                      language: *ref_1367
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39528,7 +39522,7 @@ testModel:
                   value: $(dnsCname).$(customDomainName)
               responses:
                 '200':
-                  body: *ref_1365
+                  body: *ref_1368
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39570,8 +39564,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1367 {}
-                      language: *ref_1366
+                      rawValue: &ref_1370 {}
+                      language: *ref_1369
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39592,7 +39586,7 @@ testModel:
                   value: app01
               responses:
                 '200':
-                  body: *ref_1367
+                  body: *ref_1370
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39634,8 +39628,8 @@ testModel:
                 responses:
                   '200':
                     body:
-                      rawValue: &ref_1369 {}
-                      language: *ref_1368
+                      rawValue: &ref_1372 {}
+                      language: *ref_1371
                   '202': {}
                   '204': {}
               outputVariables: {}
@@ -39656,7 +39650,7 @@ testModel:
                   value: asc-certificate
               responses:
                 '200':
-                  body: *ref_1369
+                  body: *ref_1372
                 '202': {}
                 '204': {}
             - type: restCall
@@ -39693,9 +39687,9 @@ testModel:
                 responses:
                   '202':
                     body:
-                      rawValue: &ref_1371 {}
-                      language: *ref_1370
-                    headers: &ref_1372
+                      rawValue: &ref_1374 {}
+                      language: *ref_1373
+                    headers: &ref_1375
                       location: https://management.azure.com/subscriptions/subid/providers/Microsoft.AppPlatform/...pathToOperationResult...
                   '204': {}
               outputVariables: {}
@@ -39712,8 +39706,8 @@ testModel:
               variables: {}
               responses:
                 '202':
-                  body: *ref_1371
-                  headers: *ref_1372
+                  body: *ref_1374
+                  headers: *ref_1375
                 '204': {}
             - type: restCall
               operationId: Skus_List
