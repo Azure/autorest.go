@@ -141,7 +141,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         for (const clientParam of values(clientParams)) {
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
           if (clientParam.language.go!.description) {
-            paramDocs.push(comment(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`, '//', undefined, commentLength));
+            paramDocs.push(comment(`  - ${clientParam.language.go!.name} - ${clientParam.language.go!.description}`, '//', undefined, commentLength));
           }
         }
       }
@@ -154,9 +154,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
-      paramDocs.push('// credential - used to authorize requests. Usually a credential from azidentity.');
+      paramDocs.push('//   - credential - used to authorize requests. Usually a credential from azidentity.');
       methodParams.push(`options *${optionsType}`);
-      paramDocs.push('// options - pass nil to accept the default values.');
+      paramDocs.push('//   - options - pass nil to accept the default values.');
     } else {
       // this is the vanilla ARM or data-plane case.  both of them can
       // have parameterized host, however data-plane takes a pipeline
@@ -174,7 +174,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           const paramName = param.language.go!.name;
           methodParams.push(`${paramName} ${formatParameterTypeName(param)}`);
           if (param.language.go!.description) {
-            paramDocs.push(comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength));
+            paramDocs.push(comment(`  - ${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength));
           }
         }
       }
@@ -186,12 +186,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (hasOauth2Security) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
         methodParams.push('credential azcore.TokenCredential');
-        paramDocs.push('// credential - used to authorize requests. Usually a credential from azidentity.');
+        paramDocs.push('//   - credential - used to authorize requests. Usually a credential from azidentity.');
         methodParams.push(`options *${optionsType}`);
-        paramDocs.push('// options - pass nil to accept the default values.');
+        paramDocs.push('//   - options - pass nil to accept the default values.');
       } else {
         methodParams.push('pl runtime.Pipeline');
-        paramDocs.push('// pl - the pipeline used for sending requests and handling responses.');
+        paramDocs.push('//   - pl - the pipeline used for sending requests and handling responses.');
       }
     }
 
