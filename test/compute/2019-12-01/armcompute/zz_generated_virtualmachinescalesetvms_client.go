@@ -33,10 +33,10 @@ type VirtualMachineScaleSetVMsClient struct {
 }
 
 // NewVirtualMachineScaleSetVMsClient creates a new instance of VirtualMachineScaleSetVMsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewVirtualMachineScaleSetVMsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachineScaleSetVMsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -61,6 +61,7 @@ func NewVirtualMachineScaleSetVMsClient(subscriptionID string, credential azcore
 // the compute resources it uses. You are not billed for the compute resources of this virtual
 // machine once it is deallocated.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -83,6 +84,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginDeallocate(ctx context.Conte
 // compute resources it uses. You are not billed for the compute resources of this virtual
 // machine once it is deallocated.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) deallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeallocateOptions) (*http.Response, error) {
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -130,6 +132,7 @@ func (client *VirtualMachineScaleSetVMsClient) deallocateCreateRequest(ctx conte
 
 // BeginDelete - Deletes a virtual machine from a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -150,6 +153,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginDelete(ctx context.Context, 
 
 // Delete - Deletes a virtual machine from a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -197,6 +201,7 @@ func (client *VirtualMachineScaleSetVMsClient) deleteCreateRequest(ctx context.C
 
 // Get - Gets a virtual machine from a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -262,6 +267,7 @@ func (client *VirtualMachineScaleSetVMsClient) getHandleResponse(resp *http.Resp
 
 // GetInstanceView - Gets the status of a virtual machine from a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -323,6 +329,7 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleResponse(res
 }
 
 // NewListPager - Gets a list of all virtual machines in a VM scale sets.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the VM scale set.
@@ -403,6 +410,7 @@ func (client *VirtualMachineScaleSetVMsClient) listHandleResponse(resp *http.Res
 // BeginPerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers
 // it back on during the self-service phase of planned maintenance.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -424,6 +432,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginPerformMaintenance(ctx conte
 // PerformMaintenance - Shuts down the virtual machine in a VMScaleSet, moves it to an already updated node, and powers it
 // back on during the self-service phase of planned maintenance.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) performMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPerformMaintenanceOptions) (*http.Response, error) {
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -473,6 +482,7 @@ func (client *VirtualMachineScaleSetVMsClient) performMaintenanceCreateRequest(c
 // getting charged for the resources. Instead, use deallocate to release resources and avoid
 // charges.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -495,6 +505,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginPowerOff(ctx context.Context
 // charged for the resources. Instead, use deallocate to release resources and avoid
 // charges.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) powerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginPowerOffOptions) (*http.Response, error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -546,6 +557,7 @@ func (client *VirtualMachineScaleSetVMsClient) powerOffCreateRequest(ctx context
 // BeginRedeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it
 // back on.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -567,6 +579,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRedeploy(ctx context.Context
 // Redeploy - Shuts down the virtual machine in the virtual machine scale set, moves it to a new node, and powers it back
 // on.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) redeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRedeployOptions) (*http.Response, error) {
 	req, err := client.redeployCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -614,6 +627,7 @@ func (client *VirtualMachineScaleSetVMsClient) redeployCreateRequest(ctx context
 
 // BeginReimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -634,6 +648,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginReimage(ctx context.Context,
 
 // Reimage - Reimages (upgrade the operating system) a specific virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) reimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageOptions) (*http.Response, error) {
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -685,6 +700,7 @@ func (client *VirtualMachineScaleSetVMsClient) reimageCreateRequest(ctx context.
 // BeginReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation
 // is only supported for managed disks.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -706,6 +722,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginReimageAll(ctx context.Conte
 // ReimageAll - Allows you to re-image all the disks ( including data disks ) in the a VM scale set instance. This operation
 // is only supported for managed disks.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) reimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginReimageAllOptions) (*http.Response, error) {
 	req, err := client.reimageAllCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -753,6 +770,7 @@ func (client *VirtualMachineScaleSetVMsClient) reimageAllCreateRequest(ctx conte
 
 // BeginRestart - Restarts a virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -773,6 +791,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRestart(ctx context.Context,
 
 // Restart - Restarts a virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) restart(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginRestartOptions) (*http.Response, error) {
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -820,6 +839,7 @@ func (client *VirtualMachineScaleSetVMsClient) restartCreateRequest(ctx context.
 
 // BeginRunCommand - Run command on a virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -843,6 +863,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginRunCommand(ctx context.Conte
 
 // RunCommand - Run command on a virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) runCommand(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters RunCommandInput, options *VirtualMachineScaleSetVMsClientBeginRunCommandOptions) (*http.Response, error) {
 	req, err := client.runCommandCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)
@@ -892,6 +913,7 @@ func (client *VirtualMachineScaleSetVMsClient) runCommandCreateRequest(ctx conte
 // SimulateEviction - The operation to simulate the eviction of spot virtual machine in a VM scale set. The eviction will
 // occur within 30 minutes of calling the API
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -944,6 +966,7 @@ func (client *VirtualMachineScaleSetVMsClient) simulateEvictionCreateRequest(ctx
 
 // BeginStart - Starts a virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
@@ -964,6 +987,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginStart(ctx context.Context, r
 
 // Start - Starts a virtual machine in a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) start(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMsClientBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
@@ -1011,6 +1035,7 @@ func (client *VirtualMachineScaleSetVMsClient) startCreateRequest(ctx context.Co
 
 // BeginUpdate - Updates a virtual machine of a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set where the extension should be create or updated.
@@ -1032,6 +1057,7 @@ func (client *VirtualMachineScaleSetVMsClient) BeginUpdate(ctx context.Context, 
 
 // Update - Updates a virtual machine of a VM scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *VirtualMachineScaleSetVMsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, parameters VirtualMachineScaleSetVM, options *VirtualMachineScaleSetVMsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, parameters, options)

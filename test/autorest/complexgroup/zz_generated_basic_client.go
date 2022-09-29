@@ -23,7 +23,7 @@ type BasicClient struct {
 }
 
 // NewBasicClient creates a new instance of BasicClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewBasicClient(pl runtime.Pipeline) *BasicClient {
 	client := &BasicClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewBasicClient(pl runtime.Pipeline) *BasicClient {
 
 // GetEmpty - Get a basic complex type that is empty
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
 func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicClientGetEmptyOptions) (BasicClientGetEmptyResponse, error) {
@@ -72,6 +73,7 @@ func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicCli
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
 func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicClientGetInvalidOptions) (BasicClientGetInvalidResponse, error) {
@@ -111,6 +113,7 @@ func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicC
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
 func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicClientGetNotProvidedOptions) (BasicClientGetNotProvidedResponse, error) {
@@ -150,6 +153,7 @@ func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (Ba
 
 // GetNull - Get a basic complex type whose properties are null
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
 func (client *BasicClient) GetNull(ctx context.Context, options *BasicClientGetNullOptions) (BasicClientGetNullResponse, error) {
@@ -189,6 +193,7 @@ func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicClie
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
 func (client *BasicClient) GetValid(ctx context.Context, options *BasicClientGetValidOptions) (BasicClientGetValidResponse, error) {
@@ -228,6 +233,7 @@ func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicCli
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put {id: 2, name: 'abc', color: 'Magenta'}
 // options - BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.

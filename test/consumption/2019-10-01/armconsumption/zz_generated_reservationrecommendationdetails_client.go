@@ -29,8 +29,8 @@ type ReservationRecommendationDetailsClient struct {
 }
 
 // NewReservationRecommendationDetailsClient creates a new instance of ReservationRecommendationDetailsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationRecommendationDetailsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -52,6 +52,7 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 
 // Get - Details of a reservation recommendation for what-if analysis of reserved instances.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
 // billingScope - The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/'
 // for subscription scope,

@@ -23,7 +23,7 @@ type DictionaryClient struct {
 }
 
 // NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewDictionaryClient(pl runtime.Pipeline) *DictionaryClient {
 	client := &DictionaryClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewDictionaryClient(pl runtime.Pipeline) *DictionaryClient {
 
 // GetEmpty - Get complex types with dictionary property which is empty
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryClientGetEmptyOptions) (DictionaryClientGetEmptyResponse, error) {
@@ -72,6 +73,7 @@ func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (Dic
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - DictionaryClientGetNotProvidedOptions contains the optional parameters for the DictionaryClient.GetNotProvided
 // method.
@@ -112,6 +114,7 @@ func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response
 
 // GetNull - Get complex types with dictionary property which is null
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryClientGetNullOptions) (DictionaryClientGetNullResponse, error) {
@@ -151,6 +154,7 @@ func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (Dict
 
 // GetValid - Get complex types with dictionary property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - DictionaryClientGetValidOptions contains the optional parameters for the DictionaryClient.GetValid method.
 func (client *DictionaryClient) GetValid(ctx context.Context, options *DictionaryClientGetValidOptions) (DictionaryClientGetValidResponse, error) {
@@ -190,6 +194,7 @@ func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (Dic
 
 // PutEmpty - Put complex types with dictionary property which is empty
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put an empty dictionary
 // options - DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
@@ -221,6 +226,7 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, compl
 
 // PutValid - Put complex types with dictionary property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel", "exe":"",
 // "":null

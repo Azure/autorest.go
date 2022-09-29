@@ -23,7 +23,7 @@ type HTTPRedirectsClient struct {
 }
 
 // NewHTTPRedirectsClient creates a new instance of HTTPRedirectsClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewHTTPRedirectsClient(pl runtime.Pipeline) *HTTPRedirectsClient {
 	client := &HTTPRedirectsClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewHTTPRedirectsClient(pl runtime.Pipeline) *HTTPRedirectsClient {
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
 func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsClientDelete307Options) (HTTPRedirectsClientDelete307Response, error) {
@@ -63,6 +64,7 @@ func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, o
 
 // Get300 - Return 300 status code and redirect to /http/success/200
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
 func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsClientGet300Options) (HTTPRedirectsClientGet300Response, error) {
@@ -105,6 +107,7 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HT
 
 // Get301 - Return 301 status code and redirect to /http/success/200
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
 func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsClientGet301Options) (HTTPRedirectsClientGet301Response, error) {
@@ -135,6 +138,7 @@ func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, opti
 
 // Get302 - Return 302 status code and redirect to /http/success/200
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
 func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsClientGet302Options) (HTTPRedirectsClientGet302Response, error) {
@@ -165,6 +169,7 @@ func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, opti
 
 // Get307 - Redirect get with 307, resulting in a 200 success
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
 func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsClientGet307Options) (HTTPRedirectsClientGet307Response, error) {
@@ -194,6 +199,7 @@ func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, opti
 }
 
 // Head300 - Return 300 status code and redirect to /http/success/200
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
 func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsClientHead300Options) (HTTPRedirectsClientHead300Response, error) {
@@ -233,6 +239,7 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (H
 }
 
 // Head301 - Return 301 status code and redirect to /http/success/200
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
 func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsClientHead301Options) (HTTPRedirectsClientHead301Response, error) {
@@ -262,6 +269,7 @@ func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opt
 }
 
 // Head302 - Return 302 status code and redirect to /http/success/200
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
 func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsClientHead302Options) (HTTPRedirectsClientHead302Response, error) {
@@ -291,6 +299,7 @@ func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opt
 }
 
 // Head307 - Redirect with 307, resulting in a 200 success
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
 func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsClientHead307Options) (HTTPRedirectsClientHead307Response, error) {
@@ -321,6 +330,7 @@ func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opt
 
 // Options307 - options redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307
 // method.
@@ -353,6 +363,7 @@ func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, 
 // Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should
 // return the received 302 to the caller for evaluation
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
 func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsClientPatch302Options) (HTTPRedirectsClientPatch302Response, error) {
@@ -392,6 +403,7 @@ func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (
 
 // Patch307 - Patch redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
 func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsClientPatch307Options) (HTTPRedirectsClientPatch307Response, error) {
@@ -423,6 +435,7 @@ func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, op
 // Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
 // ultimately returning a 200 status code
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
 func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsClientPost303Options) (HTTPRedirectsClientPost303Response, error) {
@@ -462,6 +475,7 @@ func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (H
 
 // Post307 - Post redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
 func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsClientPost307Options) (HTTPRedirectsClientPost307Response, error) {
@@ -493,6 +507,7 @@ func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, opt
 // Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
 // return the received 301 to the caller for evaluation
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
 func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsClientPut301Options) (HTTPRedirectsClientPut301Response, error) {
@@ -532,6 +547,7 @@ func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HT
 
 // Put307 - Put redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPRedirectsClientPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
 func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsClientPut307Options) (HTTPRedirectsClientPut307Response, error) {

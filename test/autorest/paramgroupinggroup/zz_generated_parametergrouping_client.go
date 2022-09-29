@@ -27,7 +27,7 @@ type ParameterGroupingClient struct {
 }
 
 // NewParameterGroupingClient creates a new instance of ParameterGroupingClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewParameterGroupingClient(pl runtime.Pipeline) *ParameterGroupingClient {
 	client := &ParameterGroupingClient{
 		pl: pl,
@@ -37,6 +37,7 @@ func NewParameterGroupingClient(pl runtime.Pipeline) *ParameterGroupingClient {
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // FirstParameterGroup - FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
@@ -86,6 +87,7 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 
 // PostOptional - Post a bunch of optional parameters grouped
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // ParameterGroupingClientPostOptionalParameters - ParameterGroupingClientPostOptionalParameters contains a group of parameters
 // for the ParameterGroupingClient.PostOptional method.
@@ -127,6 +129,7 @@ func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Con
 
 // PostRequired - Post a bunch of required parameters grouped
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // ParameterGroupingClientPostRequiredParameters - ParameterGroupingClientPostRequiredParameters contains a group of parameters
 // for the ParameterGroupingClient.PostRequired method.
@@ -172,6 +175,7 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 
 // PostReservedWords - Post a grouped parameters with reserved words
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // ParameterGroupingClientPostReservedWordsParameters - ParameterGroupingClientPostReservedWordsParameters contains a group
 // of parameters for the ParameterGroupingClient.PostReservedWords method.
@@ -213,6 +217,7 @@ func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx contex
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // FirstParameterGroup - FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.

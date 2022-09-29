@@ -28,9 +28,9 @@ type IntegrationRuntimesClient struct {
 }
 
 // NewIntegrationRuntimesClient creates a new instance of IntegrationRuntimesClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewIntegrationRuntimesClient(endpoint string, credential azcore.TokenCredential, options *IntegrationRuntimesClientOptions) *IntegrationRuntimesClient {
 	if options == nil {
 		options = &IntegrationRuntimesClientOptions{}
@@ -46,6 +46,7 @@ func NewIntegrationRuntimesClient(endpoint string, credential azcore.TokenCreden
 
 // Get - Get Integration Runtime
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // integrationRuntimeName - The Integration Runtime name
 // options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
@@ -93,6 +94,7 @@ func (client *IntegrationRuntimesClient) getHandleResponse(resp *http.Response) 
 
 // List - List Integration Runtimes
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // options - IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List
 // method.

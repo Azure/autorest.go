@@ -28,9 +28,9 @@ type PathsClient struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-// dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
-// subscriptionID - The subscription id with value 'test12'.
-// pl - the pipeline used for sending requests and handling responses.
+// - dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
+// - subscriptionID - The subscription id with value 'test12'.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{
 		dnsSuffix:      "host",
@@ -45,6 +45,7 @@ func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipelin
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // vault - The vault name, e.g. https://myvault
 // secret - Secret value.

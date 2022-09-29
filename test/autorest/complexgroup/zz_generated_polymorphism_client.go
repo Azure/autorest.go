@@ -23,7 +23,7 @@ type PolymorphismClient struct {
 }
 
 // NewPolymorphismClient creates a new instance of PolymorphismClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPolymorphismClient(pl runtime.Pipeline) *PolymorphismClient {
 	client := &PolymorphismClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewPolymorphismClient(pl runtime.Pipeline) *PolymorphismClient {
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientGetComplicatedOptions contains the optional parameters for the PolymorphismClient.GetComplicated
 // method.
@@ -75,6 +76,7 @@ func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Respon
 // element type, with discriminator specified. Deserialization must NOT fail and use the discriminator type
 // specified on the wire.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientGetComposedWithDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithDiscriminator
 // method.
@@ -117,6 +119,7 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(res
 // element type, without discriminator specified on wire. Deserialization must NOT fail and use the explicit
 // type of the property.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientGetComposedWithoutDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithoutDiscriminator
 // method.
@@ -157,6 +160,7 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(
 
 // GetDotSyntax - Get complex types that are polymorphic, JSON key contains a dot
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientGetDotSyntaxOptions contains the optional parameters for the PolymorphismClient.GetDotSyntax
 // method.
@@ -197,6 +201,7 @@ func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response
 
 // GetValid - Get complex types that are polymorphic
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
 func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismClientGetValidOptions) (PolymorphismClientGetValidResponse, error) {
@@ -236,6 +241,7 @@ func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (P
 
 // PutComplicated - Put complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientPutComplicatedOptions contains the optional parameters for the PolymorphismClient.PutComplicated
 // method.
@@ -267,6 +273,7 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 
 // PutMissingDiscriminator - Put complex types that are polymorphic, omitting the discriminator
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphismClientPutMissingDiscriminatorOptions contains the optional parameters for the PolymorphismClient.PutMissingDiscriminator
 // method.
@@ -307,6 +314,7 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *ht
 
 // PutValid - Put complex types that are polymorphic
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put a salmon that looks like this: { 'fishtype':'Salmon', 'location':'alaska', 'iswild':true, 'species':'king',
 // 'length':1.0, 'siblings':[ { 'fishtype':'Shark', 'age':6, 'birthday':
@@ -344,6 +352,7 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 // PutValidMissingRequired - Put complex types that are polymorphic, attempting to omit required 'birthday' field - the request
 // should not be allowed from the client
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please attempt put a sawshark that looks like this, the client should not allow this data to be sent: { "fishtype":
 // "sawshark", "species": "snaggle toothed", "length": 18.5, "age": 2, "birthday":

@@ -27,8 +27,8 @@ type RoleAssignmentsClient struct {
 }
 
 // NewRoleAssignmentsClient creates a new instance of RoleAssignmentsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewRoleAssignmentsClient(credential azcore.TokenCredential, options *RoleAssignmentsClientOptions) *RoleAssignmentsClient {
 	if options == nil {
 		options = &RoleAssignmentsClientOptions{}
@@ -43,6 +43,7 @@ func NewRoleAssignmentsClient(credential azcore.TokenCredential, options *RoleAs
 
 // Create - Creates a role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to create.
@@ -96,6 +97,7 @@ func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (
 
 // Delete - Deletes a role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to delete.
@@ -148,6 +150,7 @@ func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (
 
 // Get - Get the specified role assignment.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment.
@@ -199,6 +202,7 @@ func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (Rol
 }
 
 // NewListForScopePager - Gets role assignments for a scope.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.

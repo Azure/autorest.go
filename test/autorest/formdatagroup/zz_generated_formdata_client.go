@@ -24,7 +24,7 @@ type FormdataClient struct {
 }
 
 // NewFormdataClient creates a new instance of FormdataClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewFormdataClient(pl runtime.Pipeline) *FormdataClient {
 	client := &FormdataClient{
 		pl: pl,
@@ -34,6 +34,7 @@ func NewFormdataClient(pl runtime.Pipeline) *FormdataClient {
 
 // UploadFile - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // fileContent - File to upload.
 // fileName - File name to upload. Name has to be spelled exactly as written here.
@@ -73,6 +74,7 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 
 // UploadFileViaBody - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // fileContent - File to upload.
 // options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
@@ -106,6 +108,7 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 
 // UploadFiles - Upload multiple files
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // fileContent - Files to upload.
 // options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.

@@ -23,7 +23,7 @@ type HeaderClient struct {
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
 	client := &HeaderClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // fooClientRequestID - The fooRequestId
 // options - HeaderClientCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
@@ -74,6 +75,7 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Respon
 }
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
+//
 // Generated from API version 2015-07-01-preview
 // fooClientRequestID - The fooRequestId
 // options - HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
@@ -118,6 +120,7 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of
 // the request, via a parameter group
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // HeaderClientCustomNamedRequestIDParamGroupingParameters - HeaderClientCustomNamedRequestIDParamGroupingParameters contains
 // a group of parameters for the HeaderClient.CustomNamedRequestIDParamGrouping method.

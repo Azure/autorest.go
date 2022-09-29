@@ -32,10 +32,10 @@ type GalleryImagesClient struct {
 }
 
 // NewGalleryImagesClient creates a new instance of GalleryImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*GalleryImagesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Create or update a gallery Image Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition is to be created.
@@ -81,6 +82,7 @@ func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Create or update a gallery Image Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *GalleryImagesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
@@ -129,6 +131,7 @@ func (client *GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // BeginDelete - Delete a gallery image.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition is to be deleted.
@@ -149,6 +152,7 @@ func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Delete a gallery image.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *GalleryImagesClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
@@ -197,6 +201,7 @@ func (client *GalleryImagesClient) deleteCreateRequest(ctx context.Context, reso
 
 // Get - Retrieves information about a gallery Image Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery from which the Image Definitions are to be retrieved.
@@ -257,6 +262,7 @@ func (client *GalleryImagesClient) getHandleResponse(resp *http.Response) (Galle
 }
 
 // NewListByGalleryPager - List gallery Image Definitions in a gallery.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery from which Image Definitions are to be listed.
@@ -327,6 +333,7 @@ func (client *GalleryImagesClient) listByGalleryHandleResponse(resp *http.Respon
 
 // BeginUpdate - Update a gallery Image Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition is to be updated.
@@ -349,6 +356,7 @@ func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGrou
 
 // Update - Update a gallery Image Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *GalleryImagesClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)

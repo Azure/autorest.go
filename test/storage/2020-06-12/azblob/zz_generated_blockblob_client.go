@@ -27,9 +27,9 @@ type blockBlobClient struct {
 }
 
 // newBlockBlobClient creates a new instance of blockBlobClient with the specified values.
-// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// pl - the pipeline used for sending requests and handling responses.
+// - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+// - version - Specifies the version of the operation to use for this request.
+//   - pl - the pipeline used for sending requests and handling responses.
 func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *blockBlobClient {
 	client := &blockBlobClient{
 		endpoint: endpoint,
@@ -47,6 +47,7 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // the most recently uploaded version of the block, whichever list it may
 // belong to.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - blockBlobClientCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList
 // method.
@@ -228,6 +229,7 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
 // options - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList method.
@@ -329,6 +331,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 // partial updates to a block blob’s contents using a source URL, use the Put
 // Block from URL API in conjunction with Put Block List.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // contentLength - The length of the request.
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
@@ -520,6 +523,7 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
 // to 64 bytes in size. For a given blob, the length of the value specified for the blockid
@@ -640,6 +644,7 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (Bl
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents
 // are read from a URL.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
 // to 64 bytes in size. For a given blob, the length of the value specified for the blockid
@@ -781,6 +786,7 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 // Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of
 // the content of a block blob, use the Put Block List operation.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // contentLength - The length of the request.
 // body - Initial data

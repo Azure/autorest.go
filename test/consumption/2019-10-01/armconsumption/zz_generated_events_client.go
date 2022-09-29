@@ -29,8 +29,8 @@ type EventsClient struct {
 }
 
 // NewEventsClient creates a new instance of EventsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*EventsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -51,6 +51,7 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 }
 
 // NewListPager - Lists the events by billingAccountId and billingProfileId for given start and end date.
+//
 // Generated from API version 2019-10-01
 // startDate - Start date
 // endDate - End date

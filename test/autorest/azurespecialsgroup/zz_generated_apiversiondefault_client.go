@@ -23,7 +23,7 @@ type APIVersionDefaultClient struct {
 }
 
 // NewAPIVersionDefaultClient creates a new instance of APIVersionDefaultClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewAPIVersionDefaultClient(pl runtime.Pipeline) *APIVersionDefaultClient {
 	client := &APIVersionDefaultClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewAPIVersionDefaultClient(pl runtime.Pipeline) *APIVersionDefaultClient {
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 // method.
@@ -67,6 +68,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 // method.
@@ -101,6 +103,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 // method.
@@ -135,6 +138,7 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - APIVersionDefaultClientGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 // method.

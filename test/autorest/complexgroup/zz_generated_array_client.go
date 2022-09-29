@@ -23,7 +23,7 @@ type ArrayClient struct {
 }
 
 // NewArrayClient creates a new instance of ArrayClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewArrayClient(pl runtime.Pipeline) *ArrayClient {
 	client := &ArrayClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewArrayClient(pl runtime.Pipeline) *ArrayClient {
 
 // GetEmpty - Get complex types with array property which is empty
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGetEmptyOptions) (ArrayClientGetEmptyResponse, error) {
@@ -72,6 +73,7 @@ func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayCli
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - ArrayClientGetNotProvidedOptions contains the optional parameters for the ArrayClient.GetNotProvided method.
 func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayClientGetNotProvidedOptions) (ArrayClientGetNotProvidedResponse, error) {
@@ -111,6 +113,7 @@ func (client *ArrayClient) getNotProvidedHandleResponse(resp *http.Response) (Ar
 
 // GetValid - Get complex types with array property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - ArrayClientGetValidOptions contains the optional parameters for the ArrayClient.GetValid method.
 func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayClientGetValidOptions) (ArrayClientGetValidResponse, error) {
@@ -150,6 +153,7 @@ func (client *ArrayClient) getValidHandleResponse(resp *http.Response) (ArrayCli
 
 // PutEmpty - Put complex types with array property which is empty
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put an empty array
 // options - ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
@@ -181,6 +185,7 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBod
 
 // PutValid - Put complex types with array property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over the
 // lazy dog"

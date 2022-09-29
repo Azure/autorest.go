@@ -33,10 +33,10 @@ type VirtualMachineImagesClient struct {
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachineImagesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -59,6 +59,7 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 
 // Get - Gets a virtual machine image.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
@@ -131,6 +132,7 @@ func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response)
 
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
@@ -207,6 +209,7 @@ func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response
 
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
@@ -264,6 +267,7 @@ func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Re
 
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineImagesClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
@@ -316,6 +320,7 @@ func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *htt
 
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.

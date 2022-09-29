@@ -33,10 +33,10 @@ type VirtualMachineExtensionImagesClient struct {
 }
 
 // NewVirtualMachineExtensionImagesClient creates a new instance of VirtualMachineExtensionImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachineExtensionImagesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -59,6 +59,7 @@ func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential az
 
 // Get - Gets a virtual machine extension image.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
@@ -123,6 +124,7 @@ func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.
 
 // ListTypes - Gets a list of virtual machine extension image types.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
@@ -179,6 +181,7 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp 
 
 // ListVersions - Gets a list of virtual machine extension image versions.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions

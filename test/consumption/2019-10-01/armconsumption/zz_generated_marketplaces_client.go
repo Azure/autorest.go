@@ -30,8 +30,8 @@ type MarketplacesClient struct {
 }
 
 // NewMarketplacesClient creates a new instance of MarketplacesClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*MarketplacesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -53,6 +53,7 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 
 // NewListPager - Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for
 // May 1, 2014 or later.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing

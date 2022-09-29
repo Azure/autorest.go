@@ -23,7 +23,7 @@ type LRORetrysClient struct {
 }
 
 // NewLRORetrysClient creates a new instance of LRORetrysClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewLRORetrysClient(pl runtime.Pipeline) *LRORetrysClient {
 	client := &LRORetrysClient{
 		pl: pl,
@@ -34,6 +34,7 @@ func NewLRORetrysClient(pl runtime.Pipeline) *LRORetrysClient {
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
 // this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
 // method.
@@ -52,6 +53,7 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 // Delete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
 // this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*http.Response, error) {
 	req, err := client.delete202Retry200CreateRequest(ctx, options)
@@ -82,6 +84,7 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 // BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded
 // method.
@@ -100,6 +103,7 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 // DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRelativeRetrySucceededCreateRequest(ctx, options)
@@ -132,6 +136,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 // returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the
 // LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded method.
@@ -152,6 +157,7 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 // a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*http.Response, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest(ctx, options)
@@ -182,6 +188,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 // BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
 // and 'Retry-After' headers, Polls return a 200 with a response body after success
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - LRORetrysClientBeginPost202Retry200Options contains the optional parameters for the LRORetrysClient.BeginPost202Retry200
 // method.
@@ -200,6 +207,7 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
 // and 'Retry-After' headers, Polls return a 200 with a response body after success
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (*http.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
@@ -234,6 +242,7 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded
 // method.
@@ -253,6 +262,7 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncRelativeRetrySucceededCreateRequest(ctx, options)
@@ -287,6 +297,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 // an entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // product - Product to put
 // options - LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
@@ -307,6 +318,7 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 // entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, product, options)
@@ -338,6 +350,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // product - Product to put
 // options - LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
@@ -358,6 +371,7 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 // an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(ctx, product, options)

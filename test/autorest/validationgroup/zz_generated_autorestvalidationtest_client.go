@@ -28,8 +28,8 @@ type AutoRestValidationTestClient struct {
 }
 
 // NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
-// subscriptionID - Subscription ID.
-// pl - the pipeline used for sending requests and handling responses.
+// - subscriptionID - Subscription ID.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewAutoRestValidationTestClient(subscriptionID string, pl runtime.Pipeline) *AutoRestValidationTestClient {
 	client := &AutoRestValidationTestClient{
 		subscriptionID: subscriptionID,
@@ -40,6 +40,7 @@ func NewAutoRestValidationTestClient(subscriptionID string, pl runtime.Pipeline)
 
 // GetWithConstantInPath -
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 // method.
@@ -71,6 +72,7 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(c
 
 // PostWithConstantInBody -
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
 // method.
@@ -115,6 +117,7 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse
 
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
@@ -169,6 +172,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp 
 
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.

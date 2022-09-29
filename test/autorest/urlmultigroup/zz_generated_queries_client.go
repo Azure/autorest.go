@@ -23,7 +23,7 @@ type QueriesClient struct {
 }
 
 // NewQueriesClient creates a new instance of QueriesClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewQueriesClient(pl runtime.Pipeline) *QueriesClient {
 	client := &QueriesClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewQueriesClient(pl runtime.Pipeline) *QueriesClient {
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
 // method.
@@ -71,6 +72,7 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - QueriesClientArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull
 // method.
@@ -110,6 +112,7 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the mult-array
 // format
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - QueriesClientArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
 // method.

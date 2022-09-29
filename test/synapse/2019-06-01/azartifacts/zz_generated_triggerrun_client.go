@@ -28,9 +28,9 @@ type TriggerRunClient struct {
 }
 
 // NewTriggerRunClient creates a new instance of TriggerRunClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewTriggerRunClient(endpoint string, credential azcore.TokenCredential, options *TriggerRunClientOptions) *TriggerRunClient {
 	if options == nil {
 		options = &TriggerRunClientOptions{}
@@ -46,6 +46,7 @@ func NewTriggerRunClient(endpoint string, credential azcore.TokenCredential, opt
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
@@ -90,6 +91,7 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // filterParameters - Parameters to filter the pipeline run.
 // options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
@@ -134,6 +136,7 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.

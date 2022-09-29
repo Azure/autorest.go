@@ -24,7 +24,7 @@ type ODataClient struct {
 }
 
 // NewODataClient creates a new instance of ODataClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewODataClient(pl runtime.Pipeline) *ODataClient {
 	client := &ODataClient{
 		pl: pl,
@@ -34,6 +34,7 @@ func NewODataClient(pl runtime.Pipeline) *ODataClient {
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - ODataClientGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClientGetWithFilterOptions) (ODataClientGetWithFilterResponse, error) {

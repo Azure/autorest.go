@@ -23,7 +23,7 @@ type IntClient struct {
 }
 
 // NewIntClient creates a new instance of IntClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewIntClient(pl runtime.Pipeline) *IntClient {
 	client := &IntClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewIntClient(pl runtime.Pipeline) *IntClient {
 
 // Get - Get an int enum
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
 func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) (IntClientGetResponse, error) {
@@ -72,6 +73,7 @@ func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetRes
 
 // Put - Put an int enum
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // input - Input int enum.
 // options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.

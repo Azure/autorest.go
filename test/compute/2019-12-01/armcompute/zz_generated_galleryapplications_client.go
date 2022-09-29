@@ -32,10 +32,10 @@ type GalleryApplicationsClient struct {
 }
 
 // NewGalleryApplicationsClient creates a new instance of GalleryApplicationsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewGalleryApplicationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*GalleryApplicationsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewGalleryApplicationsClient(subscriptionID string, credential azcore.Token
 
 // BeginCreateOrUpdate - Create or update a gallery Application Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be created.
@@ -81,6 +82,7 @@ func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Create or update a gallery Application Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *GalleryApplicationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
@@ -129,6 +131,7 @@ func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context
 
 // BeginDelete - Delete a gallery Application.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be deleted.
@@ -149,6 +152,7 @@ func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resour
 
 // Delete - Delete a gallery Application.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *GalleryApplicationsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
@@ -197,6 +201,7 @@ func (client *GalleryApplicationsClient) deleteCreateRequest(ctx context.Context
 
 // Get - Retrieves information about a gallery Application Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which the Application Definitions are to be retrieved.
@@ -257,6 +262,7 @@ func (client *GalleryApplicationsClient) getHandleResponse(resp *http.Response) 
 }
 
 // NewListByGalleryPager - List gallery Application Definitions in a gallery.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which Application Definitions are to be listed.
@@ -327,6 +333,7 @@ func (client *GalleryApplicationsClient) listByGalleryHandleResponse(resp *http.
 
 // BeginUpdate - Update a gallery Application Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be updated.
@@ -350,6 +357,7 @@ func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resour
 
 // Update - Update a gallery Application Definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 func (client *GalleryApplicationsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)

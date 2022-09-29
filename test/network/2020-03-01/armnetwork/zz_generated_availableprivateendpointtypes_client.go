@@ -32,10 +32,10 @@ type AvailablePrivateEndpointTypesClient struct {
 }
 
 // NewAvailablePrivateEndpointTypesClient creates a new instance of AvailablePrivateEndpointTypesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AvailablePrivateEndpointTypesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 
 // NewListPager - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this
 // region.
+//
 // Generated from API version 2020-03-01
 // location - The location of the domain name.
 // options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
@@ -123,6 +124,7 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http
 
 // NewListByResourceGroupPager - Returns all of the resource types that can be linked to a Private Endpoint in this subscription
 // in this region.
+//
 // Generated from API version 2020-03-01
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.

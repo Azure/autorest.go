@@ -32,10 +32,10 @@ type DedicatedHostGroupsClient struct {
 }
 
 // NewDedicatedHostGroupsClient creates a new instance of DedicatedHostGroupsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewDedicatedHostGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DedicatedHostGroupsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -59,6 +59,7 @@ func NewDedicatedHostGroupsClient(subscriptionID string, credential azcore.Token
 // CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please
 // see Dedicated Host Documentation [https://go.microsoft.com/fwlink/?linkid=2082596]
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
@@ -117,6 +118,7 @@ func (client *DedicatedHostGroupsClient) createOrUpdateHandleResponse(resp *http
 
 // Delete - Delete a dedicated host group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
@@ -164,6 +166,7 @@ func (client *DedicatedHostGroupsClient) deleteCreateRequest(ctx context.Context
 
 // Get - Retrieves information about a dedicated host group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
@@ -220,6 +223,7 @@ func (client *DedicatedHostGroupsClient) getHandleResponse(resp *http.Response) 
 
 // NewListByResourceGroupPager - Lists all of the dedicated host groups in the specified resource group. Use the nextLink
 // property in the response to get the next page of dedicated host groups.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
@@ -285,6 +289,7 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupHandleResponse(resp 
 
 // NewListBySubscriptionPager - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the
 // response to get the next page of dedicated host groups.
+//
 // Generated from API version 2019-12-01
 // options - DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
 // method.
@@ -345,6 +350,7 @@ func (client *DedicatedHostGroupsClient) listBySubscriptionHandleResponse(resp *
 
 // Update - Update an dedicated host group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.

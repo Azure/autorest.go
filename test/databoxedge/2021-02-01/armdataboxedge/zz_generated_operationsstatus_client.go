@@ -32,9 +32,9 @@ type OperationsStatusClient struct {
 }
 
 // NewOperationsStatusClient creates a new instance of OperationsStatusClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*OperationsStatusClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,6 +57,7 @@ func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCre
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The job name.

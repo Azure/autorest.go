@@ -26,7 +26,7 @@ type PetClient struct {
 }
 
 // NewPetClient creates a new instance of PetClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPetClient(pl runtime.Pipeline) *PetClient {
 	client := &PetClient{
 		pl: pl,
@@ -36,6 +36,7 @@ func NewPetClient(pl runtime.Pipeline) *PetClient {
 
 // DoSomething - Asks pet to do something
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 0.0.0
 // whatAction - what action the pet should do
 // options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
@@ -80,6 +81,7 @@ func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClie
 
 // GetPetByID - Gets pets by id.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 0.0.0
 // petID - pet id
 // options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
@@ -125,6 +127,7 @@ func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClien
 // HasModelsParam - Ensure you can correctly deserialize the returned PetActionError and deserialization doesn't conflict
 // with the input param name 'models'
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 0.0.0
 // options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
 func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientHasModelsParamOptions) (PetClientHasModelsParamResponse, error) {

@@ -29,8 +29,8 @@ type TagsClient struct {
 }
 
 // NewTagsClient creates a new instance of TagsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*TagsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -52,6 +52,7 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 
 // Get - Get all available tag keys for the defined scope
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with tags operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope,
 // '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for

@@ -32,9 +32,9 @@ type AvailableSKUsClient struct {
 }
 
 // NewAvailableSKUsClient creates a new instance of AvailableSKUsClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AvailableSKUsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -56,6 +56,7 @@ func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCreden
 }
 
 // NewListPager - List all the available Skus and information related to them.
+//
 // Generated from API version 2021-02-01
 // options - AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.List method.
 func (client *AvailableSKUsClient) NewListPager(options *AvailableSKUsClientListOptions) *runtime.Pager[AvailableSKUsClientListResponse] {

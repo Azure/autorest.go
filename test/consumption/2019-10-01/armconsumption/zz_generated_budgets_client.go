@@ -31,8 +31,8 @@ type BudgetsClient struct {
 }
 
 // NewBudgetsClient creates a new instance of BudgetsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*BudgetsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -56,6 +56,7 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // concurrency control. To obtain the latest eTag for a given budget, perform a get operation prior
 // to your put operation.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
@@ -114,6 +115,7 @@ func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (
 
 // Delete - The operation to delete a budget.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
@@ -162,6 +164,7 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 
 // Get - Gets the budget for the scope by budget name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
@@ -218,6 +221,7 @@ func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClie
 }
 
 // NewListPager - Lists all budgets for the defined scope.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for

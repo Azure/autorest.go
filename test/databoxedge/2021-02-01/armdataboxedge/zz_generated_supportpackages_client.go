@@ -32,9 +32,9 @@ type SupportPackagesClient struct {
 }
 
 // NewSupportPackagesClient creates a new instance of SupportPackagesClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SupportPackagesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,6 +57,7 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginTriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
@@ -77,6 +78,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 
 // TriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)

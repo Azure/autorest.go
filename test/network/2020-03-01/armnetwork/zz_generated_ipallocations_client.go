@@ -32,10 +32,10 @@ type IPAllocationsClient struct {
 }
 
 // NewIPAllocationsClient creates a new instance of IPAllocationsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*IPAllocationsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
@@ -80,6 +81,7 @@ func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *IPAllocationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
@@ -124,6 +126,7 @@ func (client *IPAllocationsClient) createOrUpdateCreateRequest(ctx context.Conte
 
 // BeginDelete - Deletes the specified IpAllocation.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
@@ -145,6 +148,7 @@ func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified IpAllocation.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *IPAllocationsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
@@ -189,6 +193,7 @@ func (client *IPAllocationsClient) deleteCreateRequest(ctx context.Context, reso
 
 // Get - Gets the specified IpAllocation by resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
@@ -247,6 +252,7 @@ func (client *IPAllocationsClient) getHandleResponse(resp *http.Response) (IPAll
 }
 
 // NewListPager - Gets all IpAllocations in a subscription.
+//
 // Generated from API version 2020-03-01
 // options - IPAllocationsClientListOptions contains the optional parameters for the IPAllocationsClient.List method.
 func (client *IPAllocationsClient) NewListPager(options *IPAllocationsClientListOptions) *runtime.Pager[IPAllocationsClientListResponse] {
@@ -305,6 +311,7 @@ func (client *IPAllocationsClient) listHandleResponse(resp *http.Response) (IPAl
 }
 
 // NewListByResourceGroupPager - Gets all IpAllocations in a resource group.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - IPAllocationsClientListByResourceGroupOptions contains the optional parameters for the IPAllocationsClient.ListByResourceGroup
@@ -370,6 +377,7 @@ func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *http.
 
 // UpdateTags - Updates a IpAllocation tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.

@@ -32,10 +32,10 @@ type PacketCapturesClient struct {
 }
 
 // NewPacketCapturesClient creates a new instance of PacketCapturesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPacketCapturesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PacketCapturesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewPacketCapturesClient(subscriptionID string, credential azcore.TokenCrede
 
 // BeginCreate - Create and start a packet capture on the specified VM.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
@@ -81,6 +82,7 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 
 // Create - Create and start a packet capture on the specified VM.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *PacketCapturesClient) create(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (*http.Response, error) {
 	req, err := client.createCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, parameters, options)
@@ -129,6 +131,7 @@ func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, res
 
 // BeginDelete - Deletes the specified packet capture session.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
@@ -151,6 +154,7 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 
 // Delete - Deletes the specified packet capture session.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *PacketCapturesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
@@ -199,6 +203,7 @@ func (client *PacketCapturesClient) deleteCreateRequest(ctx context.Context, res
 
 // Get - Gets a packet capture session by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
@@ -260,6 +265,7 @@ func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (Pack
 
 // BeginGetStatus - Query the status of a running packet capture session.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
@@ -282,6 +288,7 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 
 // GetStatus - Query the status of a running packet capture session.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *PacketCapturesClient) getStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (*http.Response, error) {
 	req, err := client.getStatusCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
@@ -329,6 +336,7 @@ func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, 
 }
 
 // NewListPager - Lists all packet capture sessions within the specified resource group.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
@@ -392,6 +400,7 @@ func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (Pac
 
 // BeginStop - Stops a specified packet capture session.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
@@ -414,6 +423,7 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 
 // Stop - Stops a specified packet capture session.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *PacketCapturesClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (*http.Response, error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)

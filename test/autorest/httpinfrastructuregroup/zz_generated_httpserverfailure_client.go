@@ -23,7 +23,7 @@ type HTTPServerFailureClient struct {
 }
 
 // NewHTTPServerFailureClient creates a new instance of HTTPServerFailureClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewHTTPServerFailureClient(pl runtime.Pipeline) *HTTPServerFailureClient {
 	client := &HTTPServerFailureClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewHTTPServerFailureClient(pl runtime.Pipeline) *HTTPServerFailureClient {
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
 // method.
@@ -64,6 +65,7 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 
 // Get501 - Return 501 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
 // method.
@@ -94,6 +96,7 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 }
 
 // Head501 - Return 501 status code - should be represented in the client as an error
+//
 // Generated from API version 1.0.0
 // options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
 // method.
@@ -125,6 +128,7 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 
 // Post505 - Return 505 status code - should be represented in the client as an error
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
 // method.

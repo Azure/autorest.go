@@ -32,10 +32,10 @@ type RouteTablesClient struct {
 }
 
 // NewRouteTablesClient creates a new instance of RouteTablesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*RouteTablesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredenti
 
 // BeginCreateOrUpdate - Create or updates a route table in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
@@ -80,6 +81,7 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // CreateOrUpdate - Create or updates a route table in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
@@ -124,6 +126,7 @@ func (client *RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context
 
 // BeginDelete - Deletes the specified route table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
@@ -144,6 +147,7 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // Delete - Deletes the specified route table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, options)
@@ -188,6 +192,7 @@ func (client *RouteTablesClient) deleteCreateRequest(ctx context.Context, resour
 
 // Get - Gets the specified route table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
@@ -246,6 +251,7 @@ func (client *RouteTablesClient) getHandleResponse(resp *http.Response) (RouteTa
 }
 
 // NewListPager - Gets all route tables in a resource group.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - RouteTablesClientListOptions contains the optional parameters for the RouteTablesClient.List method.
@@ -309,6 +315,7 @@ func (client *RouteTablesClient) listHandleResponse(resp *http.Response) (RouteT
 }
 
 // NewListAllPager - Gets all route tables in a subscription.
+//
 // Generated from API version 2020-03-01
 // options - RouteTablesClientListAllOptions contains the optional parameters for the RouteTablesClient.ListAll method.
 func (client *RouteTablesClient) NewListAllPager(options *RouteTablesClientListAllOptions) *runtime.Pager[RouteTablesClientListAllResponse] {
@@ -368,6 +375,7 @@ func (client *RouteTablesClient) listAllHandleResponse(resp *http.Response) (Rou
 
 // UpdateTags - Updates a route table tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.

@@ -32,10 +32,10 @@ type PeerExpressRouteCircuitConnectionsClient struct {
 }
 
 // NewPeerExpressRouteCircuitConnectionsClient creates a new instance of PeerExpressRouteCircuitConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PeerExpressRouteCircuitConnectionsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 
 // Get - Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
@@ -124,6 +125,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getHandleResponse(resp *
 }
 
 // NewListPager - Gets all global reach peer connections associated with a private peering in an express route circuit.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.

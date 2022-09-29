@@ -29,8 +29,8 @@ type ChargesClient struct {
 }
 
 // NewChargesClient creates a new instance of ChargesClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ChargesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -52,6 +52,7 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 
 // List - Lists the charges based for the defined scope.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with charges operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
 // for Department scope, and

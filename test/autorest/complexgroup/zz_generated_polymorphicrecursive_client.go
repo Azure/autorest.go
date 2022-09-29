@@ -23,7 +23,7 @@ type PolymorphicrecursiveClient struct {
 }
 
 // NewPolymorphicrecursiveClient creates a new instance of PolymorphicrecursiveClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPolymorphicrecursiveClient(pl runtime.Pipeline) *PolymorphicrecursiveClient {
 	client := &PolymorphicrecursiveClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewPolymorphicrecursiveClient(pl runtime.Pipeline) *PolymorphicrecursiveCli
 
 // GetValid - Get complex types that are polymorphic and have recursive references
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // options - PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
 // method.
@@ -73,6 +74,7 @@ func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Resp
 
 // PutValid - Put complex types that are polymorphic and have recursive references
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
 // complexBody - Please put a salmon that looks like this: { "fishtype": "salmon", "species": "king", "length": 1, "age":
 // 1, "location": "alaska", "iswild": true, "siblings": [ { "fishtype": "shark", "species":

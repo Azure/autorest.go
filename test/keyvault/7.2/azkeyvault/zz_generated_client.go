@@ -28,8 +28,8 @@ type Client struct {
 }
 
 // NewClient creates a new instance of Client with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewClient(credential azcore.TokenCredential, options *ClientOptions) *Client {
 	if options == nil {
 		options = &ClientOptions{}
@@ -45,6 +45,7 @@ func NewClient(credential azcore.TokenCredential, options *ClientOptions) *Clien
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the
 // certificate will be downloaded. This operation requires the certificates/backup permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -104,6 +105,7 @@ func (client *Client) backupCertificateHandleResponse(resp *http.Response) (Clie
 // geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This
 // operation requires the key/backup permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -155,6 +157,7 @@ func (client *Client) backupKeyHandleResponse(resp *http.Response) (ClientBackup
 // BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will
 // be downloaded. This operation requires the secrets/backup permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -206,6 +209,7 @@ func (client *Client) backupSecretHandleResponse(resp *http.Response) (ClientBac
 // BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation
 // requires the storage/backup permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -257,6 +261,7 @@ func (client *Client) backupStorageAccountHandleResponse(resp *http.Response) (C
 // CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -310,6 +315,7 @@ func (client *Client) createCertificateHandleResponse(resp *http.Response) (Clie
 // Azure Key Vault creates a new version of the key. It requires the keys/create
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name for the new key. The system will generate the version name for the new key.
@@ -365,6 +371,7 @@ func (client *Client) createKeyHandleResponse(resp *http.Response) (ClientCreate
 // operation applies to asymmetric and symmetric keys stored in Azure Key Vault
 // since it uses the private portion of the key. This operation requires the keys/decrypt permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -423,6 +430,7 @@ func (client *Client) decryptHandleResponse(resp *http.Response) (ClientDecryptR
 // be used to remove individual versions of a certificate object. This operation requires the
 // certificates/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -474,6 +482,7 @@ func (client *Client) deleteCertificateHandleResponse(resp *http.Response) (Clie
 // DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires
 // the certificates/managecontacts permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientDeleteCertificateContactsOptions contains the optional parameters for the Client.DeleteCertificateContacts
@@ -521,6 +530,7 @@ func (client *Client) deleteCertificateContactsHandleResponse(resp *http.Respons
 // DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from
 // the vault. This operation requires the certificates/manageissuers/deleteissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
@@ -573,6 +583,7 @@ func (client *Client) deleteCertificateIssuerHandleResponse(resp *http.Response)
 // DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being
 // created. The certificate is no longer created. This operation requires the certificates/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -626,6 +637,7 @@ func (client *Client) deleteCertificateOperationHandleResponse(resp *http.Respon
 // cryptographic material associated with the key, which means the key is not usable for
 // Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to delete.
@@ -677,6 +689,7 @@ func (client *Client) deleteKeyHandleResponse(resp *http.Response) (ClientDelete
 // DeleteSasDefinition - Deletes a SAS definition from a specified storage account. This operation requires the storage/deletesas
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -733,6 +746,7 @@ func (client *Client) deleteSasDefinitionHandleResponse(resp *http.Response) (Cl
 // DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual
 // version of a secret. This operation requires the secrets/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -783,6 +797,7 @@ func (client *Client) deleteSecretHandleResponse(resp *http.Response) (ClientDel
 
 // DeleteStorageAccount - Deletes a storage account. This operation requires the storage/delete permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -839,6 +854,7 @@ func (client *Client) deleteStorageAccountHandleResponse(resp *http.Response) (C
 // for callers that have a key-reference but do not have access to the
 // public key material. This operation requires the keys/encrypt permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -895,6 +911,7 @@ func (client *Client) encryptHandleResponse(resp *http.Response) (ClientEncryptR
 
 // BeginFullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
@@ -914,6 +931,7 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 func (client *Client) fullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (*http.Response, error) {
 	req, err := client.fullBackupCreateRequest(ctx, vaultBaseURL, options)
@@ -951,6 +969,7 @@ func (client *Client) fullBackupCreateRequest(ctx context.Context, vaultBaseURL 
 
 // FullBackupStatus - Returns the status of full backup operation
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // jobID - The id returned as part of the backup request
@@ -1002,6 +1021,7 @@ func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (Clien
 // BeginFullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
 // backup folder
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // restoreBlobDetails - The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
@@ -1024,6 +1044,7 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 // FullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
 // backup folder
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL string, restoreBlobDetails RestoreOperationParameters, options *ClientBeginFullRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, restoreBlobDetails, options)
@@ -1058,6 +1079,7 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given vault.
@@ -1115,6 +1137,7 @@ func (client *Client) getCertificateHandleResponse(resp *http.Response) (ClientG
 // GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified
 // key vault. This operation requires the certificates/managecontacts permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateContactsOptions contains the optional parameters for the Client.GetCertificateContacts method.
@@ -1161,6 +1184,7 @@ func (client *Client) getCertificateContactsHandleResponse(resp *http.Response) 
 // GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified
 // key vault. This operation requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
@@ -1211,6 +1235,7 @@ func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (C
 
 // NewGetCertificateIssuersPager - The GetCertificateIssuers operation returns the set of certificate issuer resources in
 // the specified key vault. This operation requires the certificates/manageissuers/getissuers permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
@@ -1273,6 +1298,7 @@ func (client *Client) getCertificateIssuersHandleResponse(resp *http.Response) (
 // GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires
 // the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -1325,6 +1351,7 @@ func (client *Client) getCertificateOperationHandleResponse(resp *http.Response)
 // GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified
 // key vault. This operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in a given key vault.
@@ -1375,6 +1402,7 @@ func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (C
 
 // NewGetCertificateVersionsPager - The GetCertificateVersions operation returns the versions of a certificate in the specified
 // key vault. This operation requires the certificates/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -1441,6 +1469,7 @@ func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) 
 
 // NewGetCertificatesPager - The GetCertificates operation returns the set of certificates resources in the specified key
 // vault. This operation requires the certificates/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
@@ -1507,6 +1536,7 @@ func (client *Client) getCertificatesHandleResponse(resp *http.Response) (Client
 // such as retention interval, scheduled permanent deletion and the current deletion recovery level.
 // This operation requires the certificates/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate
@@ -1559,6 +1589,7 @@ func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (
 // are in a deleted state and ready for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete
 // enabled vaults.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
@@ -1625,6 +1656,7 @@ func (client *Client) getDeletedCertificatesHandleResponse(resp *http.Response) 
 // invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This
 // operation requires the keys/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -1678,6 +1710,7 @@ func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGe
 // operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return
 // an error if invoked on a non soft-delete enabled vault. This operation
 // requires the keys/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
@@ -1740,6 +1773,7 @@ func (client *Client) getDeletedKeysHandleResponse(resp *http.Response) (ClientG
 // GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with
 // its attributes. This operation requires the storage/getsas permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -1796,6 +1830,7 @@ func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response)
 
 // NewGetDeletedSasDefinitionsPager - The Get Deleted Sas Definitions operation returns the SAS definitions that have been
 // deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -1864,6 +1899,7 @@ func (client *Client) getDeletedSasDefinitionsHandleResponse(resp *http.Response
 // GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This
 // operation requires the secrets/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -1914,6 +1950,7 @@ func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (Clien
 
 // NewGetDeletedSecretsPager - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled
 // for soft-delete. This operation requires the secrets/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
@@ -1976,6 +2013,7 @@ func (client *Client) getDeletedSecretsHandleResponse(resp *http.Response) (Clie
 // GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along
 // with its attributes. This operation requires the storage/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -2027,6 +2065,7 @@ func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response
 
 // NewGetDeletedStorageAccountsPager - The Get Deleted Storage Accounts operation returns the storage accounts that have been
 // deleted for a vault enabled for soft-delete. This operation requires the storage/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
@@ -2090,6 +2129,7 @@ func (client *Client) getDeletedStorageAccountsHandleResponse(resp *http.Respons
 // GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material
 // is released in the response. This operation requires the keys/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to get.
@@ -2146,6 +2186,7 @@ func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyRes
 
 // NewGetKeyVersionsPager - The full key identifier, attributes, and tags are provided in the response. This operation requires
 // the keys/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -2214,6 +2255,7 @@ func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientG
 // of a stored key. The LIST operation is applicable to all key types, however only the base key
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response.
 // This operation requires the keys/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
@@ -2276,6 +2318,7 @@ func (client *Client) getKeysHandleResponse(resp *http.Response) (ClientGetKeysR
 // GetSasDefinition - Gets information about a SAS definition for the specified storage account. This operation requires the
 // storage/getsas permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -2331,6 +2374,7 @@ func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (Clien
 
 // NewGetSasDefinitionsPager - List storage SAS definitions for the given storage account. This operation requires the storage/listsas
 // permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -2398,6 +2442,7 @@ func (client *Client) getSasDefinitionsHandleResponse(resp *http.Response) (Clie
 // GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -2454,6 +2499,7 @@ func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSec
 
 // NewGetSecretVersionsPager - The full secret identifier and attributes are provided in the response. No values are returned
 // for the secrets. This operations requires the secrets/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -2521,6 +2567,7 @@ func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (Clie
 // NewGetSecretsPager - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier
 // and its attributes are provided in the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
@@ -2582,6 +2629,7 @@ func (client *Client) getSecretsHandleResponse(resp *http.Response) (ClientGetSe
 
 // GetStorageAccount - Gets information about a specified storage account. This operation requires the storage/get permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -2632,6 +2680,7 @@ func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (Clie
 
 // NewGetStorageAccountsPager - List storage accounts managed by the specified key vault. This operation requires the storage/list
 // permission.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
@@ -2695,6 +2744,7 @@ func (client *Client) getStorageAccountsHandleResponse(resp *http.Response) (Cli
 // to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM
 // file must contain the key as well as x509 certificates. This operation requires the certificates/import permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -2748,6 +2798,7 @@ func (client *Client) importCertificateHandleResponse(resp *http.Response) (Clie
 // exists, Azure Key Vault creates a new version of the key. This operation requires the
 // keys/import permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - Name for the imported key.
@@ -2801,6 +2852,7 @@ func (client *Client) importKeyHandleResponse(resp *http.Response) (ClientImport
 // pair currently available in the service. This operation requires the certificates/create
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -2854,6 +2906,7 @@ func (client *Client) mergeCertificateHandleResponse(resp *http.Response) (Clien
 // without possibility for recovery. The operation is not available if the recovery level does not
 // specify 'Purgeable'. This operation requires the certificate/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate
@@ -2898,6 +2951,7 @@ func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, 
 // be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault.
 // This operation requires the keys/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key
@@ -2941,6 +2995,7 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBas
 // This operation can only be enabled on a soft-delete enabled vault. This operation requires the
 // secrets/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -2984,6 +3039,7 @@ func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vault
 // of recovery. This operation can only be performed on a soft-delete enabled vault. This operation
 // requires the storage/purge permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -3028,6 +3084,7 @@ func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Contex
 // operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval
 // (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the deleted certificate
@@ -3082,6 +3139,7 @@ func (client *Client) recoverDeletedCertificateHandleResponse(resp *http.Respons
 // key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation
 // requires the keys/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the deleted key.
@@ -3133,6 +3191,7 @@ func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (Clie
 // RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can
 // only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -3190,6 +3249,7 @@ func (client *Client) recoverDeletedSasDefinitionHandleResponse(resp *http.Respo
 // RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete
 // enabled vault. This operation requires the secrets/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the deleted secret.
@@ -3241,6 +3301,7 @@ func (client *Client) recoverDeletedSecretHandleResponse(resp *http.Response) (C
 // RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be
 // performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -3293,6 +3354,7 @@ func (client *Client) recoverDeletedStorageAccountHandleResponse(resp *http.Resp
 // RegenerateStorageAccountKey - Regenerates the specified key value for the given storage account. This operation requires
 // the storage/regeneratekey permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -3346,6 +3408,7 @@ func (client *Client) regenerateStorageAccountKeyHandleResponse(resp *http.Respo
 // RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the certificate.
@@ -3400,6 +3463,7 @@ func (client *Client) restoreCertificateHandleResponse(resp *http.Response) (Cli
 // must be owned by the same Microsoft Azure Subscription as the source Key Vault
 // The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the key.
@@ -3447,6 +3511,7 @@ func (client *Client) restoreKeyHandleResponse(resp *http.Response) (ClientResto
 // RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the secret.
@@ -3493,6 +3558,7 @@ func (client *Client) restoreSecretHandleResponse(resp *http.Response) (ClientRe
 
 // RestoreStatus - Returns the status of restore operation
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // jobID - The Job Id returned part of the restore operation
@@ -3543,6 +3609,7 @@ func (client *Client) restoreStatusHandleResponse(resp *http.Response) (ClientRe
 
 // RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the storage account.
@@ -3590,6 +3657,7 @@ func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (
 // BeginSelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to
 // a previously stored Azure Blob storage backup folder
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to be restored from the user supplied backup
@@ -3613,6 +3681,7 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 // SelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously
 // stored Azure Blob storage backup folder
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, restoreBlobDetails SelectiveKeyRestoreOperationParameters, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, restoreBlobDetails, options)
@@ -3652,6 +3721,7 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // contacts - The contacts for the key vault certificate.
@@ -3699,6 +3769,7 @@ func (client *Client) setCertificateContactsHandleResponse(resp *http.Response) 
 // SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation
 // requires the certificates/setissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
@@ -3751,6 +3822,7 @@ func (client *Client) setCertificateIssuerHandleResponse(resp *http.Response) (C
 // SetSasDefinition - Creates or updates a new SAS definition for the specified storage account. This operation requires the
 // storage/setsas permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -3808,6 +3880,7 @@ func (client *Client) setSasDefinitionHandleResponse(resp *http.Response) (Clien
 // SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault
 // creates a new version of that secret. This operation requires the secrets/set permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -3859,6 +3932,7 @@ func (client *Client) setSecretHandleResponse(resp *http.Response) (ClientSetSec
 
 // SetStorageAccount - Creates or updates a new storage account. This operation requires the storage/set permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -3911,6 +3985,7 @@ func (client *Client) setStorageAccountHandleResponse(resp *http.Response) (Clie
 // Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation
 // uses the private portion of the key. This operation requires the keys/sign permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -3970,6 +4045,7 @@ func (client *Client) signHandleResponse(resp *http.Response) (ClientSignRespons
 // symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -4028,6 +4104,7 @@ func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (ClientUnwrap
 // updated are the certificate's attributes. This operation requires the certificates/update
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given key vault.
@@ -4085,6 +4162,7 @@ func (client *Client) updateCertificateHandleResponse(resp *http.Response) (Clie
 // UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer
 // entity. This operation requires the certificates/setissuers permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
@@ -4138,6 +4216,7 @@ func (client *Client) updateCertificateIssuerHandleResponse(resp *http.Response)
 // UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires
 // the certificates/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
@@ -4191,6 +4270,7 @@ func (client *Client) updateCertificateOperationHandleResponse(resp *http.Respon
 // UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires
 // the certificates/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given vault.
@@ -4244,6 +4324,7 @@ func (client *Client) updateCertificatePolicyHandleResponse(resp *http.Response)
 // UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material
 // of a key itself cannot be changed. This operation requires the keys/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of key to update.
@@ -4301,6 +4382,7 @@ func (client *Client) updateKeyHandleResponse(resp *http.Response) (ClientUpdate
 // UpdateSasDefinition - Updates the specified attributes associated with the given SAS definition. This operation requires
 // the storage/setsas permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -4359,6 +4441,7 @@ func (client *Client) updateSasDefinitionHandleResponse(resp *http.Response) (Cl
 // specified in the request are left unchanged. The value of a secret itself cannot be changed.
 // This operation requires the secrets/set permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
@@ -4416,6 +4499,7 @@ func (client *Client) updateSecretHandleResponse(resp *http.Response) (ClientUpd
 // UpdateStorageAccount - Updates the specified attributes associated with the given storage account. This operation requires
 // the storage/set/update permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
@@ -4471,6 +4555,7 @@ func (client *Client) updateStorageAccountHandleResponse(resp *http.Response) (C
 // a key-reference and not the public portion of the key. This operation requires
 // the keys/verify permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
@@ -4532,6 +4617,7 @@ func (client *Client) verifyHandleResponse(resp *http.Response) (ClientVerifyRes
 // callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey
 // permission.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.

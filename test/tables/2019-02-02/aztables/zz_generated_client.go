@@ -32,10 +32,10 @@ type Client struct {
 }
 
 // NewClient creates a new instance of Client with the specified values.
-// endpoint - The URL of the service account or table that is the target of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The URL of the service account or table that is the target of the desired operation.
+// - version - Specifies the version of the operation to use for this request.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *ClientOptions) *Client {
 	if options == nil {
 		options = &ClientOptions{}
@@ -52,6 +52,7 @@ func NewClient(endpoint string, version Enum0, credential azcore.TokenCredential
 
 // Create - Creates a new table under the given account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // tableProperties - The Table properties.
@@ -125,6 +126,7 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 
 // Delete - Operation permanently deletes the specified table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // table - The name of the table.
 // options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
@@ -186,6 +188,7 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 
 // DeleteEntity - Deletes the specified entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
@@ -271,6 +274,7 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared
 // Access Signatures.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // table - The name of the table.
 // comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
@@ -342,6 +346,7 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 
 // InsertEntity - Insert entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
@@ -431,6 +436,7 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 
 // MergeEntity - Merge entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
@@ -519,6 +525,7 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 
 // Query - Queries tables under the given account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // options - ClientQueryOptions contains the optional parameters for the Client.Query method.
@@ -600,6 +607,7 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 
 // QueryEntities - Queries entities in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
@@ -695,6 +703,7 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
@@ -795,6 +804,7 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // table - The name of the table.
 // comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
@@ -868,6 +878,7 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 
 // UpdateEntity - Update entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.

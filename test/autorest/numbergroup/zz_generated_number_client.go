@@ -23,7 +23,7 @@ type NumberClient struct {
 }
 
 // NewNumberClient creates a new instance of NumberClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewNumberClient(pl runtime.Pipeline) *NumberClient {
 	client := &NumberClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewNumberClient(pl runtime.Pipeline) *NumberClient {
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
 func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberClientGetBigDecimalOptions) (NumberClientGetBigDecimalResponse, error) {
@@ -72,6 +73,7 @@ func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (Nu
 
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
 // method.
@@ -112,6 +114,7 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *htt
 
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
 // method.
@@ -152,6 +155,7 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *htt
 
 // GetBigDouble - Get big double value 2.5976931e+101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
 func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberClientGetBigDoubleOptions) (NumberClientGetBigDoubleResponse, error) {
@@ -191,6 +195,7 @@ func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (Num
 
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
 // method.
@@ -231,6 +236,7 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http
 
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
 // method.
@@ -271,6 +277,7 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http
 
 // GetBigFloat - Get big float value 3.402823e+20
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
 func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClientGetBigFloatOptions) (NumberClientGetBigFloatResponse, error) {
@@ -310,6 +317,7 @@ func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (Numb
 
 // GetInvalidDecimal - Get invalid decimal Number value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal
 // method.
@@ -350,6 +358,7 @@ func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response)
 
 // GetInvalidDouble - Get invalid double Number value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
 func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (NumberClientGetInvalidDoubleResponse, error) {
@@ -389,6 +398,7 @@ func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) 
 
 // GetInvalidFloat - Get invalid float Number value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
 func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (NumberClientGetInvalidFloatResponse, error) {
@@ -428,6 +438,7 @@ func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (
 
 // GetNull - Get null Number value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
 func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGetNullOptions) (NumberClientGetNullResponse, error) {
@@ -467,6 +478,7 @@ func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberCl
 
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
 func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (NumberClientGetSmallDecimalResponse, error) {
@@ -506,6 +518,7 @@ func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (
 
 // GetSmallDouble - Get big double value 2.5976931e-101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
 func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (NumberClientGetSmallDoubleResponse, error) {
@@ -545,6 +558,7 @@ func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (N
 
 // GetSmallFloat - Get big double value 3.402823e-20
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
 func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberClientGetSmallFloatOptions) (NumberClientGetSmallFloatResponse, error) {
@@ -584,6 +598,7 @@ func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (Nu
 
 // PutBigDecimal - Put big decimal value 2.5976931e+101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // numberBody - number body
 // options - NumberClientPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
@@ -615,6 +630,7 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
 // method.
@@ -646,6 +662,7 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
 // method.
@@ -677,6 +694,7 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 
 // PutBigDouble - Put big double value 2.5976931e+101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // numberBody - number body
 // options - NumberClientPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
@@ -708,6 +726,7 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
 // method.
@@ -739,6 +758,7 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - NumberClientPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
 // method.
@@ -770,6 +790,7 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 
 // PutBigFloat - Put big float value 3.402823e+20
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // numberBody - number body
 // options - NumberClientPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
@@ -801,6 +822,7 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // numberBody - number body
 // options - NumberClientPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
@@ -832,6 +854,7 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 
 // PutSmallDouble - Put small double value 2.5976931e-101
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // numberBody - number body
 // options - NumberClientPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
@@ -863,6 +886,7 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 
 // PutSmallFloat - Put small float value 3.402823e-20
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // numberBody - number body
 // options - NumberClientPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.

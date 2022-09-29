@@ -26,10 +26,10 @@ type directoryClient struct {
 }
 
 // newDirectoryClient creates a new instance of directoryClient with the specified values.
-// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// pathRenameMode - Determines the behavior of the rename operation
-// pl - the pipeline used for sending requests and handling responses.
+// - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+// - version - Specifies the version of the operation to use for this request.
+// - pathRenameMode - Determines the behavior of the rename operation
+//   - pl - the pipeline used for sending requests and handling responses.
 func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *directoryClient {
 	client := &directoryClient{
 		endpoint:       endpoint,
@@ -46,6 +46,7 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - directoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
 // DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
@@ -166,6 +167,7 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (Direct
 
 // Delete - Deletes the directory
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
 // non-empty, an error occurs.
@@ -252,6 +254,7 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (Direct
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - directoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl
 // method.
@@ -357,6 +360,7 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 // If "x-ms-properties" is specified, the properties will overwrite the existing properties;
@@ -506,6 +510,7 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (Direct
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - directoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl
 // method.

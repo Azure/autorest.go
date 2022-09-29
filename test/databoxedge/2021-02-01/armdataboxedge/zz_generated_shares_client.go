@@ -32,9 +32,9 @@ type SharesClient struct {
 }
 
 // NewSharesClient creates a new instance of SharesClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SharesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,6 +57,7 @@ func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // BeginCreateOrUpdate - Creates a new share or updates an existing share on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The share name.
@@ -78,6 +79,7 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 
 // CreateOrUpdate - Creates a new share or updates an existing share on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, share, options)
@@ -123,6 +125,7 @@ func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, dev
 
 // BeginDelete - Deletes the share on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The share name.
@@ -142,6 +145,7 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 
 // Delete - Deletes the share on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
@@ -187,6 +191,7 @@ func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName 
 
 // Get - Gets a share by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The share name.
@@ -244,6 +249,7 @@ func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesClient
 }
 
 // NewListByDataBoxEdgeDevicePager - Lists all the shares in a Data Box Edge/Data Box Gateway device.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
@@ -311,6 +317,7 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Res
 
 // BeginRefresh - Refreshes the share metadata with the data from the cloud.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The share name.
@@ -330,6 +337,7 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 
 // Refresh - Refreshes the share metadata with the data from the cloud.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, name, resourceGroupName, options)

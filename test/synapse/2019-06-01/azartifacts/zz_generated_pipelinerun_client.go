@@ -29,9 +29,9 @@ type PipelineRunClient struct {
 }
 
 // NewPipelineRunClient creates a new instance of PipelineRunClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPipelineRunClient(endpoint string, credential azcore.TokenCredential, options *PipelineRunClientOptions) *PipelineRunClient {
 	if options == nil {
 		options = &PipelineRunClientOptions{}
@@ -47,6 +47,7 @@ func NewPipelineRunClient(endpoint string, credential azcore.TokenCredential, op
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // runID - The pipeline run identifier.
 // options - PipelineRunClientCancelPipelineRunOptions contains the optional parameters for the PipelineRunClient.CancelPipelineRun
@@ -89,6 +90,7 @@ func (client *PipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 
 // GetPipelineRun - Get a pipeline run by its run ID.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // runID - The pipeline run identifier.
 // options - PipelineRunClientGetPipelineRunOptions contains the optional parameters for the PipelineRunClient.GetPipelineRun
@@ -137,6 +139,7 @@ func (client *PipelineRunClient) getPipelineRunHandleResponse(resp *http.Respons
 
 // QueryActivityRuns - Query activity runs based on input filter conditions.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // pipelineName - The pipeline name.
 // runID - The pipeline run identifier.
@@ -191,6 +194,7 @@ func (client *PipelineRunClient) queryActivityRunsHandleResponse(resp *http.Resp
 
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // filterParameters - Parameters to filter the pipeline run.
 // options - PipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRunClient.QueryPipelineRunsByWorkspace

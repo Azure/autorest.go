@@ -24,7 +24,7 @@ type XMLClient struct {
 }
 
 // NewXMLClient creates a new instance of XMLClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewXMLClient(pl runtime.Pipeline) *XMLClient {
 	client := &XMLClient{
 		pl: pl,
@@ -34,6 +34,7 @@ func NewXMLClient(pl runtime.Pipeline) *XMLClient {
 
 // GetACLs - Gets storage ACLs for a container.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetACLsOptions contains the optional parameters for the XMLClient.GetACLs method.
 func (client *XMLClient) GetACLs(ctx context.Context, options *XMLClientGetACLsOptions) (XMLClientGetACLsResponse, error) {
@@ -77,6 +78,7 @@ func (client *XMLClient) getACLsHandleResponse(resp *http.Response) (XMLClientGe
 
 // GetBytes - Get an XML document with binary property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetBytesOptions contains the optional parameters for the XMLClient.GetBytes method.
 func (client *XMLClient) GetBytes(ctx context.Context, options *XMLClientGetBytesOptions) (XMLClientGetBytesResponse, error) {
@@ -116,6 +118,7 @@ func (client *XMLClient) getBytesHandleResponse(resp *http.Response) (XMLClientG
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetComplexTypeRefNoMetaOptions contains the optional parameters for the XMLClient.GetComplexTypeRefNoMeta
 // method.
@@ -156,6 +159,7 @@ func (client *XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *http.Respon
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetComplexTypeRefWithMetaOptions contains the optional parameters for the XMLClient.GetComplexTypeRefWithMeta
 // method.
@@ -196,6 +200,7 @@ func (client *XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *http.Resp
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetEmptyChildElementOptions contains the optional parameters for the XMLClient.GetEmptyChildElement
 // method.
@@ -236,6 +241,7 @@ func (client *XMLClient) getEmptyChildElementHandleResponse(resp *http.Response)
 
 // GetEmptyList - Get an empty list.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetEmptyListOptions contains the optional parameters for the XMLClient.GetEmptyList method.
 func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLClientGetEmptyListOptions) (XMLClientGetEmptyListResponse, error) {
@@ -275,6 +281,7 @@ func (client *XMLClient) getEmptyListHandleResponse(resp *http.Response) (XMLCli
 
 // GetEmptyRootList - Gets an empty list as the root element.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetEmptyRootListOptions contains the optional parameters for the XMLClient.GetEmptyRootList method.
 func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLClientGetEmptyRootListOptions) (XMLClientGetEmptyRootListResponse, error) {
@@ -314,6 +321,7 @@ func (client *XMLClient) getEmptyRootListHandleResponse(resp *http.Response) (XM
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetEmptyWrappedListsOptions contains the optional parameters for the XMLClient.GetEmptyWrappedLists
 // method.
@@ -354,6 +362,7 @@ func (client *XMLClient) getEmptyWrappedListsHandleResponse(resp *http.Response)
 
 // GetHeaders - Get strongly-typed response headers.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetHeadersOptions contains the optional parameters for the XMLClient.GetHeaders method.
 func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLClientGetHeadersOptions) (XMLClientGetHeadersResponse, error) {
@@ -392,6 +401,7 @@ func (client *XMLClient) getHeadersHandleResponse(resp *http.Response) (XMLClien
 
 // GetRootList - Gets a list as the root element.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetRootListOptions contains the optional parameters for the XMLClient.GetRootList method.
 func (client *XMLClient) GetRootList(ctx context.Context, options *XMLClientGetRootListOptions) (XMLClientGetRootListResponse, error) {
@@ -431,6 +441,7 @@ func (client *XMLClient) getRootListHandleResponse(resp *http.Response) (XMLClie
 
 // GetRootListSingleItem - Gets a list with a single item.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetRootListSingleItemOptions contains the optional parameters for the XMLClient.GetRootListSingleItem
 // method.
@@ -471,6 +482,7 @@ func (client *XMLClient) getRootListSingleItemHandleResponse(resp *http.Response
 
 // GetServiceProperties - Gets storage service properties.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetServicePropertiesOptions contains the optional parameters for the XMLClient.GetServiceProperties
 // method.
@@ -515,6 +527,7 @@ func (client *XMLClient) getServicePropertiesHandleResponse(resp *http.Response)
 
 // GetSimple - Get a simple XML document
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetSimpleOptions contains the optional parameters for the XMLClient.GetSimple method.
 func (client *XMLClient) GetSimple(ctx context.Context, options *XMLClientGetSimpleOptions) (XMLClientGetSimpleResponse, error) {
@@ -554,6 +567,7 @@ func (client *XMLClient) getSimpleHandleResponse(resp *http.Response) (XMLClient
 
 // GetURI - Get an XML document with uri property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetURIOptions contains the optional parameters for the XMLClient.GetURI method.
 func (client *XMLClient) GetURI(ctx context.Context, options *XMLClientGetURIOptions) (XMLClientGetURIResponse, error) {
@@ -593,6 +607,7 @@ func (client *XMLClient) getURIHandleResponse(resp *http.Response) (XMLClientGet
 
 // GetWrappedLists - Get an XML document with multiple wrapped lists
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetWrappedListsOptions contains the optional parameters for the XMLClient.GetWrappedLists method.
 func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLClientGetWrappedListsOptions) (XMLClientGetWrappedListsResponse, error) {
@@ -633,6 +648,7 @@ func (client *XMLClient) getWrappedListsHandleResponse(resp *http.Response) (XML
 // GetXMsText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language'
 // property being 'english' and its 'content' property being 'I am text'
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientGetXMsTextOptions contains the optional parameters for the XMLClient.GetXMsText method.
 func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLClientGetXMsTextOptions) (XMLClientGetXMsTextResponse, error) {
@@ -672,6 +688,7 @@ func (client *XMLClient) getXMsTextHandleResponse(resp *http.Response) (XMLClien
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientJSONInputOptions contains the optional parameters for the XMLClient.JSONInput method.
 func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLClientJSONInputOptions) (XMLClientJSONInputResponse, error) {
@@ -701,6 +718,7 @@ func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties 
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientJSONOutputOptions contains the optional parameters for the XMLClient.JSONOutput method.
 func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLClientJSONOutputOptions) (XMLClientJSONOutputResponse, error) {
@@ -740,6 +758,7 @@ func (client *XMLClient) jsonOutputHandleResponse(resp *http.Response) (XMLClien
 
 // ListBlobs - Lists blobs in a storage container.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientListBlobsOptions contains the optional parameters for the XMLClient.ListBlobs method.
 func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLClientListBlobsOptions) (XMLClientListBlobsResponse, error) {
@@ -783,6 +802,7 @@ func (client *XMLClient) listBlobsHandleResponse(resp *http.Response) (XMLClient
 
 // ListContainers - Lists containers in a storage account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientListContainersOptions contains the optional parameters for the XMLClient.ListContainers method.
 func (client *XMLClient) ListContainers(ctx context.Context, options *XMLClientListContainersOptions) (XMLClientListContainersResponse, error) {
@@ -825,6 +845,7 @@ func (client *XMLClient) listContainersHandleResponse(resp *http.Response) (XMLC
 
 // PutACLs - Puts storage ACLs for a container.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutACLsOptions contains the optional parameters for the XMLClient.PutACLs method.
 func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdentifier, options *XMLClientPutACLsOptions) (XMLClientPutACLsResponse, error) {
@@ -862,6 +883,7 @@ func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []
 
 // PutBinary - Put an XML document with binary property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutBinaryOptions contains the optional parameters for the XMLClient.PutBinary method.
 func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteProperty, options *XMLClientPutBinaryOptions) (XMLClientPutBinaryResponse, error) {
@@ -892,6 +914,7 @@ func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow M
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutComplexTypeRefNoMetaOptions contains the optional parameters for the XMLClient.PutComplexTypeRefNoMeta
 // method.
@@ -922,6 +945,7 @@ func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutComplexTypeRefWithMetaOptions contains the optional parameters for the XMLClient.PutComplexTypeRefWithMeta
 // method.
@@ -952,6 +976,7 @@ func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 
 // PutEmptyChildElement - Puts a value with an empty child element.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutEmptyChildElementOptions contains the optional parameters for the XMLClient.PutEmptyChildElement
 // method.
@@ -982,6 +1007,7 @@ func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, 
 
 // PutEmptyList - Puts an empty list.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutEmptyListOptions contains the optional parameters for the XMLClient.PutEmptyList method.
 func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, options *XMLClientPutEmptyListOptions) (XMLClientPutEmptyListResponse, error) {
@@ -1011,6 +1037,7 @@ func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slidesho
 
 // PutEmptyRootList - Puts an empty list as the root element.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutEmptyRootListOptions contains the optional parameters for the XMLClient.PutEmptyRootList method.
 func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana, options *XMLClientPutEmptyRootListOptions) (XMLClientPutEmptyRootListResponse, error) {
@@ -1044,6 +1071,7 @@ func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bana
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutEmptyWrappedListsOptions contains the optional parameters for the XMLClient.PutEmptyWrappedLists
 // method.
@@ -1074,6 +1102,7 @@ func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, 
 
 // PutRootList - Puts a list as the root element.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutRootListOptions contains the optional parameters for the XMLClient.PutRootList method.
 func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, options *XMLClientPutRootListOptions) (XMLClientPutRootListResponse, error) {
@@ -1107,6 +1136,7 @@ func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas [
 
 // PutRootListSingleItem - Puts a list with a single item.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutRootListSingleItemOptions contains the optional parameters for the XMLClient.PutRootListSingleItem
 // method.
@@ -1141,6 +1171,7 @@ func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context,
 
 // PutServiceProperties - Puts storage service properties.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutServicePropertiesOptions contains the optional parameters for the XMLClient.PutServiceProperties
 // method.
@@ -1175,6 +1206,7 @@ func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, 
 
 // PutSimple - Put a simple XML document
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutSimpleOptions contains the optional parameters for the XMLClient.PutSimple method.
 func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, options *XMLClientPutSimpleOptions) (XMLClientPutSimpleResponse, error) {
@@ -1205,6 +1237,7 @@ func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow S
 
 // PutURI - Put an XML document with uri property
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutURIOptions contains the optional parameters for the XMLClient.PutURI method.
 func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty, options *XMLClientPutURIOptions) (XMLClientPutURIResponse, error) {
@@ -1235,6 +1268,7 @@ func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWit
 
 // PutWrappedLists - Put an XML document with multiple wrapped lists
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - XMLClientPutWrappedListsOptions contains the optional parameters for the XMLClient.PutWrappedLists method.
 func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel, options *XMLClientPutWrappedListsOptions) (XMLClientPutWrappedListsResponse, error) {

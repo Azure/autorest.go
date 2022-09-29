@@ -32,9 +32,9 @@ type TriggersClient struct {
 }
 
 // NewTriggersClient creates a new instance of TriggersClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*TriggersClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,6 +57,7 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 
 // BeginCreateOrUpdate - Creates or updates a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - Creates or updates a trigger
 // name - The trigger name.
@@ -78,6 +79,7 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 
 // CreateOrUpdate - Creates or updates a trigger.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, trigger, options)
@@ -123,6 +125,7 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 
 // BeginDelete - Deletes the trigger on the gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The trigger name.
@@ -142,6 +145,7 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 
 // Delete - Deletes the trigger on the gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
@@ -187,6 +191,7 @@ func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceNam
 
 // Get - Get a specific trigger by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // name - The trigger name.
@@ -244,6 +249,7 @@ func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersCl
 }
 
 // NewListByDataBoxEdgeDevicePager - Lists all the triggers configured in the device.
+//
 // Generated from API version 2021-02-01
 // deviceName - The device name.
 // resourceGroupName - The resource group name.

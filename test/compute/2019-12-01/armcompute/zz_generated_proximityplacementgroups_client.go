@@ -32,10 +32,10 @@ type ProximityPlacementGroupsClient struct {
 }
 
 // NewProximityPlacementGroupsClient creates a new instance of ProximityPlacementGroupsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewProximityPlacementGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ProximityPlacementGroupsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewProximityPlacementGroupsClient(subscriptionID string, credential azcore.
 
 // CreateOrUpdate - Create or update a proximity placement group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.
@@ -116,6 +117,7 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateHandleResponse(resp 
 
 // Delete - Delete a proximity placement group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.
@@ -163,6 +165,7 @@ func (client *ProximityPlacementGroupsClient) deleteCreateRequest(ctx context.Co
 
 // Get - Retrieves information about a proximity placement group .
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.
@@ -222,6 +225,7 @@ func (client *ProximityPlacementGroupsClient) getHandleResponse(resp *http.Respo
 }
 
 // NewListByResourceGroupPager - Lists all proximity placement groups in a resource group.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - ProximityPlacementGroupsClientListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroupsClient.ListByResourceGroup
@@ -286,6 +290,7 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleResponse(
 }
 
 // NewListBySubscriptionPager - Lists all proximity placement groups in a subscription.
+//
 // Generated from API version 2019-12-01
 // options - ProximityPlacementGroupsClientListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroupsClient.ListBySubscription
 // method.
@@ -346,6 +351,7 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleResponse(r
 
 // Update - Update a proximity placement group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.

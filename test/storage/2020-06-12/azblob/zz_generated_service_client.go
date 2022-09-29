@@ -28,9 +28,9 @@ type serviceClient struct {
 }
 
 // newServiceClient creates a new instance of serviceClient with the specified values.
-// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// pl - the pipeline used for sending requests and handling responses.
+// - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+// - version - Specifies the version of the operation to use for this request.
+//   - pl - the pipeline used for sending requests and handling responses.
 func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serviceClient {
 	client := &serviceClient{
 		endpoint: endpoint,
@@ -44,6 +44,7 @@ func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serv
 // expression. Filter blobs searches across all containers within a storage account but can
 // be scoped within the expression to a single container.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - serviceClientFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
 func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *serviceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
@@ -117,6 +118,7 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - serviceClientGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
 func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *serviceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
@@ -187,6 +189,7 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and
 // CORS (Cross-Origin Resource Sharing) rules.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - serviceClientGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
 func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *serviceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
@@ -246,6 +249,7 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (S
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary
 // location endpoint when read-access geo-redundant replication is enabled for the storage account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - serviceClientGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
 func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *serviceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
@@ -312,6 +316,7 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using
 // bearer token authentication.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // options - serviceClientGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey
 // method.
@@ -378,6 +383,7 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 
 // NewListContainersSegmentPager - The List Containers Segment operation returns a list of the containers under the specified
 // account
+//
 // Generated from API version 2020-06-12
 // options - serviceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
 // method.
@@ -462,6 +468,7 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Resp
 // SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics
 // and CORS (Cross-Origin Resource Sharing) rules
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // storageServiceProperties - The StorageService properties.
 // options - serviceClientSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
@@ -518,6 +525,7 @@ func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (S
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
 // contentLength - The length of the request.
 // multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header

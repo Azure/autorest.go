@@ -32,10 +32,10 @@ type SSHPublicKeysClient struct {
 }
 
 // NewSSHPublicKeysClient creates a new instance of SSHPublicKeysClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SSHPublicKeysClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCreden
 
 // Create - Creates a new SSH public key resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
@@ -115,6 +116,7 @@ func (client *SSHPublicKeysClient) createHandleResponse(resp *http.Response) (SS
 
 // Delete - Delete an SSH public key.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
@@ -163,6 +165,7 @@ func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, reso
 // key. The length of the key will be 3072 bits. This operation can only be performed once per
 // SSH public key resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
@@ -220,6 +223,7 @@ func (client *SSHPublicKeysClient) generateKeyPairHandleResponse(resp *http.Resp
 
 // Get - Retrieves information about an SSH public key.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
@@ -276,6 +280,7 @@ func (client *SSHPublicKeysClient) getHandleResponse(resp *http.Response) (SSHPu
 
 // NewListByResourceGroupPager - Lists all of the SSH public keys in the specified resource group. Use the nextLink property
 // in the response to get the next page of SSH public keys.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // options - SSHPublicKeysClientListByResourceGroupOptions contains the optional parameters for the SSHPublicKeysClient.ListByResourceGroup
@@ -341,6 +346,7 @@ func (client *SSHPublicKeysClient) listByResourceGroupHandleResponse(resp *http.
 
 // NewListBySubscriptionPager - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response
 // to get the next page of SSH public keys.
+//
 // Generated from API version 2019-12-01
 // options - SSHPublicKeysClientListBySubscriptionOptions contains the optional parameters for the SSHPublicKeysClient.ListBySubscription
 // method.
@@ -401,6 +407,7 @@ func (client *SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *http.R
 
 // Update - Updates a new SSH public key resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.

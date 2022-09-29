@@ -32,10 +32,10 @@ type VirtualNetworkTapsClient struct {
 }
 
 // NewVirtualNetworkTapsClient creates a new instance of VirtualNetworkTapsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualNetworkTapsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenC
 
 // BeginCreateOrUpdate - Creates or updates a Virtual Network Tap.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the virtual network tap.
@@ -80,6 +81,7 @@ func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context,
 
 // CreateOrUpdate - Creates or updates a Virtual Network Tap.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *VirtualNetworkTapsClient) createOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, tapName, parameters, options)
@@ -124,6 +126,7 @@ func (client *VirtualNetworkTapsClient) createOrUpdateCreateRequest(ctx context.
 
 // BeginDelete - Deletes the specified virtual network tap.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the virtual network tap.
@@ -145,6 +148,7 @@ func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourc
 
 // Delete - Deletes the specified virtual network tap.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *VirtualNetworkTapsClient) deleteOperation(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, tapName, options)
@@ -189,6 +193,7 @@ func (client *VirtualNetworkTapsClient) deleteCreateRequest(ctx context.Context,
 
 // Get - Gets information about the specified virtual network tap.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // tapName - The name of virtual network tap.
@@ -244,6 +249,7 @@ func (client *VirtualNetworkTapsClient) getHandleResponse(resp *http.Response) (
 }
 
 // NewListAllPager - Gets all the VirtualNetworkTaps in a subscription.
+//
 // Generated from API version 2020-03-01
 // options - VirtualNetworkTapsClientListAllOptions contains the optional parameters for the VirtualNetworkTapsClient.ListAll
 // method.
@@ -303,6 +309,7 @@ func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *http.Respons
 }
 
 // NewListByResourceGroupPager - Gets all the VirtualNetworkTaps in a subscription.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // options - VirtualNetworkTapsClientListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTapsClient.ListByResourceGroup
@@ -368,6 +375,7 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *
 
 // UpdateTags - Updates an VirtualNetworkTap tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the tap.

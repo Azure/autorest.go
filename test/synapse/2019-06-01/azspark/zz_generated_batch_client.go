@@ -28,11 +28,11 @@ type BatchClient struct {
 }
 
 // NewBatchClient creates a new instance of BatchClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// livyAPIVersion - Valid api-version for the request.
-// sparkPoolName - Name of the spark pool.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// - livyAPIVersion - Valid api-version for the request.
+// - sparkPoolName - Name of the spark pool.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, credential azcore.TokenCredential, options *BatchClientOptions) *BatchClient {
 	if options == nil {
 		options = &BatchClientOptions{}
@@ -56,6 +56,7 @@ func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName strin
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01-preview
 // batchID - Identifier for the batch job.
 // options - BatchClientCancelSparkBatchJobOptions contains the optional parameters for the BatchClient.CancelSparkBatchJob
@@ -88,6 +89,7 @@ func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 
 // CreateSparkBatchJob - Create new spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01-preview
 // sparkBatchJobOptions - Livy compatible batch job request payload.
 // options - BatchClientCreateSparkBatchJobOptions contains the optional parameters for the BatchClient.CreateSparkBatchJob
@@ -134,6 +136,7 @@ func (client *BatchClient) createSparkBatchJobHandleResponse(resp *http.Response
 
 // GetSparkBatchJob - Gets a single spark batch job.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01-preview
 // batchID - Identifier for the batch job.
 // options - BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
@@ -180,6 +183,7 @@ func (client *BatchClient) getSparkBatchJobHandleResponse(resp *http.Response) (
 
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01-preview
 // options - BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
 func (client *BatchClient) GetSparkBatchJobs(ctx context.Context, options *BatchClientGetSparkBatchJobsOptions) (BatchClientGetSparkBatchJobsResponse, error) {

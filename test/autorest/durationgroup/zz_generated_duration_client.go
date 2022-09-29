@@ -23,7 +23,7 @@ type DurationClient struct {
 }
 
 // NewDurationClient creates a new instance of DurationClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewDurationClient(pl runtime.Pipeline) *DurationClient {
 	client := &DurationClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewDurationClient(pl runtime.Pipeline) *DurationClient {
 
 // GetInvalid - Get an invalid duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - DurationClientGetInvalidOptions contains the optional parameters for the DurationClient.GetInvalid method.
 func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationClientGetInvalidOptions) (DurationClientGetInvalidResponse, error) {
@@ -72,6 +73,7 @@ func (client *DurationClient) getInvalidHandleResponse(resp *http.Response) (Dur
 
 // GetNull - Get null duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
 func (client *DurationClient) GetNull(ctx context.Context, options *DurationClientGetNullOptions) (DurationClientGetNullResponse, error) {
@@ -111,6 +113,7 @@ func (client *DurationClient) getNullHandleResponse(resp *http.Response) (Durati
 
 // GetPositiveDuration - Get a positive duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - DurationClientGetPositiveDurationOptions contains the optional parameters for the DurationClient.GetPositiveDuration
 // method.
@@ -151,6 +154,7 @@ func (client *DurationClient) getPositiveDurationHandleResponse(resp *http.Respo
 
 // PutPositiveDuration - Put a positive duration value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // durationBody - duration body
 // options - DurationClientPutPositiveDurationOptions contains the optional parameters for the DurationClient.PutPositiveDuration

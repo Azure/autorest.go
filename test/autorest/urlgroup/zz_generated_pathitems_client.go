@@ -28,9 +28,9 @@ type PathItemsClient struct {
 }
 
 // NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
-// globalStringPath - A string value 'globalItemStringPath' that appears in the path
-// globalStringQuery - should contain value null
-// pl - the pipeline used for sending requests and handling responses.
+// - globalStringPath - A string value 'globalItemStringPath' that appears in the path
+// - globalStringQuery - should contain value null
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl runtime.Pipeline) *PathItemsClient {
 	client := &PathItemsClient{
 		globalStringPath:  globalStringPath,
@@ -44,6 +44,7 @@ func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl r
 // globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 // localStringPath - should contain value 'localStringPath'
@@ -102,6 +103,7 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 // globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery=null
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 // localStringPath - should contain value 'localStringPath'
@@ -160,6 +162,7 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 // globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 // localStringPath - should contain value 'localStringPath'
@@ -218,6 +221,7 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 // globalStringQuery='globalStringQuery', pathItemStringQuery=null,
 // localStringQuery=null
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 // localStringPath - should contain value 'localStringPath'

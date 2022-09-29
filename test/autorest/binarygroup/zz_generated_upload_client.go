@@ -24,7 +24,7 @@ type UploadClient struct {
 }
 
 // NewUploadClient creates a new instance of UploadClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewUploadClient(pl runtime.Pipeline) *UploadClient {
 	client := &UploadClient{
 		pl: pl,
@@ -34,6 +34,7 @@ func NewUploadClient(pl runtime.Pipeline) *UploadClient {
 
 // Binary - Uploading binary file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // fileParam - Non-empty binary file
 // options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
@@ -64,6 +65,7 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 
 // File - Uploading json file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // fileParam - JSON file with payload { "more": "cowbell" }
 // options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.

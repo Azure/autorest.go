@@ -28,10 +28,10 @@ type ServiceClient struct {
 }
 
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
-// endpoint - The URL of the service account or table that is the target of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The URL of the service account or table that is the target of the desired operation.
+// - version - Specifies the version of the operation to use for this request.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *ServiceClientOptions) *ServiceClient {
 	if options == nil {
 		options = &ServiceClientOptions{}
@@ -49,6 +49,7 @@ func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCre
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin
 // Resource Sharing) rules.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
@@ -110,6 +111,7 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 // GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary
 // location endpoint when read-access geo-redundant replication is enabled for the account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // restype - Required query string to get service stats.
 // comp - Required query string to get service stats.
@@ -178,6 +180,7 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin
 // Resource Sharing) rules.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.

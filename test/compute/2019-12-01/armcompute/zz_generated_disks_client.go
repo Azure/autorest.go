@@ -32,10 +32,10 @@ type DisksClient struct {
 }
 
 // NewDisksClient creates a new instance of DisksClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 // part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DisksClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,6 +58,7 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 
 // BeginCreateOrUpdate - Creates or updates a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
@@ -80,6 +81,7 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 
 // CreateOrUpdate - Creates or updates a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
@@ -124,6 +126,7 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 
 // BeginDelete - Deletes a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
@@ -144,6 +147,7 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 
 // Delete - Deletes a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskName, options)
@@ -187,6 +191,7 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 
 // Get - Gets information about a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
@@ -245,6 +250,7 @@ func (client *DisksClient) getHandleResponse(resp *http.Response) (DisksClientGe
 
 // BeginGrantAccess - Grants access to a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
@@ -268,6 +274,7 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 
 // GrantAccess - Grants access to a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*http.Response, error) {
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, diskName, grantAccessData, options)
@@ -311,6 +318,7 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 }
 
 // NewListPager - Lists all the disks under a subscription.
+//
 // Generated from API version 2019-11-01
 // options - DisksClientListOptions contains the optional parameters for the DisksClient.List method.
 func (client *DisksClient) NewListPager(options *DisksClientListOptions) *runtime.Pager[DisksClientListResponse] {
@@ -369,6 +377,7 @@ func (client *DisksClient) listHandleResponse(resp *http.Response) (DisksClientL
 }
 
 // NewListByResourceGroupPager - Lists all the disks under a resource group.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // options - DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup
@@ -434,6 +443,7 @@ func (client *DisksClient) listByResourceGroupHandleResponse(resp *http.Response
 
 // BeginRevokeAccess - Revokes access to a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
@@ -456,6 +466,7 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 
 // RevokeAccess - Revokes access to a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*http.Response, error) {
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, diskName, options)
@@ -499,6 +510,7 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 
 // BeginUpdate - Updates (patches) a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
@@ -520,6 +532,7 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 
 // Update - Updates (patches) a disk.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-11-01
 func (client *DisksClient) update(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskName, disk, options)

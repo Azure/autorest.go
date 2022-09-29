@@ -27,10 +27,10 @@ type client struct {
 }
 
 // newClient creates a new instance of client with the specified values.
-// geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
-// clientVersion - Version number of Azure Maps API.
-// clientIndex - Index number of Azure Maps API.
-// pl - the pipeline used for sending requests and handling responses.
+// - geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
+// - clientVersion - Version number of Azure Maps API.
+// - clientIndex - Index number of Azure Maps API.
+//   - pl - the pipeline used for sending requests and handling responses.
 func newClient(geography *Geography, clientVersion *string, clientIndex *int32, pl runtime.Pipeline) *client {
 	hostURL := "https://{geography}.atlas.microsoft.com"
 	if geography == nil {
@@ -68,6 +68,7 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0
 // options - clientCreateOptions contains the optional parameters for the client.Create method.
 func (client *client) Create(ctx context.Context, options *clientCreateOptions) (ClientCreateResponse, error) {
@@ -129,6 +130,7 @@ func (client *client) createHandleResponse(resp *http.Response) (ClientCreateRes
 
 // GetScript - Retrieve the configuration script identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0
 // options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
 func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (ClientGetScriptResponse, error) {
@@ -187,6 +189,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 // "2020-02-13T21:19:22.123Z" }, { "createdTimestamp": "2020-02-18T19:53:33.123Z", "aliasId": "1856dbfc-7a66-ee5a-bf8d-51dbfe1906f6",
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
+//
 // Generated from API version 2.0
 // options - clientListOptions contains the optional parameters for the client.List method.
 func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[ClientListResponse] {
@@ -247,6 +250,7 @@ func (client *client) listHandleResponse(resp *http.Response) (ClientListRespons
 
 // PolicyAssignment -
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0
 // options - clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
 func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {

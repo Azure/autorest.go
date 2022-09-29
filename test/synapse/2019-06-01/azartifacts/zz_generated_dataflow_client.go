@@ -28,9 +28,9 @@ type DataFlowClient struct {
 }
 
 // NewDataFlowClient creates a new instance of DataFlowClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewDataFlowClient(endpoint string, credential azcore.TokenCredential, options *DataFlowClientOptions) *DataFlowClient {
 	if options == nil {
 		options = &DataFlowClientOptions{}
@@ -46,6 +46,7 @@ func NewDataFlowClient(endpoint string, credential azcore.TokenCredential, optio
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
 // dataFlow - Data flow resource definition.
@@ -65,6 +66,7 @@ func (client *DataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 func (client *DataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowClientBeginCreateOrUpdateDataFlowOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
@@ -104,6 +106,7 @@ func (client *DataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 
 // BeginDeleteDataFlow - Deletes a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
 // options - DataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the DataFlowClient.BeginDeleteDataFlow
@@ -122,6 +125,7 @@ func (client *DataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 
 // DeleteDataFlow - Deletes a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 func (client *DataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowClientBeginDeleteDataFlowOptions) (*http.Response, error) {
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
@@ -158,6 +162,7 @@ func (client *DataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 
 // GetDataFlow - Gets a data flow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
 // options - DataFlowClientGetDataFlowOptions contains the optional parameters for the DataFlowClient.GetDataFlow method.
@@ -207,6 +212,7 @@ func (client *DataFlowClient) getDataFlowHandleResponse(resp *http.Response) (Da
 }
 
 // NewGetDataFlowsByWorkspacePager - Lists data flows.
+//
 // Generated from API version 2019-06-01-preview
 // options - DataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlowClient.GetDataFlowsByWorkspace
 // method.
@@ -263,6 +269,7 @@ func (client *DataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.R
 
 // BeginRenameDataFlow - Renames a dataflow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 // dataFlowName - The data flow name.
 // request - proposed new name.
@@ -282,6 +289,7 @@ func (client *DataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 
 // RenameDataFlow - Renames a dataflow.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 func (client *DataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowClientBeginRenameDataFlowOptions) (*http.Response, error) {
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)

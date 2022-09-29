@@ -31,8 +31,8 @@ type ReservationsDetailsClient struct {
 }
 
 // NewReservationsDetailsClient creates a new instance of ReservationsDetailsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewReservationsDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationsDetailsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -53,6 +53,7 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 }
 
 // NewListPager - Lists the reservations details for the defined scope and provided date range.
+//
 // Generated from API version 2019-10-01
 // scope - The scope associated with reservations details operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
 // for BillingAccount scope (legacy), and
@@ -128,6 +129,7 @@ func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response)
 }
 
 // NewListByReservationOrderPager - Lists the reservations details for provided date range.
+//
 // Generated from API version 2019-10-01
 // reservationOrderID - Order Id of the reservation
 // filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
@@ -191,6 +193,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(re
 }
 
 // NewListByReservationOrderAndReservationPager - Lists the reservations details for provided date range.
+//
 // Generated from API version 2019-10-01
 // reservationOrderID - Order Id of the reservation
 // reservationID - Id of the reservation

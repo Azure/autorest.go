@@ -23,7 +23,7 @@ type ObjectTypeClient struct {
 }
 
 // NewObjectTypeClient creates a new instance of ObjectTypeClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewObjectTypeClient(pl runtime.Pipeline) *ObjectTypeClient {
 	client := &ObjectTypeClient{
 		pl: pl,
@@ -33,6 +33,7 @@ func NewObjectTypeClient(pl runtime.Pipeline) *ObjectTypeClient {
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
 func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
@@ -72,6 +73,7 @@ func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTy
 
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
 // options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.

@@ -26,7 +26,7 @@ type MediaTypesClient struct {
 }
 
 // NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewMediaTypesClient(pl runtime.Pipeline) *MediaTypesClient {
 	client := &MediaTypesClient{
 		pl: pl,
@@ -36,6 +36,7 @@ func NewMediaTypesClient(pl runtime.Pipeline) *MediaTypesClient {
 
 // AnalyzeBody - Analyze body, that could be different media types.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // options - MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
@@ -79,6 +80,7 @@ func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *http.Response) (
 // AnalyzeBodyNoAcceptHeader - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept
 // type.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // options - MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
 // method.
@@ -113,6 +115,7 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx conte
 // AnalyzeBodyNoAcceptHeaderWithBinary - Analyze body, that could be different media types. Adds to AnalyzeBody by not having
 // an accept type.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // contentType - Upload file type
 // options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithBinaryOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithBinary
@@ -148,6 +151,7 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithBinaryCreateRequest
 
 // AnalyzeBodyWithBinary - Analyze body, that could be different media types.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // contentType - Upload file type
 // options - MediaTypesClientAnalyzeBodyWithBinaryOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithBinary
@@ -195,6 +199,7 @@ func (client *MediaTypesClient) analyzeBodyWithBinaryHandleResponse(resp *http.R
 // type 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
 // 'application/octet-stream'.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // contentType - Upload file type
 // message - The payload body.
@@ -242,6 +247,7 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithBinaryHandleR
 // BinaryBodyWithTwoContentTypesWithBinary - Binary body with two content types. Pass in of {'hello': 'world'} for the application/json
 // content type, and a byte stream of 'hello, world!' for application/octet-stream.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // contentType - Upload file type
 // message - The payload body.
@@ -289,6 +295,7 @@ func (client *MediaTypesClient) binaryBodyWithTwoContentTypesWithBinaryHandleRes
 // ContentTypeWithEncodingWithText - Pass in contentType 'text/plain; charset=UTF-8' to pass test. Value for input does not
 // matter
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // options - MediaTypesClientContentTypeWithEncodingWithTextOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncodingWithText
 // method.
@@ -333,6 +340,7 @@ func (client *MediaTypesClient) contentTypeWithEncodingWithTextHandleResponse(re
 
 // PutTextAndJSONBodyWithText - Body that's either text/plain or application/json
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
 // contentType - Upload file type
 // message - The payload body.

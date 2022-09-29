@@ -27,8 +27,8 @@ type SubscriptionInCredentialsClient struct {
 }
 
 // NewSubscriptionInCredentialsClient creates a new instance of SubscriptionInCredentialsClient with the specified values.
-// subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
-// pl - the pipeline used for sending requests and handling responses.
+// - subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeline) *SubscriptionInCredentialsClient {
 	client := &SubscriptionInCredentialsClient{
 		subscriptionID: subscriptionID,
@@ -40,6 +40,7 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeli
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId
 // to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the
 // SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid method.
@@ -79,6 +80,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null,
 // and client-side validation should prevent you from making this call
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
 // method.
@@ -115,6 +117,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
 // method.
@@ -151,6 +154,7 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
 // method.
@@ -187,6 +191,7 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2015-07-01-preview
 // options - SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
 // method.

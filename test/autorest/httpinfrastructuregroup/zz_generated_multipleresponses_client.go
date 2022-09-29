@@ -24,7 +24,7 @@ type MultipleResponsesClient struct {
 }
 
 // NewMultipleResponsesClient creates a new instance of MultipleResponsesClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewMultipleResponsesClient(pl runtime.Pipeline) *MultipleResponsesClient {
 	client := &MultipleResponsesClient{
 		pl: pl,
@@ -34,6 +34,7 @@ func NewMultipleResponsesClient(pl runtime.Pipeline) *MultipleResponsesClient {
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model201ModelDefaultError200Valid method.
@@ -88,6 +89,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 // Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode':
 // 'Created'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model201ModelDefaultError201Valid method.
@@ -141,6 +143,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 
 // Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model201ModelDefaultError400Valid method.
@@ -194,6 +197,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 
 // Get200Model204NoModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid method.
@@ -234,6 +238,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 
 // Get200Model204NoModelDefaultError201Invalid - Send a 201 response with valid payload: {'statusCode': '201'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid method.
@@ -274,6 +279,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 
 // Get200Model204NoModelDefaultError202None - Send a 202 response with no payload:
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model204NoModelDefaultError202None method.
@@ -314,6 +320,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneH
 
 // Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid method.
@@ -355,6 +362,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 // Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client
 // error'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid method.
@@ -395,6 +403,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 
 // Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
 // method.
@@ -436,6 +445,7 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidHandleResponse(resp
 // Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object
 // of thde type for model A
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
 // method.
@@ -476,6 +486,7 @@ func (client *MultipleResponsesClient) get200ModelA200NoneHandleResponse(resp *h
 
 // Get200ModelA200Valid - Send a 200 response with payload {'statusCode': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
 // method.
@@ -516,6 +527,7 @@ func (client *MultipleResponsesClient) get200ModelA200ValidHandleResponse(resp *
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
@@ -575,6 +587,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
@@ -635,6 +648,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message':
 // 'client error'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
@@ -694,6 +708,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
@@ -753,6 +768,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA202Valid - Send a 202 response with payload {'statusCode': '202'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
 // method.
@@ -793,6 +809,7 @@ func (client *MultipleResponsesClient) get200ModelA202ValidHandleResponse(resp *
 
 // Get200ModelA400Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '400'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
 // method.
@@ -833,6 +850,7 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidHandleResponse(resp
 
 // Get200ModelA400None - Send a 400 response with no payload client should treat as an http error with no error model
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
 // method.
@@ -873,6 +891,7 @@ func (client *MultipleResponsesClient) get200ModelA400NoneHandleResponse(resp *h
 
 // Get200ModelA400Valid - Send a 200 response with payload {'statusCode': '400'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
 // method.
@@ -913,6 +932,7 @@ func (client *MultipleResponsesClient) get200ModelA400ValidHandleResponse(resp *
 
 // Get202None204NoneDefaultError202None - Send a 202 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
 // method.
@@ -944,6 +964,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 
 // Get202None204NoneDefaultError204None - Send a 204 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
 // method.
@@ -975,6 +996,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 
 // Get202None204NoneDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get202None204NoneDefaultError400Valid method.
@@ -1006,6 +1028,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 
 // Get202None204NoneDefaultNone202Invalid - Send a 202 response with an unexpected payload {'property': 'value'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid method.
@@ -1036,6 +1059,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidCre
 
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
 // method.
@@ -1066,6 +1090,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneCreate
 
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid method.
@@ -1096,6 +1121,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidCre
 
 // Get202None204NoneDefaultNone400None - Send a 400 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
 // method.
@@ -1126,6 +1152,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneCreate
 
 // GetDefaultModelA200None - Send a 200 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
 // method.
@@ -1166,6 +1193,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleResponse(res
 
 // GetDefaultModelA200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
 // method.
@@ -1206,6 +1234,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleResponse(re
 
 // GetDefaultModelA400None - Send a 400 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
 // method.
@@ -1237,6 +1266,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 
 // GetDefaultModelA400Valid - Send a 400 response with valid payload: {'statusCode': '400'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
 // method.
@@ -1268,6 +1298,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 
 // GetDefaultNone200Invalid - Send a 200 response with invalid payload: {'statusCode': '200'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
 // method.
@@ -1298,6 +1329,7 @@ func (client *MultipleResponsesClient) getDefaultNone200InvalidCreateRequest(ctx
 
 // GetDefaultNone200None - Send a 200 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
 // method.
@@ -1328,6 +1360,7 @@ func (client *MultipleResponsesClient) getDefaultNone200NoneCreateRequest(ctx co
 
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
 // method.
@@ -1358,6 +1391,7 @@ func (client *MultipleResponsesClient) getDefaultNone400InvalidCreateRequest(ctx
 
 // GetDefaultNone400None - Send a 400 response with no payload
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
 // options - MultipleResponsesClientGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
 // method.
