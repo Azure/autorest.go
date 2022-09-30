@@ -35,8 +35,8 @@ func NewHTTPServerFailureClient(pl runtime.Pipeline) *HTTPServerFailureClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
-// method.
+//   - options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
+//     method.
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (HTTPServerFailureClientDelete505Response, error) {
 	req, err := client.delete505CreateRequest(ctx, options)
 	if err != nil {
@@ -67,8 +67,8 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
-// method.
+//   - options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
+//     method.
 func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureClientGet501Options) (HTTPServerFailureClientGet501Response, error) {
 	req, err := client.get501CreateRequest(ctx, options)
 	if err != nil {
@@ -98,8 +98,8 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 // Head501 - Return 501 status code - should be represented in the client as an error
 //
 // Generated from API version 1.0.0
-// options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
-// method.
+//   - options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
+//     method.
 func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureClientHead501Options) (HTTPServerFailureClientHead501Response, error) {
 	req, err := client.head501CreateRequest(ctx, options)
 	if err != nil {
@@ -130,8 +130,8 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
-// method.
+//   - options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
+//     method.
 func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailureClientPost505Options) (HTTPServerFailureClientPost505Response, error) {
 	req, err := client.post505CreateRequest(ctx, options)
 	if err != nil {

@@ -34,7 +34,7 @@ func NewHTTPSuccessClient(pl runtime.Pipeline) *HTTPSuccessClient {
 // Head200 - Return 200 status code if successful
 //
 // Generated from API version 1.0.0
-// options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
+//   - options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
@@ -63,7 +63,7 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 // Head204 - Return 204 status code if successful
 //
 // Generated from API version 1.0.0
-// options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
+//   - options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
@@ -92,7 +92,7 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 // Head404 - Return 404 status code if successful
 //
 // Generated from API version 1.0.0
-// options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
+//   - options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {

@@ -32,8 +32,8 @@ type VPNLinkConnectionsClient struct {
 }
 
 // NewVPNLinkConnectionsClient creates a new instance of VPNLinkConnectionsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VPNLinkConnectionsClient, error) {
@@ -59,11 +59,11 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 // NewListByVPNConnectionPager - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnGateway.
-// gatewayName - The name of the gateway.
-// connectionName - The name of the vpn connection.
-// options - VPNLinkConnectionsClientListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnectionsClient.ListByVPNConnection
-// method.
+//   - resourceGroupName - The resource group name of the VpnGateway.
+//   - gatewayName - The name of the gateway.
+//   - connectionName - The name of the vpn connection.
+//   - options - VPNLinkConnectionsClientListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnectionsClient.ListByVPNConnection
+//     method.
 func (client *VPNLinkConnectionsClient) NewListByVPNConnectionPager(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsClientListByVPNConnectionOptions) *runtime.Pager[VPNLinkConnectionsClientListByVPNConnectionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNLinkConnectionsClientListByVPNConnectionResponse]{
 		More: func(page VPNLinkConnectionsClientListByVPNConnectionResponse) bool {

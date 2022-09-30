@@ -32,8 +32,8 @@ type VPNServerConfigurationsAssociatedWithVirtualWanClient struct {
 }
 
 // NewVPNServerConfigurationsAssociatedWithVirtualWanClient creates a new instance of VPNServerConfigurationsAssociatedWithVirtualWanClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VPNServerConfigurationsAssociatedWithVirtualWanClient, error) {
@@ -60,10 +60,10 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name.
-// virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
-// options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
-// VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
+//   - resourceGroupName - The resource group name.
+//   - virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
+//   - options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
+//     VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*runtime.Poller[VPNServerConfigurationsAssociatedWithVirtualWanClientListResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)

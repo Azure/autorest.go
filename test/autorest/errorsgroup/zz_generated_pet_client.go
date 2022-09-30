@@ -38,8 +38,8 @@ func NewPetClient(pl runtime.Pipeline) *PetClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 0.0.0
-// whatAction - what action the pet should do
-// options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
+//   - whatAction - what action the pet should do
+//   - options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (PetClientDoSomethingResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
@@ -83,8 +83,8 @@ func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClie
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 0.0.0
-// petID - pet id
-// options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
+//   - petID - pet id
+//   - options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
 func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (PetClientGetPetByIDResponse, error) {
 	req, err := client.getPetByIDCreateRequest(ctx, petID, options)
 	if err != nil {
@@ -129,7 +129,7 @@ func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 0.0.0
-// options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
+//   - options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
 func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientHasModelsParamOptions) (PetClientHasModelsParamResponse, error) {
 	req, err := client.hasModelsParamCreateRequest(ctx, options)
 	if err != nil {

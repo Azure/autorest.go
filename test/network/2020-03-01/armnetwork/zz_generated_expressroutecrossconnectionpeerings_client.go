@@ -32,8 +32,8 @@ type ExpressRouteCrossConnectionPeeringsClient struct {
 }
 
 // NewExpressRouteCrossConnectionPeeringsClient creates a new instance of ExpressRouteCrossConnectionPeeringsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ExpressRouteCrossConnectionPeeringsClient, error) {
@@ -60,12 +60,12 @@ func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credent
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// crossConnectionName - The name of the ExpressRouteCrossConnection.
-// peeringName - The name of the peering.
-// peeringParameters - Parameters supplied to the create or update ExpressRouteCrossConnection peering operation.
-// options - ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the
-// ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate method.
+//   - resourceGroupName - The name of the resource group.
+//   - crossConnectionName - The name of the ExpressRouteCrossConnection.
+//   - peeringName - The name of the peering.
+//   - peeringParameters - Parameters supplied to the create or update ExpressRouteCrossConnection peering operation.
+//   - options - ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions contains the optional parameters for the
+//     ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ExpressRouteCrossConnectionPeeringsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
@@ -133,11 +133,11 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateCreateReq
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// crossConnectionName - The name of the ExpressRouteCrossConnection.
-// peeringName - The name of the peering.
-// options - ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - crossConnectionName - The name of the ExpressRouteCrossConnection.
+//   - peeringName - The name of the peering.
+//   - options - ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.BeginDelete
+//     method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientBeginDeleteOptions) (*runtime.Poller[ExpressRouteCrossConnectionPeeringsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
@@ -205,11 +205,11 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteCreateRequest(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// crossConnectionName - The name of the ExpressRouteCrossConnection.
-// peeringName - The name of the peering.
-// options - ExpressRouteCrossConnectionPeeringsClientGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.Get
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - crossConnectionName - The name of the ExpressRouteCrossConnection.
+//   - peeringName - The name of the peering.
+//   - options - ExpressRouteCrossConnectionPeeringsClientGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.Get
+//     method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsClientGetOptions) (ExpressRouteCrossConnectionPeeringsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
@@ -267,10 +267,10 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp 
 // NewListPager - Gets all peerings in a specified ExpressRouteCrossConnection.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// crossConnectionName - The name of the ExpressRouteCrossConnection.
-// options - ExpressRouteCrossConnectionPeeringsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.List
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - crossConnectionName - The name of the ExpressRouteCrossConnection.
+//   - options - ExpressRouteCrossConnectionPeeringsClientListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.List
+//     method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) NewListPager(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsClientListOptions) *runtime.Pager[ExpressRouteCrossConnectionPeeringsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteCrossConnectionPeeringsClientListResponse]{
 		More: func(page ExpressRouteCrossConnectionPeeringsClientListResponse) bool {

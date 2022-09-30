@@ -32,8 +32,8 @@ type AvailableDelegationsClient struct {
 }
 
 // NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAvailableDelegationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AvailableDelegationsClient, error) {
@@ -59,9 +59,9 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 // NewListPager - Gets all of the available subnet delegations for this subscription in this region.
 //
 // Generated from API version 2020-03-01
-// location - The location of the subnet.
-// options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
-// method.
+//   - location - The location of the subnet.
+//   - options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
+//     method.
 func (client *AvailableDelegationsClient) NewListPager(location string, options *AvailableDelegationsClientListOptions) *runtime.Pager[AvailableDelegationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableDelegationsClientListResponse]{
 		More: func(page AvailableDelegationsClientListResponse) bool {

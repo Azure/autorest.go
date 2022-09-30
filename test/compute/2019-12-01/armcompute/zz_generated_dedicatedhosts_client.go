@@ -32,8 +32,8 @@ type DedicatedHostsClient struct {
 }
 
 // NewDedicatedHostsClient creates a new instance of DedicatedHostsClient with the specified values.
-// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
+//   - - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DedicatedHostsClient, error) {
@@ -60,12 +60,12 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// hostGroupName - The name of the dedicated host group.
-// hostName - The name of the dedicated host .
-// parameters - Parameters supplied to the Create Dedicated Host.
-// options - DedicatedHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - hostGroupName - The name of the dedicated host group.
+//   - hostName - The name of the dedicated host .
+//   - parameters - Parameters supplied to the Create Dedicated Host.
+//   - options - DedicatedHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginCreateOrUpdate
+//     method.
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (*runtime.Poller[DedicatedHostsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
@@ -131,11 +131,11 @@ func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Cont
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// hostGroupName - The name of the dedicated host group.
-// hostName - The name of the dedicated host.
-// options - DedicatedHostsClientBeginDeleteOptions contains the optional parameters for the DedicatedHostsClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - hostGroupName - The name of the dedicated host group.
+//   - hostName - The name of the dedicated host.
+//   - options - DedicatedHostsClientBeginDeleteOptions contains the optional parameters for the DedicatedHostsClient.BeginDelete
+//     method.
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (*runtime.Poller[DedicatedHostsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
@@ -200,10 +200,10 @@ func (client *DedicatedHostsClient) deleteCreateRequest(ctx context.Context, res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// hostGroupName - The name of the dedicated host group.
-// hostName - The name of the dedicated host.
-// options - DedicatedHostsClientGetOptions contains the optional parameters for the DedicatedHostsClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - hostGroupName - The name of the dedicated host group.
+//   - hostName - The name of the dedicated host.
+//   - options - DedicatedHostsClientGetOptions contains the optional parameters for the DedicatedHostsClient.Get method.
 func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientGetOptions) (DedicatedHostsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -265,10 +265,10 @@ func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (Dedi
 // in the response to get the next page of dedicated hosts.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// hostGroupName - The name of the dedicated host group.
-// options - DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - hostGroupName - The name of the dedicated host group.
+//   - options - DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
+//     method.
 func (client *DedicatedHostsClient) NewListByHostGroupPager(resourceGroupName string, hostGroupName string, options *DedicatedHostsClientListByHostGroupOptions) *runtime.Pager[DedicatedHostsClientListByHostGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DedicatedHostsClientListByHostGroupResponse]{
 		More: func(page DedicatedHostsClientListByHostGroupResponse) bool {
@@ -336,12 +336,12 @@ func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// hostGroupName - The name of the dedicated host group.
-// hostName - The name of the dedicated host .
-// parameters - Parameters supplied to the Update Dedicated Host operation.
-// options - DedicatedHostsClientBeginUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - hostGroupName - The name of the dedicated host group.
+//   - hostName - The name of the dedicated host .
+//   - parameters - Parameters supplied to the Update Dedicated Host operation.
+//   - options - DedicatedHostsClientBeginUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginUpdate
+//     method.
 func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (*runtime.Poller[DedicatedHostsClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)

@@ -52,7 +52,7 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 // NewListPager - Lists all of the available Network Rest API operations.
 //
 // Generated from API version 2020-03-01
-// options - OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+//   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
 func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{
 		More: func(page OperationsClientListResponse) bool {

@@ -32,8 +32,8 @@ type VPNSitesConfigurationClient struct {
 }
 
 // NewVPNSitesConfigurationClient creates a new instance of VPNSitesConfigurationClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VPNSitesConfigurationClient, error) {
@@ -60,11 +60,11 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name.
-// virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
-// request - Parameters supplied to download vpn-sites configuration.
-// options - VPNSitesConfigurationClientBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
-// method.
+//   - resourceGroupName - The resource group name.
+//   - virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
+//   - request - Parameters supplied to download vpn-sites configuration.
+//   - options - VPNSitesConfigurationClientBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
+//     method.
 func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*runtime.Poller[VPNSitesConfigurationClientDownloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)

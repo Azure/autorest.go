@@ -27,9 +27,9 @@ type client struct {
 }
 
 // newClient creates a new instance of client with the specified values.
-// - geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
-// - clientVersion - Version number of Azure Maps API.
-// - clientIndex - Index number of Azure Maps API.
+//   - geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
+//   - - clientVersion - Version number of Azure Maps API.
+//   - - clientIndex - Index number of Azure Maps API.
 //   - pl - the pipeline used for sending requests and handling responses.
 func newClient(geography *Geography, clientVersion *string, clientIndex *int32, pl runtime.Pipeline) *client {
 	hostURL := "https://{geography}.atlas.microsoft.com"
@@ -70,7 +70,7 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-// options - clientCreateOptions contains the optional parameters for the client.Create method.
+//   - options - clientCreateOptions contains the optional parameters for the client.Create method.
 func (client *client) Create(ctx context.Context, options *clientCreateOptions) (ClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
@@ -132,7 +132,7 @@ func (client *client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-// options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
+//   - options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
 func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (ClientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
@@ -191,7 +191,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 // "2020-02-18T19:53:33.123Z" } ] }
 //
 // Generated from API version 2.0
-// options - clientListOptions contains the optional parameters for the client.List method.
+//   - options - clientListOptions contains the optional parameters for the client.List method.
 func (client *client) NewListPager(options *clientListOptions) *runtime.Pager[ClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
 		More: func(page ClientListResponse) bool {
@@ -252,7 +252,7 @@ func (client *client) listHandleResponse(resp *http.Response) (ClientListRespons
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-// options - clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
+//   - options - clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
 func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {

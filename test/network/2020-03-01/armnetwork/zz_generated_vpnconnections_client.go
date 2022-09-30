@@ -32,8 +32,8 @@ type VPNConnectionsClient struct {
 }
 
 // NewVPNConnectionsClient creates a new instance of VPNConnectionsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VPNConnectionsClient, error) {
@@ -61,12 +61,12 @@ func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCrede
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnGateway.
-// gatewayName - The name of the gateway.
-// connectionName - The name of the connection.
-// vpnConnectionParameters - Parameters supplied to create or Update a VPN Connection.
-// options - VPNConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnectionsClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The resource group name of the VpnGateway.
+//   - gatewayName - The name of the gateway.
+//   - connectionName - The name of the connection.
+//   - vpnConnectionParameters - Parameters supplied to create or Update a VPN Connection.
+//   - options - VPNConnectionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnectionsClient.BeginCreateOrUpdate
+//     method.
 func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[VPNConnectionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
@@ -134,11 +134,11 @@ func (client *VPNConnectionsClient) createOrUpdateCreateRequest(ctx context.Cont
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnGateway.
-// gatewayName - The name of the gateway.
-// connectionName - The name of the connection.
-// options - VPNConnectionsClientBeginDeleteOptions contains the optional parameters for the VPNConnectionsClient.BeginDelete
-// method.
+//   - resourceGroupName - The resource group name of the VpnGateway.
+//   - gatewayName - The name of the gateway.
+//   - connectionName - The name of the connection.
+//   - options - VPNConnectionsClientBeginDeleteOptions contains the optional parameters for the VPNConnectionsClient.BeginDelete
+//     method.
 func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientBeginDeleteOptions) (*runtime.Poller[VPNConnectionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
@@ -206,10 +206,10 @@ func (client *VPNConnectionsClient) deleteCreateRequest(ctx context.Context, res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnGateway.
-// gatewayName - The name of the gateway.
-// connectionName - The name of the vpn connection.
-// options - VPNConnectionsClientGetOptions contains the optional parameters for the VPNConnectionsClient.Get method.
+//   - resourceGroupName - The resource group name of the VpnGateway.
+//   - gatewayName - The name of the gateway.
+//   - connectionName - The name of the vpn connection.
+//   - options - VPNConnectionsClientGetOptions contains the optional parameters for the VPNConnectionsClient.Get method.
 func (client *VPNConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsClientGetOptions) (VPNConnectionsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
@@ -267,10 +267,10 @@ func (client *VPNConnectionsClient) getHandleResponse(resp *http.Response) (VPNC
 // NewListByVPNGatewayPager - Retrieves all vpn connections for a particular virtual wan vpn gateway.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnGateway.
-// gatewayName - The name of the gateway.
-// options - VPNConnectionsClientListByVPNGatewayOptions contains the optional parameters for the VPNConnectionsClient.ListByVPNGateway
-// method.
+//   - resourceGroupName - The resource group name of the VpnGateway.
+//   - gatewayName - The name of the gateway.
+//   - options - VPNConnectionsClientListByVPNGatewayOptions contains the optional parameters for the VPNConnectionsClient.ListByVPNGateway
+//     method.
 func (client *VPNConnectionsClient) NewListByVPNGatewayPager(resourceGroupName string, gatewayName string, options *VPNConnectionsClientListByVPNGatewayOptions) *runtime.Pager[VPNConnectionsClientListByVPNGatewayResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNConnectionsClientListByVPNGatewayResponse]{
 		More: func(page VPNConnectionsClientListByVPNGatewayResponse) bool {

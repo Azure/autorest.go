@@ -28,8 +28,8 @@ type PathItemsClient struct {
 }
 
 // NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
-// - globalStringPath - A string value 'globalItemStringPath' that appears in the path
-// - globalStringQuery - should contain value null
+//   - - globalStringPath - A string value 'globalItemStringPath' that appears in the path
+//   - - globalStringQuery - should contain value null
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl runtime.Pipeline) *PathItemsClient {
 	client := &PathItemsClient{
@@ -46,10 +46,10 @@ func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
-// localStringPath - should contain value 'localStringPath'
-// options - PathItemsClientGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues
-// method.
+//   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
+//   - localStringPath - should contain value 'localStringPath'
+//   - options - PathItemsClientGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues
+//     method.
 func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetAllWithValuesOptions) (PathItemsClientGetAllWithValuesResponse, error) {
 	req, err := client.getAllWithValuesCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -105,10 +105,10 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
-// localStringPath - should contain value 'localStringPath'
-// options - PathItemsClientGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalAndLocalQueryNull
-// method.
+//   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
+//   - localStringPath - should contain value 'localStringPath'
+//   - options - PathItemsClientGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalAndLocalQueryNull
+//     method.
 func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalAndLocalQueryNullOptions) (PathItemsClientGetGlobalAndLocalQueryNullResponse, error) {
 	req, err := client.getGlobalAndLocalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -164,10 +164,10 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
-// localStringPath - should contain value 'localStringPath'
-// options - PathItemsClientGetGlobalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalQueryNull
-// method.
+//   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
+//   - localStringPath - should contain value 'localStringPath'
+//   - options - PathItemsClientGetGlobalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalQueryNull
+//     method.
 func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetGlobalQueryNullOptions) (PathItemsClientGetGlobalQueryNullResponse, error) {
 	req, err := client.getGlobalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -223,10 +223,10 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
-// localStringPath - should contain value 'localStringPath'
-// options - PathItemsClientGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItemsClient.GetLocalPathItemQueryNull
-// method.
+//   - pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
+//   - localStringPath - should contain value 'localStringPath'
+//   - options - PathItemsClientGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItemsClient.GetLocalPathItemQueryNull
+//     method.
 func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsClientGetLocalPathItemQueryNullOptions) (PathItemsClientGetLocalPathItemQueryNullResponse, error) {
 	req, err := client.getLocalPathItemQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {

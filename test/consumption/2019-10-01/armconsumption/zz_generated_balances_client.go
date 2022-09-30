@@ -57,9 +57,9 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-10-01
-// billingAccountID - BillingAccount ID
-// options - BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
-// method.
+//   - billingAccountID - BillingAccount ID
+//   - options - BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
+//     method.
 func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesClientGetByBillingAccountOptions) (BalancesClientGetByBillingAccountResponse, error) {
 	req, err := client.getByBillingAccountCreateRequest(ctx, billingAccountID, options)
 	if err != nil {
@@ -107,10 +107,10 @@ func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Respo
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-10-01
-// billingAccountID - BillingAccount ID
-// billingPeriodName - Billing Period Name.
-// options - BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
-// method.
+//   - billingAccountID - BillingAccount ID
+//   - billingPeriodName - Billing Period Name.
+//   - options - BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
+//     method.
 func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesClientGetForBillingPeriodByBillingAccountOptions) (BalancesClientGetForBillingPeriodByBillingAccountResponse, error) {
 	req, err := client.getForBillingPeriodByBillingAccountCreateRequest(ctx, billingAccountID, billingPeriodName, options)
 	if err != nil {

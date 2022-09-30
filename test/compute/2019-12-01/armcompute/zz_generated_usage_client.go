@@ -32,8 +32,8 @@ type UsageClient struct {
 }
 
 // NewUsageClient creates a new instance of UsageClient with the specified values.
-// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
+//   - - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*UsageClient, error) {
@@ -60,8 +60,8 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 // compute resources under the subscription.
 //
 // Generated from API version 2019-12-01
-// location - The location for which resource usage is queried.
-// options - UsageClientListOptions contains the optional parameters for the UsageClient.List method.
+//   - location - The location for which resource usage is queried.
+//   - options - UsageClientListOptions contains the optional parameters for the UsageClient.List method.
 func (client *UsageClient) NewListPager(location string, options *UsageClientListOptions) *runtime.Pager[UsageClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[UsageClientListResponse]{
 		More: func(page UsageClientListResponse) bool {

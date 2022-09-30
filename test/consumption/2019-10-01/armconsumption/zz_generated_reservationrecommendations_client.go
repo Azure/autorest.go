@@ -53,14 +53,14 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 // NewListPager - List of recommendations for purchasing reserved instances.
 //
 // Generated from API version 2019-10-01
-// scope - The scope associated with reservation recommendations operations. This includes '/subscriptions/{subscriptionId}/'
-// for subscription scope,
-// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
-// for BillingAccount scope, and
-// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile
-// scope
-// options - ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.List
-// method.
+//   - scope - The scope associated with reservation recommendations operations. This includes '/subscriptions/{subscriptionId}/'
+//     for subscription scope,
+//     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+//     for BillingAccount scope, and
+//     '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile
+//     scope
+//   - options - ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.List
+//     method.
 func (client *ReservationRecommendationsClient) NewListPager(scope string, options *ReservationRecommendationsClientListOptions) *runtime.Pager[ReservationRecommendationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ReservationRecommendationsClientListResponse]{
 		More: func(page ReservationRecommendationsClientListResponse) bool {

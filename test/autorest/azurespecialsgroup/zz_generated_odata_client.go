@@ -36,7 +36,7 @@ func NewODataClient(pl runtime.Pipeline) *ODataClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - ODataClientGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
+//   - options - ODataClientGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClientGetWithFilterOptions) (ODataClientGetWithFilterResponse, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {

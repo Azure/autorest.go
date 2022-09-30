@@ -53,10 +53,10 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 // NewListPager - Lists the lots by billingAccountId and billingProfileId.
 //
 // Generated from API version 2019-10-01
-// scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
-// for Billing Profile scope, and
-// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - LotsClientListOptions contains the optional parameters for the LotsClient.List method.
+//   - scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
+//     for Billing Profile scope, and
+//     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
+//   - options - LotsClientListOptions contains the optional parameters for the LotsClient.List method.
 func (client *LotsClient) NewListPager(scope string, options *LotsClientListOptions) *runtime.Pager[LotsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LotsClientListResponse]{
 		More: func(page LotsClientListResponse) bool {

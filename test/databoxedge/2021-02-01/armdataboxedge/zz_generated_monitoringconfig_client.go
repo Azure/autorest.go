@@ -32,7 +32,7 @@ type MonitoringConfigClient struct {
 }
 
 // NewMonitoringConfigClient creates a new instance of MonitoringConfigClient with the specified values.
-// - subscriptionID - The subscription ID.
+//   - - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*MonitoringConfigClient, error) {
@@ -59,12 +59,12 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// resourceGroupName - The resource group name.
-// monitoringMetricConfiguration - The metric configuration.
-// options - MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - resourceGroupName - The resource group name.
+//   - monitoringMetricConfiguration - The metric configuration.
+//   - options - MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
+//     method.
 func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*runtime.Poller[MonitoringConfigClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
@@ -127,11 +127,11 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// resourceGroupName - The resource group name.
-// options - MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
-// method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - resourceGroupName - The resource group name.
+//   - options - MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
+//     method.
 func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*runtime.Poller[MonitoringConfigClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
@@ -194,10 +194,10 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// resourceGroupName - The resource group name.
-// options - MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - resourceGroupName - The resource group name.
+//   - options - MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
 func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (MonitoringConfigClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -252,10 +252,10 @@ func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (Mo
 // NewListPager - Lists metric configurations in a role.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// resourceGroupName - The resource group name.
-// options - MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - resourceGroupName - The resource group name.
+//   - options - MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
 func (client *MonitoringConfigClient) NewListPager(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientListOptions) *runtime.Pager[MonitoringConfigClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[MonitoringConfigClientListResponse]{
 		More: func(page MonitoringConfigClientListResponse) bool {

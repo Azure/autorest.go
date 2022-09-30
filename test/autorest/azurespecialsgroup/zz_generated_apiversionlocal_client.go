@@ -35,8 +35,8 @@ func NewAPIVersionLocalClient(pl runtime.Pipeline) *APIVersionLocalClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - APIVersionLocalClientGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalNull
-// method.
+//   - options - APIVersionLocalClientGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalNull
+//     method.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalClientGetMethodLocalNullOptions) (APIVersionLocalClientGetMethodLocalNullResponse, error) {
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -72,8 +72,8 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - APIVersionLocalClientGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalValid
-// method.
+//   - options - APIVersionLocalClientGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalValid
+//     method.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalClientGetMethodLocalValidOptions) (APIVersionLocalClientGetMethodLocalValidResponse, error) {
 	req, err := client.getMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -107,8 +107,8 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - APIVersionLocalClientGetPathLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetPathLocalValid
-// method.
+//   - options - APIVersionLocalClientGetPathLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetPathLocalValid
+//     method.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalClientGetPathLocalValidOptions) (APIVersionLocalClientGetPathLocalValidResponse, error) {
 	req, err := client.getPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -142,8 +142,8 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - APIVersionLocalClientGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetSwaggerLocalValid
-// method.
+//   - options - APIVersionLocalClientGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetSwaggerLocalValid
+//     method.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalClientGetSwaggerLocalValidOptions) (APIVersionLocalClientGetSwaggerLocalValidResponse, error) {
 	req, err := client.getSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {

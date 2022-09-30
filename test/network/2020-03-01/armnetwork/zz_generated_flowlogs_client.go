@@ -32,8 +32,8 @@ type FlowLogsClient struct {
 }
 
 // NewFlowLogsClient creates a new instance of FlowLogsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewFlowLogsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*FlowLogsClient, error) {
@@ -60,12 +60,12 @@ func NewFlowLogsClient(subscriptionID string, credential azcore.TokenCredential,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// flowLogName - The name of the flow log.
-// parameters - Parameters that define the create or update flow log resource.
-// options - FlowLogsClientBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - flowLogName - The name of the flow log.
+//   - parameters - Parameters that define the create or update flow log resource.
+//   - options - FlowLogsClientBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
+//     method.
 func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (*runtime.Poller[FlowLogsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
@@ -133,10 +133,10 @@ func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// flowLogName - The name of the flow log resource.
-// options - FlowLogsClientBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - flowLogName - The name of the flow log resource.
+//   - options - FlowLogsClientBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
 func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (*runtime.Poller[FlowLogsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
@@ -204,10 +204,10 @@ func (client *FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// flowLogName - The name of the flow log resource.
-// options - FlowLogsClientGetOptions contains the optional parameters for the FlowLogsClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - flowLogName - The name of the flow log resource.
+//   - options - FlowLogsClientGetOptions contains the optional parameters for the FlowLogsClient.Get method.
 func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientGetOptions) (FlowLogsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
@@ -265,9 +265,9 @@ func (client *FlowLogsClient) getHandleResponse(resp *http.Response) (FlowLogsCl
 // NewListPager - Lists all flow log resources for the specified Network Watcher.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group containing Network Watcher.
-// networkWatcherName - The name of the Network Watcher resource.
-// options - FlowLogsClientListOptions contains the optional parameters for the FlowLogsClient.List method.
+//   - resourceGroupName - The name of the resource group containing Network Watcher.
+//   - networkWatcherName - The name of the Network Watcher resource.
+//   - options - FlowLogsClientListOptions contains the optional parameters for the FlowLogsClient.List method.
 func (client *FlowLogsClient) NewListPager(resourceGroupName string, networkWatcherName string, options *FlowLogsClientListOptions) *runtime.Pager[FlowLogsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FlowLogsClientListResponse]{
 		More: func(page FlowLogsClientListResponse) bool {

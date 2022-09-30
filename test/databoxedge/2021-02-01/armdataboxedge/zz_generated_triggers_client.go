@@ -32,7 +32,7 @@ type TriggersClient struct {
 }
 
 // NewTriggersClient creates a new instance of TriggersClient with the specified values.
-// - subscriptionID - The subscription ID.
+//   - - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*TriggersClient, error) {
@@ -59,12 +59,12 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - Creates or updates a trigger
-// name - The trigger name.
-// resourceGroupName - The resource group name.
-// trigger - The trigger.
-// options - TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - Creates or updates a trigger
+//   - name - The trigger name.
+//   - resourceGroupName - The resource group name.
+//   - trigger - The trigger.
+//   - options - TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
+//     method.
 func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*runtime.Poller[TriggersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
@@ -127,10 +127,10 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The trigger name.
-// resourceGroupName - The resource group name.
-// options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
+//   - deviceName - The device name.
+//   - name - The trigger name.
+//   - resourceGroupName - The resource group name.
+//   - options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
 func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*runtime.Poller[TriggersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
@@ -193,10 +193,10 @@ func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceNam
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The trigger name.
-// resourceGroupName - The resource group name.
-// options - TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
+//   - deviceName - The device name.
+//   - name - The trigger name.
+//   - resourceGroupName - The resource group name.
+//   - options - TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
 func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientGetOptions) (TriggersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -251,10 +251,10 @@ func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersCl
 // NewListByDataBoxEdgeDevicePager - Lists all the triggers configured in the device.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *TriggersClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *TriggersClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[TriggersClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[TriggersClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page TriggersClientListByDataBoxEdgeDeviceResponse) bool {

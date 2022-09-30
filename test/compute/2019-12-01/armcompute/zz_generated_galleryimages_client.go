@@ -32,8 +32,8 @@ type GalleryImagesClient struct {
 }
 
 // NewGalleryImagesClient creates a new instance of GalleryImagesClient with the specified values.
-// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
+//   - - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*GalleryImagesClient, error) {
@@ -60,14 +60,14 @@ func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCreden
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery in which the Image Definition is to be created.
-// galleryImageName - The name of the gallery Image Definition to be created or updated. The allowed characters are alphabets
-// and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
-// characters.
-// galleryImage - Parameters supplied to the create or update gallery image operation.
-// options - GalleryImagesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery in which the Image Definition is to be created.
+//   - galleryImageName - The name of the gallery Image Definition to be created or updated. The allowed characters are alphabets
+//     and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
+//     characters.
+//   - galleryImage - Parameters supplied to the create or update gallery image operation.
+//   - options - GalleryImagesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginCreateOrUpdate
+//     method.
 func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesClientBeginCreateOrUpdateOptions) (*runtime.Poller[GalleryImagesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
@@ -133,11 +133,11 @@ func (client *GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery in which the Image Definition is to be deleted.
-// galleryImageName - The name of the gallery Image Definition to be deleted.
-// options - GalleryImagesClientBeginDeleteOptions contains the optional parameters for the GalleryImagesClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery in which the Image Definition is to be deleted.
+//   - galleryImageName - The name of the gallery Image Definition to be deleted.
+//   - options - GalleryImagesClientBeginDeleteOptions contains the optional parameters for the GalleryImagesClient.BeginDelete
+//     method.
 func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesClientBeginDeleteOptions) (*runtime.Poller[GalleryImagesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, options)
@@ -203,10 +203,10 @@ func (client *GalleryImagesClient) deleteCreateRequest(ctx context.Context, reso
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery from which the Image Definitions are to be retrieved.
-// galleryImageName - The name of the gallery Image Definition to be retrieved.
-// options - GalleryImagesClientGetOptions contains the optional parameters for the GalleryImagesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery from which the Image Definitions are to be retrieved.
+//   - galleryImageName - The name of the gallery Image Definition to be retrieved.
+//   - options - GalleryImagesClientGetOptions contains the optional parameters for the GalleryImagesClient.Get method.
 func (client *GalleryImagesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesClientGetOptions) (GalleryImagesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
@@ -264,10 +264,10 @@ func (client *GalleryImagesClient) getHandleResponse(resp *http.Response) (Galle
 // NewListByGalleryPager - List gallery Image Definitions in a gallery.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery from which Image Definitions are to be listed.
-// options - GalleryImagesClientListByGalleryOptions contains the optional parameters for the GalleryImagesClient.ListByGallery
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery from which Image Definitions are to be listed.
+//   - options - GalleryImagesClientListByGalleryOptions contains the optional parameters for the GalleryImagesClient.ListByGallery
+//     method.
 func (client *GalleryImagesClient) NewListByGalleryPager(resourceGroupName string, galleryName string, options *GalleryImagesClientListByGalleryOptions) *runtime.Pager[GalleryImagesClientListByGalleryResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleryImagesClientListByGalleryResponse]{
 		More: func(page GalleryImagesClientListByGalleryResponse) bool {
@@ -335,13 +335,13 @@ func (client *GalleryImagesClient) listByGalleryHandleResponse(resp *http.Respon
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery in which the Image Definition is to be updated.
-// galleryImageName - The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers
-// with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters.
-// galleryImage - Parameters supplied to the update gallery image operation.
-// options - GalleryImagesClientBeginUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery in which the Image Definition is to be updated.
+//   - galleryImageName - The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers
+//     with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters.
+//   - galleryImage - Parameters supplied to the update gallery image operation.
+//   - options - GalleryImagesClientBeginUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginUpdate
+//     method.
 func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesClientBeginUpdateOptions) (*runtime.Poller[GalleryImagesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)

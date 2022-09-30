@@ -32,8 +32,8 @@ type GalleriesClient struct {
 }
 
 // NewGalleriesClient creates a new instance of GalleriesClient with the specified values.
-// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
+//   - - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*GalleriesClient, error) {
@@ -60,12 +60,12 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
-// allowed in the middle. The maximum length is 80 characters.
-// gallery - Parameters supplied to the create or update Shared Image Gallery operation.
-// options - GalleriesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleriesClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
+//     allowed in the middle. The maximum length is 80 characters.
+//   - gallery - Parameters supplied to the create or update Shared Image Gallery operation.
+//   - options - GalleriesClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleriesClient.BeginCreateOrUpdate
+//     method.
 func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*runtime.Poller[GalleriesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, gallery, options)
@@ -127,9 +127,9 @@ func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery to be deleted.
-// options - GalleriesClientBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery to be deleted.
+//   - options - GalleriesClientBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
 func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*runtime.Poller[GalleriesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
@@ -191,9 +191,9 @@ func (client *GalleriesClient) deleteCreateRequest(ctx context.Context, resource
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery.
-// options - GalleriesClientGetOptions contains the optional parameters for the GalleriesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery.
+//   - options - GalleriesClientGetOptions contains the optional parameters for the GalleriesClient.Get method.
 func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientGetOptions) (GalleriesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -247,7 +247,7 @@ func (client *GalleriesClient) getHandleResponse(resp *http.Response) (Galleries
 // NewListPager - List galleries under a subscription.
 //
 // Generated from API version 2019-12-01
-// options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
+//   - options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
 func (client *GalleriesClient) NewListPager(options *GalleriesClientListOptions) *runtime.Pager[GalleriesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleriesClientListResponse]{
 		More: func(page GalleriesClientListResponse) bool {
@@ -306,9 +306,9 @@ func (client *GalleriesClient) listHandleResponse(resp *http.Response) (Gallerie
 // NewListByResourceGroupPager - List galleries under a resource group.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup
+//     method.
 func (client *GalleriesClient) NewListByResourceGroupPager(resourceGroupName string, options *GalleriesClientListByResourceGroupOptions) *runtime.Pager[GalleriesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[GalleriesClientListByResourceGroupResponse]{
 		More: func(page GalleriesClientListByResourceGroupResponse) bool {
@@ -372,11 +372,11 @@ func (client *GalleriesClient) listByResourceGroupHandleResponse(resp *http.Resp
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
-// allowed in the middle. The maximum length is 80 characters.
-// gallery - Parameters supplied to the update Shared Image Gallery operation.
-// options - GalleriesClientBeginUpdateOptions contains the optional parameters for the GalleriesClient.BeginUpdate method.
+//   - resourceGroupName - The name of the resource group.
+//   - galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
+//     allowed in the middle. The maximum length is 80 characters.
+//   - gallery - Parameters supplied to the update Shared Image Gallery operation.
+//   - options - GalleriesClientBeginUpdateOptions contains the optional parameters for the GalleriesClient.BeginUpdate method.
 func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*runtime.Poller[GalleriesClientUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.update(ctx, resourceGroupName, galleryName, gallery, options)

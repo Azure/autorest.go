@@ -32,8 +32,8 @@ type WatchersClient struct {
 }
 
 // NewWatchersClient creates a new instance of WatchersClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewWatchersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*WatchersClient, error) {
@@ -61,11 +61,11 @@ func NewWatchersClient(subscriptionID string, credential azcore.TokenCredential,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the network watcher resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that determine how the connectivity check will be performed.
-// options - WatchersClientBeginCheckConnectivityOptions contains the optional parameters for the WatchersClient.BeginCheckConnectivity
-// method.
+//   - resourceGroupName - The name of the network watcher resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that determine how the connectivity check will be performed.
+//   - options - WatchersClientBeginCheckConnectivityOptions contains the optional parameters for the WatchersClient.BeginCheckConnectivity
+//     method.
 func (client *WatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *WatchersClientBeginCheckConnectivityOptions) (*runtime.Poller[WatchersClientCheckConnectivityResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.checkConnectivity(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -130,10 +130,10 @@ func (client *WatchersClient) checkConnectivityCreateRequest(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters that define the network watcher resource.
-// options - WatchersClientCreateOrUpdateOptions contains the optional parameters for the WatchersClient.CreateOrUpdate method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters that define the network watcher resource.
+//   - options - WatchersClientCreateOrUpdateOptions contains the optional parameters for the WatchersClient.CreateOrUpdate method.
 func (client *WatchersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters Watcher, options *WatchersClientCreateOrUpdateOptions) (WatchersClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -188,9 +188,9 @@ func (client *WatchersClient) createOrUpdateHandleResponse(resp *http.Response) 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// options - WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - options - WatchersClientBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
 func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *WatchersClientBeginDeleteOptions) (*runtime.Poller[WatchersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, options)
@@ -254,9 +254,9 @@ func (client *WatchersClient) deleteCreateRequest(ctx context.Context, resourceG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// options - WatchersClientGetOptions contains the optional parameters for the WatchersClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - options - WatchersClientGetOptions contains the optional parameters for the WatchersClient.Get method.
 func (client *WatchersClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, options *WatchersClientGetOptions) (WatchersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
@@ -312,11 +312,11 @@ func (client *WatchersClient) getHandleResponse(resp *http.Response) (WatchersCl
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the network watcher resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that determine Azure reachability report configuration.
-// options - WatchersClientBeginGetAzureReachabilityReportOptions contains the optional parameters for the WatchersClient.BeginGetAzureReachabilityReport
-// method.
+//   - resourceGroupName - The name of the network watcher resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that determine Azure reachability report configuration.
+//   - options - WatchersClientBeginGetAzureReachabilityReportOptions contains the optional parameters for the WatchersClient.BeginGetAzureReachabilityReport
+//     method.
 func (client *WatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *WatchersClientBeginGetAzureReachabilityReportOptions) (*runtime.Poller[WatchersClientGetAzureReachabilityReportResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getAzureReachabilityReport(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -381,11 +381,11 @@ func (client *WatchersClient) getAzureReachabilityReportCreateRequest(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the network watcher resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that define a resource to query flow log and traffic analytics (optional) status.
-// options - WatchersClientBeginGetFlowLogStatusOptions contains the optional parameters for the WatchersClient.BeginGetFlowLogStatus
-// method.
+//   - resourceGroupName - The name of the network watcher resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that define a resource to query flow log and traffic analytics (optional) status.
+//   - options - WatchersClientBeginGetFlowLogStatusOptions contains the optional parameters for the WatchersClient.BeginGetFlowLogStatus
+//     method.
 func (client *WatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *WatchersClientBeginGetFlowLogStatusOptions) (*runtime.Poller[WatchersClientGetFlowLogStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getFlowLogStatus(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -453,11 +453,11 @@ func (client *WatchersClient) getFlowLogStatusCreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters to get network configuration diagnostic.
-// options - WatchersClientBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the WatchersClient.BeginGetNetworkConfigurationDiagnostic
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters to get network configuration diagnostic.
+//   - options - WatchersClientBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the WatchersClient.BeginGetNetworkConfigurationDiagnostic
+//     method.
 func (client *WatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *WatchersClientBeginGetNetworkConfigurationDiagnosticOptions) (*runtime.Poller[WatchersClientGetNetworkConfigurationDiagnosticResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getNetworkConfigurationDiagnostic(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -525,11 +525,11 @@ func (client *WatchersClient) getNetworkConfigurationDiagnosticCreateRequest(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters that define the source and destination endpoint.
-// options - WatchersClientBeginGetNextHopOptions contains the optional parameters for the WatchersClient.BeginGetNextHop
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters that define the source and destination endpoint.
+//   - options - WatchersClientBeginGetNextHopOptions contains the optional parameters for the WatchersClient.BeginGetNextHop
+//     method.
 func (client *WatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *WatchersClientBeginGetNextHopOptions) (*runtime.Poller[WatchersClientGetNextHopResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getNextHop(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -593,10 +593,10 @@ func (client *WatchersClient) getNextHopCreateRequest(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters that define the representation of topology.
-// options - WatchersClientGetTopologyOptions contains the optional parameters for the WatchersClient.GetTopology method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters that define the representation of topology.
+//   - options - WatchersClientGetTopologyOptions contains the optional parameters for the WatchersClient.GetTopology method.
 func (client *WatchersClient) GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *WatchersClientGetTopologyOptions) (WatchersClientGetTopologyResponse, error) {
 	req, err := client.getTopologyCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -651,11 +651,11 @@ func (client *WatchersClient) getTopologyHandleResponse(resp *http.Response) (Wa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that define the resource to troubleshoot.
-// options - WatchersClientBeginGetTroubleshootingOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshooting
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that define the resource to troubleshoot.
+//   - options - WatchersClientBeginGetTroubleshootingOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshooting
+//     method.
 func (client *WatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingOptions) (*runtime.Poller[WatchersClientGetTroubleshootingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getTroubleshooting(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -719,11 +719,11 @@ func (client *WatchersClient) getTroubleshootingCreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that define the resource to query the troubleshooting result.
-// options - WatchersClientBeginGetTroubleshootingResultOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshootingResult
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that define the resource to query the troubleshooting result.
+//   - options - WatchersClientBeginGetTroubleshootingResultOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshootingResult
+//     method.
 func (client *WatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *WatchersClientBeginGetTroubleshootingResultOptions) (*runtime.Poller[WatchersClientGetTroubleshootingResultResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getTroubleshootingResult(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -787,11 +787,11 @@ func (client *WatchersClient) getTroubleshootingResultCreateRequest(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters that define the VM to check security groups for.
-// options - WatchersClientBeginGetVMSecurityRulesOptions contains the optional parameters for the WatchersClient.BeginGetVMSecurityRules
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters that define the VM to check security groups for.
+//   - options - WatchersClientBeginGetVMSecurityRulesOptions contains the optional parameters for the WatchersClient.BeginGetVMSecurityRules
+//     method.
 func (client *WatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *WatchersClientBeginGetVMSecurityRulesOptions) (*runtime.Poller[WatchersClientGetVMSecurityRulesResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.getVMSecurityRules(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -854,8 +854,8 @@ func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Contex
 // NewListPager - Gets all network watchers by resource group.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - WatchersClientListOptions contains the optional parameters for the WatchersClient.List method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - WatchersClientListOptions contains the optional parameters for the WatchersClient.List method.
 func (client *WatchersClient) NewListPager(resourceGroupName string, options *WatchersClientListOptions) *runtime.Pager[WatchersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WatchersClientListResponse]{
 		More: func(page WatchersClientListResponse) bool {
@@ -912,7 +912,7 @@ func (client *WatchersClient) listHandleResponse(resp *http.Response) (WatchersC
 // NewListAllPager - Gets all network watchers by subscription.
 //
 // Generated from API version 2020-03-01
-// options - WatchersClientListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
+//   - options - WatchersClientListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
 func (client *WatchersClient) NewListAllPager(options *WatchersClientListAllOptions) *runtime.Pager[WatchersClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[WatchersClientListAllResponse]{
 		More: func(page WatchersClientListAllResponse) bool {
@@ -967,11 +967,11 @@ func (client *WatchersClient) listAllHandleResponse(resp *http.Response) (Watche
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the network watcher resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that scope the list of available providers.
-// options - WatchersClientBeginListAvailableProvidersOptions contains the optional parameters for the WatchersClient.BeginListAvailableProviders
-// method.
+//   - resourceGroupName - The name of the network watcher resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that scope the list of available providers.
+//   - options - WatchersClientBeginListAvailableProvidersOptions contains the optional parameters for the WatchersClient.BeginListAvailableProviders
+//     method.
 func (client *WatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *WatchersClientBeginListAvailableProvidersOptions) (*runtime.Poller[WatchersClientListAvailableProvidersResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.listAvailableProviders(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -1036,11 +1036,11 @@ func (client *WatchersClient) listAvailableProvidersCreateRequest(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the network watcher resource group.
-// networkWatcherName - The name of the network watcher resource.
-// parameters - Parameters that define the configuration of flow log.
-// options - WatchersClientBeginSetFlowLogConfigurationOptions contains the optional parameters for the WatchersClient.BeginSetFlowLogConfiguration
-// method.
+//   - resourceGroupName - The name of the network watcher resource group.
+//   - networkWatcherName - The name of the network watcher resource.
+//   - parameters - Parameters that define the configuration of flow log.
+//   - options - WatchersClientBeginSetFlowLogConfigurationOptions contains the optional parameters for the WatchersClient.BeginSetFlowLogConfiguration
+//     method.
 func (client *WatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *WatchersClientBeginSetFlowLogConfigurationOptions) (*runtime.Poller[WatchersClientSetFlowLogConfigurationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.setFlowLogConfiguration(ctx, resourceGroupName, networkWatcherName, parameters, options)
@@ -1104,10 +1104,10 @@ func (client *WatchersClient) setFlowLogConfigurationCreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters supplied to update network watcher tags.
-// options - WatchersClientUpdateTagsOptions contains the optional parameters for the WatchersClient.UpdateTags method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters supplied to update network watcher tags.
+//   - options - WatchersClientUpdateTagsOptions contains the optional parameters for the WatchersClient.UpdateTags method.
 func (client *WatchersClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *WatchersClientUpdateTagsOptions) (WatchersClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
@@ -1162,11 +1162,11 @@ func (client *WatchersClient) updateTagsHandleResponse(resp *http.Response) (Wat
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkWatcherName - The name of the network watcher.
-// parameters - Parameters that define the IP flow to be verified.
-// options - WatchersClientBeginVerifyIPFlowOptions contains the optional parameters for the WatchersClient.BeginVerifyIPFlow
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkWatcherName - The name of the network watcher.
+//   - parameters - Parameters that define the IP flow to be verified.
+//   - options - WatchersClientBeginVerifyIPFlowOptions contains the optional parameters for the WatchersClient.BeginVerifyIPFlow
+//     method.
 func (client *WatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *WatchersClientBeginVerifyIPFlowOptions) (*runtime.Poller[WatchersClientVerifyIPFlowResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.verifyIPFlow(ctx, resourceGroupName, networkWatcherName, parameters, options)

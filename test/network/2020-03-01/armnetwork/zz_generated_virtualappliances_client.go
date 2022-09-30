@@ -32,8 +32,8 @@ type VirtualAppliancesClient struct {
 }
 
 // NewVirtualAppliancesClient creates a new instance of VirtualAppliancesClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualAppliancesClient, error) {
@@ -60,11 +60,11 @@ func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCr
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkVirtualApplianceName - The name of Network Virtual Appliance.
-// parameters - Parameters supplied to the create or update Network Virtual Appliance.
-// options - VirtualAppliancesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkVirtualApplianceName - The name of Network Virtual Appliance.
+//   - parameters - Parameters supplied to the create or update Network Virtual Appliance.
+//   - options - VirtualAppliancesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
+//     method.
 func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*runtime.Poller[VirtualAppliancesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
@@ -128,10 +128,10 @@ func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkVirtualApplianceName - The name of Network Virtual Appliance.
-// options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkVirtualApplianceName - The name of Network Virtual Appliance.
+//   - options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
+//     method.
 func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*runtime.Poller[VirtualAppliancesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
@@ -195,9 +195,9 @@ func (client *VirtualAppliancesClient) deleteCreateRequest(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkVirtualApplianceName - The name of Network Virtual Appliance.
-// options - VirtualAppliancesClientGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkVirtualApplianceName - The name of Network Virtual Appliance.
+//   - options - VirtualAppliancesClientGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
 func (client *VirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientGetOptions) (VirtualAppliancesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -254,7 +254,7 @@ func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (V
 // NewListPager - Gets all Network Virtual Appliances in a subscription.
 //
 // Generated from API version 2020-03-01
-// options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
+//   - options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
 func (client *VirtualAppliancesClient) NewListPager(options *VirtualAppliancesClientListOptions) *runtime.Pager[VirtualAppliancesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualAppliancesClientListResponse]{
 		More: func(page VirtualAppliancesClientListResponse) bool {
@@ -313,9 +313,9 @@ func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (
 // NewListByResourceGroupPager - Lists all Network Virtual Appliances in a resource group.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
+//     method.
 func (client *VirtualAppliancesClient) NewListByResourceGroupPager(resourceGroupName string, options *VirtualAppliancesClientListByResourceGroupOptions) *runtime.Pager[VirtualAppliancesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VirtualAppliancesClientListByResourceGroupResponse]{
 		More: func(page VirtualAppliancesClientListByResourceGroupResponse) bool {
@@ -379,11 +379,11 @@ func (client *VirtualAppliancesClient) listByResourceGroupHandleResponse(resp *h
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of Network Virtual Appliance.
-// networkVirtualApplianceName - The name of Network Virtual Appliance being updated.
-// parameters - Parameters supplied to Update Network Virtual Appliance Tags.
-// options - VirtualAppliancesClientUpdateTagsOptions contains the optional parameters for the VirtualAppliancesClient.UpdateTags
-// method.
+//   - resourceGroupName - The resource group name of Network Virtual Appliance.
+//   - networkVirtualApplianceName - The name of Network Virtual Appliance being updated.
+//   - parameters - Parameters supplied to Update Network Virtual Appliance Tags.
+//   - options - VirtualAppliancesClientUpdateTagsOptions contains the optional parameters for the VirtualAppliancesClient.UpdateTags
+//     method.
 func (client *VirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *VirtualAppliancesClientUpdateTagsOptions) (VirtualAppliancesClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {

@@ -9,7 +9,7 @@ import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, Con
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength, hasOAuth2SecurityDefinition, getOAuth2SecuritySchema } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, formatParamComment, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -141,7 +141,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         for (const clientParam of values(clientParams)) {
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
           if (clientParam.language.go!.description) {
-            paramDocs.push(comment(`  - ${clientParam.language.go!.name} - ${clientParam.language.go!.description}`, '//', undefined, commentLength));
+            paramDocs.push(formatParamComment(`  - ${clientParam.language.go!.name} - ${clientParam.language.go!.description}`));
           }
         }
       }
@@ -174,7 +174,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           const paramName = param.language.go!.name;
           methodParams.push(`${paramName} ${formatParameterTypeName(param)}`);
           if (param.language.go!.description) {
-            paramDocs.push(comment(`  - ${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength));
+            paramDocs.push(formatParamComment(`${param.language.go!.name} - ${param.language.go!.description}`));
           }
         }
       }
@@ -575,7 +575,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     const methodParams = getMethodParameters(op);
     for (const param of values(methodParams)) {
       if (param.language.go!.description) {
-        text += `${comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength)}\n`;
+        text += `${formatParamComment(`${param.language.go!.name} - ${param.language.go!.description}`)}\n`;
       }
     }
   }
@@ -1267,7 +1267,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
   const methodParams = getMethodParameters(op);
   for (const param of values(methodParams)) {
     if (param.language.go!.description) {
-      text += `${comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength)}\n`;
+      text += `${formatParamComment(`${param.language.go!.name} - ${param.language.go!.description}`)}\n`;
     }
   }
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;

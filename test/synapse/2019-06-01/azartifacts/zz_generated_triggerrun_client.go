@@ -28,7 +28,7 @@ type TriggerRunClient struct {
 }
 
 // NewTriggerRunClient creates a new instance of TriggerRunClient with the specified values.
-// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewTriggerRunClient(endpoint string, credential azcore.TokenCredential, options *TriggerRunClientOptions) *TriggerRunClient {
@@ -48,10 +48,10 @@ func NewTriggerRunClient(endpoint string, credential azcore.TokenCredential, opt
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-// triggerName - The trigger name.
-// runID - The pipeline run identifier.
-// options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
-// method.
+//   - triggerName - The trigger name.
+//   - runID - The pipeline run identifier.
+//   - options - TriggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.CancelTriggerInstance
+//     method.
 func (client *TriggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientCancelTriggerInstanceOptions) (TriggerRunClientCancelTriggerInstanceResponse, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
@@ -93,9 +93,9 @@ func (client *TriggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-// filterParameters - Parameters to filter the pipeline run.
-// options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
-// method.
+//   - filterParameters - Parameters to filter the pipeline run.
+//   - options - TriggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRunClient.QueryTriggerRunsByWorkspace
+//     method.
 func (client *TriggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunClientQueryTriggerRunsByWorkspaceOptions) (TriggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
@@ -138,10 +138,10 @@ func (client *TriggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-// triggerName - The trigger name.
-// runID - The pipeline run identifier.
-// options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
-// method.
+//   - triggerName - The trigger name.
+//   - runID - The pipeline run identifier.
+//   - options - TriggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the TriggerRunClient.RerunTriggerInstance
+//     method.
 func (client *TriggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunClientRerunTriggerInstanceOptions) (TriggerRunClientRerunTriggerInstanceResponse, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {

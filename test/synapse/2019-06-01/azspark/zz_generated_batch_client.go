@@ -28,9 +28,9 @@ type BatchClient struct {
 }
 
 // NewBatchClient creates a new instance of BatchClient with the specified values.
-// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// - livyAPIVersion - Valid api-version for the request.
-// - sparkPoolName - Name of the spark pool.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - livyAPIVersion - Valid api-version for the request.
+//   - sparkPoolName - Name of the spark pool.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, credential azcore.TokenCredential, options *BatchClientOptions) *BatchClient {
@@ -58,9 +58,9 @@ func NewBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName strin
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// batchID - Identifier for the batch job.
-// options - BatchClientCancelSparkBatchJobOptions contains the optional parameters for the BatchClient.CancelSparkBatchJob
-// method.
+//   - batchID - Identifier for the batch job.
+//   - options - BatchClientCancelSparkBatchJobOptions contains the optional parameters for the BatchClient.CancelSparkBatchJob
+//     method.
 func (client *BatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientCancelSparkBatchJobOptions) (BatchClientCancelSparkBatchJobResponse, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
@@ -91,9 +91,9 @@ func (client *BatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sparkBatchJobOptions - Livy compatible batch job request payload.
-// options - BatchClientCreateSparkBatchJobOptions contains the optional parameters for the BatchClient.CreateSparkBatchJob
-// method.
+//   - sparkBatchJobOptions - Livy compatible batch job request payload.
+//   - options - BatchClientCreateSparkBatchJobOptions contains the optional parameters for the BatchClient.CreateSparkBatchJob
+//     method.
 func (client *BatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions BatchJobOptions, options *BatchClientCreateSparkBatchJobOptions) (BatchClientCreateSparkBatchJobResponse, error) {
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {
@@ -138,8 +138,8 @@ func (client *BatchClient) createSparkBatchJobHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// batchID - Identifier for the batch job.
-// options - BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
+//   - batchID - Identifier for the batch job.
+//   - options - BatchClientGetSparkBatchJobOptions contains the optional parameters for the BatchClient.GetSparkBatchJob method.
 func (client *BatchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *BatchClientGetSparkBatchJobOptions) (BatchClientGetSparkBatchJobResponse, error) {
 	req, err := client.getSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
@@ -185,7 +185,7 @@ func (client *BatchClient) getSparkBatchJobHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// options - BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
+//   - options - BatchClientGetSparkBatchJobsOptions contains the optional parameters for the BatchClient.GetSparkBatchJobs method.
 func (client *BatchClient) GetSparkBatchJobs(ctx context.Context, options *BatchClientGetSparkBatchJobsOptions) (BatchClientGetSparkBatchJobsResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
 	if err != nil {

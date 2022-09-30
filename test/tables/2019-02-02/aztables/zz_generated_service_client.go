@@ -28,8 +28,8 @@ type ServiceClient struct {
 }
 
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
-// - endpoint - The URL of the service account or table that is the target of the desired operation.
-// - version - Specifies the version of the operation to use for this request.
+//   - endpoint - The URL of the service account or table that is the target of the desired operation.
+//   - - version - Specifies the version of the operation to use for this request.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *ServiceClientOptions) *ServiceClient {
@@ -51,9 +51,9 @@ func NewServiceClient(endpoint string, version Enum0, credential azcore.TokenCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-02-02
-// restype - Required query string to set the service properties.
-// comp - Required query string to set the service properties.
-// options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
+//   - restype - Required query string to set the service properties.
+//   - comp - Required query string to set the service properties.
+//   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, comp Enum6, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -113,9 +113,9 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-02-02
-// restype - Required query string to get service stats.
-// comp - Required query string to get service stats.
-// options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
+//   - restype - Required query string to get service stats.
+//   - comp - Required query string to get service stats.
+//   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, comp Enum7, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -182,10 +182,10 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-02-02
-// restype - Required query string to set the service properties.
-// comp - Required query string to set the service properties.
-// tableServiceProperties - The Table Service properties.
-// options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
+//   - restype - Required query string to set the service properties.
+//   - comp - Required query string to set the service properties.
+//   - tableServiceProperties - The Table Service properties.
+//   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties ServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, tableServiceProperties, options)
 	if err != nil {

@@ -32,7 +32,7 @@ type SupportPackagesClient struct {
 }
 
 // NewSupportPackagesClient creates a new instance of SupportPackagesClient with the specified values.
-// - subscriptionID - The subscription ID.
+//   - - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SupportPackagesClient, error) {
@@ -59,11 +59,11 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// triggerSupportPackageRequest - The trigger support package request object
-// options - SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - triggerSupportPackageRequest - The trigger support package request object
+//   - options - SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
+//     method.
 func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*runtime.Poller[SupportPackagesClientTriggerSupportPackageResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)

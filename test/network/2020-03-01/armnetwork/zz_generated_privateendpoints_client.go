@@ -32,8 +32,8 @@ type PrivateEndpointsClient struct {
 }
 
 // NewPrivateEndpointsClient creates a new instance of PrivateEndpointsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PrivateEndpointsClient, error) {
@@ -60,11 +60,11 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// privateEndpointName - The name of the private endpoint.
-// parameters - Parameters supplied to the create or update private endpoint operation.
-// options - PrivateEndpointsClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - privateEndpointName - The name of the private endpoint.
+//   - parameters - Parameters supplied to the create or update private endpoint operation.
+//   - options - PrivateEndpointsClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
+//     method.
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*runtime.Poller[PrivateEndpointsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
@@ -128,10 +128,10 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// privateEndpointName - The name of the private endpoint.
-// options - PrivateEndpointsClientBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - privateEndpointName - The name of the private endpoint.
+//   - options - PrivateEndpointsClientBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
+//     method.
 func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*runtime.Poller[PrivateEndpointsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
@@ -195,9 +195,9 @@ func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// privateEndpointName - The name of the private endpoint.
-// options - PrivateEndpointsClientGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - privateEndpointName - The name of the private endpoint.
+//   - options - PrivateEndpointsClientGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
 func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientGetOptions) (PrivateEndpointsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -254,8 +254,8 @@ func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (Pr
 // NewListPager - Gets all private endpoints in a resource group.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - PrivateEndpointsClientListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - PrivateEndpointsClientListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
 func (client *PrivateEndpointsClient) NewListPager(resourceGroupName string, options *PrivateEndpointsClientListOptions) *runtime.Pager[PrivateEndpointsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateEndpointsClientListResponse]{
 		More: func(page PrivateEndpointsClientListResponse) bool {
@@ -318,8 +318,8 @@ func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (P
 // NewListBySubscriptionPager - Gets all private endpoints in a subscription.
 //
 // Generated from API version 2020-03-01
-// options - PrivateEndpointsClientListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
-// method.
+//   - options - PrivateEndpointsClientListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
+//     method.
 func (client *PrivateEndpointsClient) NewListBySubscriptionPager(options *PrivateEndpointsClientListBySubscriptionOptions) *runtime.Pager[PrivateEndpointsClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PrivateEndpointsClientListBySubscriptionResponse]{
 		More: func(page PrivateEndpointsClientListBySubscriptionResponse) bool {

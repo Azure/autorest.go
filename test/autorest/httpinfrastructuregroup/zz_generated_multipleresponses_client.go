@@ -36,8 +36,8 @@ func NewMultipleResponsesClient(pl runtime.Pipeline) *MultipleResponsesClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the
-// MultipleResponsesClient.Get200Model201ModelDefaultError200Valid method.
+//   - options - MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get200Model201ModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse, error) {
 	req, err := client.get200Model201ModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -91,8 +91,8 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the
-// MultipleResponsesClient.Get200Model201ModelDefaultError201Valid method.
+//   - options - MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get200Model201ModelDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse, error) {
 	req, err := client.get200Model201ModelDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -145,8 +145,8 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the
-// MultipleResponsesClient.Get200Model201ModelDefaultError400Valid method.
+//   - options - MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get200Model201ModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse, error) {
 	req, err := client.get200Model201ModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -199,8 +199,8 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for
-// the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid method.
+//   - options - MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for
+//     the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -240,8 +240,8 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for
-// the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid method.
+//   - options - MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for
+//     the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError201InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -281,8 +281,8 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the
-// MultipleResponsesClient.Get200Model204NoModelDefaultError202None method.
+//   - options - MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get200Model204NoModelDefaultError202None method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -322,8 +322,8 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneH
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for
-// the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid method.
+//   - options - MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for
+//     the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError204ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -364,8 +364,8 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for
-// the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid method.
+//   - options - MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for
+//     the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -405,8 +405,8 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
-// method.
+//   - options - MultipleResponsesClientGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200InvalidOptions) (MultipleResponsesClientGet200ModelA200InvalidResponse, error) {
 	req, err := client.get200ModelA200InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -447,8 +447,8 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidHandleResponse(resp
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
-// method.
+//   - options - MultipleResponsesClientGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesClientGet200ModelA200NoneOptions) (MultipleResponsesClientGet200ModelA200NoneResponse, error) {
 	req, err := client.get200ModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -488,8 +488,8 @@ func (client *MultipleResponsesClient) get200ModelA200NoneHandleResponse(resp *h
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
-// method.
+//   - options - MultipleResponsesClientGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200ValidOptions) (MultipleResponsesClientGet200ModelA200ValidResponse, error) {
 	req, err := client.get200ModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -529,8 +529,8 @@ func (client *MultipleResponsesClient) get200ModelA200ValidHandleResponse(resp *
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters
-// for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
+//   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters
+//     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -589,8 +589,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters
-// for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
+//   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters
+//     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -650,8 +650,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters
-// for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
+//   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters
+//     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -710,8 +710,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters
-// for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
+//   - options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters
+//     for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError404ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -770,8 +770,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
-// method.
+//   - options - MultipleResponsesClientGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA202ValidOptions) (MultipleResponsesClientGet200ModelA202ValidResponse, error) {
 	req, err := client.get200ModelA202ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -811,8 +811,8 @@ func (client *MultipleResponsesClient) get200ModelA202ValidHandleResponse(resp *
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
-// method.
+//   - options - MultipleResponsesClientGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400InvalidOptions) (MultipleResponsesClientGet200ModelA400InvalidResponse, error) {
 	req, err := client.get200ModelA400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -852,8 +852,8 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidHandleResponse(resp
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
-// method.
+//   - options - MultipleResponsesClientGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, options *MultipleResponsesClientGet200ModelA400NoneOptions) (MultipleResponsesClientGet200ModelA400NoneResponse, error) {
 	req, err := client.get200ModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -893,8 +893,8 @@ func (client *MultipleResponsesClient) get200ModelA400NoneHandleResponse(resp *h
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
-// method.
+//   - options - MultipleResponsesClientGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
+//     method.
 func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400ValidOptions) (MultipleResponsesClientGet200ModelA400ValidResponse, error) {
 	req, err := client.get200ModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -934,8 +934,8 @@ func (client *MultipleResponsesClient) get200ModelA400ValidHandleResponse(resp *
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
-// method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
+//     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -966,8 +966,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
-// method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
+//     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultError204NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -998,8 +998,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the
-// MultipleResponsesClient.Get202None204NoneDefaultError400Valid method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get202None204NoneDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions) (MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse, error) {
 	req, err := client.get202None204NoneDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1030,8 +1030,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the
-// MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse, error) {
 	req, err := client.get202None204NoneDefaultNone202InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1061,8 +1061,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
-// method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
+//     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultNone204NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1092,8 +1092,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneCreate
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the
-// MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the
+//     MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse, error) {
 	req, err := client.get202None204NoneDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1123,8 +1123,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
-// method.
+//   - options - MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
+//     method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1154,8 +1154,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneCreate
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
-// method.
+//   - options - MultipleResponsesClientGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
+//     method.
 func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200NoneOptions) (MultipleResponsesClientGetDefaultModelA200NoneResponse, error) {
 	req, err := client.getDefaultModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1195,8 +1195,8 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleResponse(res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
-// method.
+//   - options - MultipleResponsesClientGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
+//     method.
 func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200ValidOptions) (MultipleResponsesClientGetDefaultModelA200ValidResponse, error) {
 	req, err := client.getDefaultModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1236,8 +1236,8 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleResponse(re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
-// method.
+//   - options - MultipleResponsesClientGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
+//     method.
 func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400NoneOptions) (MultipleResponsesClientGetDefaultModelA400NoneResponse, error) {
 	req, err := client.getDefaultModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1268,8 +1268,8 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
-// method.
+//   - options - MultipleResponsesClientGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
+//     method.
 func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400ValidOptions) (MultipleResponsesClientGetDefaultModelA400ValidResponse, error) {
 	req, err := client.getDefaultModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1300,8 +1300,8 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
-// method.
+//   - options - MultipleResponsesClientGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
+//     method.
 func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200InvalidOptions) (MultipleResponsesClientGetDefaultNone200InvalidResponse, error) {
 	req, err := client.getDefaultNone200InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1331,8 +1331,8 @@ func (client *MultipleResponsesClient) getDefaultNone200InvalidCreateRequest(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
-// method.
+//   - options - MultipleResponsesClientGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
+//     method.
 func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200NoneOptions) (MultipleResponsesClientGetDefaultNone200NoneResponse, error) {
 	req, err := client.getDefaultNone200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1362,8 +1362,8 @@ func (client *MultipleResponsesClient) getDefaultNone200NoneCreateRequest(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
-// method.
+//   - options - MultipleResponsesClientGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
+//     method.
 func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400InvalidOptions) (MultipleResponsesClientGetDefaultNone400InvalidResponse, error) {
 	req, err := client.getDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1393,8 +1393,8 @@ func (client *MultipleResponsesClient) getDefaultNone400InvalidCreateRequest(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - MultipleResponsesClientGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
-// method.
+//   - options - MultipleResponsesClientGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
+//     method.
 func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400NoneOptions) (MultipleResponsesClientGetDefaultNone400NoneResponse, error) {
 	req, err := client.getDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {

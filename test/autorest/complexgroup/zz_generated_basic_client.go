@@ -35,7 +35,7 @@ func NewBasicClient(pl runtime.Pipeline) *BasicClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
+//   - options - BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
 func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicClientGetEmptyOptions) (BasicClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -75,7 +75,7 @@ func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicCli
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
+//   - options - BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
 func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicClientGetInvalidOptions) (BasicClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -115,7 +115,7 @@ func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicC
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
+//   - options - BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
 func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicClientGetNotProvidedOptions) (BasicClientGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -155,7 +155,7 @@ func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (Ba
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
+//   - options - BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
 func (client *BasicClient) GetNull(ctx context.Context, options *BasicClientGetNullOptions) (BasicClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -195,7 +195,7 @@ func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicClie
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
+//   - options - BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
 func (client *BasicClient) GetValid(ctx context.Context, options *BasicClientGetValidOptions) (BasicClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -235,8 +235,8 @@ func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicCli
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// complexBody - Please put {id: 2, name: 'abc', color: 'Magenta'}
-// options - BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
+//   - complexBody - Please put {id: 2, name: 'abc', color: 'Magenta'}
+//   - options - BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
 func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicClientPutValidOptions) (BasicClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

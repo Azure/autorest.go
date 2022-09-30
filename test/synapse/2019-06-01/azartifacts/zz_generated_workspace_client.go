@@ -25,7 +25,7 @@ type WorkspaceClient struct {
 }
 
 // NewWorkspaceClient creates a new instance of WorkspaceClient with the specified values.
-// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewWorkspaceClient(endpoint string, credential azcore.TokenCredential, options *WorkspaceClientOptions) *WorkspaceClient {
@@ -45,7 +45,7 @@ func NewWorkspaceClient(endpoint string, credential azcore.TokenCredential, opti
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-06-01-preview
-// options - WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
+//   - options - WorkspaceClientGetOptions contains the optional parameters for the WorkspaceClient.Get method.
 func (client *WorkspaceClient) Get(ctx context.Context, options *WorkspaceClientGetOptions) (WorkspaceClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {

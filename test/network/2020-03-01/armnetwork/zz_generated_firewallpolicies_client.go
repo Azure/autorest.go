@@ -32,8 +32,8 @@ type FirewallPoliciesClient struct {
 }
 
 // NewFirewallPoliciesClient creates a new instance of FirewallPoliciesClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*FirewallPoliciesClient, error) {
@@ -60,11 +60,11 @@ func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// firewallPolicyName - The name of the Firewall Policy.
-// parameters - Parameters supplied to the create or update Firewall Policy operation.
-// options - FirewallPoliciesClientBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPoliciesClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - firewallPolicyName - The name of the Firewall Policy.
+//   - parameters - Parameters supplied to the create or update Firewall Policy operation.
+//   - options - FirewallPoliciesClientBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPoliciesClient.BeginCreateOrUpdate
+//     method.
 func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesClientBeginCreateOrUpdateOptions) (*runtime.Poller[FirewallPoliciesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
@@ -128,10 +128,10 @@ func (client *FirewallPoliciesClient) createOrUpdateCreateRequest(ctx context.Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// firewallPolicyName - The name of the Firewall Policy.
-// options - FirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the FirewallPoliciesClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - firewallPolicyName - The name of the Firewall Policy.
+//   - options - FirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the FirewallPoliciesClient.BeginDelete
+//     method.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientBeginDeleteOptions) (*runtime.Poller[FirewallPoliciesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
@@ -195,9 +195,9 @@ func (client *FirewallPoliciesClient) deleteCreateRequest(ctx context.Context, r
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// firewallPolicyName - The name of the Firewall Policy.
-// options - FirewallPoliciesClientGetOptions contains the optional parameters for the FirewallPoliciesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - firewallPolicyName - The name of the Firewall Policy.
+//   - options - FirewallPoliciesClientGetOptions contains the optional parameters for the FirewallPoliciesClient.Get method.
 func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesClientGetOptions) (FirewallPoliciesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -254,8 +254,8 @@ func (client *FirewallPoliciesClient) getHandleResponse(resp *http.Response) (Fi
 // NewListPager - Lists all Firewall Policies in a resource group.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - FirewallPoliciesClientListOptions contains the optional parameters for the FirewallPoliciesClient.List method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - FirewallPoliciesClientListOptions contains the optional parameters for the FirewallPoliciesClient.List method.
 func (client *FirewallPoliciesClient) NewListPager(resourceGroupName string, options *FirewallPoliciesClientListOptions) *runtime.Pager[FirewallPoliciesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FirewallPoliciesClientListResponse]{
 		More: func(page FirewallPoliciesClientListResponse) bool {
@@ -318,8 +318,8 @@ func (client *FirewallPoliciesClient) listHandleResponse(resp *http.Response) (F
 // NewListAllPager - Gets all the Firewall Policies in a subscription.
 //
 // Generated from API version 2020-03-01
-// options - FirewallPoliciesClientListAllOptions contains the optional parameters for the FirewallPoliciesClient.ListAll
-// method.
+//   - options - FirewallPoliciesClientListAllOptions contains the optional parameters for the FirewallPoliciesClient.ListAll
+//     method.
 func (client *FirewallPoliciesClient) NewListAllPager(options *FirewallPoliciesClientListAllOptions) *runtime.Pager[FirewallPoliciesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[FirewallPoliciesClientListAllResponse]{
 		More: func(page FirewallPoliciesClientListAllResponse) bool {

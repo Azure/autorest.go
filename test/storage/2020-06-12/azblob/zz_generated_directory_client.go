@@ -26,9 +26,9 @@ type directoryClient struct {
 }
 
 // newDirectoryClient creates a new instance of directoryClient with the specified values.
-// - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// - version - Specifies the version of the operation to use for this request.
-// - pathRenameMode - Determines the behavior of the rename operation
+//   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+//   - - version - Specifies the version of the operation to use for this request.
+//   - - pathRenameMode - Determines the behavior of the rename operation
 //   - pl - the pipeline used for sending requests and handling responses.
 func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *directoryClient {
 	client := &directoryClient{
@@ -48,10 +48,10 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - directoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
-// DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - directoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
+//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *directoryClient) Create(ctx context.Context, resource Enum20, options *directoryClientCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, resource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -169,11 +169,11 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
-// non-empty, an error occurs.
-// options - directoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
+//     non-empty, an error occurs.
+//   - options - directoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *directoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, recursiveDirectoryDelete, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -256,10 +256,10 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - directoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl
-// method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - directoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl
+//     method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum22, options *directoryClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -362,15 +362,15 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
-// If "x-ms-properties" is specified, the properties will overwrite the existing properties;
-// otherwise, the existing properties will be preserved.
-// options - directoryClientRenameOptions contains the optional parameters for the directoryClient.Rename method.
-// DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
-// method.
+//   - renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
+//     If "x-ms-properties" is specified, the properties will overwrite the existing properties;
+//     otherwise, the existing properties will be preserved.
+//   - options - directoryClientRenameOptions contains the optional parameters for the directoryClient.Rename method.
+//   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//     method.
 func (client *directoryClient) Rename(ctx context.Context, renameSource string, options *directoryClientRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (DirectoryClientRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, options, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -512,10 +512,10 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - directoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl
-// method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - directoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl
+//     method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum21, options *directoryClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientSetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, action, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {

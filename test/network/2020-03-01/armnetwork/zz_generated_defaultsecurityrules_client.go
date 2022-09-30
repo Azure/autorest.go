@@ -32,8 +32,8 @@ type DefaultSecurityRulesClient struct {
 }
 
 // NewDefaultSecurityRulesClient creates a new instance of DefaultSecurityRulesClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*DefaultSecurityRulesClient, error) {
@@ -60,11 +60,11 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkSecurityGroupName - The name of the network security group.
-// defaultSecurityRuleName - The name of the default security rule.
-// options - DefaultSecurityRulesClientGetOptions contains the optional parameters for the DefaultSecurityRulesClient.Get
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkSecurityGroupName - The name of the network security group.
+//   - defaultSecurityRuleName - The name of the default security rule.
+//   - options - DefaultSecurityRulesClientGetOptions contains the optional parameters for the DefaultSecurityRulesClient.Get
+//     method.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesClientGetOptions) (DefaultSecurityRulesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
@@ -122,10 +122,10 @@ func (client *DefaultSecurityRulesClient) getHandleResponse(resp *http.Response)
 // NewListPager - Gets all default security rules in a network security group.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkSecurityGroupName - The name of the network security group.
-// options - DefaultSecurityRulesClientListOptions contains the optional parameters for the DefaultSecurityRulesClient.List
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkSecurityGroupName - The name of the network security group.
+//   - options - DefaultSecurityRulesClientListOptions contains the optional parameters for the DefaultSecurityRulesClient.List
+//     method.
 func (client *DefaultSecurityRulesClient) NewListPager(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesClientListOptions) *runtime.Pager[DefaultSecurityRulesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[DefaultSecurityRulesClientListResponse]{
 		More: func(page DefaultSecurityRulesClientListResponse) bool {

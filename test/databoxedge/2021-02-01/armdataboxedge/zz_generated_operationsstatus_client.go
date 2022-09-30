@@ -32,7 +32,7 @@ type OperationsStatusClient struct {
 }
 
 // NewOperationsStatusClient creates a new instance of OperationsStatusClient with the specified values.
-// - subscriptionID - The subscription ID.
+//   - - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*OperationsStatusClient, error) {
@@ -59,10 +59,10 @@ func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCre
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The job name.
-// resourceGroupName - The resource group name.
-// options - OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
+//   - deviceName - The device name.
+//   - name - The job name.
+//   - resourceGroupName - The resource group name.
+//   - options - OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
 func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusClientGetOptions) (OperationsStatusClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

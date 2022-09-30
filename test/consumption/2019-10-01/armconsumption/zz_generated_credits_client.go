@@ -54,10 +54,10 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-10-01
-// scope - The scope associated with credits operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
-// for Billing Profile scope, and
-// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
+//   - scope - The scope associated with credits operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
+//     for Billing Profile scope, and
+//     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
+//   - options - CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
 func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsClientGetOptions) (CreditsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {

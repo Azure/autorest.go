@@ -35,9 +35,9 @@ func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// fooClientRequestID - The fooRequestId
-// options - HeaderClientCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
-// method.
+//   - fooClientRequestID - The fooRequestId
+//   - options - HeaderClientCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
+//     method.
 func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDOptions) (HeaderClientCustomNamedRequestIDResponse, error) {
 	req, err := client.customNamedRequestIDCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -77,9 +77,9 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Respon
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 //
 // Generated from API version 2015-07-01-preview
-// fooClientRequestID - The fooRequestId
-// options - HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
-// method.
+//   - fooClientRequestID - The fooRequestId
+//   - options - HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
+//     method.
 func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestID string, options *HeaderClientCustomNamedRequestIDHeadOptions) (HeaderClientCustomNamedRequestIDHeadResponse, error) {
 	req, err := client.customNamedRequestIDHeadCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -122,10 +122,10 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// HeaderClientCustomNamedRequestIDParamGroupingParameters - HeaderClientCustomNamedRequestIDParamGroupingParameters contains
-// a group of parameters for the HeaderClient.CustomNamedRequestIDParamGrouping method.
-// options - HeaderClientCustomNamedRequestIDParamGroupingOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDParamGrouping
-// method.
+//   - HeaderClientCustomNamedRequestIDParamGroupingParameters - HeaderClientCustomNamedRequestIDParamGroupingParameters contains
+//     a group of parameters for the HeaderClient.CustomNamedRequestIDParamGrouping method.
+//   - options - HeaderClientCustomNamedRequestIDParamGroupingOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDParamGrouping
+//     method.
 func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters, options *HeaderClientCustomNamedRequestIDParamGroupingOptions) (HeaderClientCustomNamedRequestIDParamGroupingResponse, error) {
 	req, err := client.customNamedRequestIDParamGroupingCreateRequest(ctx, headerClientCustomNamedRequestIDParamGroupingParameters, options)
 	if err != nil {

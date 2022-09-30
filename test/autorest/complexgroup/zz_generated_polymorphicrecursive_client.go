@@ -35,8 +35,8 @@ func NewPolymorphicrecursiveClient(pl runtime.Pipeline) *PolymorphicrecursiveCli
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
-// method.
+//   - options - PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
+//     method.
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (PolymorphicrecursiveClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -76,15 +76,15 @@ func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Resp
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// complexBody - Please put a salmon that looks like this: { "fishtype": "salmon", "species": "king", "length": 1, "age":
-// 1, "location": "alaska", "iswild": true, "siblings": [ { "fishtype": "shark", "species":
-// "predator", "length": 20, "age": 6, "siblings": [ { "fishtype": "salmon", "species": "coho", "length": 2, "age": 2, "location":
-// "atlantic", "iswild": true, "siblings": [ { "fishtype": "shark",
-// "species": "predator", "length": 20, "age": 6 }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age":
-// 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10,
-// "age": 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age": 105 } ] }
-// options - PolymorphicrecursiveClientPutValidOptions contains the optional parameters for the PolymorphicrecursiveClient.PutValid
-// method.
+//   - complexBody - Please put a salmon that looks like this: { "fishtype": "salmon", "species": "king", "length": 1, "age":
+//     1, "location": "alaska", "iswild": true, "siblings": [ { "fishtype": "shark", "species":
+//     "predator", "length": 20, "age": 6, "siblings": [ { "fishtype": "salmon", "species": "coho", "length": 2, "age": 2, "location":
+//     "atlantic", "iswild": true, "siblings": [ { "fishtype": "shark",
+//     "species": "predator", "length": 20, "age": 6 }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age":
+//     105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10,
+//     "age": 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age": 105 } ] }
+//   - options - PolymorphicrecursiveClientPutValidOptions contains the optional parameters for the PolymorphicrecursiveClient.PutValid
+//     method.
 func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursiveClientPutValidOptions) (PolymorphicrecursiveClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

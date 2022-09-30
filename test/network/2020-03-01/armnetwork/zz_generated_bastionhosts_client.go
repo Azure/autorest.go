@@ -32,8 +32,8 @@ type BastionHostsClient struct {
 }
 
 // NewBastionHostsClient creates a new instance of BastionHostsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*BastionHostsClient, error) {
@@ -60,11 +60,11 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// parameters - Parameters supplied to the create or update Bastion Host operation.
-// options - BastionHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the BastionHostsClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - parameters - Parameters supplied to the create or update Bastion Host operation.
+//   - options - BastionHostsClientBeginCreateOrUpdateOptions contains the optional parameters for the BastionHostsClient.BeginCreateOrUpdate
+//     method.
 func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsClientBeginCreateOrUpdateOptions) (*runtime.Poller[BastionHostsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
@@ -128,10 +128,10 @@ func (client *BastionHostsClient) createOrUpdateCreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// options - BastionHostsClientBeginDeleteOptions contains the optional parameters for the BastionHostsClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - options - BastionHostsClientBeginDeleteOptions contains the optional parameters for the BastionHostsClient.BeginDelete
+//     method.
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientBeginDeleteOptions) (*runtime.Poller[BastionHostsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
@@ -195,9 +195,9 @@ func (client *BastionHostsClient) deleteCreateRequest(ctx context.Context, resou
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// options - BastionHostsClientGetOptions contains the optional parameters for the BastionHostsClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - options - BastionHostsClientGetOptions contains the optional parameters for the BastionHostsClient.Get method.
 func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsClientGetOptions) (BastionHostsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -251,7 +251,7 @@ func (client *BastionHostsClient) getHandleResponse(resp *http.Response) (Bastio
 // NewListPager - Lists all Bastion Hosts in a subscription.
 //
 // Generated from API version 2020-03-01
-// options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.List method.
+//   - options - BastionHostsClientListOptions contains the optional parameters for the BastionHostsClient.List method.
 func (client *BastionHostsClient) NewListPager(options *BastionHostsClientListOptions) *runtime.Pager[BastionHostsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BastionHostsClientListResponse]{
 		More: func(page BastionHostsClientListResponse) bool {
@@ -310,9 +310,9 @@ func (client *BastionHostsClient) listHandleResponse(resp *http.Response) (Basti
 // NewListByResourceGroupPager - Lists all Bastion Hosts in a resource group.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - BastionHostsClientListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup
+//     method.
 func (client *BastionHostsClient) NewListByResourceGroupPager(resourceGroupName string, options *BastionHostsClientListByResourceGroupOptions) *runtime.Pager[BastionHostsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[BastionHostsClientListByResourceGroupResponse]{
 		More: func(page BastionHostsClientListByResourceGroupResponse) bool {

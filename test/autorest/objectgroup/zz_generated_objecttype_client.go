@@ -35,7 +35,7 @@ func NewObjectTypeClient(pl runtime.Pipeline) *ObjectTypeClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
+//   - options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
 func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -75,8 +75,8 @@ func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTy
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
-// options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
+//   - putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
+//   - options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
 func (client *ObjectTypeClient) Put(ctx context.Context, putObject any, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {

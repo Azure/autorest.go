@@ -35,8 +35,8 @@ func NewLROSADsClient(pl runtime.Pipeline) *LROSADsClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDelete202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginDelete202NonRetry400
-// method.
+//   - options - LROSADsClientBeginDelete202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginDelete202NonRetry400
+//     method.
 func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, options *LROSADsClientBeginDelete202NonRetry400Options) (*runtime.Poller[LROSADsClientDelete202NonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete202NonRetry400(ctx, options)
@@ -84,8 +84,8 @@ func (client *LROSADsClient) delete202NonRetry400CreateRequest(ctx context.Conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDelete202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDelete202RetryInvalidHeader
-// method.
+//   - options - LROSADsClientBeginDelete202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDelete202RetryInvalidHeader
+//     method.
 func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDelete202RetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientDelete202RetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete202RetryInvalidHeader(ctx, options)
@@ -133,8 +133,8 @@ func (client *LROSADsClient) delete202RetryInvalidHeaderCreateRequest(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDelete204SucceededOptions contains the optional parameters for the LROSADsClient.BeginDelete204Succeeded
-// method.
+//   - options - LROSADsClientBeginDelete204SucceededOptions contains the optional parameters for the LROSADsClient.BeginDelete204Succeeded
+//     method.
 func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, options *LROSADsClientBeginDelete204SucceededOptions) (*runtime.Poller[LROSADsClientDelete204SucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete204Succeeded(ctx, options)
@@ -182,8 +182,8 @@ func (client *LROSADsClient) delete204SucceededCreateRequest(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDeleteAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetry400
-// method.
+//   - options - LROSADsClientBeginDeleteAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetry400
+//     method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetry400(ctx, options)
@@ -232,8 +232,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400CreateRequest(ctx contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader
-// method.
+//   - options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidHeader
+//     method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetryInvalidHeader(ctx, options)
@@ -282,8 +282,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the
-// LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling method.
+//   - options - LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the
+//     LROSADsClient.BeginDeleteAsyncRelativeRetryInvalidJSONPolling method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetryInvalidJSONPolling(ctx, options)
@@ -332,8 +332,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingCreateReq
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus
-// method.
+//   - options - LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginDeleteAsyncRelativeRetryNoStatus
+//     method.
 func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.Context, options *LROSADsClientBeginDeleteAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientDeleteAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetryNoStatus(ctx, options)
@@ -381,8 +381,8 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx c
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginDeleteNonRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteNonRetry400
-// method.
+//   - options - LROSADsClientBeginDeleteNonRetry400Options contains the optional parameters for the LROSADsClient.BeginDeleteNonRetry400
+//     method.
 func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options *LROSADsClientBeginDeleteNonRetry400Options) (*runtime.Poller[LROSADsClientDeleteNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteNonRetry400(ctx, options)
@@ -429,8 +429,8 @@ func (client *LROSADsClient) deleteNonRetry400CreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPost202NoLocationOptions contains the optional parameters for the LROSADsClient.BeginPost202NoLocation
-// method.
+//   - options - LROSADsClientBeginPost202NoLocationOptions contains the optional parameters for the LROSADsClient.BeginPost202NoLocation
+//     method.
 func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options *LROSADsClientBeginPost202NoLocationOptions) (*runtime.Poller[LROSADsClientPost202NoLocationResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202NoLocation(ctx, options)
@@ -480,8 +480,8 @@ func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPost202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginPost202NonRetry400
-// method.
+//   - options - LROSADsClientBeginPost202NonRetry400Options contains the optional parameters for the LROSADsClient.BeginPost202NonRetry400
+//     method.
 func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, options *LROSADsClientBeginPost202NonRetry400Options) (*runtime.Poller[LROSADsClientPost202NonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202NonRetry400(ctx, options)
@@ -532,8 +532,8 @@ func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPost202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPost202RetryInvalidHeader
-// method.
+//   - options - LROSADsClientBeginPost202RetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPost202RetryInvalidHeader
+//     method.
 func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPost202RetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPost202RetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202RetryInvalidHeader(ctx, options)
@@ -585,8 +585,8 @@ func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPostAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetry400
-// method.
+//   - options - LROSADsClientBeginPostAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetry400
+//     method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetry400(ctx, options)
@@ -639,8 +639,8 @@ func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader
-// method.
+//   - options - LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidHeader
+//     method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetryInvalidHeader(ctx, options)
@@ -695,8 +695,8 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling
-// method.
+//   - options - LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryInvalidJSONPolling
+//     method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetryInvalidJSONPolling(ctx, options)
@@ -750,8 +750,8 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateReque
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryNoPayload
-// method.
+//   - options - LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LROSADsClient.BeginPostAsyncRelativeRetryNoPayload
+//     method.
 func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Context, options *LROSADsClientBeginPostAsyncRelativeRetryNoPayloadOptions) (*runtime.Poller[LROSADsClientPostAsyncRelativeRetryNoPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetryNoPayload(ctx, options)
@@ -803,8 +803,8 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LROSADsClientBeginPostNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPostNonRetry400
-// method.
+//   - options - LROSADsClientBeginPostNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPostNonRetry400
+//     method.
 func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *LROSADsClientBeginPostNonRetry400Options) (*runtime.Poller[LROSADsClientPostNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postNonRetry400(ctx, options)
@@ -855,9 +855,9 @@ func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, o
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPut200InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPut200InvalidJSON
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPut200InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPut200InvalidJSON
+//     method.
 func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPut200InvalidJSONOptions) (*runtime.Poller[LROSADsClientPut200InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.put200InvalidJSON(ctx, product, options)
@@ -906,9 +906,9 @@ func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetry400
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetry400
+//     method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetry400Options) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetry400(ctx, product, options)
@@ -957,9 +957,9 @@ func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidHeader
+//     method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidHeaderResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryInvalidHeader(ctx, product, options)
@@ -1010,9 +1010,9 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryInvalidJSONPolling
+//     method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryInvalidJSONPolling(ctx, product, options)
@@ -1063,9 +1063,9 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateReques
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatus
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatus
+//     method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryNoStatus(ctx, product, options)
@@ -1116,9 +1116,9 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx cont
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADsClient.BeginPutAsyncRelativeRetryNoStatusPayload
+//     method.
 func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx context.Context, product Product, options *LROSADsClientBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*runtime.Poller[LROSADsClientPutAsyncRelativeRetryNoStatusPayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetryNoStatusPayload(ctx, product, options)
@@ -1168,9 +1168,9 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(c
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions contains the optional parameters for the LROSADsClient.BeginPutError201NoProvisioningStatePayload
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions contains the optional parameters for the LROSADsClient.BeginPutError201NoProvisioningStatePayload
+//     method.
 func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx context.Context, product Product, options *LROSADsClientBeginPutError201NoProvisioningStatePayloadOptions) (*runtime.Poller[LROSADsClientPutError201NoProvisioningStatePayloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putError201NoProvisioningStatePayload(ctx, product, options)
@@ -1219,9 +1219,9 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400
+//     method.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400Options) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putNonRetry201Creating400(ctx, product, options)
@@ -1270,9 +1270,9 @@ func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADsClient.BeginPutNonRetry201Creating400InvalidJSON
+//     method.
 func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry201Creating400InvalidJSONOptions) (*runtime.Poller[LROSADsClientPutNonRetry201Creating400InvalidJSONResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putNonRetry201Creating400InvalidJSON(ctx, product, options)
@@ -1320,9 +1320,9 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(c
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LROSADsClientBeginPutNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry400
-// method.
+//   - product - Product to put
+//   - options - LROSADsClientBeginPutNonRetry400Options contains the optional parameters for the LROSADsClient.BeginPutNonRetry400
+//     method.
 func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, product Product, options *LROSADsClientBeginPutNonRetry400Options) (*runtime.Poller[LROSADsClientPutNonRetry400Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putNonRetry400(ctx, product, options)

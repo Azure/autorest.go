@@ -27,7 +27,7 @@ type SubscriptionInCredentialsClient struct {
 }
 
 // NewSubscriptionInCredentialsClient creates a new instance of SubscriptionInCredentialsClient with the specified values.
-// - subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
+//   - - subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeline) *SubscriptionInCredentialsClient {
 	client := &SubscriptionInCredentialsClient{
@@ -42,8 +42,8 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeli
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the
-// SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid method.
+//   - options - SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the
+//     SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse, error) {
 	req, err := client.postMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
@@ -82,8 +82,8 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidC
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - SubscriptionInCredentialsClientPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
-// method.
+//   - options - SubscriptionInCredentialsClientPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
+//     method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (SubscriptionInCredentialsClientPostMethodGlobalNullResponse, error) {
 	req, err := client.postMethodGlobalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -119,8 +119,8 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - SubscriptionInCredentialsClientPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
-// method.
+//   - options - SubscriptionInCredentialsClientPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
+//     method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalValidResponse, error) {
 	req, err := client.postMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -156,8 +156,8 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateReques
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - SubscriptionInCredentialsClientPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
-// method.
+//   - options - SubscriptionInCredentialsClientPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
+//     method.
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (SubscriptionInCredentialsClientPostPathGlobalValidResponse, error) {
 	req, err := client.postPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -193,8 +193,8 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2015-07-01-preview
-// options - SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
-// method.
+//   - options - SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
+//     method.
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse, error) {
 	req, err := client.postSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {

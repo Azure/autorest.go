@@ -33,7 +33,7 @@ type PriceSheetClient struct {
 }
 
 // NewPriceSheetClient creates a new instance of PriceSheetClient with the specified values.
-// - subscriptionID - Azure Subscription ID.
+//   - - subscriptionID - Azure Subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PriceSheetClient, error) {
@@ -61,7 +61,7 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-10-01
-// options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
+//   - options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
 func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (PriceSheetClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -118,9 +118,9 @@ func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceShe
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-10-01
-// billingPeriodName - Billing Period Name.
-// options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
-// method.
+//   - billingPeriodName - Billing Period Name.
+//   - options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
+//     method.
 func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingPeriodName string, options *PriceSheetClientGetByBillingPeriodOptions) (PriceSheetClientGetByBillingPeriodResponse, error) {
 	req, err := client.getByBillingPeriodCreateRequest(ctx, billingPeriodName, options)
 	if err != nil {

@@ -36,8 +36,8 @@ func NewLRORetrysClient(pl runtime.Pipeline) *LRORetrysClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
-// method.
+//   - options - LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
+//     method.
 func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*runtime.Poller[LRORetrysClientDelete202Retry200Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.delete202Retry200(ctx, options)
@@ -86,8 +86,8 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded
-// method.
+//   - options - LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded
+//     method.
 func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientDeleteAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteAsyncRelativeRetrySucceeded(ctx, options)
@@ -138,8 +138,8 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the
-// LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded method.
+//   - options - LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the
+//     LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded method.
 func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*runtime.Poller[LRORetrysClientDeleteProvisioning202Accepted200SucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteProvisioning202Accepted200Succeeded(ctx, options)
@@ -190,8 +190,8 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LRORetrysClientBeginPost202Retry200Options contains the optional parameters for the LRORetrysClient.BeginPost202Retry200
-// method.
+//   - options - LRORetrysClientBeginPost202Retry200Options contains the optional parameters for the LRORetrysClient.BeginPost202Retry200
+//     method.
 func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (*runtime.Poller[LRORetrysClientPost202Retry200Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.post202Retry200(ctx, options)
@@ -244,8 +244,8 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// options - LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded
-// method.
+//   - options - LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded
+//     method.
 func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientPostAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.postAsyncRelativeRetrySucceeded(ctx, options)
@@ -299,9 +299,9 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
-// method.
+//   - product - Product to put
+//   - options - LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
+//     method.
 func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, product Product, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*runtime.Poller[LRORetrysClientPut201CreatingSucceeded200Response], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.put201CreatingSucceeded200(ctx, product, options)
@@ -352,9 +352,9 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// product - Product to put
-// options - LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
-// method.
+//   - product - Product to put
+//   - options - LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
+//     method.
 func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, product Product, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*runtime.Poller[LRORetrysClientPutAsyncRelativeRetrySucceededResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.putAsyncRelativeRetrySucceeded(ctx, product, options)

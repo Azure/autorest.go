@@ -32,8 +32,8 @@ type ManagementClient struct {
 }
 
 // NewManagementClient creates a new instance of ManagementClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewManagementClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ManagementClient, error) {
@@ -60,10 +60,10 @@ func NewManagementClient(subscriptionID string, credential azcore.TokenCredentia
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// location - The location of the domain name.
-// domainNameLabel - The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
-// options - ManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the ManagementClient.CheckDNSNameAvailability
-// method.
+//   - location - The location of the domain name.
+//   - domainNameLabel - The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
+//   - options - ManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the ManagementClient.CheckDNSNameAvailability
+//     method.
 func (client *ManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string, options *ManagementClientCheckDNSNameAvailabilityOptions) (ManagementClientCheckDNSNameAvailabilityResponse, error) {
 	req, err := client.checkDNSNameAvailabilityCreateRequest(ctx, location, domainNameLabel, options)
 	if err != nil {
@@ -115,11 +115,11 @@ func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *htt
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// bslRequest - Post request for all the Bastion Shareable Link endpoints.
-// options - ManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginDeleteBastionShareableLink
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - bslRequest - Post request for all the Bastion Shareable Link endpoints.
+//   - options - ManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginDeleteBastionShareableLink
+//     method.
 func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*runtime.Poller[ManagementClientDeleteBastionShareableLinkResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
@@ -182,11 +182,11 @@ func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx cont
 // NewDisconnectActiveSessionsPager - Returns the list of currently active sessions on the Bastion.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// sessionIDs - The list of sessionids to disconnect.
-// options - ManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the ManagementClient.DisconnectActiveSessions
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - sessionIDs - The list of sessionids to disconnect.
+//   - options - ManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the ManagementClient.DisconnectActiveSessions
+//     method.
 func (client *ManagementClient) NewDisconnectActiveSessionsPager(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *ManagementClientDisconnectActiveSessionsOptions) *runtime.Pager[ManagementClientDisconnectActiveSessionsResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ManagementClientDisconnectActiveSessionsResponse]{
 		More: func(page ManagementClientDisconnectActiveSessionsResponse) bool {
@@ -255,11 +255,11 @@ func (client *ManagementClient) disconnectActiveSessionsHandleResponse(resp *htt
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name.
-// virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
-// vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
-// options - ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
-// for the ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
+//   - resourceGroupName - The resource group name.
+//   - virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
+//   - vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
+//   - options - ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
+//     for the ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
 func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*runtime.Poller[ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofileResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
@@ -323,10 +323,10 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 // BeginGetActiveSessions - Returns the list of currently active sessions on the Bastion.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// options - ManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - options - ManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
+//     method.
 func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*runtime.Poller[*runtime.Pager[ManagementClientGetActiveSessionsResponse]], error) {
 	pager := runtime.NewPager(runtime.PagingHandler[ManagementClientGetActiveSessionsResponse]{
 		More: func(page ManagementClientGetActiveSessionsResponse) bool {
@@ -419,11 +419,11 @@ func (client *ManagementClient) getActiveSessionsHandleResponse(resp *http.Respo
 // NewGetBastionShareableLinkPager - Return the Bastion Shareable Links for all the VMs specified in the request.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// bslRequest - Post request for all the Bastion Shareable Link endpoints.
-// options - ManagementClientGetBastionShareableLinkOptions contains the optional parameters for the ManagementClient.GetBastionShareableLink
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - bslRequest - Post request for all the Bastion Shareable Link endpoints.
+//   - options - ManagementClientGetBastionShareableLinkOptions contains the optional parameters for the ManagementClient.GetBastionShareableLink
+//     method.
 func (client *ManagementClient) NewGetBastionShareableLinkPager(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientGetBastionShareableLinkOptions) *runtime.Pager[ManagementClientGetBastionShareableLinkResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ManagementClientGetBastionShareableLinkResponse]{
 		More: func(page ManagementClientGetBastionShareableLinkResponse) bool {
@@ -490,11 +490,11 @@ func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http
 // BeginPutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// bastionHostName - The name of the Bastion Host.
-// bslRequest - Post request for all the Bastion Shareable Link endpoints.
-// options - ManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginPutBastionShareableLink
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - bastionHostName - The name of the Bastion Host.
+//   - bslRequest - Post request for all the Bastion Shareable Link endpoints.
+//   - options - ManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginPutBastionShareableLink
+//     method.
 func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*runtime.Poller[*runtime.Pager[ManagementClientPutBastionShareableLinkResponse]], error) {
 	pager := runtime.NewPager(runtime.PagingHandler[ManagementClientPutBastionShareableLinkResponse]{
 		More: func(page ManagementClientPutBastionShareableLinkResponse) bool {
@@ -588,10 +588,10 @@ func (client *ManagementClient) putBastionShareableLinkHandleResponse(resp *http
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name.
-// virtualWANName - The name of the VirtualWAN for which supported security providers are needed.
-// options - ManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the ManagementClient.SupportedSecurityProviders
-// method.
+//   - resourceGroupName - The resource group name.
+//   - virtualWANName - The name of the VirtualWAN for which supported security providers are needed.
+//   - options - ManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the ManagementClient.SupportedSecurityProviders
+//     method.
 func (client *ManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWANName string, options *ManagementClientSupportedSecurityProvidersOptions) (ManagementClientSupportedSecurityProvidersResponse, error) {
 	req, err := client.supportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {

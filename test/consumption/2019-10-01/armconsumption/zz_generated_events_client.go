@@ -53,12 +53,12 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 // NewListPager - Lists the events by billingAccountId and billingProfileId for given start and end date.
 //
 // Generated from API version 2019-10-01
-// startDate - Start date
-// endDate - End date
-// scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
-// for Billing Profile scope, and
-// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
+//   - startDate - Start date
+//   - endDate - End date
+//   - scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
+//     for Billing Profile scope, and
+//     'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
+//   - options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
 func (client *EventsClient) NewListPager(startDate string, endDate string, scope string, options *EventsClientListOptions) *runtime.Pager[EventsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[EventsClientListResponse]{
 		More: func(page EventsClientListResponse) bool {

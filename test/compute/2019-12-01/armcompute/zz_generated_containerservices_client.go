@@ -32,8 +32,8 @@ type ContainerServicesClient struct {
 }
 
 // NewContainerServicesClient creates a new instance of ContainerServicesClient with the specified values.
-// - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
+//   - - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ContainerServicesClient, error) {
@@ -61,11 +61,11 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2017-01-31
-// resourceGroupName - The name of the resource group.
-// containerServiceName - The name of the container service in the specified subscription and resource group.
-// parameters - Parameters supplied to the Create or Update a Container Service operation.
-// options - ContainerServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - containerServiceName - The name of the container service in the specified subscription and resource group.
+//   - parameters - Parameters supplied to the Create or Update a Container Service operation.
+//   - options - ContainerServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
+//     method.
 func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*runtime.Poller[ContainerServicesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
@@ -131,10 +131,10 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2017-01-31
-// resourceGroupName - The name of the resource group.
-// containerServiceName - The name of the container service in the specified subscription and resource group.
-// options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - containerServiceName - The name of the container service in the specified subscription and resource group.
+//   - options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
+//     method.
 func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*runtime.Poller[ContainerServicesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
@@ -200,9 +200,9 @@ func (client *ContainerServicesClient) deleteCreateRequest(ctx context.Context, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2017-01-31
-// resourceGroupName - The name of the resource group.
-// containerServiceName - The name of the container service in the specified subscription and resource group.
-// options - ContainerServicesClientGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - containerServiceName - The name of the container service in the specified subscription and resource group.
+//   - options - ContainerServicesClientGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
 func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientGetOptions) (ContainerServicesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -258,7 +258,7 @@ func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (C
 // masters and agents.
 //
 // Generated from API version 2017-01-31
-// options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
+//   - options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
 func (client *ContainerServicesClient) NewListPager(options *ContainerServicesClientListOptions) *runtime.Pager[ContainerServicesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerServicesClientListResponse]{
 		More: func(page ContainerServicesClientListResponse) bool {
@@ -319,9 +319,9 @@ func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (
 // agents, and FQDNs of masters and agents.
 //
 // Generated from API version 2017-01-31
-// resourceGroupName - The name of the resource group.
-// options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
+//     method.
 func (client *ContainerServicesClient) NewListByResourceGroupPager(resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) *runtime.Pager[ContainerServicesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerServicesClientListByResourceGroupResponse]{
 		More: func(page ContainerServicesClientListByResourceGroupResponse) bool {

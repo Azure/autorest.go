@@ -28,8 +28,8 @@ type PathsClient struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-// - dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
-// - subscriptionID - The subscription id with value 'test12'.
+//   - dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
+//   - - subscriptionID - The subscription id with value 'test12'.
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{
@@ -47,10 +47,10 @@ func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipelin
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 1.0.0
-// vault - The vault name, e.g. https://myvault
-// secret - Secret value.
-// keyName - The key name with value 'key1'.
-// options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
+//   - vault - The vault name, e.g. https://myvault
+//   - secret - Secret value.
+//   - keyName - The key name with value 'key1'.
+//   - options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {

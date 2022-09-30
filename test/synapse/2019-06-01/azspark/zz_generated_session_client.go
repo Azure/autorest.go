@@ -28,9 +28,9 @@ type SessionClient struct {
 }
 
 // NewSessionClient creates a new instance of SessionClient with the specified values.
-// - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// - livyAPIVersion - Valid api-version for the request.
-// - sparkPoolName - Name of the spark pool.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - livyAPIVersion - Valid api-version for the request.
+//   - sparkPoolName - Name of the spark pool.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName string, credential azcore.TokenCredential, options *SessionClientOptions) *SessionClient {
@@ -58,9 +58,9 @@ func NewSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName str
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// options - SessionClientCancelSparkSessionOptions contains the optional parameters for the SessionClient.CancelSparkSession
-// method.
+//   - sessionID - Identifier for the session.
+//   - options - SessionClientCancelSparkSessionOptions contains the optional parameters for the SessionClient.CancelSparkSession
+//     method.
 func (client *SessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SessionClientCancelSparkSessionOptions) (SessionClientCancelSparkSessionResponse, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -91,10 +91,10 @@ func (client *SessionClient) cancelSparkSessionCreateRequest(ctx context.Context
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// statementID - Identifier for the statement.
-// options - SessionClientCancelSparkStatementOptions contains the optional parameters for the SessionClient.CancelSparkStatement
-// method.
+//   - sessionID - Identifier for the session.
+//   - statementID - Identifier for the statement.
+//   - options - SessionClientCancelSparkStatementOptions contains the optional parameters for the SessionClient.CancelSparkStatement
+//     method.
 func (client *SessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SessionClientCancelSparkStatementOptions) (SessionClientCancelSparkStatementResponse, error) {
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -136,9 +136,9 @@ func (client *SessionClient) cancelSparkStatementHandleResponse(resp *http.Respo
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sparkSessionOptions - Livy compatible batch job request payload.
-// options - SessionClientCreateSparkSessionOptions contains the optional parameters for the SessionClient.CreateSparkSession
-// method.
+//   - sparkSessionOptions - Livy compatible batch job request payload.
+//   - options - SessionClientCreateSparkSessionOptions contains the optional parameters for the SessionClient.CreateSparkSession
+//     method.
 func (client *SessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SessionOptions, options *SessionClientCreateSparkSessionOptions) (SessionClientCreateSparkSessionResponse, error) {
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
@@ -183,10 +183,10 @@ func (client *SessionClient) createSparkSessionHandleResponse(resp *http.Respons
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// sparkStatementOptions - Livy compatible batch job request payload.
-// options - SessionClientCreateSparkStatementOptions contains the optional parameters for the SessionClient.CreateSparkStatement
-// method.
+//   - sessionID - Identifier for the session.
+//   - sparkStatementOptions - Livy compatible batch job request payload.
+//   - options - SessionClientCreateSparkStatementOptions contains the optional parameters for the SessionClient.CreateSparkStatement
+//     method.
 func (client *SessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions StatementOptions, options *SessionClientCreateSparkStatementOptions) (SessionClientCreateSparkStatementResponse, error) {
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
@@ -227,8 +227,8 @@ func (client *SessionClient) createSparkStatementHandleResponse(resp *http.Respo
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// options - SessionClientGetSparkSessionOptions contains the optional parameters for the SessionClient.GetSparkSession method.
+//   - sessionID - Identifier for the session.
+//   - options - SessionClientGetSparkSessionOptions contains the optional parameters for the SessionClient.GetSparkSession method.
 func (client *SessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SessionClientGetSparkSessionOptions) (SessionClientGetSparkSessionResponse, error) {
 	req, err := client.getSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -274,8 +274,8 @@ func (client *SessionClient) getSparkSessionHandleResponse(resp *http.Response) 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// options - SessionClientGetSparkSessionsOptions contains the optional parameters for the SessionClient.GetSparkSessions
-// method.
+//   - options - SessionClientGetSparkSessionsOptions contains the optional parameters for the SessionClient.GetSparkSessions
+//     method.
 func (client *SessionClient) GetSparkSessions(ctx context.Context, options *SessionClientGetSparkSessionsOptions) (SessionClientGetSparkSessionsResponse, error) {
 	req, err := client.getSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
@@ -326,10 +326,10 @@ func (client *SessionClient) getSparkSessionsHandleResponse(resp *http.Response)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// statementID - Identifier for the statement.
-// options - SessionClientGetSparkStatementOptions contains the optional parameters for the SessionClient.GetSparkStatement
-// method.
+//   - sessionID - Identifier for the session.
+//   - statementID - Identifier for the statement.
+//   - options - SessionClientGetSparkStatementOptions contains the optional parameters for the SessionClient.GetSparkStatement
+//     method.
 func (client *SessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SessionClientGetSparkStatementOptions) (SessionClientGetSparkStatementResponse, error) {
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -371,9 +371,9 @@ func (client *SessionClient) getSparkStatementHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// options - SessionClientGetSparkStatementsOptions contains the optional parameters for the SessionClient.GetSparkStatements
-// method.
+//   - sessionID - Identifier for the session.
+//   - options - SessionClientGetSparkStatementsOptions contains the optional parameters for the SessionClient.GetSparkStatements
+//     method.
 func (client *SessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SessionClientGetSparkStatementsOptions) (SessionClientGetSparkStatementsResponse, error) {
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -414,9 +414,9 @@ func (client *SessionClient) getSparkStatementsHandleResponse(resp *http.Respons
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2019-11-01-preview
-// sessionID - Identifier for the session.
-// options - SessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the SessionClient.ResetSparkSessionTimeout
-// method.
+//   - sessionID - Identifier for the session.
+//   - options - SessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the SessionClient.ResetSparkSessionTimeout
+//     method.
 func (client *SessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SessionClientResetSparkSessionTimeoutOptions) (SessionClientResetSparkSessionTimeoutResponse, error) {
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {

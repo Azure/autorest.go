@@ -32,8 +32,8 @@ type AvailableServiceAliasesClient struct {
 }
 
 // NewAvailableServiceAliasesClient creates a new instance of AvailableServiceAliasesClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AvailableServiceAliasesClient, error) {
@@ -59,9 +59,9 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 // NewListPager - Gets all available service aliases for this subscription in this region.
 //
 // Generated from API version 2020-03-01
-// location - The location.
-// options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
-// method.
+//   - location - The location.
+//   - options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
+//     method.
 func (client *AvailableServiceAliasesClient) NewListPager(location string, options *AvailableServiceAliasesClientListOptions) *runtime.Pager[AvailableServiceAliasesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableServiceAliasesClientListResponse]{
 		More: func(page AvailableServiceAliasesClientListResponse) bool {
@@ -124,10 +124,10 @@ func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Respo
 // NewListByResourceGroupPager - Gets all available service aliases for this resource group in this region.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// location - The location.
-// options - AvailableServiceAliasesClientListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - location - The location.
+//   - options - AvailableServiceAliasesClientListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.ListByResourceGroup
+//     method.
 func (client *AvailableServiceAliasesClient) NewListByResourceGroupPager(resourceGroupName string, location string, options *AvailableServiceAliasesClientListByResourceGroupOptions) *runtime.Pager[AvailableServiceAliasesClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailableServiceAliasesClientListByResourceGroupResponse]{
 		More: func(page AvailableServiceAliasesClientListByResourceGroupResponse) bool {

@@ -32,7 +32,7 @@ type SharesClient struct {
 }
 
 // NewSharesClient creates a new instance of SharesClient with the specified values.
-// - subscriptionID - The subscription ID.
+//   - - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SharesClient, error) {
@@ -59,12 +59,12 @@ func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, o
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The share name.
-// resourceGroupName - The resource group name.
-// share - The share properties.
-// options - SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The device name.
+//   - name - The share name.
+//   - resourceGroupName - The resource group name.
+//   - share - The share properties.
+//   - options - SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate
+//     method.
 func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*runtime.Poller[SharesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, share, options)
@@ -127,10 +127,10 @@ func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, dev
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The share name.
-// resourceGroupName - The resource group name.
-// options - SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
+//   - deviceName - The device name.
+//   - name - The share name.
+//   - resourceGroupName - The resource group name.
+//   - options - SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
 func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*runtime.Poller[SharesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
@@ -193,10 +193,10 @@ func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The share name.
-// resourceGroupName - The resource group name.
-// options - SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
+//   - deviceName - The device name.
+//   - name - The share name.
+//   - resourceGroupName - The resource group name.
+//   - options - SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
 func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (SharesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -251,10 +251,10 @@ func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesClient
 // NewListByDataBoxEdgeDevicePager - Lists all the shares in a Data Box Edge/Data Box Gateway device.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *SharesClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *SharesClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[SharesClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SharesClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page SharesClientListByDataBoxEdgeDeviceResponse) bool {
@@ -319,10 +319,10 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The share name.
-// resourceGroupName - The resource group name.
-// options - SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
+//   - deviceName - The device name.
+//   - name - The share name.
+//   - resourceGroupName - The resource group name.
+//   - options - SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
 func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*runtime.Poller[SharesClientRefreshResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.refresh(ctx, deviceName, name, resourceGroupName, options)

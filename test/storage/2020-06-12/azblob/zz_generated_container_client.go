@@ -29,8 +29,8 @@ type containerClient struct {
 }
 
 // newContainerClient creates a new instance of containerClient with the specified values.
-// - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// - version - Specifies the version of the operation to use for this request.
+//   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+//   - - version - Specifies the version of the operation to use for this request.
 //   - pl - the pipeline used for sending requests and handling responses.
 func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *containerClient {
 	client := &containerClient{
@@ -46,8 +46,8 @@ func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientAcquireLeaseOptions contains the optional parameters for the containerClient.AcquireLease method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - containerClientAcquireLeaseOptions contains the optional parameters for the containerClient.AcquireLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, restype Enum11, options *containerClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, comp, restype, options, modifiedAccessConditions)
 	if err != nil {
@@ -137,8 +137,8 @@ func (client *containerClient) acquireLeaseHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientBreakLeaseOptions contains the optional parameters for the containerClient.BreakLease method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - containerClientBreakLeaseOptions contains the optional parameters for the containerClient.BreakLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, restype Enum11, options *containerClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientBreakLeaseResponse, error) {
 	req, err := client.breakLeaseCreateRequest(ctx, comp, restype, options, modifiedAccessConditions)
 	if err != nil {
@@ -230,12 +230,12 @@ func (client *containerClient) breakLeaseHandleResponse(resp *http.Response) (Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// leaseID - Specifies the current lease ID on the resource.
-// proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
-// lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
-// string formats.
-// options - containerClientChangeLeaseOptions contains the optional parameters for the containerClient.ChangeLease method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - leaseID - Specifies the current lease ID on the resource.
+//   - proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
+//     lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
+//     string formats.
+//   - options - containerClientChangeLeaseOptions contains the optional parameters for the containerClient.ChangeLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, options *containerClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientChangeLeaseResponse, error) {
 	req, err := client.changeLeaseCreateRequest(ctx, comp, restype, leaseID, proposedLeaseID, options, modifiedAccessConditions)
 	if err != nil {
@@ -321,8 +321,8 @@ func (client *containerClient) changeLeaseHandleResponse(resp *http.Response) (C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientCreateOptions contains the optional parameters for the containerClient.Create method.
-// ContainerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the containerClient.Create method.
+//   - options - containerClientCreateOptions contains the optional parameters for the containerClient.Create method.
+//   - ContainerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the containerClient.Create method.
 func (client *containerClient) Create(ctx context.Context, restype Enum11, options *containerClientCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (ContainerClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, restype, options, containerCpkScopeInfo)
 	if err != nil {
@@ -409,9 +409,9 @@ func (client *containerClient) createHandleResponse(resp *http.Response) (Contai
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientDeleteOptions contains the optional parameters for the containerClient.Delete method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - containerClientDeleteOptions contains the optional parameters for the containerClient.Delete method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) Delete(ctx context.Context, restype Enum11, options *containerClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, restype, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -483,9 +483,9 @@ func (client *containerClient) deleteHandleResponse(resp *http.Response) (Contai
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientGetAccessPolicyOptions contains the optional parameters for the containerClient.GetAccessPolicy
-// method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - options - containerClientGetAccessPolicyOptions contains the optional parameters for the containerClient.GetAccessPolicy
+//     method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum11, comp Enum13, options *containerClientGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (ContainerClientGetAccessPolicyResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, restype, comp, options, leaseAccessConditions)
 	if err != nil {
@@ -567,8 +567,8 @@ func (client *containerClient) getAccessPolicyHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientGetAccountInfoOptions contains the optional parameters for the containerClient.GetAccountInfo
-// method.
+//   - options - containerClientGetAccountInfoOptions contains the optional parameters for the containerClient.GetAccountInfo
+//     method.
 func (client *containerClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *containerClientGetAccountInfoOptions) (ContainerClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -632,8 +632,8 @@ func (client *containerClient) getAccountInfoHandleResponse(resp *http.Response)
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientGetPropertiesOptions contains the optional parameters for the containerClient.GetProperties method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - options - containerClientGetPropertiesOptions contains the optional parameters for the containerClient.GetProperties method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 func (client *containerClient) GetProperties(ctx context.Context, restype Enum11, options *containerClientGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (ContainerClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, options, leaseAccessConditions)
 	if err != nil {
@@ -758,8 +758,8 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 // NewListBlobFlatSegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
 //
 // Generated from API version 2020-06-12
-// options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
-// method.
+//   - options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
+//     method.
 func (client *containerClient) NewListBlobFlatSegmentPager(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *runtime.Pager[ContainerClientListBlobFlatSegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerClientListBlobFlatSegmentResponse]{
 		More: func(page ContainerClientListBlobFlatSegmentResponse) bool {
@@ -852,11 +852,11 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 // NewListBlobHierarchySegmentPager - [Update] The List Blobs operation returns a list of the blobs under the specified container
 //
 // Generated from API version 2020-06-12
-// delimiter - When the request includes this parameter, the operation returns a BlobPrefix element in the response body that
-// acts as a placeholder for all blobs whose names begin with the same substring up to the
-// appearance of the delimiter character. The delimiter may be a single character or a string.
-// options - containerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
-// method.
+//   - delimiter - When the request includes this parameter, the operation returns a BlobPrefix element in the response body that
+//     acts as a placeholder for all blobs whose names begin with the same substring up to the
+//     appearance of the delimiter character. The delimiter may be a single character or a string.
+//   - options - containerClientListBlobHierarchySegmentOptions contains the optional parameters for the containerClient.ListBlobHierarchySegment
+//     method.
 func (client *containerClient) NewListBlobHierarchySegmentPager(restype Enum11, comp Enum5, delimiter string, options *containerClientListBlobHierarchySegmentOptions) *runtime.Pager[ContainerClientListBlobHierarchySegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainerClientListBlobHierarchySegmentResponse]{
 		More: func(page ContainerClientListBlobHierarchySegmentResponse) bool {
@@ -952,9 +952,9 @@ func (client *containerClient) listBlobHierarchySegmentHandleResponse(resp *http
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// leaseID - Specifies the current lease ID on the resource.
-// options - containerClientReleaseLeaseOptions contains the optional parameters for the containerClient.ReleaseLease method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - leaseID - Specifies the current lease ID on the resource.
+//   - options - containerClientReleaseLeaseOptions contains the optional parameters for the containerClient.ReleaseLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, options *containerClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientReleaseLeaseResponse, error) {
 	req, err := client.releaseLeaseCreateRequest(ctx, comp, restype, leaseID, options, modifiedAccessConditions)
 	if err != nil {
@@ -1035,8 +1035,8 @@ func (client *containerClient) releaseLeaseHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// sourceContainerName - Required. Specifies the name of the container to rename.
-// options - containerClientRenameOptions contains the optional parameters for the containerClient.Rename method.
+//   - sourceContainerName - Required. Specifies the name of the container to rename.
+//   - options - containerClientRenameOptions contains the optional parameters for the containerClient.Rename method.
 func (client *containerClient) Rename(ctx context.Context, restype Enum11, comp Enum15, sourceContainerName string, options *containerClientRenameOptions) (ContainerClientRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, restype, comp, sourceContainerName, options)
 	if err != nil {
@@ -1104,9 +1104,9 @@ func (client *containerClient) renameHandleResponse(resp *http.Response) (Contai
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// leaseID - Specifies the current lease ID on the resource.
-// options - containerClientRenewLeaseOptions contains the optional parameters for the containerClient.RenewLease method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - leaseID - Specifies the current lease ID on the resource.
+//   - options - containerClientRenewLeaseOptions contains the optional parameters for the containerClient.RenewLease method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, restype Enum11, leaseID string, options *containerClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, comp, restype, leaseID, options, modifiedAccessConditions)
 	if err != nil {
@@ -1190,7 +1190,7 @@ func (client *containerClient) renewLeaseHandleResponse(resp *http.Response) (Co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientRestoreOptions contains the optional parameters for the containerClient.Restore method.
+//   - options - containerClientRestoreOptions contains the optional parameters for the containerClient.Restore method.
 func (client *containerClient) Restore(ctx context.Context, restype Enum11, comp Enum14, options *containerClientRestoreOptions) (ContainerClientRestoreResponse, error) {
 	req, err := client.restoreCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -1260,10 +1260,10 @@ func (client *containerClient) restoreHandleResponse(resp *http.Response) (Conta
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientSetAccessPolicyOptions contains the optional parameters for the containerClient.SetAccessPolicy
-// method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - containerClientSetAccessPolicyOptions contains the optional parameters for the containerClient.SetAccessPolicy
+//     method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum11, comp Enum13, options *containerClientSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientSetAccessPolicyResponse, error) {
 	req, err := client.setAccessPolicyCreateRequest(ctx, restype, comp, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1355,9 +1355,9 @@ func (client *containerClient) setAccessPolicyHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// options - containerClientSetMetadataOptions contains the optional parameters for the containerClient.SetMetadata method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - containerClientSetMetadataOptions contains the optional parameters for the containerClient.SetMetadata method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, comp Enum12, options *containerClientSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ContainerClientSetMetadataResponse, error) {
 	req, err := client.setMetadataCreateRequest(ctx, restype, comp, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -1441,11 +1441,11 @@ func (client *containerClient) setMetadataHandleResponse(resp *http.Response) (C
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-// contentLength - The length of the request.
-// multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
-// value: multipart/mixed; boundary=batch_
-// body - Initial data
-// options - containerClientSubmitBatchOptions contains the optional parameters for the containerClient.SubmitBatch method.
+//   - contentLength - The length of the request.
+//   - multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
+//     value: multipart/mixed; boundary=batch_
+//   - body - Initial data
+//   - options - containerClientSubmitBatchOptions contains the optional parameters for the containerClient.SubmitBatch method.
 func (client *containerClient) SubmitBatch(ctx context.Context, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *containerClientSubmitBatchOptions) (ContainerClientSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, restype, comp, contentLength, multipartContentType, body, options)
 	if err != nil {

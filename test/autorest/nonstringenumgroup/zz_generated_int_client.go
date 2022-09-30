@@ -35,7 +35,7 @@ func NewIntClient(pl runtime.Pipeline) *IntClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0-preview
-// options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
+//   - options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
 func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) (IntClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -75,8 +75,8 @@ func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0-preview
-// input - Input int enum.
-// options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
+//   - input - Input int enum.
+//   - options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
 func (client *IntClient) Put(ctx context.Context, input IntEnum, options *IntClientPutOptions) (IntClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {

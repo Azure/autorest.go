@@ -32,8 +32,8 @@ type ServiceEndpointPolicyDefinitionsClient struct {
 }
 
 // NewServiceEndpointPolicyDefinitionsClient creates a new instance of ServiceEndpointPolicyDefinitionsClient with the specified values.
-// - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
+//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ServiceEndpointPolicyDefinitionsClient, error) {
@@ -60,12 +60,12 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// serviceEndpointPolicyName - The name of the service endpoint policy.
-// serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
-// serviceEndpointPolicyDefinitions - Parameters supplied to the create or update service endpoint policy operation.
-// options - ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - serviceEndpointPolicyName - The name of the service endpoint policy.
+//   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
+//   - serviceEndpointPolicyDefinitions - Parameters supplied to the create or update service endpoint policy operation.
+//   - options - ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginCreateOrUpdate
+//     method.
 func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*runtime.Poller[ServiceEndpointPolicyDefinitionsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
@@ -133,11 +133,11 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// serviceEndpointPolicyName - The name of the Service Endpoint Policy.
-// serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
-// options - ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - serviceEndpointPolicyName - The name of the Service Endpoint Policy.
+//   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
+//   - options - ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.BeginDelete
+//     method.
 func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*runtime.Poller[ServiceEndpointPolicyDefinitionsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
@@ -205,11 +205,11 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx co
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// serviceEndpointPolicyName - The name of the service endpoint policy name.
-// serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
-// options - ServiceEndpointPolicyDefinitionsClientGetOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.Get
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - serviceEndpointPolicyName - The name of the service endpoint policy name.
+//   - serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
+//   - options - ServiceEndpointPolicyDefinitionsClientGetOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.Get
+//     method.
 func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientGetOptions) (ServiceEndpointPolicyDefinitionsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
@@ -267,10 +267,10 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *ht
 // NewListByResourceGroupPager - Gets all service endpoint policy definitions in a service end point policy.
 //
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// serviceEndpointPolicyName - The name of the service endpoint policy name.
-// options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - serviceEndpointPolicyName - The name of the service endpoint policy name.
+//   - options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup
+//     method.
 func (client *ServiceEndpointPolicyDefinitionsClient) NewListByResourceGroupPager(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions) *runtime.Pager[ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse]{
 		More: func(page ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse) bool {

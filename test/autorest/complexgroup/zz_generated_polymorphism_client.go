@@ -35,8 +35,8 @@ func NewPolymorphismClient(pl runtime.Pipeline) *PolymorphismClient {
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientGetComplicatedOptions contains the optional parameters for the PolymorphismClient.GetComplicated
-// method.
+//   - options - PolymorphismClientGetComplicatedOptions contains the optional parameters for the PolymorphismClient.GetComplicated
+//     method.
 func (client *PolymorphismClient) GetComplicated(ctx context.Context, options *PolymorphismClientGetComplicatedOptions) (PolymorphismClientGetComplicatedResponse, error) {
 	req, err := client.getComplicatedCreateRequest(ctx, options)
 	if err != nil {
@@ -78,8 +78,8 @@ func (client *PolymorphismClient) getComplicatedHandleResponse(resp *http.Respon
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientGetComposedWithDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithDiscriminator
-// method.
+//   - options - PolymorphismClientGetComposedWithDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithDiscriminator
+//     method.
 func (client *PolymorphismClient) GetComposedWithDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithDiscriminatorOptions) (PolymorphismClientGetComposedWithDiscriminatorResponse, error) {
 	req, err := client.getComposedWithDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
@@ -121,8 +121,8 @@ func (client *PolymorphismClient) getComposedWithDiscriminatorHandleResponse(res
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientGetComposedWithoutDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithoutDiscriminator
-// method.
+//   - options - PolymorphismClientGetComposedWithoutDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithoutDiscriminator
+//     method.
 func (client *PolymorphismClient) GetComposedWithoutDiscriminator(ctx context.Context, options *PolymorphismClientGetComposedWithoutDiscriminatorOptions) (PolymorphismClientGetComposedWithoutDiscriminatorResponse, error) {
 	req, err := client.getComposedWithoutDiscriminatorCreateRequest(ctx, options)
 	if err != nil {
@@ -162,8 +162,8 @@ func (client *PolymorphismClient) getComposedWithoutDiscriminatorHandleResponse(
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientGetDotSyntaxOptions contains the optional parameters for the PolymorphismClient.GetDotSyntax
-// method.
+//   - options - PolymorphismClientGetDotSyntaxOptions contains the optional parameters for the PolymorphismClient.GetDotSyntax
+//     method.
 func (client *PolymorphismClient) GetDotSyntax(ctx context.Context, options *PolymorphismClientGetDotSyntaxOptions) (PolymorphismClientGetDotSyntaxResponse, error) {
 	req, err := client.getDotSyntaxCreateRequest(ctx, options)
 	if err != nil {
@@ -203,7 +203,7 @@ func (client *PolymorphismClient) getDotSyntaxHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
+//   - options - PolymorphismClientGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
 func (client *PolymorphismClient) GetValid(ctx context.Context, options *PolymorphismClientGetValidOptions) (PolymorphismClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -243,8 +243,8 @@ func (client *PolymorphismClient) getValidHandleResponse(resp *http.Response) (P
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientPutComplicatedOptions contains the optional parameters for the PolymorphismClient.PutComplicated
-// method.
+//   - options - PolymorphismClientPutComplicatedOptions contains the optional parameters for the PolymorphismClient.PutComplicated
+//     method.
 func (client *PolymorphismClient) PutComplicated(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutComplicatedOptions) (PolymorphismClientPutComplicatedResponse, error) {
 	req, err := client.putComplicatedCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -275,8 +275,8 @@ func (client *PolymorphismClient) putComplicatedCreateRequest(ctx context.Contex
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// options - PolymorphismClientPutMissingDiscriminatorOptions contains the optional parameters for the PolymorphismClient.PutMissingDiscriminator
-// method.
+//   - options - PolymorphismClientPutMissingDiscriminatorOptions contains the optional parameters for the PolymorphismClient.PutMissingDiscriminator
+//     method.
 func (client *PolymorphismClient) PutMissingDiscriminator(ctx context.Context, complexBody SalmonClassification, options *PolymorphismClientPutMissingDiscriminatorOptions) (PolymorphismClientPutMissingDiscriminatorResponse, error) {
 	req, err := client.putMissingDiscriminatorCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -316,13 +316,13 @@ func (client *PolymorphismClient) putMissingDiscriminatorHandleResponse(resp *ht
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// complexBody - Please put a salmon that looks like this: { 'fishtype':'Salmon', 'location':'alaska', 'iswild':true, 'species':'king',
-// 'length':1.0, 'siblings':[ { 'fishtype':'Shark', 'age':6, 'birthday':
-// '2012-01-05T01:00:00Z', 'length':20.0, 'species':'predator', }, { 'fishtype':'Sawshark', 'age':105, 'birthday': '1900-01-05T01:00:00Z',
-// 'length':10.0, 'picture': new Buffer([255, 255, 255, 255,
-// 254]).toString('base64'), 'species':'dangerous', }, { 'fishtype': 'goblin', 'age': 1, 'birthday': '2015-08-08T00:00:00Z',
-// 'length': 30.0, 'species': 'scary', 'jawsize': 5 } ] };
-// options - PolymorphismClientPutValidOptions contains the optional parameters for the PolymorphismClient.PutValid method.
+//   - complexBody - Please put a salmon that looks like this: { 'fishtype':'Salmon', 'location':'alaska', 'iswild':true, 'species':'king',
+//     'length':1.0, 'siblings':[ { 'fishtype':'Shark', 'age':6, 'birthday':
+//     '2012-01-05T01:00:00Z', 'length':20.0, 'species':'predator', }, { 'fishtype':'Sawshark', 'age':105, 'birthday': '1900-01-05T01:00:00Z',
+//     'length':10.0, 'picture': new Buffer([255, 255, 255, 255,
+//     254]).toString('base64'), 'species':'dangerous', }, { 'fishtype': 'goblin', 'age': 1, 'birthday': '2015-08-08T00:00:00Z',
+//     'length': 30.0, 'species': 'scary', 'jawsize': 5 } ] };
+//   - options - PolymorphismClientPutValidOptions contains the optional parameters for the PolymorphismClient.PutValid method.
 func (client *PolymorphismClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidOptions) (PolymorphismClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -354,13 +354,13 @@ func (client *PolymorphismClient) putValidCreateRequest(ctx context.Context, com
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2016-02-29
-// complexBody - Please attempt put a sawshark that looks like this, the client should not allow this data to be sent: { "fishtype":
-// "sawshark", "species": "snaggle toothed", "length": 18.5, "age": 2, "birthday":
-// "2013-06-01T01:00:00Z", "location": "alaska", "picture": base64(FF FF FF FF FE), "siblings": [ { "fishtype": "shark", "species":
-// "predator", "birthday": "2012-01-05T01:00:00Z", "length": 20, "age": 6
-// }, { "fishtype": "sawshark", "species": "dangerous", "picture": base64(FF FF FF FF FE), "length": 10, "age": 105 } ] }
-// options - PolymorphismClientPutValidMissingRequiredOptions contains the optional parameters for the PolymorphismClient.PutValidMissingRequired
-// method.
+//   - complexBody - Please attempt put a sawshark that looks like this, the client should not allow this data to be sent: { "fishtype":
+//     "sawshark", "species": "snaggle toothed", "length": 18.5, "age": 2, "birthday":
+//     "2013-06-01T01:00:00Z", "location": "alaska", "picture": base64(FF FF FF FF FE), "siblings": [ { "fishtype": "shark", "species":
+//     "predator", "birthday": "2012-01-05T01:00:00Z", "length": 20, "age": 6
+//     }, { "fishtype": "sawshark", "species": "dangerous", "picture": base64(FF FF FF FF FE), "length": 10, "age": 105 } ] }
+//   - options - PolymorphismClientPutValidMissingRequiredOptions contains the optional parameters for the PolymorphismClient.PutValidMissingRequired
+//     method.
 func (client *PolymorphismClient) PutValidMissingRequired(ctx context.Context, complexBody FishClassification, options *PolymorphismClientPutValidMissingRequiredOptions) (PolymorphismClientPutValidMissingRequiredResponse, error) {
 	req, err := client.putValidMissingRequiredCreateRequest(ctx, complexBody, options)
 	if err != nil {
