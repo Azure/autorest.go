@@ -32,9 +32,9 @@ type ContainersClient struct {
 }
 
 // NewContainersClient creates a new instance of ContainersClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewContainersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ContainersClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,14 +57,15 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 
 // BeginCreateOrUpdate - Creates a new container or updates an existing container on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// storageAccountName - The Storage Account Name
-// containerName - The container name.
-// resourceGroupName - The resource group name.
-// containerParam - The container properties.
-// options - ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The device name.
+//   - storageAccountName - The Storage Account Name
+//   - containerName - The container name.
+//   - resourceGroupName - The resource group name.
+//   - containerParam - The container properties.
+//   - options - ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
+//     method.
 func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*runtime.Poller[ContainersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
@@ -79,6 +80,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 
 // CreateOrUpdate - Creates a new container or updates an existing container on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
@@ -128,12 +130,13 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 
 // BeginDelete - Deletes the container on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// storageAccountName - The Storage Account Name
-// containerName - The container name.
-// resourceGroupName - The resource group name.
-// options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
+//   - deviceName - The device name.
+//   - storageAccountName - The Storage Account Name
+//   - containerName - The container name.
+//   - resourceGroupName - The resource group name.
+//   - options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
 func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*runtime.Poller[ContainersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
@@ -148,6 +151,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 
 // Delete - Deletes the container on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
@@ -197,12 +201,13 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 
 // Get - Gets a container by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// storageAccountName - The Storage Account Name
-// containerName - The container Name
-// resourceGroupName - The resource group name.
-// options - ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
+//   - deviceName - The device name.
+//   - storageAccountName - The Storage Account Name
+//   - containerName - The container Name
+//   - resourceGroupName - The resource group name.
+//   - options - ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
 func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (ContainersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -259,12 +264,13 @@ func (client *ContainersClient) getHandleResponse(resp *http.Response) (Containe
 }
 
 // NewListByStorageAccountPager - Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// storageAccountName - The storage Account name.
-// resourceGroupName - The resource group name.
-// options - ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
-// method.
+//   - deviceName - The device name.
+//   - storageAccountName - The storage Account name.
+//   - resourceGroupName - The resource group name.
+//   - options - ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
+//     method.
 func (client *ContainersClient) NewListByStorageAccountPager(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersClientListByStorageAccountOptions) *runtime.Pager[ContainersClientListByStorageAccountResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ContainersClientListByStorageAccountResponse]{
 		More: func(page ContainersClientListByStorageAccountResponse) bool {
@@ -331,12 +337,13 @@ func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Re
 
 // BeginRefresh - Refreshes the container metadata with the data from the cloud.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// storageAccountName - The Storage Account Name
-// containerName - The container name.
-// resourceGroupName - The resource group name.
-// options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
+//   - deviceName - The device name.
+//   - storageAccountName - The Storage Account Name
+//   - containerName - The container name.
+//   - resourceGroupName - The resource group name.
+//   - options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
 func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*runtime.Poller[ContainersClientRefreshResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
@@ -351,6 +358,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 
 // Refresh - Refreshes the container metadata with the data from the cloud.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)

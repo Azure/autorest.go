@@ -29,9 +29,9 @@ type PipelineClient struct {
 }
 
 // NewPipelineClient creates a new instance of PipelineClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPipelineClient(endpoint string, credential azcore.TokenCredential, options *PipelineClientOptions) *PipelineClient {
 	if options == nil {
 		options = &PipelineClientOptions{}
@@ -47,11 +47,12 @@ func NewPipelineClient(endpoint string, credential azcore.TokenCredential, optio
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// pipelineName - The pipeline name.
-// pipeline - Pipeline resource definition.
-// options - PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the PipelineClient.BeginCreateOrUpdatePipeline
-// method.
+//   - pipelineName - The pipeline name.
+//   - pipeline - Pipeline resource definition.
+//   - options - PipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the PipelineClient.BeginCreateOrUpdatePipeline
+//     method.
 func (client *PipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*runtime.Poller[PipelineClientCreateOrUpdatePipelineResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
@@ -66,6 +67,7 @@ func (client *PipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 func (client *PipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineClientBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
@@ -105,10 +107,11 @@ func (client *PipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 
 // CreatePipelineRun - Creates a run of a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// pipelineName - The pipeline name.
-// options - PipelineClientCreatePipelineRunOptions contains the optional parameters for the PipelineClient.CreatePipelineRun
-// method.
+//   - pipelineName - The pipeline name.
+//   - options - PipelineClientCreatePipelineRunOptions contains the optional parameters for the PipelineClient.CreatePipelineRun
+//     method.
 func (client *PipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineClientCreatePipelineRunOptions) (PipelineClientCreatePipelineRunResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -165,10 +168,11 @@ func (client *PipelineClient) createPipelineRunHandleResponse(resp *http.Respons
 
 // BeginDeletePipeline - Deletes a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// pipelineName - The pipeline name.
-// options - PipelineClientBeginDeletePipelineOptions contains the optional parameters for the PipelineClient.BeginDeletePipeline
-// method.
+//   - pipelineName - The pipeline name.
+//   - options - PipelineClientBeginDeletePipelineOptions contains the optional parameters for the PipelineClient.BeginDeletePipeline
+//     method.
 func (client *PipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*runtime.Poller[PipelineClientDeletePipelineResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deletePipeline(ctx, pipelineName, options)
@@ -183,6 +187,7 @@ func (client *PipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 
 // DeletePipeline - Deletes a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 func (client *PipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineClientBeginDeletePipelineOptions) (*http.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
@@ -219,9 +224,10 @@ func (client *PipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 
 // GetPipeline - Gets a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// pipelineName - The pipeline name.
-// options - PipelineClientGetPipelineOptions contains the optional parameters for the PipelineClient.GetPipeline method.
+//   - pipelineName - The pipeline name.
+//   - options - PipelineClientGetPipelineOptions contains the optional parameters for the PipelineClient.GetPipeline method.
 func (client *PipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineClientGetPipelineOptions) (PipelineClientGetPipelineResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -268,9 +274,10 @@ func (client *PipelineClient) getPipelineHandleResponse(resp *http.Response) (Pi
 }
 
 // NewGetPipelinesByWorkspacePager - Lists pipelines.
+//
 // Generated from API version 2019-06-01-preview
-// options - PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the PipelineClient.GetPipelinesByWorkspace
-// method.
+//   - options - PipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the PipelineClient.GetPipelinesByWorkspace
+//     method.
 func (client *PipelineClient) NewGetPipelinesByWorkspacePager(options *PipelineClientGetPipelinesByWorkspaceOptions) *runtime.Pager[PipelineClientGetPipelinesByWorkspaceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PipelineClientGetPipelinesByWorkspaceResponse]{
 		More: func(page PipelineClientGetPipelinesByWorkspaceResponse) bool {
@@ -324,11 +331,12 @@ func (client *PipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.R
 
 // BeginRenamePipeline - Renames a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// pipelineName - The pipeline name.
-// request - proposed new name.
-// options - PipelineClientBeginRenamePipelineOptions contains the optional parameters for the PipelineClient.BeginRenamePipeline
-// method.
+//   - pipelineName - The pipeline name.
+//   - request - proposed new name.
+//   - options - PipelineClientBeginRenamePipelineOptions contains the optional parameters for the PipelineClient.BeginRenamePipeline
+//     method.
 func (client *PipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*runtime.Poller[PipelineClientRenamePipelineResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.renamePipeline(ctx, pipelineName, request, options)
@@ -343,6 +351,7 @@ func (client *PipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 
 // RenamePipeline - Renames a pipeline.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
 func (client *PipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineClientBeginRenamePipelineOptions) (*http.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)

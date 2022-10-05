@@ -33,10 +33,10 @@ type VirtualMachineImagesClient struct {
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VirtualMachineImagesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -59,14 +59,15 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 
 // Get - Gets a virtual machine image.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// location - The name of a supported Azure region.
-// publisherName - A valid image publisher.
-// offer - A valid image publisher offer.
-// skus - A valid image SKU.
-// version - A valid image SKU version.
-// options - VirtualMachineImagesClientGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get
-// method.
+//   - location - The name of a supported Azure region.
+//   - publisherName - A valid image publisher.
+//   - offer - A valid image publisher offer.
+//   - skus - A valid image SKU.
+//   - version - A valid image SKU version.
+//   - options - VirtualMachineImagesClientGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get
+//     method.
 func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (VirtualMachineImagesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
@@ -131,13 +132,14 @@ func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response)
 
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// location - The name of a supported Azure region.
-// publisherName - A valid image publisher.
-// offer - A valid image publisher offer.
-// skus - A valid image SKU.
-// options - VirtualMachineImagesClientListOptions contains the optional parameters for the VirtualMachineImagesClient.List
-// method.
+//   - location - The name of a supported Azure region.
+//   - publisherName - A valid image publisher.
+//   - offer - A valid image publisher offer.
+//   - skus - A valid image SKU.
+//   - options - VirtualMachineImagesClientListOptions contains the optional parameters for the VirtualMachineImagesClient.List
+//     method.
 func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesClientListOptions) (VirtualMachineImagesClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
@@ -207,11 +209,12 @@ func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response
 
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// location - The name of a supported Azure region.
-// publisherName - A valid image publisher.
-// options - VirtualMachineImagesClientListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
-// method.
+//   - location - The name of a supported Azure region.
+//   - publisherName - A valid image publisher.
+//   - options - VirtualMachineImagesClientListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
+//     method.
 func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (VirtualMachineImagesClientListOffersResponse, error) {
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -264,10 +267,11 @@ func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Re
 
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// location - The name of a supported Azure region.
-// options - VirtualMachineImagesClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
-// method.
+//   - location - The name of a supported Azure region.
+//   - options - VirtualMachineImagesClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
+//     method.
 func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (VirtualMachineImagesClientListPublishersResponse, error) {
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {
@@ -316,12 +320,13 @@ func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *htt
 
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// location - The name of a supported Azure region.
-// publisherName - A valid image publisher.
-// offer - A valid image publisher offer.
-// options - VirtualMachineImagesClientListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs
-// method.
+//   - location - The name of a supported Azure region.
+//   - publisherName - A valid image publisher.
+//   - offer - A valid image publisher offer.
+//   - options - VirtualMachineImagesClientListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs
+//     method.
 func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (VirtualMachineImagesClientListSKUsResponse, error) {
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {

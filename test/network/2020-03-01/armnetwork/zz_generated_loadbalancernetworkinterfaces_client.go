@@ -32,10 +32,10 @@ type LoadBalancerNetworkInterfacesClient struct {
 }
 
 // NewLoadBalancerNetworkInterfacesClient creates a new instance of LoadBalancerNetworkInterfacesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*LoadBalancerNetworkInterfacesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,11 +57,12 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 }
 
 // NewListPager - Gets associated load balancer network interfaces.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// loadBalancerName - The name of the load balancer.
-// options - LoadBalancerNetworkInterfacesClientListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.List
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - loadBalancerName - The name of the load balancer.
+//   - options - LoadBalancerNetworkInterfacesClientListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.List
+//     method.
 func (client *LoadBalancerNetworkInterfacesClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesClientListOptions) *runtime.Pager[LoadBalancerNetworkInterfacesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancerNetworkInterfacesClientListResponse]{
 		More: func(page LoadBalancerNetworkInterfacesClientListResponse) bool {

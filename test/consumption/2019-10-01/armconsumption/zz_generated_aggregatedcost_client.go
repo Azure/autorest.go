@@ -31,8 +31,8 @@ type AggregatedCostClient struct {
 }
 
 // NewAggregatedCostClient creates a new instance of AggregatedCostClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*AggregatedCostClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -55,10 +55,11 @@ func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.Cli
 // GetByManagementGroup - Provides the aggregate cost of a management group and all child management groups by current billing
 // period.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
-// managementGroupID - Azure Management Group ID.
-// options - AggregatedCostClientGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
-// method.
+//   - managementGroupID - Azure Management Group ID.
+//   - options - AggregatedCostClientGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
+//     method.
 func (client *AggregatedCostClient) GetByManagementGroup(ctx context.Context, managementGroupID string, options *AggregatedCostClientGetByManagementGroupOptions) (AggregatedCostClientGetByManagementGroupResponse, error) {
 	req, err := client.getByManagementGroupCreateRequest(ctx, managementGroupID, options)
 	if err != nil {
@@ -107,11 +108,12 @@ func (client *AggregatedCostClient) getByManagementGroupHandleResponse(resp *htt
 // GetForBillingPeriodByManagementGroup - Provides the aggregate cost of a management group and all child management groups
 // by specified billing period
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
-// managementGroupID - Azure Management Group ID.
-// billingPeriodName - Billing Period Name.
-// options - AggregatedCostClientGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup
-// method.
+//   - managementGroupID - Azure Management Group ID.
+//   - billingPeriodName - Billing Period Name.
+//   - options - AggregatedCostClientGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup
+//     method.
 func (client *AggregatedCostClient) GetForBillingPeriodByManagementGroup(ctx context.Context, managementGroupID string, billingPeriodName string, options *AggregatedCostClientGetForBillingPeriodByManagementGroupOptions) (AggregatedCostClientGetForBillingPeriodByManagementGroupResponse, error) {
 	req, err := client.getForBillingPeriodByManagementGroupCreateRequest(ctx, managementGroupID, billingPeriodName, options)
 	if err != nil {

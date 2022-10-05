@@ -32,9 +32,9 @@ type ForecastsClient struct {
 }
 
 // NewForecastsClient creates a new instance of ForecastsClient with the specified values.
-// subscriptionID - Azure Subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - Azure Subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ForecastsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,8 +58,9 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // NewListPager - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development.
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
+//
 // Generated from API version 2019-10-01
-// options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
+//   - options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
 func (client *ForecastsClient) NewListPager(options *ForecastsClientListOptions) *runtime.Pager[ForecastsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ForecastsClientListResponse]{
 		More: func(page ForecastsClientListResponse) bool {

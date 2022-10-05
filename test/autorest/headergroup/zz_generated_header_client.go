@@ -26,7 +26,7 @@ type HeaderClient struct {
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
 	client := &HeaderClient{
 		pl: pl,
@@ -36,8 +36,9 @@ func NewHeaderClient(pl runtime.Pipeline) *HeaderClient {
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - HeaderClientCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.
+//   - options - HeaderClientCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.
 func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderClientCustomRequestIDOptions) (HeaderClientCustomRequestIDResponse, error) {
 	req, err := client.customRequestIDCreateRequest(ctx, options)
 	if err != nil {
@@ -66,10 +67,11 @@ func (client *HeaderClient) customRequestIDCreateRequest(ctx context.Context, op
 
 // ParamBool - Send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value": false
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "true" or "false"
-// value - Send a post request with header values true or false
-// options - HeaderClientParamBoolOptions contains the optional parameters for the HeaderClient.ParamBool method.
+//   - scenario - Send a post request with header values "scenario": "true" or "false"
+//   - value - Send a post request with header values true or false
+//   - options - HeaderClientParamBoolOptions contains the optional parameters for the HeaderClient.ParamBool method.
 func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool, options *HeaderClientParamBoolOptions) (HeaderClientParamBoolResponse, error) {
 	req, err := client.paramBoolCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -100,10 +102,11 @@ func (client *HeaderClient) paramBoolCreateRequest(ctx context.Context, scenario
 
 // ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid"
-// value - Send a post request with header values "啊齄丂狛狜隣郎隣兀﨩"
-// options - HeaderClientParamByteOptions contains the optional parameters for the HeaderClient.ParamByte method.
+//   - scenario - Send a post request with header values "scenario": "valid"
+//   - value - Send a post request with header values "啊齄丂狛狜隣郎隣兀﨩"
+//   - options - HeaderClientParamByteOptions contains the optional parameters for the HeaderClient.ParamByte method.
 func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderClientParamByteOptions) (HeaderClientParamByteResponse, error) {
 	req, err := client.paramByteCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -135,10 +138,11 @@ func (client *HeaderClient) paramByteCreateRequest(ctx context.Context, scenario
 // ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value":
 // "0001-01-01"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "min"
-// value - Send a post request with header values "2010-01-01" or "0001-01-01"
-// options - HeaderClientParamDateOptions contains the optional parameters for the HeaderClient.ParamDate method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "min"
+//   - value - Send a post request with header values "2010-01-01" or "0001-01-01"
+//   - options - HeaderClientParamDateOptions contains the optional parameters for the HeaderClient.ParamDate method.
 func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderClientParamDateOptions) (HeaderClientParamDateResponse, error) {
 	req, err := client.paramDateCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -170,10 +174,11 @@ func (client *HeaderClient) paramDateCreateRequest(ctx context.Context, scenario
 // ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario":
 // "min", "value": "0001-01-01T00:00:00Z"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "min"
-// value - Send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
-// options - HeaderClientParamDatetimeOptions contains the optional parameters for the HeaderClient.ParamDatetime method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "min"
+//   - value - Send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
+//   - options - HeaderClientParamDatetimeOptions contains the optional parameters for the HeaderClient.ParamDatetime method.
 func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderClientParamDatetimeOptions) (HeaderClientParamDatetimeResponse, error) {
 	req, err := client.paramDatetimeCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -205,10 +210,11 @@ func (client *HeaderClient) paramDatetimeCreateRequest(ctx context.Context, scen
 // ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56
 // GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "min"
-// options - HeaderClientParamDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ParamDatetimeRFC1123
-// method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "min"
+//   - options - HeaderClientParamDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ParamDatetimeRFC1123
+//     method.
 func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderClientParamDatetimeRFC1123Options) (HeaderClientParamDatetimeRFC1123Response, error) {
 	req, err := client.paramDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -242,10 +248,11 @@ func (client *HeaderClient) paramDatetimeRFC1123CreateRequest(ctx context.Contex
 // ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative",
 // "value": -3.0
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// value - Send a post request with header values 7e120 or -3.0
-// options - HeaderClientParamDoubleOptions contains the optional parameters for the HeaderClient.ParamDouble method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - value - Send a post request with header values 7e120 or -3.0
+//   - options - HeaderClientParamDoubleOptions contains the optional parameters for the HeaderClient.ParamDouble method.
 func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderClientParamDoubleOptions) (HeaderClientParamDoubleResponse, error) {
 	req, err := client.paramDoubleCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -276,10 +283,11 @@ func (client *HeaderClient) paramDoubleCreateRequest(ctx context.Context, scenar
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid"
-// value - Send a post request with header values "P123DT22H14M12.011S"
-// options - HeaderClientParamDurationOptions contains the optional parameters for the HeaderClient.ParamDuration method.
+//   - scenario - Send a post request with header values "scenario": "valid"
+//   - value - Send a post request with header values "P123DT22H14M12.011S"
+//   - options - HeaderClientParamDurationOptions contains the optional parameters for the HeaderClient.ParamDuration method.
 func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string, options *HeaderClientParamDurationOptions) (HeaderClientParamDurationResponse, error) {
 	req, err := client.paramDurationCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -311,9 +319,10 @@ func (client *HeaderClient) paramDurationCreateRequest(ctx context.Context, scen
 // ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value":
 // null
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
-// options - HeaderClientParamEnumOptions contains the optional parameters for the HeaderClient.ParamEnum method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+//   - options - HeaderClientParamEnumOptions contains the optional parameters for the HeaderClient.ParamEnum method.
 func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, options *HeaderClientParamEnumOptions) (HeaderClientParamEnumResponse, error) {
 	req, err := client.paramEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -346,9 +355,10 @@ func (client *HeaderClient) paramEnumCreateRequest(ctx context.Context, scenario
 
 // ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// userAgent - Send a post request with header value "User-Agent": "overwrite"
-// options - HeaderClientParamExistingKeyOptions contains the optional parameters for the HeaderClient.ParamExistingKey method.
+//   - userAgent - Send a post request with header value "User-Agent": "overwrite"
+//   - options - HeaderClientParamExistingKeyOptions contains the optional parameters for the HeaderClient.ParamExistingKey method.
 func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string, options *HeaderClientParamExistingKeyOptions) (HeaderClientParamExistingKeyResponse, error) {
 	req, err := client.paramExistingKeyCreateRequest(ctx, userAgent, options)
 	if err != nil {
@@ -379,10 +389,11 @@ func (client *HeaderClient) paramExistingKeyCreateRequest(ctx context.Context, u
 // ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value":
 // -3.0
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// value - Send a post request with header values 0.07 or -3.0
-// options - HeaderClientParamFloatOptions contains the optional parameters for the HeaderClient.ParamFloat method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - value - Send a post request with header values 0.07 or -3.0
+//   - options - HeaderClientParamFloatOptions contains the optional parameters for the HeaderClient.ParamFloat method.
 func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderClientParamFloatOptions) (HeaderClientParamFloatResponse, error) {
 	req, err := client.paramFloatCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -414,10 +425,11 @@ func (client *HeaderClient) paramFloatCreateRequest(ctx context.Context, scenari
 // ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value":
 // -2
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// value - Send a post request with header values 1 or -2
-// options - HeaderClientParamIntegerOptions contains the optional parameters for the HeaderClient.ParamInteger method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - value - Send a post request with header values 1 or -2
+//   - options - HeaderClientParamIntegerOptions contains the optional parameters for the HeaderClient.ParamInteger method.
 func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderClientParamIntegerOptions) (HeaderClientParamIntegerResponse, error) {
 	req, err := client.paramIntegerCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -449,10 +461,11 @@ func (client *HeaderClient) paramIntegerCreateRequest(ctx context.Context, scena
 // ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value":
 // -2
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// value - Send a post request with header values 105 or -2
-// options - HeaderClientParamLongOptions contains the optional parameters for the HeaderClient.ParamLong method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - value - Send a post request with header values 105 or -2
+//   - options - HeaderClientParamLongOptions contains the optional parameters for the HeaderClient.ParamLong method.
 func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64, options *HeaderClientParamLongOptions) (HeaderClientParamLongResponse, error) {
 	req, err := client.paramLongCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -483,10 +496,11 @@ func (client *HeaderClient) paramLongCreateRequest(ctx context.Context, scenario
 
 // ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// contentType - Send a post request with header value "Content-Type": "text/html"
-// options - HeaderClientParamProtectedKeyOptions contains the optional parameters for the HeaderClient.ParamProtectedKey
-// method.
+//   - contentType - Send a post request with header value "Content-Type": "text/html"
+//   - options - HeaderClientParamProtectedKeyOptions contains the optional parameters for the HeaderClient.ParamProtectedKey
+//     method.
 func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string, options *HeaderClientParamProtectedKeyOptions) (HeaderClientParamProtectedKeyResponse, error) {
 	req, err := client.paramProtectedKeyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -517,9 +531,10 @@ func (client *HeaderClient) paramProtectedKeyCreateRequest(ctx context.Context, 
 // ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the
 // lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
-// options - HeaderClientParamStringOptions contains the optional parameters for the HeaderClient.ParamString method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+//   - options - HeaderClientParamStringOptions contains the optional parameters for the HeaderClient.ParamString method.
 func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderClientParamStringOptions) (HeaderClientParamStringResponse, error) {
 	req, err := client.paramStringCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -552,9 +567,10 @@ func (client *HeaderClient) paramStringCreateRequest(ctx context.Context, scenar
 
 // ResponseBool - Get a response with header value "value": true or false
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "true" or "false"
-// options - HeaderClientResponseBoolOptions contains the optional parameters for the HeaderClient.ResponseBool method.
+//   - scenario - Send a post request with header values "scenario": "true" or "false"
+//   - options - HeaderClientResponseBoolOptions contains the optional parameters for the HeaderClient.ResponseBool method.
 func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, options *HeaderClientResponseBoolOptions) (HeaderClientResponseBoolResponse, error) {
 	req, err := client.responseBoolCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -597,9 +613,10 @@ func (client *HeaderClient) responseBoolHandleResponse(resp *http.Response) (Hea
 
 // ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid"
-// options - HeaderClientResponseByteOptions contains the optional parameters for the HeaderClient.ResponseByte method.
+//   - scenario - Send a post request with header values "scenario": "valid"
+//   - options - HeaderClientResponseByteOptions contains the optional parameters for the HeaderClient.ResponseByte method.
 func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, options *HeaderClientResponseByteOptions) (HeaderClientResponseByteResponse, error) {
 	req, err := client.responseByteCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -642,9 +659,10 @@ func (client *HeaderClient) responseByteHandleResponse(resp *http.Response) (Hea
 
 // ResponseDate - Get a response with header values "2010-01-01" or "0001-01-01"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "min"
-// options - HeaderClientResponseDateOptions contains the optional parameters for the HeaderClient.ResponseDate method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "min"
+//   - options - HeaderClientResponseDateOptions contains the optional parameters for the HeaderClient.ResponseDate method.
 func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, options *HeaderClientResponseDateOptions) (HeaderClientResponseDateResponse, error) {
 	req, err := client.responseDateCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -687,9 +705,10 @@ func (client *HeaderClient) responseDateHandleResponse(resp *http.Response) (Hea
 
 // ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "min"
-// options - HeaderClientResponseDatetimeOptions contains the optional parameters for the HeaderClient.ResponseDatetime method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "min"
+//   - options - HeaderClientResponseDatetimeOptions contains the optional parameters for the HeaderClient.ResponseDatetime method.
 func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario string, options *HeaderClientResponseDatetimeOptions) (HeaderClientResponseDatetimeResponse, error) {
 	req, err := client.responseDatetimeCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -733,10 +752,11 @@ func (client *HeaderClient) responseDatetimeHandleResponse(resp *http.Response) 
 // ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00
 // GMT"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "min"
-// options - HeaderClientResponseDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ResponseDatetimeRFC1123
-// method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "min"
+//   - options - HeaderClientResponseDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ResponseDatetimeRFC1123
+//     method.
 func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderClientResponseDatetimeRFC1123Options) (HeaderClientResponseDatetimeRFC1123Response, error) {
 	req, err := client.responseDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -779,9 +799,10 @@ func (client *HeaderClient) responseDatetimeRFC1123HandleResponse(resp *http.Res
 
 // ResponseDouble - Get a response with header value "value": 7e120 or -3.0
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// options - HeaderClientResponseDoubleOptions contains the optional parameters for the HeaderClient.ResponseDouble method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - options - HeaderClientResponseDoubleOptions contains the optional parameters for the HeaderClient.ResponseDouble method.
 func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string, options *HeaderClientResponseDoubleOptions) (HeaderClientResponseDoubleResponse, error) {
 	req, err := client.responseDoubleCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -824,9 +845,10 @@ func (client *HeaderClient) responseDoubleHandleResponse(resp *http.Response) (H
 
 // ResponseDuration - Get a response with header values "P123DT22H14M12.011S"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid"
-// options - HeaderClientResponseDurationOptions contains the optional parameters for the HeaderClient.ResponseDuration method.
+//   - scenario - Send a post request with header values "scenario": "valid"
+//   - options - HeaderClientResponseDurationOptions contains the optional parameters for the HeaderClient.ResponseDuration method.
 func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario string, options *HeaderClientResponseDurationOptions) (HeaderClientResponseDurationResponse, error) {
 	req, err := client.responseDurationCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -865,9 +887,10 @@ func (client *HeaderClient) responseDurationHandleResponse(resp *http.Response) 
 
 // ResponseEnum - Get a response with header values "GREY" or null
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
-// options - HeaderClientResponseEnumOptions contains the optional parameters for the HeaderClient.ResponseEnum method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+//   - options - HeaderClientResponseEnumOptions contains the optional parameters for the HeaderClient.ResponseEnum method.
 func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, options *HeaderClientResponseEnumOptions) (HeaderClientResponseEnumResponse, error) {
 	req, err := client.responseEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -906,9 +929,10 @@ func (client *HeaderClient) responseEnumHandleResponse(resp *http.Response) (Hea
 
 // ResponseExistingKey - Get a response with header value "User-Agent": "overwrite"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - HeaderClientResponseExistingKeyOptions contains the optional parameters for the HeaderClient.ResponseExistingKey
-// method.
+//   - options - HeaderClientResponseExistingKeyOptions contains the optional parameters for the HeaderClient.ResponseExistingKey
+//     method.
 func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *HeaderClientResponseExistingKeyOptions) (HeaderClientResponseExistingKeyResponse, error) {
 	req, err := client.responseExistingKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -946,9 +970,10 @@ func (client *HeaderClient) responseExistingKeyHandleResponse(resp *http.Respons
 
 // ResponseFloat - Get a response with header value "value": 0.07 or -3.0
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// options - HeaderClientResponseFloatOptions contains the optional parameters for the HeaderClient.ResponseFloat method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - options - HeaderClientResponseFloatOptions contains the optional parameters for the HeaderClient.ResponseFloat method.
 func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, options *HeaderClientResponseFloatOptions) (HeaderClientResponseFloatResponse, error) {
 	req, err := client.responseFloatCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -992,9 +1017,10 @@ func (client *HeaderClient) responseFloatHandleResponse(resp *http.Response) (He
 
 // ResponseInteger - Get a response with header value "value": 1 or -2
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// options - HeaderClientResponseIntegerOptions contains the optional parameters for the HeaderClient.ResponseInteger method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - options - HeaderClientResponseIntegerOptions contains the optional parameters for the HeaderClient.ResponseInteger method.
 func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string, options *HeaderClientResponseIntegerOptions) (HeaderClientResponseIntegerResponse, error) {
 	req, err := client.responseIntegerCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1038,9 +1064,10 @@ func (client *HeaderClient) responseIntegerHandleResponse(resp *http.Response) (
 
 // ResponseLong - Get a response with header value "value": 105 or -2
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "positive" or "negative"
-// options - HeaderClientResponseLongOptions contains the optional parameters for the HeaderClient.ResponseLong method.
+//   - scenario - Send a post request with header values "scenario": "positive" or "negative"
+//   - options - HeaderClientResponseLongOptions contains the optional parameters for the HeaderClient.ResponseLong method.
 func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, options *HeaderClientResponseLongOptions) (HeaderClientResponseLongResponse, error) {
 	req, err := client.responseLongCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1083,9 +1110,10 @@ func (client *HeaderClient) responseLongHandleResponse(resp *http.Response) (Hea
 
 // ResponseProtectedKey - Get a response with header value "Content-Type": "text/html"
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - HeaderClientResponseProtectedKeyOptions contains the optional parameters for the HeaderClient.ResponseProtectedKey
-// method.
+//   - options - HeaderClientResponseProtectedKeyOptions contains the optional parameters for the HeaderClient.ResponseProtectedKey
+//     method.
 func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *HeaderClientResponseProtectedKeyOptions) (HeaderClientResponseProtectedKeyResponse, error) {
 	req, err := client.responseProtectedKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1123,9 +1151,10 @@ func (client *HeaderClient) responseProtectedKeyHandleResponse(resp *http.Respon
 
 // ResponseString - Get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
-// options - HeaderClientResponseStringOptions contains the optional parameters for the HeaderClient.ResponseString method.
+//   - scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+//   - options - HeaderClientResponseStringOptions contains the optional parameters for the HeaderClient.ResponseString method.
 func (client *HeaderClient) ResponseString(ctx context.Context, scenario string, options *HeaderClientResponseStringOptions) (HeaderClientResponseStringResponse, error) {
 	req, err := client.responseStringCreateRequest(ctx, scenario, options)
 	if err != nil {

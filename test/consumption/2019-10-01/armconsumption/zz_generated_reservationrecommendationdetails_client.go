@@ -29,8 +29,8 @@ type ReservationRecommendationDetailsClient struct {
 }
 
 // NewReservationRecommendationDetailsClient creates a new instance of ReservationRecommendationDetailsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) (*ReservationRecommendationDetailsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -52,21 +52,22 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 
 // Get - Details of a reservation recommendation for what-if analysis of reserved instances.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
-// billingScope - The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/'
-// for subscription scope,
-// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
-// for BillingAccount scope, and
-// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile
-// scope
-// scope - Scope of the reservation.
-// region - Used to select the region the recommendation should be generated for.
-// term - Specify length of reservation recommendation term.
-// lookBackPeriod - Filter the time period on which reservation recommendation results are based.
-// product - Filter the products for which reservation recommendation results are generated. Examples: StandardDS1v2 (for
-// VM), PremiumSSDManagedDisksP30 (for Managed Disks)
-// options - ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
-// method.
+//   - billingScope - The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/'
+//     for subscription scope,
+//     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+//     for BillingAccount scope, and
+//     '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile
+//     scope
+//   - scope - Scope of the reservation.
+//   - region - Used to select the region the recommendation should be generated for.
+//   - term - Specify length of reservation recommendation term.
+//   - lookBackPeriod - Filter the time period on which reservation recommendation results are based.
+//   - product - Filter the products for which reservation recommendation results are generated. Examples: StandardDS1v2 (for
+//     VM), PremiumSSDManagedDisksP30 (for Managed Disks)
+//   - options - ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
+//     method.
 func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsClientGetOptions) (ReservationRecommendationDetailsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, billingScope, scope, region, term, lookBackPeriod, product, options)
 	if err != nil {

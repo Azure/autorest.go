@@ -25,8 +25,8 @@ type PathsClient struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-// host - A string value that is used as a global part of the parameterized host
-// pl - the pipeline used for sending requests and handling responses.
+//   - host - A string value that is used as a global part of the parameterized host
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPathsClient(host *string, pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{
 		host: "host",
@@ -40,9 +40,10 @@ func NewPathsClient(host *string, pl runtime.Pipeline) *PathsClient {
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// accountName - Account Name
-// options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
+//   - accountName - Account Name
+//   - options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {

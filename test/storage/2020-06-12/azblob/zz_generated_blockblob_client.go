@@ -27,9 +27,9 @@ type blockBlobClient struct {
 }
 
 // newBlockBlobClient creates a new instance of blockBlobClient with the specified values.
-// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// pl - the pipeline used for sending requests and handling responses.
+//   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+//   - version - Specifies the version of the operation to use for this request.
+//   - pl - the pipeline used for sending requests and handling responses.
 func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *blockBlobClient {
 	client := &blockBlobClient{
 		endpoint: endpoint,
@@ -47,14 +47,15 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // the most recently uploaded version of the block, whichever list it may
 // belong to.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// options - blockBlobClientCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList
-// method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - options - blockBlobClientCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList
+//     method.
+//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, options *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientCommitBlockListResponse, error) {
 	req, err := client.commitBlockListCreateRequest(ctx, comp, blocks, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -228,11 +229,12 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
-// options - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
+//   - options - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, options *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientGetBlockListResponse, error) {
 	req, err := client.getBlockListCreateRequest(ctx, comp, listType, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -329,20 +331,21 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 // partial updates to a block blob’s contents using a source URL, use the Put
 // Block from URL API in conjunction with Put Block List.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// contentLength - The length of the request.
-// copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
-// a page blob snapshot. The value should be URL-encoded as it would appear in a request
-// URI. The source blob must either be public or must be authenticated via a shared access signature.
-// options - blockBlobClientPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL
-// method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
-// method.
+//   - contentLength - The length of the request.
+//   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
+//     a page blob snapshot. The value should be URL-encoded as it would appear in a request
+//     URI. The source blob must either be public or must be authenticated via a shared access signature.
+//   - options - blockBlobClientPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL
+//     method.
+//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//     method.
 func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, options *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientPutBlobFromURLResponse, error) {
 	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -520,16 +523,17 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
-// to 64 bytes in size. For a given blob, the length of the value specified for the blockid
-// parameter must be the same size for each block.
-// contentLength - The length of the request.
-// body - Initial data
-// options - blockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
+//     to 64 bytes in size. For a given blob, the length of the value specified for the blockid
+//     parameter must be the same size for each block.
+//   - contentLength - The length of the request.
+//   - body - Initial data
+//   - options - blockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockResponse, error) {
 	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
@@ -640,19 +644,20 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (Bl
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents
 // are read from a URL.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
-// to 64 bytes in size. For a given blob, the length of the value specified for the blockid
-// parameter must be the same size for each block.
-// contentLength - The length of the request.
-// sourceURL - Specify a URL to the copy source.
-// options - blockBlobClientStageBlockFromURLOptions contains the optional parameters for the blockBlobClient.StageBlockFromURL
-// method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
-// method.
+//   - blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
+//     to 64 bytes in size. For a given blob, the length of the value specified for the blockid
+//     parameter must be the same size for each block.
+//   - contentLength - The length of the request.
+//   - sourceURL - Specify a URL to the copy source.
+//   - options - blockBlobClientStageBlockFromURLOptions contains the optional parameters for the blockBlobClient.StageBlockFromURL
+//     method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//     method.
 func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -781,15 +786,16 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 // Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of
 // the content of a block blob, use the Put Block List operation.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// contentLength - The length of the request.
-// body - Initial data
-// options - blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - contentLength - The length of the request.
+//   - body - Initial data
+//   - options - blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
+//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadResponse, error) {
 	req, err := client.uploadCreateRequest(ctx, contentLength, body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {

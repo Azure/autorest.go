@@ -33,9 +33,9 @@ type PriceSheetClient struct {
 }
 
 // NewPriceSheetClient creates a new instance of PriceSheetClient with the specified values.
-// subscriptionID - Azure Subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - Azure Subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PriceSheetClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -59,8 +59,9 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 // Get - Gets the price sheet for a scope by subscriptionId. Price sheet is available via this API only for May 1, 2014 or
 // later.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
-// options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
+//   - options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
 func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (PriceSheetClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -115,10 +116,11 @@ func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceShe
 // GetByBillingPeriod - Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via
 // this API only for May 1, 2014 or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-10-01
-// billingPeriodName - Billing Period Name.
-// options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
-// method.
+//   - billingPeriodName - Billing Period Name.
+//   - options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
+//     method.
 func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingPeriodName string, options *PriceSheetClientGetByBillingPeriodOptions) (PriceSheetClientGetByBillingPeriodResponse, error) {
 	req, err := client.getByBillingPeriodCreateRequest(ctx, billingPeriodName, options)
 	if err != nil {

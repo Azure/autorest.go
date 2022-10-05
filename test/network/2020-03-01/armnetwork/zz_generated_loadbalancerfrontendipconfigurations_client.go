@@ -32,10 +32,10 @@ type LoadBalancerFrontendIPConfigurationsClient struct {
 }
 
 // NewLoadBalancerFrontendIPConfigurationsClient creates a new instance of LoadBalancerFrontendIPConfigurationsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*LoadBalancerFrontendIPConfigurationsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,12 +58,13 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 
 // Get - Gets load balancer frontend IP configuration.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// loadBalancerName - The name of the load balancer.
-// frontendIPConfigurationName - The name of the frontend IP configuration.
-// options - LoadBalancerFrontendIPConfigurationsClientGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.Get
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - loadBalancerName - The name of the load balancer.
+//   - frontendIPConfigurationName - The name of the frontend IP configuration.
+//   - options - LoadBalancerFrontendIPConfigurationsClientGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.Get
+//     method.
 func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsClientGetOptions) (LoadBalancerFrontendIPConfigurationsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
 	if err != nil {
@@ -119,11 +120,12 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleResponse(resp
 }
 
 // NewListPager - Gets all the load balancer frontend IP configurations.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// loadBalancerName - The name of the load balancer.
-// options - LoadBalancerFrontendIPConfigurationsClientListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.List
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - loadBalancerName - The name of the load balancer.
+//   - options - LoadBalancerFrontendIPConfigurationsClientListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.List
+//     method.
 func (client *LoadBalancerFrontendIPConfigurationsClient) NewListPager(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsClientListOptions) *runtime.Pager[LoadBalancerFrontendIPConfigurationsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[LoadBalancerFrontendIPConfigurationsClientListResponse]{
 		More: func(page LoadBalancerFrontendIPConfigurationsClientListResponse) bool {

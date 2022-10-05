@@ -32,9 +32,9 @@ type AddonsClient struct {
 }
 
 // NewAddonsClient creates a new instance of AddonsClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AddonsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,14 +57,15 @@ func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // BeginCreateOrUpdate - Create or update a addon.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// addonName - The addon name.
-// resourceGroupName - The resource group name.
-// addon - The addon properties.
-// options - AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - addonName - The addon name.
+//   - resourceGroupName - The resource group name.
+//   - addon - The addon properties.
+//   - options - AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate
+//     method.
 func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*runtime.Poller[AddonsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
@@ -79,6 +80,7 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 
 // CreateOrUpdate - Create or update a addon.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
@@ -128,12 +130,13 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 
 // BeginDelete - Deletes the addon on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// addonName - The addon name.
-// resourceGroupName - The resource group name.
-// options - AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - addonName - The addon name.
+//   - resourceGroupName - The resource group name.
+//   - options - AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
 func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*runtime.Poller[AddonsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
@@ -148,6 +151,7 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 
 // Delete - Deletes the addon on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
@@ -197,12 +201,13 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 
 // Get - Gets a specific addon by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// addonName - The addon name.
-// resourceGroupName - The resource group name.
-// options - AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - addonName - The addon name.
+//   - resourceGroupName - The resource group name.
+//   - options - AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
 func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientGetOptions) (AddonsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
@@ -259,11 +264,12 @@ func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsClient
 }
 
 // NewListByRolePager - Lists all the addons configured in the role.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// roleName - The role name.
-// resourceGroupName - The resource group name.
-// options - AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
+//   - deviceName - The device name.
+//   - roleName - The role name.
+//   - resourceGroupName - The resource group name.
+//   - options - AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
 func (client *AddonsClient) NewListByRolePager(deviceName string, roleName string, resourceGroupName string, options *AddonsClientListByRoleOptions) *runtime.Pager[AddonsClientListByRoleResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AddonsClientListByRoleResponse]{
 		More: func(page AddonsClientListByRoleResponse) bool {

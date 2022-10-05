@@ -32,10 +32,10 @@ type AzureFirewallFqdnTagsClient struct {
 }
 
 // NewAzureFirewallFqdnTagsClient creates a new instance of AzureFirewallFqdnTagsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AzureFirewallFqdnTagsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,9 +57,10 @@ func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.Tok
 }
 
 // NewListAllPager - Gets all the Azure Firewall FQDN Tags in a subscription.
+//
 // Generated from API version 2020-03-01
-// options - AzureFirewallFqdnTagsClientListAllOptions contains the optional parameters for the AzureFirewallFqdnTagsClient.ListAll
-// method.
+//   - options - AzureFirewallFqdnTagsClientListAllOptions contains the optional parameters for the AzureFirewallFqdnTagsClient.ListAll
+//     method.
 func (client *AzureFirewallFqdnTagsClient) NewListAllPager(options *AzureFirewallFqdnTagsClientListAllOptions) *runtime.Pager[AzureFirewallFqdnTagsClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AzureFirewallFqdnTagsClientListAllResponse]{
 		More: func(page AzureFirewallFqdnTagsClientListAllResponse) bool {

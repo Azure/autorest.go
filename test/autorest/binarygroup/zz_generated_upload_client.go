@@ -24,7 +24,7 @@ type UploadClient struct {
 }
 
 // NewUploadClient creates a new instance of UploadClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewUploadClient(pl runtime.Pipeline) *UploadClient {
 	client := &UploadClient{
 		pl: pl,
@@ -34,9 +34,10 @@ func NewUploadClient(pl runtime.Pipeline) *UploadClient {
 
 // Binary - Uploading binary file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// fileParam - Non-empty binary file
-// options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
+//   - fileParam - Non-empty binary file
+//   - options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
@@ -64,9 +65,10 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 
 // File - Uploading json file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// fileParam - JSON file with payload { "more": "cowbell" }
-// options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
+//   - fileParam - JSON file with payload { "more": "cowbell" }
+//   - options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {

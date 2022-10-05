@@ -23,7 +23,7 @@ type FloatClient struct {
 }
 
 // NewFloatClient creates a new instance of FloatClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewFloatClient(pl runtime.Pipeline) *FloatClient {
 	client := &FloatClient{
 		pl: pl,
@@ -33,8 +33,9 @@ func NewFloatClient(pl runtime.Pipeline) *FloatClient {
 
 // Get - Get a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
+//   - options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
 func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -72,9 +73,10 @@ func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGe
 
 // Put - Put a float enum
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// input - Input float enum.
-// options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
+//   - input - Input float enum.
+//   - options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
 func (client *FloatClient) Put(ctx context.Context, input FloatEnum, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, input, options)
 	if err != nil {

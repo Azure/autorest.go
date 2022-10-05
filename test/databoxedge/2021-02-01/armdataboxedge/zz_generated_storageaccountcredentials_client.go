@@ -32,9 +32,9 @@ type StorageAccountCredentialsClient struct {
 }
 
 // NewStorageAccountCredentialsClient creates a new instance of StorageAccountCredentialsClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*StorageAccountCredentialsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,13 +57,14 @@ func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore
 
 // BeginCreateOrUpdate - Creates or updates the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The storage account credential name.
-// resourceGroupName - The resource group name.
-// storageAccountCredential - The storage account credential.
-// options - StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The device name.
+//   - name - The storage account credential name.
+//   - resourceGroupName - The resource group name.
+//   - storageAccountCredential - The storage account credential.
+//   - options - StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
+//     method.
 func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*runtime.Poller[StorageAccountCredentialsClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
@@ -78,6 +79,7 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 
 // CreateOrUpdate - Creates or updates the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
@@ -123,12 +125,13 @@ func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx c
 
 // BeginDelete - Deletes the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The storage account credential name.
-// resourceGroupName - The resource group name.
-// options - StorageAccountCredentialsClientBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
-// method.
+//   - deviceName - The device name.
+//   - name - The storage account credential name.
+//   - resourceGroupName - The resource group name.
+//   - options - StorageAccountCredentialsClientBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
+//     method.
 func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*runtime.Poller[StorageAccountCredentialsClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
@@ -143,6 +146,7 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 
 // Delete - Deletes the storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
@@ -188,12 +192,13 @@ func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.C
 
 // Get - Gets the properties of the specified storage account credential.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The storage account credential name.
-// resourceGroupName - The resource group name.
-// options - StorageAccountCredentialsClientGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get
-// method.
+//   - deviceName - The device name.
+//   - name - The storage account credential name.
+//   - resourceGroupName - The resource group name.
+//   - options - StorageAccountCredentialsClientGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get
+//     method.
 func (client *StorageAccountCredentialsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientGetOptions) (StorageAccountCredentialsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -246,11 +251,12 @@ func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Resp
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the storage account credentials in a Data Box Edge/Data Box Gateway device.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *StorageAccountCredentialsClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse) bool {

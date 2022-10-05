@@ -25,9 +25,9 @@ type WorkspaceGitRepoManagementClient struct {
 }
 
 // NewWorkspaceGitRepoManagementClient creates a new instance of WorkspaceGitRepoManagementClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewWorkspaceGitRepoManagementClient(endpoint string, credential azcore.TokenCredential, options *WorkspaceGitRepoManagementClientOptions) *WorkspaceGitRepoManagementClient {
 	if options == nil {
 		options = &WorkspaceGitRepoManagementClientOptions{}
@@ -43,9 +43,10 @@ func NewWorkspaceGitRepoManagementClient(endpoint string, credential azcore.Toke
 
 // GetGitHubAccessToken - Get the GitHub access token.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// options - WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
-// method.
+//   - options - WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagementClient.GetGitHubAccessToken
+//     method.
 func (client *WorkspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {

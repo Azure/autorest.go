@@ -23,7 +23,7 @@ type AutoRestReportServiceClient struct {
 }
 
 // NewAutoRestReportServiceClient creates a new instance of AutoRestReportServiceClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewAutoRestReportServiceClient(pl runtime.Pipeline) *AutoRestReportServiceClient {
 	client := &AutoRestReportServiceClient{
 		pl: pl,
@@ -33,9 +33,10 @@ func NewAutoRestReportServiceClient(pl runtime.Pipeline) *AutoRestReportServiceC
 
 // GetOptionalReport - Get optional test coverage report
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - AutoRestReportServiceClientGetOptionalReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetOptionalReport
-// method.
+//   - options - AutoRestReportServiceClientGetOptionalReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetOptionalReport
+//     method.
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceClientGetOptionalReportOptions) (AutoRestReportServiceClientGetOptionalReportResponse, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
@@ -78,9 +79,10 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp 
 
 // GetReport - Get test coverage report
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - AutoRestReportServiceClientGetReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetReport
-// method.
+//   - options - AutoRestReportServiceClientGetReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetReport
+//     method.
 func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceClientGetReportOptions) (AutoRestReportServiceClientGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

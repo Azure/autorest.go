@@ -32,9 +32,9 @@ type RolesClient struct {
 }
 
 // NewRolesClient creates a new instance of RolesClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*RolesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,13 +57,14 @@ func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, op
 
 // BeginCreateOrUpdate - Create or update a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The role name.
-// resourceGroupName - The resource group name.
-// role - The role properties.
-// options - RolesClientBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The device name.
+//   - name - The role name.
+//   - resourceGroupName - The resource group name.
+//   - role - The role properties.
+//   - options - RolesClientBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate
+//     method.
 func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*runtime.Poller[RolesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, role, options)
@@ -78,6 +79,7 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 
 // CreateOrUpdate - Create or update a role.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, role, options)
@@ -123,11 +125,12 @@ func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, devi
 
 // BeginDelete - Deletes the role on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The role name.
-// resourceGroupName - The resource group name.
-// options - RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
+//   - deviceName - The device name.
+//   - name - The role name.
+//   - resourceGroupName - The resource group name.
+//   - options - RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
 func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*runtime.Poller[RolesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
@@ -142,6 +145,7 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 
 // Delete - Deletes the role on the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *RolesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
@@ -187,11 +191,12 @@ func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName s
 
 // Get - Gets a specific role by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The role name.
-// resourceGroupName - The resource group name.
-// options - RolesClientGetOptions contains the optional parameters for the RolesClient.Get method.
+//   - deviceName - The device name.
+//   - name - The role name.
+//   - resourceGroupName - The resource group name.
+//   - options - RolesClientGetOptions contains the optional parameters for the RolesClient.Get method.
 func (client *RolesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientGetOptions) (RolesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -244,11 +249,12 @@ func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesClientGe
 }
 
 // NewListByDataBoxEdgeDevicePager - Lists all the roles configured in a Data Box Edge/Data Box Gateway device.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *RolesClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *RolesClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[RolesClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RolesClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page RolesClientListByDataBoxEdgeDeviceResponse) bool {

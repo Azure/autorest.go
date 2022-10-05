@@ -32,9 +32,9 @@ type NodesClient struct {
 }
 
 // NewNodesClient creates a new instance of NodesClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewNodesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*NodesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -56,11 +56,12 @@ func NewNodesClient(subscriptionID string, credential azcore.TokenCredential, op
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the nodes currently configured under this Data Box Edge device
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *NodesClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *NodesClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[NodesClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[NodesClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page NodesClientListByDataBoxEdgeDeviceResponse) bool {

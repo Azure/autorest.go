@@ -32,10 +32,10 @@ type PublicIPAddressesClient struct {
 }
 
 // NewPublicIPAddressesClient creates a new instance of PublicIPAddressesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PublicIPAddressesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,12 +58,13 @@ func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCr
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// publicIPAddressName - The name of the public IP address.
-// parameters - Parameters supplied to the create or update public IP address operation.
-// options - PublicIPAddressesClientBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPAddressesClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - publicIPAddressName - The name of the public IP address.
+//   - parameters - Parameters supplied to the create or update public IP address operation.
+//   - options - PublicIPAddressesClientBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPAddressesClient.BeginCreateOrUpdate
+//     method.
 func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*runtime.Poller[PublicIPAddressesClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
@@ -80,6 +81,7 @@ func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, 
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *PublicIPAddressesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
@@ -124,11 +126,12 @@ func (client *PublicIPAddressesClient) createOrUpdateCreateRequest(ctx context.C
 
 // BeginDelete - Deletes the specified public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// publicIPAddressName - The name of the subnet.
-// options - PublicIPAddressesClientBeginDeleteOptions contains the optional parameters for the PublicIPAddressesClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - publicIPAddressName - The name of the subnet.
+//   - options - PublicIPAddressesClientBeginDeleteOptions contains the optional parameters for the PublicIPAddressesClient.BeginDelete
+//     method.
 func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*runtime.Poller[PublicIPAddressesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
@@ -145,6 +148,7 @@ func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resource
 
 // Delete - Deletes the specified public IP address.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *PublicIPAddressesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
@@ -189,10 +193,11 @@ func (client *PublicIPAddressesClient) deleteCreateRequest(ctx context.Context, 
 
 // Get - Gets the specified public IP address in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// publicIPAddressName - The name of the subnet.
-// options - PublicIPAddressesClientGetOptions contains the optional parameters for the PublicIPAddressesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - publicIPAddressName - The name of the subnet.
+//   - options - PublicIPAddressesClientGetOptions contains the optional parameters for the PublicIPAddressesClient.Get method.
 func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesClientGetOptions) (PublicIPAddressesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
@@ -248,15 +253,16 @@ func (client *PublicIPAddressesClient) getHandleResponse(resp *http.Response) (P
 
 // GetVirtualMachineScaleSetPublicIPAddress - Get the specified public IP address in a virtual machine scale set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2018-10-01
-// resourceGroupName - The name of the resource group.
-// virtualMachineScaleSetName - The name of the virtual machine scale set.
-// virtualmachineIndex - The virtual machine index.
-// networkInterfaceName - The name of the network interface.
-// ipConfigurationName - The name of the IP configuration.
-// publicIPAddressName - The name of the public IP Address.
-// options - PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressOptions contains the optional parameters for the
-// PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress method.
+//   - resourceGroupName - The name of the resource group.
+//   - virtualMachineScaleSetName - The name of the virtual machine scale set.
+//   - virtualmachineIndex - The virtual machine index.
+//   - networkInterfaceName - The name of the network interface.
+//   - ipConfigurationName - The name of the IP configuration.
+//   - publicIPAddressName - The name of the public IP Address.
+//   - options - PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressOptions contains the optional parameters for the
+//     PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress method.
 func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressOptions) (PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse, error) {
 	req, err := client.getVirtualMachineScaleSetPublicIPAddressCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, options)
 	if err != nil {
@@ -327,9 +333,10 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 }
 
 // NewListPager - Gets all public IP addresses in a resource group.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.List method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - PublicIPAddressesClientListOptions contains the optional parameters for the PublicIPAddressesClient.List method.
 func (client *PublicIPAddressesClient) NewListPager(resourceGroupName string, options *PublicIPAddressesClientListOptions) *runtime.Pager[PublicIPAddressesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListResponse]{
 		More: func(page PublicIPAddressesClientListResponse) bool {
@@ -390,9 +397,10 @@ func (client *PublicIPAddressesClient) listHandleResponse(resp *http.Response) (
 }
 
 // NewListAllPager - Gets all the public IP addresses in a subscription.
+//
 // Generated from API version 2020-03-01
-// options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.ListAll
-// method.
+//   - options - PublicIPAddressesClientListAllOptions contains the optional parameters for the PublicIPAddressesClient.ListAll
+//     method.
 func (client *PublicIPAddressesClient) NewListAllPager(options *PublicIPAddressesClientListAllOptions) *runtime.Pager[PublicIPAddressesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListAllResponse]{
 		More: func(page PublicIPAddressesClientListAllResponse) bool {
@@ -450,11 +458,12 @@ func (client *PublicIPAddressesClient) listAllHandleResponse(resp *http.Response
 
 // NewListVirtualMachineScaleSetPublicIPAddressesPager - Gets information about all public IP addresses on a virtual machine
 // scale set level.
+//
 // Generated from API version 2018-10-01
-// resourceGroupName - The name of the resource group.
-// virtualMachineScaleSetName - The name of the virtual machine scale set.
-// options - PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions contains the optional parameters for
-// the PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses method.
+//   - resourceGroupName - The name of the resource group.
+//   - virtualMachineScaleSetName - The name of the virtual machine scale set.
+//   - options - PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions contains the optional parameters for
+//     the PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses method.
 func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetPublicIPAddressesPager(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse]{
 		More: func(page PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse) bool {
@@ -520,14 +529,15 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 
 // NewListVirtualMachineScaleSetVMPublicIPAddressesPager - Gets information about all public IP addresses in a virtual machine
 // IP configuration in a virtual machine scale set.
+//
 // Generated from API version 2018-10-01
-// resourceGroupName - The name of the resource group.
-// virtualMachineScaleSetName - The name of the virtual machine scale set.
-// virtualmachineIndex - The virtual machine index.
-// networkInterfaceName - The network interface name.
-// ipConfigurationName - The IP configuration name.
-// options - PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions contains the optional parameters
-// for the PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses method.
+//   - resourceGroupName - The name of the resource group.
+//   - virtualMachineScaleSetName - The name of the virtual machine scale set.
+//   - virtualmachineIndex - The virtual machine index.
+//   - networkInterfaceName - The network interface name.
+//   - ipConfigurationName - The IP configuration name.
+//   - options - PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions contains the optional parameters
+//     for the PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses method.
 func (client *PublicIPAddressesClient) NewListVirtualMachineScaleSetVMPublicIPAddressesPager(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesOptions) *runtime.Pager[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse]{
 		More: func(page PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse) bool {
@@ -605,12 +615,13 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 
 // UpdateTags - Updates public IP address tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// publicIPAddressName - The name of the public IP address.
-// parameters - Parameters supplied to update public IP address tags.
-// options - PublicIPAddressesClientUpdateTagsOptions contains the optional parameters for the PublicIPAddressesClient.UpdateTags
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - publicIPAddressName - The name of the public IP address.
+//   - parameters - Parameters supplied to update public IP address tags.
+//   - options - PublicIPAddressesClientUpdateTagsOptions contains the optional parameters for the PublicIPAddressesClient.UpdateTags
+//     method.
 func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesClientUpdateTagsOptions) (PublicIPAddressesClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {

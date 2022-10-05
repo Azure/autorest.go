@@ -32,10 +32,10 @@ type VPNSiteLinksClient struct {
 }
 
 // NewVPNSiteLinksClient creates a new instance of VPNSiteLinksClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*VPNSiteLinksClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,11 +58,12 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 
 // Get - Retrieves the details of a VPN site link.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnSite.
-// vpnSiteName - The name of the VpnSite.
-// vpnSiteLinkName - The name of the VpnSiteLink being retrieved.
-// options - VPNSiteLinksClientGetOptions contains the optional parameters for the VPNSiteLinksClient.Get method.
+//   - resourceGroupName - The resource group name of the VpnSite.
+//   - vpnSiteName - The name of the VpnSite.
+//   - vpnSiteLinkName - The name of the VpnSiteLink being retrieved.
+//   - options - VPNSiteLinksClientGetOptions contains the optional parameters for the VPNSiteLinksClient.Get method.
 func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksClientGetOptions) (VPNSiteLinksClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteLinkName, options)
 	if err != nil {
@@ -118,11 +119,12 @@ func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSit
 }
 
 // NewListByVPNSitePager - Lists all the vpnSiteLinks in a resource group for a vpn site.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The resource group name of the VpnSite.
-// vpnSiteName - The name of the VpnSite.
-// options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
-// method.
+//   - resourceGroupName - The resource group name of the VpnSite.
+//   - vpnSiteName - The name of the VpnSite.
+//   - options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
+//     method.
 func (client *VPNSiteLinksClient) NewListByVPNSitePager(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) *runtime.Pager[VPNSiteLinksClientListByVPNSiteResponse] {
 	return runtime.NewPager(runtime.PagingHandler[VPNSiteLinksClientListByVPNSiteResponse]{
 		More: func(page VPNSiteLinksClientListByVPNSiteResponse) bool {

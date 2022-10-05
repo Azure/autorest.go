@@ -32,10 +32,10 @@ type Client struct {
 }
 
 // NewClient creates a new instance of Client with the specified values.
-// endpoint - The URL of the service account or table that is the target of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - endpoint - The URL of the service account or table that is the target of the desired operation.
+//   - version - Specifies the version of the operation to use for this request.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewClient(endpoint string, version Enum0, credential azcore.TokenCredential, options *ClientOptions) *Client {
 	if options == nil {
 		options = &ClientOptions{}
@@ -52,10 +52,11 @@ func NewClient(endpoint string, version Enum0, credential azcore.TokenCredential
 
 // Create - Creates a new table under the given account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// tableProperties - The Table properties.
-// options - ClientCreateOptions contains the optional parameters for the Client.Create method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - tableProperties - The Table properties.
+//   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
 func (client *Client) Create(ctx context.Context, dataServiceVersion Enum1, tableProperties Properties, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, dataServiceVersion, tableProperties, options)
 	if err != nil {
@@ -125,9 +126,10 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 
 // Delete - Operation permanently deletes the specified table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// table - The name of the table.
-// options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
+//   - table - The name of the table.
+//   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
@@ -186,14 +188,15 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 
 // DeleteEntity - Deletes the specified entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// table - The name of the table.
-// partitionKey - The partition key of the entity.
-// rowKey - The row key of the entity.
-// ifMatch - Match condition for an entity to be deleted. If specified and a matching entity is not found, an error will be
-// raised. To force an unconditional delete, set to the wildcard character (*).
-// options - ClientDeleteEntityOptions contains the optional parameters for the Client.DeleteEntity method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - table - The name of the table.
+//   - partitionKey - The partition key of the entity.
+//   - rowKey - The row key of the entity.
+//   - ifMatch - Match condition for an entity to be deleted. If specified and a matching entity is not found, an error will be
+//     raised. To force an unconditional delete, set to the wildcard character (*).
+//   - options - ClientDeleteEntityOptions contains the optional parameters for the Client.DeleteEntity method.
 func (client *Client) DeleteEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, ifMatch string, options *ClientDeleteEntityOptions) (ClientDeleteEntityResponse, error) {
 	req, err := client.deleteEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, ifMatch, options)
 	if err != nil {
@@ -271,10 +274,11 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared
 // Access Signatures.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// table - The name of the table.
-// comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
-// options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
+//   - table - The name of the table.
+//   - comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
+//   - options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
 func (client *Client) GetAccessPolicy(ctx context.Context, table string, comp Enum4, options *ClientGetAccessPolicyOptions) (ClientGetAccessPolicyResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, comp, options)
 	if err != nil {
@@ -342,10 +346,11 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 
 // InsertEntity - Insert entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// table - The name of the table.
-// options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - table - The name of the table.
+//   - options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
 func (client *Client) InsertEntity(ctx context.Context, dataServiceVersion Enum1, table string, options *ClientInsertEntityOptions) (ClientInsertEntityResponse, error) {
 	req, err := client.insertEntityCreateRequest(ctx, dataServiceVersion, table, options)
 	if err != nil {
@@ -431,13 +436,14 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 
 // MergeEntity - Merge entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// table - The name of the table.
-// partitionKey - The partition key of the entity.
-// rowKey - The row key of the entity.
-// tableEntityProperties - The properties for the table entity.
-// options - ClientMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - table - The name of the table.
+//   - partitionKey - The partition key of the entity.
+//   - rowKey - The row key of the entity.
+//   - tableEntityProperties - The properties for the table entity.
+//   - options - ClientMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
 func (client *Client) MergeEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientMergeEntityOptions) (ClientMergeEntityResponse, error) {
 	req, err := client.mergeEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {
@@ -519,9 +525,10 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 
 // Query - Queries tables under the given account.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// options - ClientQueryOptions contains the optional parameters for the Client.Query method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
 func (client *Client) Query(ctx context.Context, dataServiceVersion Enum1, options *ClientQueryOptions) (ClientQueryResponse, error) {
 	req, err := client.queryCreateRequest(ctx, dataServiceVersion, options)
 	if err != nil {
@@ -600,10 +607,11 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 
 // QueryEntities - Queries entities in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// table - The name of the table.
-// options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - table - The name of the table.
+//   - options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
 func (client *Client) QueryEntities(ctx context.Context, dataServiceVersion Enum1, table string, options *ClientQueryEntitiesOptions) (ClientQueryEntitiesResponse, error) {
 	req, err := client.queryEntitiesCreateRequest(ctx, dataServiceVersion, table, options)
 	if err != nil {
@@ -695,13 +703,14 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// table - The name of the table.
-// partitionKey - The partition key of the entity.
-// rowKey - The row key of the entity.
-// options - ClientQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Client.QueryEntityWithPartitionAndRowKey
-// method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - table - The name of the table.
+//   - partitionKey - The partition key of the entity.
+//   - rowKey - The row key of the entity.
+//   - options - ClientQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Client.QueryEntityWithPartitionAndRowKey
+//     method.
 func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *ClientQueryEntityWithPartitionAndRowKeyOptions) (ClientQueryEntityWithPartitionAndRowKeyResponse, error) {
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
 	if err != nil {
@@ -795,11 +804,12 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// table - The name of the table.
-// comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
-// tableACL - The acls for the table.
-// options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
+//   - table - The name of the table.
+//   - comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
+//   - tableACL - The acls for the table.
+//   - options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
 func (client *Client) SetAccessPolicy(ctx context.Context, table string, comp Enum4, tableACL []*SignedIdentifier, options *ClientSetAccessPolicyOptions) (ClientSetAccessPolicyResponse, error) {
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, comp, tableACL, options)
 	if err != nil {
@@ -868,13 +878,14 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 
 // UpdateEntity - Update entity in a table.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-02-02
-// dataServiceVersion - Specifies the data service version.
-// table - The name of the table.
-// partitionKey - The partition key of the entity.
-// rowKey - The row key of the entity.
-// tableEntityProperties - The properties for the table entity.
-// options - ClientUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
+//   - dataServiceVersion - Specifies the data service version.
+//   - table - The name of the table.
+//   - partitionKey - The partition key of the entity.
+//   - rowKey - The row key of the entity.
+//   - tableEntityProperties - The properties for the table entity.
+//   - options - ClientUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
 func (client *Client) UpdateEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, tableEntityProperties map[string]any, options *ClientUpdateEntityOptions) (ClientUpdateEntityResponse, error) {
 	req, err := client.updateEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, tableEntityProperties, options)
 	if err != nil {

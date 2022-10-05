@@ -32,10 +32,10 @@ type SecurityPartnerProvidersClient struct {
 }
 
 // NewSecurityPartnerProvidersClient creates a new instance of SecurityPartnerProvidersClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*SecurityPartnerProvidersClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,12 +58,13 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 
 // BeginCreateOrUpdate - Creates or updates the specified Security Partner Provider.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// securityPartnerProviderName - The name of the Security Partner Provider.
-// parameters - Parameters supplied to the create or update Security Partner Provider operation.
-// options - SecurityPartnerProvidersClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - securityPartnerProviderName - The name of the Security Partner Provider.
+//   - parameters - Parameters supplied to the create or update Security Partner Provider operation.
+//   - options - SecurityPartnerProvidersClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
+//     method.
 func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*runtime.Poller[SecurityPartnerProvidersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
@@ -80,6 +81,7 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
@@ -124,11 +126,12 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx co
 
 // BeginDelete - Deletes the specified Security Partner Provider.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// securityPartnerProviderName - The name of the Security Partner Provider.
-// options - SecurityPartnerProvidersClientBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - securityPartnerProviderName - The name of the Security Partner Provider.
+//   - options - SecurityPartnerProvidersClientBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
+//     method.
 func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*runtime.Poller[SecurityPartnerProvidersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
@@ -145,6 +148,7 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 
 // Delete - Deletes the specified Security Partner Provider.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
@@ -189,11 +193,12 @@ func (client *SecurityPartnerProvidersClient) deleteCreateRequest(ctx context.Co
 
 // Get - Gets the specified Security Partner Provider.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// securityPartnerProviderName - The name of the Security Partner Provider.
-// options - SecurityPartnerProvidersClientGetOptions contains the optional parameters for the SecurityPartnerProvidersClient.Get
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - securityPartnerProviderName - The name of the Security Partner Provider.
+//   - options - SecurityPartnerProvidersClientGetOptions contains the optional parameters for the SecurityPartnerProvidersClient.Get
+//     method.
 func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientGetOptions) (SecurityPartnerProvidersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
@@ -245,9 +250,10 @@ func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Respo
 }
 
 // NewListPager - Gets all the Security Partner Providers in a subscription.
+//
 // Generated from API version 2020-03-01
-// options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
-// method.
+//   - options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
+//     method.
 func (client *SecurityPartnerProvidersClient) NewListPager(options *SecurityPartnerProvidersClientListOptions) *runtime.Pager[SecurityPartnerProvidersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityPartnerProvidersClientListResponse]{
 		More: func(page SecurityPartnerProvidersClientListResponse) bool {
@@ -304,10 +310,11 @@ func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Resp
 }
 
 // NewListByResourceGroupPager - Lists all Security Partner Providers in a resource group.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
+//     method.
 func (client *SecurityPartnerProvidersClient) NewListByResourceGroupPager(resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) *runtime.Pager[SecurityPartnerProvidersClientListByResourceGroupResponse] {
 	return runtime.NewPager(runtime.PagingHandler[SecurityPartnerProvidersClientListByResourceGroupResponse]{
 		More: func(page SecurityPartnerProvidersClientListByResourceGroupResponse) bool {
@@ -369,12 +376,13 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(
 
 // UpdateTags - Updates tags of a Security Partner Provider resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// securityPartnerProviderName - The name of the Security Partner Provider.
-// parameters - Parameters supplied to update Security Partner Provider tags.
-// options - SecurityPartnerProvidersClientUpdateTagsOptions contains the optional parameters for the SecurityPartnerProvidersClient.UpdateTags
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - securityPartnerProviderName - The name of the Security Partner Provider.
+//   - parameters - Parameters supplied to update Security Partner Provider tags.
+//   - options - SecurityPartnerProvidersClientUpdateTagsOptions contains the optional parameters for the SecurityPartnerProvidersClient.UpdateTags
+//     method.
 func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersClientUpdateTagsOptions) (SecurityPartnerProvidersClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {

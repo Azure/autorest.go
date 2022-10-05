@@ -26,7 +26,7 @@ type MediaTypesClient struct {
 }
 
 // NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewMediaTypesClient(pl runtime.Pipeline) *MediaTypesClient {
 	client := &MediaTypesClient{
 		pl: pl,
@@ -36,9 +36,10 @@ func NewMediaTypesClient(pl runtime.Pipeline) *MediaTypesClient {
 
 // AnalyzeBody - Analyze body, that could be different media types.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// contentType - Upload file type
-// options - MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
+//   - contentType - Upload file type
+//   - options - MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -81,10 +82,11 @@ func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *http.Response) (
 // AnalyzeBodyNoAcceptHeader - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept
 // type.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// contentType - Upload file type
-// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
-// method.
+//   - contentType - Upload file type
+//   - options - MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
+//     method.
 func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse, error) {
 	req, err := client.analyzeBodyNoAcceptHeaderCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -117,9 +119,10 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx conte
 // AnalyzeBodyNoAcceptHeaderWithJSON - Analyze body, that could be different media types. Adds to AnalyzeBody by not having
 // an accept type.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
-// method.
+//   - options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
+//     method.
 func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse, error) {
 	req, err := client.analyzeBodyNoAcceptHeaderWithJSONCreateRequest(ctx, options)
 	if err != nil {
@@ -150,9 +153,10 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONCreateRequest(c
 
 // AnalyzeBodyWithJSON - Analyze body, that could be different media types.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// options - MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
-// method.
+//   - options - MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
+//     method.
 func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
 	req, err := client.analyzeBodyWithJSONCreateRequest(ctx, options)
 	if err != nil {
@@ -195,11 +199,12 @@ func (client *MediaTypesClient) analyzeBodyWithJSONHandleResponse(resp *http.Res
 // 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
 // 'application/octet-stream'.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// contentType - Upload file type
-// message - The payload body.
-// options - MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
-// method.
+//   - contentType - Upload file type
+//   - message - The payload body.
+//   - options - MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
+//     method.
 func (client *MediaTypesClient) BinaryBodyWithThreeContentTypes(ctx context.Context, contentType ContentType1AutoGenerated, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithThreeContentTypesOptions) (MediaTypesClientBinaryBodyWithThreeContentTypesResponse, error) {
 	req, err := client.binaryBodyWithThreeContentTypesCreateRequest(ctx, contentType, message, options)
 	if err != nil {
@@ -242,11 +247,12 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesHandleResponse(re
 // BinaryBodyWithTwoContentTypes - Binary body with two content types. Pass in of {'hello': 'world'} for the application/json
 // content type, and a byte stream of 'hello, world!' for application/octet-stream.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// contentType - Upload file type
-// message - The payload body.
-// options - MediaTypesClientBinaryBodyWithTwoContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithTwoContentTypes
-// method.
+//   - contentType - Upload file type
+//   - message - The payload body.
+//   - options - MediaTypesClientBinaryBodyWithTwoContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithTwoContentTypes
+//     method.
 func (client *MediaTypesClient) BinaryBodyWithTwoContentTypes(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (MediaTypesClientBinaryBodyWithTwoContentTypesResponse, error) {
 	req, err := client.binaryBodyWithTwoContentTypesCreateRequest(ctx, contentType, message, options)
 	if err != nil {
@@ -288,9 +294,10 @@ func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleResponse(resp
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; charset=UTF-8' to pass test. Value for input does not matter
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// options - MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
-// method.
+//   - options - MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
+//     method.
 func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (MediaTypesClientContentTypeWithEncodingResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, options)
 	if err != nil {
@@ -332,11 +339,12 @@ func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *http
 
 // PutTextAndJSONBody - Body that's either text/plain or application/json
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2.0-preview
-// contentType - Upload file type
-// message - The payload body.
-// options - MediaTypesClientPutTextAndJSONBodyOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBody
-// method.
+//   - contentType - Upload file type
+//   - message - The payload body.
+//   - options - MediaTypesClientPutTextAndJSONBodyOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBody
+//     method.
 func (client *MediaTypesClient) PutTextAndJSONBody(ctx context.Context, contentType ContentType1AutoGenerated2, message string, options *MediaTypesClientPutTextAndJSONBodyOptions) (MediaTypesClientPutTextAndJSONBodyResponse, error) {
 	req, err := client.putTextAndJSONBodyCreateRequest(ctx, contentType, message, options)
 	if err != nil {

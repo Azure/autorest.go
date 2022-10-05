@@ -23,7 +23,7 @@ type AutoRestReportServiceForAzureClient struct {
 }
 
 // NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewAutoRestReportServiceForAzureClient(pl runtime.Pipeline) *AutoRestReportServiceForAzureClient {
 	client := &AutoRestReportServiceForAzureClient{
 		pl: pl,
@@ -33,9 +33,10 @@ func NewAutoRestReportServiceForAzureClient(pl runtime.Pipeline) *AutoRestReport
 
 // GetReport - Get test coverage report
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - AutoRestReportServiceForAzureClientGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
-// method.
+//   - options - AutoRestReportServiceForAzureClientGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
+//     method.
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

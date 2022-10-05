@@ -9,7 +9,7 @@ import { ApiVersions, ArraySchema, ByteArraySchema, ChoiceSchema, CodeModel, Con
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, formatConstantValue, getSchemaResponse, isArraySchema, isBinaryResponseOperation, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, isLROOperation, commentLength, hasOAuth2SecurityDefinition, getOAuth2SecuritySchema } from '../common/helpers';
 import { OperationNaming } from '../transform/namer';
-import { contentPreamble, elementByValueForParam, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
+import { contentPreamble, elementByValueForParam, formatCommentAsBulletItem, formatParameterTypeName, formatStatusCodes, formatValue, getClientDefaultValue, getResponseEnvelope, getResponseEnvelopeName, getResultFieldName, getStatusCodes, hasDescription, hasResultProperty, hasSchemaResponse, skipURLEncoding, sortAscending, getCreateRequestParameters, getCreateRequestParametersSig, getMethodParameters, getParamName, formatParamValue, dateFormat, datetimeRFC1123Format, datetimeRFC3339Format, sortParametersByRequired, substituteDiscriminator } from './helpers';
 import { ImportManager } from './imports';
 
 // represents the generated content for an operation group
@@ -141,7 +141,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         for (const clientParam of values(clientParams)) {
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
           if (clientParam.language.go!.description) {
-            paramDocs.push(comment(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`, '//', undefined, commentLength));
+            paramDocs.push(formatCommentAsBulletItem(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`));
           }
         }
       }
@@ -154,9 +154,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
-      paramDocs.push('// credential - used to authorize requests. Usually a credential from azidentity.');
+      paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
       methodParams.push(`options *${optionsType}`);
-      paramDocs.push('// options - pass nil to accept the default values.');
+      paramDocs.push(formatCommentAsBulletItem('options - pass nil to accept the default values.'));
     } else {
       // this is the vanilla ARM or data-plane case.  both of them can
       // have parameterized host, however data-plane takes a pipeline
@@ -174,7 +174,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           const paramName = param.language.go!.name;
           methodParams.push(`${paramName} ${formatParameterTypeName(param)}`);
           if (param.language.go!.description) {
-            paramDocs.push(comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength));
+            paramDocs.push(formatCommentAsBulletItem(`${param.language.go!.name} - ${param.language.go!.description}`));
           }
         }
       }
@@ -186,12 +186,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (hasOauth2Security) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
         methodParams.push('credential azcore.TokenCredential');
-        paramDocs.push('// credential - used to authorize requests. Usually a credential from azidentity.');
+        paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
         methodParams.push(`options *${optionsType}`);
-        paramDocs.push('// options - pass nil to accept the default values.');
+        paramDocs.push(formatCommentAsBulletItem('options - pass nil to accept the default values.'));
       } else {
         methodParams.push('pl runtime.Pipeline');
-        paramDocs.push('// pl - the pipeline used for sending requests and handling responses.');
+        paramDocs.push(formatCommentAsBulletItem('pl - the pipeline used for sending requests and handling responses.'));
       }
     }
 
@@ -548,7 +548,7 @@ function genApiVersionDoc(apiVersions?: ApiVersions): string {
   apiVersions.forEach((val) => {
     versions.push(val.version);
   })
-  return `// Generated from API version ${versions.join(',')}\n`;
+  return `//\n// Generated from API version ${versions.join(',')}\n`;
 }
 
 function generateOperation(op: Operation, imports: ImportManager): string {
@@ -575,7 +575,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     const methodParams = getMethodParameters(op);
     for (const param of values(methodParams)) {
       if (param.language.go!.description) {
-        text += `${comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength)}\n`;
+        text += `${formatCommentAsBulletItem(`${param.language.go!.name} - ${param.language.go!.description}`)}\n`;
       }
     }
   }
@@ -1267,7 +1267,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager): string {
   const methodParams = getMethodParameters(op);
   for (const param of values(methodParams)) {
     if (param.language.go!.description) {
-      text += `${comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength)}\n`;
+      text += `${formatCommentAsBulletItem(`${param.language.go!.name} - ${param.language.go!.description}`)}\n`;
     }
   }
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;

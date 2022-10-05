@@ -27,8 +27,8 @@ type RoleDefinitionsClient struct {
 }
 
 // NewRoleDefinitionsClient creates a new instance of RoleDefinitionsClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewRoleDefinitionsClient(credential azcore.TokenCredential, options *RoleDefinitionsClientOptions) *RoleDefinitionsClient {
 	if options == nil {
 		options = &RoleDefinitionsClientOptions{}
@@ -43,13 +43,14 @@ func NewRoleDefinitionsClient(credential azcore.TokenCredential, options *RoleDe
 
 // CreateOrUpdate - Creates or updates a custom role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
-// roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
-// parameters - Parameters for the role definition.
-// options - RoleDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate
-// method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
+//   - roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
+//   - parameters - Parameters for the role definition.
+//   - options - RoleDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate
+//     method.
 func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsClientCreateOrUpdateOptions) (RoleDefinitionsClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, parameters, options)
 	if err != nil {
@@ -97,11 +98,12 @@ func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Res
 
 // Delete - Deletes a custom role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// scope - The scope of the role definition to delete. Managed HSM only supports '/'.
-// roleDefinitionName - The name (GUID) of the role definition to delete.
-// options - RoleDefinitionsClientDeleteOptions contains the optional parameters for the RoleDefinitionsClient.Delete method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - scope - The scope of the role definition to delete. Managed HSM only supports '/'.
+//   - roleDefinitionName - The name (GUID) of the role definition to delete.
+//   - options - RoleDefinitionsClientDeleteOptions contains the optional parameters for the RoleDefinitionsClient.Delete method.
 func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsClientDeleteOptions) (RoleDefinitionsClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
@@ -149,11 +151,12 @@ func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (
 
 // Get - Get the specified role definition.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// scope - The scope of the role definition to get. Managed HSM only supports '/'.
-// roleDefinitionName - The name of the role definition to get.
-// options - RoleDefinitionsClientGetOptions contains the optional parameters for the RoleDefinitionsClient.Get method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - scope - The scope of the role definition to get. Managed HSM only supports '/'.
+//   - roleDefinitionName - The name of the role definition to get.
+//   - options - RoleDefinitionsClientGetOptions contains the optional parameters for the RoleDefinitionsClient.Get method.
 func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsClientGetOptions) (RoleDefinitionsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
@@ -200,10 +203,11 @@ func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (Rol
 }
 
 // NewListPager - Get all role definitions that are applicable at scope and above.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// scope - The scope of the role definition.
-// options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - scope - The scope of the role definition.
+//   - options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
 func (client *RoleDefinitionsClient) NewListPager(vaultBaseURL string, scope string, options *RoleDefinitionsClientListOptions) *runtime.Pager[RoleDefinitionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[RoleDefinitionsClientListResponse]{
 		More: func(page RoleDefinitionsClientListResponse) bool {

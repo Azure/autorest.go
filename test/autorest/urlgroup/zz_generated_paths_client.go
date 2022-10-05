@@ -28,7 +28,7 @@ type PathsClient struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewPathsClient(pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{
 		pl: pl,
@@ -38,9 +38,10 @@ func NewPathsClient(pl runtime.Pipeline) *PathsClient {
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
-// options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
+//   - arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ”] using the csv-array format
+//   - options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (PathsClientArrayCSVInPathResponse, error) {
 	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
 	if err != nil {
@@ -70,9 +71,10 @@ func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arra
 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// base64URLPath - base64url encoded value
-// options - PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
+//   - base64URLPath - base64url encoded value
+//   - options - PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
 func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (PathsClientBase64URLResponse, error) {
 	req, err := client.base64URLCreateRequest(ctx, base64URLPath, options)
 	if err != nil {
@@ -102,8 +104,9 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 
 // ByteEmpty - Get ” as byte array
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
+//   - options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
 func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientByteEmptyOptions) (PathsClientByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -133,9 +136,10 @@ func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-// options - PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
+//   - bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+//   - options - PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
 func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (PathsClientByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, bytePath, options)
 	if err != nil {
@@ -165,9 +169,10 @@ func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, byteP
 
 // ByteNull - Get null as byte array (should throw)
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// bytePath - null as byte array (should throw)
-// options - PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
+//   - bytePath - null as byte array (should throw)
+//   - options - PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
 func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (PathsClientByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, bytePath, options)
 	if err != nil {
@@ -197,9 +202,10 @@ func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath [
 
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// datePath - null as date (should throw)
-// options - PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
+//   - datePath - null as date (should throw)
+//   - options - PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
 func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (PathsClientDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, datePath, options)
 	if err != nil {
@@ -229,9 +235,10 @@ func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath t
 
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// dateTimePath - null as date-time
-// options - PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
+//   - dateTimePath - null as date-time
+//   - options - PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
 func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (PathsClientDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, dateTimePath, options)
 	if err != nil {
@@ -261,8 +268,9 @@ func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTi
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
+//   - options - PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
 func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClientDateTimeValidOptions) (PathsClientDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -292,8 +300,9 @@ func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, optio
 
 // DateValid - Get '2012-01-01' as date
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
+//   - options - PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
 func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDateValidOptions) (PathsClientDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -323,9 +332,10 @@ func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative
-// method.
+//   - options - PathsClientDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative
+//     method.
 func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (PathsClientDoubleDecimalNegativeResponse, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -355,9 +365,10 @@ func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Contex
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive
-// method.
+//   - options - PathsClientDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive
+//     method.
 func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (PathsClientDoubleDecimalPositiveResponse, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -387,9 +398,10 @@ func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Contex
 
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// enumPath - send null should throw
-// options - PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
+//   - enumPath - send null should throw
+//   - options - PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
 func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (PathsClientEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, enumPath, options)
 	if err != nil {
@@ -422,9 +434,10 @@ func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath U
 
 // EnumValid - Get using uri with 'green color' in path parameter
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// enumPath - send the value green
-// options - PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
+//   - enumPath - send the value green
+//   - options - PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
 func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (PathsClientEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, enumPath, options)
 	if err != nil {
@@ -457,9 +470,10 @@ func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath 
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
-// method.
+//   - options - PathsClientFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
+//     method.
 func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (PathsClientFloatScientificNegativeResponse, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -489,9 +503,10 @@ func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Cont
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
-// method.
+//   - options - PathsClientFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
+//     method.
 func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (PathsClientFloatScientificPositiveResponse, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -521,8 +536,9 @@ func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Cont
 
 // GetBooleanFalse - Get false Boolean value on path
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
+//   - options - PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
 func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (PathsClientGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -552,8 +568,9 @@ func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, opt
 
 // GetBooleanTrue - Get true Boolean value on path
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
+//   - options - PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
 func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (PathsClientGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -583,9 +600,10 @@ func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, opti
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
-// method.
+//   - options - PathsClientGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
+//     method.
 func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (PathsClientGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -615,8 +633,9 @@ func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Con
 
 // GetIntOneMillion - Get '1000000' integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
+//   - options - PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
 func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (PathsClientGetIntOneMillionResponse, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -646,9 +665,10 @@ func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, op
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion
-// method.
+//   - options - PathsClientGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion
+//     method.
 func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (PathsClientGetNegativeTenBillionResponse, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -678,8 +698,9 @@ func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Contex
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
+//   - options - PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
 func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClientGetTenBillionOptions) (PathsClientGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -709,8 +730,9 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 
 // StringEmpty - Get ”
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
+//   - options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
 func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClientStringEmptyOptions) (PathsClientStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -740,9 +762,10 @@ func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options
 
 // StringNull - Get null (should throw)
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// stringPath - null string value
-// options - PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
+//   - stringPath - null string value
+//   - options - PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
 func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (PathsClientStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, stringPath, options)
 	if err != nil {
@@ -775,8 +798,9 @@ func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPa
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
+//   - options - PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
 func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsClientStringURLEncodedOptions) (PathsClientStringURLEncodedResponse, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -806,9 +830,10 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, op
 
 // StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded
-// method.
+//   - options - PathsClientStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded
+//     method.
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (PathsClientStringURLNonEncodedResponse, error) {
 	req, err := client.stringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -838,8 +863,9 @@ func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context,
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// options - PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
+//   - options - PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
 func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClientStringUnicodeOptions) (PathsClientStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
@@ -869,9 +895,10 @@ func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, optio
 
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// unixTimeURLPath - Unix time encoded value
-// options - PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
+//   - unixTimeURLPath - Unix time encoded value
+//   - options - PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
 func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (PathsClientUnixTimeURLResponse, error) {
 	req, err := client.unixTimeURLCreateRequest(ctx, unixTimeURLPath, options)
 	if err != nil {

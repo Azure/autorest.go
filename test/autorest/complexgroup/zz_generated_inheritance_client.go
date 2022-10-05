@@ -23,7 +23,7 @@ type InheritanceClient struct {
 }
 
 // NewInheritanceClient creates a new instance of InheritanceClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewInheritanceClient(pl runtime.Pipeline) *InheritanceClient {
 	client := &InheritanceClient{
 		pl: pl,
@@ -33,8 +33,9 @@ func NewInheritanceClient(pl runtime.Pipeline) *InheritanceClient {
 
 // GetValid - Get complex types that extend others
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
-// options - InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
+//   - options - InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
 func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceClientGetValidOptions) (InheritanceClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -72,11 +73,12 @@ func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (In
 
 // PutValid - Put complex types that extend others
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
-// complexBody - Please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the 1st one
-// named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
-// food="french fries".
-// options - InheritanceClientPutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
+//   - complexBody - Please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the 1st one
+//     named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
+//     food="french fries".
+//   - options - InheritanceClientPutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
 func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritanceClientPutValidOptions) (InheritanceClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

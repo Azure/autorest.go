@@ -24,7 +24,7 @@ type FormdataClient struct {
 }
 
 // NewFormdataClient creates a new instance of FormdataClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewFormdataClient(pl runtime.Pipeline) *FormdataClient {
 	client := &FormdataClient{
 		pl: pl,
@@ -34,10 +34,11 @@ func NewFormdataClient(pl runtime.Pipeline) *FormdataClient {
 
 // UploadFile - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// fileContent - File to upload.
-// fileName - File name to upload. Name has to be spelled exactly as written here.
-// options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
+//   - fileContent - File to upload.
+//   - fileName - File name to upload. Name has to be spelled exactly as written here.
+//   - options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
 func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataClientUploadFileOptions) (FormdataClientUploadFileResponse, error) {
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
@@ -73,10 +74,11 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 
 // UploadFileViaBody - Upload file
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// fileContent - File to upload.
-// options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
-// method.
+//   - fileContent - File to upload.
+//   - options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
+//     method.
 func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (FormdataClientUploadFileViaBodyResponse, error) {
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
@@ -106,9 +108,10 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 
 // UploadFiles - Upload multiple files
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 1.0.0
-// fileContent - Files to upload.
-// options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
+//   - fileContent - Files to upload.
+//   - options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (FormdataClientUploadFilesResponse, error) {
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {

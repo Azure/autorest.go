@@ -25,8 +25,8 @@ type HSMSecurityDomainClient struct {
 }
 
 // NewHSMSecurityDomainClient creates a new instance of HSMSecurityDomainClient with the specified values.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewHSMSecurityDomainClient(credential azcore.TokenCredential, options *HSMSecurityDomainClientOptions) *HSMSecurityDomainClient {
 	if options == nil {
 		options = &HSMSecurityDomainClientOptions{}
@@ -42,12 +42,13 @@ func NewHSMSecurityDomainClient(credential azcore.TokenCredential, options *HSMS
 // BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
 // managed HSM resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// certificateInfoObject - The Security Domain download operation requires customer to provide N certificates (minimum 3 and
-// maximum 10) containing a public key in JWK format.
-// options - HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
-// method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - certificateInfoObject - The Security Domain download operation requires customer to provide N certificates (minimum 3 and
+//     maximum 10) containing a public key in JWK format.
+//   - options - HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
+//     method.
 func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*runtime.Poller[HSMSecurityDomainClientDownloadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
@@ -65,6 +66,7 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 // Download - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
 // managed HSM resource.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainClientBeginDownloadOptions) (*http.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, vaultBaseURL, certificateInfoObject, options)
@@ -99,10 +101,11 @@ func (client *HSMSecurityDomainClient) downloadCreateRequest(ctx context.Context
 
 // DownloadPending - Retrieves the Security Domain download operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainClientDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
-// method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - options - HSMSecurityDomainClientDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
+//     method.
 func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientDownloadPendingOptions) (HSMSecurityDomainClientDownloadPendingResponse, error) {
 	req, err := client.downloadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -142,10 +145,11 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *http.
 
 // TransferKey - Retrieve Security Domain transfer key
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainClientTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey
-// method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - options - HSMSecurityDomainClientTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey
+//     method.
 func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientTransferKeyOptions) (HSMSecurityDomainClientTransferKeyResponse, error) {
 	req, err := client.transferKeyCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -188,11 +192,12 @@ func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *http.Resp
 
 // BeginUpload - Restore the provided Security Domain.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// securityDomain - The Security Domain to be restored.
-// options - HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
-// method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - securityDomain - The Security Domain to be restored.
+//   - options - HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
+//     method.
 func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*runtime.Poller[HSMSecurityDomainClientUploadResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.upload(ctx, vaultBaseURL, securityDomain, options)
@@ -209,6 +214,7 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 
 // Upload - Restore the provided Security Domain.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
 func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainClientBeginUploadOptions) (*http.Response, error) {
 	req, err := client.uploadCreateRequest(ctx, vaultBaseURL, securityDomain, options)
@@ -240,10 +246,11 @@ func (client *HSMSecurityDomainClient) uploadCreateRequest(ctx context.Context, 
 
 // UploadPending - Get Security Domain upload operation status
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 7.2
-// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainClientUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending
-// method.
+//   - vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+//   - options - HSMSecurityDomainClientUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending
+//     method.
 func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainClientUploadPendingOptions) (HSMSecurityDomainClientUploadPendingResponse, error) {
 	req, err := client.uploadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {

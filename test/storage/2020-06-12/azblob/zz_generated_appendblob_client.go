@@ -27,9 +27,9 @@ type appendBlobClient struct {
 }
 
 // newAppendBlobClient creates a new instance of appendBlobClient with the specified values.
-// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-// version - Specifies the version of the operation to use for this request.
-// pl - the pipeline used for sending requests and handling responses.
+//   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+//   - version - Specifies the version of the operation to use for this request.
+//   - pl - the pipeline used for sending requests and handling responses.
 func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *appendBlobClient {
 	client := &appendBlobClient{
 		endpoint: endpoint,
@@ -43,16 +43,17 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 // Block operation is permitted only if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// contentLength - The length of the request.
-// body - Initial data
-// options - appendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
-// method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - contentLength - The length of the request.
+//   - body - Initial data
+//   - options - appendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
+//     method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *appendBlobClient) AppendBlock(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, options *appendBlobClientAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientAppendBlockResponse, error) {
 	req, err := client.appendBlockCreateRequest(ctx, comp, contentLength, body, options, leaseAccessConditions, appendPositionAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -205,19 +206,20 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 // the contents are read from a source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// sourceURL - Specify a URL to the copy source.
-// contentLength - The length of the request.
-// options - appendBlobClientAppendBlockFromURLOptions contains the optional parameters for the appendBlobClient.AppendBlockFromURL
-// method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
-// method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
-// method.
+//   - sourceURL - Specify a URL to the copy source.
+//   - contentLength - The length of the request.
+//   - options - appendBlobClientAppendBlockFromURLOptions contains the optional parameters for the appendBlobClient.AppendBlockFromURL
+//     method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
+//     method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
+//     method.
 func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, comp Enum38, sourceURL string, contentLength int64, options *appendBlobClientAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobClientAppendBlockFromURLResponse, error) {
 	req, err := client.appendBlockFromURLCreateRequest(ctx, comp, sourceURL, contentLength, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -384,14 +386,15 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 
 // Create - The Create Append Blob operation creates a new append blob.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// contentLength - The length of the request.
-// options - appendBlobClientCreateOptions contains the optional parameters for the appendBlobClient.Create method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - contentLength - The length of the request.
+//   - options - appendBlobClientCreateOptions contains the optional parameters for the appendBlobClient.Create method.
+//   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+//   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *appendBlobClient) Create(ctx context.Context, contentLength int64, options *appendBlobClientCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (AppendBlobClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, contentLength, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
@@ -551,12 +554,13 @@ func (client *appendBlobClient) createHandleResponse(resp *http.Response) (Appen
 // Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version
 // or later.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-06-12
-// options - appendBlobClientSealOptions contains the optional parameters for the appendBlobClient.Seal method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
-// method.
+//   - options - appendBlobClientSealOptions contains the optional parameters for the appendBlobClient.Seal method.
+//   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+//   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+//   - AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
+//     method.
 func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, options *appendBlobClientSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobClientSealResponse, error) {
 	req, err := client.sealCreateRequest(ctx, comp, options, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
 	if err != nil {

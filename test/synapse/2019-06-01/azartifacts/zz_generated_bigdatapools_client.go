@@ -28,9 +28,9 @@ type BigDataPoolsClient struct {
 }
 
 // NewBigDataPoolsClient creates a new instance of BigDataPoolsClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewBigDataPoolsClient(endpoint string, credential azcore.TokenCredential, options *BigDataPoolsClientOptions) *BigDataPoolsClient {
 	if options == nil {
 		options = &BigDataPoolsClientOptions{}
@@ -46,9 +46,10 @@ func NewBigDataPoolsClient(endpoint string, credential azcore.TokenCredential, o
 
 // Get - Get Big Data Pool
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// bigDataPoolName - The Big Data Pool name
-// options - BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
+//   - bigDataPoolName - The Big Data Pool name
+//   - options - BigDataPoolsClientGetOptions contains the optional parameters for the BigDataPoolsClient.Get method.
 func (client *BigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsClientGetOptions) (BigDataPoolsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
@@ -93,8 +94,9 @@ func (client *BigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDat
 
 // List - List Big Data Pools
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// options - BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
+//   - options - BigDataPoolsClientListOptions contains the optional parameters for the BigDataPoolsClient.List method.
 func (client *BigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsClientListOptions) (BigDataPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

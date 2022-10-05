@@ -23,7 +23,7 @@ type FlattencomplexClient struct {
 }
 
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
-// pl - the pipeline used for sending requests and handling responses.
+//   - pl - the pipeline used for sending requests and handling responses.
 func NewFlattencomplexClient(pl runtime.Pipeline) *FlattencomplexClient {
 	client := &FlattencomplexClient{
 		pl: pl,
@@ -33,8 +33,9 @@ func NewFlattencomplexClient(pl runtime.Pipeline) *FlattencomplexClient {
 
 // GetValid -
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2016-02-29
-// options - FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
+//   - options - FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexClientGetValidOptions) (FlattencomplexClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {

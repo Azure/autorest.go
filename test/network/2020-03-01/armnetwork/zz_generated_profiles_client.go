@@ -32,10 +32,10 @@ type ProfilesClient struct {
 }
 
 // NewProfilesClient creates a new instance of ProfilesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewProfilesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ProfilesClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,11 +58,12 @@ func NewProfilesClient(subscriptionID string, credential azcore.TokenCredential,
 
 // CreateOrUpdate - Creates or updates a network profile.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkProfileName - The name of the network profile.
-// parameters - Parameters supplied to the create or update network profile operation.
-// options - ProfilesClientCreateOrUpdateOptions contains the optional parameters for the ProfilesClient.CreateOrUpdate method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkProfileName - The name of the network profile.
+//   - parameters - Parameters supplied to the create or update network profile operation.
+//   - options - ProfilesClientCreateOrUpdateOptions contains the optional parameters for the ProfilesClient.CreateOrUpdate method.
 func (client *ProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *ProfilesClientCreateOrUpdateOptions) (ProfilesClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
@@ -115,10 +116,11 @@ func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) 
 
 // BeginDelete - Deletes the specified network profile.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkProfileName - The name of the NetworkProfile.
-// options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkProfileName - The name of the NetworkProfile.
+//   - options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
 func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*runtime.Poller[ProfilesClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
@@ -135,6 +137,7 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes the specified network profile.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
 func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
@@ -179,10 +182,11 @@ func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceG
 
 // Get - Gets the specified network profile in a specified resource group.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkProfileName - The name of the public IP prefix.
-// options - ProfilesClientGetOptions contains the optional parameters for the ProfilesClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkProfileName - The name of the public IP prefix.
+//   - options - ProfilesClientGetOptions contains the optional parameters for the ProfilesClient.Get method.
 func (client *ProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientGetOptions) (ProfilesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -237,9 +241,10 @@ func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesCl
 }
 
 // NewListPager - Gets all network profiles in a resource group.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
 func (client *ProfilesClient) NewListPager(resourceGroupName string, options *ProfilesClientListOptions) *runtime.Pager[ProfilesClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ProfilesClientListResponse]{
 		More: func(page ProfilesClientListResponse) bool {
@@ -300,8 +305,9 @@ func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesC
 }
 
 // NewListAllPager - Gets all the network profiles in a subscription.
+//
 // Generated from API version 2020-03-01
-// options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
+//   - options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
 func (client *ProfilesClient) NewListAllPager(options *ProfilesClientListAllOptions) *runtime.Pager[ProfilesClientListAllResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ProfilesClientListAllResponse]{
 		More: func(page ProfilesClientListAllResponse) bool {
@@ -359,11 +365,12 @@ func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (Profil
 
 // UpdateTags - Updates network profile tags.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// networkProfileName - The name of the network profile.
-// parameters - Parameters supplied to update network profile tags.
-// options - ProfilesClientUpdateTagsOptions contains the optional parameters for the ProfilesClient.UpdateTags method.
+//   - resourceGroupName - The name of the resource group.
+//   - networkProfileName - The name of the network profile.
+//   - parameters - Parameters supplied to update network profile tags.
+//   - options - ProfilesClientUpdateTagsOptions contains the optional parameters for the ProfilesClient.UpdateTags method.
 func (client *ProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *ProfilesClientUpdateTagsOptions) (ProfilesClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {

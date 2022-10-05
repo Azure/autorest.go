@@ -32,9 +32,9 @@ type AlertsClient struct {
 }
 
 // NewAlertsClient creates a new instance of AlertsClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AlertsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,11 +57,12 @@ func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // Get - Gets an alert by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// name - The alert name.
-// resourceGroupName - The resource group name.
-// options - AlertsClientGetOptions contains the optional parameters for the AlertsClient.Get method.
+//   - deviceName - The device name.
+//   - name - The alert name.
+//   - resourceGroupName - The resource group name.
+//   - options - AlertsClientGetOptions contains the optional parameters for the AlertsClient.Get method.
 func (client *AlertsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *AlertsClientGetOptions) (AlertsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -114,11 +115,12 @@ func (client *AlertsClient) getHandleResponse(resp *http.Response) (AlertsClient
 }
 
 // NewListByDataBoxEdgeDevicePager - Gets all the alerts for a Data Box Edge/Data Box Gateway device.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *AlertsClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *AlertsClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[AlertsClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AlertsClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page AlertsClientListByDataBoxEdgeDeviceResponse) bool {

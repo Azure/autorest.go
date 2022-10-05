@@ -32,10 +32,10 @@ type ExpressRouteServiceProvidersClient struct {
 }
 
 // NewExpressRouteServiceProvidersClient creates a new instance of ExpressRouteServiceProvidersClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewExpressRouteServiceProvidersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*ExpressRouteServiceProvidersClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,9 +57,10 @@ func NewExpressRouteServiceProvidersClient(subscriptionID string, credential azc
 }
 
 // NewListPager - Gets all the available express route service providers.
+//
 // Generated from API version 2020-03-01
-// options - ExpressRouteServiceProvidersClientListOptions contains the optional parameters for the ExpressRouteServiceProvidersClient.List
-// method.
+//   - options - ExpressRouteServiceProvidersClientListOptions contains the optional parameters for the ExpressRouteServiceProvidersClient.List
+//     method.
 func (client *ExpressRouteServiceProvidersClient) NewListPager(options *ExpressRouteServiceProvidersClientListOptions) *runtime.Pager[ExpressRouteServiceProvidersClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ExpressRouteServiceProvidersClientListResponse]{
 		More: func(page ExpressRouteServiceProvidersClientListResponse) bool {

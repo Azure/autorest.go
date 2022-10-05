@@ -32,10 +32,10 @@ type AvailabilitySetsClient struct {
 }
 
 // NewAvailabilitySetsClient creates a new instance of AvailabilitySetsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
-// part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//     part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AvailabilitySetsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,12 +58,13 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 
 // CreateOrUpdate - Create or update an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// availabilitySetName - The name of the availability set.
-// parameters - Parameters supplied to the Create Availability Set operation.
-// options - AvailabilitySetsClientCreateOrUpdateOptions contains the optional parameters for the AvailabilitySetsClient.CreateOrUpdate
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - availabilitySetName - The name of the availability set.
+//   - parameters - Parameters supplied to the Create Availability Set operation.
+//   - options - AvailabilitySetsClientCreateOrUpdateOptions contains the optional parameters for the AvailabilitySetsClient.CreateOrUpdate
+//     method.
 func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsClientCreateOrUpdateOptions) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
@@ -116,10 +117,11 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Re
 
 // Delete - Delete an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsClientDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
+//   - resourceGroupName - The name of the resource group.
+//   - availabilitySetName - The name of the availability set.
+//   - options - AvailabilitySetsClientDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
 func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientDeleteOptions) (AvailabilitySetsClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -162,10 +164,11 @@ func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, r
 
 // Get - Retrieves information about an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsClientGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
+//   - resourceGroupName - The name of the resource group.
+//   - availabilitySetName - The name of the availability set.
+//   - options - AvailabilitySetsClientGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
 func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientGetOptions) (AvailabilitySetsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -217,9 +220,10 @@ func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (Av
 }
 
 // NewListPager - Lists all availability sets in a resource group.
+//
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
+//   - resourceGroupName - The name of the resource group.
+//   - options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
 func (client *AvailabilitySetsClient) NewListPager(resourceGroupName string, options *AvailabilitySetsClientListOptions) *runtime.Pager[AvailabilitySetsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailabilitySetsClientListResponse]{
 		More: func(page AvailabilitySetsClientListResponse) bool {
@@ -281,11 +285,12 @@ func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (A
 
 // NewListAvailableSizesPager - Lists all available virtual machine sizes that can be used to create a new virtual machine
 // in an existing availability set.
+//
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - availabilitySetName - The name of the availability set.
+//   - options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
+//     method.
 func (client *AvailabilitySetsClient) NewListAvailableSizesPager(resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) *runtime.Pager[AvailabilitySetsClientListAvailableSizesResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailabilitySetsClientListAvailableSizesResponse]{
 		More: func(page AvailabilitySetsClientListAvailableSizesResponse) bool {
@@ -344,9 +349,10 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *htt
 }
 
 // NewListBySubscriptionPager - Lists all availability sets in a subscription.
+//
 // Generated from API version 2019-12-01
-// options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
-// method.
+//   - options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
+//     method.
 func (client *AvailabilitySetsClient) NewListBySubscriptionPager(options *AvailabilitySetsClientListBySubscriptionOptions) *runtime.Pager[AvailabilitySetsClientListBySubscriptionResponse] {
 	return runtime.NewPager(runtime.PagingHandler[AvailabilitySetsClientListBySubscriptionResponse]{
 		More: func(page AvailabilitySetsClientListBySubscriptionResponse) bool {
@@ -407,11 +413,12 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *htt
 
 // Update - Update an availability set.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-12-01
-// resourceGroupName - The name of the resource group.
-// availabilitySetName - The name of the availability set.
-// parameters - Parameters supplied to the Update Availability Set operation.
-// options - AvailabilitySetsClientUpdateOptions contains the optional parameters for the AvailabilitySetsClient.Update method.
+//   - resourceGroupName - The name of the resource group.
+//   - availabilitySetName - The name of the availability set.
+//   - parameters - Parameters supplied to the Update Availability Set operation.
+//   - options - AvailabilitySetsClientUpdateOptions contains the optional parameters for the AvailabilitySetsClient.Update method.
 func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsClientUpdateOptions) (AvailabilitySetsClientUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {

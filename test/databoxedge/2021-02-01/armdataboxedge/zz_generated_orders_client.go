@@ -32,9 +32,9 @@ type OrdersClient struct {
 }
 
 // NewOrdersClient creates a new instance of OrdersClient with the specified values.
-// subscriptionID - The subscription ID.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription ID.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewOrdersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*OrdersClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -57,12 +57,13 @@ func NewOrdersClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // BeginCreateOrUpdate - Creates or updates an order.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The order details of a device.
-// resourceGroupName - The resource group name.
-// order - The order to be created or updated.
-// options - OrdersClientBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate
-// method.
+//   - deviceName - The order details of a device.
+//   - resourceGroupName - The resource group name.
+//   - order - The order to be created or updated.
+//   - options - OrdersClientBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate
+//     method.
 func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*runtime.Poller[OrdersClientCreateOrUpdateResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.createOrUpdate(ctx, deviceName, resourceGroupName, order, options)
@@ -77,6 +78,7 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 
 // CreateOrUpdate - Creates or updates an order.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *OrdersClient) createOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, order, options)
@@ -118,10 +120,11 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 
 // BeginDelete - Deletes the order related to the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
 func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*runtime.Poller[OrdersClientDeleteResponse], error) {
 	if options == nil || options.ResumeToken == "" {
 		resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
@@ -136,6 +139,7 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 
 // Delete - Deletes the order related to the device.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
 func (client *OrdersClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
@@ -177,10 +181,11 @@ func (client *OrdersClient) deleteCreateRequest(ctx context.Context, deviceName 
 
 // Get - Gets a specific order by name.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - OrdersClientGetOptions contains the optional parameters for the OrdersClient.Get method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - OrdersClientGetOptions contains the optional parameters for the OrdersClient.Get method.
 func (client *OrdersClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientGetOptions) (OrdersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -229,11 +234,12 @@ func (client *OrdersClient) getHandleResponse(resp *http.Response) (OrdersClient
 }
 
 // NewListByDataBoxEdgeDevicePager - Lists all the orders related to a Data Box Edge/Data Box Gateway device.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name.
-// resourceGroupName - The resource group name.
-// options - OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
-// method.
+//   - deviceName - The device name.
+//   - resourceGroupName - The resource group name.
+//   - options - OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
+//     method.
 func (client *OrdersClient) NewListByDataBoxEdgeDevicePager(deviceName string, resourceGroupName string, options *OrdersClientListByDataBoxEdgeDeviceOptions) *runtime.Pager[OrdersClientListByDataBoxEdgeDeviceResponse] {
 	return runtime.NewPager(runtime.PagingHandler[OrdersClientListByDataBoxEdgeDeviceResponse]{
 		More: func(page OrdersClientListByDataBoxEdgeDeviceResponse) bool {
@@ -296,10 +302,11 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Res
 
 // ListDCAccessCode - Gets the DCAccess Code
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2021-02-01
-// deviceName - The device name
-// resourceGroupName - The resource group name.
-// options - OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
+//   - deviceName - The device name
+//   - resourceGroupName - The resource group name.
+//   - options - OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
 func (client *OrdersClient) ListDCAccessCode(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientListDCAccessCodeOptions) (OrdersClientListDCAccessCodeResponse, error) {
 	req, err := client.listDCAccessCodeCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {

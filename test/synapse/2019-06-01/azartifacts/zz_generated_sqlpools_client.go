@@ -28,9 +28,9 @@ type SQLPoolsClient struct {
 }
 
 // NewSQLPoolsClient creates a new instance of SQLPoolsClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewSQLPoolsClient(endpoint string, credential azcore.TokenCredential, options *SQLPoolsClientOptions) *SQLPoolsClient {
 	if options == nil {
 		options = &SQLPoolsClientOptions{}
@@ -46,9 +46,10 @@ func NewSQLPoolsClient(endpoint string, credential azcore.TokenCredential, optio
 
 // Get - Get Sql Pool
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// sqlPoolName - The Sql Pool name
-// options - SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
+//   - sqlPoolName - The Sql Pool name
+//   - options - SQLPoolsClientGetOptions contains the optional parameters for the SQLPoolsClient.Get method.
 func (client *SQLPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsClientGetOptions) (SQLPoolsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
@@ -93,8 +94,9 @@ func (client *SQLPoolsClient) getHandleResponse(resp *http.Response) (SQLPoolsCl
 
 // List - List Sql Pools
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// options - SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
+//   - options - SQLPoolsClientListOptions contains the optional parameters for the SQLPoolsClient.List method.
 func (client *SQLPoolsClient) List(ctx context.Context, options *SQLPoolsClientListOptions) (SQLPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

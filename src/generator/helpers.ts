@@ -6,7 +6,7 @@
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
-import { aggregateParameters, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
+import { aggregateParameters, commentLength, isSchemaResponse, isMultiRespOperation } from '../common/helpers';
 import { ArraySchema, ChoiceSchema, ChoiceValue, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SealedChoiceSchema, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
 
@@ -529,4 +529,26 @@ export function formatStatusCode(statusCode: string): string {
     default:
       throw new Error(`unhandled status code ${statusCode}`);
   }
+}
+
+export function formatCommentAsBulletItem(description: string): string {
+  // first create the comment block. note that it can be multi-line depending on length:
+  //
+  // some comment first line
+  // and it finishes here.
+  description = comment(description, '//', undefined, commentLength);
+
+  // transform the above to look like this:
+  //
+  //   - some comment first line
+  //     and it finishes here.
+  const chunks = description.split('\n');
+  for (let i = 0; i < chunks.length; ++i) {
+    if (i === 0) {
+      chunks[i] = chunks[i].replace('// ', '//   - ');
+    } else {
+      chunks[i] = chunks[i].replace('// ', '//     ');
+    }
+  }
+  return chunks.join('\n');
 }

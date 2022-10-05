@@ -28,9 +28,9 @@ type IntegrationRuntimesClient struct {
 }
 
 // NewIntegrationRuntimesClient creates a new instance of IntegrationRuntimesClient with the specified values.
-// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewIntegrationRuntimesClient(endpoint string, credential azcore.TokenCredential, options *IntegrationRuntimesClientOptions) *IntegrationRuntimesClient {
 	if options == nil {
 		options = &IntegrationRuntimesClientOptions{}
@@ -46,9 +46,10 @@ func NewIntegrationRuntimesClient(endpoint string, credential azcore.TokenCreden
 
 // Get - Get Integration Runtime
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// integrationRuntimeName - The Integration Runtime name
-// options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
+//   - integrationRuntimeName - The Integration Runtime name
+//   - options - IntegrationRuntimesClientGetOptions contains the optional parameters for the IntegrationRuntimesClient.Get method.
 func (client *IntegrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesClientGetOptions) (IntegrationRuntimesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
@@ -93,9 +94,10 @@ func (client *IntegrationRuntimesClient) getHandleResponse(resp *http.Response) 
 
 // List - List Integration Runtimes
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2019-06-01-preview
-// options - IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List
-// method.
+//   - options - IntegrationRuntimesClientListOptions contains the optional parameters for the IntegrationRuntimesClient.List
+//     method.
 func (client *IntegrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesClientListOptions) (IntegrationRuntimesClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

@@ -32,10 +32,10 @@ type PeerExpressRouteCircuitConnectionsClient struct {
 }
 
 // NewPeerExpressRouteCircuitConnectionsClient creates a new instance of PeerExpressRouteCircuitConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
-// ID forms part of the URI for every service call.
-// credential - used to authorize requests. Usually a credential from azidentity.
-// options - pass nil to accept the default values.
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//     ID forms part of the URI for every service call.
+//   - credential - used to authorize requests. Usually a credential from azidentity.
+//   - options - pass nil to accept the default values.
 func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PeerExpressRouteCircuitConnectionsClient, error) {
 	if options == nil {
 		options = &arm.ClientOptions{}
@@ -58,13 +58,14 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 
 // Get - Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.
 // If the operation fails it returns an *azcore.ResponseError type.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// circuitName - The name of the express route circuit.
-// peeringName - The name of the peering.
-// connectionName - The name of the peer express route circuit connection.
-// options - PeerExpressRouteCircuitConnectionsClientGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.Get
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - circuitName - The name of the express route circuit.
+//   - peeringName - The name of the peering.
+//   - connectionName - The name of the peer express route circuit connection.
+//   - options - PeerExpressRouteCircuitConnectionsClientGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.Get
+//     method.
 func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *PeerExpressRouteCircuitConnectionsClientGetOptions) (PeerExpressRouteCircuitConnectionsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -124,12 +125,13 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getHandleResponse(resp *
 }
 
 // NewListPager - Gets all global reach peer connections associated with a private peering in an express route circuit.
+//
 // Generated from API version 2020-03-01
-// resourceGroupName - The name of the resource group.
-// circuitName - The name of the circuit.
-// peeringName - The name of the peering.
-// options - PeerExpressRouteCircuitConnectionsClientListOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.List
-// method.
+//   - resourceGroupName - The name of the resource group.
+//   - circuitName - The name of the circuit.
+//   - peeringName - The name of the peering.
+//   - options - PeerExpressRouteCircuitConnectionsClientListOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.List
+//     method.
 func (client *PeerExpressRouteCircuitConnectionsClient) NewListPager(resourceGroupName string, circuitName string, peeringName string, options *PeerExpressRouteCircuitConnectionsClientListOptions) *runtime.Pager[PeerExpressRouteCircuitConnectionsClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[PeerExpressRouteCircuitConnectionsClientListResponse]{
 		More: func(page PeerExpressRouteCircuitConnectionsClientListResponse) bool {
