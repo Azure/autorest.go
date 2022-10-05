@@ -154,9 +154,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
-      paramDocs.push('//   - credential - used to authorize requests. Usually a credential from azidentity.');
+      paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
       methodParams.push(`options *${optionsType}`);
-      paramDocs.push('//   - options - pass nil to accept the default values.');
+      paramDocs.push(formatCommentAsBulletItem('options - pass nil to accept the default values.'));
     } else {
       // this is the vanilla ARM or data-plane case.  both of them can
       // have parameterized host, however data-plane takes a pipeline
@@ -186,12 +186,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (hasOauth2Security) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
         methodParams.push('credential azcore.TokenCredential');
-        paramDocs.push('//   - credential - used to authorize requests. Usually a credential from azidentity.');
+        paramDocs.push(formatCommentAsBulletItem('credential - used to authorize requests. Usually a credential from azidentity.'));
         methodParams.push(`options *${optionsType}`);
-        paramDocs.push('//   - options - pass nil to accept the default values.');
+        paramDocs.push(formatCommentAsBulletItem('options - pass nil to accept the default values.'));
       } else {
         methodParams.push('pl runtime.Pipeline');
-        paramDocs.push('//   - pl - the pipeline used for sending requests and handling responses.');
+        paramDocs.push(formatCommentAsBulletItem('pl - the pipeline used for sending requests and handling responses.'));
       }
     }
 
