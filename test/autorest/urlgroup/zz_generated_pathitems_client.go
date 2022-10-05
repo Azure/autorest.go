@@ -28,8 +28,8 @@ type PathItemsClient struct {
 }
 
 // NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
-//   - - globalStringPath - A string value 'globalItemStringPath' that appears in the path
-//   - - globalStringQuery - should contain value null
+//   - globalStringPath - A string value 'globalItemStringPath' that appears in the path
+//   - globalStringQuery - should contain value null
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewPathItemsClient(globalStringPath string, globalStringQuery *string, pl runtime.Pipeline) *PathItemsClient {
 	client := &PathItemsClient{

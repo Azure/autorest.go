@@ -30,7 +30,7 @@ type containerClient struct {
 
 // newContainerClient creates a new instance of containerClient with the specified values.
 //   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-//   - - version - Specifies the version of the operation to use for this request.
+//   - version - Specifies the version of the operation to use for this request.
 //   - pl - the pipeline used for sending requests and handling responses.
 func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *containerClient {
 	client := &containerClient{

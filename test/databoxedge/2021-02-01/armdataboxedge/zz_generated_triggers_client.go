@@ -32,7 +32,7 @@ type TriggersClient struct {
 }
 
 // NewTriggersClient creates a new instance of TriggersClient with the specified values.
-//   - - subscriptionID - The subscription ID.
+//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*TriggersClient, error) {

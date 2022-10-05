@@ -32,7 +32,7 @@ type ImagesClient struct {
 }
 
 // NewImagesClient creates a new instance of ImagesClient with the specified values.
-//   - - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+//   - subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
 //     part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.

@@ -28,7 +28,7 @@ type AutoRestValidationTestClient struct {
 }
 
 // NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
-//   - - subscriptionID - Subscription ID.
+//   - subscriptionID - Subscription ID.
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewAutoRestValidationTestClient(subscriptionID string, pl runtime.Pipeline) *AutoRestValidationTestClient {
 	client := &AutoRestValidationTestClient{

@@ -531,7 +531,7 @@ export function formatStatusCode(statusCode: string): string {
   }
 }
 
-export function formatParamComment(description: string): string {
+export function formatCommentAsBulletItem(description: string): string {
   // first create the comment block. note that it can be multi-line depending on length:
   //
   // some comment first line

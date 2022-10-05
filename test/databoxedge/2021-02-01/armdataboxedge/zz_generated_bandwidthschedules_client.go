@@ -32,7 +32,7 @@ type BandwidthSchedulesClient struct {
 }
 
 // NewBandwidthSchedulesClient creates a new instance of BandwidthSchedulesClient with the specified values.
-//   - - subscriptionID - The subscription ID.
+//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewBandwidthSchedulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*BandwidthSchedulesClient, error) {

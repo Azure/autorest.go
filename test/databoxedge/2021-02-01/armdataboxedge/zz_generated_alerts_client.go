@@ -32,7 +32,7 @@ type AlertsClient struct {
 }
 
 // NewAlertsClient creates a new instance of AlertsClient with the specified values.
-//   - - subscriptionID - The subscription ID.
+//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AlertsClient, error) {

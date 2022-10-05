@@ -32,7 +32,7 @@ type InterfaceTapConfigurationsClient struct {
 }
 
 // NewInterfaceTapConfigurationsClient creates a new instance of InterfaceTapConfigurationsClient with the specified values.
-//   - - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+//   - subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 //     ID forms part of the URI for every service call.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.

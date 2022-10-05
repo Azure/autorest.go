@@ -29,8 +29,8 @@ type client struct {
 
 // newClient creates a new instance of client with the specified values.
 //   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-//   - - version - Specifies the version of the operation to use for this request.
-//   - - pathRenameMode - Determines the behavior of the rename operation
+//   - version - Specifies the version of the operation to use for this request.
+//   - pathRenameMode - Determines the behavior of the rename operation
 //   - pl - the pipeline used for sending requests and handling responses.
 func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *client {
 	client := &client{

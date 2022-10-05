@@ -28,7 +28,7 @@ type blockBlobClient struct {
 
 // newBlockBlobClient creates a new instance of blockBlobClient with the specified values.
 //   - endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
-//   - - version - Specifies the version of the operation to use for this request.
+//   - version - Specifies the version of the operation to use for this request.
 //   - pl - the pipeline used for sending requests and handling responses.
 func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *blockBlobClient {
 	client := &blockBlobClient{

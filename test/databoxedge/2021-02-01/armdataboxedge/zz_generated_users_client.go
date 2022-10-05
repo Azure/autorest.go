@@ -32,7 +32,7 @@ type UsersClient struct {
 }
 
 // NewUsersClient creates a new instance of UsersClient with the specified values.
-//   - - subscriptionID - The subscription ID.
+//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*UsersClient, error) {

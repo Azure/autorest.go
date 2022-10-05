@@ -32,9 +32,9 @@ type ImplicitClient struct {
 }
 
 // NewImplicitClient creates a new instance of ImplicitClient with the specified values.
-//   - - requiredGlobalPath - number of items to skip
-//   - - requiredGlobalQuery - number of items to skip
-//   - - optionalGlobalQuery - number of items to skip
+//   - requiredGlobalPath - number of items to skip
+//   - requiredGlobalQuery - number of items to skip
+//   - optionalGlobalQuery - number of items to skip
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, pl runtime.Pipeline) *ImplicitClient {
 	client := &ImplicitClient{

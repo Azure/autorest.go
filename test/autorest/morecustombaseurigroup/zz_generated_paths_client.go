@@ -29,7 +29,7 @@ type PathsClient struct {
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
 //   - dnsSuffix - A string value that is used as a global part of the parameterized host. Default value 'host'.
-//   - - subscriptionID - The subscription id with value 'test12'.
+//   - subscriptionID - The subscription id with value 'test12'.
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewPathsClient(dnsSuffix *string, subscriptionID string, pl runtime.Pipeline) *PathsClient {
 	client := &PathsClient{

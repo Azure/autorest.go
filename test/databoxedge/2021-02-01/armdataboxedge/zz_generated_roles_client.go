@@ -32,7 +32,7 @@ type RolesClient struct {
 }
 
 // NewRolesClient creates a new instance of RolesClient with the specified values.
-//   - - subscriptionID - The subscription ID.
+//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*RolesClient, error) {

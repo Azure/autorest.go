@@ -28,8 +28,8 @@ type client struct {
 
 // newClient creates a new instance of client with the specified values.
 //   - geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
-//   - - clientVersion - Version number of Azure Maps API.
-//   - - clientIndex - Index number of Azure Maps API.
+//   - clientVersion - Version number of Azure Maps API.
+//   - clientIndex - Index number of Azure Maps API.
 //   - pl - the pipeline used for sending requests and handling responses.
 func newClient(geography *Geography, clientVersion *string, clientIndex *int32, pl runtime.Pipeline) *client {
 	hostURL := "https://{geography}.atlas.microsoft.com"

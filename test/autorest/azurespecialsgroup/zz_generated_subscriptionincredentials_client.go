@@ -27,7 +27,7 @@ type SubscriptionInCredentialsClient struct {
 }
 
 // NewSubscriptionInCredentialsClient creates a new instance of SubscriptionInCredentialsClient with the specified values.
-//   - - subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
+//   - subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
 //   - pl - the pipeline used for sending requests and handling responses.
 func NewSubscriptionInCredentialsClient(subscriptionID string, pl runtime.Pipeline) *SubscriptionInCredentialsClient {
 	client := &SubscriptionInCredentialsClient{

@@ -32,7 +32,7 @@ type AvailableSKUsClient struct {
 }
 
 // NewAvailableSKUsClient creates a new instance of AvailableSKUsClient with the specified values.
-//   - - subscriptionID - The subscription ID.
+//   - subscriptionID - The subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*AvailableSKUsClient, error) {

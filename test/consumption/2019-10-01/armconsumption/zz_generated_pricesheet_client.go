@@ -33,7 +33,7 @@ type PriceSheetClient struct {
 }
 
 // NewPriceSheetClient creates a new instance of PriceSheetClient with the specified values.
-//   - - subscriptionID - Azure Subscription ID.
+//   - subscriptionID - Azure Subscription ID.
 //   - credential - used to authorize requests. Usually a credential from azidentity.
 //   - options - pass nil to accept the default values.
 func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) (*PriceSheetClient, error) {
