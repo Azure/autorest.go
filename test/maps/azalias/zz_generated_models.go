@@ -26,6 +26,30 @@ type AliasesCreateResponse struct {
 	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
 }
 
+// ClientCreateOptions contains the optional parameters for the Client.Create method.
+type ClientCreateOptions struct {
+	GroupBy []SomethingCount
+	// The unique id that references the assigned data item to be aliased.
+	AssignedID *float32
+	// The unique id that references a creator data item to be aliased.
+	CreatorID *int32
+}
+
+// ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
+type ClientGetScriptOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientListOptions contains the optional parameters for the Client.List method.
+type ClientListOptions struct {
+	GroupBy []LogMetricsGroupBy
+}
+
+// ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
+type ClientPolicyAssignmentOptions struct {
+	// placeholder for future optional parameters
+}
+
 // ErrorResponse - An error happened.
 type ErrorResponse struct {
 	// READ-ONLY; The error code.
@@ -162,28 +186,4 @@ type ScheduleCreateOrUpdateProperties struct {
 
 	// Gets or sets the start time of the schedule.
 	StartTime *time.Time `json:"startTime,omitempty"`
-}
-
-// clientCreateOptions contains the optional parameters for the client.Create method.
-type clientCreateOptions struct {
-	GroupBy []SomethingCount
-	// The unique id that references the assigned data item to be aliased.
-	AssignedID *float32
-	// The unique id that references a creator data item to be aliased.
-	CreatorID *int32
-}
-
-// clientGetScriptOptions contains the optional parameters for the client.GetScript method.
-type clientGetScriptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// clientListOptions contains the optional parameters for the client.List method.
-type clientListOptions struct {
-	GroupBy []LogMetricsGroupBy
-}
-
-// clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
-type clientPolicyAssignmentOptions struct {
-	// placeholder for future optional parameters
 }

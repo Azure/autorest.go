@@ -49,14 +49,14 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - blockBlobClientCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList
+//   - options - BlockBlobClientCommitBlockListOptions contains the optional parameters for the BlockBlobClient.CommitBlockList
 //     method.
 //   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, options *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientCommitBlockListResponse, error) {
+func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, options *BlockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientCommitBlockListResponse, error) {
 	req, err := client.commitBlockListCreateRequest(ctx, comp, blocks, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return BlockBlobClientCommitBlockListResponse{}, err
@@ -72,7 +72,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34,
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
-func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, comp Enum34, blocks BlockLookupList, options *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, comp Enum34, blocks BlockLookupList, options *BlockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -232,10 +232,10 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 //
 // Generated from API version 2020-06-12
 //   - listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
-//   - options - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList method.
+//   - options - BlockBlobClientGetBlockListOptions contains the optional parameters for the BlockBlobClient.GetBlockList method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, options *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientGetBlockListResponse, error) {
+func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, options *BlockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientGetBlockListResponse, error) {
 	req, err := client.getBlockListCreateRequest(ctx, comp, listType, options, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
 		return BlockBlobClientGetBlockListResponse{}, err
@@ -251,7 +251,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, li
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
-func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, comp Enum34, listType BlockListType, options *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, comp Enum34, listType BlockListType, options *BlockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -337,7 +337,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
-//   - options - blockBlobClientPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL
+//   - options - BlockBlobClientPutBlobFromURLOptions contains the optional parameters for the BlockBlobClient.PutBlobFromURL
 //     method.
 //   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -346,7 +346,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 //     method.
-func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, options *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientPutBlobFromURLResponse, error) {
+func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, options *BlockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientPutBlobFromURLResponse, error) {
 	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return BlockBlobClientPutBlobFromURLResponse{}, err
@@ -362,7 +362,7 @@ func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength
 }
 
 // putBlobFromURLCreateRequest creates the PutBlobFromURL request.
-func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, contentLength int64, copySource string, options *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, contentLength int64, copySource string, options *BlockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -530,11 +530,11 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 //     parameter must be the same size for each block.
 //   - contentLength - The length of the request.
 //   - body - Initial data
-//   - options - blockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock method.
+//   - options - BlockBlobClientStageBlockOptions contains the optional parameters for the BlockBlobClient.StageBlock method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
-func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockResponse, error) {
+func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobClientStageBlockResponse, error) {
 	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, options, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
 		return BlockBlobClientStageBlockResponse{}, err
@@ -550,7 +550,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, bloc
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
-func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
+func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -651,14 +651,14 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (Bl
 //     parameter must be the same size for each block.
 //   - contentLength - The length of the request.
 //   - sourceURL - Specify a URL to the copy source.
-//   - options - blockBlobClientStageBlockFromURLOptions contains the optional parameters for the blockBlobClient.StageBlockFromURL
+//   - options - BlockBlobClientStageBlockFromURLOptions contains the optional parameters for the BlockBlobClient.StageBlockFromURL
 //     method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 //     method.
-func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientStageBlockFromURLResponse, error) {
+func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *BlockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobClientStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, options, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
 		return BlockBlobClientStageBlockFromURLResponse{}, err
@@ -674,7 +674,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum3
 }
 
 // stageBlockFromURLCreateRequest creates the StageBlockFromURL request.
-func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, options *BlockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -790,13 +790,13 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 // Generated from API version 2020-06-12
 //   - contentLength - The length of the request.
 //   - body - Initial data
-//   - options - blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
+//   - options - BlockBlobClientUploadOptions contains the optional parameters for the BlockBlobClient.Upload method.
 //   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
-func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadResponse, error) {
+func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobClientUploadResponse, error) {
 	req, err := client.uploadCreateRequest(ctx, contentLength, body, options, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
 		return BlockBlobClientUploadResponse{}, err
@@ -812,7 +812,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 }
 
 // uploadCreateRequest creates the Upload request.
-func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, options *BlockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
