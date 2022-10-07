@@ -46,8 +46,8 @@ func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serv
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - serviceClientFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
-func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *serviceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
+//   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
+func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
 		return ServiceClientFilterBlobsResponse{}, err
@@ -63,7 +63,7 @@ func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, optio
 }
 
 // filterBlobsCreateRequest creates the FilterBlobs request.
-func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, comp Enum10, options *serviceClientFilterBlobsOptions) (*policy.Request, error) {
+func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, comp Enum10, options *ServiceClientFilterBlobsOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -120,8 +120,8 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - serviceClientGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
-func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *serviceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
+//   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
+func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceClientGetAccountInfoResponse{}, err
@@ -137,7 +137,7 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, 
 }
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
-func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *serviceClientGetAccountInfoOptions) (*policy.Request, error) {
+func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ServiceClientGetAccountInfoOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -191,8 +191,8 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - serviceClientGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
-func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *serviceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
+//   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
+func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceClientGetPropertiesResponse{}, err
@@ -208,7 +208,7 @@ func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, c
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, options *serviceClientGetPropertiesOptions) (*policy.Request, error) {
+func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, options *ServiceClientGetPropertiesOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -251,8 +251,8 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (S
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - serviceClientGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
-func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *serviceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
+//   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
+func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
 		return ServiceClientGetStatisticsResponse{}, err
@@ -268,7 +268,7 @@ func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, c
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
-func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum0, comp Enum3, options *serviceClientGetStatisticsOptions) (*policy.Request, error) {
+func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum0, comp Enum3, options *ServiceClientGetStatisticsOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -318,9 +318,9 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - serviceClientGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey
+//   - options - ServiceClientGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey
 //     method.
-func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *serviceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
+func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
 		return ServiceClientGetUserDelegationKeyResponse{}, err
@@ -336,7 +336,7 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype E
 }
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
-func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *serviceClientGetUserDelegationKeyOptions) (*policy.Request, error) {
+func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceClientGetUserDelegationKeyOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -385,9 +385,9 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 // account
 //
 // Generated from API version 2020-06-12
-//   - options - serviceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
+//   - options - ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
 //     method.
-func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *serviceClientListContainersSegmentOptions) *runtime.Pager[ServiceClientListContainersSegmentResponse] {
+func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *ServiceClientListContainersSegmentOptions) *runtime.Pager[ServiceClientListContainersSegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceClientListContainersSegmentResponse]{
 		More: func(page ServiceClientListContainersSegmentResponse) bool {
 			return page.NextMarker != nil && len(*page.NextMarker) > 0
@@ -416,7 +416,7 @@ func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *
 }
 
 // listContainersSegmentCreateRequest creates the ListContainersSegment request.
-func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Context, comp Enum5, options *serviceClientListContainersSegmentOptions) (*policy.Request, error) {
+func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Context, comp Enum5, options *ServiceClientListContainersSegmentOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -471,8 +471,8 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Resp
 //
 // Generated from API version 2020-06-12
 //   - storageServiceProperties - The StorageService properties.
-//   - options - serviceClientSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
-func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *serviceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
+//   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
+func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
 		return ServiceClientSetPropertiesResponse{}, err
@@ -488,7 +488,7 @@ func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, c
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.
-func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *serviceClientSetPropertiesOptions) (*policy.Request, error) {
+func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceClientSetPropertiesOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -531,8 +531,8 @@ func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (S
 //   - multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
 //     value: multipart/mixed; boundary=batch_
 //   - body - Initial data
-//   - options - serviceClientSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
-func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *serviceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
+//   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
+func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {
 		return ServiceClientSubmitBatchResponse{}, err
@@ -548,7 +548,7 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, conten
 }
 
 // submitBatchCreateRequest creates the SubmitBatch request.
-func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *serviceClientSubmitBatchOptions) (*policy.Request, error) {
+func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err

@@ -339,7 +339,8 @@ async function processOperationRequests(session: Session<CodeModel>) {
       // don't do this for paging next link operation as this isn't part of the public API
       if (!op.language.go!.paging || !op.language.go!.paging.isNextOp) {
         // create a type named <OperationGroup><Operation>Options
-        const optionalParamsGroupName = `${group.language.go!.clientName}${opName}Options`;
+        // the client might not be exported, but the options should be.
+        const optionalParamsGroupName = `${capitalize(group.language.go!.clientName)}${opName}Options`;
         const desc = `${optionalParamsGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
         const gp = createGroupProperty(optionalParamsGroupName, desc);
         gp.language.go!.name = 'options';
