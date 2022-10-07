@@ -47,7 +47,7 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 // Generated from API version 2020-06-12
 //   - contentLength - The length of the request.
 //   - body - Initial data
-//   - options - AppendBlobClientAppendBlockOptions contains the optional parameters for the AppendBlobClient.AppendBlock method.
+//   - options - AppendBlobClientAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock
 //     method.
@@ -210,7 +210,7 @@ func (client *appendBlobClient) appendBlockHandleResponse(resp *http.Response) (
 // Generated from API version 2020-06-12
 //   - sourceURL - Specify a URL to the copy source.
 //   - contentLength - The length of the request.
-//   - options - AppendBlobClientAppendBlockFromURLOptions contains the optional parameters for the AppendBlobClient.AppendBlockFromURL
+//   - options - AppendBlobClientAppendBlockFromURLOptions contains the optional parameters for the appendBlobClient.AppendBlockFromURL
 //     method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
@@ -389,7 +389,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleResponse(resp *http.Resp
 //
 // Generated from API version 2020-06-12
 //   - contentLength - The length of the request.
-//   - options - AppendBlobClientCreateOptions contains the optional parameters for the AppendBlobClient.Create method.
+//   - options - AppendBlobClientCreateOptions contains the optional parameters for the appendBlobClient.Create method.
 //   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -556,7 +556,7 @@ func (client *appendBlobClient) createHandleResponse(resp *http.Response) (Appen
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - AppendBlobClientSealOptions contains the optional parameters for the AppendBlobClient.Seal method.
+//   - options - AppendBlobClientSealOptions contains the optional parameters for the appendBlobClient.Seal method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 //   - AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the appendBlobClient.AppendBlock

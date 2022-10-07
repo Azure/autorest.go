@@ -70,7 +70,7 @@ func newClient(geography *Geography, clientVersion *string, clientIndex *int32, 
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-//   - options - ClientCreateOptions contains the optional parameters for the Client.Create method.
+//   - options - ClientCreateOptions contains the optional parameters for the client.Create method.
 func (client *client) Create(ctx context.Context, options *ClientCreateOptions) (ClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
@@ -132,7 +132,7 @@ func (client *client) createHandleResponse(resp *http.Response) (ClientCreateRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-//   - options - ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
+//   - options - ClientGetScriptOptions contains the optional parameters for the client.GetScript method.
 func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *ClientGetScriptOptions) (ClientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
@@ -191,7 +191,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (ClientGetScr
 // "2020-02-18T19:53:33.123Z" } ] }
 //
 // Generated from API version 2.0
-//   - options - ClientListOptions contains the optional parameters for the Client.List method.
+//   - options - ClientListOptions contains the optional parameters for the client.List method.
 func (client *client) NewListPager(options *ClientListOptions) *runtime.Pager[ClientListResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ClientListResponse]{
 		More: func(page ClientListResponse) bool {
@@ -252,7 +252,7 @@ func (client *client) listHandleResponse(resp *http.Response) (ClientListRespons
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2.0
-//   - options - ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
+//   - options - ClientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
 func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *ClientPolicyAssignmentOptions) (ClientPolicyAssignmentResponse, error) {
 	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
 	if err != nil {

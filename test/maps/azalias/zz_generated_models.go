@@ -26,7 +26,7 @@ type AliasesCreateResponse struct {
 	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
 }
 
-// ClientCreateOptions contains the optional parameters for the Client.Create method.
+// ClientCreateOptions contains the optional parameters for the client.Create method.
 type ClientCreateOptions struct {
 	GroupBy []SomethingCount
 	// The unique id that references the assigned data item to be aliased.
@@ -35,17 +35,17 @@ type ClientCreateOptions struct {
 	CreatorID *int32
 }
 
-// ClientGetScriptOptions contains the optional parameters for the Client.GetScript method.
+// ClientGetScriptOptions contains the optional parameters for the client.GetScript method.
 type ClientGetScriptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ClientListOptions contains the optional parameters for the Client.List method.
+// ClientListOptions contains the optional parameters for the client.List method.
 type ClientListOptions struct {
 	GroupBy []LogMetricsGroupBy
 }
 
-// ClientPolicyAssignmentOptions contains the optional parameters for the Client.PolicyAssignment method.
+// ClientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
 type ClientPolicyAssignmentOptions struct {
 	// placeholder for future optional parameters
 }

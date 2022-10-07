@@ -46,7 +46,7 @@ func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serv
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the ServiceClient.FilterBlobs method.
+//   - options - ServiceClientFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
 func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceClientFilterBlobsOptions) (ServiceClientFilterBlobsResponse, error) {
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
@@ -120,7 +120,7 @@ func (client *serviceClient) filterBlobsHandleResponse(resp *http.Response) (Ser
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the ServiceClient.GetAccountInfo method.
+//   - options - ServiceClientGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
 func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceClientGetAccountInfoOptions) (ServiceClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -191,7 +191,7 @@ func (client *serviceClient) getAccountInfoHandleResponse(resp *http.Response) (
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
+//   - options - ServiceClientGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
 func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -251,7 +251,7 @@ func (client *serviceClient) getPropertiesHandleResponse(resp *http.Response) (S
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
+//   - options - ServiceClientGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
 func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -318,7 +318,7 @@ func (client *serviceClient) getStatisticsHandleResponse(resp *http.Response) (S
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientGetUserDelegationKeyOptions contains the optional parameters for the ServiceClient.GetUserDelegationKey
+//   - options - ServiceClientGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey
 //     method.
 func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceClientGetUserDelegationKeyOptions) (ServiceClientGetUserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
@@ -385,7 +385,7 @@ func (client *serviceClient) getUserDelegationKeyHandleResponse(resp *http.Respo
 // account
 //
 // Generated from API version 2020-06-12
-//   - options - ServiceClientListContainersSegmentOptions contains the optional parameters for the ServiceClient.ListContainersSegment
+//   - options - ServiceClientListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
 //     method.
 func (client *serviceClient) NewListContainersSegmentPager(comp Enum5, options *ServiceClientListContainersSegmentOptions) *runtime.Pager[ServiceClientListContainersSegmentResponse] {
 	return runtime.NewPager(runtime.PagingHandler[ServiceClientListContainersSegmentResponse]{
@@ -471,7 +471,7 @@ func (client *serviceClient) listContainersSegmentHandleResponse(resp *http.Resp
 //
 // Generated from API version 2020-06-12
 //   - storageServiceProperties - The StorageService properties.
-//   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
+//   - options - ServiceClientSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
 func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
@@ -531,7 +531,7 @@ func (client *serviceClient) setPropertiesHandleResponse(resp *http.Response) (S
 //   - multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
 //     value: multipart/mixed; boundary=batch_
 //   - body - Initial data
-//   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the ServiceClient.SubmitBatch method.
+//   - options - ServiceClientSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
 func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceClientSubmitBatchOptions) (ServiceClientSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {

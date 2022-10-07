@@ -48,7 +48,7 @@ func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, p
 //
 // Generated from API version 2020-06-12
 //   - copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
-//   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the Client.AbortCopyFromURL method.
+//   - options - ClientAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 func (client *client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, options *ClientAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (ClientAbortCopyFromURLResponse, error) {
 	req, err := client.abortCopyFromURLCreateRequest(ctx, comp, copyActionAbortConstant, copyID, options, leaseAccessConditions)
@@ -116,7 +116,7 @@ func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientAcquireLeaseOptions contains the optional parameters for the Client.AcquireLease method.
+//   - options - ClientAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) AcquireLease(ctx context.Context, comp Enum16, options *ClientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, comp, options, modifiedAccessConditions)
@@ -214,7 +214,7 @@ func (client *client) acquireLeaseHandleResponse(resp *http.Response) (ClientAcq
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientBreakLeaseOptions contains the optional parameters for the Client.BreakLease method.
+//   - options - ClientBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) BreakLease(ctx context.Context, comp Enum16, options *ClientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientBreakLeaseResponse, error) {
 	req, err := client.breakLeaseCreateRequest(ctx, comp, options, modifiedAccessConditions)
@@ -318,7 +318,7 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (ClientBreak
 //   - proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 //     lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
 //     string formats.
-//   - options - ClientChangeLeaseOptions contains the optional parameters for the Client.ChangeLease method.
+//   - options - ClientChangeLeaseOptions contains the optional parameters for the client.ChangeLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) ChangeLease(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, options *ClientChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientChangeLeaseResponse, error) {
 	req, err := client.changeLeaseCreateRequest(ctx, comp, leaseID, proposedLeaseID, options, modifiedAccessConditions)
@@ -416,7 +416,7 @@ func (client *client) changeLeaseHandleResponse(resp *http.Response) (ClientChan
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
-//   - options - ClientCopyFromURLOptions contains the optional parameters for the Client.CopyFromURL method.
+//   - options - ClientCopyFromURLOptions contains the optional parameters for the client.CopyFromURL method.
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 //     method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -569,7 +569,7 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (ClientCopy
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientCreateSnapshotOptions contains the optional parameters for the Client.CreateSnapshot method.
+//   - options - ClientCreateSnapshotOptions contains the optional parameters for the client.CreateSnapshot method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -703,7 +703,7 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (ClientC
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
+//   - options - ClientDeleteOptions contains the optional parameters for the client.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) Delete(ctx context.Context, options *ClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientDeleteResponse, error) {
@@ -796,7 +796,7 @@ func (client *client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the Client.DeleteImmutabilityPolicy
+//   - options - ClientDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy
 //     method.
 func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *ClientDeleteImmutabilityPolicyOptions) (ClientDeleteImmutabilityPolicyResponse, error) {
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, comp, options)
@@ -860,7 +860,7 @@ func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientDownloadOptions contains the optional parameters for the Client.Download method.
+//   - options - ClientDownloadOptions contains the optional parameters for the client.Download method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -1155,7 +1155,7 @@ func (client *client) downloadHandleResponse(resp *http.Response) (ClientDownloa
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetAccessControlOptions contains the optional parameters for the Client.GetAccessControl method.
+//   - options - ClientGetAccessControlOptions contains the optional parameters for the client.GetAccessControl method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) GetAccessControl(ctx context.Context, action Enum22, options *ClientGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientGetAccessControlResponse, error) {
@@ -1256,7 +1256,7 @@ func (client *client) getAccessControlHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetAccountInfoOptions contains the optional parameters for the Client.GetAccountInfo method.
+//   - options - ClientGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
 func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ClientGetAccountInfoOptions) (ClientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -1320,7 +1320,7 @@ func (client *client) getAccountInfoHandleResponse(resp *http.Response) (ClientG
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetPropertiesOptions contains the optional parameters for the Client.GetProperties method.
+//   - options - ClientGetPropertiesOptions contains the optional parameters for the client.GetProperties method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -1635,7 +1635,7 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (ClientGe
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientGetTagsOptions contains the optional parameters for the Client.GetTags method.
+//   - options - ClientGetTagsOptions contains the optional parameters for the client.GetTags method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 func (client *client) GetTags(ctx context.Context, comp Enum42, options *ClientGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientGetTagsResponse, error) {
@@ -1714,7 +1714,7 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (ClientGetTagsR
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientQueryOptions contains the optional parameters for the Client.Query method.
+//   - options - ClientQueryOptions contains the optional parameters for the client.Query method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -1943,7 +1943,7 @@ func (client *client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 //
 // Generated from API version 2020-06-12
 //   - leaseID - Specifies the current lease ID on the resource.
-//   - options - ClientReleaseLeaseOptions contains the optional parameters for the Client.ReleaseLease method.
+//   - options - ClientReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) ReleaseLease(ctx context.Context, comp Enum16, leaseID string, options *ClientReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientReleaseLeaseResponse, error) {
 	req, err := client.releaseLeaseCreateRequest(ctx, comp, leaseID, options, modifiedAccessConditions)
@@ -2040,7 +2040,7 @@ func (client *client) releaseLeaseHandleResponse(resp *http.Response) (ClientRel
 //   - renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 //     If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 //     otherwise, the existing properties will be preserved.
-//   - options - ClientRenameOptions contains the optional parameters for the Client.Rename method.
+//   - options - ClientRenameOptions contains the optional parameters for the client.Rename method.
 //   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2182,7 +2182,7 @@ func (client *client) renameHandleResponse(resp *http.Response) (ClientRenameRes
 //
 // Generated from API version 2020-06-12
 //   - leaseID - Specifies the current lease ID on the resource.
-//   - options - ClientRenewLeaseOptions contains the optional parameters for the Client.RenewLease method.
+//   - options - ClientRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) RenewLease(ctx context.Context, comp Enum16, leaseID string, options *ClientRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, comp, leaseID, options, modifiedAccessConditions)
@@ -2275,7 +2275,7 @@ func (client *client) renewLeaseHandleResponse(resp *http.Response) (ClientRenew
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetAccessControlOptions contains the optional parameters for the Client.SetAccessControl method.
+//   - options - ClientSetAccessControlOptions contains the optional parameters for the client.SetAccessControl method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) SetAccessControl(ctx context.Context, action Enum21, options *ClientSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetAccessControlResponse, error) {
@@ -2374,7 +2374,7 @@ func (client *client) setAccessControlHandleResponse(resp *http.Response) (Clien
 //
 // Generated from API version 2020-06-12
 //   - expiryOptions - Required. Indicates mode of the expiry time
-//   - options - ClientSetExpiryOptions contains the optional parameters for the Client.SetExpiry method.
+//   - options - ClientSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
 func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *ClientSetExpiryOptions) (ClientSetExpiryResponse, error) {
 	req, err := client.setExpiryCreateRequest(ctx, comp, expiryOptions, options)
 	if err != nil {
@@ -2450,7 +2450,7 @@ func (client *client) setExpiryHandleResponse(resp *http.Response) (ClientSetExp
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetHTTPHeadersOptions contains the optional parameters for the Client.SetHTTPHeaders method.
+//   - options - ClientSetHTTPHeadersOptions contains the optional parameters for the client.SetHTTPHeaders method.
 //   - BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2568,7 +2568,7 @@ func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (ClientS
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the Client.SetImmutabilityPolicy method.
+//   - options - ClientSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, options *ClientSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetImmutabilityPolicyResponse, error) {
 	req, err := client.setImmutabilityPolicyCreateRequest(ctx, comp, options, modifiedAccessConditions)
@@ -2651,7 +2651,7 @@ func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 //
 // Generated from API version 2020-06-12
 //   - legalHold - Specified if a legal hold should be set on the blob.
-//   - options - ClientSetLegalHoldOptions contains the optional parameters for the Client.SetLegalHold method.
+//   - options - ClientSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
 func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *ClientSetLegalHoldOptions) (ClientSetLegalHoldResponse, error) {
 	req, err := client.setLegalHoldCreateRequest(ctx, comp, legalHold, options)
 	if err != nil {
@@ -2722,7 +2722,7 @@ func (client *client) setLegalHoldHandleResponse(resp *http.Response) (ClientSet
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetMetadataOptions contains the optional parameters for the Client.SetMetadata method.
+//   - options - ClientSetMetadataOptions contains the optional parameters for the client.SetMetadata method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
 //   - CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
@@ -2849,7 +2849,7 @@ func (client *client) setMetadataHandleResponse(resp *http.Response) (ClientSetM
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientSetTagsOptions contains the optional parameters for the Client.SetTags method.
+//   - options - ClientSetTagsOptions contains the optional parameters for the client.SetTags method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 func (client *client) SetTags(ctx context.Context, comp Enum42, options *ClientSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (ClientSetTagsResponse, error) {
@@ -2935,7 +2935,7 @@ func (client *client) setTagsHandleResponse(resp *http.Response) (ClientSetTagsR
 //
 // Generated from API version 2020-06-12
 //   - tier - Indicates the tier to be set on the blob.
-//   - options - ClientSetTierOptions contains the optional parameters for the Client.SetTier method.
+//   - options - ClientSetTierOptions contains the optional parameters for the client.SetTier method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) SetTier(ctx context.Context, comp Enum32, tier AccessTier, options *ClientSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (ClientSetTierResponse, error) {
@@ -3011,7 +3011,7 @@ func (client *client) setTierHandleResponse(resp *http.Response) (ClientSetTierR
 //   - copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 //     a page blob snapshot. The value should be URL-encoded as it would appear in a request
 //     URI. The source blob must either be public or must be authenticated via a shared access signature.
-//   - options - ClientStartCopyFromURLOptions contains the optional parameters for the Client.StartCopyFromURL method.
+//   - options - ClientStartCopyFromURLOptions contains the optional parameters for the client.StartCopyFromURL method.
 //   - SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 //     method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -3155,7 +3155,7 @@ func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (Clien
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - ClientUndeleteOptions contains the optional parameters for the Client.Undelete method.
+//   - options - ClientUndeleteOptions contains the optional parameters for the client.Undelete method.
 func (client *client) Undelete(ctx context.Context, comp Enum14, options *ClientUndeleteOptions) (ClientUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, comp, options)
 	if err != nil {

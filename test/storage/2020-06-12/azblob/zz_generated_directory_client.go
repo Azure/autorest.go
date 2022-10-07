@@ -48,7 +48,7 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - DirectoryClientCreateOptions contains the optional parameters for the DirectoryClient.Create method.
+//   - options - DirectoryClientCreateOptions contains the optional parameters for the directoryClient.Create method.
 //   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -171,7 +171,7 @@ func (client *directoryClient) createHandleResponse(resp *http.Response) (Direct
 // Generated from API version 2020-06-12
 //   - recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
 //     non-empty, an error occurs.
-//   - options - DirectoryClientDeleteOptions contains the optional parameters for the DirectoryClient.Delete method.
+//   - options - DirectoryClientDeleteOptions contains the optional parameters for the directoryClient.Delete method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, options *DirectoryClientDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryClientDeleteResponse, error) {
@@ -256,7 +256,7 @@ func (client *directoryClient) deleteHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - DirectoryClientGetAccessControlOptions contains the optional parameters for the DirectoryClient.GetAccessControl
+//   - options - DirectoryClientGetAccessControlOptions contains the optional parameters for the directoryClient.GetAccessControl
 //     method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -365,7 +365,7 @@ func (client *directoryClient) getAccessControlHandleResponse(resp *http.Respons
 //   - renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 //     If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 //     otherwise, the existing properties will be preserved.
-//   - options - DirectoryClientRenameOptions contains the optional parameters for the DirectoryClient.Rename method.
+//   - options - DirectoryClientRenameOptions contains the optional parameters for the directoryClient.Rename method.
 //   - DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the directoryClient.Create method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -512,7 +512,7 @@ func (client *directoryClient) renameHandleResponse(resp *http.Response) (Direct
 // If the operation fails it returns an *azcore.ResponseError type.
 //
 // Generated from API version 2020-06-12
-//   - options - DirectoryClientSetAccessControlOptions contains the optional parameters for the DirectoryClient.SetAccessControl
+//   - options - DirectoryClientSetAccessControlOptions contains the optional parameters for the directoryClient.SetAccessControl
 //     method.
 //   - LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 //   - ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
