@@ -9,8 +9,8 @@ import { BaseCodeGenerator } from './baseGenerator';
 import { Config } from '../common/constant';
 import { ExampleParameter, ExampleValue, OutputVariableModelType, StepRestCallModel, TestDefinitionModel, TestScenarioModel } from '@autorest/testmodeler/dist/src/core/model';
 import { GoExampleModel, ParameterOutput, VariableOutput } from '../common/model';
-import { GoHelper } from '../util/goHelper';
-import { GroupProperty, Parameter, Schema, SchemaType } from '@autorest/codemodel';
+import { camelCase, snakeCase, upperFirst, lowerFirst } from 'lodash';
+import { GroupProperty, Parameter } from '@autorest/codemodel';
 import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { MockTestDataRender } from './mockTestGenerator';
 import { OavStepType } from '@autorest/testmodeler/dist/src/common/constant';
@@ -145,24 +145,8 @@ export class ScenarioTestDataRender extends MockTestDataRender {
       }
       case OavStepType.armTemplate: {
         const copyOfPayload = _.cloneDeep(step.armTemplatePayload);
-        // environment variables & arguments parse
-        if (copyOfPayload.resources) {
-          copyOfPayload.resources.forEach((t) => {
-            (t.properties['environmentVariables'] || []).forEach((e) => {
-              if (e.value) {
-                e.value = '<parsedVariable>' + this.getStringValue(e.value);
-              } else {
-                e.secureValue = '<parsedVariable>' + this.getStringValue(e.secureValue);
-              }
-            });
-            if (t.properties['arguments']) {
-              t.properties['arguments'] = this.getStringValue(t.properties['arguments']);
-            }
-          });
-        }
-
         // template parse
-        step['armTemplateOutput'] = GoHelper.objectToString(copyOfPayload);
+        step['armTemplateOutput'] = this.objectToString(copyOfPayload);
 
         break;
       }
@@ -234,12 +218,12 @@ export class ScenarioTestDataRender extends MockTestDataRender {
     } else if (variable.type === 'array') {
       type = '[]interface{}';
       if (variable.value !== undefined) {
-        value = GoHelper.arrayToString(variable.value);
+        value = this.arrayToString(variable.value);
       }
     } else if (variable.type === 'object' || variable.type === 'secureObject') {
       type = 'map[string]interface{}';
       if (variable.value !== undefined) {
-        value = GoHelper.objectToString(variable.value);
+        value = this.objectToString(variable.value);
       }
     }
     if (replaceGlobal && variable.value === undefined && Object.prototype.hasOwnProperty.call(this.globalVariables, key)) {
@@ -308,15 +292,15 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
           ...testDef.variables,
         });
         this.renderAndWrite(
-          { ...testDef, testCaseName: Helper.capitalize(Helper.toCamelCase(filename)) },
+          { ...testDef, testCaseName: upperFirst(camelCase(filename)) },
           'scenarioTest.go.njk',
           `${this.getFilePrefix(Config.testFilePrefix)}${filename.toLowerCase()}_live_test.go`,
           extraParam,
           {
-            toSnakeCase: Helper.toSnakeCase,
-            uncapitalize: Helper.uncapitalize,
-            toCamelCase: Helper.toCamelCase,
-            capitalize: Helper.capitalize,
+            snakeCase: snakeCase,
+            lowerFirst: lowerFirst,
+            camelCase: camelCase,
+            upperFirst: upperFirst,
             quotedEscapeString: Helper.quotedEscapeString,
             genVariableName: (typeName: string) => {
               // This function generate variable instance name from variable type name
@@ -324,7 +308,7 @@ export class ScenarioTestCodeGenerator extends BaseCodeGenerator {
               //   1) VirtualMachineResponse  --> virtualMachineResponse
               //   2) armCompute.VirtualMachineResponse  --> virtualMachineResponse   // remove package name
               //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
-              return Helper.uncapitalize(typeName.split('.').join('*').split('*').pop());
+              return lowerFirst(typeName.split('.').join('*').split('*').pop());
             },
             getParamsValue: (params: Array<ParameterOutput>) => {
               return params

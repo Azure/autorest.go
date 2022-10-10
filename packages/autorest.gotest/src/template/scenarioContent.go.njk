@@ -9,7 +9,7 @@ var err error
 {%- else %}
     {%- if step.type == "restCall" %}
         {%- set example = step.exampleModel %}
-        {%- set clientVariable = jsFunc.uncapitalize(example.operationGroup.language.go.clientName) %}
+        {%- set clientVariable = jsFunc.lowerFirst(example.operationGroup.language.go.clientName) %}
         {%- if allVariables.indexOf(clientVariable)<0 %}
     {{clientVariable}}, err := {{packageName}}.{{example.operationGroup.language.go.clientCtorName}}({{jsFunc.getParamsValue(example.clientParametersOutput) + ", " if example.clientParametersOutput.length>0 else ""}}testsuite.cred, testsuite.options)
     testsuite.Require().NoError(err)
@@ -92,17 +92,9 @@ var err error
         {%- endif %}
     {%- elif step.type == "armTemplateDeployment" %}
     template {%- if firstDeployment %}:{%- endif %}= {{step.armTemplateOutput}}
-    params {%- if firstDeployment %}:{%- endif %}= map[string]interface{}{
-        {%- for k, v in step.armTemplatePayload.parameters %}
-        {%- if v.defaultValue === "$("  + k + ")" %}
-    "{{k}}": map[string]interface{}{ "value": {% if globalVariables.indexOf(k)>=0 %}testsuite.{% endif %}{{k}},},
-        {%- endif %}
-        {%- endfor %}
-    }
     deployment {%- if firstDeployment %}:{%- set firstDeployment = false %}{%- endif %}= armresources.Deployment{
         Properties: &armresources.DeploymentProperties{
             Template:   template,
-            Parameters: params,
             Mode:       to.Ptr(armresources.DeploymentModeIncremental),
         },
     }

@@ -12,6 +12,7 @@ import { Helper } from '@autorest/testmodeler/dist/src/util/helper';
 import { ScenarioTestDataRender } from './scenarioTestGenerator';
 import { TestDefinitionModel } from '@autorest/testmodeler/dist/src/core/model';
 import { ParameterOutput } from '../common/model';
+import { camelCase, snakeCase, upperFirst, lowerFirst } from 'lodash';
 
 export class SampleDataRender extends ScenarioTestDataRender {
   packagePrefixForGlobalVariables = '';
@@ -45,34 +46,28 @@ export class SampleCodeGenerator extends BaseCodeGenerator {
         }
         this.renderAndWrite({ ...testDef }, 'sampleGo.mod.njk', `${extraParam['testPackageName']}/go.mod`, extraParam);
 
-        this.renderAndWrite(
-          { ...testDef, testCaseName: Helper.capitalize(Helper.toCamelCase(filename)) },
-          'sampleMain.go.njk',
-          `${extraParam['testPackageName']}/main.go`,
-          extraParam,
-          {
-            toSnakeCase: Helper.toSnakeCase,
-            uncapitalize: Helper.uncapitalize,
-            toCamelCase: Helper.toCamelCase,
-            capitalize: Helper.capitalize,
-            quotedEscapeString: Helper.quotedEscapeString,
-            genVariableName: (typeName: string) => {
-              // This function generate variable instance name from variable type name
-              // For instance:
-              //   1) VirtualMachineResponse  --> virtualMachineResponse
-              //   2) armCompute.VirtualMachineResponse  --> virtualMachineResponse   // remove package name
-              //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
-              return Helper.uncapitalize(typeName.split('.').join('*').split('*').pop());
-            },
-            getParamsValue: (params: Array<ParameterOutput>) => {
-              return params
-                .map((p) => {
-                  return p.paramOutput;
-                })
-                .join(', ');
-            },
+        this.renderAndWrite({ ...testDef, testCaseName: upperFirst(camelCase(filename)) }, 'sampleMain.go.njk', `${extraParam['testPackageName']}/main.go`, extraParam, {
+          snakeCase: snakeCase,
+          lowerFirst: lowerFirst,
+          camelCase: camelCase,
+          upperFirst: upperFirst,
+          quotedEscapeString: Helper.quotedEscapeString,
+          genVariableName: (typeName: string) => {
+            // This function generate variable instance name from variable type name
+            // For instance:
+            //   1) VirtualMachineResponse  --> virtualMachineResponse
+            //   2) armCompute.VirtualMachineResponse  --> virtualMachineResponse   // remove package name
+            //   3) *VirtualMachineResponse  --> virtualMachineResponse  // remove char of pointer.
+            return lowerFirst(typeName.split('.').join('*').split('*').pop());
           },
-        );
+          getParamsValue: (params: Array<ParameterOutput>) => {
+            return params
+              .map((p) => {
+                return p.paramOutput;
+              })
+              .join(', ');
+          },
+        });
       }
     }
   }

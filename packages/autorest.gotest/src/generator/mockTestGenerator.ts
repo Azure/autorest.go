@@ -404,13 +404,15 @@ export class MockTestDataRender extends BaseDataRender {
         ret = `func() time.Time { t, _ := time.Parse(${timeFormat}, "${rawValue}"); return t}()`;
       }
     } else if (goType === 'map[string]interface{}') {
-      ret = GoHelper.objectToString(rawValue);
+      ret = this.objectToString(rawValue);
     } else if (goType === 'interface{}' && Array.isArray(rawValue)) {
-      ret = GoHelper.arrayToString(rawValue);
+      ret = this.arrayToString(rawValue);
     } else if (goType === 'interface{}' && typeof rawValue === 'object') {
-      ret = GoHelper.objectToString(rawValue);
+      ret = this.objectToString(rawValue);
     } else if (goType === 'interface{}' && _.isNumber(rawValue)) {
       ret = `float64(${rawValue})`;
+    } else if (goType === 'interface{}' && _.isString(rawValue)) {
+      ret = this.getStringValue(rawValue);
     } else if (goType === 'bool') {
       ret = rawValue.toString();
     }
@@ -441,6 +443,54 @@ export class MockTestDataRender extends BaseDataRender {
 
   protected getLanguageName(meta: any): string {
     return (<Metadata>meta).language.go.name;
+  }
+
+  protected objectToString(rawValue: any): string {
+    let ret = 'map[string]interface{}{\n';
+    for (const [key, value] of Object.entries(rawValue)) {
+      if (_.isArray(value)) {
+        ret += `"${key}":`;
+        ret += this.arrayToString(value);
+        ret += ',\n';
+      } else if (_.isObject(value)) {
+        ret += `"${key}":`;
+        ret += this.objectToString(value);
+        ret += ',\n';
+      } else if (_.isString(value)) {
+        ret += `"${key}": ${this.getStringValue(value)},\n`;
+      } else if (value === null) {
+        ret += `"${key}": nil,\n`;
+      } else if (_.isNumber(value)) {
+        ret += `"${key}": float64(${value}),\n`;
+      } else {
+        ret += `"${key}": ${value},\n`;
+      }
+    }
+    ret += '}';
+    return ret;
+  }
+
+  protected arrayToString(rawValue: any): string {
+    let ret = '[]interface{}{\n';
+    for (const item of rawValue) {
+      if (_.isArray(item)) {
+        ret += this.arrayToString(item);
+        ret += ',\n';
+      } else if (_.isObject(item)) {
+        ret += this.objectToString(item);
+        ret += ',\n';
+      } else if (_.isString(item)) {
+        ret += `${Helper.quotedEscapeString(item)},\n`;
+      } else if (item === null) {
+        ret += 'nil,\n';
+      } else if (_.isNumber(item)) {
+        ret += `float64(${item}),\n`;
+      } else {
+        ret += `${item},\n`;
+      }
+    }
+    ret += '}';
+    return ret;
   }
 }
 

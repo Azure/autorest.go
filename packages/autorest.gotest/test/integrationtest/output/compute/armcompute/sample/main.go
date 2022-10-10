@@ -90,12 +90,10 @@ func scenario0Sample() {
 			},
 		},
 	}
-	params := map[string]interface{}{}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend := createDeployment("Generate_Unique_Name", &deployment)

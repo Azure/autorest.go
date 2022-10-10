@@ -21,7 +21,7 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-type SignalrTestSuite struct {
+type SignalRTestSuite struct {
 	suite.Suite
 
 	ctx               context.Context
@@ -32,7 +32,7 @@ type SignalrTestSuite struct {
 	subscriptionId    string
 }
 
-func (testsuite *SignalrTestSuite) SetupSuite() {
+func (testsuite *SignalRTestSuite) SetupSuite() {
 	testutil.StartRecording(testsuite.T(), "sdk/resourcemanager/signalr/armsignalr/testdata")
 
 	testsuite.ctx = context.Background()
@@ -45,18 +45,18 @@ func (testsuite *SignalrTestSuite) SetupSuite() {
 	testsuite.resourceGroupName = *resourceGroup.Name
 }
 
-func (testsuite *SignalrTestSuite) TearDownSuite() {
+func (testsuite *SignalRTestSuite) TearDownSuite() {
 	_, err := testutil.DeleteResourceGroup(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName)
 	testsuite.Require().NoError(err)
 	testutil.StopRecording(testsuite.T())
 }
 
-func TestSignalrTestSuite(t *testing.T) {
-	suite.Run(t, new(SignalrTestSuite))
+func TestSignalRTestSuite(t *testing.T) {
+	suite.Run(t, new(SignalRTestSuite))
 }
 
 // Microsoft.SignalRService/Basic_CRUD
-func (testsuite *SignalrTestSuite) TestSignalr() {
+func (testsuite *SignalRTestSuite) TestSignalR() {
 	var resourceName string
 	var err error
 	// From step Generate_Unique_Name
@@ -80,12 +80,10 @@ func (testsuite *SignalrTestSuite) TestSignalr() {
 			},
 		},
 	}
-	params := map[string]interface{}{}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend, err := testutil.CreateDeployment(testsuite.ctx, testsuite.subscriptionId, testsuite.cred, testsuite.options, testsuite.resourceGroupName, "Generate_Unique_Name", &deployment)

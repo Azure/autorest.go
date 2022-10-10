@@ -78,12 +78,10 @@ func prepare() {
 			"serviceNameLong": "[concat(parameters('serviceNamePrefix'), uniqueString(resourceGroup().id))]",
 		},
 	}
-	params := map[string]interface{}{}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend := createDeployment("Generate_Unique_ServiceName", &deployment)
@@ -124,12 +122,10 @@ func prepare() {
 			},
 		},
 	}
-	params = map[string]interface{}{}
 	deployment = armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend = createDeployment("Create_Application_Insight_Instance", &deployment)
@@ -142,7 +138,7 @@ func prepare() {
 		"parameters": map[string]interface{}{
 			"userAssignedIdentity": map[string]interface{}{
 				"type":         "string",
-				"defaultValue": "$(userAssignedIdentity)",
+				"defaultValue": userAssignedIdentity,
 			},
 			"utcValue": map[string]interface{}{
 				"type":         "string",
@@ -191,14 +187,10 @@ func prepare() {
 			},
 		},
 	}
-	params = map[string]interface{}{
-		"userAssignedIdentity": map[string]interface{}{"value": userAssignedIdentity},
-	}
 	deployment = armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	_ = createDeployment("Add_Dns_Cname_Record", &deployment)
@@ -593,7 +585,7 @@ func springSample() {
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
 				"databaseName": "mysqldb",
-				"username":     "test",
+				"username":     mysqlKey,
 			},
 			Key:        to.Ptr(mysqlKey),
 			ResourceID: to.Ptr("/subscriptions/b46590cb-a111-4b84-935f-c305aaf1f424/resourceGroups/mary-west/providers/Microsoft.DBforMySQL/servers/fake-sql"),
@@ -612,8 +604,10 @@ func springSample() {
 	bindingsClientUpdateResponsePoller, err := bindingsClient.BeginUpdate(ctx, resourceGroupName, serviceName, appName, bindingName, armappplatform.BindingResource{
 		Properties: &armappplatform.BindingResourceProperties{
 			BindingParameters: map[string]interface{}{
-				"databaseName": "mysqldb2",
-				"username":     "test2",
+				"anotherLayer": map[string]interface{}{
+					"databaseName": "mysqldb2",
+					"username":     mysqlKey,
+				},
 			},
 			Key: to.Ptr(mysqlKey),
 		},
@@ -728,7 +722,7 @@ func springSample() {
 		"parameters": map[string]interface{}{
 			"userAssignedIdentity": map[string]interface{}{
 				"type":         "string",
-				"defaultValue": "$(userAssignedIdentity)",
+				"defaultValue": userAssignedIdentity,
 			},
 			"utcValue": map[string]interface{}{
 				"type":         "string",
@@ -769,14 +763,10 @@ func springSample() {
 			},
 		},
 	}
-	params := map[string]interface{}{
-		"userAssignedIdentity": map[string]interface{}{"value": userAssignedIdentity},
-	}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	_ = createDeployment("Upload_File", &deployment)
@@ -1016,7 +1006,7 @@ func cleanup() {
 		"parameters": map[string]interface{}{
 			"userAssignedIdentity": map[string]interface{}{
 				"type":         "string",
-				"defaultValue": "$(userAssignedIdentity)",
+				"defaultValue": userAssignedIdentity,
 			},
 			"utcValue": map[string]interface{}{
 				"type":         "string",
@@ -1061,14 +1051,10 @@ func cleanup() {
 			},
 		},
 	}
-	params := map[string]interface{}{
-		"userAssignedIdentity": map[string]interface{}{"value": userAssignedIdentity},
-	}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	_ = createDeployment("delete_cname_record", &deployment)

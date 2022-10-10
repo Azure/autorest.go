@@ -40,7 +40,7 @@ var (
     {%- if variable === "subscriptionId" %}
     subscriptionId = getEnv("AZURE_SUBSCRIPTION_ID", "")
     {%- else %}
-    {{variable}} = getEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
+    {{variable}} = getEnv("{{jsFunc.snakeCase(variable).toUpperCase()}}", "{{requiredVariablesDefault[variable]}}")
     {%- endif %}
 {%- endfor %}
 )
@@ -59,7 +59,7 @@ func main() {
     prepare()
     {%- endif %}
     {%- for testScenario in scenarios %}
-    {{jsFunc.toCamelCase(testScenario.scenario)}}Sample()
+    {{jsFunc.camelCase(testScenario.scenario)}}Sample()
     {%- endfor %}
     {%- if cleanUpSteps.length > 0 %}
     cleanup()
@@ -78,10 +78,10 @@ func prepare() {
 
 {% for testScenario in scenarios %}
 // {{testScenario.description}}
-func {{jsFunc.toCamelCase(testScenario.scenario)}}Sample() {
+func {{jsFunc.camelCase(testScenario.scenario)}}Sample() {
     {%- for variable, value in testScenario.requiredVariablesDefault %}
     {%- if not requiredVariablesDefault.hasOwnProperty(variable) %}
-    {{variable}} := getEnv("{{jsFunc.toSnakeCase(variable).toUpperCase()}}, "{{value}}")
+    {{variable}} := getEnv("{{jsFunc.snakeCase(variable).toUpperCase()}}, "{{value}}")
     {%- endif %}
     {%- endfor %}
     {%- for name, variable in testScenario.variablesOutput %}

@@ -40,12 +40,12 @@ func main() {
 		panic(err)
 	}
 	createResourceGroup()
-	signalrSample()
+	signalRSample()
 	deleteResourceGroup()
 }
 
 // Microsoft.SignalRService/Basic_CRUD
-func signalrSample() {
+func signalRSample() {
 	var resourceName string
 	// From step Generate_Unique_Name
 	template := map[string]interface{}{
@@ -68,12 +68,10 @@ func signalrSample() {
 			},
 		},
 	}
-	params := map[string]interface{}{}
 	deployment := armresources.Deployment{
 		Properties: &armresources.DeploymentProperties{
-			Template:   template,
-			Parameters: params,
-			Mode:       to.Ptr(armresources.DeploymentModeIncremental),
+			Template: template,
+			Mode:     to.Ptr(armresources.DeploymentModeIncremental),
 		},
 	}
 	deploymentExtend := createDeployment("Generate_Unique_Name", &deployment)
